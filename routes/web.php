@@ -24,3 +24,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/dashboard', function () {
+    return view('administrative.dashboard');
+});
+
+Route::get('/iedcr/dashboard', function () {
+    return view('epidemiologist.dashboard');
+});
+
+Route::get('/admin/dashboard', function () {
+    return view('superadmin.dashboard');
+});
