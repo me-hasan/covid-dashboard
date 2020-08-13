@@ -3,10 +3,10 @@
           <div class="container-fluid">
             <div class="d-flex">
                 <a class="header-brand" href="index.html">
-                    <img src="{{ asset('superadmin/assets/images/brand/corona-logo.webp') }}" class="header-brand-img desktop-lgo" alt="Logo">
-                    <img src="{{ asset('superadmin/assets/images/brand/logo1.png') }}" class="header-brand-img dark-logo" alt="Logo">
-                    <img src="{{ asset('superadmin/assets/images/brand/favicon.png') }}" class="header-brand-img mobile-logo" alt="Logo">
-                    <img src="{{ asset('superadmin/assets/images/brand/favicon1.png') }}" class="header-brand-img darkmobile-logo" alt="Logo">
+                    <img src="{{ asset('assets/images/brand/corona-logo.webp') }}" class="header-brand-img desktop-lgo" alt="Logo">
+                    <img src="{{ asset('assets/images/brand/logo1.png') }}" class="header-brand-img dark-logo" alt="Logo">
+                    <img src="{{ asset('assets/images/brand/favicon.png') }}" class="header-brand-img mobile-logo" alt="Logo">
+                    <img src="{{ asset('assets/images/brand/favicon1.png') }}" class="header-brand-img darkmobile-logo" alt="Logo">
                 </a>
               <div class="app-sidebar__toggle" data-toggle="sidebar">
                 <a class="open-toggle" href="#">
@@ -90,7 +90,7 @@
 				<div class="dropdown profile-dropdown">
 					<a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
 						<span>
-							<img src="{{ asset('superadmin/assets/images/users/2.jpg') }}" alt="img" class="avatar avatar-md brround">
+							<img src="{{ asset('assets/images/users/2.jpg') }}" alt="img" class="avatar avatar-md brround">
 						</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">

@@ -3,10 +3,10 @@
     <div class="container-fluid">
         <div class="d-flex">
             <a class="header-brand" href="index.html">
-                <img src="{{ asset('superadmin/assets/images/brand/logo.png') }}" class="header-brand-img desktop-lgo" alt="Admintro logo">
-                <img src="{{ asset('superadmin/assets/images/brand/logo1.png') }}" class="header-brand-img dark-logo" alt="Admintro logo">
-                <img src="{{ asset('superadmin/assets/images/brand/favicon.png') }}" class="header-brand-img mobile-logo" alt="Admintro logo">
-                <img src="{{ asset('superadmin/assets/images/brand/favicon1.png') }}" class="header-brand-img darkmobile-logo" alt="Admintro logo">
+                <img src="{{ asset('assets/images/brand/logo.png') }}" class="header-brand-img desktop-lgo" alt="Admintro logo">
+                <img src="{{ asset('assets/images/brand/logo1.png') }}" class="header-brand-img dark-logo" alt="Admintro logo">
+                <img src="{{ asset('assets/images/brand/favicon.png') }}" class="header-brand-img mobile-logo" alt="Admintro logo">
+                <img src="{{ asset('assets/images/brand/favicon1.png') }}" class="header-brand-img darkmobile-logo" alt="Admintro logo">
             </a>
             <div class="app-sidebar__toggle" data-toggle="sidebar">
                 <a class="open-toggle" href="#">
@@ -50,7 +50,7 @@
                             <a class="dropdown-item border-bottom" href="#">
                                 <div class="d-flex align-items-center">
                                     <div class="">
-                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('superadmin/assets/images/users/1.jpg') }}"></span>
+                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/1.jpg') }}"></span>
                                     </div>
                                     <div class="d-flex">
                                         <div class="pl-3">
@@ -66,7 +66,7 @@
                             <a class="dropdown-item border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div class="">
-                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('superadmin/assets/images/users/2.jpg') }}"></span>
+                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/2.jpg') }}"></span>
                                     </div>
                                     <div class="d-flex">
                                         <div class="pl-3">
@@ -82,7 +82,7 @@
                             <a class="dropdown-item border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div class="">
-                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('superadmin/assets/images/users/3.jpg') }}"></span>
+                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/3.jpg') }}"></span>
                                     </div>
                                     <div class="d-flex">
                                         <div class="pl-3">
@@ -98,7 +98,7 @@
                             <a class="dropdown-item border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div class="">
-                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('superadmin/assets/images/users/4.jpg') }}"></span>
+                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/4.jpg') }}"></span>
                                     </div>
                                     <div class="d-flex">
                                         <div class="pl-3">
@@ -114,7 +114,7 @@
                             <a class="dropdown-item border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div class="">
-                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('superadmin/assets/images/users/6.jpg') }}"></span>
+                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/6.jpg') }}"></span>
                                     </div>
                                     <div class="d-flex">
                                         <div class="pl-3">
@@ -130,7 +130,7 @@
                             <a class="dropdown-item border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div class="">
-                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('superadmin/assets/images/users/7.jpg') }}"></span>
+                                        <span class="avatar avatar-md brround align-self-center cover-image" data-image-src="{{ asset('assets/images/users/7.jpg') }}"></span>
                                     </div>
                                     <div class="d-flex">
                                         <div class="pl-3">
@@ -197,7 +197,7 @@
                 <div class="dropdown profile-dropdown">
                     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                         <span>
-                            <img src="{{ asset('superadmin/assets/images/users/2.jpg') }}" alt="img" class="avatar avatar-md brround">
+                            <img src="{{ asset('assets/images/users/2.jpg') }}" alt="img" class="avatar avatar-md brround">
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
