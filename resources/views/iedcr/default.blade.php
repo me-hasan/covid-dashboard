@@ -1,4 +1,4 @@
-@include('epidemiologist.header')
+@include('iedcr.header')
 
 <body class="app sidebar-mini">
 
@@ -10,13 +10,13 @@
 <div class="page">
   <div class="page-main"> 
     
-    @include('epidemiologist.aside')
+    @include('iedcr.aside')
     
     <!-- App-Content -->
     <div class="app-content main-content">
       <div class="side-app"> 
         
-        @include('epidemiologist.sub-header')
+        @include('iedcr.sub-header')
         
         <!--Page header-->
         <div class="page-header">
@@ -60,4 +60,4 @@
 <!-- Back to top --> 
 <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a> 
 
-@include('epidemiologist.footer')
+@include('iedcr.footer')

@@ -82,12 +82,24 @@
                   </div>
                 </div>
                 
-                <!--<div class="dropdown   header-fullscreen" >
-					<a  class="nav-link icon full-screen-link p-0"  id="fullscreen-button">
-						<svg xmlns="http://www.w3.org/2000/svg" class="header-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M10 4L8 4 8 8 4 8 4 10 10 10zM8 20L10 20 10 14 4 14 4 16 8 16zM20 14L14 14 14 20 16 20 16 16 20 16zM20 8L16 8 16 4 14 4 14 10 20 10z"/></svg>
-					</a>
-				</div>
-				<div class="dropdown profile-dropdown">
+                <div class="dropdown">
+                  <a class="nav-link icon p-0" href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                      <i class="mdi mdi-power"></i>
+                  </a>
+
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+                </div>
+
+                <!-- <div class="dropdown   header-fullscreen" >
+                  <a  class="nav-link icon full-screen-link p-0"  id="fullscreen-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="header-icon" width="24" height="24" viewBox="0 0 24 24"><path d="M10 4L8 4 8 8 4 8 4 10 10 10zM8 20L10 20 10 14 4 14 4 16 8 16zM20 14L14 14 14 20 16 20 16 16 20 16zM20 8L16 8 16 4 14 4 14 10 20 10z"/></svg>
+                  </a>
+                </div> -->
+				<!--<div class="dropdown profile-dropdown">
 					<a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
 						<span>
 							<img src="{{ asset('assets/images/users/2.jpg') }}" alt="img" class="avatar avatar-md brround">

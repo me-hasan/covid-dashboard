@@ -15,10 +15,10 @@
 <!-- endinject -->
 <!-- Layout styles -->
 <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/css/style_administrative.css') }}"/>
 <!-- End layout styles -->
 <!--<link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />-->
 <!-- Custom Style -->
-<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/css/custom_administrative.css') }}"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>

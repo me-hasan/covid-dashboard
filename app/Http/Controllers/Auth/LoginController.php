@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::DASHBOARD;
 
     /**
      * Create a new controller instance.
@@ -36,6 +36,28 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function redirectTo()
+    {
+        // User role
+        $userType = auth()->user()->user_type; 
+        
+        // Check user role
+        switch ($userType) {
+            case 'superadmin':
+                return RouteServiceProvider::SUPERADMIN_DASHBOARD; 
+                break;
+            case 'cabinet':
+                return RouteServiceProvider::CABINET_DASHBOARD;
+                break; 
+            case 'epidemiologist':
+                return RouteServiceProvider::IEDCR_DASHBOARD;
+                break; 
+            default:
+                return RouteServiceProvider::IEDCR_DASHBOARD;
+                break;
+        }
     }
 
     /**

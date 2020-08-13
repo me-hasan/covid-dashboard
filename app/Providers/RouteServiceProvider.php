@@ -24,6 +24,15 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * The path to the "dashboard" route for your application.
+     *
+     * @var string
+     */
+    public const CABINET_DASHBOARD = '/dashboard';
+    public const IEDCR_DASHBOARD = '/iedcr/dashboard';
+    public const SUPERADMIN_DASHBOARD = '/admin/dashboard';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void

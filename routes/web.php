@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login2');
+});
+Route::get('/hello', function () {
+    return 'hello';
 });
 
 Auth::routes();
@@ -27,12 +33,41 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dashboard', function () {
     return view('administrative.dashboard');
-});
+})->middleware('auth');
 
 Route::get('/iedcr/dashboard', function () {
-    return view('epidemiologist.dashboard');
-});
+    return view('iedcr.dashboard');
+})->middleware('auth');
 
-Route::get('/admin/dashboard', function () {
-    return view('superadmin.dashboard');
+
+Route::prefix('admin')->group(function () {
+    Route::get('dashboard', function () {
+        return view('superadmin.dashboard');
+    })->middleware('auth');
+
+    Route::get('roles/create', function () {
+        $role = Role::create(['name' => 'writer']);
+        $permission = Permission::create(['name' => 'edit-articles']);
+
+        $role->givePermissionTo($permission);
+        $permission->assignRole($role);
+
+    });
+
+    Route::get('assign-role', function() {
+        $user = App\User::find(1);
+        $user->assignRole('writer');
+
+        dd('assigned role writer to user: ' . $user->name);
+    });
+
+    Route::get('check-permission', function() {
+        $user = App\User::find(1);
+
+        if ($user->can('edit-articles')) {
+            dd('yap, working!');
+        } else {
+            dd('not working');
+        }
+    });
 });
