@@ -71,8 +71,9 @@ Route::prefix('admin')->group(function () {
         }
     });
 
-    // user management routes for admin
+    
     Route::group(['middleware' => 'auth'], function () {
+        // user management routes for admin
         Route::get('users','UserController@index')->name('all-user');
         Route::get('user/create','UserController@createForm');
         Route::post('user/create','UserController@store')->name('create-user');
@@ -80,8 +81,18 @@ Route::prefix('admin')->group(function () {
         Route::get('user/edit/{user}','UserController@editForm');
         Route::post('user/edit/{user}','UserController@update')->name('edit-user');
         Route::delete('user/{id}','UserController@destroy');
+        // user management routes ending
+
+        // role management routes for admin
+        Route::get('roles','RoleController@index')->name('all-roles');
+        Route::post('role/create','RoleController@store')->name('create-role');
+
+        Route::put('role/edit/{role_id}','RoleController@update')->name('edit-role');
+        Route::delete('role/{role_id}','RoleController@destroy');
+
+        // role management routes ending
     });
-    // user management routes ending
+    
 });
 
 

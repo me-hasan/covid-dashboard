@@ -65,17 +65,22 @@
                             <option value="epidemiologist" {{$user->user_type == 'epidemiologist' ? 'selected' : ''}}>Epidemiologist</option>
                         </select>
                     </div>
-<!--                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Password : <span style="color:red">*</span></label>
-                        <input type="password" name="password" class="form-control" required>
-                    </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Confirm Password : <span style="color:red">*</span></label>
-                        <input type="password" name="password_confirmation" class="form-control" required>
-                    </div> -->
+                        <label for="recipient-name" class="control-label mb-10">Role : <span style="color:red">*</span></label>
+                        <select name="role" class="form-control" data-placeholder="Select Role" required>
+                            @foreach($roles as $role)
+                                @php
+                                $getUserRoles = $user->getRoleNames()->toArray();
+                                if(in_array($role, $getUserRoles)){
+                                    $selectAttr = 'selected="selected"';
+                                }
+                                @endphp
+                                <option value="{{$role}}" {{ $selectAttr ?? ''}}>{{$role}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
-
 
                 </form>
             </div>

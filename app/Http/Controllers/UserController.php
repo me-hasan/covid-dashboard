@@ -33,8 +33,7 @@ class UserController extends Controller
         //     abort(403);
 
         $users = User::get();
-        // dd($users);
-        // $roles = Role::pluck('name', 'name');
+        $roles = Role::pluck('name', 'name');
         return view("superadmin.user.index", compact('users'));
     }
 
@@ -54,7 +53,8 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|min:3',
             'email' => 'required|unique:users',
-            'password' => 'required|confirmed|min:8'
+            'password' => 'required|confirmed|min:8',
+            'role' => 'required|exists:roles,name'
         ]);
 
         try {
@@ -67,7 +67,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            // $user->assignRole($request->role);
+            $user->assignRole($request->role);
             DB::commit();
 
             // return redirect()->back()->with("success", "User Create Successfully");
@@ -83,8 +83,8 @@ class UserController extends Controller
         // if (!auth()->user()->can('System User Management'))
         //     abort(403);
 
-        // dd($user);
-        return view("superadmin.user.edit", compact('user'));
+        $roles = Role::pluck('name', 'name');
+        return view("superadmin.user.edit", compact('user','roles'));
     }
 
     public function update($id, Request $request) {
@@ -93,7 +93,8 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string|min:3',
-            'email' => 'required'
+            'email' => 'required',
+            'role' => 'required|exists:roles,name'
         ]);
 
         try {
@@ -104,7 +105,7 @@ class UserController extends Controller
             $user->user_type = $request->user_type;
             $user->save();
 
-            // $user->syncRoles([$request->role]);
+            $user->syncRoles([$request->role]);
             DB::commit();
 
             return redirect()->route('all-user')->with("success", "User Successfully Updated");

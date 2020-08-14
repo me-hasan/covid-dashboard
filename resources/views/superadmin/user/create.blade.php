@@ -65,6 +65,14 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="recipient-name" class="control-label mb-10">Role : <span style="color:red">*</span></label>
+                        <select name="role" class="form-control" data-placeholder="Select Role" required>
+                            @foreach($roles as $role)
+                            <option value="{{$role}}">{{$role}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="recipient-name" class="control-label mb-10">Password : <span style="color:red">*</span></label>
                         <input type="password" name="password" class="form-control" required>
                     </div>
