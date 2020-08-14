@@ -45,7 +45,7 @@ Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('ie
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', function () {
         return view('superadmin.dashboard');
-    })->middleware('auth');
+    })->middleware('auth')->name('admin-dashboard');
 
     Route::get('roles/create', function () {
         $role = Role::create(['name' => 'writer']);
@@ -72,8 +72,22 @@ Route::prefix('admin')->group(function () {
             dd('not working');
         }
     });
+
+    // user management routes for admin
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('users','UserController@index')->name('all-user');
+        Route::get('user/create','UserController@createForm');
+        Route::post('user/create','UserController@store')->name('create-user');
+
+        Route::get('user/edit/{user}','UserController@editForm');
+        Route::post('user/edit/{user}','UserController@update')->name('edit-user');
+        Route::delete('user/{id}','UserController@destroy');
+    });
+    // user management routes ending
 });
+
 
 Route::prefix('iedcr')->group(function () {
     require(__DIR__ . '/iedcr.php');
 });
+
