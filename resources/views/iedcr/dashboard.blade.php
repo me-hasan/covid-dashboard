@@ -1,71 +1,107 @@
 @extends('iedcr.default')
 
 @section('content')
+<style type="text/css">
+  
+.top-cards .col-xl-2{padding-right: 0.35rem; padding-left: 0.35rem; max-width: 12.5%;}
+.top-cards .col-xl-2 p,
+.top-cards .col-xl-2 small{ font-size: 10px;}
+.side-menu__item{padding: 2.5px 10px 3px 5px;}
+.card-body {padding: .75rem .75rem;}
 
+.header .form-inline .form-control.header-search { width: 150px;}
+.header .panel .dropdown-menu[x-placement^="bottom"]{ top: 0px !important;}
+.header .panel .form-control[name^="from_date"],
+.header .panel .form-control[name^="to_date"]{ width: 165px;}
+
+.fa-download:before,
+.fa-table:before{font-size: 22px; font-weight: normal;}
+
+#case_analysis_dtable_wrapper .row:first-child {display: none;}
+#case_analysis_dtable_paginate {float: right;}
+.card-body .table-responsive{overflow-x: hidden;}
+
+.risk-zone-analysis .top-zone .card,
+.risk-zone-analysis .last-zone-status .card{ background-color: #e7e7e7;}
+
+.text-ash{ color: #989898;}
+
+.bg-before-none::before{ background-color: transparent;}
+
+.cart-height-customize{ min-height: 1rem !important;}
+
+#color-group .colorinput-color{ width: 1rem; height: 1rem;}
+
+#color-group .group-color-label{position: relative; top: -3px; font-size: 12px;}
+
+.dataTable thead th{ text-transform: capitalize !important;}
+
+
+</style>
 <!-- Row-1 -->
 <div class="row top-cards">
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1 ">Infected (24 hours)</p>
-                <h4 class="mb-1 number-font">2,977</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">11%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->infected_24_hr) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">{{ round($hda_card->infected_24_hr_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1 ">Total Infected</p>
-                <h4 class="mb-1 number-font">249,651</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">1%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->intefted_total) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">{{ round($hda_card->infected_total_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1 ">Recoverd (24 hours)</p>
-                <h4 class="mb-1 number-font">2,074</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">9%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->recovered_24_hr) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ round($hda_card->recovered_24_hr_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1">Total Recoverd</p>
-                <h4 class="mb-1 number-font">143,824</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">1%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->recovered_total) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ round($hda_card->recovered_total_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1 ">Death (24 hours)</p>
-                <h4 class="mb-1 number-font">39</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">15%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->death_24_hr) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">{{ round($hda_card->death_24_hr_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1">Total Death</p>
-                <h4 class="mb-1 number-font">3,306</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">1%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->death_total) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">{{ round($hda_card->death_total_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1 ">Test (24 hours)</p>
-                <h4 class="mb-1 number-font">12,708</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-info">12%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->test_24_hr) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-info">{{ round($hda_card->test_24_hr_change) }}%</span> </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
               <div class="card-body">
                 <p class=" mb-1">Total Test</p>
-                <h4 class="mb-1 number-font">1,225,124</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">1%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->test_total) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ round($hda_card->test_total_change) }}%</span> </div>
             </div>
           </div>
         </div>
@@ -93,518 +129,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Chittagong</td>
-                        <td>14874</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Natore</td>
-                        <td>6019</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Comilla</td>
-                        <td>5727</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Bogra</td>
-                        <td>5180</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Feni</td>
-                        <td>5149</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Khulna</td>
-                        <td>4646</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Sylhet</td>
-                        <td>Sylhet</td>
-                        <td>4583</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Gazipur</td>
-                        <td>4338</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Dhaka</td>
-                        <td>4028</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Rajshahi</td>
-                        <td>3532</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Cox's Bazar</td>
-                        <td>3530</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Noakhali</td>
-                        <td>3409</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Manikganj</td>
-                        <td>3193</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Mymensingh</td>
-                        <td>Mymensingh</td>
-                        <td>2828</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Barisal</td>
-                        <td>Barisal</td>
-                        <td>2581</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Jessore</td>
-                        <td>2159</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Kishoreganj</td>
-                        <td>2133</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Kushtia</td>
-                        <td>1970</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Brahmanbaria</td>
-                        <td>1961</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Chandpur</td>
-                        <td>1890</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Tangail</td>
-                        <td>1835</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Gopalganj</td>
-                        <td>1793</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Dinajpur</td>
-                        <td>1787</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Mymensingh</td>
-                        <td>Netrakona (Netrokona)</td>
-                        <td>1772</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Rangpur</td>
-                        <td>1736</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Sylhet</td>
-                        <td>Sunamganj</td>
-                        <td>1596</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Satkhira</td>
-                        <td>1569</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Lakshmipur</td>
-                        <td>1501</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Rajbari</td>
-                        <td>1438</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Faridpur</td>
-                        <td>1384</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Sylhet</td>
-                        <td>Habiganj</td>
-                        <td>1249</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Magura</td>
-                        <td>1224</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Shariatpur</td>
-                        <td>1139</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Barisal</td>
-                        <td>Patuakhali</td>
-                        <td>1081</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Barisal</td>
-                        <td>Jhalakati (Jhalokati)</td>
-                        <td>1075</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Sylhet</td>
-                        <td>Maulvi Bazar (Moulvibazar)</td>
-                        <td>1069</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Naogaon</td>
-                        <td>990</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Mymensingh</td>
-                        <td>Jamalpur</td>
-                        <td>982</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Madaripur</td>
-                        <td>919</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Narail</td>
-                        <td>898</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Barisal</td>
-                        <td>Pirojpur</td>
-                        <td>871</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Chuadanga</td>
-                        <td>816</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Jaipurhat (Joypurhat)</td>
-                        <td>780</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Sirajganj</td>
-                        <td>780</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Pabna</td>
-                        <td>765</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Bagerhat</td>
-                        <td>694</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Narayanganj</td>
-                        <td>693</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Barisal</td>
-                        <td>Barguna</td>
-                        <td>684</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Rangamati</td>
-                        <td>677</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Gaibandha</td>
-                        <td>671</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Nilphamari</td>
-                        <td>647</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Narsingdi</td>
-                        <td>628</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Bandarban</td>
-                        <td>586</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Barisal</td>
-                        <td>Bhola</td>
-                        <td>564</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Meherpur</td>
-                        <td>562</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong</td>
-                        <td>Khagrachhari</td>
-                        <td>550</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Kurigram</td>
-                        <td>529</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rajshahi</td>
-                        <td>Chapai Nawabganj</td>
-                        <td>519</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Khulna</td>
-                        <td>Jhenaidah (Jhenida)</td>
-                        <td>509</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Thakurgaon</td>
-                        <td>427</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Lalmonirhat</td>
-                        <td>419</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Rangpur</td>
-                        <td>Panchagarh</td>
-                        <td>345</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Mymensingh</td>
-                        <td>Sherpur</td>
-                        <td>326</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka</td>
-                        <td>Munshiganj</td>
-                        <td>243</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
+                    @foreach($hda_nationwide_summary_data as $row)
+                      <tr>
+                        <td>{{ $row->division }}</td>
+                        <td>{{ $row->district }}</td>
+                        <td>{{ ($row->total_infected == NULL)?'-':$row->total_infected }}</td>
+                        <td>{{ ($row->total_recovered == NULL)?'-':$row->total_recovered }}</td>
+                        <td>{{ ($row->active_case == NULL)?'-':$row->active_case }}</td>
+                        <td>{{ ($row->total_death == NULL)?'-':$row->total_death }}</td>
+                      </tr>
+                    @endforeach  
                     </tbody>
                   </table>
                 </div>

@@ -35,10 +35,10 @@ Route::get('/dashboard', function () {
     return view('administrative.dashboard');
 })->middleware('auth');
 
-Route::get('/iedcr/dashboard', function () {
-    return view('iedcr.dashboard');
-})->middleware('auth');
-
+// Route::get('/iedcr/dashboard', function () {
+//     return view('iedcr.dashboard');
+// })->middleware('auth');
+Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index');
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', function () {
