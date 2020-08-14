@@ -37,8 +37,10 @@ Route::get('/dashboard', function () {
 
 // Route::get('/iedcr/dashboard', function () {
 //     return view('iedcr.dashboard');
-// })->middleware('auth');
-Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index');
+// })->name('iedcr.dashboard')->middleware('auth');
+
+Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard');
+
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', function () {
@@ -70,4 +72,8 @@ Route::prefix('admin')->group(function () {
             dd('not working');
         }
     });
+});
+
+Route::prefix('iedcr')->group(function () {
+    require(__DIR__ . '/iedcr.php');
 });
