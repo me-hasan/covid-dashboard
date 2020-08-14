@@ -19,15 +19,11 @@ use Spatie\Permission\Models\Permission;
 Route::get('/', function () {
     return view('auth.login2');
 });
-Route::get('/hello', function () {
-    return 'hello';
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
+Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
+Route::post('/login/admin', 'Auth\LoginController@adminLogin')->name('login_admin');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -40,10 +36,10 @@ Route::get('/iedcr/dashboard', function () {
 })->name('iedcr.dashboard')->middleware('auth');
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('dashboard', function () {
         return view('superadmin.dashboard');
-    })->middleware('auth')->name('admin-dashboard');
+    })->name('admin-dashboard');
 
     Route::get('roles/create', function () {
         $role = Role::create(['name' => 'writer']);
@@ -72,7 +68,7 @@ Route::prefix('admin')->group(function () {
     });
 
     // user management routes for admin
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group([/*'middleware' => 'auth:admin'*/], function () {
         Route::get('users','UserController@index')->name('all-user');
         Route::get('user/create','UserController@createForm');
         Route::post('user/create','UserController@store')->name('create-user');
