@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/iedcr/dashboard', function () {
     return view('iedcr.dashboard');
-})->middleware('auth');
+})->name('iedcr.dashboard')->middleware('auth');
 
 
 Route::prefix('admin')->group(function () {
@@ -83,3 +83,9 @@ Route::prefix('admin')->group(function () {
     });
     // user management routes ending
 });
+
+
+Route::prefix('iedcr')->group(function () {
+    require(__DIR__ . '/iedcr.php');
+});
+
