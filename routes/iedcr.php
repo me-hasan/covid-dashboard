@@ -3,7 +3,7 @@ Route::group(['namespace' => 'Iedcr'],function (){
     Route::get('doubling-time-growth-rate-analysis', 'ManageIframeController@doubling_time_growth_rate_analysis')->name('iedcr.doubling_time_growth_rate_analysis');
     Route::get('rt-analysis', 'ManageIframeController@rt_analysis')->name('iedcr.rt_analysis');
     Route::get('risk-zone-analysis', 'ManageIframeController@risk_zone_analysis')->name('iedcr.risk_zone_analysis');
-    Route::get('test-positivity-analysis', 'ManageIframeController@rt_analysis')->name('iedcr.test_positivity_analysis');
+    Route::get('test-positivity-analysis', 'ManageIframeController@test_positivity_analysis')->name('iedcr.test_positivity_analysis');
     Route::get('case-distribution-and-forecasting', 'ManageIframeController@case_distribution_and_forecasting')->name('iedcr.case_distribution_and_forecasting');
     Route::get('syndromic-surveillance', 'ManageIframeController@syndromic_surveillance')->name('iedcr.syndromic_surveillance');
     Route::get('epidemiological-syndromic-indicator-analysis', 'ManageIframeController@epidemiological_syndromic_indicator_analysis')->name('iedcr.epidemiological_syndromic_indicator_analysis');

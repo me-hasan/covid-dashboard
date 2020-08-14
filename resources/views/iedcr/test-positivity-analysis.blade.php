@@ -2,7 +2,9 @@
 @section('bread_crumb_active','Risk Zone Analysis')
 @section('content')
 
-
+<?php
+ini_set('error_reporting', 0);
+?>
     <!-- Row-1 -->
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-12">

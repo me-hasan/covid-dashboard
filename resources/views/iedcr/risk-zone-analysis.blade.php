@@ -1,7 +1,10 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Risk Zone Analysis')
 @section('content')
-   {{--
+    <?php
+    ini_set('error_reporting', 0);
+
+    ?>
     <!-- Row-1 -->
 <div class="row">
     <div class="col-xl-10 col-lg-6 col-md-6 col-xm-12">
@@ -300,7 +303,7 @@
         </div>
     </div>
 </div>
-<!-- End Row-2 -->--}}
+<!-- End Row-2 -->
 
 <!-- Row-3 -->
 <div class="row">

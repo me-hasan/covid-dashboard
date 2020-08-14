@@ -2,36 +2,8 @@
 @section('bread_crumb_active','Conformance Analysis')
 @section('content')
     <?php
-    // Excel File Parser
-    $_filePath = '/var/www/html/ChallengeLovers/national-dashboard-combined-version-laravel/nd-iedcr-raw-version/SimpleXLSX.php';
-    include $_filePath;
     ini_set('error_reporting', 0);
 
-    $_hospitalCapacityDataSet = $_deathLocationPercentageDataSet = NULL;
-
-    if ($xlsxDataSet = SimpleXLSX::parse('data-source/hospital-and-patient-analysis.xlsx')){
-
-        $_fileSheetNames = $xlsxDataSet->sheetNames();
-
-        #echo $xlsxDataSet->sheetName(0);
-        #print_r($xlsxDataSet->sheetNames()); exit;
-
-        // Hospital Capacity
-        if(in_array("Hospital Capacity", $_fileSheetNames)){
-            $_hospitalCapacityDataSet = $xlsxDataSet->rows(0);
-        }
-        $_hospitalCapacityDataLabels = $_hospitalCapacityDataSet[0];
-
-        // Death Location Percentage
-        if(in_array("Death Location Percentage", $_fileSheetNames)){
-            $_deathLocationPercentageDataSet = $xlsxDataSet->rows(1);
-        }
-        $_deathLocationPercentageDataLabels = $_deathLocationPercentageDataSet[0];
-
-    }
-    /*print_r($_hospitalCapacityDataSet);
-    print_r($_hospitalCapacityDataLabels);
-    exit;*/
     ?>
     <!-- Top Row -->
     <div class="row">
@@ -138,7 +110,7 @@
 
                 <div class="card-body">
 
-                    <img src="assets/images/chart/hospital-and-patient-analysis-1.jpg" alt="Patient Comorbidity Analysis" />
+                    <img src="{!! asset('assets/images/chart/hospital-and-patient-analysis-1.jpg') !!}" alt="Patient Comorbidity Analysis" />
 
                 </div>
 
@@ -228,7 +200,7 @@
 
                 <div class="card-body">
 
-                    <img src="assets/images/chart/hospital-and-patient-analysis-3.jpg" alt="Patient Risk Level" />
+                    <img src="{!! asset('assets/images/chart/hospital-and-patient-analysis-3.jpg') !!}" alt="Patient Risk Level" />
 
                 </div>
 
@@ -254,7 +226,7 @@
 
                 <div class="card-body">
 
-                    <img src="assets/images/chart/hospital-and-patient-analysis-2.jpg" alt="Death % Hospital Vs Home" />
+                    <img src="{!! asset('assets/images/chart/hospital-and-patient-analysis-2.jpg') !!}" alt="Death % Hospital Vs Home" />
 
                 </div>
 

@@ -2,76 +2,7 @@
 @section('bread_crumb_active','Syndromic Surveillance')
 @section('content')
 <?php
-$_filePath = '/var/www/html/ChallengeLovers/national-dashboard-combined-version-laravel/nd-iedcr-raw-version/SimpleXLSX.php';
-include $_filePath;
-
 ini_set('error_reporting', 0);
-
-$_rawDataSet = $_nationalLevelDataSet = $_mobilityTypeData = array();
-
-if ($xlsxDataSet = SimpleXLSX::parse('data-source/syndromic-surveillance.xlsx')){
-
-    $_fileSheetNames = $xlsxDataSet->sheetNames();
-
-    #echo $xlsxDataSet->sheetName(0);
-    #print_r($xlsxDataSet->sheetNames()); exit;
-    //Array ( [0] => Data [1] => National Level [2] => National Test Positivity Trend [3] => Today [4] => Average )
-
-    // Data
-    if(in_array("Data", $_fileSheetNames)){
-        $_rawDataSet = $xlsxDataSet->rows(0);
-    }
-    $_rawDataLabels = $_rawDataSet[0];
-
-    // National Level
-    if(in_array("National Level", $_fileSheetNames)){
-        $_nationalLevelDataSet = $xlsxDataSet->rows(1);
-    }
-    $_nationalLevelDataLabels = $_nationalLevelDataSet[0];
-    unset($_nationalLevelDataSet[0]);
-
-    // Mobility Trend Line Graph
-    /*$_columnSkipKey = array(0, 1, 2, 3, 16);
-    foreach($_rawDataSet as $_rowDataKey => $_rawDataRow){
-        if($_rowDataKey == 0) continue;
-        foreach($_rawDataRow as $_columnKey => $_columnData){
-            if(in_array($_columnKey, $_columnSkipKey)) continue;
-            $_mblityType = $_rawDataRow[16];
-            #echo $_columnData; exit;
-            $_mobilityTypeData[$_mblityType][$_rawDataLabels[$_columnKey]] = ($_mobilityTypeData[$_mblityType][$_rawDataLabels[$_columnKey]])?$_mobilityTypeData[$_mblityType][$_rawDataLabels[$_columnKey]]+$_columnData:$_columnData;
-        }
-    }
-
-    foreach($_columnSkipKey as $_skipCol){
-        unset($_rawDataLabels[$_skipCol]);
-    }*/
-    #print_r($_nationalLevelDataSet); exit;
-
-    // Mobility Trend Line Graph
-    $_columnSkipKey = array(0, 1, 3, 4, 5, 6, 7);
-    foreach($_rawDataSet as $_rowDataKey => $_rawDataRow){
-        if($_rowDataKey == 0) continue;
-        foreach($_rawDataRow as $_columnKey => $_columnData){
-            if(in_array($_columnKey, $_columnSkipKey)) continue;
-            //$_mblityType = $_rawDataRow[16];
-            $_districtName = str_replace(array("'", " "),array("","_"),$_rawDataRow[2]);
-            #echo $_columnData; exit;
-            //if($_mblityType == "Mobility_In"){
-            if($_districtWiseData[$_districtName]){
-                //echo $_districtWiseData[$_districtName]; exit;
-                $_districtWiseData[$_districtName] = $_districtWiseData[$_districtName]+$_columnData;
-            }else{
-                $_districtWiseData[$_districtName] = $_columnData;
-            }
-            //}
-        }
-    }
-
-
-}
-#print_r($_districtWiseData);
-#print_r($_lastCardDataSet);
-#exit;
 ?>
     <!-- Row-1 -->
 

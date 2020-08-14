@@ -1,7 +1,10 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Mobility And Predictive Importation')
 @section('content')
+    <?php
+    ini_set('error_reporting', 0);
 
+    ?>
     <!-- Row-1 -->
     <div class="row">
         <div class="col-xl-12 col-md-12">
@@ -72,7 +75,7 @@
 
 @section('scripts')
 
-   {{-- <script type="text/javascript">
+    <script type="text/javascript">
         <?php
         #print_r($_mobilityTypeData); exit;
         $_mobilityTypekSeriesData = array();
@@ -171,6 +174,6 @@
             ?>
             $('#color-group').append('<div class="row gutters-xs"><?php echo $_groupData; ?></div>');
         });
-    </script>--}}
+    </script>
 
 @endsection
