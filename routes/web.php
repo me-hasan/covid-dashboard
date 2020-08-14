@@ -70,4 +70,16 @@ Route::prefix('admin')->group(function () {
             dd('not working');
         }
     });
+
+    // user management routes for admin
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('users','UserController@index')->name('all-user');
+        Route::get('user/create','UserController@createForm');
+        Route::post('user/create','UserController@store')->name('create-user');
+
+        Route::get('user/edit/{user}','UserController@editForm');
+        Route::post('user/edit/{user}','UserController@update')->name('edit-user');
+        Route::delete('user/{id}','UserController@destroy');
+    });
+    // user management routes ending
 });

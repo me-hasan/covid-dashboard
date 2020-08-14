@@ -34,6 +34,7 @@
 
 		<!---Icons css-->
 		<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" />
+		<link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" />
 
 	    <!-- Color Skin css -->
 		<link id="theme" href="{{ asset('assets/colors/color1.css') }}" rel="stylesheet" type="text/css"/>
