@@ -2,10 +2,28 @@
 
 
 @section('content')
+<!--Page header-->
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">User Management</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Edit User</a></li>
+            <!-- <li class="breadcrumb-item active" aria-current="page"><a href="#">Empty Page</a></li> -->
+        </ol>
+    </div>
+    <!-- <div class="page-rightheader">
+        <div class="btn btn-list">
+            <a href="#" class="btn btn-info"><i class="fe fe-settings mr-1"></i> General Settings </a>
+            <a href="#" class="btn btn-danger"><i class="fe fe-printer mr-1"></i> Print </a>
+            <a href="#" class="btn btn-warning"><i class="fe fe-shopping-cart mr-1"></i> Buy Now </a>
+        </div>
+    </div> -->
+</div>
+<!--End Page header-->
 <div class="row">
     <div class="col-md-8 offset-md-2">
         @include('superadmin.alert-message')
-        
+
         <div class="card">
             <div class="card-header">
                 <div style="width: 100%">
@@ -41,9 +59,8 @@
                         <input type="email" name="email" class="form-control" value="{{$user->email}}" required>
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Role : <span style="color:red">*</span></label>
+                        <label for="recipient-name" class="control-label mb-10">User Type : <span style="color:red">*</span></label>
                         <select name="user_type" class="form-control" data-placeholder="Select Role" required>
-                            <option value="superadmin" {{$user->user_type == 'superadmin' ? 'selected' : ''}}>Super Admin</option>
                             <option value="cabinet" {{$user->user_type == 'cabinet' ? 'selected' : ''}}>Cabinet</option>
                             <option value="epidemiologist" {{$user->user_type == 'epidemiologist' ? 'selected' : ''}}>Epidemiologist</option>
                         </select>

@@ -44,8 +44,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
                         <div class="text-center">
-                            <a href="#" class="dropdown-item text-center user pb-0 font-weight-bold">Super Admin</a>
-                            <span class="text-center user-semi-title">System Administrator</span>
+                            <a href="#" class="dropdown-item text-center user pb-0 font-weight-bold">{{Auth::user()->name}}</a>
+                            <span class="text-center user-semi-title">{{Auth::user()->user_type}}</span>
                             <div class="dropdown-divider"></div>
                         </div>
                         <a class="dropdown-item d-flex" href="#">
