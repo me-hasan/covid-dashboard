@@ -76,6 +76,8 @@ Route::prefix('admin')->group(function () {
         // user management routes for admin
         Route::get('users','UserController@index')->name('all-user');
         Route::get('user/create','UserController@createForm');
+        Route::get('division/districts','UserController@getDistrictFromDivision')->name('get-district-from-division');
+        Route::get('division/district/upazilla','UserController@getUpazillaFromDistrict')->name('get-upazilla-from-district');
         Route::post('user/create','UserController@store')->name('create-user');
 
         Route::get('user/edit/{user}','UserController@editForm');

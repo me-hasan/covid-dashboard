@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('user_type', 30); // i.e. superadmin, epidemiologist, cabinet
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('account_level',50);
+            $table->string('division',50)->nullable();
+            $table->string('district',50)->nullable();
+            $table->string('upazilla',50)->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

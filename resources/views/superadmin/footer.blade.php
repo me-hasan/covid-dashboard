@@ -32,6 +32,8 @@
                 $(".select2").select2();
             });
         </script>
+        @stack('scripts')
+
 
 	</body>
 </html>

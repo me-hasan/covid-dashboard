@@ -66,6 +66,15 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="recipient-name" class="control-label mb-10">Account Level : <span style="color:red">*</span></label>
+                        <select name="account_level" class="form-control" required>
+                            <option value="administrative" {{$user->account_level == 'administrative' ? 'selected' : ''}}>Administrative</option>
+                            <option value="divisional" {{$user->account_level == 'divisional' ? 'selected' : ''}}>Divisional</option>
+                            <option value="district" {{$user->account_level == 'district' ? 'selected' : ''}}>District</option>
+                            <option value="upazilla" {{$user->account_level == 'upazilla' ? 'selected' : ''}}>Upazilla</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="recipient-name" class="control-label mb-10">Role : <span style="color:red">*</span></label>
                         <select name="role" class="form-control" data-placeholder="Select Role" required>
                             @foreach($roles as $role)
@@ -89,3 +98,80 @@
 </div>
 <!-- End Row -->
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        var account_level = $(".account_level").val();
+        checkAccountLevel(account_level);
+    });
+    function checkAccountLevel(account_level){
+        console.log(account_level);
+        if(account_level == 'administrative'){
+            $('.division, .district, .upazilla').empty();
+            $('.division-holder, .district-holder, .upazilla-holder').hide();
+        }else if(account_level == 'divisional'){
+            $('.district, .upazilla').empty();
+            $('.district-holder, .upazilla-holder').hide();
+            $('.division-holder').show();
+        }else if(account_level == 'district'){
+            $('.upazilla').empty();
+            $('.upazilla-holder').hide();
+            $('.division-holder, .district-holder').show();
+        }else{
+            $('.division-holder, .district-holder, .upazilla-holder').show();
+        }
+    }
+    $('.account_level').change(function(e){
+        var account_level = $(".account_level").val();
+        checkAccountLevel(account_level);
+    });
+    $('.division').change(function(e){
+        var division = $(".division").val();
+        // console.log(division);
+        $.ajax({
+            type: 'GET',
+            url: '{{route('get-district-from-division')}}',
+            dataType: 'json',
+            data: {division: division},
+            success: function (data) {
+                console.log(data);
+                if (data.status == 1) {
+                    html = '<option value="">Select District</option>';
+                    for (var i = 0; i < data.data.length; i++) {
+                        html += '<option value=' + data.data[i].district + '>' + data.data[i].district + '</option>';
+                    }
+                    $('.district').append(html);
+                }
+            },
+            error: function (data) {
+
+            }
+        });
+    
+    });
+
+    $('.district').change(function(e){
+        var district = $(".district").val();
+        // console.log(district);
+        $.ajax({
+            type: 'GET',
+            url: '{{route('get-upazilla-from-district')}}',
+            dataType: 'json',
+            data: {district: district},
+            success: function (data) {
+                // console.log(data);
+                if (data.status == 1) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        $('.upazilla').append('<option value=' + data.data[i].upazila_en + '>' + data.data[i].upazila_en + '</option>');
+                    }
+                }
+            },
+            error: function (data) {
+
+            }
+        });
+    
+    });
+
+</script>
+@endpush
