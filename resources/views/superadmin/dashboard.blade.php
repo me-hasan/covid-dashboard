@@ -5,11 +5,10 @@
 <!--Page header-->
 <div class="page-header">
 	<div class="page-leftheader">
-		<h4 class="page-title mb-0">Dashboard</h4>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>System Dashboard</a></li>
-			<!-- <li class="breadcrumb-item active" aria-current="page"><a href="#">Empty Page</a></li> -->
-		</ol>
+          <li class="breadcrumb-item"><a href="#"><i class="fe fe-home mr-2 fs-14"></i>Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="#">Dashboard</a></li>
+        </ol>
 	</div>
 	<!-- <div class="page-rightheader">
 		<div class="btn btn-list">
@@ -53,7 +52,7 @@
 			</div>
 		</div>
 	</div>
-	
+
     <!-- <div class="col-md-12">
         <div class="card">
             <div class="card-body">

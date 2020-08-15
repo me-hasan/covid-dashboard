@@ -4,13 +4,12 @@
 @section('content')
 <!--Page header-->
 <div class="page-header">
-	<div class="page-leftheader">
-		<h4 class="page-title mb-0">User Management</h4>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>User List</a></li>
-			<!-- <li class="breadcrumb-item active" aria-current="page"><a href="#">Empty Page</a></li> -->
-		</ol>
-	</div>
+     <div class="page-leftheader">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#"><i class="fe fe-home mr-2 fs-14"></i>User Management</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="#">User List</a></li>
+        </ol>
+    </div>
 	<!-- <div class="page-rightheader">
 		<div class="btn btn-list">
 			<a href="#" class="btn btn-info"><i class="fe fe-settings mr-1"></i> General Settings </a>
