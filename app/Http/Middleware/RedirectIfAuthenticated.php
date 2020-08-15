@@ -18,14 +18,15 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if ($guard == "admin" && Auth::guard($guard)->check()) {
+            return redirect(RouteServiceProvider::SUPERADMIN_DASHBOARD);
+        }
+
         if (Auth::guard($guard)->check()) {
             $userType = auth()->user()->user_type;
         
             // Check user role
             switch ($userType) {
-                case 'superadmin':
-                    $redirectTo = RouteServiceProvider::SUPERADMIN_DASHBOARD; 
-                    break;
                 case 'cabinet':
                     $redirectTo = RouteServiceProvider::CABINET_DASHBOARD;
                     break; 
