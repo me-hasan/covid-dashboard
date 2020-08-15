@@ -3,7 +3,7 @@ session_start();
 include_once './app/etc/conn.php';
 
 
-// checking session is valid for not 
+// checking session is valid for not
 if (strlen(@$_SESSION['id']) == 0){
 	header('location:logout.php');
 }else{
@@ -11,7 +11,7 @@ if (strlen(@$_SESSION['id']) == 0){
 	if(isset($_SESSION['id']))
 	{
 		$adminid = $_SESSION['id'];
-		
+
 		$_SQL = "SELECT * FROM `admin_user` WHERE `id`='$adminid'";
 		$ret = mysqli_query($conn, $_SQL);
 		$_resultData = mysqli_fetch_array($ret);
@@ -29,16 +29,16 @@ require_once $_filePath;
 
 function en2bnbyXLSX($_enText){
 	if(!@$_SESSION['translate']){
-		
+
 		$_translateData = NULL;
 		if ($xlsx = SimpleXLSX::parse('translate.xlsx')){
 			foreach($xlsx->rows() as $_rowData){
-				$_translateData[$_rowData[0]] = $_rowData[1]; 
+				$_translateData[$_rowData[0]] = $_rowData[1];
 			}
 		}
 		$_SESSION['translate'] = $_translateData;
 	}
-	
+
 	return (@$_SESSION['translate'][$_enText])?$_SESSION['translate'][$_enText]:$_enText;
 }
 
@@ -78,8 +78,8 @@ $_apiResponseData = json_decode($_apiResponseRawData, true);
 }else{*/
 	$_COVID19SQL = "select REPORT_DY, SYS_DT, KPI_NAME, KPI_VAL from dwa_covid19_dash_summ_test where DASH_COMP_ID = 1 and REPORT_DY = (select max(REPORT_DY) from dwa_covid19_dash_summ_test where DASH_COMP_ID = 1)";
 	$covidRes = mysqli_query($conn, $_COVID19SQL);
-	$_covidImpData = array(); 
-	while($_resultData = mysqli_fetch_array($covidRes)){ 
+	$_covidImpData = array();
+	while($_resultData = mysqli_fetch_array($covidRes)){
 		$_covidImpData[$_resultData['KPI_NAME']] = $_resultData['KPI_VAL'];
 		#print_r($_resultData);
 	}
@@ -88,8 +88,8 @@ $_apiResponseData = json_decode($_apiResponseRawData, true);
 // Last Day Compare Data
 $_COVID19YesSQL = "select REPORT_DY, SYS_DT, KPI_NAME, KPI_VAL from dwa_covid19_dash_summ_test where DASH_COMP_ID = 1 and REPORT_DY = subdate(current_date(),3)";
 $covidYesRes = mysqli_query($conn, $_COVID19YesSQL);
-$_covidYesData = array(); 
-while($_resultYesData = mysqli_fetch_array($covidYesRes)){ 
+$_covidYesData = array();
+while($_resultYesData = mysqli_fetch_array($covidYesRes)){
 	$_covidYesData[$_resultYesData['KPI_NAME']] = $_resultYesData['KPI_VAL'];
 }
 
@@ -97,14 +97,14 @@ while($_resultYesData = mysqli_fetch_array($covidYesRes)){
 
 $_getDivisionSQL = "select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP CONFIRMED' from dwa_covid19_dash_summ_test WHERE KPI_NAME='MAP_OF_CASES' GROUP BY `DISTRICT` ORDER BY `DATE`";
 $_getDivisionRes = mysqli_query($conn, $_getDivisionSQL);
-$_allDivisionList = array(); 
+$_allDivisionList = array();
 while($_divQueryData = mysqli_fetch_array($_getDivisionRes)){
 	if($_divQueryData['DIVISION'] == NULL) continue; // SKIP Empty Row
 	#print_r($_divQueryData); exit;
 	$_allDivisionList[$_divQueryData['DIVISION']] = ($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])?$_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']]+$_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
 
 }
-			
+
 // District Wise Map Data
 $_extendedQuery = NULL;
 
@@ -130,10 +130,10 @@ if($_extendedQuery){
 		WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE'".$_extendedQuery.")) AS T3 USING (DISTRICT) GROUP BY `DISTRICT` ORDER BY DATE DESC, `INFECTED_PERSON` DESC";
 		#echo $_districtWiseInfectedSQL; exit;
 	//$_districtWiseInfectedSQL = "select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED PERSON', SUB_DIM_NAME_2 AS 'GROUP CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE')".$_extendedQuery." GROUP BY `DISTRICT` ORDER BY `DATE`";
-	
+
 	//$_districtWiseInfectedSQL = "select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS `DIVISION`, SUB_DIM_NAME AS `DISTRICT`, KPI_VAL AS `INFECTED PERSON`, SUB_DIM_NAME_2 AS `GROUP CONFIRMED` from dwa_covid19_dash_summ_test WHERE KPI_NAME='MAP_OF_CASES'".$_extendedQuery." ORDER BY `DATE` DESC, `INFECTED PERSON` DESC";
 }else{
-	
+
 	$_districtWiseInfectedSQL = "SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
 		(select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
 		INNER JOIN
@@ -145,7 +145,7 @@ if($_extendedQuery){
 }
 /*$_districtWiseInfectedSQL = "select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED PERSON', SUB_DIM_NAME_2 AS 'GROUP CONFIRMED' from dwa_covid19_dash_summ_test WHERE KPI_NAME='MAP_OF_CASES' GROUP BY `DISTRICT` ORDER BY `DATE`";*/
 $_districtWiseInfectedRes = mysqli_query($conn, $_districtWiseInfectedSQL);
-$_mapDataDistrictWiseInfectedRes = $_mapDataGroupList = $_districtList = $_distirctDetailsData = array(); 
+$_mapDataDistrictWiseInfectedRes = $_mapDataGroupList = $_districtList = $_distirctDetailsData = array();
 while($_disWiseInfResultData = mysqli_fetch_array($_districtWiseInfectedRes)){
 	$_distirctDetailsData[] = $_disWiseInfResultData; // This data will use for DataTable
 	#print_r($_disWiseInfResultData); exit;
@@ -284,7 +284,7 @@ ksort($_mapDataGroupList);
 									<div class="dropdown mr-1">
 										<select class="btn btn-sm btn-custom dropdown-toggle" name="upazilla" id="upazilla_list">
 											<option value="all">উপজেলা</option>
-											<?php 
+											<?php
 												$_upazillaList = getUpazillaList();
 												foreach($_upazillaList as $_indexKey => $_upazillaInfo){?>
 												<option class="upazilla-option" value="<?php echo $_upazillaInfo[0]; ?>" rel="<?php echo $_upazillaInfo[2]; ?>"<?php if($_upazillaSelName == $_upazillaInfo[0]){?> selected="selected"<?php }?>><?php echo $_upazillaInfo[1]; ?></option>
@@ -466,7 +466,7 @@ ksort($_mapDataGroupList);
                                         </a
                                         >
                                     </li>
-                                    
+
 									<li class="nav-item" role="presentation">
                                         <a class="nav-link" id="profile-tab1" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile1" aria-selected="false"><h5>
                                             <span class="text-warning">ইয়েলো জোন</span>
@@ -575,7 +575,7 @@ ksort($_mapDataGroupList);
                                     <tbody>
                                     <tr>
                                         <th scope="row">সর্বমোট নমুনা সংগ্রহ</th>
-                                        <td><?php BanglaConverter::en2bn('1,012');?></td>
+                                        <td><?php BanglaConverter::en2bn('1012');?></td>
                                         <td>1,398</td>
                                         <td class="bg-success">138,14%</td>
                                         <td><span class="line-chart-holder"><img src="assets/images/line-chart-1.png"> </span>
@@ -811,20 +811,20 @@ ksort($_mapDataGroupList);
 			if($dataGroupName == 'Doubling_Rate') continue; // Error Handling
 			$_groupDataColor[] = array('maxvalue' => $dataGroupKeyVal, 'displayvalue' => $dataGroupName, 'code' => ($dataGroupKeyVal > 1000)?$_colorCode['high']:$_colorCode[$dataGroupKeyVal]);
 		}
-		
+
 		$_divisionCode = array('RANGPUR' => 'BD.RP', 'RAJSHAHI' => 'BD.RS', 'MYMENSINGH' => 'BD.MM', 'SYLHET' => 'BD.SY', 'DHAKA' => 'BD.DA', 'KHULNA' => 'BD.KH', 'BARISHAL' => 'BD.BA', 'BARISAL' => 'BD.BA', 'CHATTOGRAM' => 'BD.CG');
-		
+
 		$_divisionDistrictCode = array(
 		'RANGPUR' => array('DINAJPUR' => 'BD.RP.DJ', 'GAIBANDHA' => 'BD.RP.GB', 'KURIGRAM' => 'BD.RP.KR', 'LALMONIRHAT' => 'BD.RP.LL', 'NILPHAMARI' => 'BD.RP.NP', 'PANCHAGARH' => 'BD.RP.PN', 'RANGPUR' => 'BD.RP.RP', 'THAKURGAON' => 'BD.RP.TH'),
-		'RAJSHAHI' => array('BOGRA' => 'BD.RS.BO', 'JOYPURHAT' => 'BD.RS.JP', 'NAOGAON' => 'BD.RS.NA', 'NATORE' => 'BD.RS.NT', 'CHAPAINAWABGANJ' => 'BD.RS.NW', 'CHAPAI NAWABGANJ' => 'BD.RS.NW', 'NOWABGANJ' => 'BD.RS.NW', 'NAWABGANJ' => 'BD.RS.NW', 'PABNA' => 'BD.RS.PB', 'RAJSHAHI' => 'BD.RS.RS', 'SIRAJGANJ' => 'BD.RS.SR'), 
-		'MYMENSINGH' => array('JAMALPUR' => 'BD.MM.JM', 'MYMENSINGH' => 'BD.MM.MM', 'NETROKONA' => 'BD.MM.NK', 'SHERPUR' => 'BD.MM.SP'), 
-		'SYLHET' => array('HABIGANJ' => 'BD.SY.HA', 'HOBIGANJ' => 'BD.SY.HA', 'MOULVIBAZAR' => 'BD.SY.MB', 'MOULVI BAZAR' => 'BD.SY.MB', 'SUNAMGANJ' => 'BD.SY.SN', 'SYLHET' => 'BD.SY.SL'), 
-		'DHAKA' => array('DHAKA' => 'BD.DA.DH', 'FARIDPUR' => 'BD.DA.FR', 'GAZIPUR' => 'BD.DA.GZ', 'GOPALGANJ' => 'BD.DA.GG', 'KISHOREGANJ' => 'BD.DA.KS', 'MANIKGANJ' => 'BD.DA.MK', 'MUNSIGANJ' => 'BD.DA.MK', 'MUNSHIGANJ' => 'BD.DA.MU', 'NARAYANGANJ' => 'BD.DA.NY', 'NARSINGDHI' => 'BD.DA.NS', 'NARSINGDI' => 'BD.DA.NS', 'RAJBARY' => 'BD.DA.RB', 'RAJBARI' => 'BD.DA.RB', 'SARIATPUR' => 'BD.DA.SA', 'SHARIATPUR' => 'BD.DA.SA', 'TANGAIL' => 'BD.DA.TA', 'MADARIPUR' => 'BD.DA.MD'), 
-		'KHULNA' => array('BAGERHAT' => 'BD.KH.BH', 'CHUADANGA' => 'BD.KH.CD', 'JESSORE' => 'BD.KH.JS', 'JHENAIDAH' => 'BD.KH.JN', 'KHULNA' => 'BD.KH.KL', 'KUSHTIA' => 'BD.KH.KU', 'MAGURA' => 'BD.KH.MG', 'MEHERPUR' => 'BD.KH.ME', 'NARAIL' => 'BD.KH.NR', 'SATKHIRA' => 'BD.KH.ST'), 
-		'BARISAL' => array('BARGUNA' => 'BD.BA.BG', 'BARISAL' => 'BD.BA.BS', 'BHOLA' => 'BD.BA.BL', 'JHALOKATI' => 'BD.BA.JK', 'JHALAKATI' => 'BD.BA.JK', 'PATUAKHALI' => 'BD.BA.PT', 'PIROJPUR' => 'BD.BA.PR', 'PEROJPUR' => 'BD.BA.PR'), 
+		'RAJSHAHI' => array('BOGRA' => 'BD.RS.BO', 'JOYPURHAT' => 'BD.RS.JP', 'NAOGAON' => 'BD.RS.NA', 'NATORE' => 'BD.RS.NT', 'CHAPAINAWABGANJ' => 'BD.RS.NW', 'CHAPAI NAWABGANJ' => 'BD.RS.NW', 'NOWABGANJ' => 'BD.RS.NW', 'NAWABGANJ' => 'BD.RS.NW', 'PABNA' => 'BD.RS.PB', 'RAJSHAHI' => 'BD.RS.RS', 'SIRAJGANJ' => 'BD.RS.SR'),
+		'MYMENSINGH' => array('JAMALPUR' => 'BD.MM.JM', 'MYMENSINGH' => 'BD.MM.MM', 'NETROKONA' => 'BD.MM.NK', 'SHERPUR' => 'BD.MM.SP'),
+		'SYLHET' => array('HABIGANJ' => 'BD.SY.HA', 'HOBIGANJ' => 'BD.SY.HA', 'MOULVIBAZAR' => 'BD.SY.MB', 'MOULVI BAZAR' => 'BD.SY.MB', 'SUNAMGANJ' => 'BD.SY.SN', 'SYLHET' => 'BD.SY.SL'),
+		'DHAKA' => array('DHAKA' => 'BD.DA.DH', 'FARIDPUR' => 'BD.DA.FR', 'GAZIPUR' => 'BD.DA.GZ', 'GOPALGANJ' => 'BD.DA.GG', 'KISHOREGANJ' => 'BD.DA.KS', 'MANIKGANJ' => 'BD.DA.MK', 'MUNSIGANJ' => 'BD.DA.MK', 'MUNSHIGANJ' => 'BD.DA.MU', 'NARAYANGANJ' => 'BD.DA.NY', 'NARSINGDHI' => 'BD.DA.NS', 'NARSINGDI' => 'BD.DA.NS', 'RAJBARY' => 'BD.DA.RB', 'RAJBARI' => 'BD.DA.RB', 'SARIATPUR' => 'BD.DA.SA', 'SHARIATPUR' => 'BD.DA.SA', 'TANGAIL' => 'BD.DA.TA', 'MADARIPUR' => 'BD.DA.MD'),
+		'KHULNA' => array('BAGERHAT' => 'BD.KH.BH', 'CHUADANGA' => 'BD.KH.CD', 'JESSORE' => 'BD.KH.JS', 'JHENAIDAH' => 'BD.KH.JN', 'KHULNA' => 'BD.KH.KL', 'KUSHTIA' => 'BD.KH.KU', 'MAGURA' => 'BD.KH.MG', 'MEHERPUR' => 'BD.KH.ME', 'NARAIL' => 'BD.KH.NR', 'SATKHIRA' => 'BD.KH.ST'),
+		'BARISAL' => array('BARGUNA' => 'BD.BA.BG', 'BARISAL' => 'BD.BA.BS', 'BHOLA' => 'BD.BA.BL', 'JHALOKATI' => 'BD.BA.JK', 'JHALAKATI' => 'BD.BA.JK', 'PATUAKHALI' => 'BD.BA.PT', 'PIROJPUR' => 'BD.BA.PR', 'PEROJPUR' => 'BD.BA.PR'),
 		'CHATTOGRAM' => array('BANDARBAN' => 'BD.CG.BD', 'BRAHAMANBARIA' => 'BD.CG.BB', 'BRAHMANBARIA' => 'BD.CG.BB', 'CHANDPUR' => 'BD.CG.CP', 'CHATTOGRAM' => 'BD.CG.CT', 'COMILLA' => 'BD.CG.CM', "COX'S BAZAR" => 'BD.CG.CB', 'FENI' => 'BD.CG.FN', 'KHAGRACHHARI' => 'BD.CG.KG', 'LAKSHMIPUR' => 'BD.CG.LK', 'NOAKHALI' => 'BD.CG.NO', 'RANGAMATI' => 'BD.CG.PC')
 		);
-		
+
 		$_divisionWiseInfacted = array();
 		#echo $_divisionSelName;
 		if($_divisionSelName && $_divisionSelName != 'all'){
@@ -833,15 +833,15 @@ ksort($_mapDataGroupList);
 				#if($_divisionName == NULL) continue; // Error Handling
 				$_divisionWiseInfacted[] = array('id' => $_divisionDistrictCode[$_districtInfo['division']][$_districtName], 'value' => $_districtInfo['infected'], 'showLabel' => '1');
 			}
-		}else{	
+		}else{
 			foreach($_mapDataDistrictWiseInfectedRes as $_divisionName => $divisionInfected){ #print_r($_divisionName);exit;
 				#if($_divisionName == NULL) continue; // Error Handling
 				$_divisionWiseInfacted[] = array('id' => $_divisionCode[$_divisionName], 'value' => $divisionInfected);
 			}
 		}
-		
+
 		#print_r($_divisionWiseInfacted); exit;
-		
+
 		$_mapRegions = array(
 			'all' => 'maps/bangladesh',
 			'MYMENSINGH' => 'maps/mymensingh',
@@ -853,7 +853,7 @@ ksort($_mapDataGroupList);
 			'DHAKA' => 'maps/dhaka',
 			'KHULNA' => 'maps/khulna'
 		);
-		
+
 	?>
 	const dataSource = {
 	  chart: {
@@ -908,7 +908,7 @@ $(document).ready(function() {
 			$('option[rel="'+$(this).val()+'"]').show();
 		}
 	});
-	
+
 	$('#district_list').change(function(){
 		console.log($(this).val());
 		/*if($('#division_list').val() != null){
@@ -917,7 +917,7 @@ $(document).ready(function() {
 		if($('#upazilla_list').val() != null){
 			$('#upazilla_list').val("");
 		}*/
-		
+
 		if($(this).val() == 'all'){
 			$('.upazilla-option').show();
 		}else{
@@ -926,21 +926,21 @@ $(document).ready(function() {
 			$('option[rel="'+$(this).val()+'"]').show();
 		}
 	});
-	
+
 	<?php if($_divisionSelName) {?>
 		$('.district-option').hide();
 		$('option[rel="<?php echo $_districtSelName;?>"]').show();
 	<?php } ?>
-	
+
 	<?php if($_districtSelName) {?>
 		$('.upazilla-option').hide();
 		$('option[rel="<?php echo $_divisionSelName;?>"]').show();
 	<?php } ?>
-	
+
 	<?php $_imageLineChart = array('line-chart-1.png', 'line-chart-2.png', 'line-chart-3.png', 'line-chart-4.png');?>
 	<?php foreach($_distirctDetailsData as $_districtWiseInfo){
 			$_dataTableDataSet[] = array(en2bnbyXLSX($_districtWiseInfo['DIVISION']), en2bnbyXLSX($_districtWiseInfo['DISTRICT']), BanglaConverter::en2bn(number_format($_districtWiseInfo['INFECTED_PERSON'])), BanglaConverter::en2bn($_districtWiseInfo['Rt']), BanglaConverter::en2bn(number_format($_districtWiseInfo['DOUBLING_RATE'])), '<span class="line-chart-holder"><img src="assets/images/'.$_imageLineChart[rand(0, 3)].'"> </span>');
-		} 
+		}
 	?>
     var districtDataTable = $('#district-infecteed').DataTable({
         data: <?php echo json_encode($_dataTableDataSet); ?>,
@@ -954,18 +954,19 @@ $(document).ready(function() {
 		],
 		//"ajax": "district-infected.php",
 		//bPaginate: false,
-		bFilter: false, 
+		bFilter: false,
 		bInfo: false,
 		"ordering": false
+		//pagingType: "simple_numbers"
 		//pagingType: "simple_numbers"
     });
 	//$.fn.DataTable.ext.pager.numbers_length = 3;
 
 });
-	
+
 // Map Dropdown List
 function districtAjaxCall(division_name){
-	
+
 	var divisionObj = {
 		'all': 'maps/bangladesh',
 		'MYMENSINGH': 'maps/mymensingh',
@@ -976,44 +977,44 @@ function districtAjaxCall(division_name){
 		'RAJSHAHI': 'maps/rajshahi',
 		'DHAKA': 'maps/dhaka',
 		'KHULNA': 'maps/khulna'
-		
+
 	};
-	
+
 	console.log(divisionObj[division_name]);
-	
+
 	divisionMap = divisionObj[division_name];
-	
+
 	/*Object.keys(divisionObj).forEach(function eachKey(key) {
-		
-		console.log(key); // alerts key 
+
+		console.log(key); // alerts key
 		console.log(divisionObj[key]); // alerts value
 	});*/
-	
-	//$('.submit-btn').html('LOADING...').attr('style','background-color:#3b3b3b');	
-		 
+
+	//$('.submit-btn').html('LOADING...').attr('style','background-color:#3b3b3b');
+
 	var formParams = "division_name="+division_name+"&map_date="+$('#map_date').val()+"&isAjax=true";
-  
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 	 var responseData = JSON.parse(this.responseText);
 	 //alert(responseData.data);
 	if(responseData.data){
-		 
+
 		 if(division_name == 'all'){
 			responseData.division_group_color_data = <?php echo json_encode($_groupDataColor);?>;
 			responseData.division_wise_inffacted_data = <?php echo json_encode($_divisionWiseInfacted);?>;
 		 }
-		 
+
 		//$('#district-infecteed_wrapper').hide();
 		if ($.fn.dataTable.isDataTable( '#district-infecteed' ) ) {
 			districtDataTable = $('#district-infecteed').DataTable();
 			districtDataTable.destroy();
-		}		
+		}
 		districtDataTable = $('#district-infecteed').DataTable( {
 			data: responseData.data,
 			//bPaginate: false,
-			bFilter: false, 
+			bFilter: false,
 			bInfo: false,
 			"ordering": false,
 			columns: [
@@ -1025,7 +1026,7 @@ function districtAjaxCall(division_name){
 				{ title: "দৈনিক পরিবর্তন (১৪ দিন)" }
 			]
 		});
-		
+
 		//alert(responseData.division_group_color_data);
 		const dataSource = {
 		  chart: {
@@ -1062,7 +1063,7 @@ function districtAjaxCall(division_name){
 	}
   };
   xhttp.open("POST", "district-infected.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");		  
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(formParams);
 }
 </script>
@@ -1080,7 +1081,7 @@ WHERE KPI_NAME = 'DAILY_CHANGES' AND DIM_NAME = 'ACTUAL'";
 }
 //$_dailyInfectedSQL = "select str_to_date(DY_KEY,'%Y%m%d') AS DATE, KPI_VAL AS INFECTED_PERSON from dwa_covid19_dash_summ_test where REPORT_DY <= curdate() and DIM_NAME='CURR_VAL'";
 $_dailyInfectedRes = mysqli_query($conn, $_dailyInfectedSQL);
-while($_queryResData = mysqli_fetch_array($_dailyInfectedRes)){ 
+while($_queryResData = mysqli_fetch_array($_dailyInfectedRes)){
 	$_InfectedDailyData[$_queryResData['DATE']] = $_queryResData['CUMULATIVE_COUNT'];
 	if($_cr%7 == 0){
 		$_lableTextParts = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
@@ -1098,7 +1099,7 @@ if($_InfectedDailyData[$_infLastDay]){
 	$_lableTextParts[0] = BanglaConverter::en2bn($_lableTextParts[0]);
 	$_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
 	#print_r($_lableTextParts); exit;
-	$_infectedWeekDays[$_infLastDay] = implode("",$_lableTextParts);	
+	$_infectedWeekDays[$_infLastDay] = implode("",$_lableTextParts);
 }
 
 $_infectedWeeksDate = array_keys($_infectedWeekDays); // For Forcasting Data Maping
@@ -1117,7 +1118,7 @@ if($_divisionSelName){
 //$_forcastDailySQL = "select str_to_date(DY_KEY,'%Y%m%d') AS DATE, KPI_VAL AS INFECTED_PERSON from dwa_covid19_dash_summ_test where DIM_NAME='FORECAST_VAL'";
 $_forcastDailyRes = mysqli_query($conn, $_forcastDailySQL);
 $_cr = 0;
-while($_queryResData = mysqli_fetch_array($_forcastDailyRes)){ 
+while($_queryResData = mysqli_fetch_array($_forcastDailyRes)){
 	$_forcastDailyInfectedData[$_queryResData['DATE']] = $_queryResData['CUMULATIVE_COUNT'];
 	if(in_array($_queryResData['DATE'], $_infectedWeeksDate) || (($_cr%7 == 0) && (strtotime($_queryResData['DATE']) > strtotime($_infLastDay)))){
 		$_lableTextParts = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
@@ -1163,7 +1164,7 @@ exit;*/
 $_forcastWeeksDate = array_keys($_forcastWeekDays); // For Forcasting Data Maping
 
 foreach($_infectedWeeksData as $_infectedKey => $_infectedVal){
-	//if($_infectedVal == NULL) continue;	
+	//if($_infectedVal == NULL) continue;
 	$_forcastDailyData[$_infectedKey] = NULL;
 	//$_forcastDailyData[] = ($_infectedKey % 2 == 0)?$_infectedVal+rand(($_infectedVal/15)-200, ($_infectedVal/15)):$_infectedVal-rand(($_infectedVal/20)-200, ($_infectedVal/20));
 }
@@ -1193,21 +1194,21 @@ Highcharts.chart('division', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'bottom'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
 		categories: <?php echo json_encode($_xAxisData);?>
     },
-	
+
 	yAxis: {
         title: {
             text: ''
@@ -1219,7 +1220,7 @@ Highcharts.chart('division', {
 		},
 		max: 15*/
     },
-	
+
 	plotOptions: {
         series: {
             fillOpacity:0/*,
@@ -1233,18 +1234,18 @@ Highcharts.chart('division', {
             }*/
         }
     },
-	
+
 	colors: ["#00008b", "#e08658"],
 	series: [{
 		name: 'সংক্রামিত',
 		data: <?php echo json_encode($_infectedWeeksData, true);?>,
 		type : 'area',
 		marker:{symbol:'circle'}
-		
+
 		}, {
 			name: 'ফোরকাস্ট',
 			data: <?php echo json_encode($_forcastDailyData, true);?>,
-			type: 'area', 
+			type: 'area',
 			marker : {symbol : 'circle'},
 			dashStyle: 'shortdot'
 		}],
@@ -1258,7 +1259,7 @@ $_week = 1;
 
 $_redZoneSQL = "select str_to_date(DY_KEY,'%Y%m%d') AS 'WEEK DATE', DIM_NAME AS ZONE, KPI_VAL AS 'NO OF ZONE' from dwa_covid19_dash_summ_test WHERE KPI_NAME='ZONE' AND DIM_NAME='RED'";
 $_redZoneRes = mysqli_query($conn, $_redZoneSQL);
-while($_queryResData = mysqli_fetch_array($_redZoneRes)){ 
+while($_queryResData = mysqli_fetch_array($_redZoneRes)){
 	$_redZoneData[] = (int)$_queryResData['NO OF ZONE'];
 	$_xAxisData[] = "W".$_week;
 	$_week++;
@@ -1277,21 +1278,21 @@ Highcharts.chart('redzone', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'bottom'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
 		categories: <?php echo json_encode($_xAxisData);?>
     },
-	
+
 	yAxis: {
         title: {
             text: ''
@@ -1302,7 +1303,7 @@ Highcharts.chart('redzone', {
 			}
 		}*/
     },
-	
+
 	plotOptions: {
         series: {
             //fillOpacity:0,
@@ -1310,22 +1311,22 @@ Highcharts.chart('redzone', {
                 enabled:false
             }
         }
-    },	
+    },
 	colors: ['#ff0000'],
 	series: [{
 		name: 'রেড জোনের সংখ্যা',
 		data: <?php echo json_encode($_redZoneData);?>,
-		marker:{symbol:'circle'}		
+		marker:{symbol:'circle'}
 		}]
 });
 
 </script>
 <script type="text/javascript">
-<?php 
+<?php
 $_mobilitySQL = "SELECT DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'MOBILITY_TYPE', SUB_DIM_NAME_2 AS 'WEEK', KPI_VAL*100 AS 'PERCENTAGE(%)' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'MOBILITY_RATE'";
 $_mobilityRes = mysqli_query($conn, $_mobilitySQL);
 $_mobilityData = $_mobilityWeeks = $_mobilityInWeeklyData = $_mobilityOutWeeklyData = array();
-while($_queryResData = mysqli_fetch_array($_mobilityRes)){  	
+while($_queryResData = mysqli_fetch_array($_mobilityRes)){
 	$_mobilityData[$_queryResData['MOBILITY_TYPE']][$_queryResData['DIVISION']][$_queryResData['WEEK']] = $_queryResData['PERCENTAGE(%)'];
 	if(!in_array($_queryResData['WEEK'], $_mobilityWeeks)){
 		$_mobilityWeeks[] = $_queryResData['WEEK'];
@@ -1360,21 +1361,21 @@ Highcharts.chart('division-in-continer', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'top'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
 		categories: <?php echo json_encode($_mobilityWeeks);?>
     },
-	
+
 	yAxis: {
         title: {
             text: ''
@@ -1386,7 +1387,7 @@ Highcharts.chart('division-in-continer', {
 		},
 		max: 15
     },
-	
+
 	plotOptions: {
         series: {
             fillOpacity:0,
@@ -1400,9 +1401,9 @@ Highcharts.chart('division-in-continer', {
             }
         }
     },
-	
+
 	colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
-	
+
     series: <?php echo json_encode($_mobilityInWeeklyData);?>
 });
 // Mobility Out Chart
@@ -1414,21 +1415,21 @@ Highcharts.chart('division-out-continer', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'top'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
 		categories: <?php echo json_encode($_mobilityWeeks);?>
     },
-	
+
 	yAxis: {
         title: {
             text: ''
@@ -1440,7 +1441,7 @@ Highcharts.chart('division-out-continer', {
 		},
 		max: 15
     },
-	
+
 	plotOptions: {
         series: {
             fillOpacity:0,
@@ -1454,9 +1455,9 @@ Highcharts.chart('division-out-continer', {
             }
         }
     },
-	
+
 	colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
-	
+
     series: <?php echo json_encode($_mobilityOutWeeklyData);?>
 });
 </script>
@@ -1496,11 +1497,11 @@ Highcharts.chart('bedvsaddmitted', {
     subtitle: {
         text: ''
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
@@ -1519,7 +1520,7 @@ Highcharts.chart('bedvsaddmitted', {
     "xAxis": {
        categories: ["ঢাকা", "চট্টগ্রাম", "রাজশাহী", "খুলনা", "বরিশাল", "সিলেট", "রংপুর", "ময়মনসিংহ"]
     },
-	
+
 	//colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
 
     "series": [{
@@ -1598,8 +1599,8 @@ Highcharts.chart('chartContainer', {
       colorByPoint: true,
       innerSize: '70%',
       data: [
-	  {name: 'ঢাকা', y: 30,}, 
-	  { name: 'চট্টগ্রাম', y: 20 }, 
+	  {name: 'ঢাকা', y: 30,},
+	  { name: 'চট্টগ্রাম', y: 20 },
 	  { name: 'রাজশাহী', y: 15 },
 	  { name: "খুলনা", y: 13 },
 	  { name: "বরিশাল ", y: 3 },
@@ -1614,48 +1615,48 @@ Highcharts.chart('chartContainer', {
 function modalContent(modalLabel, modalType, yAxisLabel, xAxisLabel){
 	// Show Modal Lable
 	$('#modalLabel').html(modalLabel);
-	
+
 	var width = 600;
 	var height = 450;
-	
+
 	//AJAX
 	var formParams = "modal_type="+modalType+"&isAjax=true";
-  
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 	 var responseData = JSON.parse(this.responseText);
-	 
-	 	
+
+
 	if(responseData.chart_type == 'bar'){
-		
+
 		var barChartDataSource = [{
 			name: 'আক্রান্ত',
 			data: responseData.bar_chart
 		  }];
 		var barModalContainer = 'modalContent';
-		
+
 	}else if(responseData.chart_type == 'line'){
-		
+
 		var lineChartDataSource = responseData.line_chart_data;
 		var lineChartDataCategory = responseData.line_chart_label;
 		var lineModalContainer = 'modalContent';
-		
+
 	}else if(responseData.chart_type == 'both'){
-		
+
 		var barChartDataSource = [{
 			name: 'আক্রান্ত',
 			data: responseData.bar_chart
 		  }];
 		var lineChartDataSource = responseData.line_chart_data;
 		var lineChartDataCategory = responseData.line_chart_label;
-		
+
 		var barModalContainer = 'modalContentLeft';
 		var lineModalContainer = 'modalContentRight';
-		
+
 		$('#modal-loading').remove();
 	}
-	
+
 	 //alert(responseData.bar_chart);
 	if(responseData.chart_type == 'bar' || responseData.chart_type == 'both'){
 		 Highcharts.chart(barModalContainer, {
@@ -1743,7 +1744,7 @@ function modalContent(modalLabel, modalType, yAxisLabel, xAxisLabel){
 	}
   };
   xhttp.open("POST", "modal-data.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");		  
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(formParams);
 }
 

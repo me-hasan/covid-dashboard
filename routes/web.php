@@ -31,9 +31,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/dashboard', function () {
-    return view('administrative.dashboard');
-})->middleware('auth');
+Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dashboard');
+Route::get('/dataframe', 'cabinet\DashboardController@dataFrame')->name('dataframe');
+
+//Route::get('/dashboard', function () {
+//    return view('administrative.dashboard');
+//})->middleware('auth');
 
 Route::get('/iedcr/dashboard', function () {
     return view('iedcr.dashboard');
