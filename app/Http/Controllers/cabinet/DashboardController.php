@@ -266,17 +266,4 @@ class DashboardController extends Controller
         return str_replace(self::$en, self::$bn, $number);
     }
 
-    public static function en2bnbyXLSX($_enText){
-//        if(!@$_SESSION['translate']){
-
-            $_translateData = NULL;
-            if ($xlsx = Excel::import(new BulkImport,request()->file('translate.xlsx'))){
-                foreach($xlsx->rows() as $_rowData){
-                    $_translateData[$_rowData[0]] = $_rowData[1];
-                }
-            }
-            $_SESSION['translate'] = $_translateData;
-//        }
-        return (@$_SESSION['translate'][$_enText])?$_SESSION['translate'][$_enText]:$_enText;
-    }
 }
