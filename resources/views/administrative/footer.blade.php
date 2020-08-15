@@ -374,7 +374,8 @@ Highcharts.chart('division-in-continer', {
 	},
 
 	xAxis: {
-		categories: ["WK1","WK2","WK3","WK4","WK5","WK6","WK7"]    },
+        categories: <?php echo json_encode($_mobilityWeeks);?>
+    },
 
 	yAxis: {
         title: {
@@ -403,8 +404,8 @@ Highcharts.chart('division-in-continer', {
     },
 
 	colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
-
-    series: [{"type":"area","name":"\u09a2\u09be\u0995\u09be ","data":[10,12,9,11,8,13,14],"marker":{"symbol":"circle"}},{"type":"area","name":"\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","data":[3,4,3,2,4,2,2],"marker":{"symbol":"circle"}},{"type":"area","name":"\u0996\u09c1\u09b2\u09a8\u09be ","data":[8,4,2,5,7,4,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","data":[5,3,5,3,2,4,5],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b8\u09bf\u09b2\u09c7\u099f","data":[4,4,3,4,2,4,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u0982\u09aa\u09c1\u09b0 ","data":[2,3,3,3,3,3,2],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","data":[2,2,3,2,3,3,4],"marker":{"symbol":"circle"}}]});
+    series: <?php echo json_encode($_mobilityInWeeklyData);?>
+});
 // Mobility Out Chart
 Highcharts.chart('division-out-continer', {
 	title: {
@@ -426,7 +427,8 @@ Highcharts.chart('division-out-continer', {
 	},
 
 	xAxis: {
-		categories: ["WK1","WK2","WK3","WK4","WK5","WK6","WK7"]    },
+        categories: <?php echo json_encode($_mobilityWeeks);?>
+    },
 
 	yAxis: {
         title: {
@@ -456,7 +458,8 @@ Highcharts.chart('division-out-continer', {
 
 	colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
 
-    series: [{"type":"area","name":"\u09a2\u09be\u0995\u09be ","data":[6,6,13,8,10,14,12],"marker":{"symbol":"circle"}},{"type":"area","name":"\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","data":[5,4,5,5,4,3,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u0996\u09c1\u09b2\u09a8\u09be ","data":[5,2,4,2,5,2,2],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","data":[1,2,3,2,3,1,1],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b8\u09bf\u09b2\u09c7\u099f","data":[3,1,3,3,3,2,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u0982\u09aa\u09c1\u09b0 ","data":[1,3,3,3,2,3,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","data":[4,5,3,5,5,4,3],"marker":{"symbol":"circle"}}]});
+    series: <?php echo json_encode($_mobilityOutWeeklyData);?>
+});
 </script>
 <script type="text/javascript">
 Highcharts.chart('bedvsaddmitted', {

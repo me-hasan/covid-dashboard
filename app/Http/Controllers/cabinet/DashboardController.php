@@ -165,7 +165,38 @@ class DashboardController extends Controller
 
         $data['_xAxisRedZoneData']  = $_xAxisRedZoneData;
         $data['_redZoneData']       = $_redZoneData;
-//        dd($data['_xAxisRedZoneData']);
+
+        // Mobility IN
+        $_mobilityRes = DB::select( DB::raw("SELECT DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'MOBILITY_TYPE', SUB_DIM_NAME_2 AS 'WEEK', KPI_VAL*100 AS 'PERCENTAGE(%)' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'MOBILITY_RATE'"));
+        $_mobilityData = $_mobilityWeeks = $_mobilityInWeeklyData = $_mobilityOutWeeklyData = [];
+        foreach($_mobilityRes as $_queryResData){
+            $_queryResData = (array)$_queryResData;
+            $_mobilityData[$_queryResData['MOBILITY_TYPE']][$_queryResData['DIVISION']][$_queryResData['WEEK']] = $_queryResData['PERCENTAGE(%)'];
+            if(!in_array($_queryResData['WEEK'], $_mobilityWeeks)){
+                $_mobilityWeeks[] = $_queryResData['WEEK'];
+            }
+        }
+        asort($_mobilityWeeks);
+        $_mobilityWeeks = array_values($_mobilityWeeks);
+
+        $data['_mobilityWeeks']  = $_mobilityWeeks;
+
+        foreach($_mobilityData as $_mobilityType => $_mobilityTypeData){
+            foreach($_mobilityTypeData as  $_orgMobilityDivision => $_orgMobilityData){
+                ksort($_orgMobilityData);
+                $_mobilityDivisionWeeksData = array_values(array_map('intval', $_orgMobilityData));
+                if($_mobilityType == "IN"){
+//                    $_mobilityInWeeklyData[] = array('type' => 'area', 'name' => en2bnbyXLSX(strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
+                    $_mobilityInWeeklyData[] = array('type' => 'area', 'name' => (strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
+                }else if($_mobilityType == "OUT"){
+//                    $_mobilityOutWeeklyData[] = array('type' => 'area', 'name' => en2bnbyXLSX(strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
+                    $_mobilityOutWeeklyData[] = array('type' => 'area', 'name' => (strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
+                }
+            }
+        }
+
+        $data['_mobilityInWeeklyData']  = $_mobilityInWeeklyData;
+        $data['_mobilityOutWeeklyData']  = $_mobilityOutWeeklyData;
 
 
         //Red zone data
