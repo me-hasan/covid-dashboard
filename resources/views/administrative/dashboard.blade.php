@@ -597,7 +597,6 @@
                         </div>
                     </div>
                 </div>
-
                @include('administrative.partials.infected_24_hours')
             </div>
             @include('administrative.partials.country_wise')
