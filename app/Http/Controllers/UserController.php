@@ -52,7 +52,6 @@ class UserController extends Controller
             'name' => 'required|string|min:3',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed|min:8',
-            'account_level' => 'required',
             'role' => 'required|exists:roles,name'
         ]);
 
@@ -63,7 +62,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->user_type = $request->user_type;
-            $user->account_level = $request->account_level;
+            $user->account_level = $request->account_level ?? 'administrative';
             $user->division = $request->division;
             $user->district = $request->district;
             $user->upazilla = $request->upazilla;
@@ -109,7 +108,6 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|min:3',
             'email' => 'required',
-            'account_level' => 'required',
             'role' => 'required|exists:roles,name'
         ]);
 
@@ -119,7 +117,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->user_type = $request->user_type;
-            $user->account_level = $request->account_level;
+            $user->account_level = $request->account_level ?? 'administrative';
             $user->division = $request->division;
             $user->district = $request->district;
             $user->upazilla = $request->upazilla;
