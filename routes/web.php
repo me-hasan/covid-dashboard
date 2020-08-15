@@ -37,9 +37,7 @@ Route::get('/iedcr/dashboard', function () {
 
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
-    Route::get('dashboard', function () {
-        return view('superadmin.dashboard');
-    })->name('admin-dashboard');
+    Route::get('dashboard','HomeController@index')->name('admin-dashboard');
 
     Route::get('roles/create', function () {
         $role = Role::create(['name' => 'writer']);
