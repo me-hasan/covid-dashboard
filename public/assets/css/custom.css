@@ -52,3 +52,29 @@
     padding: 5px;
     color: #fff;
 }
+
+.select2-container--default {
+    width: 100% !important;
+    max-width: 500px !important;
+}
+.info-box{
+    height: 85px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+    margin: 0px auto 16px;
+    padding: 15px 0;
+    transition: box-shadow 0.25s ease 0s;
+    text-align: center;
+}
+.info-box h4 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+.info-box .num-style {
+    font-size: 24px;
+    font-weight: bold;
+}

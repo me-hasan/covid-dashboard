@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = User::where('account_level','!=',null)->where('user_type','!=','superadmin')->get();
+
+        $administrative_user = $users->where('account_level','administrative')->count();
+        $divisional_user = $users->where('account_level','divisional')->count();
+        $district_user = $users->where('account_level','district')->count();
+        $upazilla_user = $users->where('account_level','upazilla')->count();
+
+        return view('superadmin.dashboard',compact('administrative_user','divisional_user','district_user','upazilla_user'));
     }
 }

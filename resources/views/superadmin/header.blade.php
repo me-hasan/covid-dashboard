@@ -32,6 +32,8 @@
 		<!-- P-scroll bar css-->
 		<link href="{{ asset('assets/plugins/p-scrollbar/p-scrollbar.css') }}" rel="stylesheet" />
 
+		<!-- select 2 -->
+		<link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
 		<!---Icons css-->
 		<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" />
 		<link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" />
