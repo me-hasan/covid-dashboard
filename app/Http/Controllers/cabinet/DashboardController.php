@@ -15,6 +15,9 @@ class DashboardController extends Controller
     public static $en = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
     public function covid24Hours(Request $request) {
+        $_outputDailyData = $_InfectedDailyData = $_forcastDailyInfectedData = $_infectedWeekDays = $_forcastWeekDays = $_lastDay = array();
+        $_cr = 0;
+        $_infLastDay = '';
         $_divisionSelName = $_districtSelName = $_upazillaSelName = NULL;
         $_divisionSelName = $request->get('division');
         $_districtSelName = $request->get('district');
@@ -68,7 +71,7 @@ class DashboardController extends Controller
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
                                 INNER JOIN
-                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test 
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test
                                 WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE'".$_extendedQuery.")) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
         } else {
             $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
@@ -76,7 +79,7 @@ class DashboardController extends Controller
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
                                 INNER JOIN
-                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test 
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test
                                 WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE')) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
         }
 
@@ -118,7 +121,7 @@ class DashboardController extends Controller
             $_cr++;
         }
 
-        if($_InfectedDailyData[$_infLastDay]){
+        if(isset($_InfectedDailyData[$_infLastDay]) && $_InfectedDailyData[$_infLastDay]){
             $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_infLastDay)));
             $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
 //            $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
@@ -314,7 +317,7 @@ class DashboardController extends Controller
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
                                 INNER JOIN
-                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test 
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test
                                 WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE')) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
 
         $_mapDataDistrictWiseInfectedRes = $_mapDataGroupList = $_districtList = $_distirctDetailsData = [];
