@@ -111,7 +111,7 @@
                         <select name="upazilla" class="form-control upazilla">
                             <option value="">Select Upazilla</option>
                             @foreach($upazillas as $upazilla)
-                            <option value="{{$upazilla->upazilla}}" {{$user->upazilla == $upazilla->upazilla ? 'selected' : ''}}>{{$upazilla->upazilla}}</option>
+                            <option value="{{$upazilla->upazila_en}}" {{$user->upazilla == $upazilla->upazila_en ? 'selected' : ''}}>{{$upazilla->upazila_en}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -163,6 +163,7 @@
             success: function (data) {
                 console.log(data);
                 if (data.status == 1) {
+                    $('.district').empty();
                     html = '<option value="">Select District</option>';
                     for (var i = 0; i < data.data.length; i++) {
                         html += '<option value=' + data.data[i].district + '>' + data.data[i].district + '</option>';
@@ -188,6 +189,7 @@
             success: function (data) {
                 // console.log(data);
                 if (data.status == 1) {
+                    $('.upazilla').empty();
                     for (var i = 0; i < data.data.length; i++) {
                         $('.upazilla').append('<option value=' + data.data[i].upazila_en + '>' + data.data[i].upazila_en + '</option>');
                     }

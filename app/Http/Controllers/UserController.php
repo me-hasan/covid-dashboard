@@ -93,11 +93,12 @@ class UserController extends Controller
         }else{
             $districts = [];
         }
-        if($user->upazila != null){
-            $upazillas = DB::table('upazila')->where('district',$user->district)->distinct()->get('upazila_en');
+        if($user->upazilla != null){
+            $upazillas = DB::table('upazila')->where(['district' => $user->district])->distinct()->get('upazila_en');
         }else{
             $upazillas = [];
         }
+
         return view("superadmin.user.edit", compact('user','roles','divisions','districts','upazillas'));
     }
 
