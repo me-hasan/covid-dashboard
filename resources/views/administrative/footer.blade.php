@@ -254,8 +254,7 @@ Highcharts.chart('division', {
 	},
 
 	xAxis: {
-		categories: ["\u09e6\u09ea\u09ae\u09be\u09b0","\u09e7\u09e7\u09ae\u09be\u09b0","\u09e7\u09ee\u09ae\u09be\u09b0","\u09e8\u09eb\u09ae\u09be\u09b0","\u09e6\u09e7\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ee\u098f\u09aa\u09cd\u09b0\u09bf","\u09e7\u09eb\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09e8\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09ef\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ec\u09ae\u09c7","\u09e7\u09e9\u09ae\u09c7","\u09e8\u09e6\u09ae\u09c7","\u09e8\u09ed\u09ae\u09c7","\u09e6\u09e9\u099c\u09c1\u09a8","\u09e7\u09e6\u099c\u09c1\u09a8","\u09e7\u09ed\u099c\u09c1\u09a8","\u09e8\u09ea\u099c\u09c1\u09a8","\u09e6\u09e7\u099c\u09c1\u09b2","\u09e6\u09ee\u099c\u09c1\u09b2","\u09e7\u09eb\u099c\u09c1\u09b2","\u09e7\u09ed\u099c\u09c1\u09b2","\u09e8\u09ea\u099c\u09c1\u09b2","\u09e9\u09e7\u099c\u09c1\u09b2"]    },
-        {{--categories: <?php echo json_encode($_xAxisData);?>--}}
+        categories: <?php echo json_encode($_xAxisData);?> },
 	yAxis: {
         title: {
             text: ''
@@ -285,14 +284,14 @@ Highcharts.chart('division', {
 	colors: ["#00008b", "#e08658"],
 	series: [{
 		name: 'সংক্রামিত',
-		data: [0,3,8,39,54,218,1231,3772,7103,11719,17822,26738,38292,55140,74865,98489,122660,149258,172134,196323,null,null,null],
-		type : 'area',
+        data: <?php echo json_encode($_infectedWeeksData, true);?>,
+        type : 'area',
 		marker:{symbol:'circle'}
 
 		}, {
 			name: 'ফোরকাস্ট',
-			data: [null,null,null,null,null,null,null,null,null,16353,24383,32471,40660,48850,70373,107342,146700,186059,225417,264775,276020,315378,354737],
-			type: 'area',
+            data: <?php echo json_encode($_forcastDailyData, true);?>,
+            type: 'area',
 			marker : {symbol : 'circle'},
 			dashStyle: 'shortdot'
 		}],
@@ -323,7 +322,7 @@ Highcharts.chart('redzone', {
 	},
 
 	xAxis: {
-		categories: ["W1","W2","W3","W4"]    },
+        categories: <?php echo json_encode($_xAxisRedZoneData);?>    },
 
 	yAxis: {
         title: {
@@ -347,8 +346,8 @@ Highcharts.chart('redzone', {
 	colors: ['#ff0000'],
 	series: [{
 		name: 'রেড জোনের সংখ্যা',
-		data: [20,30,45,70],
-		marker:{symbol:'circle'}
+        data: <?php echo json_encode($_redZoneData);?>,
+        marker:{symbol:'circle'}
 		}]
 });
 

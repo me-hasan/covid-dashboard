@@ -64,26 +64,109 @@ class DashboardController extends Controller
 
         //Daily Changes & forcast
         $_outputDailyData = $_InfectedDailyData = $_forcastDailyInfectedData = $_infectedWeekDays = $_forcastWeekDays = $_lastDay = [];
-//        $_cr = 0;
-//
-//        $_dailyInfectedSQL =  DB::select( DB::raw("select str_to_date(REPORT_DY, '%Y%m%d') AS 'DATE', KPI_VAL AS 'CUMULATIVE_COUNT' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'DAILY_CHANGES' AND DIM_NAME = 'ACTUAL'"));
-//
-//        foreach($_dailyInfectedSQL as $_queryResData){
-//            $_queryResData = (array) $_queryResData;
-//            $_InfectedDailyData[$_queryResData['DATE']] = $_queryResData['CUMULATIVE_COUNT'];
-//
-//            if($_cr%7 == 0){
-//                $_lableTextParts = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
-//                $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
-////                $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
-//                $_lableTextParts[1] = $_lableTextParts[1];
-//                #print_r($_lableTextParts); exit;
-//                $_infectedWeekDays[$_queryResData['DATE']] = implode("",$_lableTextParts);
-//            }
-//            $_infLastDay = $_queryResData['DATE'];
-//            $_cr++;
-//        }
-//dd();
+        $_cr = 0;
+
+        $_dailyInfectedSQL =  DB::select( DB::raw("select str_to_date(REPORT_DY, '%Y%m%d') AS 'DATE', KPI_VAL AS 'CUMULATIVE_COUNT' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'DAILY_CHANGES' AND DIM_NAME = 'ACTUAL'"));
+
+        foreach($_dailyInfectedSQL as $_queryResData){
+            $_queryResData = (array) $_queryResData;
+            $_InfectedDailyData[$_queryResData['DATE']] = $_queryResData['CUMULATIVE_COUNT'];
+
+            if($_cr%7 == 0){
+                $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
+                $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
+//                $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
+                $_lableTextParts[1] = $_lableTextParts[1];
+                $_infectedWeekDays[$_queryResData['DATE']] = implode("",$_lableTextParts);
+            }
+            $_infLastDay = $_queryResData['DATE'];
+            $_cr++;
+        }
+
+        if($_InfectedDailyData[$_infLastDay]){
+            $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_infLastDay)));
+            $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
+//            $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
+            $_lableTextParts[1] = $_lableTextParts[1];
+            $_infectedWeekDays[$_infLastDay] = implode("",$_lableTextParts);
+        }
+        $_infectedWeeksDate = array_keys($_infectedWeekDays); // For Forcasting Data Maping
+
+        $_forcastDailySQL = DB::select( DB::raw("select str_to_date(REPORT_DY, '%Y%m%d') AS 'DATE', KPI_VAL AS 'CUMULATIVE_COUNT' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'DAILY_CHANGES' AND DIM_NAME = 'PREDICTION'"));
+
+        $_cr = 0;
+        foreach($_forcastDailySQL as $_queryResData){
+            $_queryResData = (array)$_queryResData;
+            $_forcastDailyInfectedData[$_queryResData['DATE']] = $_queryResData['CUMULATIVE_COUNT'];
+            if(in_array($_queryResData['DATE'], $_infectedWeeksDate) || (($_cr%7 == 0) && (strtotime($_queryResData['DATE']) > strtotime($_infLastDay)))){
+                $_lableTextParts = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
+                $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
+//                $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
+                $_lableTextParts[1] = $_lableTextParts[1];
+                $_forcastWeekDays[$_queryResData['DATE']] = implode("",$_lableTextParts);
+            }
+            $_lastDay = $_queryResData['DATE'];
+            $_cr++;
+        }
+
+        $_totalDataCount = count($_InfectedDailyData)+count($_forcastDailyInfectedData);
+
+        $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_lastDay)));
+        $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
+//        $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
+        $_lableTextParts[1] = $_lableTextParts[1];
+        $_lastDayData       = array($_lastDay => implode("", $_lableTextParts));
+
+        $_xAxisData = array_merge($_infectedWeekDays, $_forcastWeekDays, $_lastDayData);
+        $_xAxisData = array_values($_xAxisData);
+
+        foreach($_infectedWeekDays as $_infactedWeekDaysKey => $_infactedWeekDaysVal){
+            $_infectedWeeksData[] = (int)$_InfectedDailyData[$_infactedWeekDaysKey];
+        }
+//$_infectedWeeksData[] = (int)$_InfectedDailyData[$_infLastDay]; // Used before
+
+        foreach($_forcastWeekDays as $_forcastKeyDate => $_forcastVal){
+            if(!in_array($_forcastKeyDate, $_infectedWeeksDate)){
+                $_infectedWeeksData[] = NULL;
+            }
+        }
+
+        $_forcastWeeksDate = array_keys($_forcastWeekDays); // For Forcasting Data Maping
+
+        foreach($_infectedWeeksData as $_infectedKey => $_infectedVal){
+            //if($_infectedVal == NULL) continue;
+            $_forcastDailyData[$_infectedKey] = NULL;
+            //$_forcastDailyData[] = ($_infectedKey % 2 == 0)?$_infectedVal+rand(($_infectedVal/15)-200, ($_infectedVal/15)):$_infectedVal-rand(($_infectedVal/20)-200, ($_infectedVal/20));
+        }
+
+        $_totalInfecRecords = (int)count($_infectedWeeksData);
+        $_rc = (int)count($_forcastWeekDays);
+
+        foreach($_forcastWeekDays as $_forcastWeekKey => $_forcastVal){
+            $_forcastDailyData[$_totalInfecRecords-$_rc] = (int)$_forcastDailyInfectedData[$_forcastWeekKey];
+            $_rc--;
+        }
+
+        $data['_xAxisData'] = $_xAxisData;
+        $data['_infectedWeeksData'] = $_infectedWeeksData;
+        $data['_forcastDailyData'] = $_forcastDailyData;
+
+        //Red zone
+        $_redZoneData = $_xAxisRedZoneData = array();
+        $_week = 1;
+
+        $_redZoneRes = DB::select( DB::raw("select str_to_date(DY_KEY,'%Y%m%d') AS 'WEEK DATE', DIM_NAME AS ZONE, KPI_VAL AS 'NO OF ZONE' from dwa_covid19_dash_summ_test WHERE KPI_NAME='ZONE' AND DIM_NAME='RED'"));
+        foreach( $_redZoneRes as $_queryResData){
+            $_queryResData  = (array)$_queryResData;
+            $_redZoneData[] = (int)$_queryResData['NO OF ZONE'];
+            $_xAxisRedZoneData[] = "W".$_week;
+            $_week++;
+        }
+
+        $data['_xAxisRedZoneData']  = $_xAxisRedZoneData;
+        $data['_redZoneData']       = $_redZoneData;
+//        dd($data['_xAxisRedZoneData']);
+
 
         //Red zone data
         $data['red_zone_data'] = DB::select( DB::raw("SELECT T1.ZONE_AREA, T1.DOUBLING_RATE, T2.Rt, T3.TEST_POSITIVITY, T4.CASES_PER_1M_POPULATION

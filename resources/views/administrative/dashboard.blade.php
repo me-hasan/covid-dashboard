@@ -597,6 +597,7 @@
                         </div>
                     </div>
                 </div>
+{{--                {!! dd($_xAxisData) !!}--}}
                @include('administrative.partials.infected_24_hours')
             </div>
             @include('administrative.partials.country_wise')
