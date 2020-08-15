@@ -47,3 +47,8 @@
 .modal-dialog .modal-body .highcharts-container{margin: auto;}
 .modal-dialog .modal-header {background:#DDDDDD;}
 .modal-dialog .modal-header .modal-title{font-size: 20px;}
+
+.label-success {
+    padding: 5px;
+    color: #fff;
+}
