@@ -155,7 +155,7 @@ while($_disWiseInfResultData = mysqli_fetch_array($_districtWiseInfectedRes)){
 	$_mapDataGroupList[$_dataGroupKey] = BanglaConverter::en2bn($_disWiseInfResultData['GROUP_CONFIRMED']);
 	$_districtList[$_disWiseInfResultData['DISTRICT']] = array( 'division' => $_disWiseInfResultData['DIVISION'], 'district' => $_disWiseInfResultData['DISTRICT'], 'infected' => $_disWiseInfResultData['INFECTED_PERSON']); // Prepare District List
 }
-ksort($_mapDataGroupList);
+//ksort($_mapDataGroupList);
 
 #echo "<pre>";
 #print_r($_mapDataGroupList);

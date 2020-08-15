@@ -7,7 +7,7 @@
                 <div class="col-lg-12">
                     <div class="main-filter-area mb-3">
                         <div class="d-flex">
-                            <form action="" method="post" class="row">
+                            <form action="{!! route('dashboard') !!}" method="get" class="row">
                                 <div class="dropdown mr-1">
                                     <select class="btn btn-sm btn-custom dropdown-toggle" name="division" id="division_list">
                                         <option value="all">সব বিভাগ</option>

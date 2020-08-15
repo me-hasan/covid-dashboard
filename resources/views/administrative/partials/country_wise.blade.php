@@ -41,7 +41,15 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="py-1" style="text-align: center;"> <a class="float-right btn btn-link" href="{!! route('dataframe', ['datatype' => 'detailsmap']) !!}">বিস্তারিত</a> <img src="assets/images/covid-19-bangladesh-map.png" alt="Covid-19" width="250" /> <img src="assets/images/bangladesh-map.png" alt="Covid-19" width="300" height="100" style="padding-bottom:20px;" />
+{{--                                    {!! dd($_divisionSelName) !!}--}}
+{{--                                    @if($_divisionSelName)--}}
+
                                     <div id="map-container" style="display: none;"></div>
+{{--                                    @else--}}
+{{--                                        <img src="assets/images/covid-19-bangladesh-map.png" alt="Covid-19" width="250" />--}}
+{{--                                        <img src="assets/images/bangladesh-map.png" alt="Covid-19" width="300" height="100" style="padding-bottom:20px;" />--}}
+{{--                                        <div id="map-container" style="display: none;"></div>--}}
+{{--                                    @endif--}}
                                 </div>
                             </div>
                             <div class="col-lg-7">

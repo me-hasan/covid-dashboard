@@ -14,7 +14,22 @@ class DashboardController extends Controller
     public static $bn = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০"];
     public static $en = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
-    public function covid24Hours() {
+    public function covid24Hours(Request $request) {
+        $_divisionSelName = $_districtSelName = $_upazillaSelName = NULL;
+        $_divisionSelName = $request->get('division');
+        $_districtSelName = $request->get('district');
+        $_upazillaSelName = $request->get('upazilla');
+
+        // Get All Division List
+//        $_getDivisionRes =  DB::select( DB::raw("select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP CONFIRMED' from dwa_covid19_dash_summ_test WHERE KPI_NAME='MAP_OF_CASES' GROUP BY `DISTRICT` ORDER BY `DATE`"));
+//
+//        $_allDivisionList = [];
+//        $_mapDataDistrictWiseInfectedRes = [];
+//        foreach( $_getDivisionRes as $_divQueryData){
+//            $_divQueryData = (array)$_divQueryData;
+//            if($_divQueryData['DIVISION'] == NULL) continue; // SKIP Empty Row
+//            $_allDivisionList[$_divQueryData['DIVISION']] = ($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])?$_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']]+$_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
+//        }
 
         //Test 24 hours
         $covid_tests_24_hours = Covid19DashboardTestSum::where('DASH_COMP_ID', '=', 1)->where('REPORT_DY', function($q)
@@ -41,14 +56,30 @@ class DashboardController extends Controller
             $data['result_last_day'] = null;
         }
 
-        //District wise result
-        $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
+        //District wise map result
+//        if($_divisionSelName == "all")
+//            unset($_divisionSelName);
+
+        if(isset($_divisionSelName) && $_divisionSelName != "all"){
+            $_extendedQuery = " AND DIM_NAME='".$_divisionSelName."'";
+
+            $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
+                                (select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
+                                INNER JOIN
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
+                                INNER JOIN
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test 
+                                WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE'".$_extendedQuery.")) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
+        } else {
+            $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
                                 (select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test 
                                 WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE')) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
+        }
+
 
         $_mapDataDistrictWiseInfectedRes = $_mapDataGroupList = $_districtList = $_distirctDetailsData = [];
         foreach ($district_wise_infected_data as $_disWiseInfResultData){
@@ -66,7 +97,11 @@ class DashboardController extends Controller
         $_outputDailyData = $_InfectedDailyData = $_forcastDailyInfectedData = $_infectedWeekDays = $_forcastWeekDays = $_lastDay = [];
         $_cr = 0;
 
-        $_dailyInfectedSQL =  DB::select( DB::raw("select str_to_date(REPORT_DY, '%Y%m%d') AS 'DATE', KPI_VAL AS 'CUMULATIVE_COUNT' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'DAILY_CHANGES' AND DIM_NAME = 'ACTUAL'"));
+        if(isset($_divisionSelName)){
+            $_dailyInfectedSQL = DB::select( DB::raw("select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', SUM(KPI_VAL) AS 'CUMULATIVE_COUNT', DIM_NAME AS 'DIVISION' FROM dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') AND DIM_NAME = '".$_divisionSelName."' GROUP BY DY_KEY"));
+        }else {
+            $_dailyInfectedSQL =  DB::select( DB::raw("select str_to_date(REPORT_DY, '%Y%m%d') AS 'DATE', KPI_VAL AS 'CUMULATIVE_COUNT' FROM dwa_covid19_dash_summ_test WHERE KPI_NAME = 'DAILY_CHANGES' AND DIM_NAME = 'ACTUAL'"));
+        }
 
         foreach($_dailyInfectedSQL as $_queryResData){
             $_queryResData = (array) $_queryResData;
@@ -209,6 +244,64 @@ class DashboardController extends Controller
 													FROM dwa_covid19_dash_summ_test WHERE SUB_DIM_NAME_2 = 'TEST_POSITIVITY' AND KPI_NAME = 'TABULAR_DATA') AS T3 using(ZONE_AREA)
 													INNER JOIN (select DIM_NAME as 'ZONE_AREA', SUB_DIM_NAME AS 'ZONE',KPI_VAL AS 'CASES_PER_1M_POPULATION'
 													FROM dwa_covid19_dash_summ_test WHERE SUB_DIM_NAME_2 = 'CASES_PER_100000_POPULATION' AND KPI_NAME = 'TABULAR_DATA') AS T4 using(ZONE_AREA) GROUP BY T1.ZONE_AREA ORDER BY CASES_PER_1M_POPULATION DESC") );
+
+        // search data
+        if($_divisionSelName){
+            $data['_divisionSelName'] = $_divisionSelName;
+        } else {
+            $data['_divisionSelName'] = null;
+        }
+
+        $_colorCode = array( '10' => '#FCAA94', '50' => '#F69475', '100' => '#F37366', '150' => '#E5515D', '1000' => '#CD3E52', 'high' => '#BC2B4C');
+        $_groupDataColor = array();
+        foreach($_mapDataGroupList as $dataGroupKeyVal => $dataGroupName){
+            if($dataGroupName == 'Doubling_Rate') continue; // Error Handling
+            $_groupDataColor[] = array('maxvalue' => $dataGroupKeyVal, 'displayvalue' => $dataGroupName, 'code' => ($dataGroupKeyVal > 1000)?$_colorCode['high']:$_colorCode[$dataGroupKeyVal]);
+        }
+
+        $_divisionCode = array('RANGPUR' => 'BD.RP', 'RAJSHAHI' => 'BD.RS', 'MYMENSINGH' => 'BD.MM', 'SYLHET' => 'BD.SY', 'DHAKA' => 'BD.DA', 'KHULNA' => 'BD.KH', 'BARISHAL' => 'BD.BA', 'BARISAL' => 'BD.BA', 'CHATTOGRAM' => 'BD.CG');
+
+        $_divisionDistrictCode = array(
+            'RANGPUR' => array('DINAJPUR' => 'BD.RP.DJ', 'GAIBANDHA' => 'BD.RP.GB', 'KURIGRAM' => 'BD.RP.KR', 'LALMONIRHAT' => 'BD.RP.LL', 'NILPHAMARI' => 'BD.RP.NP', 'PANCHAGARH' => 'BD.RP.PN', 'RANGPUR' => 'BD.RP.RP', 'THAKURGAON' => 'BD.RP.TH'),
+            'RAJSHAHI' => array('BOGRA' => 'BD.RS.BO', 'JOYPURHAT' => 'BD.RS.JP', 'NAOGAON' => 'BD.RS.NA', 'NATORE' => 'BD.RS.NT', 'CHAPAINAWABGANJ' => 'BD.RS.NW', 'CHAPAI NAWABGANJ' => 'BD.RS.NW', 'NOWABGANJ' => 'BD.RS.NW', 'NAWABGANJ' => 'BD.RS.NW', 'PABNA' => 'BD.RS.PB', 'RAJSHAHI' => 'BD.RS.RS', 'SIRAJGANJ' => 'BD.RS.SR'),
+            'MYMENSINGH' => array('JAMALPUR' => 'BD.MM.JM', 'MYMENSINGH' => 'BD.MM.MM', 'NETROKONA' => 'BD.MM.NK', 'SHERPUR' => 'BD.MM.SP'),
+            'SYLHET' => array('HABIGANJ' => 'BD.SY.HA', 'HOBIGANJ' => 'BD.SY.HA', 'MOULVIBAZAR' => 'BD.SY.MB', 'MOULVI BAZAR' => 'BD.SY.MB', 'SUNAMGANJ' => 'BD.SY.SN', 'SYLHET' => 'BD.SY.SL'),
+            'DHAKA' => array('DHAKA' => 'BD.DA.DH', 'FARIDPUR' => 'BD.DA.FR', 'GAZIPUR' => 'BD.DA.GZ', 'GOPALGANJ' => 'BD.DA.GG', 'KISHOREGANJ' => 'BD.DA.KS', 'MANIKGANJ' => 'BD.DA.MK', 'MUNSIGANJ' => 'BD.DA.MK', 'MUNSHIGANJ' => 'BD.DA.MU', 'NARAYANGANJ' => 'BD.DA.NY', 'NARSINGDHI' => 'BD.DA.NS', 'NARSINGDI' => 'BD.DA.NS', 'RAJBARY' => 'BD.DA.RB', 'RAJBARI' => 'BD.DA.RB', 'SARIATPUR' => 'BD.DA.SA', 'SHARIATPUR' => 'BD.DA.SA', 'TANGAIL' => 'BD.DA.TA', 'MADARIPUR' => 'BD.DA.MD'),
+            'KHULNA' => array('BAGERHAT' => 'BD.KH.BH', 'CHUADANGA' => 'BD.KH.CD', 'JESSORE' => 'BD.KH.JS', 'JHENAIDAH' => 'BD.KH.JN', 'KHULNA' => 'BD.KH.KL', 'KUSHTIA' => 'BD.KH.KU', 'MAGURA' => 'BD.KH.MG', 'MEHERPUR' => 'BD.KH.ME', 'NARAIL' => 'BD.KH.NR', 'SATKHIRA' => 'BD.KH.ST'),
+            'BARISAL' => array('BARGUNA' => 'BD.BA.BG', 'BARISAL' => 'BD.BA.BS', 'BHOLA' => 'BD.BA.BL', 'JHALOKATI' => 'BD.BA.JK', 'JHALAKATI' => 'BD.BA.JK', 'PATUAKHALI' => 'BD.BA.PT', 'PIROJPUR' => 'BD.BA.PR', 'PEROJPUR' => 'BD.BA.PR'),
+            'CHATTOGRAM' => array('BANDARBAN' => 'BD.CG.BD', 'BRAHAMANBARIA' => 'BD.CG.BB', 'BRAHMANBARIA' => 'BD.CG.BB', 'CHANDPUR' => 'BD.CG.CP', 'CHATTOGRAM' => 'BD.CG.CT', 'COMILLA' => 'BD.CG.CM', "COX'S BAZAR" => 'BD.CG.CB', 'FENI' => 'BD.CG.FN', 'KHAGRACHHARI' => 'BD.CG.KG', 'LAKSHMIPUR' => 'BD.CG.LK', 'NOAKHALI' => 'BD.CG.NO', 'RANGAMATI' => 'BD.CG.PC')
+        );
+
+        $_divisionWiseInfacted = array();
+        #echo $_divisionSelName;
+        if($_divisionSelName && $_divisionSelName != 'all'){
+            #print_r($_districtList); exit;
+            foreach($_districtList as $_districtName => $_districtInfo){ #print_r($_districtInfo);exit;
+                #if($_divisionName == NULL) continue; // Error Handling
+                $_divisionWiseInfacted[] = array('id' => $_divisionDistrictCode[$_districtInfo['division']][$_districtName], 'value' => $_districtInfo['infected'], 'showLabel' => '1');
+            }
+        }else{
+            foreach($_mapDataDistrictWiseInfectedRes as $_divisionName => $divisionInfected){ #print_r($_divisionName);exit;
+                #if($_divisionName == NULL) continue; // Error Handling
+                $_divisionWiseInfacted[] = array('id' => $_divisionCode[$_divisionName], 'value' => $divisionInfected);
+            }
+        }
+
+        $_mapRegions = array(
+            'all' => 'maps/bangladesh',
+            'MYMENSINGH' => 'maps/mymensingh',
+            'BARISAL' => 'maps/barisal',
+            'RANGPUR' => 'maps/rangpur',
+            'SYLHET' => 'maps/sylhet',
+            'CHATTOGRAM' => 'maps/chittagong',
+            'RAJSHAHI' => 'maps/rajshahi',
+            'DHAKA' => 'maps/dhaka',
+            'KHULNA' => 'maps/khulna'
+        );
+
+        $data['_groupDataColor']        = $_groupDataColor;
+        $data['_divisionWiseInfacted']  = $_divisionWiseInfacted;
+        $data['_mapRegions']            = $_mapRegions;
 
 
         return view('administrative.dashboard', $data);

@@ -39,16 +39,18 @@
 	  },
 	  colorrange: {
 		gradient: "0",
-		color: [{"maxvalue":50,"displayvalue":"\u09e7\u09e7-\u09eb\u09e6","code":"#F69475"},{"maxvalue":100,"displayvalue":"\u09eb\u09e7-\u09e7\u09e6\u09e6","code":"#F37366"},{"maxvalue":150,"displayvalue":"\u09e7\u09e6\u09e7-\u09e7\u09eb\u09e6","code":"#E5515D"},{"maxvalue":1000,"displayvalue":"\u09e7\u09eb\u09e7-\u09e7\u09e6\u09e6\u09e6","code":"#CD3E52"},{"maxvalue":101000,"displayvalue":"\u09e7\u09e6\u09e6\u09e6+","code":"#BC2B4C"}]	  },
+          color: <?php echo json_encode($_groupDataColor);?>
+      },
 	  data: [
 		{
-		  data: [{"id":"BD.DA","value":39886},{"id":"BD.CG","value":17152},{"id":"BD.RS","value":3313},{"id":"BD.SY","value":2556},{"id":"BD.MM","value":2330},{"id":"BD.BA","value":1711},{"id":"BD.KH","value":2092},{"id":"BD.RP","value":2074}]		}
+            data: <?php echo json_encode($_divisionWiseInfacted);?>
+		}
 	  ]
 	};
 
 	FusionCharts.ready(function() {
 	  var myChart = new FusionCharts({
-		type: 'maps/bangladesh',
+        type: <?php echo ($_divisionSelName)?"'".$_mapRegions[$_divisionSelName]."'":"'maps/bangladesh'"; ?>,
 		renderAt: "map-container",
 		width: "320",
 		height: "400",
@@ -165,9 +167,9 @@ function districtAjaxCall(division_name){
 	if(responseData.data){
 
 		 if(division_name == 'all'){
-			responseData.division_group_color_data = [{"maxvalue":50,"displayvalue":"\u09e7\u09e7-\u09eb\u09e6","code":"#F69475"},{"maxvalue":100,"displayvalue":"\u09eb\u09e7-\u09e7\u09e6\u09e6","code":"#F37366"},{"maxvalue":150,"displayvalue":"\u09e7\u09e6\u09e7-\u09e7\u09eb\u09e6","code":"#E5515D"},{"maxvalue":1000,"displayvalue":"\u09e7\u09eb\u09e7-\u09e7\u09e6\u09e6\u09e6","code":"#CD3E52"},{"maxvalue":101000,"displayvalue":"\u09e7\u09e6\u09e6\u09e6+","code":"#BC2B4C"}];
-			responseData.division_wise_inffacted_data = [{"id":"BD.DA","value":39886},{"id":"BD.CG","value":17152},{"id":"BD.RS","value":3313},{"id":"BD.SY","value":2556},{"id":"BD.MM","value":2330},{"id":"BD.BA","value":1711},{"id":"BD.KH","value":2092},{"id":"BD.RP","value":2074}];
-		 }
+             responseData.division_group_color_data = <?php echo json_encode($_groupDataColor);?>;
+             responseData.division_wise_inffacted_data = <?php echo json_encode($_divisionWiseInfacted);?>;
+			 }
 
 		//$('#district-infecteed_wrapper').hide();
 		if ($.fn.dataTable.isDataTable( '#district-infecteed' ) ) {
