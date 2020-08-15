@@ -4,13 +4,12 @@
 @section('content')
 <!--Page header-->
 <div class="page-header">
-	<div class="page-leftheader">
-		<h4 class="page-title mb-0">User Management</h4>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>User List</a></li>
-			<!-- <li class="breadcrumb-item active" aria-current="page"><a href="#">Empty Page</a></li> -->
-		</ol>
-	</div>
+     <div class="page-leftheader">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#"><i class="fe fe-home mr-2 fs-14"></i>User Management</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="#">User List</a></li>
+        </ol>
+    </div>
 	<!-- <div class="page-rightheader">
 		<div class="btn btn-list">
 			<a href="#" class="btn btn-info"><i class="fe fe-settings mr-1"></i> General Settings </a>
@@ -46,11 +45,14 @@
                         <tr>
                             <th style="width: 200px">Name</th>
                             <th>Email</th>
-<!--                             <th>Mobile</th>
-                            <th>Brnach</th> -->
                             <th>User Type</th>
+                            <th>Account Level</th>
+                            <th>Role</th>
+                            <th>Division</th>
+                            <th>District</th>
+                            <th>Upazilla</th>
                             <th>Registered Since</th>
-                            <th style="width: 200px">Action</th>
+                            <th style="width: 150px">Action</th>
 
                         </tr>
                     </thead>
@@ -60,13 +62,22 @@
                         <tr>
                             <td style="text-transform: capitalize;">{{$user->name ?? '--'}}</td>
                             <td>{{$user->email ?? '--'}}</td>
-<!--                             <td>{{$user->mobile_no ?? '--'}}</td>
-                            <td>{{$user->branch != '' ? $user->branch : '--' ?? '--'}}</td> -->
                             <td style="text-transform: capitalize;">
-
                                 <span class="label label-success"> {{$user->user_type ?? '--'}} </span>
-
                             </td>
+                            <td style="text-transform: capitalize;">
+                                <span class="label label-success"> {{$user->account_level ?? '--'}} </span>
+                            </td>
+                            <td>
+                                @if($user->getRoleNames()->count())
+                                <span class="label label-success"> {{$user->getRoleNames()[0]}} </span>
+                                @else
+                                --
+                                @endif
+                            </td>
+                            <td>{{$user->division ?? '--'}}</td>
+                            <td>{{$user->district ?? '--'}}</td>
+                            <td>{{$user->upazilla ?? '--'}}</td>
                             <td>{{$user->created_at ?? '--'}}</td>
                             <td>
                             	<a href="user/edit/{{$user->id}}" class="btn btn-sm btn-info" style="float: left;margin-right: 5px;">Edit</a>

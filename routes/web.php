@@ -37,9 +37,7 @@ Route::get('/iedcr/dashboard', function () {
 
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
-    Route::get('dashboard', function () {
-        return view('superadmin.dashboard');
-    })->name('admin-dashboard');
+    Route::get('dashboard','HomeController@index')->name('admin-dashboard');
 
     Route::get('roles/create', function () {
         $role = Role::create(['name' => 'writer']);
@@ -67,17 +65,27 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
         }
     });
 
-    // user management routes for admin
-    Route::group([/*'middleware' => 'auth:admin'*/], function () {
-        Route::get('users','UserController@index')->name('all-user');
-        Route::get('user/create','UserController@createForm');
-        Route::post('user/create','UserController@store')->name('create-user');
 
-        Route::get('user/edit/{user}','UserController@editForm');
-        Route::post('user/edit/{user}','UserController@update')->name('edit-user');
-        Route::delete('user/{id}','UserController@destroy');
-    });
+    // user management routes for admin
+    Route::get('users','UserController@index')->name('all-user');
+    Route::get('user/create','UserController@createForm');
+    Route::get('division/districts','UserController@getDistrictFromDivision')->name('get-district-from-division');
+    Route::get('division/district/upazilla','UserController@getUpazillaFromDistrict')->name('get-upazilla-from-district');
+    Route::post('user/create','UserController@store')->name('create-user');
+
+    Route::get('user/edit/{user}','UserController@editForm');
+    Route::post('user/edit/{user}','UserController@update')->name('edit-user');
+    Route::delete('user/{id}','UserController@destroy');
     // user management routes ending
+
+    // role management routes for admin
+    Route::get('roles','RoleController@index')->name('all-roles');
+    Route::post('role/create','RoleController@store')->name('create-role');
+
+    Route::put('role/edit/{role_id}','RoleController@update')->name('edit-role');
+    Route::delete('role/{role_id}','RoleController@destroy');
+    // role management routes ending
+    
 });
 
 

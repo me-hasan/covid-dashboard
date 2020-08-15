@@ -62,6 +62,13 @@
 								<li><a href="{{route('create-user')}}" class="slide-item">Create User</a></li>
 							</ul>
 						</li>
+						<li class="side-item side-item-category">Role Management</li>
+						<li class="slide">
+							<a class="side-menu__item"  href="{{route('all-roles')}}">
+							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z"/></svg>
+							<span class="side-menu__label">Role</span>
+							</a>
+						</li>
 						<!-- <li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#">
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"/><circle cx="12" cy="9" r="2.5"/></svg>
