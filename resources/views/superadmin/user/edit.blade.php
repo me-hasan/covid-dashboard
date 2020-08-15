@@ -67,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="control-label mb-10">Account Level : <span style="color:red">*</span></label>
-                        <select name="account_level" class="form-control" required>
+                        <select name="account_level" class="form-control account_level" required>
                             <option value="administrative" {{$user->account_level == 'administrative' ? 'selected' : ''}}>Administrative</option>
                             <option value="divisional" {{$user->account_level == 'divisional' ? 'selected' : ''}}>Divisional</option>
                             <option value="district" {{$user->account_level == 'district' ? 'selected' : ''}}>District</option>
@@ -85,6 +85,33 @@
                                 }
                                 @endphp
                                 <option value="{{$role}}" {{ $selectAttr ?? ''}}>{{$role}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group division-holder">
+                        <label for="recipient-name" class="control-label mb-10">Division : <span style="color:red">*</span></label>
+                        <select name="division" class="form-control division">
+                            <option value="">Select Division</option>
+                            @foreach($divisions as $division)
+                            <option value="{{$division->division}}" {{$user->division == $division->division ? 'selected' : ''}}>{{$division->division}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group district-holder">
+                        <label for="recipient-name" class="control-label mb-10">District :</label>
+                        <select name="district" class="form-control district">
+                            <option value="">Select District</option>
+                            @foreach($districts as $district)
+                            <option value="{{$district->district}}">{{$district->district}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group upazilla-holder">
+                        <label for="recipient-name" class="control-label mb-10">Upazilla :</label>
+                        <select name="upazilla" class="form-control upazilla">
+                            <option value="">Select Upazilla</option>
+                            @foreach($upazillas as $upazilla)
+                            <option value="{{$upazilla->upazilla}}">{{$upazilla->upazilla}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -107,14 +134,14 @@
     function checkAccountLevel(account_level){
         console.log(account_level);
         if(account_level == 'administrative'){
-            $('.division, .district, .upazilla').empty();
+            $('.division, .district, .upazilla').val("");
             $('.division-holder, .district-holder, .upazilla-holder').hide();
         }else if(account_level == 'divisional'){
-            $('.district, .upazilla').empty();
+            $('.district, .upazilla').val("");
             $('.district-holder, .upazilla-holder').hide();
             $('.division-holder').show();
         }else if(account_level == 'district'){
-            $('.upazilla').empty();
+            $('.upazilla').val("");
             $('.upazilla-holder').hide();
             $('.division-holder, .district-holder').show();
         }else{

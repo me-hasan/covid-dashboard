@@ -87,7 +87,18 @@ class UserController extends Controller
         //     abort(403);
 
         $roles = Role::pluck('name', 'name');
-        return view("superadmin.user.edit", compact('user','roles'));
+        $divisions = DB::table('upazila')->distinct()->get('division');
+        if($user->district != null){
+            $districts = DB::table('upazila')->where('division',$user->division)->distinct()->get('district');
+        }else{
+            $districts = [];
+        }
+        if($user->upazila != null){
+            $upazillas = DB::table('upazila')->where('district',$user->district)->distinct()->get('upazila_en');
+        }else{
+            $upazillas = [];
+        }
+        return view("superadmin.user.edit", compact('user','roles','divisions','districts','upazillas'));
     }
 
     public function update($id, Request $request) {

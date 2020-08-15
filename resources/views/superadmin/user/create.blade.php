@@ -130,14 +130,14 @@
     function checkAccountLevel(account_level){
         console.log(account_level);
         if(account_level == 'administrative'){
-            $('.division, .district, .upazilla').empty();
+            $('.division, .district, .upazilla').val("");
             $('.division-holder, .district-holder, .upazilla-holder').hide();
         }else if(account_level == 'divisional'){
-            $('.district, .upazilla').empty();
+            $('.district, .upazilla').val("");
             $('.district-holder, .upazilla-holder').hide();
             $('.division-holder').show();
         }else if(account_level == 'district'){
-            $('.upazilla').empty();
+            $('.upazilla').val("");
             $('.upazilla-holder').hide();
             $('.division-holder, .district-holder').show();
         }else{
