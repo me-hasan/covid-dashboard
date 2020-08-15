@@ -22,9 +22,18 @@
 		<script src="{{ asset('assets/plugins/p-scrollbar/p-scrollbar.js') }}"></script>
 		<script src="{{ asset('assets/plugins/p-scrollbar/p-scroll1.js') }}"></script>
 		<script src="{{ asset('assets/plugins/p-scrollbar/p-scroll.js') }}"></script>
-
+		<!-- select 2 -->
+		<script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
 		<!-- Custom js-->
 		<script src="{{ asset('assets/js/custom.js') }}"></script>
+
+		<script>
+            $(document).ready(function () {
+                $(".select2").select2();
+            });
+        </script>
+        @stack('scripts')
+
 
 	</body>
 </html>

@@ -33,28 +33,27 @@ class UserController extends Controller
         //     abort(403);
 
         $users = User::get();
-        // dd($users);
-        // $roles = Role::pluck('name', 'name');
         return view("superadmin.user.index", compact('users'));
     }
 
     public function createForm() {
         // if (!auth()->user()->can('System User Management'))
         //     abort(403);
-
-        return view("superadmin.user.create");
+        $roles = Role::pluck('name', 'name');
+        $divisions = DB::table('upazila')->distinct()->get('division');
+        return view("superadmin.user.create",compact('roles','divisions'));
     }
 
     public function store(Request $request) {
         // if (!auth()->user()->can('System User Management'))
         //     abort(403);
 
-        // dd($request->all());
-
         $this->validate($request, [
             'name' => 'required|string|min:3',
             'email' => 'required|unique:users',
-            'password' => 'required|confirmed|min:8'
+            'password' => 'required|confirmed|min:8',
+            'account_level' => 'required',
+            'role' => 'required|exists:roles,name'
         ]);
 
         try {
@@ -64,10 +63,14 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->user_type = $request->user_type;
+            $user->account_level = $request->account_level;
+            $user->division = $request->division;
+            $user->district = $request->district;
+            $user->upazilla = $request->upazilla;
             $user->password = Hash::make($request->password);
             $user->save();
 
-            // $user->assignRole($request->role);
+            $user->assignRole($request->role);
             DB::commit();
 
             // return redirect()->back()->with("success", "User Create Successfully");
@@ -83,8 +86,20 @@ class UserController extends Controller
         // if (!auth()->user()->can('System User Management'))
         //     abort(403);
 
-        // dd($user);
-        return view("superadmin.user.edit", compact('user'));
+        $roles = Role::pluck('name', 'name');
+        $divisions = DB::table('upazila')->distinct()->get('division');
+        if($user->district != null){
+            $districts = DB::table('upazila')->where('division',$user->division)->distinct()->get('district');
+        }else{
+            $districts = [];
+        }
+        if($user->upazilla != null){
+            $upazillas = DB::table('upazila')->where(['district' => $user->district])->distinct()->get('upazila_en');
+        }else{
+            $upazillas = [];
+        }
+
+        return view("superadmin.user.edit", compact('user','roles','divisions','districts','upazillas'));
     }
 
     public function update($id, Request $request) {
@@ -93,7 +108,9 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string|min:3',
-            'email' => 'required'
+            'email' => 'required',
+            'account_level' => 'required',
+            'role' => 'required|exists:roles,name'
         ]);
 
         try {
@@ -102,9 +119,13 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->user_type = $request->user_type;
+            $user->account_level = $request->account_level;
+            $user->division = $request->division;
+            $user->district = $request->district;
+            $user->upazilla = $request->upazilla;
             $user->save();
 
-            // $user->syncRoles([$request->role]);
+            $user->syncRoles([$request->role]);
             DB::commit();
 
             return redirect()->route('all-user')->with("success", "User Successfully Updated");
@@ -112,6 +133,32 @@ class UserController extends Controller
             DB::rollback();
             Log::error('[Class => ' . __CLASS__ . ", function => " . __FUNCTION__ . " ]" . " @ " . $ex->getFile() . " " . $ex->getLine() . " " . $ex->getMessage());
             return redirect()->back()->withErrors('Something went wrong. Please try again')->withInput();
+        }
+    }
+
+    public function getDistrictFromDivision(Request $request)
+    {
+        if(isset($request->division)) {
+            $districts = DB::table('upazila')->where('division',$request->division)->distinct()->get('district');
+            $response = array(
+                'status' => 1,
+                'data' => $districts,
+                'message' => 'District data has successfully retrieved.',
+            );
+            return $response;
+        }
+    }
+
+    public function getUpazillaFromDistrict(Request $request)
+    {
+        if(isset($request->district)) {
+            $upazillas = DB::table('upazila')->where('district',$request->district)->distinct()->get('upazila_en');
+            $response = array(
+                'status' => 1,
+                'data' => $upazillas,
+                'message' => 'Upazilla data has successfully retrieved.',
+            );
+            return $response;
         }
     }
 
