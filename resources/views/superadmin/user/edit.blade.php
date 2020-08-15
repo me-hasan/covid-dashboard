@@ -102,7 +102,7 @@
                         <select name="district" class="form-control district">
                             <option value="">Select District</option>
                             @foreach($districts as $district)
-                            <option value="{{$district->district}}">{{$district->district}}</option>
+                            <option value="{{$district->district}}" {{$user->district == $district->district ? 'selected' : ''}}>{{$district->district}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -111,7 +111,7 @@
                         <select name="upazilla" class="form-control upazilla">
                             <option value="">Select Upazilla</option>
                             @foreach($upazillas as $upazilla)
-                            <option value="{{$upazilla->upazilla}}">{{$upazilla->upazilla}}</option>
+                            <option value="{{$upazilla->upazilla}}" {{$user->upazilla == $upazilla->upazilla ? 'selected' : ''}}>{{$upazilla->upazilla}}</option>
                             @endforeach
                         </select>
                     </div>
