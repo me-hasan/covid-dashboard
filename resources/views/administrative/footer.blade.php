@@ -1,31 +1,31 @@
-<!--jQuery--> 
-<script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script> 
-<!-- plugins:js --> 
-<script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script> 
-<!-- endinject --> 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
-<!-- Plugin js for this page --> 
-<script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script> 
-<!-- End plugin js for this page --> 
-<!-- inject:js --> 
-<script src="{{ asset('assets/js/off-canvas.js') }}"></script> 
-<!--<script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>--> 
-<script src="{{ asset('assets/js/misc.js') }}"></script> 
-<!-- endinject --> 
-<!-- Custom js for this page --> 
+<!--jQuery-->
+<script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+<!-- plugins:js -->
+<script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+<!-- endinject -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Plugin js for this page -->
+<script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+<!--<script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>-->
+<script src="{{ asset('assets/js/misc.js') }}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
 <!--<script src="{{ asset('assets/js/dashboard.js') }}"></script>
-<script src="{{ asset('assets/js/todolist.js') }}"></script>--> 
-<!-- End custom js for this page --> 
+<script src="{{ asset('assets/js/todolist.js') }}"></script>-->
+<!-- End custom js for this page -->
 
-<!-- Fututionchart Integration --> 
-<!-- Step 1 - Include the fusioncharts core library --> 
-<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script> 
-<!-- Step 2 - Include the fusion theme --> 
-<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script> 
-<!-- Fututionchart Integration --> 
-<script src="https://code.highcharts.com/highcharts.js"></script> 
-<script src="https://code.highcharts.com/modules/accessibility.js"></script> 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> 
+<!-- Fututionchart Integration -->
+<!-- Step 1 - Include the fusioncharts core library -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<!-- Step 2 - Include the fusion theme -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+<!-- Fututionchart Integration -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 		const dataSource = {
 	  chart: {
@@ -39,16 +39,18 @@
 	  },
 	  colorrange: {
 		gradient: "0",
-		color: [{"maxvalue":50,"displayvalue":"\u09e7\u09e7-\u09eb\u09e6","code":"#F69475"},{"maxvalue":100,"displayvalue":"\u09eb\u09e7-\u09e7\u09e6\u09e6","code":"#F37366"},{"maxvalue":150,"displayvalue":"\u09e7\u09e6\u09e7-\u09e7\u09eb\u09e6","code":"#E5515D"},{"maxvalue":1000,"displayvalue":"\u09e7\u09eb\u09e7-\u09e7\u09e6\u09e6\u09e6","code":"#CD3E52"},{"maxvalue":101000,"displayvalue":"\u09e7\u09e6\u09e6\u09e6+","code":"#BC2B4C"}]	  },
+          color: <?php echo json_encode($_groupDataColor);?>
+      },
 	  data: [
 		{
-		  data: [{"id":"BD.DA","value":39886},{"id":"BD.CG","value":17152},{"id":"BD.RS","value":3313},{"id":"BD.SY","value":2556},{"id":"BD.MM","value":2330},{"id":"BD.BA","value":1711},{"id":"BD.KH","value":2092},{"id":"BD.RP","value":2074}]		}
+            data: <?php echo json_encode($_divisionWiseInfacted);?>
+		}
 	  ]
 	};
 
 	FusionCharts.ready(function() {
 	  var myChart = new FusionCharts({
-		type: 'maps/bangladesh',
+        type: <?php echo ($_divisionSelName)?"'".$_mapRegions[$_divisionSelName]."'":"'maps/bangladesh'"; ?>,
 		renderAt: "map-container",
 		width: "320",
 		height: "400",
@@ -78,7 +80,7 @@ $(document).ready(function() {
 			$('option[rel="'+$(this).val()+'"]').show();
 		}
 	});
-	
+
 	$('#district_list').change(function(){
 		console.log($(this).val());
 		/*if($('#division_list').val() != null){
@@ -87,7 +89,7 @@ $(document).ready(function() {
 		if($('#upazilla_list').val() != null){
 			$('#upazilla_list').val("");
 		}*/
-		
+
 		if($(this).val() == 'all'){
 			$('.upazilla-option').show();
 		}else{
@@ -96,11 +98,18 @@ $(document).ready(function() {
 			$('option[rel="'+$(this).val()+'"]').show();
 		}
 	});
-	
-		
-		
-		    var districtDataTable = $('#district-infecteed').DataTable({
-        data: [["\u09a2\u09be\u0995\u09be ","\u09a2\u09be\u0995\u09be ","\u09e8\u09ed,\u09e8\u09ec\u09ed","\u09e6.\u09ec\u09e8","\u09e9\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09eb,\u09eb\u09ee\u09eb","\u09e6.\u09ea\u09ea","\u09e8\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09a8\u09be\u09b0\u09be\u09af\u09bc\u09a3\u0997\u099e\u09cd\u099c ","\u09ea,\u09eb\u09e9\u09e6","\u09e6.\u09ef\u09ec","\u09e9\u09ef","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u0995\u0995\u09cd\u09b8\u09ac\u09be\u099c\u09be\u09b0","\u09e8,\u09ec\u09ee\u09ee","\u09e7.\u09e7\u09ed","\u09e7\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09ab\u09c7\u09a8\u09c0","\u09e8,\u09ec\u09ee\u09ee","\u09e6.\u09ef\u09e7","\u09e9\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u0997\u09be\u099c\u09c0\u09aa\u09c1\u09b0 ","\u09e8,\u09eb\u09e7\u09e7","\u09e6.\u09eb\u09ec","\u09e9\u09e9","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u0995\u09c1\u09ae\u09bf\u09b2\u09cd\u09b2\u09be","\u09e8,\u09ea\u09ed\u09e7","\u09e6.\u09e7\u09e8","\u09e9\u09e8","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09ac\u0997\u09c1\u09a1\u09bc\u09be ","\u09e8,\u09e6\u09ee\u09eb","\u09e7.\u09e6\u09e9","\u09e7\u09ec","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09b8\u09bf\u09b2\u09c7\u099f","\u09b8\u09bf\u09b2\u09c7\u099f","\u09e7,\u09ed\u09ec\u09ee","\u09e7.\u09e6\u09eb","\u09e7\u09eb","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09a8\u09cb\u09af\u09bc\u09be\u0996\u09be\u09b2\u09c0 ","\u09e7,\u09ed\u09e6\u09ed","\u09e6.\u09ea\u09ed","\u09ee\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","\u09e7,\u09e9\u09e7\u09eb","\u09e6.\u09ee","\u09e7\u09e9","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09ac\u09b0\u09bf\u09b6\u09be\u09b2","\u09ac\u09b0\u09bf\u09b6\u09be\u09b2","\u09e7,\u09e7\u09e8\u09ef","\u09e6.\u09e8\u09eb","\u09eb\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09a8\u09b0\u09b8\u09bf\u0982\u09a6\u09c0","\u09e7,\u09e7\u09e6\u09ef","\u09e7.\u09e7\u09ec","\u09e7\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u0995\u09bf\u09b6\u09cb\u09b0\u0997\u099e\u09cd\u099c","\u09e7,\u09e6\u09ee\u09e9","\u09e6.\u09eb\u09ec","\u09e9\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09ab\u09b0\u09bf\u09a6\u09aa\u09c1\u09b0","\u09e7,\u09e6\u09e8\u09e9","\u09e7.\u09e9\u09e9","\u09e7\u09e9","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u0996\u09c1\u09b2\u09a8\u09be ","\u09ee\u09e6\u09e6","\u09e6.\u09ec\u09eb","\u09e7\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09b8\u09bf\u09b2\u09c7\u099f","\u09b8\u09c1\u09a8\u09be\u09ae\u0997\u099e\u09cd\u099c ","\u09ed\u09ee\u09ee","\u09e6.\u09ec","\u09e8\u09e9","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u09b0\u0982\u09aa\u09c1\u09b0 ","\u09ed\u09ec\u09eb","\u09e6.\u09ef\u09ee","\u09ea\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09b2\u0995\u09cd\u09b7\u09cd\u09ae\u09c0\u09aa\u09c1\u09b0 ","\u09eb\u09ef\u09eb","\u09e7.\u09e6\u09e8","\u09e9\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u099a\u09be\u0981\u09a6\u09aa\u09c1\u09b0 ","\u09eb\u09ec\u09ea","\u09e7.\u09e8\u09eb","\u09e7\u09ec","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09ac\u09cd\u09b0\u09be\u09b9\u09cd\u09ae\u09a3\u09ac\u09be\u09a1\u09bc\u09c0\u09af\u09bc\u09be ","\u09eb\u09e9\u09e9","\u09e6.\u09ec\u09e8","\u09e8\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u09a6\u09bf\u09a8\u09be\u099c\u09aa\u09c1\u09b0","\u09ea\u09ef\u09e8","\u09e7.\u09e6\u09e8","\u09e9\u09ef","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09ae\u09be\u09a8\u09bf\u0995\u0997\u099e\u09cd\u099c ","\u09ea\u09ed\u09e8","\u09e6.\u09ea\u09ea","\u09e9\u09e8","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09ae\u09be\u09a6\u09be\u09b0\u09c0\u09aa\u09c1\u09b0 ","\u09ea\u09ec\u09ee","\u09e6.\u09e9\u09eb","\u09e7\u09e8\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u0997\u09cb\u09aa\u09be\u09b2\u0997\u099e\u09cd\u099c ","\u09ea\u09ec\u09e6","\u09e7.\u09e7\u09ef","\u09e7\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","\u099c\u09be\u09ae\u09be\u09b2\u09aa\u09c1\u09b0 ","\u09ea\u09ea\u09e6","\u09e7.\u09e6\u09ee","\u09e8\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u099f\u09be\u0999\u09cd\u0997\u09be\u0987\u09b2 ","\u09e9\u09ed\u09ef","\u09e7.\u09e9\u09e8","\u09e7\u09e8","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09b6\u09b0\u09c0\u09af\u09bc\u09a4\u09aa\u09c1\u09b0","\u09e9\u09ed\u09ee","\u09e7.\u09e6\u09e9","\u09e9\u09ec","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","\u09a8\u09c7\u09a4\u09cd\u09b0\u0995\u09cb\u09a8\u09be","\u09e9\u09ec\u09ec","\u09e8.\u09e8\u09ef","\u09ef","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u09af\u09b6\u09cb\u09b0 ","\u09e9\u09e7\u09ea","\u09e6.\u09ef\u09e7","\u09e7\u09e9","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u0995\u09c1\u09b7\u09cd\u099f\u09bf\u09df\u09be","\u09e9\u09e6\u09ed","\u09e7.\u09e9\u09e9","\u09e7\u09e7","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u09a8\u09c0\u09b2\u09ab\u09be\u09ae\u09be\u09b0\u09c0 ","\u09e8\u09ef\u09eb","\u09e7.\u09e6\u09ec","\u09e8\u09eb","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09aa\u09be\u09ac\u09a8\u09be ","\u09e8\u09ed\u09e6","\u09e7.\u09e9\u09eb","\u09e7\u09e7","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09b8\u09bf\u09b0\u09be\u099c\u0997\u099e\u09cd\u099c ","\u09e8\u09ec\u09e7","\u09e7.\u09e8","\u09e7\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09ac\u09b0\u09bf\u09b6\u09be\u09b2","\u09aa\u099f\u09c1\u09af\u09bc\u09be\u0996\u09be\u09b2\u09c0 ","\u09e8\u09ea\u09e7","\u09e6.\u09ea\u09ef","\u09ea\u09eb","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09a8\u0993\u0997\u09be\u0981 ","\u09e8\u09e9\u09ef","\u09e6.\u09ee\u09ee","\u09ed\u09ef","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09e8\u09e9\u09ed","\u09e7.\u09ec\u09e7","\u09eb","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","\u09b6\u09c7\u09b0\u09aa\u09c1\u09b0","\u09e8\u09e6\u09ef","\u09e7.\u09e6\u09ea","\u09e8\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u0997\u09be\u0987\u09ac\u09be\u09a8\u09cd\u09a7\u09be ","\u09e8\u09e6\u09ed","\u09e7.\u09e6\u09e8","\u09e9\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09a2\u09be\u0995\u09be ","\u09b0\u09be\u099c\u09ac\u09be\u09a1\u09bc\u09c0 ","\u09e8\u09e6\u09ec","\u09e7.\u09e7\u09ea","\u09e7\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09ac\u09b0\u09bf\u09b6\u09be\u09b2","\u09ad\u09cb\u09b2\u09be ","\u09e7\u09ee\u09ed","\u09e6.\u09e9","\u09e7\u09e8\u09e7","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u099a\u09c1\u09af\u09bc\u09be\u09a1\u09be\u0999\u09cd\u0997\u09be ","\u09e7\u09ec\u09ef","\u09e6.\u09eb\u09eb","\u09e7\u09ef","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09ac\u09b0\u09bf\u09b6\u09be\u09b2","\u09ac\u09b0\u0997\u09c1\u09a8\u09be ","\u09e7\u09eb\u09ea","\u09e7.\u09e6\u09e7","\u09e9\u09e7","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u099c\u09af\u09bc\u09aa\u09c1\u09b0\u09b9\u09be\u099f","\u09e7\u09e9\u09eb","\u09e6.\u09ef\u09eb","\u09e8\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u09aa\u099e\u09cd\u099a\u0997\u09a1\u09bc ","\u09e7\u09e8\u09eb","\u09e6.\u09ee\u09e8","\u09ea\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u099d\u09bf\u09a8\u09be\u0987\u09a6\u09be\u09b9 ","\u09e7\u09e8\u09e9","\u09e7.\u09e6\u09ef","\u09e7\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u0995\u09c1\u09a1\u09bc\u0997\u09cd\u09b0\u09bf\u09be\u09ae ","\u09e7\u09e7\u09ef","\u09e6.\u09e7\u09e8","\u09e7\u09eb","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09b0\u09be\u0999\u09cd\u0997\u09be\u09ae\u09be\u099f\u09bf ","\u09e7\u09e7\u09ec","\u09e6.\u09ec\u09e8","\u09e7\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u09ac\u09be\u09a8\u09cd\u09a6\u09b0\u09ac\u09be\u09a8 ","\u09e7\u09e7\u09e7","\u09e7.\u09e6\u09ee","\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u09ac\u09be\u0997\u09c7\u09b0\u09b9\u09be\u099f ","\u09e7\u09e6\u09e8","\u09e7.\u09ea\u09e9","\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u09b8\u09be\u09a4\u0995\u09cd\u09b7\u09c0\u09b0\u09be ","\u09e7\u09e6\u09e6","\u09e6.\u09ef\u09eb","\u09e8\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","\u0996\u09be\u0997\u09a1\u09bc\u09be\u099b\u09a1\u09bc\u09bf ","\u09ef\u09ea","\u09e7.\u09e9\u09e8","\u09e7\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-3.png\"> <\/span>"],["\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","\u09a8\u09ac\u09be\u09ac\u0997\u099e\u09cd\u099c","\u09ee\u09ec","\u09e6.\u09ef\u09e9","\u09e7\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u09a8\u09a1\u09bc\u09be\u0987\u09b2 ","\u09ed\u09e9","\u09e7.\u09e8\u09e8","\u09e7\u09e6","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-4.png\"> <\/span>"],["\u09b0\u0982\u09aa\u09c1\u09b0 ","\u09b2\u09be\u09b2\u09ae\u09a8\u09b0\u09bf\u09b9\u09be\u099f ","\u09ed\u09e7","\u09e6.\u09ef\u09e9","\u09e7\u09ee","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-1.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u09ae\u09be\u0997\u09c1\u09b0\u09be ","\u09ec\u09ea","\u09e7.\u09e8\u09e7","\u09ed","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"],["\u0996\u09c1\u09b2\u09a8\u09be ","\u09ae\u09b9\u09c7\u09b0\u09c7\u09aa\u09c1\u09b0 ","\u09ea\u09e6","\u09e7.\u09e8","\u09ea","<span class=\"line-chart-holder\"><img src=\"assets\/images\/line-chart-2.png\"> <\/span>"]],
+
+        <?php $_imageLineChart = ['line-chart-1.png', 'line-chart-2.png', 'line-chart-3.png', 'line-chart-4.png'];
+        ?>
+        <?php
+        foreach($_distirctDetailsData as $_districtWiseInfo){
+            $_districtWiseInfo = (array)$_districtWiseInfo;
+//            $_dataTableDataSet[] = [en2bnbyXLSX($_districtWiseInfo['DIVISION']), en2bnbyXLSX($_districtWiseInfo['DISTRICT']), BanglaConverter::en2bn(number_format($_districtWiseInfo['INFECTED_PERSON'])), BanglaConverter::en2bn($_districtWiseInfo['Rt']), BanglaConverter::en2bn(number_format($_districtWiseInfo['DOUBLING_RATE'])), '<span class="line-chart-holder"><img src="assets/images/'.$_imageLineChart[rand(0, 3)].'"> </span>'];
+            $_dataTableDataSet[] = [$_districtWiseInfo['DIVISION'], $_districtWiseInfo['DISTRICT'], App\Http\Controllers\cabinet\DashboardController::en2bn(number_format($_districtWiseInfo['INFECTED_PERSON'])), App\Http\Controllers\cabinet\DashboardController::en2bn($_districtWiseInfo['Rt']), App\Http\Controllers\cabinet\DashboardController::en2bn(number_format($_districtWiseInfo['DOUBLING_RATE'])), '<span class="line-chart-holder"><img src="assets/images/'.$_imageLineChart[rand(0, 3)].'"> </span>'];
+        }
+        ?>
+        var districtDataTable = $('#district-infecteed').DataTable({
+        data: <?php echo json_encode($_dataTableDataSet); ?>,
         columns: [
 			{ title: "বিভাগ" },
 			{ title: "জেলা" },
@@ -111,7 +120,7 @@ $(document).ready(function() {
 		],
 		//"ajax": "district-infected.php",
 		//bPaginate: false,
-		bFilter: false, 
+		bFilter: false,
 		bInfo: false,
 		"ordering": false
 		//pagingType: "simple_numbers"
@@ -119,10 +128,10 @@ $(document).ready(function() {
 	//$.fn.DataTable.ext.pager.numbers_length = 3;
 
 });
-	
+
 // Map Dropdown List
 function districtAjaxCall(division_name){
-	
+
 	var divisionObj = {
 		'all': 'maps/bangladesh',
 		'MYMENSINGH': 'maps/mymensingh',
@@ -133,44 +142,44 @@ function districtAjaxCall(division_name){
 		'RAJSHAHI': 'maps/rajshahi',
 		'DHAKA': 'maps/dhaka',
 		'KHULNA': 'maps/khulna'
-		
+
 	};
-	
+
 	console.log(divisionObj[division_name]);
-	
+
 	divisionMap = divisionObj[division_name];
-	
+
 	/*Object.keys(divisionObj).forEach(function eachKey(key) {
-		
-		console.log(key); // alerts key 
+
+		console.log(key); // alerts key
 		console.log(divisionObj[key]); // alerts value
 	});*/
-	
-	//$('.submit-btn').html('LOADING...').attr('style','background-color:#3b3b3b');	
-		 
+
+	//$('.submit-btn').html('LOADING...').attr('style','background-color:#3b3b3b');
+
 	var formParams = "division_name="+division_name+"&map_date="+$('#map_date').val()+"&isAjax=true";
-  
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 	 var responseData = JSON.parse(this.responseText);
 	 //alert(responseData.data);
 	if(responseData.data){
-		 
+
 		 if(division_name == 'all'){
-			responseData.division_group_color_data = [{"maxvalue":50,"displayvalue":"\u09e7\u09e7-\u09eb\u09e6","code":"#F69475"},{"maxvalue":100,"displayvalue":"\u09eb\u09e7-\u09e7\u09e6\u09e6","code":"#F37366"},{"maxvalue":150,"displayvalue":"\u09e7\u09e6\u09e7-\u09e7\u09eb\u09e6","code":"#E5515D"},{"maxvalue":1000,"displayvalue":"\u09e7\u09eb\u09e7-\u09e7\u09e6\u09e6\u09e6","code":"#CD3E52"},{"maxvalue":101000,"displayvalue":"\u09e7\u09e6\u09e6\u09e6+","code":"#BC2B4C"}];
-			responseData.division_wise_inffacted_data = [{"id":"BD.DA","value":39886},{"id":"BD.CG","value":17152},{"id":"BD.RS","value":3313},{"id":"BD.SY","value":2556},{"id":"BD.MM","value":2330},{"id":"BD.BA","value":1711},{"id":"BD.KH","value":2092},{"id":"BD.RP","value":2074}];
-		 }
-		 
+             responseData.division_group_color_data = <?php echo json_encode($_groupDataColor);?>;
+             responseData.division_wise_inffacted_data = <?php echo json_encode($_divisionWiseInfacted);?>;
+			 }
+
 		//$('#district-infecteed_wrapper').hide();
 		if ($.fn.dataTable.isDataTable( '#district-infecteed' ) ) {
 			districtDataTable = $('#district-infecteed').DataTable();
 			districtDataTable.destroy();
-		}		
+		}
 		districtDataTable = $('#district-infecteed').DataTable( {
 			data: responseData.data,
 			//bPaginate: false,
-			bFilter: false, 
+			bFilter: false,
 			bInfo: false,
 			"ordering": false,
 			columns: [
@@ -182,7 +191,7 @@ function districtAjaxCall(division_name){
 				{ title: "দৈনিক পরিবর্তন (১৪ দিন)" }
 			]
 		});
-		
+
 		//alert(responseData.division_group_color_data);
 		const dataSource = {
 		  chart: {
@@ -219,11 +228,11 @@ function districtAjaxCall(division_name){
 	}
   };
   xhttp.open("POST", "district-infected.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");		  
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(formParams);
 }
-</script> 
-<!-- Daily Infected & Forcast Graph --> 
+</script>
+<!-- Daily Infected & Forcast Graph -->
 <script type="text/javascript">
 
 // Highcharts Infected and Forcast Chart
@@ -235,20 +244,19 @@ Highcharts.chart('division', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'bottom'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
-		categories: ["\u09e6\u09ea\u09ae\u09be\u09b0","\u09e7\u09e7\u09ae\u09be\u09b0","\u09e7\u09ee\u09ae\u09be\u09b0","\u09e8\u09eb\u09ae\u09be\u09b0","\u09e6\u09e7\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ee\u098f\u09aa\u09cd\u09b0\u09bf","\u09e7\u09eb\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09e8\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09ef\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ec\u09ae\u09c7","\u09e7\u09e9\u09ae\u09c7","\u09e8\u09e6\u09ae\u09c7","\u09e8\u09ed\u09ae\u09c7","\u09e6\u09e9\u099c\u09c1\u09a8","\u09e7\u09e6\u099c\u09c1\u09a8","\u09e7\u09ed\u099c\u09c1\u09a8","\u09e8\u09ea\u099c\u09c1\u09a8","\u09e6\u09e7\u099c\u09c1\u09b2","\u09e6\u09ee\u099c\u09c1\u09b2","\u09e7\u09eb\u099c\u09c1\u09b2","\u09e7\u09ed\u099c\u09c1\u09b2","\u09e8\u09ea\u099c\u09c1\u09b2","\u09e9\u09e7\u099c\u09c1\u09b2"]    },
-	
+        categories: <?php echo json_encode($_xAxisData);?> },
 	yAxis: {
         title: {
             text: ''
@@ -260,7 +268,7 @@ Highcharts.chart('division', {
 		},
 		max: 15*/
     },
-	
+
 	plotOptions: {
         series: {
             fillOpacity:0/*,
@@ -274,24 +282,24 @@ Highcharts.chart('division', {
             }*/
         }
     },
-	
+
 	colors: ["#00008b", "#e08658"],
 	series: [{
 		name: 'সংক্রামিত',
-		data: [0,3,8,39,54,218,1231,3772,7103,11719,17822,26738,38292,55140,74865,98489,122660,149258,172134,196323,null,null,null],
-		type : 'area',
+        data: <?php echo json_encode($_infectedWeeksData, true);?>,
+        type : 'area',
 		marker:{symbol:'circle'}
-		
+
 		}, {
 			name: 'ফোরকাস্ট',
-			data: [null,null,null,null,null,null,null,null,null,16353,24383,32471,40660,48850,70373,107342,146700,186059,225417,264775,276020,315378,354737],
-			type: 'area', 
+            data: <?php echo json_encode($_forcastDailyData, true);?>,
+            type: 'area',
 			marker : {symbol : 'circle'},
 			dashStyle: 'shortdot'
 		}],
 });
 
-</script> 
+</script>
 <script type="text/javascript">
 
 // Highcharts Infected and Forcast Chart
@@ -304,20 +312,20 @@ Highcharts.chart('redzone', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'bottom'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
-		categories: ["W1","W2","W3","W4"]    },
-	
+        categories: <?php echo json_encode($_xAxisRedZoneData);?>    },
+
 	yAxis: {
         title: {
             text: ''
@@ -328,7 +336,7 @@ Highcharts.chart('redzone', {
 			}
 		}*/
     },
-	
+
 	plotOptions: {
         series: {
             //fillOpacity:0,
@@ -336,16 +344,16 @@ Highcharts.chart('redzone', {
                 enabled:false
             }
         }
-    },	
+    },
 	colors: ['#ff0000'],
 	series: [{
 		name: 'রেড জোনের সংখ্যা',
-		data: [20,30,45,70],
-		marker:{symbol:'circle'}		
+        data: <?php echo json_encode($_redZoneData);?>,
+        marker:{symbol:'circle'}
 		}]
 });
 
-</script> 
+</script>
 <script type="text/javascript">
 // Mobility In Chart
 Highcharts.chart('division-in-continer', {
@@ -356,20 +364,21 @@ Highcharts.chart('division-in-continer', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'top'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
-		categories: ["WK1","WK2","WK3","WK4","WK5","WK6","WK7"]    },
-	
+        categories: <?php echo json_encode($_mobilityWeeks);?>
+    },
+
 	yAxis: {
         title: {
             text: ''
@@ -381,7 +390,7 @@ Highcharts.chart('division-in-continer', {
 		},
 		max: 15
     },
-	
+
 	plotOptions: {
         series: {
             fillOpacity:0,
@@ -395,10 +404,10 @@ Highcharts.chart('division-in-continer', {
             }
         }
     },
-	
+
 	colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
-	
-    series: [{"type":"area","name":"\u09a2\u09be\u0995\u09be ","data":[10,12,9,11,8,13,14],"marker":{"symbol":"circle"}},{"type":"area","name":"\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","data":[3,4,3,2,4,2,2],"marker":{"symbol":"circle"}},{"type":"area","name":"\u0996\u09c1\u09b2\u09a8\u09be ","data":[8,4,2,5,7,4,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","data":[5,3,5,3,2,4,5],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b8\u09bf\u09b2\u09c7\u099f","data":[4,4,3,4,2,4,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u0982\u09aa\u09c1\u09b0 ","data":[2,3,3,3,3,3,2],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","data":[2,2,3,2,3,3,4],"marker":{"symbol":"circle"}}]});
+    series: <?php echo json_encode($_mobilityInWeeklyData);?>
+});
 // Mobility Out Chart
 Highcharts.chart('division-out-continer', {
 	title: {
@@ -408,20 +417,21 @@ Highcharts.chart('division-out-continer', {
     subtitle: {
         text: ''
     },
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
         verticalAlign: 'top'
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	xAxis: {
-		categories: ["WK1","WK2","WK3","WK4","WK5","WK6","WK7"]    },
-	
+        categories: <?php echo json_encode($_mobilityWeeks);?>
+    },
+
 	yAxis: {
         title: {
             text: ''
@@ -433,7 +443,7 @@ Highcharts.chart('division-out-continer', {
 		},
 		max: 15
     },
-	
+
 	plotOptions: {
         series: {
             fillOpacity:0,
@@ -447,11 +457,12 @@ Highcharts.chart('division-out-continer', {
             }
         }
     },
-	
+
 	colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
-	
-    series: [{"type":"area","name":"\u09a2\u09be\u0995\u09be ","data":[6,6,13,8,10,14,12],"marker":{"symbol":"circle"}},{"type":"area","name":"\u099a\u099f\u09cd\u09b0\u0997\u09cd\u09b0\u09be\u09ae ","data":[5,4,5,5,4,3,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u0996\u09c1\u09b2\u09a8\u09be ","data":[5,2,4,2,5,2,2],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u09be\u099c\u09b6\u09be\u09b9\u09c0 ","data":[1,2,3,2,3,1,1],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b8\u09bf\u09b2\u09c7\u099f","data":[3,1,3,3,3,2,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09b0\u0982\u09aa\u09c1\u09b0 ","data":[1,3,3,3,2,3,3],"marker":{"symbol":"circle"}},{"type":"area","name":"\u09ae\u09df\u09ae\u09a8\u09b8\u09bf\u0982\u09b9","data":[4,5,3,5,5,4,3],"marker":{"symbol":"circle"}}]});
-</script> 
+
+    series: <?php echo json_encode($_mobilityOutWeeklyData);?>
+});
+</script>
 <script type="text/javascript">
 Highcharts.chart('bedvsaddmitted', {
 	title: {
@@ -461,11 +472,11 @@ Highcharts.chart('bedvsaddmitted', {
     subtitle: {
         text: ''
     },
-	
+
 	credits:{
 		enabled:false
 	},
-	
+
 	legend: {
         layout: 'horizontal',
         align: 'center',
@@ -484,7 +495,7 @@ Highcharts.chart('bedvsaddmitted', {
     "xAxis": {
        categories: ["ঢাকা", "চট্টগ্রাম", "রাজশাহী", "খুলনা", "বরিশাল", "সিলেট", "রংপুর", "ময়মনসিংহ"]
     },
-	
+
 	//colors: ['#444a9f', '#843984', '#399de9', '#e08658', '#cbc434', '#7c6faf', '#843984', '#ca5aa9'],
 
     "series": [{
@@ -519,7 +530,7 @@ Highcharts.chart('bedvsaddmitted', {
       }
     }
   });
-</script> 
+</script>
 <script type="text/javascript">
 /*Highcharts.setOptions({
     colors: ['#01BAF2', '#71BF45', '#FAA74B']
@@ -562,8 +573,8 @@ Highcharts.chart('chartContainer', {
       colorByPoint: true,
       innerSize: '70%',
       data: [
-	  {name: 'ঢাকা', y: 30,}, 
-	  { name: 'চট্টগ্রাম', y: 20 }, 
+	  {name: 'ঢাকা', y: 30,},
+	  { name: 'চট্টগ্রাম', y: 20 },
 	  { name: 'রাজশাহী', y: 15 },
 	  { name: "খুলনা", y: 13 },
 	  { name: "বরিশাল ", y: 3 },
@@ -578,48 +589,48 @@ Highcharts.chart('chartContainer', {
 function modalContent(modalLabel, modalType, yAxisLabel, xAxisLabel){
 	// Show Modal Lable
 	$('#modalLabel').html(modalLabel);
-	
+
 	var width = 600;
 	var height = 450;
-	
+
 	//AJAX
 	var formParams = "modal_type="+modalType+"&isAjax=true";
-  
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 	 var responseData = JSON.parse(this.responseText);
-	 
-	 	
+
+
 	if(responseData.chart_type == 'bar'){
-		
+
 		var barChartDataSource = [{
 			name: 'আক্রান্ত',
 			data: responseData.bar_chart
 		  }];
 		var barModalContainer = 'modalContent';
-		
+
 	}else if(responseData.chart_type == 'line'){
-		
+
 		var lineChartDataSource = responseData.line_chart_data;
 		var lineChartDataCategory = responseData.line_chart_label;
 		var lineModalContainer = 'modalContent';
-		
+
 	}else if(responseData.chart_type == 'both'){
-		
+
 		var barChartDataSource = [{
 			name: 'আক্রান্ত',
 			data: responseData.bar_chart
 		  }];
 		var lineChartDataSource = responseData.line_chart_data;
 		var lineChartDataCategory = responseData.line_chart_label;
-		
+
 		var barModalContainer = 'modalContentLeft';
 		var lineModalContainer = 'modalContentRight';
-		
+
 		$('#modal-loading').remove();
 	}
-	
+
 	 //alert(responseData.bar_chart);
 	if(responseData.chart_type == 'bar' || responseData.chart_type == 'both'){
 		 Highcharts.chart(barModalContainer, {
@@ -707,13 +718,13 @@ function modalContent(modalLabel, modalType, yAxisLabel, xAxisLabel){
 	}
   };
   xhttp.open("POST", "modal-data.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");		  
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(formParams);
 }
 
-</script> 
-<!-- Include Date Range Picker --> 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script> 
+</script>
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $('input[name="from_date"]').datepicker({
   minDate: new Date('2020-03-08')
