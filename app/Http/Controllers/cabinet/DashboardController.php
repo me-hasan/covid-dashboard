@@ -111,7 +111,7 @@ class DashboardController extends Controller
                 $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
                 $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
 //                $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
-                $_lableTextParts[1] = $_lableTextParts[1];
+                $_lableTextParts[1] = $this->en2bnTranslation($_lableTextParts[1]);
                 $_infectedWeekDays[$_queryResData['DATE']] = implode("",$_lableTextParts);
             }
             $_infLastDay = $_queryResData['DATE'];
@@ -122,7 +122,7 @@ class DashboardController extends Controller
             $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_infLastDay)));
             $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
 //            $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
-            $_lableTextParts[1] = $_lableTextParts[1];
+            $_lableTextParts[1] = $this->en2bnTranslation($_lableTextParts[1]);
             $_infectedWeekDays[$_infLastDay] = implode("",$_lableTextParts);
         }
         $_infectedWeeksDate = array_keys($_infectedWeekDays); // For Forcasting Data Maping
@@ -137,7 +137,7 @@ class DashboardController extends Controller
                 $_lableTextParts = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_queryResData['DATE'])));
                 $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
 //                $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
-                $_lableTextParts[1] = $_lableTextParts[1];
+                $_lableTextParts[1] = $this->en2bnTranslation($_lableTextParts[1]);
                 $_forcastWeekDays[$_queryResData['DATE']] = implode("",$_lableTextParts);
             }
             $_lastDay = $_queryResData['DATE'];
@@ -149,7 +149,7 @@ class DashboardController extends Controller
         $_lableTextParts    = preg_split('/(?<=[0-9])(?=[a-z]+)/i', date('dM', strtotime($_lastDay)));
         $_lableTextParts[0] = $this->en2bn($_lableTextParts[0]);
 //        $_lableTextParts[1] = en2bnbyXLSX($_lableTextParts[1]);
-        $_lableTextParts[1] = $_lableTextParts[1];
+        $_lableTextParts[1] = $this->en2bnTranslation($_lableTextParts[1]);
         $_lastDayData       = array($_lastDay => implode("", $_lableTextParts));
 
         $_xAxisData = array_merge($_infectedWeekDays, $_forcastWeekDays, $_lastDayData);
@@ -222,10 +222,10 @@ class DashboardController extends Controller
                 $_mobilityDivisionWeeksData = array_values(array_map('intval', $_orgMobilityData));
                 if($_mobilityType == "IN"){
 //                    $_mobilityInWeeklyData[] = array('type' => 'area', 'name' => en2bnbyXLSX(strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
-                    $_mobilityInWeeklyData[] = array('type' => 'area', 'name' => (strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
+                    $_mobilityInWeeklyData[] = array('type' => 'area', 'name' => $this->en2bnTranslation(strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
                 }else if($_mobilityType == "OUT"){
 //                    $_mobilityOutWeeklyData[] = array('type' => 'area', 'name' => en2bnbyXLSX(strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
-                    $_mobilityOutWeeklyData[] = array('type' => 'area', 'name' => (strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
+                    $_mobilityOutWeeklyData[] = array('type' => 'area', 'name' => $this->en2bnTranslation(strtoupper($_orgMobilityDivision)), 'data' => $_mobilityDivisionWeeksData, 'marker' => array('symbol' => 'circle'));
                 }
             }
         }
@@ -357,6 +357,16 @@ class DashboardController extends Controller
 
     public static function en2bn($number) {
         return str_replace(self::$en, self::$bn, $number);
+    }
+    public static function en2bnTranslation($en_text)
+    {
+        $uppercas_text = strtoupper($en_text);
+        $translation = DB::table('translate')->where('word_en', $uppercas_text)->first();
+        if(!is_null($translation)){
+            return $translation->word_bn;
+        } else {
+            return $en_text;
+        }
     }
 
 }
