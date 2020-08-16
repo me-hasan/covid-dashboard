@@ -28,13 +28,11 @@ Route::post('/login/admin', 'Auth\LoginController@adminLogin')->name('login_admi
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route for cabinet
-Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dashboard');
+Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dashboard')->middleware(['auth', 'permission:cabinet-dashboard']);
 Route::get('/dataframe', 'cabinet\DashboardController@dataFrame')->name('dataframe');
 
 
 Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
-
-
 
 
 
