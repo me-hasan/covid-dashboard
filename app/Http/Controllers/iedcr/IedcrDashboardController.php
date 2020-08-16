@@ -17,7 +17,18 @@ class IedcrDashboardController extends Controller
     {
        $hda_card = DB::table('hda_card')->orderBy('date','DESC')->first();
        $hda_nationwide_summary_data = DB::table('hda_nationwide_summary_data')->get();
-       return view('iedcr.dashboard',compact('hda_card','hda_nationwide_summary_data'));
+       $hda_population_wise_infected = DB::table('hda_population_wise_infected')->get();
+       $hda_age_wise_infected_distribution = DB::table('hda_age_wise_infected_distribution')->get();
+       $hda_gender_wise_infect_distribution = DB::table('hda_gender_wise_infect_distribution')->orderBy('date','DESC')->first();
+       $hda_age_wise_death_distribution = DB::table('hda_age_wise_death_distribution')->get();
+       $hda_gender_wise_death_distribution = DB::table('hda_gender_wise_death_distribution')->orderBy('date','DESC')->first();
+       $hda_average_delay_time = DB::table('hda_average_delay_time')->orderBy('id','DESC')->first();
+       $hda_time_series = DB::table('hda_time_series')->get();
+
+       return view('iedcr.dashboard',compact('hda_card','hda_nationwide_summary_data',
+        'hda_population_wise_infected','hda_age_wise_infected_distribution',
+        'hda_gender_wise_infect_distribution','hda_age_wise_death_distribution',
+        'hda_gender_wise_death_distribution','hda_average_delay_time','hda_time_series'));
     }
     
 }

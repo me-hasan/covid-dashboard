@@ -2,9 +2,30 @@
 @section('bread_crumb_active','Risk Zone Analysis')
 @section('content')
 
-<?php
-ini_set('error_reporting', 0);
+  <?php
+    ini_set('error_reporting', 0);
+    $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
+    $tpr_national_testpositivity_trend = \Illuminate\Support\Facades\DB::table('tpr_national_testpositivity_trend')->get();
+    $tpr_today = \Illuminate\Support\Facades\DB::table('tpr_today')->orderBy('id', 'DESC')->first();
+    $tpr_average = \Illuminate\Support\Facades\DB::table('tpr_average')->orderBy('id', 'DESC')->first();
+    // $_changeStatusDataSet = \Illuminate\Support\Facades\DB::table('rza_change_status')->orderBy('id','DESC')->first();
+    // $_zoneInformationDataSet = \Illuminate\Support\Facades\DB::table('rza_zone_information')->get();
+    // $_nationalLevelDataLabels = array('Date','Green Zone','Yellow Zone','Red Zone');
+    // $_nationalInfoData = \Illuminate\Support\Facades\DB::table('rza_weekly_change')->get();
+    // $_nationalLevelDataSet = array();
+    // if(count($_nationalInfoData)) {
+    //     foreach ($_nationalInfoData as $key=>$_nationalInfo){
+    //         $_nationalLevelDataSet[$key+1][0] = $_nationalInfo->date;
+    //         $_nationalLevelDataSet[$key+1][1] = $_nationalInfo->green_zone;
+    //         $_nationalLevelDataSet[$key+1][2] = $_nationalInfo->yellow_zone;
+    //         $_nationalLevelDataSet[$key+1][3] = $_nationalInfo->red_zone;
+
+    //     }
+    // }
+
+
 ?>
+
     <!-- Row-1 -->
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-12">
@@ -46,11 +67,11 @@ ini_set('error_reporting', 0);
                 <div class="card-body">
                     <div class="card-body text-center">
                         <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                        <h2 class="text-success"><?php echo number_format($_todayDataSet[count($_todayDataSet)-1][2],2);?>%</h2>
+                        <h2 class="text-success">{{ number_format($tpr_today->test_positivity_rate, 2, '.', '')  }}%</h2>
                     </div>
                     <div class="card-body text-center border-0">
                         <h4 class="text-ash">Number of Performed Tests</h4>
-                        <h2 class="text-success"><?php echo $_todayDataSet[count($_todayDataSet)-1][1];?></h2>
+                        <h2 class="text-success">{{ $tpr_today->total_tests }}</h2>
                     </div>
                 </div>
             </div>
@@ -64,11 +85,11 @@ ini_set('error_reporting', 0);
                 <div class="card-body">
                     <div class="card-body text-center">
                         <h4 class="text-ash">Average Test Positivity Rate</h4>
-                        <h2 class="text-success"><?php echo number_format($_averageDataSet[count($_averageDataSet)-1][1],2);?>%</h2>
+                        <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
                     </div>
                     <div class="card-body text-center border-0">
                         <h4 class="text-ash">Average # of Performed Tests</h4>
-                        <h2 class="text-success"><?php echo $_averageDataSet[count($_averageDataSet)-1][0];?></h2>
+                        <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
                     </div>
                 </div>
             </div>
@@ -181,29 +202,18 @@ ini_set('error_reporting', 0);
 
     <script type="text/javascript">
         /* Time Seris Graph */
-        <?php
-        $_seriesLabels = $_testPositvityTrendyDataTemp = $_testPositvityTrendyData = array();
-        #print_r($_timeSeriesDataSet);exit;
-        /*foreach($_timeSeriesDataLabels as $_labelKey => $_labelText){
-            if($_labelKey == 0) continue;
-            $_seriesLabels[] = $_labelText;
-        }*/
+        <?php 
 
-        foreach($_testPositvityTrendyDataSet as $_rowKey => $_rowData){
-            foreach($_rowData as  $_key => $_columnData){
-                if($_key == 0){
-                    $_columnData = date('d\/m\/Y', strtotime($_columnData));
-                }
-                $_testPositvityTrendyDataTemp[$_testPositvityTrendyDataLabels[$_key]][] = (float) number_format($_columnData, 2);
+            $date_arr = $tp_arr = array();
+
+            foreach($tpr_national_testpositivity_trend as $row){
+                
+              $date_arr[] = date('d\/m\/Y', strtotime($row->date));
+              $tp_arr[] = number_format($row->test_positivity_rate, 2, '.', '');
             }
-        }
 
-        foreach($_testPositvityTrendyDataTemp as $_testPositvityTrendLabel => $_testPositvityTrendSet){
-            if($_testPositvityTrendLabel == "date") continue;
-            $_testPositvityTrendyData[] = array('type' => 'area', 'name' => strtoupper($_testPositvityTrendLabel), 'data' => $_testPositvityTrendSet, 'marker' => array('symbol' => 'circle'));
-        }
-        #print_r($_testPositvityTrendyData);
-        #exit;
+            $tp_rate = implode(",", $tp_arr);
+
         ?>
         Highcharts.chart('test-positivity-trend', {
             chart: {
@@ -229,12 +239,8 @@ ini_set('error_reporting', 0);
             },
 
             xAxis: {
-                categories: <?php echo json_encode($_testPositvityTrendyDataTemp['date']);?>/*,
-					labels: {
-						formatter: function() {
-						   return 'Test Positivity Rate: ' +this.value+'%';
-						}
-					}*/
+                categories: <?php echo json_encode($date_arr);?>
+              
             },
 
             yAxis: {
@@ -265,7 +271,7 @@ ini_set('error_reporting', 0);
 
             colors: ['#ef4b4b'],
 
-            series: <?php echo json_encode($_testPositvityTrendyData);?>
+            series: [{"type":"area","name":"TEST POSITIVITY RATE","data":[<?php echo $tp_rate;?>],"marker":{"symbol":"circle"}}]
         });
 
         // Map JS Data
