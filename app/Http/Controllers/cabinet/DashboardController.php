@@ -35,10 +35,11 @@ class DashboardController extends Controller
         foreach( $_getDivisionRes as $_divQueryData){
             $_divQueryData = (array)$_divQueryData;
             if($_divQueryData['DIVISION'] == NULL) continue; // SKIP Empty Row
-//            if(auth()->user()->account_level == 'divisional'){
-//                $_allDivisionList[$_divQueryData[strtoupper(auth()->user()->division)]] = (isset($_mapDataDistrictWiseInfectedRes[$_divQueryData[strtoupper(auth()->user()->division)]])) ? $_mapDataDistrictWiseInfectedRes[$_divQueryData[strtoupper(auth()->user()->division)]] + 0:0;
-//            }
+            if(auth()->user()->account_level == 'divisional'){
+                $_allDivisionList[strtoupper(auth()->user()->division)] = 120 + 0;
+            } else {
             $_allDivisionList[$_divQueryData['DIVISION']] = (isset($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])) ? $_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']] + $_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
+            }
         }
 
         $data['_allDivisionList'] = $_allDivisionList;
