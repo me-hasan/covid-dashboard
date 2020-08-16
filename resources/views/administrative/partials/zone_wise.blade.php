@@ -36,7 +36,7 @@
                                 <tbody>
                                 @foreach($red_zone_data as $red_zone)
                                     <tr>
-                                        <th scope="row">{!! $red_zone->ZONE_AREA !!}</th>
+                                        <th scope="row">{!! en2bnTranslation($red_zone->ZONE_AREA) !!}</th>
                                         <td>{!! App\Http\Controllers\cabinet\DashboardController::en2bn($red_zone->DOUBLING_RATE) !!}</td>
                                         <td>{!! App\Http\Controllers\cabinet\DashboardController::en2bn($red_zone->Rt) !!}</td>
                                         <td>{!! App\Http\Controllers\cabinet\DashboardController::en2bn($red_zone->TEST_POSITIVITY) !!}</td>
