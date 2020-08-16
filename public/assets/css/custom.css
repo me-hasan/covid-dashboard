@@ -1,0 +1,80 @@
+.dataTables_paginate{
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+	float: right;
+}
+
+.dataTables_paginate .paginate_button {
+	/*color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6;*/
+	position: relative;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+	font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.dataTables_paginate .paginate_button:hover,
+.dataTables_paginate .paginate_button.current{
+	z-index: 2;
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+	cursor: pointer;
+}
+
+.dataTables_paginate .paginate_button.previous.disabled,
+.dataTables_paginate .paginate_button.next.disabled{
+	color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+.modal-dialog .modal-body .highcharts-container{margin: auto;}
+.modal-dialog .modal-header {background:#DDDDDD;}
+.modal-dialog .modal-header .modal-title{font-size: 20px;}
+
+.label-success {
+    padding: 5px;
+    color: #fff;
+}
+
+.select2-container--default {
+    width: 100% !important;
+    max-width: 500px !important;
+}
+.info-box{
+    height: 85px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+    margin: 0px auto 16px;
+    padding: 15px 0;
+    transition: box-shadow 0.25s ease 0s;
+    text-align: center;
+}
+.info-box h4 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+.info-box .num-style {
+    font-size: 24px;
+    font-weight: bold;
+}
