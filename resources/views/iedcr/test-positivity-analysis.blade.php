@@ -1,5 +1,5 @@
 @extends('iedcr.default')
-@section('bread_crumb_active','Risk Zone Analysis')
+@section('bread_crumb_active','Test Positivity Analysis')
 @section('content')
 
   <?php
