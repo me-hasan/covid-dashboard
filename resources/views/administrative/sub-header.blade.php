@@ -1,8 +1,8 @@
   <!-- partial:partials/_navbar.html -->
   <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"> <a class="navbar-brand brand-logo text-primary" href="dashboard.php">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"> <a class="navbar-brand brand-logo text-primary" href="{!! route('dashboard') !!}">
       <h4>জাতীয় ড্যাশবোর্ড</h4>
-      </a> <a class="navbar-brand brand-logo-mini text-primary" href="dashboard.php">
+      </a> <a class="navbar-brand brand-logo-mini text-primary" href="{!! route('dashboard') !!}">
       <h3>ND</h3>
       </a> </div>
     <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -11,7 +11,7 @@
         <li class="nav-item dropdown language-dropdown d-none d-sm-flex align-items-center"> <a class="nav-link d-flex align-items-center dropdown-toggle pl-0" id="LanguageDropdown" href="#" data-toggle="dropdown"  aria-expanded="false">
           <div class="d-inline-flex mr-3"></div>
           <span class="profile-text font-weight-normal">বাংলা</span> </a>
-          <div class="dropdown-menu dropdown-menu-left navbar-dropdown py-2" aria-labelledby="LanguageDropdown"> <a class="dropdown-item"> English </a> <a class="dropdown-item"> বাংলা </a> </div>
+          <div class="dropdown-menu dropdown-menu-left navbar-dropdown py-2" aria-labelledby="LanguageDropdown"> {{--<a class="dropdown-item"> English </a>--}} <a class="dropdown-item"> বাংলা </a> </div>
         </li>
       </ul>
       <div class="search-field d-none d-md-block">

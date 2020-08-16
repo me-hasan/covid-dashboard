@@ -32,11 +32,29 @@ class DashboardController extends Controller
 
         $_allDivisionList = [];
         $_mapDataDistrictWiseInfectedRes = [];
+        if($auth_level == 'divisional'){
+            $_divisionSelName = strtoupper(Auth::user()->division);
+        }
+        if($auth_level == 'district'){
+            $_divisionSelName = strtoupper(Auth::user()->division);
+            $_districtSelName = strtoupper(Auth::user()->district);
+        }
+        if($auth_level == 'upazilla'){
+            $_divisionSelName = strtoupper(Auth::user()->division);
+            $_districtSelName = strtoupper(Auth::user()->district);
+            $_upazillaSelName = strtoupper(Auth::user()->upazilla);
+        }
         foreach( $_getDivisionRes as $_divQueryData){
             $_divQueryData = (array)$_divQueryData;
             if($_divQueryData['DIVISION'] == NULL) continue; // SKIP Empty Row
-            if(auth()->user()->account_level == 'divisional'){
-                $_allDivisionList[strtoupper(auth()->user()->division)] = 120 + 0;
+           /* dd($_divQueryData);*/
+            if(in_array($auth_level,['divisional','district','upazilla'])){
+                if(strtoupper($_divisionSelName) == $_divQueryData['DIVISION']) {
+                    $_allDivisionList[strtoupper(auth()->user()->division)] = (isset($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])) ? $_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']] + $_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
+                } else {
+                    continue;
+                }
+
             } else {
             $_allDivisionList[$_divQueryData['DIVISION']] = (isset($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])) ? $_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']] + $_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
             }
@@ -77,13 +95,15 @@ class DashboardController extends Controller
 //        if($_divisionSelName == "all")
 //            unset($_divisionSelName);
 
-        if($auth_level == 'divisional'){
-            $_divisionSelName = strtoupper(Auth::user()->division);
+
+        $_extendedQuery = '';
+        if(isset($_divisionSelName) && $_divisionSelName != "all") {
+            $_extendedQuery .= " AND DIM_NAME='" . $_divisionSelName . "'";
         }
-
-        if(isset($_divisionSelName) && $_divisionSelName != "all"){
-            $_extendedQuery = " AND DIM_NAME='".$_divisionSelName."'";
-
+        if ($_districtSelName && $_districtSelName != "all") {
+            $_extendedQuery .= " AND SUB_DIM_NAME='" . $_districtSelName . "'";
+        }
+        if($_extendedQuery && $_extendedQuery != '') {
             $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
                                 (select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
                                 INNER JOIN
@@ -103,7 +123,31 @@ class DashboardController extends Controller
 
 
         $_mapDataDistrictWiseInfectedRes = $_mapDataGroupList = $_districtList = $_distirctDetailsData = [];
-        foreach ($district_wise_infected_data as $_disWiseInfResultData){
+        $_extendedQueryNew = '';
+        if($auth_level == 'divisional'){
+            $_extendedQueryNew .= " AND DIM_NAME='" . $_divisionSelName . "'";
+        }
+        if($auth_level == 'district'){
+            $_extendedQueryNew = " AND DIM_NAME='" . $_divisionSelName . "' AND SUB_DIM_NAME='" . $_districtSelName . "'";
+        }
+        if($_extendedQueryNew && $_extendedQueryNew != '') {
+            $district_wise_infected_data_new = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
+                                (select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
+                                INNER JOIN
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
+                                INNER JOIN
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test
+                                WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE'".$_extendedQueryNew.")) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
+        } else {
+            $district_wise_infected_data_new = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
+                                (select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
+                                INNER JOIN
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
+                                INNER JOIN
+                                (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test
+                                WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE')) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
+        }
+        foreach ($district_wise_infected_data_new as $_disWiseInfResultData){
             $_distirctDetailsData[] = $_disWiseInfResultData; // This data will use for DataTable
             $_disWiseInfResultData = (array)$_disWiseInfResultData;
 //            $_mapDataDistrictWiseInfectedRes[$_disWiseInfResultData['DIVISION']] = ($_mapDataDistrictWiseInfectedRes[$_disWiseInfResultData['DIVISION']])?$_mapDataDistrictWiseInfectedRes[$_disWiseInfResultData['DIVISION']]+$_disWiseInfResultData['INFECTED_PERSON']:$_disWiseInfResultData['INFECTED_PERSON'];
@@ -323,13 +367,13 @@ class DashboardController extends Controller
         );
 
         //Data frame
-        $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
+       /* $district_wise_infected_data = DB::select( DB::raw("SELECT distinct T1.DATE AS 'DATE', T1.DIVISION, T1.DISTRICT, T1.INFECTED_PERSON, T1.GROUP_CONFIRMED, T2.Rt, T3.DOUBLING_RATE FROM
                                 (select str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP_CONFIRMED' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'Rt') AND (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 <> 'DOUBLING_RATE') and DY_KEY >='20200624') AS T1
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'Rt' from dwa_covid19_dash_summ_test WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'Rt')) AS T2 USING (DISTRICT)
                                 INNER JOIN
                                 (SELECT str_to_date(DY_KEY,'%Y%m%d') AS 'DATE', DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'DOUBLING_RATE' from dwa_covid19_dash_summ_test
-                                WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE')) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));
+                                WHERE (KPI_NAME='MAP_OF_CASES' AND SUB_DIM_NAME_2 = 'DOUBLING_RATE')) AS T3 USING (DISTRICT) GROUP BY DISTRICT ORDER BY DATE DESC, `INFECTED_PERSON` DESC"));*/
 
         $_mapDataDistrictWiseInfectedRes = $_mapDataGroupList = $_districtList = $_distirctDetailsData = [];
         foreach ($district_wise_infected_data as $_disWiseInfResultData){
