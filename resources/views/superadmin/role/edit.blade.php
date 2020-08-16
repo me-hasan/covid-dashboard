@@ -14,7 +14,7 @@
                         <input type="text" name="name" value="{{$role->name}}" class="form-control" readonly>
                     </div>
                     <div class="form-group">
-                        <select name="permissions[]" class="form-control select2 select2-multiple" data-placeholder="Select Permission" multiple required id="permission">
+                        <select name="permissions[]" class="form-control select2 select2-multiple" data-placeholder="Select Permission" multiple required>
                             @php
                             $getRolePermissions = $role->permissions->pluck('id')->toArray();
                             @endphp

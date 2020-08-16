@@ -37,7 +37,7 @@ Route::get('/dataframe', 'cabinet\DashboardController@dataFrame')->name('datafra
 
 Route::get('/iedcr/dashboard', function () {
     return view('iedcr.dashboard');
-})->name('iedcr.dashboard')->middleware('auth');
+})->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
 
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
