@@ -24,15 +24,21 @@ class DashboardController extends Controller
         $_upazillaSelName = $request->get('upazilla');
 
         // Get All Division List
-//        $_getDivisionRes =  DB::select( DB::raw("select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP CONFIRMED' from dwa_covid19_dash_summ_test WHERE KPI_NAME='MAP_OF_CASES' GROUP BY `DISTRICT` ORDER BY `DATE`"));
-//
-//        $_allDivisionList = [];
-//        $_mapDataDistrictWiseInfectedRes = [];
-//        foreach( $_getDivisionRes as $_divQueryData){
-//            $_divQueryData = (array)$_divQueryData;
-//            if($_divQueryData['DIVISION'] == NULL) continue; // SKIP Empty Row
-//            $_allDivisionList[$_divQueryData['DIVISION']] = ($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])?$_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']]+$_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
-//        }
+        $_getDivisionRes =  DB::select( DB::raw("select str_to_date(DY_KEY,'%Y%m%d') AS DATE, DIM_NAME AS 'DIVISION', SUB_DIM_NAME AS 'DISTRICT', KPI_VAL AS 'INFECTED_PERSON', SUB_DIM_NAME_2 AS 'GROUP CONFIRMED' from dwa_covid19_dash_summ_test WHERE KPI_NAME='MAP_OF_CASES' GROUP BY `DISTRICT` ORDER BY `DATE`"));
+
+        $_allDivisionList = [];
+        $_mapDataDistrictWiseInfectedRes = [];
+        foreach( $_getDivisionRes as $_divQueryData){
+            $_divQueryData = (array)$_divQueryData;
+            if($_divQueryData['DIVISION'] == NULL) continue; // SKIP Empty Row
+            $_allDivisionList[$_divQueryData['DIVISION']] = (isset($_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']])) ? $_mapDataDistrictWiseInfectedRes[$_divQueryData['DIVISION']] + $_divQueryData['INFECTED_PERSON']:$_divQueryData['INFECTED_PERSON'];
+        }
+
+        $data['_allDivisionList'] = $_allDivisionList;
+
+        //Get Upazilla list
+        $upazillaList = $this->getUpazillaList();
+        $data['_upazillaList'] = $upazillaList;
 
         //Test 24 hours
         $covid_tests_24_hours = Covid19DashboardTestSum::where('DASH_COMP_ID', '=', 1)->where('REPORT_DY', function($q)
@@ -95,6 +101,8 @@ class DashboardController extends Controller
             $_districtList[$_disWiseInfResultData['DISTRICT']] = array( 'division' => $_disWiseInfResultData['DIVISION'], 'district' => $_disWiseInfResultData['DISTRICT'], 'infected' => $_disWiseInfResultData['INFECTED_PERSON']); // Prepare District List
         }
         $data['_distirctDetailsData'] = $_distirctDetailsData;
+        $data['_districtList']        = $_districtList;
+//        dd($data['_districtList']);
 
         //Daily Changes & forcast
         $_outputDailyData = $_InfectedDailyData = $_forcastDailyInfectedData = $_infectedWeekDays = $_forcastWeekDays = $_lastDay = [];
@@ -305,6 +313,9 @@ class DashboardController extends Controller
         $data['_groupDataColor']        = $_groupDataColor;
         $data['_divisionWiseInfacted']  = $_divisionWiseInfacted;
         $data['_mapRegions']            = $_mapRegions;
+        $data['_districtSelName']       = $_districtSelName;
+        $data['_upazillaSelName']       = $_upazillaSelName;
+
 
 
         return view('administrative.dashboard', $data);
@@ -360,6 +371,17 @@ class DashboardController extends Controller
 
     public static function en2bn($number) {
         return str_replace(self::$en, self::$bn, $number);
+    }
+
+    protected function getUpazillaList(){
+        $_translateData = NULL;
+
+        $upazillaList = DB::table('upazila')->get();
+        foreach($upazillaList as $_rowData){
+            $_rowData = (array)$_rowData;
+            $_translateData[] = array($_rowData['upazila_en'], $_rowData['upazila_bn'], $_rowData['district']);
+        }
+        return $_translateData;
     }
 
 }
