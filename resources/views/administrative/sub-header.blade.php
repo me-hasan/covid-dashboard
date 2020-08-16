@@ -24,9 +24,13 @@
       </div>
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown"> <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-          <div class="nav-profile-img"> <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="image"/> <span class="availability-status online"></span> </div>
+          <div class="nav-profile-img"> <img src="{{ asset('assets/images/faces/avatar.jpg') }}" alt="image"/> <span class="availability-status online"></span> </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black">eGen Admin</p>
+              @if(auth()->user())
+                <p class="mb-1 text-black">{!! auth()->user()->name; !!}</p>
+              @else
+                  <p class="mb-1 text-black">eGen Admin</p>
+              @endif
           </div>
           </a>
           <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">

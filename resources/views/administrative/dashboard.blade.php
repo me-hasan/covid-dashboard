@@ -12,7 +12,8 @@
                                     <select class="btn btn-sm btn-custom dropdown-toggle" name="division" id="division_list">
                                         <option value="all">সব বিভাগ</option>
                                         @foreach($_allDivisionList as $_divisionName => $_infByDivision)
-                                            <option class="division-option" value="<?php echo $_divisionName; ?>"<?php if($_divisionSelName == $_divisionName){?> selected="selected"<?php }?>><?php echo en2bnTranslation($_divisionName); ?></option>
+{{--                                            <option class="division-option" value="<?php if(auth()->user()->account_level == 'divisional')  { echo strtoupper(auth()->user()->division); } else { echo ($_divisionName);} ; ?>"<?php if($_divisionSelName == $_divisionName ){?> selected="selected"<?php }?>><?php echo en2bnTranslation($_divisionName); ?></option>--}}
+                                            <option class="division-option" value="<?php echo $_divisionName; ?>"<?php if($_divisionSelName == $_divisionName ){?> selected="selected"<?php }?>><?php echo en2bnTranslation($_divisionName); ?></option>
                                         @endforeach
                                     </select>
                                 </div>

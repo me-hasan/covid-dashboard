@@ -41,8 +41,8 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="py-1" style="text-align: center;">
-                                    <a class="float-right btn btn-link" href="{!! route('dataframe', ['datatype' => 'detailsmap']) !!}">বিস্তারিত</a>
-
+{{--                                    <a class="float-right btn btn-link" href="{!! route('dataframe', ['datatype' => 'detailsmap']) !!}">বিস্তারিত</a>--}}
+                                    <a class="float-right btn btn-link" href="{!! route('dashboard', ['datatype' => 'detailsmap']) !!}">বিস্তারিত</a>
                                     @if($_divisionSelName && $_divisionSelName!='')
                                     <div id="map-container"></div>
                                     @else
