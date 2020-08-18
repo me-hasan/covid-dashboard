@@ -102,10 +102,11 @@ $(document).ready(function() {
         <?php $_imageLineChart = ['line-chart-1.png', 'line-chart-2.png', 'line-chart-3.png', 'line-chart-4.png'];
         ?>
         <?php
+    $_dataTableDataSet = [];
         foreach($_distirctDetailsData as $_districtWiseInfo){
             $_districtWiseInfo = (array)$_districtWiseInfo;
 //            $_dataTableDataSet[] = [en2bnbyXLSX($_districtWiseInfo['DIVISION']), en2bnbyXLSX($_districtWiseInfo['DISTRICT']), BanglaConverter::en2bn(number_format($_districtWiseInfo['INFECTED_PERSON'])), BanglaConverter::en2bn($_districtWiseInfo['Rt']), BanglaConverter::en2bn(number_format($_districtWiseInfo['DOUBLING_RATE'])), '<span class="line-chart-holder"><img src="assets/images/'.$_imageLineChart[rand(0, 3)].'"> </span>'];
-            $_dataTableDataSet[] = [$_districtWiseInfo['DIVISION'], $_districtWiseInfo['DISTRICT'], App\Http\Controllers\cabinet\DashboardController::en2bn(number_format($_districtWiseInfo['INFECTED_PERSON'])), App\Http\Controllers\cabinet\DashboardController::en2bn($_districtWiseInfo['Rt']), App\Http\Controllers\cabinet\DashboardController::en2bn(number_format($_districtWiseInfo['DOUBLING_RATE'])), '<span class="line-chart-holder"><img src="assets/images/'.$_imageLineChart[rand(0, 3)].'"> </span>'];
+            $_dataTableDataSet[] = [en2bnTranslation($_districtWiseInfo['DIVISION']), en2bnTranslation($_districtWiseInfo['DISTRICT']), App\Http\Controllers\cabinet\DashboardController::en2bn(number_format($_districtWiseInfo['INFECTED_PERSON'])), App\Http\Controllers\cabinet\DashboardController::en2bn($_districtWiseInfo['Rt']), App\Http\Controllers\cabinet\DashboardController::en2bn(number_format($_districtWiseInfo['DOUBLING_RATE'])), '<span class="line-chart-holder"><img src="assets/images/'.$_imageLineChart[rand(0, 3)].'"> </span>'];
         }
         ?>
         var districtDataTable = $('#district-infecteed').DataTable({

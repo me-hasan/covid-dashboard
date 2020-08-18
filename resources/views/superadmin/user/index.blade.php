@@ -51,7 +51,7 @@
                             <th>Division</th>
                             <th>District</th>
                             <th>Upazilla</th>
-                            <th>Registered Since</th>
+                            <!-- <th>Registered Since</th> -->
                             <th style="width: 150px">Action</th>
 
                         </tr>
@@ -78,7 +78,7 @@
                             <td>{{$user->division ?? '--'}}</td>
                             <td>{{$user->district ?? '--'}}</td>
                             <td>{{$user->upazilla ?? '--'}}</td>
-                            <td>{{$user->created_at ?? '--'}}</td>
+                            <!-- <td>{{$user->created_at ?? '--'}}</td> -->
                             <td>
                             	<a href="user/edit/{{$user->id}}" class="btn btn-sm btn-info" style="float: left;margin-right: 5px;">Edit</a>
                                 <form action="user/{{$user->id}}" method="post">

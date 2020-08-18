@@ -1,7 +1,17 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Conformance Analysis')
 @section('content')
-
+<?php 
+  $sd_1='';
+  $ss_1='';
+  $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-conformance-analysis')->get();
+  foreach ($data_source_description as  $row) {
+    if($row->component_name=='Conformance Summary'){
+        $sd_1=$row->description;
+        $ss_1=$row->source;
+    }
+  }
+?>
     <!-- Row-3 -->
 
     <div class="row">

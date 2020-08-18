@@ -2,15 +2,42 @@
 @section('bread_crumb_active','Test Positivity Analysis')
 @section('content')
 
-<?php
-ini_set('error_reporting', 0);
+  <?php
+    ini_set('error_reporting', 0);
+    $sd_1=$sd_2=$sd_3='';
+    $ss_1=$ss_2=$ss_3='';
+    $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
+    $tpr_national_testpositivity_trend = \Illuminate\Support\Facades\DB::table('tpr_national_testpositivity_trend')->get();
+    $tpr_today = \Illuminate\Support\Facades\DB::table('tpr_today')->orderBy('id', 'DESC')->first();
+    $tpr_average = \Illuminate\Support\Facades\DB::table('tpr_average')->orderBy('id', 'DESC')->first();
+    $tpr_data = \Illuminate\Support\Facades\DB::table('tpr_data')
+                ->where('date', DB::raw("(select max(date) from tpr_data)"))
+                ->orderBy('id', 'ASC')->get();
+    
+
+    $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-test-positivity-analysis')->get();
+    foreach ($data_source_description as $row) {
+        if($row->component_name=='Test Positivity Rate'){
+            $sd_1=$row->description;
+            $ss_1=$row->source;
+        }elseif ($row->component_name=='Geo Location Wise Test Positivity Rate​'){
+            $sd_2=$row->description;
+            $ss_2=$row->source;
+        }elseif ($row->component_name=='Test Positivity for Asymptomatic Patients'){
+            $sd_3=$row->description;
+            $ss_3=$row->source;
+        }
+    }
+
+
 ?>
+
     <!-- Row-1 -->
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Test Positivity Rate</h3>
+                    <h3 class="card-title">Test Positivity Rate </h3>
                     <div class="card-options">
                         <i class="fa fa-table mr-2 text-success"></i>
                         <i class="fa fa-download text-danger"></i>
@@ -23,13 +50,13 @@ ini_set('error_reporting', 0);
                     <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
                         <div class="card-body">
                             <h5 class="card-title">Short Description</h5>
-                            <p class="card-text">Short Description text will place here.</p>
+                            <p class="card-text">{{ $sd_1 }}</p>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                         <div class="card-body">
                             <h5 class="card-title">Data Source</h5>
-                            <p class="card-text">Data Source text will place here.</p>
+                            <p class="card-text">{{ $ss_1 }}</p>
                         </div>
                     </div>
                 </div>
@@ -46,11 +73,11 @@ ini_set('error_reporting', 0);
                 <div class="card-body">
                     <div class="card-body text-center">
                         <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                        <h2 class="text-success"><?php echo number_format($_todayDataSet[count($_todayDataSet)-1][2],2);?>%</h2>
+                        <h2 class="text-success">{{ number_format($tpr_today->test_positivity_rate, 2, '.', '')  }}%</h2>
                     </div>
                     <div class="card-body text-center border-0">
                         <h4 class="text-ash">Number of Performed Tests</h4>
-                        <h2 class="text-success"><?php echo $_todayDataSet[count($_todayDataSet)-1][1];?></h2>
+                        <h2 class="text-success">{{ $tpr_today->total_tests }}</h2>
                     </div>
                 </div>
             </div>
@@ -64,11 +91,11 @@ ini_set('error_reporting', 0);
                 <div class="card-body">
                     <div class="card-body text-center">
                         <h4 class="text-ash">Average Test Positivity Rate</h4>
-                        <h2 class="text-success"><?php echo number_format($_averageDataSet[count($_averageDataSet)-1][1],2);?>%</h2>
+                        <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
                     </div>
                     <div class="card-body text-center border-0">
                         <h4 class="text-ash">Average # of Performed Tests</h4>
-                        <h2 class="text-success"><?php echo $_averageDataSet[count($_averageDataSet)-1][0];?></h2>
+                        <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
                     </div>
                 </div>
             </div>
@@ -98,40 +125,24 @@ ini_set('error_reporting', 0);
                                         <table id="case_analysis_dtable" class="table table-striped table-bordered text-nowrap">
                                             <thead>
                                             <tr>
-                                                <?php foreach($_rawDataLabels as $_indexKey => $_tableHead):?>
-                                                <?php if($_indexKey == 0 || $_indexKey == 4 || $_indexKey == 1 || $_indexKey == 3) continue; ?>
-                                                <th class="border-bottom-0"><?php echo $_tableHead; ?></th>
-                                                <?php endforeach;?>
+                                                <th class="border-bottom-0">District</th>
+                                                <th class="border-bottom-0">Date</th>
+                                                <th class="border-bottom-0">Total</th>
+                                                <th class="border-bottom-0">Positive</th>
+                                                <th class="border-bottom-0">Test Positivity</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <?php foreach($_rawDataSet as $_rowKey => $_rowData): #print_r($_rowData); exit;?>
-                                            <?php if($_rowKey == 0 || ($_rowData[8] == NULL)) continue; ?>
+                                            <?php foreach($tpr_data as $row){  ?>
+                                            
                                             <tr>
-                                                <?php foreach($_rowData as $_colKey => $_columnData):?>
-                                                <?php
-                                                if($_colKey == 0 || $_colKey == 4 || $_colKey == 1 || $_colKey == 3) continue;
-                                                if($_colKey == 5){
-                                                    $_columnData = '-';#date('d/m/Y', strtotime($_columnData));
-                                                }
-                                                if($_colKey == 8){
-                                                    #echo (float)$_columnData; exit;
-                                                    $_columnData = round($_columnData, 2);
-                                                }
-                                                $_colParts = explode("[", $_columnData);
-                                                if(count($_colParts) > 1){
-                                                    $_columnData = $_colParts[0];
-                                                }else{
-                                                    $_colParts = explode("(", $_columnData);
-                                                    if(count($_colParts) > 1){
-                                                        $_columnData = $_colParts[0];
-                                                    }
-                                                }
-                                                ?>
-                                                <td><?php echo ($_columnData == NULL)?"-":trim($_columnData); ?></td>
-                                                <?php endforeach;?>
+                                                <td>{{$row->district}}</td>
+                                                <td>-</td>
+                                                <td>{{$row->total}}</td>
+                                                <td>{{$row->positive}}</td>
+                                                <td>{{ number_format($row->test_positivity,2) }}</td>
                                             </tr>
-                                            <?php endforeach;?>
+                                            <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -160,13 +171,13 @@ ini_set('error_reporting', 0);
                         <div class="col-xl-9 col-lg-6 col-md-6 col-xm-12">
                             <div class="card-body">
                                 <h5 class="card-title">Short Description</h5>
-                                <p class="card-text">Short Description text will place here.</p>
+                                <p class="card-text">{{ $sd_2 }}</p>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
                             <div class="card-body">
                                 <h5 class="card-title">Data Source</h5>
-                                <p class="card-text">Data Source text will place here.</p>
+                                <p class="card-text">{{ $ss_2 }}</p>
                             </div>
                         </div>
                     </div>
@@ -181,29 +192,18 @@ ini_set('error_reporting', 0);
 
     <script type="text/javascript">
         /* Time Seris Graph */
-        <?php
-        $_seriesLabels = $_testPositvityTrendyDataTemp = $_testPositvityTrendyData = array();
-        #print_r($_timeSeriesDataSet);exit;
-        /*foreach($_timeSeriesDataLabels as $_labelKey => $_labelText){
-            if($_labelKey == 0) continue;
-            $_seriesLabels[] = $_labelText;
-        }*/
+        <?php 
 
-        foreach($_testPositvityTrendyDataSet as $_rowKey => $_rowData){
-            foreach($_rowData as  $_key => $_columnData){
-                if($_key == 0){
-                    $_columnData = date('d\/m\/Y', strtotime($_columnData));
-                }
-                $_testPositvityTrendyDataTemp[$_testPositvityTrendyDataLabels[$_key]][] = (float) number_format($_columnData, 2);
+            $date_arr = $tp_arr = array();
+
+            foreach($tpr_national_testpositivity_trend as $row){
+                
+              $date_arr[] = date('d\/m\/Y', strtotime($row->date));
+              $tp_arr[] = number_format($row->test_positivity_rate, 2, '.', '');
             }
-        }
 
-        foreach($_testPositvityTrendyDataTemp as $_testPositvityTrendLabel => $_testPositvityTrendSet){
-            if($_testPositvityTrendLabel == "date") continue;
-            $_testPositvityTrendyData[] = array('type' => 'area', 'name' => strtoupper($_testPositvityTrendLabel), 'data' => $_testPositvityTrendSet, 'marker' => array('symbol' => 'circle'));
-        }
-        #print_r($_testPositvityTrendyData);
-        #exit;
+            $tp_rate = implode(",", $tp_arr);
+
         ?>
         Highcharts.chart('test-positivity-trend', {
             chart: {
@@ -229,12 +229,8 @@ ini_set('error_reporting', 0);
             },
 
             xAxis: {
-                categories: <?php echo json_encode($_testPositvityTrendyDataTemp['date']);?>/*,
-					labels: {
-						formatter: function() {
-						   return 'Test Positivity Rate: ' +this.value+'%';
-						}
-					}*/
+                categories: <?php echo json_encode($date_arr);?>
+              
             },
 
             yAxis: {
@@ -265,7 +261,7 @@ ini_set('error_reporting', 0);
 
             colors: ['#ef4b4b'],
 
-            series: <?php echo json_encode($_testPositvityTrendyData);?>
+            series: [{"type":"area","name":"TEST POSITIVITY RATE","data":[<?php echo $tp_rate;?>],"marker":{"symbol":"circle"}}]
         });
 
         // Map JS Data
@@ -274,18 +270,19 @@ ini_set('error_reporting', 0);
             <?php
             $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '30' => '#F37366', '50' => '#E5515D', '75' => '#CD3E52', '100' => '#ed2355');
             $_existDataGroups = array();
-            foreach($_districtWiseData as $_mobInDistrictName => $_mobInDistrictVal){
-            //echo $_mobInDistrictVal = (int) $_mobInDistrictVal;
-            $_groupColorCode = NULL;
-            foreach($_colorCodes as $_colorRange => $_colorCode){
-                if($_mobInDistrictVal <= $_colorRange){
-                    $_groupColorCode = $_colorCode;
-                    $_existDataGroups[$_colorRange] = $_colorCode;
-                    break;
-                }
-            }
+            foreach($tpr_data as $row){
+
+                foreach($_colorCodes as $_colorRange => $_colorCode){
+                            if($row->test_positivity <= $_colorRange){
+                                $_groupColorCode = $_colorCode;
+                                $_existDataGroups[$_colorRange] = $_colorCode;
+                                break;
+                            }
+                        }
+            
+            
             ?>
-            $('#<?php echo $_mobInDistrictName; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            $('#<?php echo $row->district; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
             }
             ?>

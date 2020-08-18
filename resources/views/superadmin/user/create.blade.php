@@ -64,8 +64,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Account Level : <span style="color:red">*</span></label>
-                        <select name="account_level" class="form-control account_level" required>
+                        <label for="recipient-name" class="control-label mb-10">Account Level : </label>
+                        <select name="account_level" class="form-control account_level">
+                            <option value="">Select Account Level</option>
                             <option value="administrative">Administrative</option>
                             <option value="divisional">Divisional</option>
                             <option value="district">District</option>
@@ -128,7 +129,7 @@
     });
     function checkAccountLevel(account_level){
         console.log(account_level);
-        if(account_level == 'administrative'){
+        if(account_level == 'administrative' || account_level == ''){
             $('.division, .district, .upazilla').val("");
             $('.division-holder, .district-holder, .upazilla-holder').hide();
         }else if(account_level == 'divisional'){
