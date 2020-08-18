@@ -1,13 +1,13 @@
 @include('administrative.header')
 
 <body>
-<div class="container-scroller"> 
+<div class="container-scroller">
   @include('administrative.sub-header')
-  <div class="container-fluid page-body-wrapper"> 
+  <div class="container-fluid page-body-wrapper">
     @include('administrative.aside')
     @yield('content')
   </div>
-  <!-- page-body-wrapper ends --> 
+  <!-- page-body-wrapper ends -->
 </div>
 <!-- Modal Start -->
 <div class="modal fade" id="modalContainer" tabindex="-1" role="dialog" aria-labelledby="modalInfoLabel" aria-hidden="true">
@@ -30,7 +30,9 @@
     </div>
   </div>
 </div>
-<!-- Modal Ends --> 
-<!-- container-scroller --> 
+<!-- Modal Ends -->
+<!-- container-scroller -->
 
 @include('administrative.footer')
+
+

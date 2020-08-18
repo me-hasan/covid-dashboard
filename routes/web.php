@@ -29,7 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Route for cabinet
 Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dashboard')->middleware(['auth', 'permission:cabinet-dashboard']);
-Route::get('/dataframe', 'cabinet\DashboardController@dataFrame')->name('dataframe');
+Route::get('/dataframe', 'cabinet\DashboardController@dataFrameData')->name('cabinet.dataframe');
 
 
 Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
@@ -85,7 +85,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::put('role/edit/{role_id}','RoleController@update')->name('edit-role');
     Route::delete('role/{role_id}','RoleController@destroy');
     // role management routes ending
-    
+
 });
 
 
