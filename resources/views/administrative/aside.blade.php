@@ -4,7 +4,7 @@
     <ul class="nav">
     <li class="nav-item active"> <a class="nav-link" href="{{route('dashboard')}}"> <span class="menu-title">সামগ্রিক চিত্র</span> <i class="mdi mdi-home menu-icon"></i> </a> </li>
     @can('cabinet-risk-zone-report')
-    <li class="nav-item @if(request()->get('datatype')!= null && request()->get('datatype') == 'riskzone')  @endif   "> <a class="nav-link " href="{{route('cabinet.dataframe',['datatype'=>'riskzone'])}}"> <span class="menu-title">রিস্ক জোন রিপোর্ট</span> <i class="mdi mdi-chart-bar menu-icon"></i> </a> </li>
+    <li class="nav-item @if(request()->get('datatype')!= null && request()->get('datatype') == 'riskzone') action @endif   "> <a class="nav-link " href="{{route('cabinet.dataframe',['datatype'=>'riskzone'])}}"> <span class="menu-title">রিস্ক জোন রিপোর্ট</span> <i class="mdi mdi-chart-bar menu-icon"></i> </a> </li>
     @endcan
 
     @can('cabinet-obility-of-affected-people')
