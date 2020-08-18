@@ -15,6 +15,26 @@
 
         }
     }
+
+      $sd_1=$sd_2=$sd_3= $sd_4='';
+      $ss_1=$ss_2=$ss_3= $ss_4='';
+      $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-hospital-and-patient-analysis')->get();
+      foreach ($data_source_description as  $row) {
+        if($row->component_name=='Hospital Wise Capacity Data'){
+            $sd_1=$row->description;
+            $ss_1=$row->source;
+        }elseif ($row->component_name=='Death Location Percentage'){
+            $sd_2=$row->description;
+            $ss_2=$row->source;
+        }elseif ($row->component_name=='Patient Comorbidity Analysis'){
+            $sd_3=$row->description;
+            $ss_3=$row->source;
+        }elseif ($row->component_name=='Patient Risk Level'){
+            $sd_4=$row->description;
+            $ss_4=$row->source;
+        }
+      }
+
     ?>
     <!-- Top Row -->
     <div class="row">
@@ -74,13 +94,13 @@
                     <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
                         <div class="card-body">
                             <h5 class="card-title">Short Description</h5>
-                            <p class="card-text">Due to many data columns you need click on the data row to see all data.</p>
+                            <p class="card-text">{{$sd_1}}</p>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                         <div class="card-body">
                             <h5 class="card-title">Data Source</h5>
-                            <p class="card-text"></p>
+                            <p class="card-text">{{$ss_1}}</p>
                         </div>
                     </div>
                 </div>
@@ -101,13 +121,13 @@
                         <div class="col-xl-12 col-lg-6 col-md-6 col-xm-12">
                             <div class="card-body">
                                 <h5 class="card-title">Short Description</h5>
-                                <p class="card-text"></p>
+                                <p class="card-text">{{$sd_2}}</p>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-6 col-md-6 col-xm-12">
                             <div class="card-body">
                                 <h5 class="card-title">Data Source</h5>
-                                <p class="card-text">DGHS</p>
+                                <p class="card-text">{{$ss_2}}</p>
                             </div>
                         </div>
                     </div>
@@ -176,7 +196,7 @@
 
                                 <h5 class="card-title">Short Description</h5>
 
-                                <p class="card-text">Short Description text will place here.</p>
+                                <p class="card-text">{{$sd_3}}</p>
 
                             </div>
 
@@ -188,7 +208,7 @@
 
                                 <h5 class="card-title">Data Source</h5>
 
-                                <p class="card-text">Data Source text will place here.</p>
+                                <p class="card-text">{{$ss_3}}</p>
 
                             </div>
 
@@ -294,7 +314,7 @@
 
                                 <h5 class="card-title">Short Description</h5>
 
-                                <p class="card-text">Short Description text will place here.</p>
+                                <p class="card-text">{{$sd_4}}</p>
 
                             </div>
 
@@ -306,7 +326,7 @@
 
                                 <h5 class="card-title">Data Source</h5>
 
-                                <p class="card-text">Data Source text will place here.</p>
+                                <p class="card-text">{{$ss_4}}</p>
 
                             </div>
 

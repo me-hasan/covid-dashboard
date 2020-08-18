@@ -1,6 +1,23 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Corona Tracing Analysis')
 @section('content')
+<?php 
+  $sd_1=$sd_2=$sd_3='';
+  $ss_1=$ss_2=$ss_3='';
+  $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-corona-tracking-analysis')->get();
+  foreach ($data_source_description as  $row) {
+    if($row->component_name=='District Wise No of Contacts with Infected Person'){
+        $sd_1=$row->description;
+        $ss_1=$row->source;
+    }elseif ($row->component_name=='Average Contact Distance'){
+        $sd_2=$row->description;
+        $ss_2=$row->source;
+    }elseif ($row->component_name=='Top 10 Districts with Highest Contacts'){
+        $sd_3=$row->description;
+        $ss_3=$row->source;
+    }
+  }
+?>
 
     <!-- Row-1 -->
     <div class="row">
@@ -22,7 +39,7 @@
                                 <div class="col-xl-9 col-lg-6 col-md-6 col-xm-12">
                                     <div class="card-body">
                                         <h5 class="card-title">Short Note</h5>
-                                        <p class="card-text">Short Description text will place here.</p>
+                                        <p class="card-text">{{$sd_1}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +98,7 @@
                                 <div class="col-xl-9 col-lg-6 col-md-6 col-xm-12">
                                     <div class="card-body">
                                         <h5 class="card-title">Short Note</h5>
-                                        <p class="card-text">Short Description text will place here.</p>
+                                        <p class="card-text">{{$sd_2}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +127,7 @@
                                 <div class="col-xl-9 col-lg-6 col-md-6 col-xm-12">
                                     <div class="card-body">
                                         <h5 class="card-title">Short Note</h5>
-                                        <p class="card-text">Short Description text will place here.</p>
+                                        <p class="card-text">{{$sd_3}}</p>
                                     </div>
                                 </div>
                             </div>
