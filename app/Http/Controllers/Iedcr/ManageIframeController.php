@@ -26,10 +26,10 @@ class ManageIframeController extends Controller
         return view('iedcr.corona-tracing-analysis');
     }
     public function conformance_analysis() {
-        return view('iedcr.conformance-analysis');
+        return view('iedcr.conformance-analysis-new');
     }
     public function hospital_and_patient_analysis() {
-        return view('iedcr.hospital-and-patient-analysis');
+        return view('iedcr.hospital-and-patient-analysis-new');
     }
     public function mobility_and_predictive_importation() {
         return view('iedcr.mobility-and-predictive-importation');
@@ -40,6 +40,6 @@ class ManageIframeController extends Controller
     public function syndromic_surveillance() {
         return view('iedcr.syndromic-surveillance');
     } public function test_positivity_analysis() {
-        return view('iedcr.test-positivity-analysis');
+        return view('iedcr.test-positivity-analysis-new');
     }
 }

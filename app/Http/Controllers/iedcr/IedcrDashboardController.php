@@ -26,7 +26,7 @@ class IedcrDashboardController extends Controller
        $hda_time_series = DB::table('hda_time_series')->get();
        $data_source_description = DB::table('data_source_description')->where('page_name','iedcr-dashboard')->get();
 
-       return view('iedcr.dashboard',compact('hda_card','hda_nationwide_summary_data',
+       return view('iedcr.dashboard_new',compact('hda_card','hda_nationwide_summary_data',
         'hda_population_wise_infected','hda_age_wise_infected_distribution',
         'hda_gender_wise_infect_distribution','hda_age_wise_death_distribution',
         'hda_gender_wise_death_distribution','hda_average_delay_time','hda_time_series','data_source_description'));
