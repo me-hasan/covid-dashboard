@@ -39,6 +39,38 @@
 
 </style>
 <!-- Row-1 -->
+<?php
+  $sd_1=$sd_2=$sd_3= $sd_4=$sd_5=$sd_6=$sd_7=$sd_8='';
+  $ss_1=$ss_2=$ss_3= $ss_4=$ss_5=$ss_6=$ss_7=$ss_8='';
+
+  foreach ($data_source_description as  $row) {
+    if($row->component_name=='Nationwide Summary Data'){
+        $sd_1=$row->description;
+        $ss_1=$row->source;
+    }elseif ($row->component_name=='Population Wise Infection rate'){
+        $sd_2=$row->description;
+        $ss_2=$row->source;
+    }elseif ($row->component_name=='Confirmed Cases % by Age Group'){
+        $sd_3=$row->description;
+        $ss_3=$row->source;
+    }elseif ($row->component_name=='Cases by Gender'){
+        $sd_4=$row->description;
+        $ss_4=$row->source;
+    }elseif ($row->component_name=='Avarage Delay Time'){
+        $sd_5=$row->description;
+        $ss_5=$row->source;
+    }elseif ($row->component_name=='Confirmed +ve Death % by Age Group'){
+        $sd_6=$row->description;
+        $ss_6=$row->source;
+    }elseif ($row->component_name=='Death by Gender'){
+        $sd_7=$row->description;
+        $ss_7=$row->source;
+    }elseif ($row->component_name=='Time Series'){
+        $sd_8=$row->description;
+        $ss_8=$row->source;
+    }
+  }
+?>
 <div class="row top-cards">
           <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden dash1-card border-0">
@@ -147,13 +179,13 @@
                 <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
                   <div class="card-body">
                     <h5 class="card-title">Short Description: </h5>
-                    <p class="card-text">Recover, Active Case and Death are not available. </p>
+                    <p class="card-text">{{$sd_1}} </p>
                   </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                   <div class="card-body">
                     <h5 class="card-title">Data Source</h5>
-                    <p class="card-text">DGHS</p>
+                    <p class="card-text">{{$ss_1}}</p>
                   </div>
                 </div>
               </div>
@@ -171,13 +203,13 @@
                   <div class="col-xl-12 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
                       <h5 class="card-title">Short Description: </h5>
-                      <p class="card-text">2011 Population census is used. </p>
+                      <p class="card-text">{{$sd_2}} </p>
                     </div>
                   </div>
                   <div class="col-xl-12 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
                       <h5 class="card-title">Data Source</h5>
-                      <p class="card-text">DGHS</p>
+                      <p class="card-text">{{$ss_2}}</p>
                     </div>
                   </div>
                 </div>
@@ -255,7 +287,7 @@
                 <div class="card-body">
                   <div class="card-body">
                     <h5 class="card-title">Data Source</h5>
-                    <p class="card-text">a2i database</p>
+                    <p class="card-text">{{$ss_5}}</p>
                   </div>
                 </div>
               </div>

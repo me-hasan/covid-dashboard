@@ -3,6 +3,7 @@
 @section('content')
     <?php
     ini_set('error_reporting', 0);
+    $sd_1=$ss_1='';
     $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
     $_currentStatusData = \Illuminate\Support\Facades\DB::table('rza_current_status')->orderBy('id', 'DESC')->first();
     $_lastZoneStatusData = \Illuminate\Support\Facades\DB::table('rza_current_status')->orderBy('id', 'ASC')->first();
@@ -20,7 +21,13 @@
 
         }
     }
-
+    $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','risk-zone-analysis')->get();
+    foreach ($data_source_description as  $row) {
+        if($row->component_name=='Current Zone Status'){
+            $sd_1=$row->description;
+            $ss_1=$row->source;
+        }
+    }
 
     ?>
     <!-- Row-1 -->
@@ -257,7 +264,7 @@
                 <h3 class="card-title">Data Source</h3>
             </div>
             <div class="card-body">
-                <div class="mb-9 mt-9 pb-5 pt-5">Content is comming soon</div>
+                <div class="mb-9 mt-9 pb-5 pt-5">{{$ss_1}}</div>
             </div>
         </div>
         <div class="card">
@@ -265,7 +272,7 @@
                 <h3 class="card-title">Short Description</h3>
             </div>
             <div class="card-body">
-                <div class="mb-9 mt-9 pb-6 pt-8">Content is comming soon</div>
+                <div class="mb-9 mt-9 pb-6 pt-8">{{$sd_1}}</div>
             </div>
         </div>
     </div>

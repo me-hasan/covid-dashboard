@@ -2,6 +2,18 @@
 @section('bread_crumb_active','Epidemiological Syndromic Indicator Analysis')
 @section('content')
 
+<?php 
+  $sd_1='';
+  $ss_1='';
+  $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-epidemiological-and-syndromic-indicator-analysis')->get();
+  foreach ($data_source_description as  $row) {
+    if($row->component_name=='Zone Information'){
+        $sd_1=$row->description;
+        $ss_1=$row->source;
+    }
+  }
+?>
+
     <!-- Row-1 -->
 
     <div class="row">
@@ -564,7 +576,7 @@
 
                                 <h5 class="card-title">Short Description</h5>
 
-                                <p class="card-text">Short Description text will place here.</p>
+                                <p class="card-text">{{$sd_1}}</p>
 
                             </div>
 
@@ -576,7 +588,7 @@
 
                                 <h5 class="card-title">Data Source</h5>
 
-                                <p class="card-text">Data Source text will place here.</p>
+                                <p class="card-text">{{$ss_1}}</p>
 
                             </div>
 

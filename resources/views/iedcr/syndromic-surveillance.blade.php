@@ -1,7 +1,7 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Syndromic Surveillance')
 @section('content')
-@php
+<?php 
 ini_set('error_reporting', 0);
 $_rawDataSet = $_nationalLevelDataSet = $_mobilityTypeData = array();
 $_ss_infoData = \Illuminate\Support\Facades\DB::table('ss_data')->get();
@@ -50,7 +50,20 @@ foreach($_rawDataSet as $_rowDataKey => $_rawDataRow){
     }
 }
 
-@endphp
+    $sd_1=$sd_2='';
+    $ss_1=$ss_2='';
+  $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-syndromic-surveillance')->get();
+  foreach ($data_source_description as  $row) {
+    if($row->component_name=='District Level Change'){
+        $sd_1=$row->description;
+        $ss_1=$row->source;
+    }elseif ($row->component_name=='Syndromic Summary Information'){
+        $sd_2=$row->description;
+        $ss_2=$row->source;
+    }
+  }
+
+?>
     <!-- Row-1 -->
 
     <div class="row">
@@ -180,10 +193,11 @@ foreach($_rawDataSet as $_rowDataKey => $_rawDataRow){
                                 <h5 class="card-title">Short Description</h5>
 
                                 <div class="card-text">
-                                    <ul>
+                                    <!-- <ul>
                                         <li>PCNPRS = Per Capita No of People Reporting Symptoms</li>
                                         <li>PCNPRHR = Per Capita No of People Reported High Risk</li>
-                                        <ul>
+                                    <ul> -->
+                                    {{$sd_2}}
                                 </div>
 
                             </div>
@@ -196,7 +210,7 @@ foreach($_rawDataSet as $_rowDataKey => $_rawDataRow){
 
                                 <h5 class="card-title">Data Source</h5>
 
-                                <p class="card-text">Data Source text will place here.</p>
+                                <p class="card-text">{{$ss_2}}</p>
 
                             </div>
 
