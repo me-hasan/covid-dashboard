@@ -5,6 +5,8 @@
   $sd_1='';
   $ss_1='';
   $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-conformance-analysis')->get();
+  $con_carddata = \Illuminate\Support\Facades\DB::table('con_carddata')->orderBy('id', 'DESC')->first();
+  $con_barchart_data = \Illuminate\Support\Facades\DB::table('con_barchart_data')->get();
   foreach ($data_source_description as  $row) {
     if($row->component_name=='Conformance Analysis'){
         $sd_1=$row->description;
@@ -25,7 +27,7 @@
                 <div class="row mt-4">
                   <div class="col-xl-12 col-lg-12 col-xm-12">
                     <div class="card-body text-center">
-                      <h1 class="text-success">69.30%</h1>
+                      <h1 class="text-success">{{ number_format($con_carddata->percent_people_wearing_masks,2) }}%</h1>
                       <h4 class="text-ash">of People are wearing mask.</h4>
                     </div>
                   </div>
@@ -33,19 +35,19 @@
                 <div class="row mt-4">
                   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
-                      <h2 class="text-success">1997</h2>
+                      <h2 class="text-success">{{ $con_carddata->total_face_detected }}</h2>
                       <h4 class="text-ash">Total faced detected.</h4>
                     </div>
                   </div>
                   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
-                      <h2 class="text-success">1384</h2>
+                      <h2 class="text-success">{{ $con_carddata->total_masked_faces }}</h2>
                       <h4 class="text-ash">Number of Masked Faces.</h4>
                     </div>
                   </div>
                   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
-                      <h2 class="text-success">610</h2>
+                      <h2 class="text-success">{{ $con_carddata->total_non_masked_faces }}</h2>
                       <h4 class="text-ash">Number of Non-Masked Faces.</h4>
                     </div>
                   </div>
@@ -165,17 +167,74 @@
             </div>
           </div>
         </div>
+ 
+@endsection
 
+@section('scripts')
+
+<script type="text/javascript">
+      // Age Wise Death Distribution
+
+      <?php 
+        $camera_no_arr = $masked_arr = array();
+      
+          foreach($con_barchart_data as $row){
+            
+                $camera_no_arr[] = $row->camera_no;
+                $masked_arr[] = (float)$row->masked;
+          }
+          $camera_no = implode(",",$camera_no_arr);
+          $masked = implode(",",$masked_arr);
+        
+      ?>
+            Highcharts.chart('camera-wise-barchart', {
+        chart: {
+          type: 'column',
+          height: 240
+        },
+        title: {
+          text: ''
+        },
+        subtitle: {
+          text: ''
+        },
+        credits:{
+          enabled:false
+        },
+        legend:{
+          enabled:false
+        },
+        yAxis: {
+          title: {
+            text: ''
+          },
+          labels: {
+            formatter: function() {
+               return this.value+"%";
+            }
+          }
+        },
+        xAxis: {
+          categories: [<?php echo $camera_no; ?>]       },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}%</b>',
+          /*valueSuffix: ' cm',
+          shared: true*/
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+          }
+        },
+        colors: ['#ef4b4b'],
+        series: [{"name":"Camera","data":[<?php echo $masked; ?>]}]     });
+    </script> 
     <!-- End Row-2 -->
 <script type="text/javascript">
             $(document).ready(function(){
                 $('#iframeData').html('<iframe width="933" height="525" src="https://www.youtube.com/embed/86WspkDtXrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');                
             });
         </script>
-@endsection
-
-@section('scripts')
-
-
 
 @endsection

@@ -93,6 +93,7 @@
 <!-- Custom js--> 
 
 <script src="{{ asset('assets/js/custom_iedcr.js?v=2') }}"></script>
+<script src="{{ asset('assets/js/custom.js?v=2') }}"></script>
 
 @yield('scripts')
 </body>
