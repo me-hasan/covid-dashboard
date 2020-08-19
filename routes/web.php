@@ -31,8 +31,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dashboard')->middleware(['auth', 'permission:cabinet-dashboard']);
 Route::get('/dataframe', 'cabinet\DashboardController@dataFrameData')->name('cabinet.dataframe');
 
+// iedcr route
 
 Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
+
+Route::get('/iedcr/generate-gender-excel', 'iedcr\IedcrDashboardController@generateInfectedGenderExcel')->name('iedcr.generate-gender-excel');
 
 
 
