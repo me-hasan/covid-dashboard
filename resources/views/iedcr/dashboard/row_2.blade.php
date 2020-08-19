@@ -3386,7 +3386,7 @@
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
                                                 <h3 class="card-title"><span class="fs-12">Cases by Gender</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <div class="card-options"> <a href="{{route('iedcr.generate-gender-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="case_by_gender"></div>
