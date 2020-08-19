@@ -227,7 +227,9 @@
         });
 
         $('.divisional_level').on('click',function (){
-
+            $('.division').prop('disabled',false);
+            $('.district').prop('disabled',false);
+            $('.upazilla').prop('disabled',false);
         });
 
     </script>
