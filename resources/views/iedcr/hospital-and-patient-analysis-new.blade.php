@@ -12,7 +12,6 @@
         foreach ($_deathLocInfoData as $key=>$_deathInfo){
             $_deathLocationPercentageDataSet[$key+1][0] = $_deathInfo->location;
             $_deathLocationPercentageDataSet[$key+1][1] = $_deathInfo->percentage;
-
         }
     }
 
@@ -64,370 +63,22 @@
                       </tr>
                     </thead>
                     <tbody>
+                    @foreach($_hospitalCapacityDataSet as $_hospitalCapacityData)
                       <tr>
-                        <td>Kuwait Matry Hospital, Uttora, Dhaka</td>
-                        <td>200</td>
-                        <td>16</td>
-                        <td>26</td>
-                        <td>119</td>
-                        <td>16</td>
-                        <td>13</td>
-                        <td>11</td>
-                        <td>123</td>
-                        <td>8</td>
-                        <td>1</td>
-                        <td>No</td>
+                        <td>{!! $_hospitalCapacityData->facility_name !!}</td>
+                        <td>{!! $_hospitalCapacityData->general_bed !!}</td>
+                        <td>{!! $_hospitalCapacityData->usable_ICU_bed !!}</td>
+                        <td>{!! $_hospitalCapacityData->ventilator !!}</td>
+                        <td>{!! $_hospitalCapacityData->general_bed_2 !!}</td>
+                        <td>{!! $_hospitalCapacityData->ICU_bed !!}</td>
+                        <td>{!! $_hospitalCapacityData->admitted_patient_last_24 !!}</td>
+                        <td>{!! $_hospitalCapacityData->released_patient_last_24 !!}</td>
+                        <td>{!! $_hospitalCapacityData->oxygen_cylinder !!}</td>
+                        <td>{!! $_hospitalCapacityData->high_flow_nasal_cannula !!}</td>
+                        <td>{!! $_hospitalCapacityData->oxygen_concentrator !!}</td>
+                        <td>{!! $_hospitalCapacityData->central_oxygen_line !!}</td>
                       </tr>
-                      <tr>
-                        <td>500 beded Kurmitola General Hospital</td>
-                        <td>275</td>
-                        <td>10</td>
-                        <td>9</td>
-                        <td>235</td>
-                        <td>10</td>
-                        <td>29</td>
-                        <td>29</td>
-                        <td>439</td>
-                        <td>17</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka Medical College Hospital and Burn Unit</td>
-                        <td>883</td>
-                        <td>24</td>
-                        <td>14</td>
-                        <td>608</td>
-                        <td>17</td>
-                        <td>59</td>
-                        <td>50</td>
-                        <td>628</td>
-                        <td>3</td>
-                        <td>30</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>500 beded Mugda Medidcal College Hospital, Dhaka</td>
-                        <td>306</td>
-                        <td>14</td>
-                        <td>10</td>
-                        <td>129</td>
-                        <td>14</td>
-                        <td>15</td>
-                        <td>24</td>
-                        <td>245</td>
-                        <td>2</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Rajarbag Police Hospital, Dhaka</td>
-                        <td>1012</td>
-                        <td>15</td>
-                        <td>15</td>
-                        <td>276</td>
-                        <td>11</td>
-                        <td>15</td>
-                        <td>32</td>
-                        <td>60</td>
-                        <td>15</td>
-                        <td>7</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>BSMMU, Dhaka</td>
-                        <td>370</td>
-                        <td>15</td>
-                        <td>30</td>
-                        <td>130</td>
-                        <td>15</td>
-                        <td>21</td>
-                        <td>7</td>
-                        <td>30</td>
-                        <td>50</td>
-                        <td>7</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Dhaka Metropolitan Hospital, Babu Bazar, Dhaka</td>
-                        <td>105</td>
-                        <td>-</td>
-                        <td>5</td>
-                        <td>21</td>
-                        <td>-</td>
-                        <td>7</td>
-                        <td>1</td>
-                        <td>48</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Infection Deasease Hospital, Mohakhali, Dhaka</td>
-                        <td>10</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>72</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Lalkuthi Hospital, Mirpur, Dhaka</td>
-                        <td>121</td>
-                        <td>5</td>
-                        <td>5</td>
-                        <td>38</td>
-                        <td>2</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>20</td>
-                        <td>5</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Railway Hosptial, Kamlapur, Dhaka</td>
-                        <td>30</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>30</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>250 beded sheikh rasel gastroliver hospital, Mohakhali, Dhaka</td>
-                        <td>140</td>
-                        <td>13</td>
-                        <td>14</td>
-                        <td>29</td>
-                        <td>6</td>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>150</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Holy Family red cresent medical college hospital</td>
-                        <td>420</td>
-                        <td>10</td>
-                        <td>6</td>
-                        <td>133</td>
-                        <td>10</td>
-                        <td>6</td>
-                        <td>8</td>
-                        <td>120</td>
-                        <td>4</td>
-                        <td>-</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Anwar Khan Modern Medical College Hospital, Dhanmondi, Dhaka</td>
-                        <td>200</td>
-                        <td>10</td>
-                        <td>-</td>
-                        <td>78</td>
-                        <td>7</td>
-                        <td>22</td>
-                        <td>8</td>
-                        <td>300</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Basundhara Covid Hospital, Kuril, Dhaka</td>
-                        <td>2013</td>
-                        <td>-</td>
-                        <td>10</td>
-                        <td>28</td>
-                        <td>-</td>
-                        <td>5</td>
-                        <td>7</td>
-                        <td>400</td>
-                        <td>-</td>
-                        <td>7</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Sarkari Kormochari Hospital, Fulbaria, Dhaka</td>
-                        <td>46</td>
-                        <td>6</td>
-                        <td>6</td>
-                        <td>5</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Shaheed Sharawardy Medical College Hospital</td>
-                        <td>174</td>
-                        <td>8</td>
-                        <td>-</td>
-                        <td>121</td>
-                        <td>-</td>
-                        <td>11</td>
-                        <td>9</td>
-                        <td>280</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Tanjira 20 beded hospital, Keraniganj, Dhaka</td>
-                        <td>27</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>5</td>
-                        <td>-</td>
-                        <td>1</td>
-                        <td>9</td>
-                        <td>18</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Khanpur 300 beded hospital, Narawanganj</td>
-                        <td>100</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>19</td>
-                        <td>-</td>
-                        <td>8</td>
-                        <td>4</td>
-                        <td>140</td>
-                        <td>5</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Sajeda Foundation, Kachpur, Narawanganj</td>
-                        <td>44</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>36</td>
-                        <td>4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>81</td>
-                        <td>1</td>
-                        <td>20</td>
-                        <td>Yes</td>
-                      </tr>
-                      <tr>
-                        <td>Shaheed Tajuddin Medical College Hospital, Gazipur</td>
-                        <td>100</td>
-                        <td>10</td>
-                        <td>4</td>
-                        <td>12</td>
-                        <td>-</td>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>408</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagonj Medical College Hospital</td>
-                        <td>160</td>
-                        <td>10</td>
-                        <td>16</td>
-                        <td>156</td>
-                        <td>6</td>
-                        <td>20</td>
-                        <td>28</td>
-                        <td>27</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>BITIT, Fouzder Hat, Chittagong</td>
-                        <td>32</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>18</td>
-                        <td>-</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>32</td>
-                        <td>-</td>
-                        <td>1</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>250 Beded Specialized General Hospital, Chittagong</td>
-                        <td>150</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>83</td>
-                        <td>6</td>
-                        <td>4</td>
-                        <td>7</td>
-                        <td>245</td>
-                        <td>2</td>
-                        <td>9</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Holy Cresent Hospital, Chittagong</td>
-                        <td>100</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>6</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>65</td>
-                        <td>-</td>
-                        <td>1</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagonj Railway Hospital, Chittagong</td>
-                        <td>100</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>3</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>6</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>Chittagong Mother and Child Hospital, Agrabad, Chittagong</td>
-                        <td>28</td>
-                        <td>6</td>
-                        <td>8</td>
-                        <td>21</td>
-                        <td>6</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>65</td>
-                        <td>7</td>
-                        <td>-</td>
-                        <td>No</td>
-                      </tr>
+                    @endforeach
                     </tbody>
                   </table>
                 </div>
@@ -474,10 +125,10 @@
             </div>
           </div>
         </div>
-        <!-- End Top Row --> 
-        
+        <!-- End Top Row -->
+
         <!-- Row-1 -->
-        
+
         <div class="row">
           <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card">
@@ -485,15 +136,15 @@
                 <h3 class="card-title">Patient Comorbidity Analysis</h3>
                 <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
               </div>
-              <div class="card-body"> <img src="assets/images/chart/hospital-and-patient-analysis-1.jpg" alt="Patient Comorbidity Analysis" /> </div>
+              <div class="card-body"> <img src="{!! asset('assets/images/chart/hospital-and-patient-analysis-1.jpg') !!}" alt="Patient Comorbidity Analysis" /> </div>
             </div>
           </div>
         </div>
-        
-        <!-- End Row-1 --> 
-        
+
+        <!-- End Row-1 -->
+
         <!-- Row-2 -->
-        
+
         <div class="row">
           <div class="col-xl-12 col-md-12">
             <div class="card">
@@ -516,11 +167,11 @@
             </div>
           </div>
         </div>
-        
-        <!-- End Row-2 --> 
-        
+
+        <!-- End Row-2 -->
+
         <!-- Row-3 -->
-        
+
         <div class="row">
           <div class="col-xl-7 col-lg-5 col-md-12">
             <div class="card">
@@ -528,7 +179,7 @@
                 <h3 class="card-title">Patient Risk Level</h3>
                 <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
               </div>
-              <div class="card-body"> <img src="assets/images/chart/hospital-and-patient-analysis-2.jpg" alt="Patient Risk Level" /> </div>
+              <div class="card-body"> <img src="{!! asset('assets/images/chart/hospital-and-patient-analysis-2.jpg') !!}" alt="Patient Risk Level" /> </div>
             </div>
           </div>
           <div class="col-xl-5 col-lg-7 col-md-12">
@@ -546,8 +197,8 @@
             </div>
           </div>
         </div>
-        
-        <!-- End Row-3 --> 
+
+        <!-- End Row-3 -->
 
     <!-- End Row-4 -->
 
