@@ -42,10 +42,10 @@
                 <div class="form-group mb-0 mt-3">
                   <div class="custom-controls-stacked d-flex">
                     <label class="custom-control custom-radio mr-2">
-                      <input type="radio" class="custom-control-input" name="example-radios" value="option1" checked>
+                      <input type="radio" class="custom-control-input natioanl_level" name="example-radios" value="option1" checked>
                       <span class="custom-control-label">National Level</span> </label>
                     <label class="custom-control custom-radio mr-2">
-                      <input type="radio" class="custom-control-input" name="example-radios" value="option2" disabled>
+                      <input type="radio" class="custom-control-input divisional_level" name="example-radios" value="option2" >
                       <span class="custom-control-label">Divisional Level</span> </label>
                   </div>
                 </div>
@@ -220,5 +220,15 @@
             });
 
         });
+        $('.natioanl_level').on('click',function (){
+          $('.division').prop('disabled','disabled');
+            $('.district').prop('disabled','disabled');
+            $('.upazilla').prop('disabled','disabled');
+        });
+
+        $('.divisional_level').on('click',function (){
+
+        });
+
     </script>
 @endpush
