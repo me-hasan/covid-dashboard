@@ -96,3 +96,4 @@
 <script src="{{ asset('assets/js/custom.js?v=2') }}"></script>
 
 @yield('scripts')
+@stack('custom_script')
