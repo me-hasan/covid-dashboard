@@ -47,13 +47,13 @@
                 <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
                   <div class="card-body">
                     <h5 class="card-title">Short Description</h5>
-                    <p class="card-text">Short Description text will place here.</p>
+                    <p class="card-text">{{ $sd_1 }}</p>
                   </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                   <div class="card-body">
                     <h5 class="card-title">Data Source</h5>
-                    <p class="card-text">Data Source text will place here.</p>
+                    <p class="card-text">{{ $ss_1 }}</p>
                   </div>
                 </div>
               </div>
@@ -67,11 +67,11 @@
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                  <h2 class="text-success">15.37%</h2>
+                  <h2 class="text-success">{{ number_format($tpr_today->test_positivity_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Number of Performed Tests</h4>
-                  <h2 class="text-success">872</h2>
+                  <h2 class="text-success">{{ $tpr_today->total_tests }}</h2>
                 </div>
               </div>
             </div>
@@ -82,11 +82,11 @@
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Average Test Positivity Rate</h4>
-                  <h2 class="text-success">15.28%</h2>
+                  <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Average # of Performed Tests</h4>
-                  <h2 class="text-success">36379</h2>
+                  <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
                 </div>
               </div>
             </div>
@@ -122,56 +122,16 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Barguna</td>
-                                <td>-</td>
-                                <td>301</td>
-                                <td>26</td>
-                                <td>8.64</td>
-                              </tr>
-                              <tr>
-                                <td>Barisal</td>
-                                <td>-</td>
-                                <td>889</td>
-                                <td>39</td>
-                                <td>4.39</td>
-                              </tr>
-                              <tr>
-                                <td>Bhola</td>
-                                <td>-</td>
-                                <td>30</td>
-                                <td>1</td>
-                                <td>3.33</td>
-                              </tr>
-                              <tr>
-                                <td>Jhalakathi</td>
-                                <td>-</td>
-                                <td>207</td>
-                                <td>15</td>
-                                <td>7.25</td>
-                              </tr>
-                              <tr>
-                                <td>Patuakhali</td>
-                                <td>-</td>
-                                <td>439</td>
-                                <td>18</td>
-                                <td>4.1</td>
-                              </tr>
-                              <tr>
-                                <td>Pirojpur</td>
-                                <td>-</td>
-                                <td>353</td>
-                                <td>23</td>
-                                <td>6.52</td>
-                              </tr>
-                              
-                              <tr>
-                                <td>Sylhet</td>
-                                <td>-</td>
-                                <td>1579</td>
-                                <td>382</td>
-                                <td>24.19</td>
-                              </tr>
+                              <?php foreach($tpr_data as $row){  ?>
+                                            
+                                  <tr>
+                                      <td>{{$row->district}}</td>
+                                      <td>-</td>
+                                      <td>{{$row->total}}</td>
+                                      <td>{{$row->positive}}</td>
+                                      <td>{{ number_format($row->test_positivity,2) }}</td>
+                                  </tr>
+                              <?php } ?>
                             </tbody>
                           </table>
                         </div>
@@ -199,13 +159,13 @@
                   <div class="col-xl-9 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
                       <h5 class="card-title">Short Description</h5>
-                      <p class="card-text">Short Description text will place here.</p>
+                      <p class="card-text">{{ $sd_2 }}</p>
                     </div>
                   </div>
                   <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
                       <h5 class="card-title">Data Source</h5>
-                      <p class="card-text">Data Source text will place here.</p>
+                      <p class="card-text">{{ $ss_2 }}</p>
                     </div>
                   </div>
                 </div>
@@ -230,13 +190,13 @@
                 <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
                   <div class="card-body">
                     <h5 class="card-title">Short Description</h5>
-                    <p class="card-text">This data is collected from testing labs whom are varified COVID-19 tests certificate provider for people who wants to go abroad. Last Update Data: 9th August, 2020</p>
+                    <p class="card-text">{{ $sd_3 }}</p>
                   </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                   <div class="card-body">
                     <h5 class="card-title">Data Source</h5>
-                    <p class="card-text">Data Source text will place here.</p>
+                    <p class="card-text">{{ $ss_3 }}</p>
                   </div>
                 </div>
               </div>
@@ -245,33 +205,33 @@
           <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: 09/08/2020</h3>
+                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3>
                 <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                  <h2 class="text-success">1.80%</h2>
+                  <h2 class="text-success">{{$tpr_today->test_positivity_rate}}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Number of Performed Tests</h4>
-                  <h2 class="text-success">666</h2>
+                  <h2 class="text-success">{{$tpr_today->total_tests}}</h2>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: 21/07/2020-09/08/2020</h3>
+                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} </h3>
                 <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Average Test Positivity Rate</h4>
-                  <h2 class="text-success">4.48%</h2>
+                  <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Average # of Performed Tests</h4>
-                  <h2 class="text-success">17175</h2>
+                  <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
                 </div>
               </div>
             </div>
@@ -392,5 +352,64 @@
             ?>
             $('#color-group').append('<div class="row gutters-xs"><?php echo $_groupData; ?></div>');
         });
+
+
+      Highcharts.chart('time-series-trend', {
+        chart: {
+          height: 330
+        },
+        title: {
+          text: ''
+        },
+
+        subtitle: {
+          text: ''
+        },
+        
+        legend: {
+          enabled:false,
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'top'
+        },
+        
+        credits:{
+          enabled:false
+        },
+        
+        xAxis: {
+          categories: ["21\/07\/2020","22\/07\/2020","23\/07\/2020","24\/07\/2020","25\/07\/2020","26\/07\/2020","27\/07\/2020","28\/07\/2020","29\/07\/2020","30\/07\/2020","31\/07\/2020","01\/08\/2020","02\/08\/2020","03\/08\/2020","04\/08\/2020","05\/08\/2020","06\/08\/2020","07\/08\/2020","08\/08\/2020","09\/08\/2020"]       },
+        
+        yAxis: {
+          title: {
+            text: ''
+          },
+          labels: {
+            //enabled: false,
+            formatter: function() {
+               return this.value+'%';
+            }
+          }
+        },
+        
+        plotOptions: {
+          series: {
+            fillOpacity:0,
+            dataLabels:{
+              enabled:false,
+              color: 'black',
+              formatter:function() {
+                //var pcnt = (this.y / dataSum) * 100;
+                return Highcharts.numberFormat(this.y);
+              }
+            }
+          }
+        },
+        
+        colors: ['#ef4b4b'],
+        
+        series: [{"type":"area","name":"Test Positivity Rate","data":[5.6,4.3,12.21,7.83,5.36,4.65,5.17,4.58,3.66,4.9,4.88,3.7,5.03,4.22,2.49,2.77,2.18,2,2.33,1.8],"marker":{"symbol":"circle"}}]    
+
+    });
     </script>
 @endsection
