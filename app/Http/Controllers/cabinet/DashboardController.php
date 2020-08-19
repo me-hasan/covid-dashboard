@@ -386,42 +386,11 @@ class DashboardController extends Controller
         }
         $data['_distirctDetailsData'] = $_distirctDetailsData;
 
-
-        $dataType = $request->input('datatype');
-        if(!is_null($dataType)) {
-            if ($dataType == "riskzone") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'https://arcg.is/1iqf0T');
-            } elseif ($dataType == "patientmobility") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'https://covid19mobility.cramstack.com/');
-            } else if ($dataType == "citizenmobility") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'https://covid19mobility.cramstack.com/');
-            } else if ($dataType == "synnoptic_surveillance") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'http://a2i-monitoring.sigmind.ai/home');
-            } else if ($dataType == "ss_report") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'http://cdr.a2i.gov.bd/outlier_new/');
-            } else if ($dataType == "sdp_monitoring") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'http://a2i-monitoring.sigmind.ai/home');
-            } else if ($dataType == "analytics") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'https://app.powerbi.com/view?r=eyJrIjoiNmU2YWEwNTEtZWIwMC00M2Q2LTg5NzItMDI1YjEwNzM5NTNmIiwidCI6ImNkNTc1NTI0LTkyNTgtNGVkOC05NDg3LWUxYTIyN2JlMjkyYiIsImMiOjEwfQ%3D%3D&pageName=ReportSection96ba617637500cdc7529');
-            } else if ($dataType == "detailsmap") {
-                $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'https://app.powerbi.com/view?r=eyJrIjoiNmU2YWEwNTEtZWIwMC00M2Q2LTg5NzItMDI1YjEwNzM5NTNmIiwidCI6ImNkNTc1NTI0LTkyNTgtNGVkOC05NDg3LWUxYTIyN2JlMjkyYiIsImMiOjEwfQ%3D%3D&pageName=ReportSection96ba617637500cdc7529');
-            }
-
-            $data['_groupDataColor']        = $_groupDataColor;
-            $data['_divisionWiseInfacted']  = $_divisionWiseInfacted;
-            $data['_mapRegions']            = $_mapRegions;
-            $data['_districtSelName']       = $_districtSelName;
-            $data['_upazillaSelName']       = $_upazillaSelName;
-            $data['_requestedFrameData'] = $_requestedFrameData;
-            return view('administrative.dataframe', $data);
-        }
-
         $data['_groupDataColor']        = $_groupDataColor;
         $data['_divisionWiseInfacted']  = $_divisionWiseInfacted;
         $data['_mapRegions']            = $_mapRegions;
         $data['_districtSelName']       = $_districtSelName;
         $data['_upazillaSelName']       = $_upazillaSelName;
-
 
 
         return view('administrative.dashboard', $data);
@@ -489,6 +458,31 @@ class DashboardController extends Controller
             $_translateData[] = array($_rowData['upazila_en'], $_rowData['upazila_bn'], $_rowData['district']);
         }
         return $_translateData;
+    }
+
+    public function dataFrameData(Request $request) {
+        $dataType = $request->get('datatype');
+        if($dataType == "riskzone"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' => 'https://arcg.is/1iqf0T');
+        }elseif($dataType == "patientmobility"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'https://covid19mobility.cramstack.com/');
+        } else if($dataType == "citizenmobility"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'https://covid19mobility.cramstack.com/');
+        } else if($dataType == "synnoptic_surveillance"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'https://moru.maps.arcgis.com/apps/opsdashboard/index.html#/f23b8a26855c434ca3188c4136860811');
+        } else if($dataType == "ss_report"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'http://cdr.a2i.gov.bd/outlier_new/');
+        } else if($dataType == "sdp_monitoring"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'http://a2i-monitoring.sigmind.ai/home');
+        } else if($dataType == "analytics"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'https://app.powerbi.com/view?r=eyJrIjoiNmU2YWEwNTEtZWIwMC00M2Q2LTg5NzItMDI1YjEwNzM5NTNmIiwidCI6ImNkNTc1NTI0LTkyNTgtNGVkOC05NDg3LWUxYTIyN2JlMjkyYiIsImMiOjEwfQ%3D%3D&pageName=ReportSection96ba617637500cdc7529');
+        } else if($dataType == "detailsmap"){
+            $_requestedFrameData = array('width' => '100%', 'height' => '820', 'URL' =>'https://app.powerbi.com/view?r=eyJrIjoiNmU2YWEwNTEtZWIwMC00M2Q2LTg5NzItMDI1YjEwNzM5NTNmIiwidCI6ImNkNTc1NTI0LTkyNTgtNGVkOC05NDg3LWUxYTIyN2JlMjkyYiIsImMiOjEwfQ%3D%3D&pageName=ReportSection96ba617637500cdc7529');
+        }
+        $data['_requestedFrameData'] = $_requestedFrameData;
+
+
+        return view('administrative.dataframe', $data);
     }
 
 }
