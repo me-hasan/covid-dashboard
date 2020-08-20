@@ -31,27 +31,33 @@ class IedcrDashboardController extends Controller
      $data_source_description = DB::table('data_source_description')->where('page_name','iedcr-dashboard')->get();
      
 
-     // Nationwide Infected Gender Distribution
-     $nationalInfectedGender = $this->nationalInfectedGender();
+     
+    if($request->division){
+      // Div Dis Upazila Level Infected Gender Distribution
+      $infectedGender = $this->upazillaLevelInfectedGender($request);
 
-     // Div Dis Upazila Level Infected Gender Distribution
-     $upazillaLevelInfectedGender = $this->upazillaLevelInfectedGender($request);
+      // Div Dis Upazila Level Infected Age Group Distribution
+      $infectedAge = $this->upazillaLevelInfectedAge($request);
+
+      // Div Dis Upazila wise Infectd Person Trend Line
+      $ininfectedTrend = $this->divDislInfectedTrend($request) ?? '';
+    }else{
+     // Nationwide Infected Gender Distribution
+      $infectedGender = $this->nationalInfectedGender();
 
      // National level Infected Age Group Distribution
-     $nationalInfectedAge = $this->nationalInfectedAge();
+      $infectedAge = $this->nationalInfectedAge();
 
-     // Div Dis Upazila Level Infected Gender Distribution
-     $upazillaLevelInfectedAge = $this->upazillaLevelInfectedAge($request);
+      // Nantionwide Infectd Person Trend Line
+      $ininfectedTrend = $this->nationalInfectedTrend();
+    }
+    //dd($infectedGender);
+     
 
-     // Nantionwide Infectd Person Trend Line
-     $nationalInfectedTrend = $this->nationalInfectedTrend();
-
-     // Div Dis Upazila wise Infectd Person Trend Line
-     $divDislInfectedTrend = $this->divDislInfectedTrend($request) ?? '';
 
      // dd($upazillaLevelInfectedTrend);
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','nationalInfectedGender','upazillaLevelInfectedGender','nationalInfectedAge','upazillaLevelInfectedAge','nationalInfectedTrend','divDislInfectedTrend'));
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend'));
   }
 
   private function nationalInfectedGender()
@@ -70,10 +76,27 @@ class IedcrDashboardController extends Controller
     return $getNationalInfectedGender[0];
   }
 
+  private function upazillaLevelInfectedGender($request)
+  {
+    if($request->division && $request->district && $request->upazila){
+      $getUpazillaLevelInfectedGender = DB::select("select Upazila, F, M from Div_Dist_Upz_Infected_Gender where Upazila='".$request->upazila."' group by Upazila;");
+    }elseif($request->division && $request->district){
+      $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District='".$request->district."' group by District;");
+    }elseif($request->division){
+      $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division='".$request->division."' group by Division;");
+    }
+    
+    return $getUpazillaLevelInfectedGender[0] ?? '';
+  }
+
   private function nationalInfectedAge()
   {
-    $getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '0-10', (A.twentyone_to_thirty/A.Total)*100 as '21-30',(A.thirtyone_to_forty/A.Total)*100 as '31-40',
-    (A.fortyone_to_fifty/A.Total)*100 as '41-50', (A.fiftyone_to_sixty/A.Total)*100 as '51-60', (A.sixtyone_to_hundred/A.Total)*100 as '60+', updt_date
+    $getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '_0_10', 
+        (A.elv_to_twenty/A.Total)*100 AS '_11_20',
+        (A.twentyone_to_thirty/A.Total)*100 as '_21_30',
+        (A.thirtyone_to_forty/A.Total)*100 as '_31_40',
+        (A.fortyone_to_fifty/A.Total)*100 as '_41_50', 
+        (A.fiftyone_to_sixty/A.Total)*100 as '_51_60', (A.sixtyone_to_hundred/A.Total)*100 as '_60_Plus', updt_date
     from
     (SELECT
         max(date_of_test) as 'updt_date',
@@ -90,13 +113,39 @@ class IedcrDashboardController extends Controller
     return $getNationalInfectedAge[0];
   }
 
+  private function upazillaLevelInfectedAge($request)
+  {
+    if($request->division && $request->district && $request->upazila){
+      $getUpazillaLevelInfectedAge = DB::select("select Upazila, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Upazila='".$request->upazila."' group by Upazila;");
+    }elseif($request->division && $request->district){
+      $getUpazillaLevelInfectedAge = DB::select("select District, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where District='".$request->district."' group by District;");
+    }elseif($request->division){
+      $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division='".$request->division."' group by Division;");
+    }
+    
+    return $getUpazillaLevelInfectedAge[0] ?? '';
+  }
+
   private function nationalInfectedTrend()
   {
     $getNationalInfectedTrend = DB::select("select date_of_test as 'Date', count(id) as infected_count from infected_person group by date_of_test");
     return $getNationalInfectedTrend[0] ?? '';
   }
 
-  private function upazillaLevelInfectedGender($request)
+  private function divDislInfectedTrend($request)
+  {
+    if($request->division && $request->district){
+      $getDivDisLevelInfectedTrend = DB::select("select District, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District='".$request->district."' group by District, Date;");
+    }elseif($request->division){
+      $getDivDisLevelInfectedTrend = DB::select("select Division, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
+    }
+    
+    return $getDivDisLevelInfectedTrend ?? '';
+  }
+
+
+
+  private function upazillaLevelInfectedGender_old($request)
   {
     $getUpazillaLevelInfectedGender = DB::table('Div_Dist_Upz_Infected_Gender')
                                       ->when($request->division, function ($query) use ($request) {
@@ -113,7 +162,7 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedGender;
   }
 
-  private function upazillaLevelInfectedAge($request)
+  private function upazillaLevelInfectedAge_old($request)
   {
     $getUpazillaLevelInfectedAge = DB::table('Div_Dist_Upz_Infected_age')
                                       ->when($request->division, function ($query) use ($request) {
@@ -130,23 +179,13 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedAge;
   }
 
-  private function divDislInfectedTrend($request)
-  {
-    if($request->division && $request->district){
-      $getDivDisLevelInfectedTrend = DB::select("select District, Date, sum(infected_person) from div_dist_upz_infected_trend where District=".$request->division." group by District, Date;");
-    }elseif($request->division){
-      $getDivDisLevelInfectedTrend = DB::select("select Division, Date, sum(infected_person) from div_dist_upz_infected_trend where Division=".$request->division." group by Division, Date;");
-    }
-    
-
-    return $getDivDisLevelInfectedTrend ?? '';
-  }
+  
 
   public function generateInfectedGenderExcel(Request $request){
-     if($request){
+     if($request->division){
         $genderData = $this->upazillaLevelInfectedGender($request);
      }else{
-        $genderData = $this->nationalInfectedGender($request);
+        $genderData = $this->nationalInfectedGender();
      }
 
      $list = collect([
