@@ -164,7 +164,7 @@
               </div>
             </div>
           </div>
-        </div>
+       
         <!--/app header-->
 @push('custom_script')
     <script>
