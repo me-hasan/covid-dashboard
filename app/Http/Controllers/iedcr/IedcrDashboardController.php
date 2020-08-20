@@ -29,9 +29,9 @@ class IedcrDashboardController extends Controller
      // $hda_time_series = DB::table('hda_time_series')->get();
 
      $data_source_description = DB::table('data_source_description')->where('page_name','iedcr-dashboard')->get();
-     
 
-     
+
+
     if($request->division){
       // Div Dis Upazila Level Infected Gender Distribution
       $infectedGender = $this->upazillaLevelInfectedGender($request);
@@ -52,12 +52,32 @@ class IedcrDashboardController extends Controller
       $ininfectedTrend = $this->nationalInfectedTrend();
     }
     //dd($infectedGender);
-     
+
 
 
      // dd($upazillaLevelInfectedTrend);
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend'));
+
+      //mobility section
+      if($request->division || $request->district || $request->upazila){
+          $mobility_list  = $this->divisionWideMobilityInOut($request);
+      } else {
+          $mobility_list  = $this->nationWideMobilityInOut();
+      }
+
+      $mobility_in = $mobility_out = $subscriber = [];
+
+      foreach ($mobility_list as $mobility) {
+          $mobilityDate[] = $mobility->Calculated_date;
+          $mobility_in[]  = $mobility->mobility_in;
+          $mobility_out[] = $mobility->mobility_out;
+          $subscriber[]   = $mobility->Num_subscriber;
+      }
+
+      $mobilityInData  = implode(",", $mobility_in);
+      $mobilityOutData = implode(",", $mobility_out);
+
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend','mobilityDate','mobilityInData','mobilityOutData'));
   }
 
   private function nationalInfectedGender()
@@ -85,7 +105,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division='".$request->division."' group by Division;");
     }
-    
+
     return $getUpazillaLevelInfectedGender[0] ?? '';
   }
 
@@ -122,7 +142,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division='".$request->division."' group by Division;");
     }
-    
+
     return $getUpazillaLevelInfectedAge[0] ?? '';
   }
 
@@ -139,7 +159,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getDivDisLevelInfectedTrend = DB::select("select Division, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
     }
-    
+
     return $getDivDisLevelInfectedTrend ?? '';
   }
 
@@ -179,7 +199,7 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedAge;
   }
 
-  
+
 
   public function generateInfectedGenderExcel(Request $request){
      if($request->division){
@@ -194,5 +214,29 @@ class IedcrDashboardController extends Controller
 
       return (new FastExcel($list))->download('infected_gender.xlsx');
   }
-    
+
+    /**
+     * Nation wide mobility IN / OUT
+     * @return mixed
+     */
+    protected function nationWideMobilityInOut() {
+      $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date");
+      return $nationWideMobility;
+  }
+
+    /**
+     * Division wide mobility IN / OUT
+     * @param $request
+     */
+    protected function divisionWideMobilityInOut($request) {
+      if($request->division && $request->district && $request->upazila){
+          $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Upazila");
+      }elseif($request->division && $request->district){
+          $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, District");
+      }elseif($request->division){
+          $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Division");
+      }
+      return $mobility;
+	}
+
 }
