@@ -52,16 +52,26 @@ class IedcrDashboardController extends Controller
       // Nantionwide Infectd Person Trend Line
       $ininfectedTrend = $this->nationalInfectedTrend();
     }
-     $testPositivityByAge =  $this->testPositivitybyAge($request);
-      $testPositivityByGender =  $this->testPositivitybyGender($request);
-    //dd($testPositivityByAge);
-    //dd($infectedGender);
+
+    if($request->has('excel_download') && $request->excel_download == 'test_posititvity_age') {
+        return  $this->testPositivitybyAge($request);
+    }
+      if($request->has('excel_download') && $request->excel_download == 'test_posititvity_gender') {
+          return  $this->testPositivitybyGender($request);
+      }
+      if($request->has('excel_download') && $request->excel_download == 'avgDelayTime') {
+          return  $this->avgDelayTime($request);
+      }
+
+    $testPositivityByAge =  $this->testPositivitybyAge($request);
+    $testPositivityByGender =  $this->testPositivitybyGender($request);
+    $avgDelayTimeData =  $this->avgDelayTime($request);
 
 
 
      // dd($upazillaLevelInfectedTrend);
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend','testPositivityByAge','testPositivityByGender'));
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend','testPositivityByAge','testPositivityByGender','avgDelayTimeData'));
   }
 
   private function nationalInfectedGender()
@@ -203,17 +213,26 @@ class IedcrDashboardController extends Controller
     public function  testPositivitybyAge($request) {
         $testPositivesqlQuery = "SELECT Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus FROM `Div_Dist_Upz_Infected_Age` WHERE Division = 'Dhaka' group by Division";
 
-        $testPositivesqlQueryData = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
+        $testPositivesqlQueryDataArray = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
        if($request->has('excel_download')) {
-           $testPositivesqlQueryData = $testPositivesqlQueryData[0];
-           $list = collect([
-               [ 'Division' => $testPositivesqlQueryData->Division ?? '--', '_0_10' => $testPositivesqlQueryData->_0_10 ?? '--', '_11_20' =>$testPositivesqlQueryData->_11_20 ?? '--' , '_21_30' =>$testPositivesqlQueryData->_21_30 ?? '--', '_31_40' =>$testPositivesqlQueryData->_31_40 ?? '--', '_41_50' =>$testPositivesqlQueryData->_41_50 ?? '--', '_51_60' =>$testPositivesqlQueryData->_51_60 ?? '--', '_60_Plus' =>$testPositivesqlQueryData->_60_Plus ?? '--' ],
-           ]);
+
+           if(count($testPositivesqlQueryDataArray)) {
+               foreach ($testPositivesqlQueryDataArray as $testPositivesqlQueryData) {
+                   $list = collect([
+                       [ 'Division' => $testPositivesqlQueryData->Division ?? '--', '_0_10' => $testPositivesqlQueryData->_0_10 ?? '--', '_11_20' =>$testPositivesqlQueryData->_11_20 ?? '--' , '_21_30' =>$testPositivesqlQueryData->_21_30 ?? '--', '_31_40' =>$testPositivesqlQueryData->_31_40 ?? '--', '_41_50' =>$testPositivesqlQueryData->_41_50 ?? '--', '_51_60' =>$testPositivesqlQueryData->_51_60 ?? '--', '_60_Plus' =>$testPositivesqlQueryData->_60_Plus ?? '--' ],
+                   ]);
+               }
+           } else {
+               $list = collect([
+                   [ 'Division' => $testPositivesqlQueryData->Division ?? '--', '_0_10' => $testPositivesqlQueryData->_0_10 ?? '--', '_11_20' =>$testPositivesqlQueryData->_11_20 ?? '--' , '_21_30' =>$testPositivesqlQueryData->_21_30 ?? '--', '_31_40' =>$testPositivesqlQueryData->_31_40 ?? '--', '_41_50' =>$testPositivesqlQueryData->_41_50 ?? '--', '_51_60' =>$testPositivesqlQueryData->_51_60 ?? '--', '_60_Plus' =>$testPositivesqlQueryData->_60_Plus ?? '--' ],
+               ]);
+           }
+
 
            return (new FastExcel($list))->download('test_positive_age.xlsx');
        }
 
-        return $testPositivesqlQueryData;
+        return $testPositivesqlQueryDataArray;
 
     }
 
@@ -221,10 +240,49 @@ class IedcrDashboardController extends Controller
         $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender WHERE Division = 'Dhaka' group by Division";
 
         $testPositivesqlGenderQueryData = \Illuminate\Support\Facades\DB::select($testPositiveGendersqlQuery);
+        if($request->has('excel_download')) {
+            $testPositivesqlGenderQueryData = $testPositivesqlGenderQueryData;
+            if(count($testPositivesqlGenderQueryData)) {
+                foreach ($testPositivesqlGenderQueryData as $genderData) {
+                    $list = collect([
+                        [ 'Female' => $genderData->F ?? '--', 'Male' => $genderData->M ?? '--', 'Updated Date' =>$genderData->updt_date ?? '--' ],
+                    ]);
+                }
+            } else {
+                $list = collect([
+                    [ 'Female' => $genderData->F ?? '--', 'Male' => $genderData->M ?? '--', 'Updated Date' =>$genderData->updt_date ?? '--' ],
+                ]);
+            }
 
+            return (new FastExcel($list))->download('test_positive_gender.xlsx');
+        }
 
         return $testPositivesqlGenderQueryData;
 
+    }
+
+    public function avgDelayTime($request) {
+        $testPositiveGendersqlQuery = "Select Date,(sum(avg_sample_to_test_lag_time)/count(avg_sample_to_test_lag_time)) as 'avg_sample_to_test_lag_time', (sum(avg_test_to_report_lag_time)/count(avg_test_to_report_lag_time)) as 'avg_test_to_report_lag_time' from test_reporting_lag_per_upazila_aug07 group by date";
+
+        $testPositivesqlGenderQueryData = \Illuminate\Support\Facades\DB::select($testPositiveGendersqlQuery);
+        if($request->has('excel_download')) {
+            $testPositivesqlGenderQueryData = $testPositivesqlGenderQueryData;
+            if(count($testPositivesqlGenderQueryData)) {
+                foreach ($testPositivesqlGenderQueryData as $genderData) {
+                    $list = collect([
+                        [ 'Sample Collection to Test' => $genderData->avg_sample_to_test_lag_time ?? '--', 'Test to Result' => $genderData->avg_test_to_report_lag_time ?? '--', ' Date' =>$genderData->Date ?? '--' ],
+                    ]);
+                }
+            } else {
+                $list = collect([
+                    [ 'Female' => $genderData->avg_sample_to_test_lag_time ?? '--', 'Male' => $genderData->avg_test_to_report_lag_time ?? '--', 'Updated Date' =>$genderData->Date ?? '--' ],
+                ]);
+            }
+
+            return (new FastExcel($list))->download('Avg_Delay_Time.xlsx');
+        }
+
+        return $testPositivesqlGenderQueryData;
     }
     /*test positivity end*/
 
