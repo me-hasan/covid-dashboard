@@ -3,13 +3,26 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Nationwide Death Cases</h3>
+                @php
+					$ctg_value = $row5_data['death_case_map']->whereIn('division_name',['Chattogram','Chittagong'])->first()->Total_death ?? -1;
+					$barishal_value = $row5_data['death_case_map']->where('division_name','Barishal')->first()->Total_death ?? -1;
+					$dhaka_value = $row5_data['death_case_map']->where('division_name','Dhaka')->first()->Total_death ?? -1;
+					$khulna_value = $row5_data['death_case_map']->where('division_name','Khulna')->first()->Total_death ?? -1;
+					$mymensing_value = $row5_data['death_case_map']->where('division_name','Mymensing')->first()->Total_death ?? -1;
+					$rajshahi_value = $row5_data['death_case_map']->where('division_name','Rajshahi')->first()->Total_death ?? -1;
+					$rangpur_value = $row5_data['death_case_map']->where('division_name','Rangpur')->first()->Total_death ?? -1;
+					$sylhet_value = $row5_data['death_case_map']->where('division_name','Sylhet')->first()->Total_death ?? -1;
+
+					echo $ctg_value.'**'.$dhaka_value;
+				@endphp
             </div>
             <div class="card-body">
                 <div class="row">
+
                     <div class="col-xl-3 col-lg-3 col-md-12"> <svg version="1.1" id="Bangladesh" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 410 548.051" enable-background="new 0 0 410 548.051" xml:space="preserve">
                     <g id="Chittagong">
                         <g>
-                            <path fill="#FCAA94" d="M399.99,493.735l0.152,0.914l-0.77,1.462l-1.643,1.72l-1.979,1.283l-1.711,0.146l-1.004-1.132
+                            <path fill="{{ mapDivisionColor($ctg_value, 'chittagong', app('request')->input('division')) }}" d="M399.99,493.735l0.152,0.914l-0.77,1.462l-1.643,1.72l-1.979,1.283l-1.711,0.146l-1.004-1.132
 			l-0.604-1.862l-0.645-3.642L390.148,489l-2.182-0.494l-2.813,0.609l-3.57-0.346l-1.928-0.66l-0.9-0.499l-0.715-0.745l-0.586-1.58
 			l-0.174-1.51l-0.357-1.479l-1.117-1.479l-2.707-0.909l-3.221,3.865l-2.672-0.042l-1.404,0.219l-0.943,1.771l-1.143,3.839
 			l-2.357,3.396l-0.453,1.574l-0.018,1.766l0.602,3.58l-0.104,1.76l-0.473,2.666l-0.287,1.411l0.488,1.595l0.637,1.243l1.982,1.852
@@ -175,7 +188,7 @@
                     </g>
                             <g id="Barisal">
                                 <g>
-                                    <path fill="#FCAA94" d="M214.949,335.872l0.355,1.989l1.178,2.871l1.58,2.73l1.689,2.193l0.193,0.463l-0.145,1.063l0.24,0.652
+                                    <path fill="{{ mapDivisionColor($barishal_value,'barishal', app('request')->input('division')) }}" d="M214.949,335.872l0.355,1.989l1.178,2.871l1.58,2.73l1.689,2.193l0.193,0.463l-0.145,1.063l0.24,0.652
 			l0.213,0.104l0.33,0.023l0.35,0.104l0.262,0.334l1.004,0.787l0.344,0.623l-0.434,0.855l-1.258,0.635l-1.258-0.134l-1.236-0.322
 			l-1.197,0.101l-1.613,2.035l-0.77,3.037l-1.018,2.535l-2.371,0.541l1.355,1.184l-0.344,1.223l-1.143,0.471l-1.023-1.07
 			l-1.834,1.223l1.234,0.924l2.414,0.8l1.643,0.839l0.791-1.672l1.441,0.256l1.465,1.26l0.92,1.348l0.256,0.938l0.322,2.845
@@ -320,7 +333,7 @@
                             </g>
                             <g id="Khulna">
                                 <g>
-                                    <path fill="#FCAA94" d="M97.576,419.502l0.024-0.055l1.478-1.848l-0.166-2.191l-0.464-1.795l-0.711-1.521l-3.688-4.818
+                                    <path fill="{{ mapDivisionColor($khulna_value,'khulna', app('request')->input('division')) }}" d="M97.576,419.502l0.024-0.055l1.478-1.848l-0.166-2.191l-0.464-1.795l-0.711-1.521l-3.688-4.818
 			l-0.803-1.898l1.217-0.835l-1.399-2.416l-0.459-1.111l-1.009-4.833l-0.008-0.887l0.228-0.937l0.725-1.194l0.148-0.714
 			l-0.351-2.113l-1.554-3.605l-0.759-3.363l-1.01-0.809l-2.622-1.028l1.886-1.261l0.516-2.09l-0.371-2.449l-0.815-2.326
 			l-1.043-1.926l-0.347-2.021l-0.287-1.171l-1.008-2.63L84.718,364l0.576-1.24l0.951-1.148l0.897-1.396l0.367-1.214l0.332-1.771
@@ -449,7 +462,7 @@
                                         <polygon fill="#FCAA94" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" points="222.49,308.4 218.477,306.295
 				215.424,305.203 213.225,305.186 212.963,306.025 213.863,307.321 216.521,310.084 218.07,311.232 219.678,311.677
 				221.197,310.939 221.658,309.904 223.35,310.574 226.441,312.814 225.719,310.813	"/>
-                                        <path fill="#FCAA94" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" d="M261.594,244.051l-1.1,0.673
+                                        <path fill="{{ mapDivisionColor($dhaka_value,'dhaka', app('request')->input('division')) }}" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" d="M261.594,244.051l-1.1,0.673
 				c-0.021-0.04-0.039-0.078-0.063-0.119c-0.49-0.896-1.508-0.604-1.508-0.604s-0.5-1.25-0.75-2s-1.709-0.143-1.709-0.143
 				s-2.441-0.916-3.291-1.357c-0.848-0.441-2-1-2.813-1.39c-0.814-0.39,0.063-0.86,0.063-0.86s1.25-1.25,1.156-2.192
 				S250.676,236,250.676,236s-2-1-2.451-1.774s-1.832-1.831-2.549-2.726s-1.25-1.5-0.506-1.548c0.744-0.048-1.994-2.952-1.994-2.952
@@ -550,7 +563,7 @@
                             </g>
                             <g id="Sylhet">
                                 <g>
-                                    <polygon fill="#FCAA94" points="358.516,198.844 357.553,199.625 356.254,200.396 355.215,201.419 354.795,203.177
+                                    <polygon fill="{{ mapDivisionColor($sylhet_value,'sylhet', app('request')->input('division')) }}" points="358.516,198.844 357.553,199.625 356.254,200.396 355.215,201.419 354.795,203.177
 			355.24,208.801 354.936,211.413 353.303,213.658 351.146,214.637 348.668,214.837 341.623,214.234 341.527,215.328
 			343.43,218.447 343.5,219.703 341.885,219.064 340.018,217.775 339.25,217.081 337.389,217.676 337.102,219.329 337.984,222.994
 			337.904,224.81 336.08,232.646 335.469,234.258 334.404,234.942 332.693,234.508 330.119,231.948 329.918,231.128
@@ -638,7 +651,7 @@
                             </g>
                             <g id="Mymensingh">
                                 <g>
-                                    <path fill="#FCAA94" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" d="M280.928,217.773l-1.143-1.846l0.93-1.018
+                                    <path fill="{{ mapDivisionColor($mymensing_value,'mymensing', app('request')->input('division')) }}" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" d="M280.928,217.773l-1.143-1.846l0.93-1.018
 			l0.576-0.188l0.445-0.836l-0.162-0.696l-0.428-0.7l-0.541-0.599l-1.832-1.649l1.404-1.006l0.092-1.119l-0.145-0.481l-0.314-1.705
 			l-1.014-0.47l-0.926-0.057l-0.658-0.378l-0.643-0.774l-0.025-0.377l0.113-0.314l0.24-0.195l0.563-0.627l0.734-1.025l0.895-1.701
 			l1.178-3.102l-1.506-0.813l-0.445-0.375l-0.553-0.575l-0.434-0.995l-1.047-1.315l-0.039-0.688l0.471-0.313l0.877-0.286
@@ -715,7 +728,7 @@
                             </g>
                             <g id="Rajshahi">
                                 <g>
-                                    <polygon fill="#FCAA94" points="69.794,231.337 69.808,231.329 70.079,230.54 71.056,229.099 71.345,228.253 71.147,227.911
+                                    <polygon fill="{{ mapDivisionColor($rajshahi_value,'rajshahi', app('request')->input('division')) }}" points="69.794,231.337 69.808,231.329 70.079,230.54 71.056,229.099 71.345,228.253 71.147,227.911
 			70.935,226.399 70.772,226.017 70.306,222.372 68.368,219.763 65.601,218.06 63.772,217.657 62.873,219.768 61.608,221.725
 			59.744,221.838 55.576,220.426 50.106,220.172 48.169,219.758 41.911,214.785 19.739,203.176 17.304,202.647 17.134,202.004
 			16.361,200.662 15.619,199.691 15.283,199.349 15.196,198.885 15.196,194.07 14.929,193.517 13.699,192.241 12.851,190.354
@@ -781,7 +794,7 @@
                             </g>
                             <g id="Rangpur">
                                 <g>
-                                    <polygon fill="#FCAA94" points="160.765,115.689 160.1,118.167 159.977,119.094 159.964,119.096 158.57,119.373 157.365,120.122
+                                    <polygon fill="{{ mapDivisionColor($rangpur_value,'rangpur', app('request')->input('division')) }}" points="160.765,115.689 160.1,118.167 159.977,119.094 159.964,119.096 158.57,119.373 157.365,120.122
 			156.854,120.861 156.63,121.494 154.703,126.076 155.453,131.127 154.962,133.477 153.72,135.297 152.725,136.482
 			151.926,137.725 150.037,141.701 143.57,141.07 135.246,141.07 127.191,138.415 122.089,137.234 116.451,140.48 113.766,137.824
 			111.619,133.102 111.35,129.559 107.859,128.672 98.729,128.672 90.391,128.412 86.267,128.613 84.272,128.34 82.858,126.885
@@ -875,7 +888,7 @@
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
                                                 <h3 class="card-title"><span class="fs-12">Division Wise Two Weeks Change</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <div class="card-options"> <a href="{{route('iedcr.generate-twoweeks-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="divition_wise_two_weeks_change"></div>
@@ -886,7 +899,7 @@
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
                                                 <h3 class="card-title"><span class="fs-12">Age Wise Ditribution</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <div class="card-options"> <a href="{{route('iedcr.generate-death-by-age-group-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="age_wise_death_distribution"></div>
@@ -903,7 +916,7 @@
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
                                                 <h3 class="card-title"><span class="fs-12">Division Wise Death Number</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <div class="card-options"> <a href="{{route('iedcr.generate-division-death-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="division_wise_death_number"></div>
@@ -914,7 +927,7 @@
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
                                                 <h3 class="card-title"><span class="fs-12">Death by Gender</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <div class="card-options"> <a href="{{route('iedcr.generate-death-by-gender-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="nw_death_by_gender"></div>
@@ -928,11 +941,11 @@
                     <div class="col-xl-12 col-md-12 ml-4">
                         <div id="color-group">
                             <div class="row gutters-xs">
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-10</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">11-20</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">21-30</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">31-40</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">51-100</span></div>
+                                <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-200</span></div>
+                                <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">201-500</span></div>
+                                <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">501-800</span></div>
+                                <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">801-1000</span></div>
+                                <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">>1000</span></div>
                             </div>
                         </div>
                     </div>
@@ -957,6 +970,14 @@
 </div>
 @push('custom_script')
     <script>
+    	const division_name = '<?php echo app('request')->input('division') ?? 'null'?>';
+    	var categories = "";
+    	if(division_name != null){
+    		categories = [division_name];
+    	}else{
+    		categories = ["Dhaka","Khulna","Barisal","Sylhet","Mymensingh","Rajshahi","Rangpur","Chittagong"];
+    	}
+
         // Death by Gender Group
         Highcharts.chart('nw_death_by_gender', {
             chart: {
@@ -1000,10 +1021,15 @@
             series: [{
                 name: 'Infected',
                 colorByPoint: true,
-                data: [{"name":"Male","y":78.9},{"name":"Female","y":21.1}]				}]
+                data: [{"name":"Male","y":<?php echo $row5_data['male_death_percentage'];?>},{"name":"Female","y":<?php echo $row5_data['female_death_percentage'];?>}]				
+            }]
         });
 
         // Divistional Total
+        <?php  
+        	$division_wise_death = implode(',', $row5_data['division_wise_death']);
+        ?>
+
         Highcharts.chart('division_wise_death_number', {
             chart: {
                 type: 'column',
@@ -1032,7 +1058,8 @@
                 }
             },
             xAxis: {
-                categories: ["Dhaka","Khulna","Barisal","Sylhet","Mymensingh","Rajshahi","Rangpur","Chittagong"]				},
+                categories: categories				
+            },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}%</b>',
                 /*valueSuffix: ' cm',
@@ -1045,9 +1072,13 @@
                 }
             },
             colors: ['#ef4b4b'],
-            series: [{"name":"Death","data":[0.53,0.98,2.62,6.36,13.85,28.68,46.98]}]			});
+            series: [{"name":"Death","data":[<?php echo $division_wise_death;?>]}]
+        });
 
         // Death Age Group V2
+        <?php  
+        	$death_by_age_group = implode(',', $row5_data['death_by_age_group']);
+        ?>
         Highcharts.chart('age_wise_death_distribution', {
             chart: {
                 type: 'column',
@@ -1089,9 +1120,16 @@
                 }
             },
             colors: ['#ef4b4b'],
-            series: [{"name":"Death","data":[0.53,0.98,2.62,6.36,13.85,28.68,46.98]}]			});
+            series: [{"name":"Death","data":[<?php echo $death_by_age_group;?>]}]			
+        });
 
         // Divition Wise Two Weeks Change
+
+        <?php  
+        	$previous_week_data = implode(',', $row5_data['previous_week_data']);
+        	$current_week_data = implode(',', $row5_data['current_week_data']);
+        ?>
+
         Highcharts.chart('divition_wise_two_weeks_change', {
             chart: {
                 type: 'column',
@@ -1120,7 +1158,7 @@
                 }
             },
             xAxis: {
-                categories: ["Dhaka","Khulna","Barisal","Sylhet","Mymensingh","Rajshahi","Rangpur","Chittagong"]
+                categories: categories
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>',
@@ -1136,11 +1174,11 @@
             colors: ['#38cb89', '#ef4b4b'],
             series: [{
                 name: 'Last Week',
-                data: [49, 71, 106, 129, 144, 176, 135, 148]
+                data: [<?php echo $previous_week_data;?>]
 
             }, {
                 name: 'Current Week',
-                data: [83, 78, 98, 93, 106, 84, 105]
+                data: [<?php echo $current_week_data;?>]
 
             }]
         });
