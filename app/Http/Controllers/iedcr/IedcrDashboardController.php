@@ -15,7 +15,7 @@ class IedcrDashboardController extends Controller
       $this->middleware('auth');
   }
 
-	public function index1111(Request $request)
+	public function index(Request $request)
   {
      $hda_card = DB::table('hda_card')->orderBy('date','DESC')->first();
 
@@ -29,9 +29,9 @@ class IedcrDashboardController extends Controller
      // $hda_time_series = DB::table('hda_time_series')->get();
 
      $data_source_description = DB::table('data_source_description')->where('page_name','iedcr-dashboard')->get();
-     
 
-     
+
+
     if($request->division){
       // Div Dis Upazila Level Infected Gender Distribution
       $infectedGender = $this->upazillaLevelInfectedGender($request);
@@ -58,6 +58,7 @@ class IedcrDashboardController extends Controller
       // Nantionwide Infectd Person Trend Line
       $ininfectedTrend = $this->nationalInfectedTrend();
 
+
       //death case for map
       $row5_data['death_case_map'] = $this->deathCaseMap();
       $ctg_value = $row5_data['death_case_map']->where('division_name','Dhaka')->first();
@@ -72,7 +73,27 @@ class IedcrDashboardController extends Controller
     $row5_data['female_death_percentage'] = number_format((float)$death_by_gender['female_death_percentage'], 2, '.', '');
     $row5_data['death_by_age_group'] = $this->deathByAgeGroup();
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend','row5_data'));
+
+      //mobility section
+      if($request->division || $request->district || $request->upazila){
+          $mobility_list  = $this->divisionWideMobilityInOut($request);
+      } else {
+          $mobility_list  = $this->nationWideMobilityInOut();
+      }
+
+      $mobility_in = $mobility_out = $subscriber = [];
+
+      foreach ($mobility_list as $mobility) {
+          $mobilityDate[] = $mobility->Calculated_date;
+          $mobility_in[]  = $mobility->mobility_in;
+          $mobility_out[] = $mobility->mobility_out;
+          $subscriber[]   = $mobility->Num_subscriber;
+      }
+
+      $mobilityInData  = implode(",", $mobility_in);
+      $mobilityOutData = implode(",", $mobility_out);
+
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend', 'row5_data' ,'mobilityDate','mobilityInData','mobilityOutData'));
   }
 
   private function nationalInfectedGender()
@@ -100,17 +121,17 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division='".$request->division."' group by Division;");
     }
-    
+
     return $getUpazillaLevelInfectedGender[0] ?? '';
   }
 
   private function nationalInfectedAge()
   {
-    $getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '_0_10', 
+    $getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '_0_10',
         (A.elv_to_twenty/A.Total)*100 AS '_11_20',
         (A.twentyone_to_thirty/A.Total)*100 as '_21_30',
         (A.thirtyone_to_forty/A.Total)*100 as '_31_40',
-        (A.fortyone_to_fifty/A.Total)*100 as '_41_50', 
+        (A.fortyone_to_fifty/A.Total)*100 as '_41_50',
         (A.fiftyone_to_sixty/A.Total)*100 as '_51_60', (A.sixtyone_to_hundred/A.Total)*100 as '_60_Plus', updt_date
     from
     (SELECT
@@ -137,7 +158,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division='".$request->division."' group by Division;");
     }
-    
+
     return $getUpazillaLevelInfectedAge[0] ?? '';
   }
 
@@ -154,7 +175,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getDivDisLevelInfectedTrend = DB::select("select Division, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
     }
-    
+
     return $getDivDisLevelInfectedTrend ?? '';
   }
 
@@ -222,14 +243,14 @@ class IedcrDashboardController extends Controller
       }else{
         $getDivisionDeath = DB::table('deathdivisionaldistribution')->where('division','like',$division_name)->pluck('percentageOfDeath')->toArray();
       }
-      
+
     }else{
       if($is_excel){
         $getDivisionDeath = DB::table('deathdivisionaldistribution')->get();
       }else{
         $getDivisionDeath = DB::table('deathdivisionaldistribution')->pluck('percentageOfDeath')->toArray();
       }
-      
+
     }
 
     // dd($getDivisionDeath);
@@ -251,7 +272,7 @@ class IedcrDashboardController extends Controller
       // dd($deathByGender);
       return $data;
     }
-    
+
     return $getDivisionDeath;
   }
 
@@ -284,8 +305,8 @@ class IedcrDashboardController extends Controller
       $division_name = 'Chattogram';
     }
     $condition = $division_name != '' ? "where division_name like '$division_name'" : '';
-    $getDeathCaseByWeek = DB::select("SELECT 
-                        division_name, SUM(last_24_hours_death) as 'death', 
+    $getDeathCaseByWeek = DB::select("SELECT
+                        division_name, SUM(last_24_hours_death) as 'death',
                         CONCAT
                         (
                           STR_TO_DATE(CONCAT(YEARWEEK(date, 2), ' Sunday'), '%X%V %W'),
@@ -328,7 +349,6 @@ class IedcrDashboardController extends Controller
     return $data;
   }
 
-  
 
   public function generateInfectedGenderExcel(Request $request){
      if($request->division){
@@ -343,6 +363,30 @@ class IedcrDashboardController extends Controller
 
       return (new FastExcel($list))->download('infected_gender.xlsx');
   }
+
+    /**
+     * Nation wide mobility IN / OUT
+     * @return mixed
+     */
+    protected function nationWideMobilityInOut() {
+      $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date");
+      return $nationWideMobility;
+  }
+
+    /**
+     * Division wide mobility IN / OUT
+     * @param $request
+     */
+    protected function divisionWideMobilityInOut($request) {
+      if($request->division && $request->district && $request->upazila){
+          $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Upazila");
+      }elseif($request->division && $request->district){
+          $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, District");
+      }elseif($request->division){
+          $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Division");
+      }
+      return $mobility;
+	}
 
   public function generateDeathByAgeGroupExcel(Request $request){
     $deathByAgeGroup = $this->deathByAgeGroup(true);
@@ -421,5 +465,4 @@ class IedcrDashboardController extends Controller
      $list = collect($data);
       return (new FastExcel($list))->download('division_wise_death.xlsx');
   }
-    
 }
