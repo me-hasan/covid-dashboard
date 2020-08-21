@@ -52,7 +52,7 @@ class IedcrDashboardController extends Controller
       // Nantionwide Infectd Person Trend Line
       $ininfectedTrend = $this->nationalInfectedTrend();
     }
-    $testPositivityByAge =  $this->testPositivitybyAge($request);
+     $testPositivityByAge =  $this->testPositivitybyAge($request);
       $testPositivityByGender =  $this->testPositivitybyGender($request);
     //dd($testPositivityByAge);
     //dd($infectedGender);
@@ -204,6 +204,14 @@ class IedcrDashboardController extends Controller
         $testPositivesqlQuery = "SELECT Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus FROM `Div_Dist_Upz_Infected_Age` WHERE Division = 'Dhaka' group by Division";
 
         $testPositivesqlQueryData = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
+       if($request->has('excel_download')) {
+           $testPositivesqlQueryData = $testPositivesqlQueryData[0];
+           $list = collect([
+               [ 'Division' => $testPositivesqlQueryData->Division ?? '--', '_0_10' => $testPositivesqlQueryData->_0_10 ?? '--', '_11_20' =>$testPositivesqlQueryData->_11_20 ?? '--' , '_21_30' =>$testPositivesqlQueryData->_21_30 ?? '--', '_31_40' =>$testPositivesqlQueryData->_31_40 ?? '--', '_41_50' =>$testPositivesqlQueryData->_41_50 ?? '--', '_51_60' =>$testPositivesqlQueryData->_51_60 ?? '--', '_60_Plus' =>$testPositivesqlQueryData->_60_Plus ?? '--' ],
+           ]);
+
+           return (new FastExcel($list))->download('test_positive_age.xlsx');
+       }
 
         return $testPositivesqlQueryData;
 
