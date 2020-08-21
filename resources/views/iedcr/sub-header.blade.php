@@ -70,11 +70,10 @@
                             </div>
                             <div class="btn-group">
                                 <div class="col-md-6 pl-0">
-                                    <input class="form-control" placeholder="From Date" type="date" name="from_date"
-                                           disabled>
+                                    <input class="form-control" placeholder="From Date" type="date" name="from_date">
                                 </div>
                                 <div class="col-md-6 pl-0">
-                                    <input class="form-control" placeholder="To Date" type="date" name="to_date" disabled>
+                                    <input class="form-control" placeholder="To Date" type="date" name="to_date">
                                 </div>
                                 <div class="btn-group">
                                     <button class="btn btn-primary-color pl-0" type="submit">
