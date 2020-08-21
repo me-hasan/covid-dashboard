@@ -4,7 +4,7 @@
             <div class="card-header cart-height-customize">
                 <h3 class="card-title">Nationwide Mobility</h3>
                 <div class="card-options">
-                    <div class="btn-list"> <a href="#" class="btn btn-primary btn-sm">Details</a> </div>
+                    <div class="btn-list"> <a href="{!! route('iedcr.mobility_and_predictive_importation') !!}" class="btn btn-primary btn-sm">Details</a> </div>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <h3 class="card-title">Calendar highlighting important dates</h3>
             </div>
             <div class="card-body">
-                <div id="calendar">
+                <div id="datepicker">
 
                 </div>
             </div>
@@ -40,17 +40,12 @@
     </div>
 </div>
 @push('custom_script')
+    <!-- include jQuery -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-
-        $(document).ready(function () {
-            $('#calendar').datepicker({
-                beforeShowDay: function (date) {
-                    debugger
-                    if (date >= date1 && date <= date2) {
-                        return [true, 'ui-state-error', ''];
-                    }
-                    return [true, '', ''];
-                }
+        $(function() {
+            $("#datepicker").datepicker({
+                numberOfMonths: 1
             });
         });
 
