@@ -1,3 +1,42 @@
+@php
+
+$row_data = array();
+if(count($testPositivityByAge)) {
+    foreach ($testPositivityByAge as $testPositiveAge) {
+        $row_data[] = (double)$testPositiveAge->_0_10 ?? '';
+        $row_data[] = (double)$testPositiveAge->_11_20 ?? '';
+        $row_data[] = (double)$testPositiveAge->_21_30 ?? '';
+        $row_data[] = (double)$testPositiveAge->_31_40 ?? '';
+        $row_data[] = (double)$testPositiveAge->_41_50 ?? '';
+        $row_data[] = (double)$testPositiveAge->_51_60 ?? '';
+        $row_data[] = (double)$testPositiveAge->_60_Plus ?? '';
+         break;
+    }
+
+}
+$genderWiseData = array();
+$maleData = 0;
+$femaleData = 0;
+if(count($testPositivityByGender)) {
+    foreach ($testPositivityByGender as $testPositiveGender) {
+        $maleData = (double)$testPositiveGender->M ?? '';
+        $femaleData = (double)$testPositiveGender->F ?? '';
+         break;
+    }
+
+}
+$genderWiseData = array();
+$avg_sample_to_test_lag_time = 0;
+$avg_test_to_report_lag_time = 0;
+if(count($avgDelayTimeData)) {
+    foreach ($avgDelayTimeData as $avgDelay) {
+        $avg_sample_to_test_lag_time = $avgDelay->avg_sample_to_test_lag_time ?? '';
+        $avg_test_to_report_lag_time = $avgDelay->avg_test_to_report_lag_time ?? '';
+         break;
+    }
+
+}
+@endphp
 <div class="row">
     <div class="col-xl-8 col-md-12">
         <div class="card">
@@ -3367,7 +3406,9 @@
                         <div class="card">
                             <div class="card-header cart-height-customize">
                                 <h3 class="card-title">Test Positivity Rate</h3>
-                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                <div class="card-options">
+                                    <a href="{!! route('iedcr.dashboard',['excel_download'=> 'test_posititvity_age']) !!}">  <i class="fa fa-download text-danger"></i></a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div id="test_positivity_rate"></div>
@@ -3376,7 +3417,9 @@
                         <div class="card">
                             <div class="card-header cart-height-customize">
                                 <h3 class="card-title">Test Positivity by Gender</h3>
-                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                <div class="card-options">
+                                    <a href="{!! route('iedcr.dashboard',['excel_download'=> 'test_posititvity_gender']) !!}">    <i class="fa fa-download text-danger"></i> </a>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div id="death_by_gender"></div>
@@ -3405,17 +3448,18 @@
                     <span class="text-ash" style="font-size: 10px;">26th July, 2020 to 7th August, 2020</span></h3>
                 <div class="card-options">
                     <!--<i class="fa fa-table mr-2 text-success"></i>-->
-                    <i class="fa fa-download text-danger"></i> </div>
+                    <a href="{!! route('iedcr.dashboard',['excel_download'=> 'avgDelayTime']) !!}">    <i class="fa fa-download text-danger"></i> </a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="card-body mt-3 text-center">
                     <h4 class="gray-600">Sample Collection to Test</h4>
-                    <h3 class="text-success">1.48 Days</h3>
+                    <h3 class="text-success">{!! round($avg_sample_to_test_lag_time,2) !!} Days</h3>
                 </div>
                 <hr />
                 <div class="card-body mb-4 text-center">
                     <h4>Test to Result</h4>
-                    <h3 class="text-success">2.10 Days</h3>
+                    <h3 class="text-success">{!! round($avg_test_to_report_lag_time,2) !!} Days</h3>
                 </div>
                 <div class="card-body">
                     <div class="card-body">
@@ -3477,7 +3521,8 @@
                 }
             },
             colors: ['#ef4b4b'],
-            series: [{"name":"Death","data":[0.53,0.98,2.62,6.36,13.85,28.68,46.98]}]			});
+            series: [{"name":"Death","data":<?php echo json_encode($row_data); ?>}]
+        });
 
         // Death by Gender Group
         Highcharts.chart('death_by_gender', {
@@ -3522,7 +3567,8 @@
             series: [{
                 name: 'Infected',
                 colorByPoint: true,
-                data: [{"name":"Male","y":78.9},{"name":"Female","y":21.1}]				}]
+                data:  [{"name":"Male","y":{!! $maleData !!}},{"name":"Female","y":{!! $femaleData !!}}]
+            }]
         });
 
     </script>
