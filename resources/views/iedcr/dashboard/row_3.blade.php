@@ -1,3 +1,33 @@
+@php
+
+$row_data = array();
+if(count($testPositivityByAge)) {
+    foreach ($testPositivityByAge as $testPositiveAge) {
+        $row_data[] = (double)$testPositiveAge->_0_10 ?? '';
+        $row_data[] = (double)$testPositiveAge->_11_20 ?? '';
+        $row_data[] = (double)$testPositiveAge->_21_30 ?? '';
+        $row_data[] = (double)$testPositiveAge->_31_40 ?? '';
+        $row_data[] = (double)$testPositiveAge->_41_50 ?? '';
+        $row_data[] = (double)$testPositiveAge->_51_60 ?? '';
+        $row_data[] = (double)$testPositiveAge->_60_Plus ?? '';
+         break;
+    }
+
+}
+$genderWiseData = array();
+$maleData = 0;
+$femaleData = 0;
+if(count($testPositivityByGender)) {
+    foreach ($testPositivityByGender as $testPositiveGender) {
+        $maleData = (double)$testPositiveGender->M ?? '';
+        $femaleData = (double)$testPositiveGender->F ?? '';
+         break;
+    }
+
+}
+
+
+@endphp
 <div class="row">
     <div class="col-xl-8 col-md-12">
         <div class="card">
@@ -3477,7 +3507,8 @@
                 }
             },
             colors: ['#ef4b4b'],
-            series: [{"name":"Death","data":[0.53,0.98,2.62,6.36,13.85,28.68,46.98]}]			});
+            series: [{"name":"Death","data":<?php echo json_encode($row_data); ?>}]
+        });
 
         // Death by Gender Group
         Highcharts.chart('death_by_gender', {
@@ -3522,7 +3553,8 @@
             series: [{
                 name: 'Infected',
                 colorByPoint: true,
-                data: [{"name":"Male","y":78.9},{"name":"Female","y":21.1}]				}]
+                data:  [{"name":"Male","y":{!! $maleData !!}},{"name":"Female","y":{!! $femaleData !!}}]
+            }]
         });
 
     </script>

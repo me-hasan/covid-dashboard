@@ -29,9 +29,9 @@ class IedcrDashboardController extends Controller
      // $hda_time_series = DB::table('hda_time_series')->get();
 
      $data_source_description = DB::table('data_source_description')->where('page_name','iedcr-dashboard')->get();
-     
 
-     
+
+
     if($request->division){
       // Div Dis Upazila Level Infected Gender Distribution
       $infectedGender = $this->upazillaLevelInfectedGender($request);
@@ -41,6 +41,7 @@ class IedcrDashboardController extends Controller
 
       // Div Dis Upazila wise Infectd Person Trend Line
       $ininfectedTrend = $this->divDislInfectedTrend($request) ?? '';
+
     }else{
      // Nationwide Infected Gender Distribution
       $infectedGender = $this->nationalInfectedGender();
@@ -51,13 +52,16 @@ class IedcrDashboardController extends Controller
       // Nantionwide Infectd Person Trend Line
       $ininfectedTrend = $this->nationalInfectedTrend();
     }
+    $testPositivityByAge =  $this->testPositivitybyAge($request);
+      $testPositivityByGender =  $this->testPositivitybyGender($request);
+    //dd($testPositivityByAge);
     //dd($infectedGender);
-     
+
 
 
      // dd($upazillaLevelInfectedTrend);
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend'));
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend','testPositivityByAge','testPositivityByGender'));
   }
 
   private function nationalInfectedGender()
@@ -85,17 +89,17 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division='".$request->division."' group by Division;");
     }
-    
+
     return $getUpazillaLevelInfectedGender[0] ?? '';
   }
 
   private function nationalInfectedAge()
   {
-    $getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '_0_10', 
+    $getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '_0_10',
         (A.elv_to_twenty/A.Total)*100 AS '_11_20',
         (A.twentyone_to_thirty/A.Total)*100 as '_21_30',
         (A.thirtyone_to_forty/A.Total)*100 as '_31_40',
-        (A.fortyone_to_fifty/A.Total)*100 as '_41_50', 
+        (A.fortyone_to_fifty/A.Total)*100 as '_41_50',
         (A.fiftyone_to_sixty/A.Total)*100 as '_51_60', (A.sixtyone_to_hundred/A.Total)*100 as '_60_Plus', updt_date
     from
     (SELECT
@@ -122,7 +126,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division='".$request->division."' group by Division;");
     }
-    
+
     return $getUpazillaLevelInfectedAge[0] ?? '';
   }
 
@@ -139,7 +143,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getDivDisLevelInfectedTrend = DB::select("select Division, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
     }
-    
+
     return $getDivDisLevelInfectedTrend ?? '';
   }
 
@@ -179,7 +183,7 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedAge;
   }
 
-  
+
 
   public function generateInfectedGenderExcel(Request $request){
      if($request->division){
@@ -194,5 +198,26 @@ class IedcrDashboardController extends Controller
 
       return (new FastExcel($list))->download('infected_gender.xlsx');
   }
-    
+
+  /*test positivity start*/
+    public function  testPositivitybyAge($request) {
+        $testPositivesqlQuery = "SELECT Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus FROM `Div_Dist_Upz_Infected_Age` WHERE Division = 'Dhaka' group by Division";
+
+        $testPositivesqlQueryData = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
+
+        return $testPositivesqlQueryData;
+
+    }
+
+    public function  testPositivitybyGender($request) {
+        $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender WHERE Division = 'Dhaka' group by Division";
+
+        $testPositivesqlGenderQueryData = \Illuminate\Support\Facades\DB::select($testPositiveGendersqlQuery);
+
+
+        return $testPositivesqlGenderQueryData;
+
+    }
+    /*test positivity end*/
+
 }
