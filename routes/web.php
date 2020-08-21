@@ -36,6 +36,9 @@ Route::get('/dataframe', 'cabinet\DashboardController@dataFrameData')->name('cab
 Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
 
 Route::get('/iedcr/generate-gender-excel', 'iedcr\IedcrDashboardController@generateInfectedGenderExcel')->name('iedcr.generate-gender-excel');
+Route::get('/iedcr/generate-series-excel', 'iedcr\IedcrDashboardController@generateInfectedSeriesExcel')->name('iedcr.generate-series-excel');
+Route::get('/iedcr/per-lac-infect', 'iedcr\IedcrDashboardController@generateInfectedPerLacExcel')->name('iedcr.per-lac-infect');
+Route::get('/iedcr/generate-agegroup-excel', 'iedcr\IedcrDashboardController@generateInfectedAgeGroupExcel')->name('iedcr.generate-agegroup-excel');
 
 // row 5 pdf
 Route::get('/iedcr/generate-tw-weeks-excel', 'iedcr\IedcrDashboardController@generateTwoWeeksExcel')->name('iedcr.generate-twoweeks-excel');

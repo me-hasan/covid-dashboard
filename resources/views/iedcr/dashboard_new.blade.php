@@ -42,6 +42,156 @@
 
     <script type="text/javascript">
 
+        
+
+        // Modal Content Function
+        function modalContent_1(modalLabel, modalType, yAxisLabel, xAxisLabel){
+            // Show Modal Lable
+            $('.modal-title').html(modalLabel);
+
+            if(modalType == 'bar'){
+
+                var barChartDataSource = [{
+                    name: 'Infected',
+                    data: [ 
+                        <?php 
+                          foreach($hda_time_series as $row){
+                            
+                              $date_arr = date('d-M', strtotime($row->date));
+                        ?>      
+                              ["<?=$date_arr?>",<?=$row->infected?>],
+
+                        <?php  } ?>
+                            
+                    ]
+                }];
+                var barModalContainer = 'modalContent2';
+
+            }else if(modalType == 'line'){
+                <?php 
+
+                  $div_arr = $infected_arr =  array();
+
+                  foreach($hda_population_wise_infected as $row){
+                    
+                      $div_arr[] = $row->division;
+                      $infected_arr[] = $row->total_infected;
+                  }
+                    $infected = implode(",", $infected_arr);
+                   
+                ?>
+
+                var lineChartDataSource = [<?php echo $infected;?>]//responseData.line_chart_data;
+                var lineChartDataCategory = <?php echo json_encode($div_arr);?> ;
+                var lineModalContainer = 'modalContent2';
+
+            }else if(modalType == 'both'){
+
+                var barChartDataSource = [{
+                    name: 'Infected',
+                    data: responseData.bar_chart
+                }];
+                var lineChartDataSource = responseData.line_chart_data;
+                var lineChartDataCategory = responseData.line_chart_label;
+
+                var barModalContainer = 'modalContentLeft';
+                var lineModalContainer = 'modalContentRight';
+
+                $('#modal-loading').remove();
+            }
+
+            //alert(responseData.bar_chart);
+            if(modalType == 'bar' || modalType == 'both'){
+                Highcharts.chart(barModalContainer, {
+                    chart: {
+                        type: 'column',
+                        /*height: height,
+                        width: width*/
+                    },
+                    title: {
+                        text: ''
+                    },
+                    credits:{
+                        enabled:false
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: '"SolaimanLipi", Arial, sans-serif'
+                            }
+                        },
+                        title: {
+                            text: xAxisLabel
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: yAxisLabel
+                        }
+                    },
+                    colors: ["#858796"],
+                    legend: {
+                        enabled: false
+                    },
+                    series: barChartDataSource
+                });
+            }
+            if(modalType == 'line' || modalType == 'both'){
+                Highcharts.chart(lineModalContainer, {
+                    title: {
+                        text: ''
+                    },
+                    credits:{
+                        enabled:false
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: '"SolaimanLipi", Arial, sans-serif'
+                            }
+                        },
+                        title: {
+                            text: xAxisLabel
+                        },
+                        categories: lineChartDataCategory
+                    },
+                    yAxis: {
+                        //min: 0,
+                        title: {
+                            text: yAxisLabel
+                        }
+                    },
+                    colors: ["#A5479B"],
+                    legend: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: yAxisLabel,
+                        data: lineChartDataSource
+                    }]
+                });
+            }
+            /*}
+          };
+          xhttp.open("POST", "modal-data.php", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send(formParams);*/
+        }
+
+
         // Modal Content Function
         function modalContent(modalLabel, modalType, yAxisLabel, xAxisLabel){
             // Show Modal Lable
