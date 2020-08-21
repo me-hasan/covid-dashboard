@@ -126,7 +126,7 @@ class IedcrDashboardController extends Controller
       $mobilityInData  = implode(",", $mobility_in);
       $mobilityOutData = implode(",", $mobility_out);
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend', 
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend',
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
       'dhaka_hospital','ctg_hospital',
@@ -212,7 +212,7 @@ class IedcrDashboardController extends Controller
     }elseif($request->division){
       $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
     }
-    
+
     return $getDivDisLevelInfectedTrend ?? '';
   }
 
@@ -403,9 +403,35 @@ class IedcrDashboardController extends Controller
 
   /*test positivity start*/
     public function  testPositivitybyAge($request) {
-        $testPositivesqlQuery = "SELECT Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus FROM `Div_Dist_Upz_Infected_Age` WHERE Division = 'Dhaka' group by Division";
+
+        $searchQuery = '';
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+            if($request->has('division') && $request->division != ''){
+                $groupBy = 'Division';
+                $division = $request->division;
+                $searchQuery = "WHERE Division = '". $division."'";
+            }
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'District';
+                $district = $request->district;
+                $searchQuery = " WHERE District = '". $district . "'";
+            }
+            if($request->has('upazilla') && $request->upazilla != ''){
+                $groupBy = 'Upazila';
+                $upzilla = $request->upazilla;
+                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+            }
+
+        }
+        if($searchQuery != '') {
+            $testPositivesqlQuery = "SELECT Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus FROM `div_dis_upazila_test_positivity_age` ". $searchQuery."  group by ".$groupBy;
+        } else {
+            $testPositivesqlQuery = "SELECT Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus FROM `div_dis_upazila_test_positivity_age`  group by Division";
+        }
+
 
         $testPositivesqlQueryDataArray = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
+
        if($request->has('excel_download')) {
 
            if(count($testPositivesqlQueryDataArray)) {
@@ -429,7 +455,33 @@ class IedcrDashboardController extends Controller
     }
 
     public function  testPositivitybyGender($request) {
-        $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender WHERE Division = 'Dhaka' group by Division";
+
+        $searchQuery = '';
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+            if($request->has('division') && $request->division != ''){
+                $groupBy = 'Division';
+                $division = $request->division;
+                $searchQuery = "WHERE Division = '". $division."'";
+            }
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'District';
+                $district = $request->district;
+                $searchQuery = " WHERE District = '". $district . "'";
+            }
+            if($request->has('upazilla') && $request->upazilla != ''){
+                $groupBy = 'Upazila';
+                $upzilla = $request->upazilla;
+                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+            }
+
+        }
+        if($searchQuery != '') {
+            $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
+        } else {
+            $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender group by Division";
+        }
+
+
 
         $testPositivesqlGenderQueryData = \Illuminate\Support\Facades\DB::select($testPositiveGendersqlQuery);
         if($request->has('excel_download')) {
@@ -454,7 +506,33 @@ class IedcrDashboardController extends Controller
     }
 
     public function avgDelayTime($request) {
-        $testPositiveGendersqlQuery = "Select Date,(sum(avg_sample_to_test_lag_time)/count(avg_sample_to_test_lag_time)) as 'avg_sample_to_test_lag_time', (sum(avg_test_to_report_lag_time)/count(avg_test_to_report_lag_time)) as 'avg_test_to_report_lag_time' from test_reporting_lag_per_upazila_aug07 group by date";
+
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+            if($request->has('division') && $request->division != ''){
+                $groupBy = 'division';
+                $division = $request->division;
+                $searchQuery = "WHERE division = '". $division."'";
+            }
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'district';
+                $district = $request->district;
+                $searchQuery = " WHERE district = '". $district . "'";
+            }
+            if($request->has('upazilla') && $request->upazilla != ''){
+                $groupBy = 'upazila';
+                $upzilla = $request->upazilla;
+                $searchQuery = " WHERE upazila = '". $upzilla."'";
+            }
+
+        }
+        if($searchQuery != '') {
+           // $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
+            $testPositiveGendersqlQuery = "Select Date,(sum(avg_sample_to_test_lag_time)/count(avg_sample_to_test_lag_time)) as 'avg_sample_to_test_lag_time', (sum(avg_test_to_report_lag_time)/count(avg_test_to_report_lag_time)) as 'avg_test_to_report_lag_time' from test_reporting_lag_per_upazila_aug07 ". $searchQuery."  group by ". $groupBy;;
+        } else {
+            $testPositiveGendersqlQuery = "Select Date,(sum(avg_sample_to_test_lag_time)/count(avg_sample_to_test_lag_time)) as 'avg_sample_to_test_lag_time', (sum(avg_test_to_report_lag_time)/count(avg_test_to_report_lag_time)) as 'avg_test_to_report_lag_time' from test_reporting_lag_per_upazila_aug07 group by date";
+        }
+
+
 
         $testPositivesqlGenderQueryData = \Illuminate\Support\Facades\DB::select($testPositiveGendersqlQuery);
         if($request->has('excel_download')) {
@@ -630,14 +708,14 @@ class IedcrDashboardController extends Controller
      }
 
       $list = collect([
-          [ 
-          '0-10' => $infectedAge->_0_10 ?? '--', 
-          '11-20' => $infectedAge->_11_20 ?? '--', 
-          '21-30' => $infectedAge->_21_30 ?? '--', 
-          '31-40' => $infectedAge->_31_40 ?? '--', 
-          '41-50' => $infectedAge->_41_50 ?? '--', 
-          '51-60' => $infectedAge->_51_60 ?? '--', 
-          '60+' => $infectedAge->_60_Plus ?? '--', 
+          [
+          '0-10' => $infectedAge->_0_10 ?? '--',
+          '11-20' => $infectedAge->_11_20 ?? '--',
+          '21-30' => $infectedAge->_21_30 ?? '--',
+          '31-40' => $infectedAge->_31_40 ?? '--',
+          '41-50' => $infectedAge->_41_50 ?? '--',
+          '51-60' => $infectedAge->_51_60 ?? '--',
+          '60+' => $infectedAge->_60_Plus ?? '--',
           'Updated Date' =>$infectedAge->updt_date ?? '--' ],
       ]);
 
@@ -651,14 +729,14 @@ class IedcrDashboardController extends Controller
     SUM(alocatedICUBed) AS 'ICU_Beds',
     ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
     ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
-    
+
     return $city_wise_hospital[0];
   }
 
   private function city_wise_hospital_details($city)
   {
     $city_wise_hospital_details = DB::select("SELECT * FROM hospitaltemporarydata WHERE city='".$city."'");
-    
+
     return $city_wise_hospital_details;
   }
   private function nationalInfectedMap()
@@ -674,7 +752,7 @@ class IedcrDashboardController extends Controller
     }else{
       $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division='".$request->division."' GROUP BY Division;");
     }
-    
+
     return $getDivDisLevelInfectedMap ?? '';
   }
 
@@ -683,7 +761,7 @@ class IedcrDashboardController extends Controller
     $getNationalInfectedPopulation = DB::select("
         select B.Division, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
         (select Division, sum(infected) as 'Infected' from Div_Dist_Upz_Infected_Geography group by Division) as A
-        inner join 
+        inner join
         (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division;
     ");
     return $getNationalInfectedPopulation ?? '';
