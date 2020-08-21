@@ -506,7 +506,7 @@ class IedcrDashboardController extends Controller
     }
 
     public function avgDelayTime($request) {
-
+        $searchQuery = '';
         if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
             if($request->has('division') && $request->division != ''){
                 $groupBy = 'division';
