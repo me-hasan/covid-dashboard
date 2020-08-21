@@ -45,7 +45,7 @@
                         <div class="panel-body p-0">
                             <div class="btn-group mt-2 mb-2 mr-1">
                                 <select class="btn btn-outline-primary dropdown-toggle division" name="division" id="">
-                                    <option>
+                                    <option value="">
                                         All Division
                                     </option>
                                     @foreach($divisions as $division)
@@ -59,7 +59,7 @@
                                     @if(request()->has('district'))
                                         <option value="{{ request()->get('district') }}">{{ request()->get('district') }}</option>
                                     @else
-                                        <option>All Districts</option>
+                                        <option value="">All Districts</option>
                                     @endif
 
 
@@ -67,7 +67,7 @@
                             </div>
                             <div class="btn-group mt-2 mb-2 mr-1">
                                 <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazilla" id="">
-                                    <option>
+                                    <option value="">
                                         All Upazilla
                                     </option>
                                 </select>
