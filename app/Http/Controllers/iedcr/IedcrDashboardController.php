@@ -48,13 +48,6 @@ class IedcrDashboardController extends Controller
       $ininfectedMap = $this->divDisInfectedMap($request);
 
       $ininfectedPopulation = $this->nationalInfectedPopulation($request);
-
-      //death case for map
-      $row5_data['death_case_map'] = $this->deathCaseMap($request->division);
-      $death_case_two_week = $this->deathCaseTwoWeek($request->division);
-      $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
-      $row5_data['current_week_data'] = $death_case_two_week['current_week'];
-      $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request->division);
     }else{
      // Nationwide Infected Gender Distribution
       $infectedGender = $this->nationalInfectedGender();
@@ -64,22 +57,23 @@ class IedcrDashboardController extends Controller
 
       // Nantionwide Infectd Person Trend Line
       $ininfectedTrend = $this->nationalInfectedTrend();
-
-      //death case for map
-      $row5_data['death_case_map'] = $this->deathCaseMap();
-      $ctg_value = $row5_data['death_case_map']->where('division_name','Dhaka')->first();
-      $death_case_two_week = $this->deathCaseTwoWeek();
-      $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
-      $row5_data['current_week_data'] = $death_case_two_week['current_week'];
-      $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request->division);
-
        $ininfectedMap = $this->nationalInfectedMap();
 
       // Nantionwide Infectd Person Population
       $ininfectedPopulation = $this->nationalInfectedPopulation();
     }
 
+    //death case for map
+    $row5_data['death_case_map'] = $this->deathCaseMap($request);
+    $death_case_two_week = $this->deathCaseTwoWeek($request);
+    // dd($death_case_two_week);
+    $row5_data['two_weeks_division'] = $death_case_two_week['two_weeks_division'];
+    $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
+    $row5_data['current_week_data'] = $death_case_two_week['current_week'];
+    $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request);
+
     // common functions
+
     //Hospital City Wise
     $dhaka_hospital=$this->city_wise_hospital('Dhaka');
     $ctg_hospital=$this->city_wise_hospital('Chittagong');
@@ -252,8 +246,9 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedAge;
   }
 
-  private function deathCaseMap($division_name = '')
+  private function deathCaseMap($request)
   {
+    $division_name = $request->division ?? '';
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
@@ -268,8 +263,9 @@ class IedcrDashboardController extends Controller
     return $getDeathCaseMap;
   }
 
-  private function divisionDeathDistribution($division_name = '', $is_excel=false)
+  private function divisionDeathDistribution($request, $is_excel=false)
   {
+    $division_name = $request->division ?? '';
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
@@ -336,8 +332,9 @@ class IedcrDashboardController extends Controller
     }
   }
 
-  private function deathCaseTwoWeek($division_name = '', $is_excel = false)
+  private function deathCaseTwoWeek($request, $is_excel = false)
   {
+    $division_name = $request->division ?? '';
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
@@ -366,12 +363,17 @@ class IedcrDashboardController extends Controller
 
     $current_week = [];
     $previous_week = [];
+    $two_weeks_division = [];
 
     $i=0;
     foreach($perWeek as $wk_details){
       foreach ($wk_details as $key => $wk) {
         if($i<2){
           if($i==0){
+            if($wk->division_name == 'Chattogram'){
+              $wk->division_name = 'Chittagong';
+            }
+            array_push($two_weeks_division, $wk->division_name);
             array_push($current_week, $wk->death);
           }else{
             array_push($previous_week, $wk->death);
@@ -380,7 +382,7 @@ class IedcrDashboardController extends Controller
       }
       $i++;
     }
-
+    $data['two_weeks_division'] = $two_weeks_division;
     $data['current_week'] = $current_week;
     $data['previous_week'] = $previous_week;
     return $data;
@@ -539,7 +541,7 @@ class IedcrDashboardController extends Controller
 
   public function generateTwoWeeksExcel(Request $request){
      if($request->division){
-        $twoWeeksData = $this->deathCaseTwoWeek($request->division, true);
+        $twoWeeksData = $this->deathCaseTwoWeek($request, true);
      }else{
         $twoWeeksData = $this->deathCaseTwoWeek('', true);
      }
@@ -560,7 +562,7 @@ class IedcrDashboardController extends Controller
 
   public function generateDivisionDeathExcel(Request $request){
      if($request->division){
-        $divisionDeathData = $this->divisionDeathDistribution($request->division, true);
+        $divisionDeathData = $this->divisionDeathDistribution($request, true);
      }else{
         $divisionDeathData = $this->divisionDeathDistribution('', true);
      }
