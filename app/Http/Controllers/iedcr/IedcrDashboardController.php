@@ -26,7 +26,9 @@ class IedcrDashboardController extends Controller
      // $hda_age_wise_death_distribution = DB::table('hda_age_wise_death_distribution')->get();
      // $hda_gender_wise_death_distribution = DB::table('hda_gender_wise_death_distribution')->orderBy('date','DESC')->first();
      // $hda_average_delay_time = DB::table('hda_average_delay_time')->orderBy('id','DESC')->first();
-     // $hda_time_series = DB::table('hda_time_series')->get();
+     $hda_population_wise_infected = DB::table('hda_population_wise_infected')->orderBy('division','ASC')->get();
+      $hda_time_series = DB::table('hda_time_series')->orderBy('date','DESC')->take(7)->get();
+
 
      $data_source_description = DB::table('data_source_description')->where('page_name','iedcr-dashboard')->get();
 
@@ -41,6 +43,11 @@ class IedcrDashboardController extends Controller
 
       // Div Dis Upazila wise Infectd Person Trend Line
       $ininfectedTrend = $this->divDislInfectedTrend($request) ?? '';
+
+
+      $ininfectedMap = $this->divDisInfectedMap($request);
+
+      $ininfectedPopulation = $this->nationalInfectedPopulation($request);
 
       //death case for map
       $row5_data['death_case_map'] = $this->deathCaseMap($request->division);
@@ -65,7 +72,20 @@ class IedcrDashboardController extends Controller
       $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
       $row5_data['current_week_data'] = $death_case_two_week['current_week'];
       $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request->division);
+
+       $ininfectedMap = $this->nationalInfectedMap();
+
+      // Nantionwide Infectd Person Population
+      $ininfectedPopulation = $this->nationalInfectedPopulation();
     }
+
+    // common functions
+    //Hospital City Wise
+    $dhaka_hospital=$this->city_wise_hospital('Dhaka');
+    $ctg_hospital=$this->city_wise_hospital('Chittagong');
+
+    $dhaka_hospital_details=$this->city_wise_hospital_details('Dhaka');
+    $ctg_hospital_details=$this->city_wise_hospital_details('Chittagong');
 
     if($request->has('excel_download') && $request->excel_download == 'test_posititvity_age') {
         return  $this->testPositivitybyAge($request);
@@ -106,7 +126,11 @@ class IedcrDashboardController extends Controller
       $mobilityInData  = implode(",", $mobility_in);
       $mobilityOutData = implode(",", $mobility_out);
 
-     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend', 'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData'));
+     return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend', 
+      'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
+      'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
+      'dhaka_hospital','ctg_hospital',
+      'dhaka_hospital_details','ctg_hospital_details'));
   }
 
   private function nationalInfectedGender()
@@ -177,18 +201,18 @@ class IedcrDashboardController extends Controller
 
   private function nationalInfectedTrend()
   {
-    $getNationalInfectedTrend = DB::select("select date_of_test as 'Date', count(id) as infected_count from infected_person group by date_of_test");
-    return $getNationalInfectedTrend[0] ?? '';
+    $getNationalInfectedTrend = DB::select("select 'national' AS area, date_of_test as 'Date', count(id) as infected_count from infected_person group by date_of_test");
+    return $getNationalInfectedTrend ?? '';
   }
 
   private function divDislInfectedTrend($request)
   {
     if($request->division && $request->district){
-      $getDivDisLevelInfectedTrend = DB::select("select District, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District='".$request->district."' group by District, Date;");
+      $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District='".$request->district."' group by District, Date;");
     }elseif($request->division){
-      $getDivDisLevelInfectedTrend = DB::select("select Division, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
+      $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
     }
-
+    
     return $getDivDisLevelInfectedTrend ?? '';
   }
 
@@ -468,6 +492,7 @@ class IedcrDashboardController extends Controller
      * @param $request
      */
     protected function divisionWideMobilityInOut($request) {
+      $mobility=null;
       if($request->division && $request->district && $request->upazila){
           $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Upazila");
       }elseif($request->division && $request->district){
@@ -554,5 +579,113 @@ class IedcrDashboardController extends Controller
     }
      $list = collect($data);
       return (new FastExcel($list))->download('division_wise_death.xlsx');
+  }
+
+
+  public function generateInfectedSeriesExcel(Request $request){
+     if($request->division){
+        $seriesData = $this->divDislInfectedTrend($request);
+     }else{
+        $seriesData = $this->nationalInfectedTrend();
+     }
+
+      $i=0;
+      $data = [];
+      if(sizeof($seriesData) > 0){
+          foreach ($seriesData as $key => $row) {
+              $data[$i]['Date'] =  $row->Date;
+              $data[$i]['Infected Count'] =  $row->infected_count;
+              $i++;
+          }
+      }
+     $list = collect($data);
+      return (new FastExcel($list))->download('infected_trend.xlsx');
+  }
+
+  public function generateInfectedPerLacExcel(Request $request){
+     if($request->division){
+        $per_pac_Data = $this->nationalInfectedPopulation($request);
+     }else{
+        $per_pac_Data = $this->nationalInfectedPopulation();
+     }
+
+      $i=0;
+      $data = [];
+      if(sizeof($per_pac_Data) > 0){
+          foreach ($per_pac_Data as $key => $row) {
+              $data[$i]['Division'] =  $row->Division;
+              $data[$i]['Cases Per Lac'] =  $row->Cases_Per_Lac;
+              $i++;
+          }
+      }
+     $list = collect($data);
+      return (new FastExcel($list))->download('infected_per_lac.xlsx');
+  }
+
+  public function generateInfectedAgeGroupExcel(Request $request){
+     if($request->division){
+       $infectedAge = $this->upazillaLevelInfectedAge($request);
+     }else{
+       $infectedAge = $this->nationalInfectedAge();
+     }
+
+      $list = collect([
+          [ 
+          '0-10' => $infectedAge->_0_10 ?? '--', 
+          '11-20' => $infectedAge->_11_20 ?? '--', 
+          '21-30' => $infectedAge->_21_30 ?? '--', 
+          '31-40' => $infectedAge->_31_40 ?? '--', 
+          '41-50' => $infectedAge->_41_50 ?? '--', 
+          '51-60' => $infectedAge->_51_60 ?? '--', 
+          '60+' => $infectedAge->_60_Plus ?? '--', 
+          'Updated Date' =>$infectedAge->updt_date ?? '--' ],
+      ]);
+
+      return (new FastExcel($list))->download('infected_age_group.xlsx');
+  }
+
+  private function city_wise_hospital($city)
+  {
+    $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
+    SUM(alocatedGeneralBed) AS 'General_Beds',
+    SUM(alocatedICUBed) AS 'ICU_Beds',
+    ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
+    ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
+    
+    return $city_wise_hospital[0];
+  }
+
+  private function city_wise_hospital_details($city)
+  {
+    $city_wise_hospital_details = DB::select("SELECT * FROM hospitaltemporarydata WHERE city='".$city."'");
+    
+    return $city_wise_hospital_details;
+  }
+  private function nationalInfectedMap()
+  {
+    $getNationalInfectedMap = DB::select("select District, sum(infected) as 'Infected', SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography  group by District");
+    return $getNationalInfectedMap ;
+  }
+
+  private function divDisInfectedMap($request)
+  {
+    if($request->division && $request->district){
+      $getDivDisLevelInfectedMap = DB::select("select District, sum(infected) as 'Infected',SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography where District='".$request->district."' group by District");
+    }else{
+      $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division='".$request->division."' GROUP BY Division;");
+    }
+    
+    return $getDivDisLevelInfectedMap ?? '';
+  }
+
+  private function nationalInfectedPopulation()
+  {
+    $getNationalInfectedPopulation = DB::select("
+        select B.Division, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
+        (select Division, sum(infected) as 'Infected' from Div_Dist_Upz_Infected_Geography group by Division) as A
+        inner join 
+        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division;
+    ");
+    return $getNationalInfectedPopulation ?? '';
   }
 }
