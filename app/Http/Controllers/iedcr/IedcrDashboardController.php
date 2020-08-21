@@ -335,8 +335,13 @@ class IedcrDashboardController extends Controller
   private function deathCaseTwoWeek($request, $is_excel = false)
   {
     $division_name = $request->division ?? '';
-    if($division_name != '' && strtolower($division_name) == 'chittagong'){
-      $division_name = 'Chattogram';
+    if($division_name != ''){
+      if(strtolower($division_name) == 'chittagong'){
+        $division_name = 'Chattogram';
+      }
+      if(strtolower($division_name) == 'barisal'){
+        $division_name = 'Barishal';
+      }
     }
     $condition = $division_name != '' ? "where division_name like '$division_name'" : '';
     $getDeathCaseByWeek = DB::select("SELECT
@@ -351,11 +356,12 @@ class IedcrDashboardController extends Controller
                       ".$condition."
                       GROUP BY YEARWEEK(date, 2), division_name
                       ORDER BY YEARWEEK(date, 2) desc limit 16");
+    // dd($getDeathCaseByWeek);
 
     if($is_excel){
       return $getDeathCaseByWeek;
     }
-    $arr = array();
+    $perWeek = array();
 
     foreach ($getDeathCaseByWeek as $key => $item) {
        $perWeek[$item->week][$key] = $item;
