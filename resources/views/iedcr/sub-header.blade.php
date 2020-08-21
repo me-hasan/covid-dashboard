@@ -187,6 +187,9 @@
 
         });
         $('.natioanl_level').on('click', function () {
+            $('.division').prop('selectedIndex',0);
+            $('.district').prop('selectedIndex',0);
+            $('.upazilla').prop('selectedIndex',0);
             $('.division').prop('disabled', 'disabled');
             $('.district').prop('disabled', 'disabled');
             $('.upazilla').prop('disabled', 'disabled');
@@ -203,6 +206,9 @@
             $('.district').prop('disabled', false);
             $('.upazilla').prop('disabled', false);
         } else {
+            $('.division').prop('selectedIndex',0);
+            $('.district').prop('selectedIndex',0);
+            $('.upazilla').prop('selectedIndex',0);
             $('.division').prop('disabled', 'disabled');
             $('.district').prop('disabled', 'disabled');
             $('.upazilla').prop('disabled', 'disabled');
