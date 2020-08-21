@@ -100,7 +100,7 @@ class IedcrDashboardController extends Controller
     $testPositivityByAge =  $this->testPositivitybyAge($request);
     $testPositivityByGender =  $this->testPositivitybyGender($request);
     $avgDelayTimeData =  $this->avgDelayTime($request);
-
+    $nationalSynPredict = $this->nationalSyndromic($request);
 
     $death_by_gender = $this->deathByGender();
     $row5_data['male_death_percentage'] = number_format((float)$death_by_gender['male_death_percentage'], 2, '.', '');
@@ -130,7 +130,7 @@ class IedcrDashboardController extends Controller
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
       'dhaka_hospital','ctg_hospital',
-      'dhaka_hospital_details','ctg_hospital_details'));
+      'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict'));
   }
 
   private function nationalInfectedGender()
@@ -553,6 +553,37 @@ class IedcrDashboardController extends Controller
         }
 
         return $testPositivesqlGenderQueryData;
+    }
+
+    public function nationalSyndromic($request) {
+        $searchQuery = '';
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+            if($request->has('division') && $request->division != ''){
+                $groupBy = 'Division';
+                $division = $request->division;
+                $searchQuery = "WHERE Division = '". $division."'";
+            }
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'District';
+                $district = $request->district;
+                $searchQuery = " WHERE District = '". $district . "'";
+            }
+            if($request->has('upazilla') && $request->upazilla != ''){
+                $groupBy = 'Upazila';
+                $upzilla = $request->upazilla;
+                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+            }
+
+        }
+        if($searchQuery != '') {
+            $testPositivesqlQuery = "select * from syndromicpriorityupazilawise ". $searchQuery." order by priority asc; ";
+        } else {
+            $testPositivesqlQuery = "select * from syndromicpriorityupazilawise order by priority asc; ";
+        }
+
+
+        $SynDromicQueryDataArray = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
+        return $SynDromicQueryDataArray;
     }
     /*test positivity end*/
 
