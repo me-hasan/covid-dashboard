@@ -40,8 +40,11 @@ Route::get('/iedcr/generate-series-excel', 'iedcr\IedcrDashboardController@gener
 Route::get('/iedcr/per-lac-infect', 'iedcr\IedcrDashboardController@generateInfectedPerLacExcel')->name('iedcr.per-lac-infect');
 Route::get('/iedcr/generate-agegroup-excel', 'iedcr\IedcrDashboardController@generateInfectedAgeGroupExcel')->name('iedcr.generate-agegroup-excel');
 
-
-
+// row 5 pdf
+Route::get('/iedcr/generate-tw-weeks-excel', 'iedcr\IedcrDashboardController@generateTwoWeeksExcel')->name('iedcr.generate-twoweeks-excel');
+Route::get('/iedcr/generate-division-death-excel', 'iedcr\IedcrDashboardController@generateDivisionDeathExcel')->name('iedcr.generate-division-death-excel');
+Route::get('/iedcr/generate-death-by-age-group-excel', 'iedcr\IedcrDashboardController@generateDeathByAgeGroupExcel')->name('iedcr.generate-death-by-age-group-excel');
+Route::get('/iedcr/generate-death-by-gender-excel', 'iedcr\IedcrDashboardController@generateDeathByGenderExcel')->name('iedcr.generate-death-by-gender-excel');
 
 
 Route::prefix('admin')->group(function () {
