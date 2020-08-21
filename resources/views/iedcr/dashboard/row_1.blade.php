@@ -34,7 +34,7 @@ foreach ($data_source_description as  $row) {
 
 <div class="row top-cards">
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
-        <div class="card overflow-hidden dash1-card border-0" onClick="modalContent('Infected (24 hours)', 'bar', 'Infected Number', 'Date');" data-target="#modaldemo1" data-toggle="modal">
+        <div class="card overflow-hidden dash1-card border-0" onClick="modalContent_1('Infected (Last 7 Days)', 'bar', 'Infected Number', 'Date');" data-target="#modaldemo2" data-toggle="modal">
             <div class="card-body">
                 <p class=" mb-1 ">Infected (24 hours)</p>
                 <h4 class="mb-1 number-font">{{ number_format($hda_card->infected_24_hr) }}</h4>
@@ -42,7 +42,7 @@ foreach ($data_source_description as  $row) {
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
-        <div class="card overflow-hidden dash1-card border-0" onClick="modalContent('Total Infected', 'line', 'Total Infected Number', 'Date');" data-target="#modaldemo1" data-toggle="modal">
+        <div class="card overflow-hidden dash1-card border-0" onClick="modalContent_1('Total Infected', 'line', 'Total Infected Number', 'Date');" data-target="#modaldemo2" data-toggle="modal">
             <div class="card-body">
                 <p class=" mb-1 ">Total Infected</p>
                 <h4 class="mb-1 number-font">{{ number_format($hda_card->intefted_total) }}</h4>

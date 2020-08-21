@@ -16,8 +16,8 @@
                                     <div class="col-xl-4 col-md-12">
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
-                                                <h3 class="card-title"><span class="fs-12">Confirmed Cases % by Age Group</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <h3 class="card-title"><span class="fs-12">Confirmed Cases % Per LAC</span></h3>
+                                                <div class="card-options"> <a href="{{route('iedcr.per-lac-infect',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="case_by_age"></div>
@@ -28,7 +28,7 @@
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
                                                 <h3 class="card-title"><span class="fs-12">Confirmed Cases % by Age Group</span></h3>
-                                                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                                <div class="card-options"> <a href="{{route('iedcr.generate-agegroup-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
                                                 <div id="death_by_age"></div>
@@ -54,7 +54,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">Time Series</h3>
-                                        <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                                        <div class="card-options"> <a href="{{route('iedcr.generate-series-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                     </div>
                                     <div class="card-body">
                                         <div id="time-seris-graph"></div>
@@ -69,11 +69,12 @@
                 <div class="col-xl-12 col-md-12 ml-4">
                     <div id="color-group">
                         <div class="row gutters-xs">
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-10</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">11-20</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">21-30</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">31-40</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">51-100</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-5</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">6-10</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">11-50</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">51-100</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">101-500</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#ed2355"></span><span class="group-color-label text-ash p-1">501-1000</span></div>
                         </div>
                     </div>
                 </div>
@@ -96,6 +97,20 @@
 @push('custom_script')
     <script>
         // Age Wise Infected Distribution
+
+        <?php 
+        $div_name = $div_data = array();
+        
+        foreach($ininfectedPopulation as $row){
+          
+              $div_name[] = $row->Division;
+              $div_data[] = (float)$row->Cases_Per_Lac;
+          
+        }
+        
+        $div_data = array('name' => 'Infected', 'data' => $div_data);
+        
+      ?>
         Highcharts.chart('case_by_age', {
             chart: {
                 type: 'column',
@@ -124,7 +139,7 @@
                 }
             },
             xAxis: {
-                categories: ["Dhaka","Khulna","Barisal","Sylhet","Mymensingh","Rajshahi","Rangpur","Chittagong"]				},
+               categories: <?php echo json_encode($div_name); ?>					},
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}%</b>',
                 /*valueSuffix: ' cm',
@@ -137,7 +152,9 @@
                 }
             },
             colors: ['#ffab00'],
-            series: [{"name":"Infected","data":[2.9,7.3,27.6,27.1,17.3,11.2,6.7]}]			});
+            series: <?php echo json_encode(array($div_data)); ?>			
+
+           });
 
         // Age Wise infected Distribution
         <?php 
@@ -153,7 +170,7 @@
 		    
 		      $_ageWiseInfectData = array('name' => 'Infected', 'data' => $_ageWiseInfectData);
 		    
-		  ?> 
+		?> 
 
         Highcharts.chart('death_by_age', {
             chart: {
@@ -258,6 +275,20 @@
         });
 
         /* Time Seris Graph */
+
+        <?php 
+
+	      $date_arr = $infected_arr =  array();
+
+	      foreach($ininfectedTrend as $row){
+	        
+	          $date_arr[] = date('d\/m\/Y', strtotime($row->Date));
+	          $infected_arr[] = $row->infected_count;
+	      }
+	        $infected = implode(",", $infected_arr);
+	       
+
+	    ?>
         Highcharts.chart('time-seris-graph', {
             chart: {
                 height: 200
@@ -281,7 +312,9 @@
             },
 
             xAxis: {
-                categories: ["30\/05\/2020","31\/05\/2020","01\/06\/2020","02\/06\/2020","03\/06\/2020","04\/06\/2020","05\/06\/2020","06\/06\/2020","07\/06\/2020","08\/06\/2020","09\/06\/2020","10\/06\/2020","11\/06\/2020","12\/06\/2020","13\/06\/2020","14\/06\/2020","15\/06\/2020","16\/06\/2020","17\/06\/2020","18\/06\/2020","19\/06\/2020","20\/06\/2020","21\/06\/2020","22\/06\/2020","23\/06\/2020","24\/06\/2020","25\/06\/2020","26\/06\/2020","27\/06\/2020","28\/06\/2020","29\/06\/2020","30\/06\/2020","01\/07\/2020","02\/07\/2020","03\/07\/2020","04\/07\/2020","05\/07\/2020","06\/07\/2020","07\/07\/2020","08\/07\/2020","09\/07\/2020","10\/07\/2020","11\/07\/2020","12\/07\/2020","13\/07\/2020","14\/07\/2020","15\/07\/2020","16\/07\/2020","17\/07\/2020","18\/07\/2020","19\/07\/2020","20\/07\/2020","21\/07\/2020","22\/07\/2020","23\/07\/2020","24\/07\/2020","25\/07\/2020","26\/07\/2020","27\/07\/2020","28\/07\/2020","29\/07\/2020","30\/07\/2020","31\/07\/2020","01\/08\/2020","02\/08\/2020","03\/08\/2020","04\/08\/2020","05\/08\/2020"]				},
+                categories: <?php echo json_encode($date_arr);?>
+
+            },
 
             yAxis: {
                 title: {
@@ -311,6 +344,43 @@
 
             colors: ['#ffab00', '#38cb89', '#ef4b4b', '#5323a7'],
 
-            series: [{"type":"area","name":"INFECTED","data":[1764,2545,2381,2911,2695,2423,2828,2635,2743,2735,3171,3190,3187,3471,2856,3141,3099,3862,4008,3803,3243,3240,3531,3480,3412,3462,3946,3868,3504,3809,4014,3682,3775,4019,3114,3288,2738,3201,3027,3489,3360,2949,2686,2666,3099,3163,3533,2733,3034,2709,2459,2928,3057,2744,2856,2548,2520,2275,2772,2960,3009,2695,2772,2199,886,1356,1918,2654],"marker":{"symbol":"circle"}},{"type":"area","name":"RECOVERED","data":[360,406,816,523,470,571,643,521,578,657,777,563,848,502,578,903,3099,2237,1925,1975,2781,1048,1084,1678,880,2031,1829,1638,1185,1409,2053,1844,2484,4334,1606,2673,1904,3524,1953,2736,3706,1862,1628,5580,4703,4910,1796,1940,1762,1373,1546,1914,1841,1850,2006,1768,1114,1792,1801,1731,2878,2668,2176,1117,586,1066,1955,1890],"marker":{"symbol":"circle"}},{"type":"area","name":"DEATH","data":[28,40,22,37,37,35,30,35,42,42,45,37,37,46,44,32,38,53,43,38,45,37,39,38,43,37,39,40,34,43,45,64,41,38,42,29,55,44,55,46,41,37,30,47,39,33,33,39,51,34,37,50,41,42,50,35,38,54,37,35,35,48,28,21,22,30,50,33],"marker":{"symbol":"circle"}},{"type":"area","name":"TEST","data":[9987,11876,11439,12704,12510,12698,14088,12486,13136,12988,14664,15965,15772,15990,16638,14505,15038,17214,17527,16259,15045,14031,15585,15555,16292,16433,17999,18498,15157,18099,17837,18426,17875,18362,14650,14727,13988,14245,13173,15672,15632,13488,11193,11059,12423,13453,14002,12889,13460,10923,10625,13362,12898,12050,12398,12027,10446,10078,12859,12714,14127,12937,12614,8802,3684,4249,7712,11160],"marker":{"symbol":"circle"}}]			});
+            series: [{"type":"area","name":"INFECTED","data":[<?php echo $infected;?>],"marker":{"symbol":"circle"}}]			});
+    </script>
+    <script type="text/javascript">
+    // Map JS Data
+        $(document).ready(function(){
+            
+            <?php
+            $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+            $_existDataGroups = array();
+            foreach($ininfectedMap as $_mobInDistrictVal){
+
+        	$str=$_mobInDistrictVal->ExtractString;
+            if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
+            	$str='Cox';
+            }elseif ($_mobInDistrictVal->District=='Narail') {
+            	$str='Narail';
+            }elseif ($_mobInDistrictVal->District=='Rangamati') {
+            	$str='Rangamati';
+            }	
+            
+            $_groupColorCode = NULL;
+            foreach($_colorCodes as $_colorRange => $_colorCode){
+                if((int)$_mobInDistrictVal->Infected <= $_colorRange){
+                    $_groupColorCode = $_colorCode;
+                    $_existDataGroups[$_colorRange] = $_colorCode;
+                    break;
+                }
+                
+            }
+            ?>
+            $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            <?php
+            }
+            ?>
+
+    
+            
+        });
     </script>
 @endpush
