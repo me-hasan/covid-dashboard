@@ -44,12 +44,12 @@
                     <div class="panel panel-default">
                         <div class="panel-body p-0">
                             <div class="btn-group mt-2 mb-2 mr-1">
-                                <select class="btn btn-outline-primary dropdown-toggle division" name="divison" id="">
+                                <select class="btn btn-outline-primary dropdown-toggle division" name="division" id="">
                                     <option>
                                         All Division
                                     </option>
                                     @foreach($divisions as $division)
-                                        <option @if(request()->get('divison') == $division->division) selected @endif value="{{$division->division}}">{{$division->division}}</option>
+                                        <option @if(request()->get('division') == $division->division) selected @endif value="{{$division->division}}">{{$division->division}}</option>
                                     @endforeach
                                 </select>
                             </div>
