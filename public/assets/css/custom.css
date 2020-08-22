@@ -170,5 +170,6 @@
 .dataTable thead th{ text-transform: capitalize !important;}
 
 .calender-highlight a {
-    background: #705ec8 !important;
+    background: #ef4b4b !important;
+    color: #fff !important;
 }
