@@ -456,6 +456,7 @@ class IedcrDashboardController extends Controller
   /*test positivity start*/
     public function  testPositivitybyAge($request) {
 
+    
         $searchQuery = '';
         if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
             if($request->has('division') && $request->division != ''){
@@ -466,12 +467,18 @@ class IedcrDashboardController extends Controller
             if($request->has('district') && $request->district != ''){
                 $groupBy = 'District';
                 $district = $request->district;
-                $searchQuery = " WHERE District = '". $district . "'";
+                if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                    $district= 'cox';
+                }
+                $searchQuery = " WHERE District like '%".$district."%' ";
             }
             if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'Upazila';
-                $upzilla = $request->upazilla;
-                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+                $upzilla = $request->upazila;
+                if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+                   $upzilla= 'cox';
+                }
+                $searchQuery = " WHERE Upazila  like '%".$upzilla."%'  ";
             }
 
         }
@@ -518,12 +525,18 @@ class IedcrDashboardController extends Controller
             if($request->has('district') && $request->district != ''){
                 $groupBy = 'District';
                 $district = $request->district;
-                $searchQuery = " WHERE District = '". $district . "'";
+                if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                    $district= 'cox';
+                }
+                $searchQuery = " WHERE District  like '%".$district."%' ";
             }
             if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'Upazila';
-                $upzilla = $request->upazilla;
-                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+                $upzilla = $request->upazila;
+                if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+                   $upzilla= 'cox';
+                }
+                $searchQuery = " WHERE Upazila like '%".$upzilla."%' ";
             }
 
         }
@@ -568,12 +581,18 @@ class IedcrDashboardController extends Controller
             if($request->has('district') && $request->district != ''){
                 $groupBy = 'district';
                 $district = $request->district;
-                $searchQuery = " WHERE district = '". $district . "'";
+                if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                    $district= 'cox';
+                }
+                $searchQuery = " WHERE district like '%".$district."%' ";
             }
             if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'upazila';
-                $upzilla = $request->upazilla;
-                $searchQuery = " WHERE upazila = '". $upzilla."'";
+                $upzilla = $request->upazila;
+                if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+                   $upzilla= 'cox';
+                }
+                $searchQuery = " WHERE upazila like '%".$upzilla."%' ";
             }
 
         }
@@ -618,12 +637,18 @@ class IedcrDashboardController extends Controller
             if($request->has('district') && $request->district != ''){
                 $groupBy = 'District';
                 $district = $request->district;
-                $searchQuery = " WHERE District = '". $district . "'";
+                if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                    $district= 'cox';
+                }
+                $searchQuery = " WHERE District like '%".$district."%' ";
             }
             if($request->has('upazilla') && $request->upazilla != ''){
                 $groupBy = 'Upazila';
-                $upzilla = $request->upazilla;
-                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+                $upzilla = $request->upazila;
+                if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+                   $upzilla= 'cox';
+                }
+                $searchQuery = " WHERE Upazila like '%".$upzilla."%' ";
             }
 
         }
@@ -662,21 +687,30 @@ class IedcrDashboardController extends Controller
      */
     protected function divisionWideMobilityInOut($request) {
       $mobility=null;
+      $str_dis= $request->district;
+      $str_upa= $request->upazila;
+      if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+         $str_dis= 'cox';
+      }
+
+      if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+         $str_upa= 'cox';
+      }
       if ($request->from_date && $request->to_date){
           $from_date = $request->from_date;
           $to_date   = $request->to_date;
           if($request->division && $request->district && $request->upazila){
-              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila='".$request->upazila."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Upazila");
+              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila like '%".$str_upa."%' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Upazila");
           }elseif($request->division && $request->district){
-              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District='".$request->district."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, District");
+              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District like '%".$str_dis."%' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, District");
           }elseif($request->division){
               $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Division");
           }
       } else {
           if($request->division && $request->district && $request->upazila){
-              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila='".$request->upazila."'group by Calculated_date, Upazila");
+              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila like '%".$str_upa."%' group by Calculated_date, Upazila");
           }elseif($request->division && $request->district){
-              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District='".$request->district."'group by Calculated_date, District");
+              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District like '%".$str_dis."%' group by Calculated_date, District");
           }elseif($request->division){
               $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' group by Calculated_date, Division");
           }
