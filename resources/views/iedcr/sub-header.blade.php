@@ -174,7 +174,7 @@
                         $('.upazilla').empty();
                         html = '<option value="">Select Upazilla</option>';
                         for (var i = 0; i < data.data.length; i++) {
-                            var selectedUpazilla = '{{ htmlentities(request()->get('upazilla')) }}';
+                            var selectedUpazilla = '{{ htmlentities(request()->get('upazila')) }}';
                             var selectedValue = '';
                             if (selectedUpazilla == htmlEntities(data.data[i].upazila_en)) {
                                 selectedValue = 'selected';

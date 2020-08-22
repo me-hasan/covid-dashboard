@@ -28,13 +28,23 @@
         <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
             <div class="card-body">
                 <h5 class="card-title">Short Description</h5>
-                <p class="card-text">Content here.</p>
+                <p class="card-text">
+                    Grameenphone CDR data averaged over the last 14 days: 
+                    <ol>
+                        <li>The number of subscribers in each upazila</li>
+                        <li>The number of subscribers moving in to each upazila</li>
+                        <li>The number of subscribers moving out of each upazila</li>
+                        <li>The number of subscribers not moving </li>
+                    </ol>
+                    The timeseries plot below shows the change in these measures over time for each upazila within the district.
+
+                </p>
             </div>
         </div>
         <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
             <div class="card-body">
                 <h5 class="card-title">Data Source & Last Update Date</h5>
-                <p class="card-text">DGHS</p>
+                <p class="card-text">Grameenphone CDR</p>
             </div>
         </div>
     </div>
