@@ -160,13 +160,13 @@
         <?php 
 		      $_ageWiseInfectData = array();
 		      
-		      $_ageWiseInfectData[] = (float)$infectedAge->_0_10;
-		      $_ageWiseInfectData[] = (float)$infectedAge->_11_20;
-		      $_ageWiseInfectData[] = (float)$infectedAge->_21_30;
-		      $_ageWiseInfectData[] = (float)$infectedAge->_31_40;
-		      $_ageWiseInfectData[] = (float)$infectedAge->_41_50;
-		      $_ageWiseInfectData[] = (float)$infectedAge->_51_60;
-		      $_ageWiseInfectData[] = (float)$infectedAge->_60_Plus;
+		      $_ageWiseInfectData[] = isset($infectedAge->_0_10) ? (float)$infectedAge->_0_10 : 0;
+		      $_ageWiseInfectData[] = isset($infectedAge->_11_20) ? (float)$infectedAge->_11_20 : 0;
+		      $_ageWiseInfectData[] = isset($infectedAge->_21_30) ? (float)$infectedAge->_21_30 : 0;
+		      $_ageWiseInfectData[] = isset($infectedAge->_31_40) ? (float)$infectedAge->_31_40 : 0;
+		      $_ageWiseInfectData[] = isset($infectedAge->_41_50) ? (float)$infectedAge->_41_50 : 0;
+		      $_ageWiseInfectData[] = isset($infectedAge->_51_60) ? (float)$infectedAge->_51_60 : 0;
+		      $_ageWiseInfectData[] = isset($infectedAge->_60_Plus) ? (float)$infectedAge->_60_Plus : 0;
 		    
 		      $_ageWiseInfectData = array('name' => 'Infected', 'data' => $_ageWiseInfectData);
 		    
@@ -223,8 +223,8 @@
         <?php 
         $_genderWiseInfectData = array();
        
-          $_genderWiseInfectData[] = array('name' => 'Male', 'y' => (float)$infectedGender->M);
-          $_genderWiseInfectData[] = array('name' => 'Female', 'y' => (float)$infectedGender->F);
+          $_genderWiseInfectData[] = array('name' => 'Male', 'y' => isset($infectedGender->M) ? (float)$infectedGender->M : 0 );
+          $_genderWiseInfectData[] = array('name' => 'Female', 'y' => isset($infectedGender->F) ? (float)$infectedGender->F : 0 );
      
       ?>
         Highcharts.chart('case_by_gender', {
