@@ -56,17 +56,17 @@
                             <div class="btn-group mt-2 mb-2 mr-1">
                                 <select class="btn btn-outline-primary dropdown-toggle district" name="district" id="">
 
-                                    @if(request()->has('district'))
+                                    @if(request()->has('district') && request()->get('district') != '')
                                         <option value="{{ request()->get('district') }}">{{ request()->get('district') }}</option>
-                                    @else
-                                        <option value="">All Districts</option>
                                     @endif
+                                        <option value="">All Districts</option>
+
 
 
                                 </select>
                             </div>
                             <div class="btn-group mt-2 mb-2 mr-1">
-                                <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazilla" id="">
+                                <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazila" id="">
                                     <option value="">
                                         All Upazilla
                                     </option>
@@ -191,6 +191,9 @@
 
         });
         $('.natioanl_level').on('click', function () {
+            $('.division').prop('selectedIndex',0);
+            $('.district').prop('selectedIndex',0);
+            $('.upazilla').prop('selectedIndex',0);
             $('.division').prop('disabled', 'disabled');
             $('.district').prop('disabled', 'disabled');
             $('.upazilla').prop('disabled', 'disabled');
@@ -207,6 +210,9 @@
             $('.district').prop('disabled', false);
             $('.upazilla').prop('disabled', false);
         } else {
+            $('.division').prop('selectedIndex',0);
+            $('.district').prop('selectedIndex',0);
+            $('.upazilla').prop('selectedIndex',0);
             $('.division').prop('disabled', 'disabled');
             $('.district').prop('disabled', 'disabled');
             $('.upazilla').prop('disabled', 'disabled');
