@@ -12,8 +12,6 @@
 					$rajshahi_value = $row5_data['death_case_map']->where('division_name','Rajshahi')->first()->Total_death ?? -1;
 					$rangpur_value = $row5_data['death_case_map']->where('division_name','Rangpur')->first()->Total_death ?? -1;
 					$sylhet_value = $row5_data['death_case_map']->where('division_name','Sylhet')->first()->Total_death ?? -1;
-
-					echo $ctg_value.'**'.$dhaka_value;
 				@endphp
             </div>
             <div class="card-body">
@@ -970,12 +968,12 @@
 </div>
 @push('custom_script')
     <script>
-    	const division_name = '<?php echo app('request')->input('division') ?? 'null'?>';
+    	const division_name = '<?php echo app('request')->input('division') ?? ""?>';
     	var categories = "";
-    	if(division_name != null){
+    	if(division_name != ""){
     		categories = [division_name];
     	}else{
-    		categories = ["Dhaka","Khulna","Barisal","Sylhet","Mymensingh","Rajshahi","Rangpur","Chittagong"];
+    		categories = ["Dhaka","Chittagong","Rajshahi","Khulna","Barisal","Sylhet","Rangpur","Mymensingh"];
     	}
 
         // Death by Gender Group
@@ -1128,6 +1126,7 @@
         <?php  
         	$previous_week_data = implode(',', $row5_data['previous_week_data']);
         	$current_week_data = implode(',', $row5_data['current_week_data']);
+        	$two_weeks_division = json_encode($row5_data['two_weeks_division']);
         ?>
 
         Highcharts.chart('divition_wise_two_weeks_change', {
@@ -1158,7 +1157,7 @@
                 }
             },
             xAxis: {
-                categories: categories
+                categories: <?php echo $two_weeks_division;?>
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>',

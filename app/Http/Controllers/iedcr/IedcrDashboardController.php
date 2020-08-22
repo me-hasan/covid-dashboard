@@ -48,13 +48,6 @@ class IedcrDashboardController extends Controller
       $ininfectedMap = $this->divDisInfectedMap($request);
 
       $ininfectedPopulation = $this->nationalInfectedPopulation($request->division);
-
-      //death case for map
-      $row5_data['death_case_map'] = $this->deathCaseMap($request->division);
-      $death_case_two_week = $this->deathCaseTwoWeek($request->division);
-      $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
-      $row5_data['current_week_data'] = $death_case_two_week['current_week'];
-      $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request->division);
     }else{
      // Nationwide Infected Gender Distribution
       $infectedGender = $this->nationalInfectedGender();
@@ -64,22 +57,23 @@ class IedcrDashboardController extends Controller
 
       // Nantionwide Infectd Person Trend Line
       $ininfectedTrend = $this->nationalInfectedTrend($request);
-
-      //death case for map
-      $row5_data['death_case_map'] = $this->deathCaseMap();
-      $ctg_value = $row5_data['death_case_map']->where('division_name','Dhaka')->first();
-      $death_case_two_week = $this->deathCaseTwoWeek();
-      $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
-      $row5_data['current_week_data'] = $death_case_two_week['current_week'];
-      $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request->division);
-
-       $ininfectedMap = $this->nationalInfectedMap();
+      $ininfectedMap = $this->nationalInfectedMap();
 
       // Nantionwide Infectd Person Population
       $ininfectedPopulation = $this->nationalInfectedPopulation();
     }
 
+    //death case for map
+    $row5_data['death_case_map'] = $this->deathCaseMap($request);
+    $death_case_two_week = $this->deathCaseTwoWeek($request);
+    // dd($death_case_two_week);
+    $row5_data['two_weeks_division'] = $death_case_two_week['two_weeks_division'];
+    $row5_data['previous_week_data'] = $death_case_two_week['previous_week'];
+    $row5_data['current_week_data'] = $death_case_two_week['current_week'];
+    $row5_data['division_wise_death'] = $this->divisionDeathDistribution($request);
+
     // common functions
+
     //Hospital City Wise
     $dhaka_hospital=$this->city_wise_hospital('Dhaka');
     $ctg_hospital=$this->city_wise_hospital('Chittagong');
@@ -100,7 +94,7 @@ class IedcrDashboardController extends Controller
     $testPositivityByAge =  $this->testPositivitybyAge($request);
     $testPositivityByGender =  $this->testPositivitybyGender($request);
     $avgDelayTimeData =  $this->avgDelayTime($request);
-
+    $nationalSynPredict = $this->nationalSyndromic($request);
 
     $death_by_gender = $this->deathByGender();
     $row5_data['male_death_percentage'] = number_format((float)$death_by_gender['male_death_percentage'], 2, '.', '');
@@ -131,7 +125,7 @@ class IedcrDashboardController extends Controller
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
       'dhaka_hospital','ctg_hospital',
-      'dhaka_hospital_details','ctg_hospital_details'));
+      'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict'));
   }
 
   private function nationalInfectedGender()
@@ -296,8 +290,9 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedAge;
   }
 
-  private function deathCaseMap($division_name = '')
+  private function deathCaseMap($request)
   {
+    $division_name = $request->division ?? '';
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
@@ -312,8 +307,9 @@ class IedcrDashboardController extends Controller
     return $getDeathCaseMap;
   }
 
-  private function divisionDeathDistribution($division_name = '', $is_excel=false)
+  private function divisionDeathDistribution($request, $is_excel=false)
   {
+    $division_name = $request->division ?? '';
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
@@ -380,10 +376,16 @@ class IedcrDashboardController extends Controller
     }
   }
 
-  private function deathCaseTwoWeek($division_name = '', $is_excel = false)
+  private function deathCaseTwoWeek($request, $is_excel = false)
   {
-    if($division_name != '' && strtolower($division_name) == 'chittagong'){
-      $division_name = 'Chattogram';
+    $division_name = $request->division ?? '';
+    if($division_name != ''){
+      if(strtolower($division_name) == 'chittagong'){
+        $division_name = 'Chattogram';
+      }
+      if(strtolower($division_name) == 'barisal'){
+        $division_name = 'Barishal';
+      }
     }
     $condition = $division_name != '' ? "where division_name like '$division_name'" : '';
     $getDeathCaseByWeek = DB::select("SELECT
@@ -398,11 +400,12 @@ class IedcrDashboardController extends Controller
                       ".$condition."
                       GROUP BY YEARWEEK(date, 2), division_name
                       ORDER BY YEARWEEK(date, 2) desc limit 16");
+    // dd($getDeathCaseByWeek);
 
     if($is_excel){
       return $getDeathCaseByWeek;
     }
-    $arr = array();
+    $perWeek = array();
 
     foreach ($getDeathCaseByWeek as $key => $item) {
        $perWeek[$item->week][$key] = $item;
@@ -410,12 +413,17 @@ class IedcrDashboardController extends Controller
 
     $current_week = [];
     $previous_week = [];
+    $two_weeks_division = [];
 
     $i=0;
     foreach($perWeek as $wk_details){
       foreach ($wk_details as $key => $wk) {
         if($i<2){
           if($i==0){
+            if($wk->division_name == 'Chattogram'){
+              $wk->division_name = 'Chittagong';
+            }
+            array_push($two_weeks_division, $wk->division_name);
             array_push($current_week, $wk->death);
           }else{
             array_push($previous_week, $wk->death);
@@ -424,7 +432,7 @@ class IedcrDashboardController extends Controller
       }
       $i++;
     }
-
+    $data['two_weeks_division'] = $two_weeks_division;
     $data['current_week'] = $current_week;
     $data['previous_week'] = $previous_week;
     return $data;
@@ -460,7 +468,7 @@ class IedcrDashboardController extends Controller
                 $district = $request->district;
                 $searchQuery = " WHERE District = '". $district . "'";
             }
-            if($request->has('upazilla') && $request->upazilla != ''){
+            if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'Upazila';
                 $upzilla = $request->upazilla;
                 $searchQuery = " WHERE Upazila = '". $upzilla."'";
@@ -512,7 +520,7 @@ class IedcrDashboardController extends Controller
                 $district = $request->district;
                 $searchQuery = " WHERE District = '". $district . "'";
             }
-            if($request->has('upazilla') && $request->upazilla != ''){
+            if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'Upazila';
                 $upzilla = $request->upazilla;
                 $searchQuery = " WHERE Upazila = '". $upzilla."'";
@@ -562,7 +570,7 @@ class IedcrDashboardController extends Controller
                 $district = $request->district;
                 $searchQuery = " WHERE district = '". $district . "'";
             }
-            if($request->has('upazilla') && $request->upazilla != ''){
+            if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'upazila';
                 $upzilla = $request->upazilla;
                 $searchQuery = " WHERE upazila = '". $upzilla."'";
@@ -597,6 +605,37 @@ class IedcrDashboardController extends Controller
         }
 
         return $testPositivesqlGenderQueryData;
+    }
+
+    public function nationalSyndromic($request) {
+        $searchQuery = '';
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+            if($request->has('division') && $request->division != ''){
+                $groupBy = 'Division';
+                $division = $request->division;
+                $searchQuery = "WHERE Division = '". $division."'";
+            }
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'District';
+                $district = $request->district;
+                $searchQuery = " WHERE District = '". $district . "'";
+            }
+            if($request->has('upazilla') && $request->upazilla != ''){
+                $groupBy = 'Upazila';
+                $upzilla = $request->upazilla;
+                $searchQuery = " WHERE Upazila = '". $upzilla."'";
+            }
+
+        }
+        if($searchQuery != '') {
+            $testPositivesqlQuery = "select * from syndromicpriorityupazilawise ". $searchQuery." order by priority asc; ";
+        } else {
+            $testPositivesqlQuery = "select * from syndromicpriorityupazilawise order by priority asc; ";
+        }
+
+
+        $SynDromicQueryDataArray = \Illuminate\Support\Facades\DB::select($testPositivesqlQuery);
+        return $SynDromicQueryDataArray;
     }
     /*test positivity end*/
 
@@ -682,7 +721,7 @@ class IedcrDashboardController extends Controller
 
   public function generateTwoWeeksExcel(Request $request){
      if($request->division){
-        $twoWeeksData = $this->deathCaseTwoWeek($request->division, true);
+        $twoWeeksData = $this->deathCaseTwoWeek($request, true);
      }else{
         $twoWeeksData = $this->deathCaseTwoWeek('', true);
      }
@@ -703,7 +742,7 @@ class IedcrDashboardController extends Controller
 
   public function generateDivisionDeathExcel(Request $request){
      if($request->division){
-        $divisionDeathData = $this->divisionDeathDistribution($request->division, true);
+        $divisionDeathData = $this->divisionDeathDistribution($request, true);
      }else{
         $divisionDeathData = $this->divisionDeathDistribution('', true);
      }
