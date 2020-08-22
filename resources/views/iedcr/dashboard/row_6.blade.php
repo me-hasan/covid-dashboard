@@ -4,7 +4,7 @@
             <div class="card-header cart-height-customize">
                 <h3 class="card-title">Nationwide Syndromic Prediction</h3>
                 <div class="card-options">
-                    <div class="btn-list"> <a href="#" class="btn btn-primary btn-sm">Details</a> </div>
+                    <div class="btn-list"> <a href="{!! route('iedcr.syndromic_surveillance') !!}" class="btn btn-primary btn-sm">Details</a> </div>
                 </div>
             </div>
         </div>

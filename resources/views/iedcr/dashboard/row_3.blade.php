@@ -36,6 +36,8 @@ if(count($avgDelayTimeData)) {
     }
 
 }
+$inputData = request()->all();
+//dd($inputData);
 @endphp
 <div class="row">
     <div class="col-xl-8 col-md-12">
@@ -3406,8 +3408,12 @@ if(count($avgDelayTimeData)) {
                         <div class="card">
                             <div class="card-header cart-height-customize">
                                 <h3 class="card-title">Test Positivity Rate</h3>
+                                @php
+                                    $inputData['excel_download'] = 'test_posititvity_age';
+                                @endphp
+
                                 <div class="card-options">
-                                    <a href="{!! route('iedcr.dashboard',['excel_download'=> 'test_posititvity_age']) !!}">  <i class="fa fa-download text-danger"></i></a>
+                                    <a href="{!! route('iedcr.dashboard',$inputData) !!}">  <i class="fa fa-download text-danger"></i></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -3417,8 +3423,11 @@ if(count($avgDelayTimeData)) {
                         <div class="card">
                             <div class="card-header cart-height-customize">
                                 <h3 class="card-title">Test Positivity by Gender</h3>
+                                @php
+                                    $inputData['excel_download'] = 'test_posititvity_gender';
+                                @endphp
                                 <div class="card-options">
-                                    <a href="{!! route('iedcr.dashboard',['excel_download'=> 'test_posititvity_gender']) !!}">    <i class="fa fa-download text-danger"></i> </a>
+                                    <a href="{!! route('iedcr.dashboard',$inputData) !!}">    <i class="fa fa-download text-danger"></i> </a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -3447,8 +3456,11 @@ if(count($avgDelayTimeData)) {
                 <h3 class="card-title">Avarage Delay Time<br/>
                     <span class="text-ash" style="font-size: 10px;">26th July, 2020 to 7th August, 2020</span></h3>
                 <div class="card-options">
+                @php
+                    $inputData['excel_download'] = 'avgDelayTime';
+                @endphp
                     <!--<i class="fa fa-table mr-2 text-success"></i>-->
-                    <a href="{!! route('iedcr.dashboard',['excel_download'=> 'avgDelayTime']) !!}">    <i class="fa fa-download text-danger"></i> </a>
+                    <a href="{!! route('iedcr.dashboard',$inputData) !!}">    <i class="fa fa-download text-danger"></i> </a>
                 </div>
             </div>
             <div class="card-body">
