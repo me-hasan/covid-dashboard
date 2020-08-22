@@ -168,3 +168,8 @@
 #color-group .group-color-label{position: relative; top: -3px; font-size: 12px;}
 
 .dataTable thead th{ text-transform: capitalize !important;}
+
+.calender-highlight a {
+    background: #ef4b4b !important;
+    color: #fff !important;
+}

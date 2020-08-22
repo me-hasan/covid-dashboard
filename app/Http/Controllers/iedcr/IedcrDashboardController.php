@@ -111,7 +111,7 @@ class IedcrDashboardController extends Controller
       if($request->division || $request->district || $request->upazila){
           $mobility_list  = $this->divisionWideMobilityInOut($request);
       } else {
-          $mobility_list  = $this->nationWideMobilityInOut();
+          $mobility_list  = $this->nationWideMobilityInOut($request);
       }
 
       $mobility_in = $mobility_out = $subscriber = [];
@@ -217,8 +217,7 @@ class IedcrDashboardController extends Controller
 
   private function divDislInfectedTrend($request)
   {
-
-    $qry_str= " ";
+      $qry_str= " ";
     
       if($request->from_date!=''){
         $qry_str= " AND DATE(Date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
@@ -232,6 +231,7 @@ class IedcrDashboardController extends Controller
       
       return $getDivDisLevelInfectedTrend ?? '';
     
+
   }
 
 
@@ -578,8 +578,16 @@ class IedcrDashboardController extends Controller
      * Nation wide mobility IN / OUT
      * @return mixed
      */
-    protected function nationWideMobilityInOut() {
-      $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date");
+    protected function nationWideMobilityInOut($request) {
+    $nationWideMobility=null;
+    if ($request->from_date && $request->to_date){
+        $from_date = $request->from_date;
+        $to_date   = $request->to_date;
+        $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date");
+
+    } else {
+        $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date");
+    }
       return $nationWideMobility;
   }
 
@@ -589,13 +597,26 @@ class IedcrDashboardController extends Controller
      */
     protected function divisionWideMobilityInOut($request) {
       $mobility=null;
-      if($request->division && $request->district && $request->upazila){
-          $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Upazila");
-      }elseif($request->division && $request->district){
-          $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, District");
-      }elseif($request->division){
-          $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Division");
+      if ($request->from_date && $request->to_date){
+          $from_date = $request->from_date;
+          $to_date   = $request->to_date;
+          if($request->division && $request->district && $request->upazila){
+              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila='".$request->upazila."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Upazila");
+          }elseif($request->division && $request->district){
+              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District='".$request->district."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, District");
+          }elseif($request->division){
+              $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Division");
+          }
+      } else {
+          if($request->division && $request->district && $request->upazila){
+              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila='".$request->upazila."'group by Calculated_date, Upazila");
+          }elseif($request->division && $request->district){
+              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District='".$request->district."'group by Calculated_date, District");
+          }elseif($request->division){
+              $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' group by Calculated_date, Division");
+          }
       }
+
       return $mobility;
 	}
 

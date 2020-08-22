@@ -44,8 +44,16 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function() {
+
             $("#datepicker").datepicker({
-                numberOfMonths: 1
+                numberOfMonths: 1,
+                todayHighlight: false,
+                beforeShowDay: function(d) {
+                    var a = new Date(2020, 7, 1);
+                    a.setDate(a.getDate() + 1);
+                    // b.setDate(b.getDate() + 5);
+                    return [true, a <= d ? "" : "calender-highlight"];
+                }
             });
         });
 
