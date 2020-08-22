@@ -45,7 +45,7 @@
                         <div class="panel-body p-0">
                             <div class="btn-group mt-2 mb-2 mr-1">
                                 <select class="btn btn-outline-primary dropdown-toggle division" name="division" id="">
-                                    <option>
+                                    <option value="">
                                         All Division
                                     </option>
                                     @foreach($divisions as $division)
@@ -56,18 +56,18 @@
                             <div class="btn-group mt-2 mb-2 mr-1">
                                 <select class="btn btn-outline-primary dropdown-toggle district" name="district" id="">
 
-                                    @if(request()->has('district'))
+                                    @if(request()->has('district') && request()->get('district') != '')
                                         <option value="{{ request()->get('district') }}">{{ request()->get('district') }}</option>
-                                    @else
-                                        <option>All Districts</option>
                                     @endif
+                                        <option value="">All Districts</option>
+
 
 
                                 </select>
                             </div>
                             <div class="btn-group mt-2 mb-2 mr-1">
-                                <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazilla" id="">
-                                    <option>
+                                <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazila" id="">
+                                    <option value="">
                                         All Upazilla
                                     </option>
                                 </select>
@@ -124,6 +124,10 @@
 <!--/app header-->
 @push('custom_script')
     <script>
+        function htmlEntities(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
         $('.division').change(function (e) {
             var division = $(".division").val();
             // console.log(division);
@@ -138,12 +142,12 @@
                         $('.district').empty();
                         html = '<option value="">Select District</option>';
                         for (var i = 0; i < data.data.length; i++) {
-                            var selectedDistrict = '{{ request()->get('district') }}';
+                            var selectedDistrict = "{{ htmlentities(request()->get('district')) }}";
                             var selectedValue = '';
-                            if (selectedDistrict == data.data[i].district) {
+                            if (selectedDistrict == htmlEntities(data.data[i].district)) {
                                 selectedValue = 'selected';
                             }
-                            html += '<option ' + selectedValue +' value=' + data.data[i].district + '>' + data.data[i].district + '</option>';
+                            html += '<option ' + selectedValue +' value="' + htmlEntities(data.data[i].district) + '">' + data.data[i].district + '</option>';
                         }
                         $('.district').append(html);
                     }
@@ -170,12 +174,12 @@
                         $('.upazilla').empty();
                         html = '<option value="">Select Upazilla</option>';
                         for (var i = 0; i < data.data.length; i++) {
-                            var selectedUpazilla = '{{ request()->get('upazilla') }}';
+                            var selectedUpazilla = '{{ htmlentities(request()->get('upazilla')) }}';
                             var selectedValue = '';
-                            if (selectedUpazilla == data.data[i].upazila_en) {
+                            if (selectedUpazilla == htmlEntities(data.data[i].upazila_en)) {
                                 selectedValue = 'selected';
                             }
-                            html += '<option ' + selectedValue + ' value=' + data.data[i].upazila_en + '>' + data.data[i].upazila_en + '</option>';
+                            html += '<option ' + selectedValue + ' value="' + htmlEntities(data.data[i].upazila_en) + '">' + data.data[i].upazila_en + '</option>';
                         }
                         $('.upazilla').append(html);
                     }
@@ -187,6 +191,9 @@
 
         });
         $('.natioanl_level').on('click', function () {
+            $('.division').prop('selectedIndex',0);
+            $('.district').prop('selectedIndex',0);
+            $('.upazilla').prop('selectedIndex',0);
             $('.division').prop('disabled', 'disabled');
             $('.district').prop('disabled', 'disabled');
             $('.upazilla').prop('disabled', 'disabled');
@@ -203,6 +210,9 @@
             $('.district').prop('disabled', false);
             $('.upazilla').prop('disabled', false);
         } else {
+            $('.division').prop('selectedIndex',0);
+            $('.district').prop('selectedIndex',0);
+            $('.upazilla').prop('selectedIndex',0);
             $('.division').prop('disabled', 'disabled');
             $('.district').prop('disabled', 'disabled');
             $('.upazilla').prop('disabled', 'disabled');

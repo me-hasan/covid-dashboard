@@ -4,7 +4,7 @@
             <div class="card-header cart-height-customize">
                 <h3 class="card-title">Nationwide Syndromic Prediction</h3>
                 <div class="card-options">
-                    <div class="btn-list"> <a href="#" class="btn btn-primary btn-sm">Details</a> </div>
+                    <div class="btn-list"> <a href="{!! route('iedcr.syndromic_surveillance') !!}" class="btn btn-primary btn-sm">Details</a> </div>
                 </div>
             </div>
         </div>
@@ -556,11 +556,12 @@
                         <path fill="#FCAA94" d="M 408.7132 551.5555 409.3719 552.1003 409.7061 552.9137 410.5418 553.4421 410.8809 552.8033 411.7221 552.799 412.3033 553.1484 411.3734 553.9118 411.3495 554.3081 412.118 554.7913 412.366 555.4211 411.6561 557.0734 410.9569 559.7393 413.0946 560.2042 414.348 560.5854 416.3513 561.5422 413.9901 564.5875 412.1137 566.8608 410.8421 566.2111 408.214 565.5303 407.7121 567.2653 407.1588 567.3072 406.4816 568.2807 405.9576 568.2922 405.6621 568.778 403.1695 568.5812 403.0001 567.9218 402.5217 567.2246 401.9305 567.2193 400.7355 567.6435 399.5421 567.412 397.8868 568.1756 396.8489 568.2714 396.2707 569.7536 395.4133 569.7561 394.8897 570.0616 394.5877 570.7147 393.6386 571.3684 392.7202 570.8626 392.1939 571.0767 391.0168 570.8322 390.773 572.2157 389.0705 572.9576 386.7378 573.3825 385.7004 573.3373 385.0311 572.782 384.8039 574.0041 385.1071 574.7106 383.4493 575.0111 382.8489 575.7878 382.5203 576.6872 381.8695 576.5936 381.1447 577.3212 380.2692 577.1753 380.0505 576.8395 380.4817 575.7271 380.9465 574.9927 381.1498 573.6999 381.6878 572.5299 382.024 572.3762 381.7793 571.3507 381.8163 570.7328 382.5744 569.9786 382.8301 567.5876 382.3716 567.0875 381.8217 565.9568 380.7953 565.8732 380.0825 565.0816 381.7492 564.3444 383.3836 563.2237 383.5899 562.1596 383.0609 562.3142 382.5349 561.1389 381.516 561.173 381.0033 560.8727 380.8584 560.2562 381.2098 559.592 381.3247 558.8307 383.1625 557.3131 384.5849 557.0755 386.3189 556.9864 385.34 555.8874 383.9411 555.2239 382.91 555.0042 382.3656 554.5188 379.9393 554.4231 379.0364 553.7426 379.076 552.0321 378.8364 551.57 379.3432 551.3157 380.1019 551.319 380.5585 550.9504 381.6866 550.648 382.4927 549.8166 382.1635 549.4208 382.9886 548.8194 384.286 548.6231 385.1623 548.9436 387.5169 548.894 387.7629 548.4461 387.3795 547.9204 387.854 547.6794 388.5198 546.5154 389.2285 545.57 390.457 545.7346 392.3219 544.7708 392.824 544.7238 393.6527 545.1873 394.9028 546.3919 396.0574 547.0038 398.8276 547.6304 400.9439 547.9303 402.8551 548.4608 403.694 548.867 404.4423 549.4636 405.8944 550.2432 407.8249 551.1287 407.5585 551.7133 408.7132 551.5555 Z" id="308694"/>
                         <path fill="#FCAA94" d="M 340.4427 706.8911 339.7355 707.1491 339.1622 707.8609 339.257 709.2715 338.8334 710.7727 337.9319 713.2268 337.281 714.7645 336.5837 716.0747 336.0271 716.7667 333.5176 718.4618 331.9819 719.6913 329.7732 722.3847 328.8664 723.2799 328.7583 723.598 326.3988 726.0405 324.7458 727.2486 324.6988 727.4493 324.1723 728.1892 323.7741 727.3526 321.5159 724.8359 319.8274 723.2818 319.2177 722.3551 319.1089 721.4039 319.6501 720.0229 320.2255 719.5027 321.7463 719.1147 322.6758 717.9318 323.5686 717.2246 324.3607 716.8076 325.9132 716.2539 328.4059 716.5693 329.2094 716.4182 330.0185 715.9557 330.8863 715.2173 331.5602 714.1668 331.6919 712.9935 331.3469 712.0898 330.6042 711.4787 329.3205 711.0261 328.4246 711.0377 326.2523 711.7561 325.5242 711.7986 323.5683 711.5321 322.7799 711.1323 321.364 709.7083 320.9947 707.8871 321.4476 706.7913 322.6525 706.0829 324.2328 706.2586 324.8255 706.1887 326.4551 706.3308 328.5268 707.4172 329.4966 707.7985 331.0904 708.1133 331.4287 708.3489 332.6001 708.5779 334.0975 708.6473 335.1584 708.5301 335.7635 707.7663 335.9736 707.0044 335.7741 706.3687 335.1218 705.9381 333.4566 705.8201 329.5135 705.8674 328.2056 705.6309 328.0888 705.1154 329.2577 703.1772 329.926 702.3903 330.9369 701.5396 332.1072 700.0674 333.5259 701.4034 334.0662 701.3387 334.612 700.5312 335.3203 700.2553 335.6122 700.6299 336.8969 700.5891 336.9034 701.1143 337.8757 701.2142 337.8488 701.9874 338.1611 702.7678 338.1026 703.4342 338.427 703.8253 339.0587 703.6537 340.4739 704.1094 340.3337 704.7939 340.4791 705.8995 340.4427 706.8911 Z" id="107990"/>
                     </g>
-                </svg> </div>
+                </svg>
+            </div>
         </div>
         <div class="col-xl-2 col-md-6">
             <div class="card-body">
-                <div class="form-group ">
+                {{--<div class="form-group ">
                     <div class="form-label">Short Description</div>
                     <div class="custom-controls-stacked">
                         <label class="custom-control custom-radio">
@@ -573,7 +574,7 @@
                             <input type="radio" class="custom-control-input" name="example-radios" value="option2">
                             <span class="custom-control-label">Priority 3</span> </label>
                     </div>
-                </div>
+                </div>--}}
             </div>
         </div>
         <div class="col-xl-6 col-md-12">
@@ -584,525 +585,30 @@
                         <tr>
                             <th class="border-bottom-0">Division</th>
                             <th class="border-bottom-0">District</th>
-                            <th class="border-bottom-0">Total Infected</th>
+                            <th class="border-bottom-0">Upazila</th>
+                            <th class="border-bottom-0">Priority</th>
+                            {{--<th class="border-bottom-0">Total Infected</th>
                             <th class="border-bottom-0">Total Recovered</th>
                             <th class="border-bottom-0">Active Case</th>
-                            <th class="border-bottom-0">Total Death</th>
+                            <th class="border-bottom-0">Total Death</th>--}}
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Chittagong</td>
-                            <td>14874</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Natore</td>
-                            <td>6019</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Comilla</td>
-                            <td>5727</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Bogra</td>
-                            <td>5180</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Feni</td>
-                            <td>5149</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Khulna</td>
-                            <td>4646</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Sylhet</td>
-                            <td>Sylhet</td>
-                            <td>4583</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Gazipur</td>
-                            <td>4338</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Dhaka</td>
-                            <td>4028</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Rajshahi</td>
-                            <td>3532</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Cox's Bazar</td>
-                            <td>3530</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Noakhali</td>
-                            <td>3409</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Manikganj</td>
-                            <td>3193</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Mymensingh</td>
-                            <td>Mymensingh</td>
-                            <td>2828</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Barisal</td>
-                            <td>Barisal</td>
-                            <td>2581</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Jessore</td>
-                            <td>2159</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Kishoreganj</td>
-                            <td>2133</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Kushtia</td>
-                            <td>1970</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Brahmanbaria</td>
-                            <td>1961</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Chandpur</td>
-                            <td>1890</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Tangail</td>
-                            <td>1835</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Gopalganj</td>
-                            <td>1793</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Dinajpur</td>
-                            <td>1787</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Mymensingh</td>
-                            <td>Netrakona (Netrokona)</td>
-                            <td>1772</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Rangpur</td>
-                            <td>1736</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Sylhet</td>
-                            <td>Sunamganj</td>
-                            <td>1596</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Satkhira</td>
-                            <td>1569</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Lakshmipur</td>
-                            <td>1501</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Rajbari</td>
-                            <td>1438</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Faridpur</td>
-                            <td>1384</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Sylhet</td>
-                            <td>Habiganj</td>
-                            <td>1249</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Magura</td>
-                            <td>1224</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Shariatpur</td>
-                            <td>1139</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Barisal</td>
-                            <td>Patuakhali</td>
-                            <td>1081</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Barisal</td>
-                            <td>Jhalakati (Jhalokati)</td>
-                            <td>1075</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Sylhet</td>
-                            <td>Maulvi Bazar (Moulvibazar)</td>
-                            <td>1069</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Naogaon</td>
-                            <td>990</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Mymensingh</td>
-                            <td>Jamalpur</td>
-                            <td>982</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Madaripur</td>
-                            <td>919</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Narail</td>
-                            <td>898</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Barisal</td>
-                            <td>Pirojpur</td>
-                            <td>871</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Chuadanga</td>
-                            <td>816</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Jaipurhat (Joypurhat)</td>
-                            <td>780</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Sirajganj</td>
-                            <td>780</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Pabna</td>
-                            <td>765</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Bagerhat</td>
-                            <td>694</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Narayanganj</td>
-                            <td>693</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Barisal</td>
-                            <td>Barguna</td>
-                            <td>684</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Rangamati</td>
-                            <td>677</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Gaibandha</td>
-                            <td>671</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Nilphamari</td>
-                            <td>647</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Narsingdi</td>
-                            <td>628</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Bandarban</td>
-                            <td>586</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Barisal</td>
-                            <td>Bhola</td>
-                            <td>564</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Meherpur</td>
-                            <td>562</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Chittagong</td>
-                            <td>Khagrachhari</td>
-                            <td>550</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Kurigram</td>
-                            <td>529</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rajshahi</td>
-                            <td>Chapai Nawabganj</td>
-                            <td>519</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Khulna</td>
-                            <td>Jhenaidah (Jhenida)</td>
-                            <td>509</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Thakurgaon</td>
-                            <td>427</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Lalmonirhat</td>
-                            <td>419</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Rangpur</td>
-                            <td>Panchagarh</td>
-                            <td>345</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Mymensingh</td>
-                            <td>Sherpur</td>
-                            <td>326</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Dhaka</td>
-                            <td>Munshiganj</td>
-                            <td>243</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
+                        @if(count($nationalSynPredict))
+                            @foreach($nationalSynPredict as $key=>$sysPredict)
+                                <tr>
+                                    <td>{!! $sysPredict->Division ?? '-' !!}</td>
+                                    <td>{!! $sysPredict->District ?? '-' !!}</td>
+                                    <td>{!! $sysPredict->Upazila ?? '-' !!}</td>
+                                    <td>{!! $sysPredict->Priority ?? '-' !!}</td>
+                                   {{-- <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>--}}
+                                </tr>
+                            @endforeach
+
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -1111,11 +617,11 @@
         <div class="col-xl-12 col-md-12 ml-4">
             <div id="color-group">
                 <div class="row gutters-xs">
-                    <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-10</span></div>
-                    <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">11-20</span></div>
-                    <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">21-30</span></div>
-                    <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">31-40</span></div>
-                    <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">51-100</span></div>
+                    <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">Priority 1</span></div>
+                    <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">Priority 2</span></div>
+                    <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">Priority 3</span></div>
+                   {{-- <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">31-40</span></div>
+                    <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">51-100</span></div>--}}
                 </div>
             </div>
         </div>
@@ -1124,7 +630,15 @@
         <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
             <div class="card-body">
                 <h5 class="card-title">Short Description</h5>
-                <p class="card-text">Content here.</p>
+                <p class="card-text">
+                    Syndromic indicators of risk:
+                    1) Per capita number of people that are considered high risk after human verification
+                    2) Per capita number of people reporting multiple symptoms consistent with COVID-19
+                    3) The proportion of tests that are positive for SARS-CoV-2
+
+                    Priority 1 - top quantile of 1 and 2 OR have greater than 30% of tests that are positive (with a minimum of 50 tests conducted)
+                    Priority 2 - top quantile of 1 or 2
+                </p>
             </div>
         </div>
         <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
@@ -1135,3 +649,37 @@
         </div>
     </div>
 </div>
+@push('custom_script')
+    <script type="text/javascript">
+        // Map JS Data
+        $(document).ready(function(){
+
+            <?php
+            //$_colorCodes = array( 'Priority 1' => '#FCAA94', 'Priority 2' => '#F69475', 'Priority 3' => '#F37366', 'Priority 4' => '#E5515D', 'Priority 5' => '#CD3E52', 'Priority 6' => '#ed2355');
+            $_colorCodes = array( 'Priority 1' => '#CD3E52', 'Priority 2' => '#F69475', 'Priority 3' => '#F37366');
+            $_existDataGroups = array();
+            foreach($nationalSynPredict as $sysPredict){
+
+            $str=$sysPredict->Upazila_Code;
+
+
+            $_groupColorCode = NULL;
+            /*foreach($_colorCodes as $_colorRange => $_colorCode){
+                if((int)$sysPredict->Upzila_Code <= $_colorRange){
+                    $_groupColorCode = $_colorCode;
+                    $_existDataGroups[$_colorRange] = $_colorCode;
+                    break;
+                }
+
+            }*/
+            ?>
+            $('#<?php echo $str; ?>').attr('fill', '<?php echo $_colorCodes[$sysPredict->Priority];?>');
+            <?php
+            }
+            ?>
+
+
+
+        });
+    </script>
+@endpush
