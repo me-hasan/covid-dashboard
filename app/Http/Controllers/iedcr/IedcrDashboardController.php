@@ -47,7 +47,7 @@ class IedcrDashboardController extends Controller
 
       $ininfectedMap = $this->divDisInfectedMap($request);
 
-      $ininfectedPopulation = $this->nationalInfectedPopulation($request);
+      $ininfectedPopulation = $this->nationalInfectedPopulation($request->division);
 
       //death case for map
       $row5_data['death_case_map'] = $this->deathCaseMap($request->division);
@@ -63,7 +63,7 @@ class IedcrDashboardController extends Controller
       $infectedAge = $this->nationalInfectedAge();
 
       // Nantionwide Infectd Person Trend Line
-      $ininfectedTrend = $this->nationalInfectedTrend();
+      $ininfectedTrend = $this->nationalInfectedTrend($request);
 
       //death case for map
       $row5_data['death_case_map'] = $this->deathCaseMap();
@@ -111,7 +111,7 @@ class IedcrDashboardController extends Controller
       if($request->division || $request->district || $request->upazila){
           $mobility_list  = $this->divisionWideMobilityInOut($request);
       } else {
-          $mobility_list  = $this->nationWideMobilityInOut();
+          $mobility_list  = $this->nationWideMobilityInOut($request);
       }
 
       $mobility_in = $mobility_out = $subscriber = [];
@@ -125,6 +125,7 @@ class IedcrDashboardController extends Controller
 
       $mobilityInData  = implode(",", $mobility_in);
       $mobilityOutData = implode(",", $mobility_out);
+
 
      return view('iedcr.dashboard_new',compact('hda_card','data_source_description','infectedGender','infectedAge','ininfectedTrend',
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
@@ -151,10 +152,15 @@ class IedcrDashboardController extends Controller
 
   private function upazillaLevelInfectedGender($request)
   {
+    $str= $request->district;
+    if($request->district=="COX'S" || $request->district=="cox's"){
+       $str= 'cox';
+    }
+    //dd($str);
     if($request->division && $request->district && $request->upazila){
       $getUpazillaLevelInfectedGender = DB::select("select Upazila, F, M from Div_Dist_Upz_Infected_Gender where Upazila='".$request->upazila."' group by Upazila;");
     }elseif($request->division && $request->district){
-      $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District='".$request->district."' group by District;");
+      $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District like '%".$str."%' group by District;");
     }elseif($request->division){
       $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division='".$request->division."' group by Division;");
     }
@@ -199,21 +205,33 @@ class IedcrDashboardController extends Controller
     return $getUpazillaLevelInfectedAge[0] ?? '';
   }
 
-  private function nationalInfectedTrend()
+  private function nationalInfectedTrend($request)
   {
-    $getNationalInfectedTrend = DB::select("select 'national' AS area, date_of_test as 'Date', count(id) as infected_count from infected_person group by date_of_test");
+    $qry_str= " ";
+    if($request->from_date!='' && $request->to_date!=''){
+        $qry_str= " where  DATE(date_of_test) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
+      }
+    $getNationalInfectedTrend = DB::select("select 'national' AS area, date_of_test as 'Date', count(id) as infected_count from infected_person ".$qry_str." group by date_of_test");
     return $getNationalInfectedTrend ?? '';
   }
 
   private function divDislInfectedTrend($request)
   {
-    if($request->division && $request->district){
-      $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District='".$request->district."' group by District, Date;");
-    }elseif($request->division){
-      $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."' group by Division, Date;");
-    }
+      $qry_str= " ";
+    
+      if($request->from_date!=''){
+        $qry_str= " AND DATE(Date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
+      }
+    
+      if($request->division && $request->district){
+        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District='".$request->district."'  ".$qry_str." group by District, Date ");
+      }elseif($request->division){
+        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."'  ".$qry_str." group by Division, Date ");
+      }
+      
+      return $getDivDisLevelInfectedTrend ?? '';
+    
 
-    return $getDivDisLevelInfectedTrend ?? '';
   }
 
 
@@ -591,8 +609,16 @@ class IedcrDashboardController extends Controller
      * Nation wide mobility IN / OUT
      * @return mixed
      */
-    protected function nationWideMobilityInOut() {
-      $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date");
+    protected function nationWideMobilityInOut($request) {
+    $nationWideMobility=null;
+    if ($request->from_date && $request->to_date){
+        $from_date = $request->from_date;
+        $to_date   = $request->to_date;
+        $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date");
+
+    } else {
+        $nationWideMobility = DB::select("select Calculated_date,sum(mobility_in) as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date");
+    }
       return $nationWideMobility;
   }
 
@@ -602,13 +628,26 @@ class IedcrDashboardController extends Controller
      */
     protected function divisionWideMobilityInOut($request) {
       $mobility=null;
-      if($request->division && $request->district && $request->upazila){
-          $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Upazila");
-      }elseif($request->division && $request->district){
-          $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, District");
-      }elseif($request->division){
-          $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility group by Calculated_date, Division");
+      if ($request->from_date && $request->to_date){
+          $from_date = $request->from_date;
+          $to_date   = $request->to_date;
+          if($request->division && $request->district && $request->upazila){
+              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila='".$request->upazila."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Upazila");
+          }elseif($request->division && $request->district){
+              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District='".$request->district."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, District");
+          }elseif($request->division){
+              $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' and (Calculated_date between '".$from_date."'and '".$to_date ."') group by Calculated_date, Division");
+          }
+      } else {
+          if($request->division && $request->district && $request->upazila){
+              $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila='".$request->upazila."'group by Calculated_date, Upazila");
+          }elseif($request->division && $request->district){
+              $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District='".$request->district."'group by Calculated_date, District");
+          }elseif($request->division){
+              $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' group by Calculated_date, Division");
+          }
       }
+
       return $mobility;
 	}
 
@@ -695,7 +734,7 @@ class IedcrDashboardController extends Controller
      if($request->division){
         $seriesData = $this->divDislInfectedTrend($request);
      }else{
-        $seriesData = $this->nationalInfectedTrend();
+        $seriesData = $this->nationalInfectedTrend($request);
      }
 
       $i=0;
@@ -713,7 +752,7 @@ class IedcrDashboardController extends Controller
 
   public function generateInfectedPerLacExcel(Request $request){
      if($request->division){
-        $per_pac_Data = $this->nationalInfectedPopulation($request);
+        $per_pac_Data = $this->nationalInfectedPopulation($request->division);
      }else{
         $per_pac_Data = $this->nationalInfectedPopulation();
      }
@@ -723,7 +762,7 @@ class IedcrDashboardController extends Controller
       if(sizeof($per_pac_Data) > 0){
           foreach ($per_pac_Data as $key => $row) {
               $data[$i]['Division'] =  $row->Division;
-              $data[$i]['Cases Per Lac'] =  $row->Cases_Per_Lac;
+              $data[$i]['Cases Per Lac'] =  number_format($row->Cases_Per_Lac,2);
               $i++;
           }
       }
@@ -781,19 +820,27 @@ class IedcrDashboardController extends Controller
     if($request->division && $request->district){
       $getDivDisLevelInfectedMap = DB::select("select District, sum(infected) as 'Infected',SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography where District='".$request->district."' group by District");
     }else{
-      $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division='".$request->division."' GROUP BY Division;");
+      $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division='".$request->division."' GROUP BY District;");
     }
 
     return $getDivDisLevelInfectedMap ?? '';
   }
 
-  private function nationalInfectedPopulation()
+  private function nationalInfectedPopulation($division=null)
   {
+    $str="";
+    if($division!=null && $division!=''){
+       $str=" WHERE  B.Division = '".$division."' ";
+    }
+    //dd($str);
     $getNationalInfectedPopulation = DB::select("
         select B.Division, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
         (select Division, sum(infected) as 'Infected' from Div_Dist_Upz_Infected_Geography group by Division) as A
-        inner join
-        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division;
+
+        inner join 
+        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division 
+    ".$str." 
+
     ");
     return $getNationalInfectedPopulation ?? '';
   }

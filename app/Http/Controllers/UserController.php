@@ -150,7 +150,7 @@ class UserController extends Controller
     public function getUpazillaFromDistrict(Request $request)
     {
         if(isset($request->district)) {
-            $upazillas = DB::table('upazila')->where('district',$request->district)->distinct()->get('upazila_en');
+            $upazillas = DB::table('upazila')->where('district',htmlentities($request->district))->distinct()->get('upazila_en');
             $response = array(
                 'status' => 1,
                 'data' => $upazillas,

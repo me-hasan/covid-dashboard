@@ -16,7 +16,7 @@
                                     <div class="col-xl-4 col-md-12">
                                         <div class="card">
                                             <div class="card-header cart-height-customize">
-                                                <h3 class="card-title"><span class="fs-12">Confirmed Cases % Per LAC</span></h3>
+                                                <h3 class="card-title"><span class="fs-12">Confirmed Cases Per LAC</span></h3>
                                                 <div class="card-options"> <a href="{{route('iedcr.per-lac-infect',request()->input())}}"><i class="fa fa-download text-danger"></i></a> </div>
                                             </div>
                                             <div class="card-body">
@@ -104,7 +104,7 @@
         foreach($ininfectedPopulation as $row){
           
               $div_name[] = $row->Division;
-              $div_data[] = (float)$row->Cases_Per_Lac;
+              $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
           
         }
         
@@ -141,7 +141,7 @@
             xAxis: {
                categories: <?php echo json_encode($div_name); ?>					},
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}%</b>',
+                pointFormat: '{series.name}: <b>{point.y}</b>',
                 /*valueSuffix: ' cm',
                 shared: true*/
             },
