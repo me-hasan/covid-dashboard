@@ -632,10 +632,12 @@
                 <h5 class="card-title">Short Description</h5>
                 <p class="card-text">
                     Syndromic indicators of risk:
-                    1) Per capita number of people that are considered high risk after human verification
-                    2) Per capita number of people reporting multiple symptoms consistent with COVID-19
-                    3) The proportion of tests that are positive for SARS-CoV-2
-
+                    <ol>
+                        <li>Per capita number of people that are considered high risk after human verification</li>
+                        <li>Per capita number of people reporting multiple symptoms consistent with COVID-19</li>
+                        <li>The proportion of tests that are positive for SARS-CoV-2</li>
+                    </ol>
+              
                     Priority 1 - top quantile of 1 and 2 OR have greater than 30% of tests that are positive (with a minimum of 50 tests conducted)
                     Priority 2 - top quantile of 1 or 2
                 </p>
