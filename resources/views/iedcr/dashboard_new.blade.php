@@ -42,7 +42,7 @@
 
     <script type="text/javascript">
 
-        
+
 
         // Modal Content Function
         function modalContent_1(modalLabel, modalType, yAxisLabel, xAxisLabel){
@@ -53,32 +53,32 @@
 
                 var barChartDataSource = [{
                     name: 'Infected',
-                    data: [ 
-                        <?php 
+                    data: [
+                        <?php
                           foreach($hda_time_series as $row){
-                            
+
                               $date_arr = date('d-M', strtotime($row->date));
-                        ?>      
+                        ?>
                               ["<?=$date_arr?>",<?=$row->infected?>],
 
                         <?php  } ?>
-                            
+
                     ]
                 }];
                 var barModalContainer = 'modalContent2';
 
             }else if(modalType == 'line'){
-                <?php 
+                <?php
 
                   $div_arr = $infected_arr =  array();
 
                   foreach($hda_population_wise_infected as $row){
-                    
+
                       $div_arr[] = $row->division;
                       $infected_arr[] = $row->total_infected;
                   }
                     $infected = implode(",", $infected_arr);
-                   
+
                 ?>
 
                 var lineChartDataSource = [<?php echo $infected;?>]//responseData.line_chart_data;
