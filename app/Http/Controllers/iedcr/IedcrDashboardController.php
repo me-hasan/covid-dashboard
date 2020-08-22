@@ -416,7 +416,7 @@ class IedcrDashboardController extends Controller
                 $district = $request->district;
                 $searchQuery = " WHERE District = '". $district . "'";
             }
-            if($request->has('upazilla') && $request->upazilla != ''){
+            if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'Upazila';
                 $upzilla = $request->upazilla;
                 $searchQuery = " WHERE Upazila = '". $upzilla."'";
@@ -468,7 +468,7 @@ class IedcrDashboardController extends Controller
                 $district = $request->district;
                 $searchQuery = " WHERE District = '". $district . "'";
             }
-            if($request->has('upazilla') && $request->upazilla != ''){
+            if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'Upazila';
                 $upzilla = $request->upazilla;
                 $searchQuery = " WHERE Upazila = '". $upzilla."'";
@@ -518,7 +518,7 @@ class IedcrDashboardController extends Controller
                 $district = $request->district;
                 $searchQuery = " WHERE district = '". $district . "'";
             }
-            if($request->has('upazilla') && $request->upazilla != ''){
+            if($request->has('upazila') && $request->upazila != ''){
                 $groupBy = 'upazila';
                 $upzilla = $request->upazilla;
                 $searchQuery = " WHERE upazila = '". $upzilla."'";

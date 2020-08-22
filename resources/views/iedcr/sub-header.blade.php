@@ -66,7 +66,7 @@
                                 </select>
                             </div>
                             <div class="btn-group mt-2 mb-2 mr-1">
-                                <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazilla" id="">
+                                <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazila" id="">
                                     <option value="">
                                         All Upazilla
                                     </option>
