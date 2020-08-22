@@ -146,17 +146,22 @@ class IedcrDashboardController extends Controller
 
   private function upazillaLevelInfectedGender($request)
   {
-    $str= $request->district;
-    if($request->district=="COX'S" || $request->district=="cox's"){
-       $str= 'cox';
+    $str_dis= $request->district;
+    $str_upa= $request->upazila;
+    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+       $str_dis= 'cox';
     }
-    //dd($str);
+
+    if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+       $str_upa= 'cox';
+    }
+
     if($request->division && $request->district && $request->upazila){
-      $getUpazillaLevelInfectedGender = DB::select("select Upazila, F, M from Div_Dist_Upz_Infected_Gender where Upazila='".$request->upazila."' group by Upazila;");
+      $getUpazillaLevelInfectedGender = DB::select("select Upazila, F, M from Div_Dist_Upz_Infected_Gender where Upazila like '%".$str_upa."%' group by Upazila;");
     }elseif($request->division && $request->district){
-      $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District like '%".$str."%' group by District;");
+      $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District like '%".$str_dis."%' group by District;");
     }elseif($request->division){
-      $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division='".$request->division."' group by Division;");
+      $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division like '%".$request->division."%' group by Division;");
     }
 
     return $getUpazillaLevelInfectedGender[0] ?? '';
@@ -188,12 +193,22 @@ class IedcrDashboardController extends Controller
 
   private function upazillaLevelInfectedAge($request)
   {
+    $str_dis= $request->district;
+    $str_upa= $request->upazila;
+    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+       $str_dis= 'cox';
+    }
+
+    if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+       $str_upa= 'cox';
+    }
+
     if($request->division && $request->district && $request->upazila){
-      $getUpazillaLevelInfectedAge = DB::select("select Upazila, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Upazila='".$request->upazila."' group by Upazila;");
+      $getUpazillaLevelInfectedAge = DB::select("select Upazila, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Upazila like '%".$str_upa."%' group by Upazila;");
     }elseif($request->division && $request->district){
-      $getUpazillaLevelInfectedAge = DB::select("select District, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where District='".$request->district."' group by District;");
+      $getUpazillaLevelInfectedAge = DB::select("select District, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where District like '%".$str_dis."%' group by District;");
     }elseif($request->division){
-      $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division='".$request->division."' group by Division;");
+      $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division like '%".$request->division."%' group by Division;");
     }
 
     return $getUpazillaLevelInfectedAge[0] ?? '';
@@ -216,11 +231,22 @@ class IedcrDashboardController extends Controller
       if($request->from_date!=''){
         $qry_str= " AND DATE(Date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
+
+    $str_dis= $request->district;
+    $str_upa= $request->upazila;
+    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+       $str_dis= 'cox';
+    }
+
+    if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+       $str_upa= 'cox';
+    }
+
     
       if($request->division && $request->district){
-        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District='".$request->district."'  ".$qry_str." group by District, Date ");
+        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date ");
       }elseif($request->division){
-        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division='".$request->division."'  ".$qry_str." group by Division, Date ");
+        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date ");
       }
       
       return $getDivDisLevelInfectedTrend ?? '';
@@ -825,10 +851,20 @@ class IedcrDashboardController extends Controller
 
   private function divDisInfectedMap($request)
   {
+    $str_dis= $request->district;
+    $str_upa= $request->upazila;
+    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+       $str_dis= 'cox';
+    }
+
+    if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+       $str_upa= 'cox';
+    }
+
     if($request->division && $request->district){
-      $getDivDisLevelInfectedMap = DB::select("select District, sum(infected) as 'Infected',SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography where District='".$request->district."' group by District");
+      $getDivDisLevelInfectedMap = DB::select("select District, sum(infected) as 'Infected',SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography where District like '%".$str_dis."%' group by District");
     }else{
-      $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division='".$request->division."' GROUP BY District;");
+      $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division like '%".$request->division."%' GROUP BY District;");
     }
 
     return $getDivDisLevelInfectedMap ?? '';
