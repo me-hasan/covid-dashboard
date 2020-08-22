@@ -124,6 +124,10 @@
 <!--/app header-->
 @push('custom_script')
     <script>
+        function htmlEntities(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
         $('.division').change(function (e) {
             var division = $(".division").val();
             // console.log(division);
@@ -138,12 +142,12 @@
                         $('.district').empty();
                         html = '<option value="">Select District</option>';
                         for (var i = 0; i < data.data.length; i++) {
-                            var selectedDistrict = '{{ request()->get('district') }}';
+                            var selectedDistrict = "{{ htmlentities(request()->get('district')) }}";
                             var selectedValue = '';
-                            if (selectedDistrict == data.data[i].district) {
+                            if (selectedDistrict == htmlEntities(data.data[i].district)) {
                                 selectedValue = 'selected';
                             }
-                            html += '<option ' + selectedValue +' value=' + data.data[i].district + '>' + data.data[i].district + '</option>';
+                            html += '<option ' + selectedValue +' value="' + htmlEntities(data.data[i].district) + '">' + data.data[i].district + '</option>';
                         }
                         $('.district').append(html);
                     }
@@ -170,12 +174,12 @@
                         $('.upazilla').empty();
                         html = '<option value="">Select Upazilla</option>';
                         for (var i = 0; i < data.data.length; i++) {
-                            var selectedUpazilla = '{{ request()->get('upazilla') }}';
+                            var selectedUpazilla = '{{ htmlentities(request()->get('upazilla')) }}';
                             var selectedValue = '';
-                            if (selectedUpazilla == data.data[i].upazila_en) {
+                            if (selectedUpazilla == htmlEntities(data.data[i].upazila_en)) {
                                 selectedValue = 'selected';
                             }
-                            html += '<option ' + selectedValue + ' value=' + data.data[i].upazila_en + '>' + data.data[i].upazila_en + '</option>';
+                            html += '<option ' + selectedValue + ' value="' + htmlEntities(data.data[i].upazila_en) + '">' + data.data[i].upazila_en + '</option>';
                         }
                         $('.upazilla').append(html);
                     }
