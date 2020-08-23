@@ -1,9 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
 @include('iedcr.header')
 
 <body class="app sidebar-mini">
 
 <!---Global-loader-->
-<div id="global-loader" > <img src="{{ asset('assets/images/svgs/loader.svg') }}" alt="loader"> </div>
+<div id="global-loader" >
+    <img src="{{ asset('assets/images/svgs/loader.svg') }}" alt="loader">
+</div>
 <!--- End Global-loader-->
 
 <!-- Page -->
@@ -61,3 +66,5 @@
 <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 @include('iedcr.footer')
+</body>
+</html>

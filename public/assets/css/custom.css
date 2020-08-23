@@ -1,3 +1,50 @@
+
+/*new css 18 aug start*/
+
+.top-cards .col-xl-2{padding-right: 0.35rem; padding-left: 0.35rem; max-width: 10%;}
+.top-cards .col-xl-2 p,
+.top-cards .col-xl-2 small{ font-size: 10px;}
+.side-menu__item{padding: 2.5px 10px 3px 5px;}
+.top-cards .card-body {padding: .5rem .5rem;}
+.top-cards .dash1-card .ratio {
+    right: 0px;
+    top: 30px;
+    padding: 3px 6px;
+    font-size: 10px;
+    line-height: 15px;
+    color: #fff;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.header .form-inline .form-control.header-search { width: 150px;}
+.header .panel .dropdown-menu[x-placement^="bottom"]{ top: 0px !important;}
+.header .panel .form-control[name^="from_date"],
+.header .panel .form-control[name^="to_date"]{ width: 165px;}
+
+.fa-download:before,
+.fa-table:before{font-size: 22px; font-weight: normal;}
+
+#case_analysis_dtable_wrapper .row:first-child {display: none;}
+#case_analysis_dtable_paginate {float: right;}
+.card-body .table-responsive{overflow-x: hidden;}
+
+.risk-zone-analysis .top-zone .card,
+.risk-zone-analysis .last-zone-status .card{ background-color: #e7e7e7;}
+
+.text-ash{ color: #989898;}
+
+.bg-before-none::before{ background-color: transparent;}
+
+.cart-height-customize{ min-height: 1rem !important;}
+
+#color-group .colorinput-color{ width: 1rem; height: 1rem;}
+
+#color-group .group-color-label{position: relative; top: -3px; font-size: 12px;}
+
+.dataTable thead th{ text-transform: capitalize !important;}
+
+/*new css 18 aug end*/
+
 .dataTables_paginate{
 	display: -webkit-box;
     display: -ms-flexbox;
@@ -77,4 +124,52 @@
 .info-box .num-style {
     font-size: 24px;
     font-weight: bold;
+}
+/*New Added*/
+.top-cards .col-xl-2{padding-right: 0.35rem; padding-left: 0.35rem; max-width: 10%;}
+.top-cards .col-xl-2 p,
+.top-cards .col-xl-2 small{ font-size: 10px;}
+.side-menu__item{padding: 2.5px 10px 3px 5px;}
+.top-cards .card-body {padding: .5rem .5rem;}
+.top-cards .dash1-card .ratio {
+    right: 0px;
+    top: 30px;
+    padding: 3px 6px;
+    font-size: 10px;
+    line-height: 15px;
+    color: #fff;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.header .form-inline .form-control.header-search { width: 150px;}
+.header .panel .dropdown-menu[x-placement^="bottom"]{ top: 0px !important;}
+.header .panel .form-control[name^="from_date"],
+.header .panel .form-control[name^="to_date"]{ width: 165px;}
+
+.fa-download:before,
+.fa-table:before{font-size: 22px; font-weight: normal;}
+
+#case_analysis_dtable_wrapper .row:first-child,
+#dtable_popup_wrapper .row:first-child {display: none;}
+#case_analysis_dtable_paginate {float: right;}
+.card-body .table-responsive{overflow-x: hidden;}
+
+.risk-zone-analysis .top-zone .card,
+.risk-zone-analysis .last-zone-status .card{ background-color: #e7e7e7;}
+
+.text-ash{ color: #989898;}
+
+.bg-before-none::before{ background-color: transparent;}
+
+.cart-height-customize{ min-height: 1rem !important;}
+
+#color-group .colorinput-color{ width: 1rem; height: 1rem;}
+
+#color-group .group-color-label{position: relative; top: -3px; font-size: 12px;}
+
+.dataTable thead th{ text-transform: capitalize !important;}
+
+.calender-highlight a {
+    background: #ef4b4b !important;
+    color: #fff !important;
 }
