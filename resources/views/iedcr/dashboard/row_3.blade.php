@@ -270,4 +270,44 @@ $inputData = request()->all();
 
         });
     </script>--}}
+
+    <script type="text/javascript">
+        // Map JS Data
+        $(document).ready(function(){
+
+            <?php
+            $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+            $_existDataGroups = array();
+            foreach($testPositivityMap as $_mobInDistrictVal){
+
+            $str=$_mobInDistrictVal->District;
+            $str='three_'.$_mobInDistrictVal->District;
+            /*if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
+                $str='Cox';
+            }elseif ($_mobInDistrictVal->District=='Narail') {
+                $str='Narail';
+            }elseif ($_mobInDistrictVal->District=='Rangamati') {
+                $str='Rangamati';
+            }*/
+
+            $_groupColorCode = NULL;
+            foreach($_colorCodes as $_colorRange => $_colorCode){
+                if((int)$_mobInDistrictVal->Test_Positivity <= $_colorRange){
+                    $_groupColorCode = $_colorCode;
+                    $_existDataGroups[$_colorRange] = $_colorCode;
+                    break;
+                }
+
+            }
+
+            ?>
+            $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            <?php
+            }
+            ?>
+
+
+
+        });
+    </script>
 @endpush

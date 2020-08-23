@@ -95,7 +95,7 @@ class IedcrDashboardController extends Controller
     $testPositivityByGender =  $this->testPositivitybyGender($request);
     $avgDelayTimeData =  $this->avgDelayTime($request);
     $nationalSynPredict = $this->nationalSyndromic($request);
-
+    $testPositivityMap = $this->testPositivityMap($request);
     $death_by_gender = $this->deathByGender();
     $row5_data['male_death_percentage'] = number_format((float)$death_by_gender['male_death_percentage'], 2, '.', '');
     $row5_data['female_death_percentage'] = number_format((float)$death_by_gender['female_death_percentage'], 2, '.', '');
@@ -125,7 +125,7 @@ class IedcrDashboardController extends Controller
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
       'dhaka_hospital','ctg_hospital',
-      'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict'));
+      'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict','testPositivityMap'));
   }
 
   private function nationalInfectedGender()
@@ -227,7 +227,7 @@ class IedcrDashboardController extends Controller
   private function divDislInfectedTrend($request)
   {
       $qry_str= " ";
-    
+
       if($request->from_date!=''){
         $qry_str= " AND DATE(Date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
@@ -242,15 +242,15 @@ class IedcrDashboardController extends Controller
        $str_upa= 'cox';
     }
 
-    
+
       if($request->division && $request->district){
         $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date ");
       }elseif($request->division){
         $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date ");
       }
-      
+
       return $getDivDisLevelInfectedTrend ?? '';
-    
+
 
   }
 
@@ -456,7 +456,7 @@ class IedcrDashboardController extends Controller
   /*test positivity start*/
     public function  testPositivitybyAge($request) {
 
-    
+
         $searchQuery = '';
         if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
             if($request->has('division') && $request->division != ''){
@@ -568,6 +568,45 @@ class IedcrDashboardController extends Controller
 
         return $testPositivesqlGenderQueryData;
 
+    }
+
+    public function testPositivityMap($request) {
+        $searchQuery = '';
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'district';
+                $district = $request->district;
+                if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                    $district= 'cox';
+                }
+                $searchQuery = " and  district like '%".$district."%' ";
+            }
+
+        }
+
+        if($searchQuery != '') {
+            $testPositivityMapSql = "select A.District, (A.Positive/B.Total)*100 as 'Test_Positivity' from
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Positive'
+from lab_clean_data
+where test_result='Positive' ". $searchQuery."  group by district) as A
+inner join
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Total'
+from lab_clean_data
+where test_result='Positive' or test_result='Negative' group by district) as B using(District)";
+        } else {
+            $testPositivityMapSql = "select A.District, (A.Positive/B.Total)*100 as 'Test_Positivity' from
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Positive'
+from lab_clean_data
+where test_result='Positive' group by district) as A
+inner join
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Total'
+from lab_clean_data
+where test_result='Positive' or test_result='Negative' group by district) as B using(District)";
+        }
+
+        $testMapData = \Illuminate\Support\Facades\DB::select($testPositivityMapSql);
+        return $testMapData;
     }
 
     public function avgDelayTime($request) {
@@ -915,9 +954,9 @@ class IedcrDashboardController extends Controller
         select B.Division, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
         (select Division, sum(infected) as 'Infected' from Div_Dist_Upz_Infected_Geography group by Division) as A
 
-        inner join 
-        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division 
-    ".$str." 
+        inner join
+        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division
+    ".$str."
 
     ");
     return $getNationalInfectedPopulation ?? '';
