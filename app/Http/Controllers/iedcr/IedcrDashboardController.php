@@ -47,7 +47,7 @@ class IedcrDashboardController extends Controller
 
       $ininfectedMap = $this->divDisInfectedMap($request);
 
-      $ininfectedPopulation = $this->nationalInfectedPopulation($request->division);
+      $ininfectedPopulation = $this->divDistUpaInfectedPopulation($request);
     }else{
      // Nationwide Infected Gender Distribution
       $infectedGender = $this->nationalInfectedGender();
@@ -108,7 +108,7 @@ class IedcrDashboardController extends Controller
           $mobility_list  = $this->nationWideMobilityInOut($request);
       }
 
-      $mobility_in = $mobility_out = $subscriber = [];
+      $mobilityDate = $mobility_in = $mobility_out = $subscriber = [];
 
       foreach ($mobility_list as $mobility) {
           $mobilityDate[] = $mobility->Calculated_date;
@@ -859,7 +859,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
 
   public function generateInfectedPerLacExcel(Request $request){
      if($request->division){
-        $per_pac_Data = $this->nationalInfectedPopulation($request->division);
+        $per_pac_Data = $this->divDistUpaInfectedPopulation($request);
      }else{
         $per_pac_Data = $this->nationalInfectedPopulation();
      }
@@ -868,7 +868,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
       $data = [];
       if(sizeof($per_pac_Data) > 0){
           foreach ($per_pac_Data as $key => $row) {
-              $data[$i]['Division'] =  $row->Division;
+              $data[$i]['Division'] =  $row->zone;
               $data[$i]['Cases Per Lac'] =  number_format($row->Cases_Per_Lac,2);
               $i++;
           }
@@ -951,7 +951,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
     }
     //dd($str);
     $getNationalInfectedPopulation = DB::select("
-        select B.Division, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
+        select B.Division as zone, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
         (select Division, sum(infected) as 'Infected' from Div_Dist_Upz_Infected_Geography group by Division) as A
 
         inner join
@@ -959,6 +959,30 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
     ".$str."
 
     ");
+    return $getNationalInfectedPopulation ?? '';
+  }
+
+  private function divDistUpaInfectedPopulation($request)
+  {
+
+    $str_dis= $request->district;
+    $str_upa= $request->upazila;
+    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+       $str_dis= 'cox';
+    }
+
+    if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+       $str_upa= 'cox';
+    }
+
+    if($request->division && $request->district && $request->upazila){
+      $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where Upazila  like '%".$str_upa."%' ");
+    }elseif($request->division && $request->district){
+     $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where District  like '%".$str_dis."%' ");
+    }elseif($request->division){
+      $getNationalInfectedPopulation = DB::select(" select Division,District as zone,Cases_Per_Lac from cases_per_lac_div_filter where Division like '%".$request->division."%' ");
+    }
+    
     return $getNationalInfectedPopulation ?? '';
   }
 }
