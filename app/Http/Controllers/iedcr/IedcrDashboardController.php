@@ -982,7 +982,66 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
     }elseif($request->division){
       $getNationalInfectedPopulation = DB::select(" select Division,District as zone,Cases_Per_Lac from cases_per_lac_div_filter where Division like '%".$request->division."%' ");
     }
-    
+
     return $getNationalInfectedPopulation ?? '';
   }
+
+    public function getTestPositivityData(Request  $request) {
+        $result = [];
+        $avg_sample_to_test_lag_time = 0;
+        $avg_test_to_report_lag_time = 0;
+        $maleData = 0;
+        $femaleData = 0;
+        try {
+            $testPositivityAvgDelayTime = $this->avgDelayTime($request);
+            if(count($testPositivityAvgDelayTime)) {
+                foreach ($testPositivityAvgDelayTime as $avgDelay) {
+                    $avg_sample_to_test_lag_time = $avgDelay->avg_sample_to_test_lag_time ?? '';
+                    $avg_test_to_report_lag_time = $avgDelay->avg_test_to_report_lag_time ?? '';
+                    break;
+                }
+
+            }
+            $testPositivityByGender = $this->testPositivitybyGender($request);
+            if(count($testPositivityByGender)) {
+                foreach ($testPositivityByGender as $testPositiveGender) {
+                    $maleData = (double)$testPositiveGender->M ?? '';
+                    $femaleData = (double)$testPositiveGender->F ?? '';
+                    break;
+                }
+
+            }
+            $testPositivityByAge =  $this->testPositivitybyAge($request);
+            $row_data = array();
+            if(count($testPositivityByAge)) {
+                foreach ($testPositivityByAge as $testPositiveAge) {
+                    $row_data[] = (double)$testPositiveAge->_0_10 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_11_20 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_21_30 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_31_40 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_41_50 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_51_60 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_60_Plus ?? '';
+                    break;
+                }
+
+            }
+
+            $result['avg_sample_to_test_lag_time'] = round($avg_sample_to_test_lag_time,2);
+            $result['avg_test_to_report_lag_time'] = round($avg_test_to_report_lag_time,2);
+            $result['maleData'] = $maleData;
+            $result['femaleData'] = $femaleData;
+            // $result['test_positivity_age_data'] = [05,10.6667,33.3333,16.6667,0,33.3333,0];
+            $result['test_positivity_age_data'] = $row_data;
+            $result['status'] = 'success';
+            /*$result['']*/
+
+        }catch (\Exception $exception) {
+            $result['status'] = 'failed';
+            \Log::error('get test positivity data:'. $exception->getMessage().'---'.$exception->getFile());
+        }
+
+        return $result;
+
+    }
 }

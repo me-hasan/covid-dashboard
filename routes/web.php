@@ -32,7 +32,8 @@ Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dash
 Route::get('/dataframe', 'cabinet\DashboardController@dataFrameData')->name('cabinet.dataframe');
 
 // iedcr route
-
+/*get test positivity data*/
+Route::get('test-positivity-data','iedcr\IedcrDashboardController@getTestPositivityData')->name('iedcr.test_positivity_data')->middleware(['auth', 'permission:iedcr-dashboard']);
 Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
 
 Route::get('/iedcr/generate-gender-excel', 'iedcr\IedcrDashboardController@generateInfectedGenderExcel')->name('iedcr.generate-gender-excel');
