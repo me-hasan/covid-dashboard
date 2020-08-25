@@ -103,7 +103,7 @@
         
         foreach($ininfectedPopulation as $row){
           
-              $div_name[] = $row->Division;
+              $div_name[] = $row->zone; //  need to be dynamic
               $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
           
         }
