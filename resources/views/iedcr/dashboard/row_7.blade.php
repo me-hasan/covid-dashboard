@@ -8,12 +8,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-8 col-lg-8 col-md-12">
+        <div class="col-xl-5 col-lg-8 col-md-12 mr-0">
             <div class="card-body">
                 <div id="mobility_time_seris_graph"></div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-12">
+        <div class="col-xl-4 col-lg-4 col-md-12 ml-0 mr-0">
             <div class="card-header">
                 <h3 class="card-title">Calendar highlighting important dates</h3>
             </div>
@@ -23,13 +23,46 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-lg-4 col-md-12 ml-0">
+            <div class="card-header">
+                <h3 class="card-title">Events</h3>
+            </div>
+            <div class="card-body">
+                <table class="table" border="1">
+                    <thead class="event-table" style="background-color: #705ec8;">
+                    <tr>
+                        <th class="text-white" scope="col" width="50%">Dates</th>
+                        <th class="text-white" scope="col" width="50%">Events</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>01 Aug, 2020</td>
+                        <td>Eid-ul-Azha</td>
+                    </tr>
+                    <tr>
+                        <td>11 Aug, 2020</td>
+                        <td>Janmashtami</td>
+                    </tr>
+                    <tr>
+                        <td>15 Aug, 2020</td>
+                        <td>National Mourning Day</td>
+                    </tr>
+                    <tr>
+                        <td>30 Aug, 2020</td>
+                        <td>Ashura</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
             <div class="card-body">
                 <h5 class="card-title">Short Description</h5>
                 <p class="card-text">
-                    Grameenphone CDR data averaged over the last 14 days: 
+                    Grameenphone CDR data averaged over the last 14 days:
                     <ol>
                         <li>The number of subscribers in each upazila</li>
                         <li>The number of subscribers moving in to each upazila</li>
@@ -53,19 +86,31 @@
     <!-- include jQuery -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function() {
-
+        var dates = ['08/01/2020', '08/11/2020', '08/15/2020', '08/30/2020'];
+        // $(function() {
             $("#datepicker").datepicker({
                 numberOfMonths: 1,
                 todayHighlight: false,
-                beforeShowDay: function(d) {
-                    var a = new Date(2020, 7, 1);
-                    a.setDate(a.getDate() + 1);
-                    // b.setDate(b.getDate() + 5);
-                    return [true, a <= d ? "" : "calender-highlight"];
-                }
+
+                dateFormat: 'mm/dd/yy',
+                beforeShowDay: highlightDays
+                // beforeShowDay: function(d) {
+                //     var a = new Date(2020, 7, 1);
+                //     a.setDate(a.getDate() + 1);
+                //     // b.setDate(b.getDate() + 5);
+                //     return [true, a <= d ? "" : "calender-highlight"];
+                // }
             });
-        });
+        // });
+
+        function highlightDays(date) {
+            for (var i = 0; i < dates.length; i++) {
+                if (new Date(dates[i]).toString() == date.toString()) {
+                    return [true, 'calender-highlight'];
+                }
+            }
+            return [true, ''];
+        }
 
         // mobility_time_seris_graph
         Highcharts.chart('mobility_time_seris_graph', {
