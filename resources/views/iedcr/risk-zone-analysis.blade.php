@@ -3,44 +3,24 @@
 @section('content')
     <?php
     use Carbon\Carbon;ini_set('error_reporting', 0);
-//    $sd_1=$ss_1='';
-//    $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
-//    $_currentStatusData = \Illuminate\Support\Facades\DB::table('rza_current_status')->orderBy('id', 'DESC')->first();
-//    $_lastZoneStatusData = \Illuminate\Support\Facades\DB::table('rza_current_status')->orderBy('id', 'ASC')->first();
-//    $_changeStatusDataSet = \Illuminate\Support\Facades\DB::table('rza_change_status')->orderBy('id','DESC')->first();
-//    $_zoneInformationDataSet = \Illuminate\Support\Facades\DB::table('rza_zone_information')->get();
-//    $_nationalLevelDataLabels = array('Date','Green Zone','Yellow Zone','Red Zone');
-//    $_nationalInfoData = \Illuminate\Support\Facades\DB::table('rza_weekly_change')->get();
-//    $_nationalLevelDataSet = array();
-//    if(count($_nationalInfoData)) {
-//        foreach ($_nationalInfoData as $key=>$_nationalInfo){
-//            $_nationalLevelDataSet[$key+1][0] = $_nationalInfo->date;
-//            $_nationalLevelDataSet[$key+1][1] = $_nationalInfo->green_zone;
-//            $_nationalLevelDataSet[$key+1][2] = $_nationalInfo->yellow_zone;
-//            $_nationalLevelDataSet[$key+1][3] = $_nationalInfo->red_zone;
-//
-//        }
-//    }
-//    $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','risk-zone-analysis')->get();
-//    foreach ($data_source_description as  $row) {
-//        if($row->component_name=='Current Zone Status'){
-//            $sd_1=$row->description;
-//            $ss_1=$row->source;
-//        }
-//    }
 
     //Current zone sql start
     $_currentRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
-    $_currentRedZoneChangeData    = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Red Zone',@last_red as 'Last Week Red Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
+//    $_currentRedZoneChangeData    = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Red Zone',@last_red as 'Last Week Red Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
     $_currentYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration = (select max(date_of_declaration) from zone_details)");
-    $_currentYellowZoneChangeData = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Yellow Zone',@last_red as 'Last Week Yellow Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
+//    $_currentYellowZoneChangeData = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Yellow Zone',@last_red as 'Last Week Yellow Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
     $_currentGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
-    $_currentGreenZoneChangeData  = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Green Zone',@last_red as 'Last Week Green Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
+//    $_currentGreenZoneChangeData  = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Green Zone',@last_red as 'Last Week Green Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
 
     //Last zone sql start
     $_lastRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
     $_lastYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
     $_lastGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+
+
+    $_currentRedZoneChangeData = (($_currentRedZoneStatusData[0]->total_id - $_lastRedZoneStatusData[0]->total_id))*100/$_lastRedZoneStatusData[0]->total_id;
+    $_currentYellowZoneChangeData    = (($_currentYellowZoneStatusData[0]->total_id - $_lastYellowZoneStatusData[0]->total_id))*100/$_lastYellowZoneStatusData[0]->total_id;
+    $_currentGreenZoneChangeData  = (($_currentGreenZoneStatusData[0]->total_id - $_lastGreenZoneStatusData[0]->total_id))*100/$_lastGreenZoneStatusData[0]->total_id;
 
     //Change Status
      $_redToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
@@ -150,7 +130,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
                                     <h5 class="mb-1">Red Zone</h5>
                                     <h2 class="mb-1 number-font">{!! isset($_currentRedZoneStatusData[0]->total_id) ? $_currentRedZoneStatusData[0]->total_id : '' !!}</h2>
                                     <small class="fs-12 text-muted">Compared to Week Day</small>
-                                    <span class="ratio bg-danger"><?php echo number_format($_currentRedZoneChangeData[0]->Change, 0);?>%</span>
+                                    <span class="ratio bg-danger"><?php echo number_format($_currentRedZoneChangeData, 0);?>%</span>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +140,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
                                     <h5 class=" mb-1">Yellow Zone</h5>
                                     <h2 class="mb-1 number-font">{!! isset($_currentYellowZoneStatusData[0]->total_id) ? $_currentYellowZoneStatusData[0]->total_id : '' !!}</h2>
                                     <small class="fs-12 text-muted">Compared to Week Day</small>
-                                    <span class="ratio bg-warning">{!! number_format($_currentRedZoneChangeData[0]->Change, 0) !!}%</span>
+                                    <span class="ratio bg-warning">{!! number_format($_currentYellowZoneChangeData, 0) !!}%</span>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +150,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
                                     <h5 class=" mb-1">Green Zone</h5>
                                     <h2 class="mb-1 number-font">{!! isset($_currentGreenZoneStatusData[0]->total_id) ? $_currentGreenZoneStatusData[0]->total_id : '' !!}</h2>
                                     <small class="fs-12 text-muted">Compared to Week Day</small>
-                                    <span class="ratio bg-success">{!! number_format($_currentRedZoneChangeData[0]->Change)  !!}%</span>
+                                    <span class="ratio bg-success">{!! number_format($_currentGreenZoneChangeData)  !!}%</span>
                                 </div>
                             </div>
                         </div>
