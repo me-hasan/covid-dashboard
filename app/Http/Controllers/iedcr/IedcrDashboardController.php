@@ -976,7 +976,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
 
     if($request->division && $request->district && $request->upazila){
       $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where Upazila  like '%".$str_upa."%' ");
-    }elseif($request->division && $request->district){
+    }elseif($request->district){
      $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where District  like '%".$str_dis."%' ");
     }elseif($request->division){
       $getNationalInfectedPopulation = DB::select(" select Division,District as zone,Cases_Per_Lac from cases_per_lac_div_filter where Division like '%".$request->division."%' ");
@@ -1047,6 +1047,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
   public function nationalInfectedCaseData(Request $request) {
         $result['status'] = 'failed';
         try{
+
             $ininfectedPopulation = $this->divDistUpaInfectedPopulation($request);
             $infectedAge = $this->upazillaLevelInfectedAge($request);
             $infectedGender = $this->upazillaLevelInfectedGender($request);
@@ -1075,6 +1076,14 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
                 }
             }
 
+            $div_name = $div_data = array();
+
+            foreach($ininfectedPopulation as $row){
+
+                $div_name[] = $row->zone; //  need to be dynamic
+                $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
+
+            }
 
             $infected = implode(",", $infected_arr);
 
@@ -1085,7 +1094,8 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
             $result['gender_wise_infected_data'] = $_genderWiseInfectData;
             $result['age_wise_infected_data'] = $_ageWiseInfectData;
             $result['age_wise_infected_data'] = $_ageWiseInfectData;
-
+            $result['div_name'] = $div_name;
+            $result['div_data'] = $div_data;
             $result['status'] = 'success';
         }catch (\Exception $exception) {
             $result['status'] = 'failed';

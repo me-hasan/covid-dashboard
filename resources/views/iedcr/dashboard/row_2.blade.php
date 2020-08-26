@@ -415,10 +415,12 @@
                             var ageWiseInfectData = data.age_wise_infected_data;
                             var timeseriesDate = data.ininfectedTrend_date;
                             var ininfectedTrend_date = data.timeseriesDate;
+                            var div_name = data.div_name;
+                            var div_data = data.div_data;
                             caseByGender(genderData[0],genderData[1]);
                             death_by_age(ageWiseInfectData);
                             timeSeriesData(timeseriesDate,ininfectedTrend_date);
-                            case_by_age(test_positivity_age_data);
+                            case_by_age(div_name, div_data);
                         } else {
                             alert("Something Went Wrong");
                         }
@@ -584,7 +586,7 @@
                 });
             }
 
-            function case_by_age() {
+            function case_by_age(div_name, div_data) {
                 Highcharts.chart('case_by_age', {
                     chart: {
                         type: 'column',
@@ -613,7 +615,8 @@
                         }
                     },
                     xAxis: {
-                        categories: <?php echo json_encode($div_name); ?>					},
+                        categories: div_name
+                    },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.y}</b>',
                         /*valueSuffix: ' cm',
@@ -626,8 +629,7 @@
                         }
                     },
                     colors: ['#ffab00'],
-                    series: <?php echo json_encode(array($div_data)); ?>
-
+                    series: [{"name":"Infected","data":div_data}]
                 });
             }
 
