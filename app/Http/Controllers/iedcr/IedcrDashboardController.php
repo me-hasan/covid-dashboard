@@ -62,7 +62,6 @@ class IedcrDashboardController extends Controller
       // Nantionwide Infectd Person Population
       $ininfectedPopulation = $this->nationalInfectedPopulation();
     }
-
     //death case for map
     $row5_data['death_case_map'] = $this->deathCaseMap($request);
     $death_case_two_week = $this->deathCaseTwoWeek($request);
@@ -158,7 +157,7 @@ class IedcrDashboardController extends Controller
 
     if($request->division && $request->district && $request->upazila){
       $getUpazillaLevelInfectedGender = DB::select("select Upazila, F, M from Div_Dist_Upz_Infected_Gender where Upazila like '%".$str_upa."%' group by Upazila;");
-    }elseif($request->division && $request->district){
+    }elseif($request->district){
       $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District like '%".$str_dis."%' group by District;");
     }elseif($request->division){
       $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division like '%".$request->division."%' group by Division;");
@@ -205,7 +204,7 @@ class IedcrDashboardController extends Controller
 
     if($request->division && $request->district && $request->upazila){
       $getUpazillaLevelInfectedAge = DB::select("select Upazila, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Upazila like '%".$str_upa."%' group by Upazila;");
-    }elseif($request->division && $request->district){
+    }elseif( $request->district){
       $getUpazillaLevelInfectedAge = DB::select("select District, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where District like '%".$str_dis."%' group by District;");
     }elseif($request->division){
       $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division like '%".$request->division."%' group by Division;");
@@ -243,7 +242,7 @@ class IedcrDashboardController extends Controller
     }
 
 
-      if($request->division && $request->district){
+      if( $request->district){
         $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date ");
       }elseif($request->division){
         $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date ");
@@ -748,7 +747,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
       } else {
           if($request->division && $request->district && $request->upazila){
               $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila like '%".$str_upa."%' group by Calculated_date, Upazila");
-          }elseif($request->division && $request->district){
+          }elseif($request->district){
               $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District like '%".$str_dis."%' group by Calculated_date, District");
           }elseif($request->division){
               $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' group by Calculated_date, Division");
@@ -977,12 +976,133 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
 
     if($request->division && $request->district && $request->upazila){
       $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where Upazila  like '%".$str_upa."%' ");
-    }elseif($request->division && $request->district){
+    }elseif($request->district){
      $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where District  like '%".$str_dis."%' ");
     }elseif($request->division){
       $getNationalInfectedPopulation = DB::select(" select Division,District as zone,Cases_Per_Lac from cases_per_lac_div_filter where Division like '%".$request->division."%' ");
     }
-    
+
     return $getNationalInfectedPopulation ?? '';
+  }
+
+  public function getTestPositivityData(Request  $request) {
+        $result = [];
+        $avg_sample_to_test_lag_time = 0;
+        $avg_test_to_report_lag_time = 0;
+        $maleData = 0;
+        $femaleData = 0;
+        try {
+            $testPositivityAvgDelayTime = $this->avgDelayTime($request);
+            if(count($testPositivityAvgDelayTime)) {
+                foreach ($testPositivityAvgDelayTime as $avgDelay) {
+                    $avg_sample_to_test_lag_time = $avgDelay->avg_sample_to_test_lag_time ?? '';
+                    $avg_test_to_report_lag_time = $avgDelay->avg_test_to_report_lag_time ?? '';
+                    break;
+                }
+
+            }
+            $testPositivityByGender = $this->testPositivitybyGender($request);
+            if(count($testPositivityByGender)) {
+                foreach ($testPositivityByGender as $testPositiveGender) {
+                    $maleData = (double)$testPositiveGender->M ?? '';
+                    $femaleData = (double)$testPositiveGender->F ?? '';
+                    break;
+                }
+
+            }
+            $testPositivityByAge =  $this->testPositivitybyAge($request);
+            $row_data = array();
+            if(count($testPositivityByAge)) {
+                foreach ($testPositivityByAge as $testPositiveAge) {
+                    $row_data[] = (double)$testPositiveAge->_0_10 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_11_20 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_21_30 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_31_40 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_41_50 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_51_60 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_60_Plus ?? '';
+                    break;
+                }
+
+            }
+
+            $result['avg_sample_to_test_lag_time'] = round($avg_sample_to_test_lag_time,2);
+            $result['avg_test_to_report_lag_time'] = round($avg_test_to_report_lag_time,2);
+            $result['maleData'] = $maleData;
+            $result['femaleData'] = $femaleData;
+            // $result['test_positivity_age_data'] = [05,10.6667,33.3333,16.6667,0,33.3333,0];
+            $result['test_positivity_age_data'] = $row_data;
+            $result['status'] = 'success';
+            /*$result['']*/
+
+        }catch (\Exception $exception) {
+            $result['status'] = 'failed';
+            \Log::error('get test positivity data:'. $exception->getMessage().'---'.$exception->getFile());
+        }
+
+        return $result;
+
+    }
+
+  public function nationalInfectedCaseData(Request $request) {
+        $result['status'] = 'failed';
+        try{
+
+            $ininfectedPopulation = $this->divDistUpaInfectedPopulation($request);
+            $infectedAge = $this->upazillaLevelInfectedAge($request);
+            $infectedGender = $this->upazillaLevelInfectedGender($request);
+            $ininfectedTrend = $this->nationalInfectedTrend($request);
+
+            $_genderWiseInfectData = array();
+
+            $_genderWiseInfectData[] = isset($infectedGender->M) ? (float)$infectedGender->M : 0;
+            $_genderWiseInfectData[] = isset($infectedGender->F) ? (float)$infectedGender->F : 0;
+            $_ageWiseInfectData = array();
+
+            $_ageWiseInfectData[] = isset($infectedAge->_0_10) ? (float)$infectedAge->_0_10 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_11_20) ? (float)$infectedAge->_11_20 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_21_30) ? (float)$infectedAge->_21_30 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_31_40) ? (float)$infectedAge->_31_40 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_41_50) ? (float)$infectedAge->_41_50 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_51_60) ? (float)$infectedAge->_51_60 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_60_Plus) ? (float)$infectedAge->_60_Plus : 0;
+            $date_arr = $infected_arr =  array();
+
+            if($ininfectedTrend && $ininfectedTrend != '' &&count($ininfectedTrend)) {
+                foreach($ininfectedTrend as $row){
+
+                    $date_arr[] = date('d\/m\/Y', strtotime($row->Date));
+                    $infected_arr[] = $row->infected_count;
+                }
+            }
+
+            $div_name = $div_data = array();
+
+            foreach($ininfectedPopulation as $row){
+
+                $div_name[] = $row->zone; //  need to be dynamic
+                $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
+
+            }
+
+            $infected = implode(",", $infected_arr);
+
+            /*dd(json_encode($_ageWiseInfectData));*/
+            $result['infectedTrend_data'] = $infected;
+            $result['ininfectedTrend_date'] = $date_arr;
+            $result['infectedTrend_string'] = $infected;
+            $result['gender_wise_infected_data'] = $_genderWiseInfectData;
+            $result['age_wise_infected_data'] = $_ageWiseInfectData;
+            $result['age_wise_infected_data'] = $_ageWiseInfectData;
+            $result['div_name'] = $div_name;
+            $result['div_data'] = $div_data;
+            $result['status'] = 'success';
+        }catch (\Exception $exception) {
+            $result['status'] = 'failed';
+            \Log::error('National Infected Case Data:'. $exception->getMessage().'---'.$exception->getFile());
+        }
+
+      return $result;
+
   }
 }
