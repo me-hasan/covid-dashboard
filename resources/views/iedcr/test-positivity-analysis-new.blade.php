@@ -7,6 +7,7 @@
     $sd_1=$sd_2=$sd_3='';
     $ss_1=$ss_2=$ss_3='';
     $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
+
     $tpr_national_testpositivity_trend = \Illuminate\Support\Facades\DB::table('tpr_national_testpositivity_trend')->get();
     $tpr_today = \Illuminate\Support\Facades\DB::table('tpr_today')->orderBy('id', 'DESC')->first();
     $tpr_average = \Illuminate\Support\Facades\DB::table('tpr_average')->orderBy('id', 'DESC')->first();
@@ -38,7 +39,10 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Test Positivity Rate</h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-test-positive-rate-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div id="test-positivity-trend"></div>
@@ -62,22 +66,25 @@
           <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-today-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                  <h2 class="text-success">{{ number_format($tpr_today->test_positivity_rate, 2, '.', '')  }}%</h2>
+                  <h2 class="text-success">{{ number_format($today_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Number of Performed Tests</h4>
-                  <h2 class="text-success">{{ $tpr_today->total_tests }}</h2>
+                  <h2 class="text-success">{{ $today_number_of_test }}</h2>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
@@ -181,7 +188,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Test Positivity for Asymptomatic Patients</h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
               </div>
               <div class="card-body">
                 <div id="time-series-trend"></div>
@@ -206,7 +213,7 @@
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
                 <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
@@ -222,7 +229,7 @@
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
                 <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} </h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
@@ -245,19 +252,7 @@
 
     <script type="text/javascript">
         /* Time Seris Graph */
-        <?php 
 
-            $date_arr = $tp_arr = array();
-
-            foreach($tpr_national_testpositivity_trend as $row){
-                
-              $date_arr[] = date('d\/m\/Y', strtotime($row->date));
-              $tp_arr[] = number_format($row->test_positivity_rate, 2, '.', '');
-            }
-
-            $tp_rate = implode(",", $tp_arr);
-
-        ?>
         Highcharts.chart('test-positivity-trend', {
             chart: {
                 height: 330
@@ -282,7 +277,7 @@
             },
 
             xAxis: {
-                categories: <?php echo json_encode($date_arr);?>
+                categories: <?php echo json_encode($testPositiveDate);?>
               
             },
 
@@ -314,7 +309,7 @@
 
             colors: ['#ef4b4b'],
 
-            series: [{"type":"area","name":"TEST POSITIVITY RATE","data":[<?php echo $tp_rate;?>],"marker":{"symbol":"circle"}}]
+            series: [{"type":"area","name":"TEST POSITIVITY RATE","data":[<?php echo $testPositiveData;?>],"marker":{"symbol":"circle"}}]
         });
 
         // Map JS Data
