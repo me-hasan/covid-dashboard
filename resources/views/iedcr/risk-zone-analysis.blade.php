@@ -6,11 +6,8 @@
 
     //Current zone sql start
     $_currentRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
-//    $_currentRedZoneChangeData    = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Red Zone',@last_red as 'Last Week Red Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
     $_currentYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration = (select max(date_of_declaration) from zone_details)");
-//    $_currentYellowZoneChangeData = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Yellow Zone',@last_red as 'Last Week Yellow Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
     $_currentGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
-//    $_currentGreenZoneChangeData  = \Illuminate\Support\Facades\DB::select("SELECT @curr_red as 'Current Week Green Zone',@last_red as 'Last Week Green Zone', @change:=((@curr_red-@last_red)*100)/@curr_red as 'Change'");
 
     //Last zone sql start
     $_lastRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
@@ -109,7 +106,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
                     <h3 class="card-title">Current Zone Status</h3>
                     <div class="card-options">
                         <i class="fa fa-table mr-2 text-success"></i>
-                        <i class="fa fa-download text-danger"></i>
+                        <a href="{{route('iedcr.generate-current-zone-excel')}}"><i class="fa fa-download text-danger"></i></a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -165,7 +162,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
                     <div class="card-header">
                         <h3 class="card-title">Last Zone Status</h3>
                         <div class="card-options">
-                            <i class="fa fa-download text-danger"></i>
+                            <a href="{{route('iedcr.generate-last-zone-excel')}}"><i class="fa fa-download text-danger"></i></a>
                         </div>
                     </div>
                     <div class="card-body last-zone-status">
@@ -213,7 +210,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
                         <h3 class="card-title">Change Status</h3>
                         <div class="card-options">
                             <i class="fa fa-table mr-2 text-success"></i>
-                            <i class="fa fa-download text-danger"></i>
+                            <a href="{{route('iedcr.generate-change-status-excel')}}"><i class="fa fa-download text-danger"></i></a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -356,7 +353,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
             <div class="card-header">
                 <h3 class="card-title">Weekly Change</h3>
                 <div class="card-options">
-                    <i class="fa fa-download text-danger"></i>
+                    <a href="{{route('iedcr.generate-weekly-change-excel')}}"><i class="fa fa-download text-danger"></i></a>
                 </div>
             </div>
             <div class="card-body">
@@ -369,7 +366,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
             <div class="card-header">
                 <h3 class="card-title">Zone Information​</h3>
                 <div class="card-options">
-                    <i class="fa fa-download text-danger"></i>
+                    <a href="{{route('iedcr.generate-zone-info-excel')}}"><i class="fa fa-download text-danger"></i></a>
                 </div>
             </div>
             <div class="card-body">

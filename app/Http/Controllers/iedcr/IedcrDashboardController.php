@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\iedcr;
 
+use Carbon\Carbon;
 use DB;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -877,6 +878,176 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
       return (new FastExcel($list))->download('infected_per_lac.xlsx');
   }
 
+  /**
+     * Generate risk analysis zone info
+     * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
+  public function generateZoneInfoExcel() {
+
+      $_zoneInfo   = \Illuminate\Support\Facades\DB::select("select A.id, A.Zone_Name, A.Current_Status, A.Last_Status, A.Total_Cases_14_Days, A.Declaration_Date from
+(select TABLE1.id as 'id', TABLE1.Zone_Name as 'Zone_Name', TABLE1.Current_Status as 'Current_Status',
+TABLE1.Last_Status as 'Last_Status', TABLE1.Confirmed_case as 'Total_Cases_14_Days', TABLE2.date_of_declaration as 'Declaration_Date'
+from (select t1.zone_map_id as 'id', t1.risk_zone_name_new as 'Zone_Name', t1.covid_zone as 'Current_Status', t2.covid_zone as 'Last_Status',
+t1.total_case_in_risk_zone_14_days as 'Confirmed_case' from
+(select zone_map_id, risk_zone_name_new, covid_zone, total_case_in_risk_zone_14_days from zone_details
+where date_of_declaration=(select max(date_of_declaration) from zone_details)) as t1
+inner join
+(select zone_map_id,covid_zone from zone_details where date_of_declaration=
+(SELECT date_of_declaration FROM
+(SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2)
+AS date_of_declaration ORDER BY date_of_declaration limit 1)) as t2
+using(zone_map_id)) as TABLE1 inner join
+(select zone_map_id, covid_zone, date_of_declaration from zone_details)
+as TABLE2 where TABLE2.zone_map_id = TABLE1.id
+ORDER BY TABLE1.id) as A
+where A.Declaration_Date=
+(
+SELECT Declaration_Date FROM
+(select TABLE1.id as 'id', TABLE1.Zone_Name as 'Zone_Name', TABLE1.Current_Status as 'Current_Status', TABLE1.Last_Status as 'Last_Status', TABLE2.date_of_declaration as 'Declaration_Date' from (select t1.zone_map_id as 'id', t1.risk_zone_name_new as 'Zone_Name', t1.covid_zone as 'Current_Status', t2.covid_zone as 'Last_Status' from
+(select zone_map_id, risk_zone_name_new, covid_zone from zone_details
+where date_of_declaration=(select max(date_of_declaration) from zone_details)) as t1
+inner join
+(select zone_map_id,covid_zone from zone_details where date_of_declaration=
+(SELECT date_of_declaration FROM
+(SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2)
+AS date_of_declaration ORDER BY date_of_declaration limit 1)) as t2
+using(zone_map_id)) as TABLE1 inner join
+(select zone_map_id, covid_zone, date_of_declaration from zone_details)
+as TABLE2 where TABLE2.zone_map_id = TABLE1.id
+ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
+) order by id");
+
+      $i=0;
+      $data = [];
+      if(sizeof($_zoneInfo) > 0){
+          foreach ($_zoneInfo as $key => $row) {
+              $data[$i]['Date'] =  Carbon::parse($row->Declaration_Date)->format('Y-m-d');
+              $data[$i]['Zone Name'] =  $row->Zone_Name;
+              $data[$i]['Current Status'] =  $row->Current_Status;
+              $data[$i]['Last Status'] =  $row->Last_Status;
+              $data[$i]['Total Cases 14 Days'] =  number_format($row->Total_Cases_14_Days);
+              $i++;
+          }
+      }
+
+      $list = collect($data);
+      return (new FastExcel($list))->download('risk_analysis_zone_info.xlsx');
+  }
+
+    /**
+     * Generate weekly changes excel
+     * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
+    public function generateWeeklyChangeExcel() {
+      $_weeklyChangeForRed     = \Illuminate\Support\Facades\DB::select("select date_of_declaration as 'Week_day', count(zone_map_id) as 'Number_of_Red_Zone' from zone_details where covid_zone='Red' group by date_of_declaration");
+      $_weeklyChangeForYellow  = \Illuminate\Support\Facades\DB::select("select date_of_declaration as 'Week_day', count(zone_map_id) as 'Number_of_Yellow_Zone' from zone_details where covid_zone='Yellow' group by date_of_declaration");
+      $_weeklyChangeForGreen   = \Illuminate\Support\Facades\DB::select("select date_of_declaration as 'Week_day', count(zone_map_id) as 'Number_of_Green_Zone' from zone_details where covid_zone='Green' group by date_of_declaration");
+
+      $weeklyChangeDate = $weeklyRedData = $weeklyYellowData =  $weeklyGreenData = $week_data = [];
+
+      foreach ($_weeklyChangeForRed as $key => $weeklyChangeData){
+          $weeklyChangeDate[] = Carbon::parse($weeklyChangeData->Week_day)->format('Y-m-d');
+          $weeklyRedData[] = $weeklyChangeData->Number_of_Red_Zone;
+      }
+      foreach ($_weeklyChangeForYellow as $key => $weeklyChangeYellowData){
+          $weeklyYellowData[] = $weeklyChangeYellowData->Number_of_Yellow_Zone;
+      }
+      foreach ($_weeklyChangeForGreen as $key => $weeklyChangeGreenData){
+          $weeklyGreenData[] = $weeklyChangeGreenData->Number_of_Green_Zone;
+      }
+
+      foreach ($weeklyChangeDate as $key => $weeklyDate){
+          $result[$key] = array(
+              'Date'                    => $weeklyChangeDate[$key],
+              'Red Weekly Change'       => $weeklyRedData[$key],
+              'Yellow Weekly Change'    => $weeklyYellowData[$key],
+              'Green Weekly Change'     => $weeklyGreenData[$key],
+          );
+      }
+
+        $list = collect($result);
+        return (new FastExcel($list))->download('weekly_change_data.xlsx');
+    }
+
+  public function generateLastZoneExcel() {
+      $_lastRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+
+      $lastZoneStatus = [];
+      $lastZoneStatus[0]['Last Red Zone']   = $_lastRedZoneStatusData[0]->total_id;
+      $lastZoneStatus[0]['Last Yellow Zone'] = $_lastYellowZoneStatusData[0]->total_id;
+      $lastZoneStatus[0]['Last Green Zone']  = $_lastGreenZoneStatusData[0]->total_id;
+
+      $list = collect($lastZoneStatus);
+      return (new FastExcel($list))->download('last_zone_status_info.xlsx');
+  }
+
+  protected function generateChangeStatusExcel() {
+
+      $_redToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_redToYellowChange = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_redToGreenChange  = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+
+      $_yellowToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_yellowToYellowChange = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_yellowToGreenChange  = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+
+      $_greenToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_greenToYellowChange = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_greenToGreenChange  = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+
+      $changeStatus = [];
+      $changeStatus[0]['Red to Red']    = $_redToRedChange[0]->total_id;
+      $changeStatus[0]['Red to Yellow'] = $_redToYellowChange[0]->total_id;
+      $changeStatus[0]['Red to Green']  = $_redToGreenChange[0]->total_id;
+      $changeStatus[0]['Yellow to Red']  = $_yellowToRedChange[0]->total_id;
+      $changeStatus[0]['Yellow to Yellow']  = $_yellowToYellowChange[0]->total_id;
+      $changeStatus[0]['Yellow to Green']  = $_yellowToGreenChange[0]->total_id;
+      $changeStatus[0]['Green to Red']  = $_greenToRedChange[0]->total_id;
+      $changeStatus[0]['Green to Yellow']  = $_greenToYellowChange[0]->total_id;
+      $changeStatus[0]['Green to Green']  = $_greenToGreenChange[0]->total_id;
+
+      $list = collect($changeStatus);
+      return (new FastExcel($list))->download('change_status_info.xlsx');
+  }
+
+  protected function generateCurrentZoneExcel() {
+
+      $_currentRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
+      $_currentYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration = (select max(date_of_declaration) from zone_details)");
+      $_currentGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
+
+      //Last zone sql start
+      $_lastRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+
+
+      $_currentRedZoneChangeData = (($_currentRedZoneStatusData[0]->total_id - $_lastRedZoneStatusData[0]->total_id))*100/$_lastRedZoneStatusData[0]->total_id;
+      $_currentYellowZoneChangeData    = (($_currentYellowZoneStatusData[0]->total_id - $_lastYellowZoneStatusData[0]->total_id))*100/$_lastYellowZoneStatusData[0]->total_id;
+      $_currentGreenZoneChangeData  = (($_currentGreenZoneStatusData[0]->total_id - $_lastGreenZoneStatusData[0]->total_id))*100/$_lastGreenZoneStatusData[0]->total_id;
+
+      $currentZoneStatus = [];
+      $currentZoneStatus[0]['Current Red Zone']    = $_currentRedZoneStatusData[0]->total_id;
+      $currentZoneStatus[0]['Red Changes(%)']    = number_format($_currentRedZoneChangeData);
+      $currentZoneStatus[0]['Current Yellow Zone'] = $_currentYellowZoneStatusData[0]->total_id;
+      $currentZoneStatus[0]['Yellow Changes(%)'] = number_format($_currentYellowZoneChangeData);
+      $currentZoneStatus[0]['Current Green Zone']  = $_currentGreenZoneStatusData[0]->total_id;
+      $currentZoneStatus[0]['Green Changes(%)']  = number_format($_currentGreenZoneChangeData);
+
+      $list = collect($currentZoneStatus);
+      return (new FastExcel($list))->download('current_zone_status_info.xlsx');
+  }
+
   public function generateInfectedAgeGroupExcel(Request $request){
      if($request->division){
        $infectedAge = $this->upazillaLevelInfectedAge($request);
@@ -982,7 +1153,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
     }elseif($request->division){
       $getNationalInfectedPopulation = DB::select(" select Division,District as zone,Cases_Per_Lac from cases_per_lac_div_filter where Division like '%".$request->division."%' ");
     }
-    
+
     return $getNationalInfectedPopulation ?? '';
   }
 }
