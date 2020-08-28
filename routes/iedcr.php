@@ -35,5 +35,7 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
     Route::get('generate-today-asymptomic-test-positive-excel', 'TestPositiveController@generateTodayAsympTestPositiveExcel')->name('iedcr.generate-today-asymptomic-test-positive-excel');
 
     Route::get('generate-avg-asymptomic-test-positive-excel', 'TestPositiveController@generateAvgAsympTestPositiveExcel')->name('iedcr.generate-avg-asymptomic-test-positive-excel');
+
+    Route::get('generate-geo-location-test-positive-excel', 'TestPositiveController@generateGeoLocationTestPositiveExcel')->name('iedcr.generate-geo-location-test-positive-excel');
 });
 

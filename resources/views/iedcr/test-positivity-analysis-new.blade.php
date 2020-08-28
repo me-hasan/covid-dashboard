@@ -110,12 +110,15 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Geo Location Wise Test Positivity Rate​</h3>
-                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <a href="{{route('iedcr.generate-geo-location-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
+                </div>
               </div>
               <div class="card-body">
                 <div class="row mt-4">
                   <div class="col-lg-4"> 
-                       @include('iedcr.bd-map-html')
+                       <!-- @include('iedcr.bd-map-html') -->
+                       @include('iedcr.dashboard.test-positivity-page-map')
                   </div>
                   <div class="col-lg-8">
                     <div class="expanel expanel-default">
@@ -132,12 +135,12 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <?php foreach($tpr_data as $row){  ?>
+                              <?php foreach($geoLocationWiseTestPositivity as $row){  ?>
                                             
                                   <tr>
-                                      <td>{{$row->district}}</td>
-                                      <td>-</td>
-                                      <td>{{$row->total}}</td>
+                                      <td>{{$row->District}}</td>
+                                      <td>{{ date('Y-m-d', strtotime($row->Date)) ?? '-'}}</td>
+                                      <td>{{$row->total_test}}</td>
                                       <td>{{$row->positive}}</td>
                                       <td>{{ number_format($row->test_positivity,2) }}</td>
                                   </tr>
@@ -218,7 +221,7 @@
           <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3>
+                <!-- <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3> -->
                 <div class="card-options"> 
                   <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
                   <a href="{{route('iedcr.generate-today-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
@@ -237,7 +240,11 @@
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} </h3>
+                <!-- <h3 class="card-title text-ash" style="font-size: 12px;">
+                  Data Date: 
+                  {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - 
+                  {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} 
+                </h3> -->
                 <div class="card-options"> 
                   <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
                   <a href="{{route('iedcr.generate-avg-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
@@ -326,28 +333,26 @@
 
         // Map JS Data
         $(document).ready(function(){
-            /* <?php print_r($_districtWiseData); ?> */
             <?php
             $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '30' => '#F37366', '50' => '#E5515D', '75' => '#CD3E52', '100' => '#ed2355');
             $_existDataGroups = array();
-            foreach($tpr_data as $row){
+            foreach($geoLocationWiseTestPositivity as $row){
+              $str=$row->District;
+              $str='three_'.$row->District;
 
-                foreach($_colorCodes as $_colorRange => $_colorCode){
-                            if($row->test_positivity <= $_colorRange){
-                                $_groupColorCode = $_colorCode;
-                                $_existDataGroups[$_colorRange] = $_colorCode;
-                                break;
-                            }
-                        }
-            
-            
+              foreach($_colorCodes as $_colorRange => $_colorCode){
+                  if($row->test_positivity <= $_colorRange){
+                      $_groupColorCode = $_colorCode;
+                      $_existDataGroups[$_colorRange] = $_colorCode;
+                      break;
+                  }
+              }
             ?>
-            $('#<?php echo $row->district; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
             }
             ?>
 
-            /* <?php print_r($_existDataGroups); ?> */
             <?php
             $_groupColorData = NULL;
             $_startData = 0;
