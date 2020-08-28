@@ -52,5 +52,8 @@
         .fill_color{
             fill: #705ec8;
         }
+        .stroke_color{
+            stroke:#705ec8;
+        }
     </style>
 </head>

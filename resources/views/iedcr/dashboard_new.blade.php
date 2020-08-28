@@ -1,5 +1,7 @@
 @extends('iedcr.default')
-
+@section('search_view')
+    @include('iedcr.search_view')
+@endsection
 @section('content')
 
 <!-- Row-1 -->

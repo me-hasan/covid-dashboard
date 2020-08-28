@@ -390,9 +390,10 @@
                 var districtId = $(this).attr('id');
                 var district = districtId.replace("two_", "");
                 InfectedCaseData_ajax_call(district);
-                $('.fill_color').css({ fill: "#FCAA94" });
+                $('.fill_color').css({fill:"#FCAA94"});
                 $(this).find('path').addClass('fill_color');
-                $(this).find('path').attr('fill','#705ec8');
+                $(this).find('path').css({fill:"#705ec8"});
+              //  $(this).find('path').css({"stroke-width":"4"});
             })
 
             function InfectedCaseData_ajax_call(district){
