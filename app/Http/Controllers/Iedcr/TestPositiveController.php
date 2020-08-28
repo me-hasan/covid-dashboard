@@ -48,10 +48,57 @@ class TestPositiveController extends Controller
           $asymptomicTestPositiveDate[] = date('Y-m-d', strtotime($tptrend->event_date));
           $asymptomic_test_positive[]  = $tptrend->total;
         }
-
         $asymptomicTestPositiveData  = implode(",", $asymptomic_test_positive);
 
-        return view('iedcr.test-positivity-analysis-new',compact('testPositiveDate','testPositiveData','today_test_positive_rate','today_number_of_test','avg_test_positive_rate','avg_number_of_test','asymptomicTestPositiveData','asymptomicTestPositiveDate'));
+        //section 4
+        $get_today_asymptomic_test_positive  = $this->todayAsymptomicTestPositiveRate($request);
+        $today_asymptomic_test_positive_rate  = $get_today_asymptomic_test_positive['today_asymp_test_positive_rate'];
+        $today_asymptomic_number_of_test  = $get_today_asymptomic_test_positive['today_asymp_number_of_test'];
+
+        //section 5
+        $get_avg_asymptomic_test_positive  = $this->avgAsymptomicTestPositiveRate($request);
+        $avg_asymptomic_test_positive_rate  = $get_avg_asymptomic_test_positive['avg_asymp_test_positive_rate'];
+        $avg_asymptomic_number_of_test  = $get_avg_asymptomic_test_positive['avg_asymp_number_of_test'];
+
+        return view('iedcr.test-positivity-analysis-new',compact('testPositiveDate','testPositiveData','today_test_positive_rate','today_number_of_test','avg_test_positive_rate','avg_number_of_test','asymptomicTestPositiveData','asymptomicTestPositiveDate','today_asymptomic_test_positive_rate','today_asymptomic_number_of_test','avg_asymptomic_test_positive_rate','avg_asymptomic_number_of_test'));
+    }
+
+    private function todayAsymptomicTestPositiveRate($request) {
+        // $getDateCondition = $this->getDateCondition($request,'event_date');
+        $asymptomicTestPositiveRate = DB::select("select distinct
+                                    (select sum(total) from lab_test_data_passport 
+                                    where lab_test_result='Positive' and
+                                    event_date=(select max(event_date) from lab_test_data_passport))/ 
+                                    (select sum(total)
+                                    from lab_test_data_passport 
+                                    where event_date=(select max(event_date) from lab_test_data_passport))
+                                    as Test_Positivity from lab_test_data_passport");
+
+        $asymptomicTestCount = DB::select("select sum(total) as Total
+                                from lab_test_data_passport 
+                                where event_date=(select max(event_date) from lab_test_data_passport)");
+
+        $data['today_asymp_test_positive_rate'] = $asymptomicTestPositiveRate[0]->Test_Positivity ?? 0;
+        $data['today_asymp_number_of_test'] = $asymptomicTestCount[0]->Total ?? 0;
+
+        return $data;
+    }
+
+    private function avgAsymptomicTestPositiveRate($request) {
+        // $getDateCondition = $this->getDateCondition($request,'event_date');
+        $asymptomicTestPositiveRate = DB::select("select (sum((P.Positive*100)/T.Total)/count(P.event_date)) as 'Avg_Test_Positivity_Rate' from (select event_date, sum(total) as 'Positive' from lab_test_data_passport 
+                where lab_test_result='Positive' group by event_date order by event_date desc) as P
+            inner join 
+                (select event_date, sum(total) as 'Total'
+                from lab_test_data_passport group by event_date order by event_date desc) as T 
+            using(event_date)");
+
+        $asymptomicTestCount = DB::select("select sum(total)/(count(distinct(event_date))) as avg_test_per_day from lab_test_data_passport");
+
+        $data['avg_asymp_test_positive_rate'] = $asymptomicTestPositiveRate[0]->Avg_Test_Positivity_Rate ?? 0;
+        $data['avg_asymp_number_of_test'] = $asymptomicTestCount[0]->avg_test_per_day ?? 0;
+
+        return $data;
     }
 
     private function asymptomicTestPositiveRate($request) {
@@ -290,5 +337,35 @@ class TestPositiveController extends Controller
       ]);
 
       return (new FastExcel($list))->download('avg_test_positive_data.xlsx');
+    }
+
+    public function generateTodayAsympTestPositiveExcel(Request $request){
+        $get_today_asymptomic_test_positive  = $this->todayAsymptomicTestPositiveRate($request);
+        $today_asymptomic_test_positive_rate  = $get_today_asymptomic_test_positive['today_asymp_test_positive_rate'];
+        $today_asymptomic_number_of_test  = $get_today_asymptomic_test_positive['today_asymp_number_of_test'];
+
+        $list = collect([
+          [
+          'Test Positivity Rate' => $today_asymptomic_test_positive_rate,
+          'Number of Performed Test' => $today_asymptomic_number_of_test
+        ]
+      ]);
+
+      return (new FastExcel($list))->download('today_asymptomic_test_positive_data.xlsx');
+    }
+
+    public function generateAvgAsympTestPositiveExcel(Request $request){
+        $get_avg_asymptomic_test_positive  = $this->avgAsymptomicTestPositiveRate($request);
+        $avg_asymptomic_test_positive_rate  = $get_avg_asymptomic_test_positive['avg_asymp_test_positive_rate'];
+        $avg_asymptomic_number_of_test  = $get_avg_asymptomic_test_positive['avg_asymp_number_of_test'];
+
+        $list = collect([
+          [
+          'Avg Test Positivity Rate' => $avg_asymptomic_test_positive_rate,
+          'Avg Number of Test' => $avg_asymptomic_number_of_test
+        ]
+      ]);
+
+      return (new FastExcel($list))->download('avg_asymptomic_test_positive_data.xlsx');
     }
 }

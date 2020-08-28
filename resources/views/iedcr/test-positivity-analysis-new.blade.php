@@ -219,32 +219,38 @@
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
                 <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3>
-                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-today-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                  <h2 class="text-success">{{$tpr_today->test_positivity_rate}}%</h2>
+                  <h2 class="text-success">{{ number_format($today_asymptomic_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Number of Performed Tests</h4>
-                  <h2 class="text-success">{{$tpr_today->total_tests}}</h2>
+                  <h2 class="text-success">{{$today_asymptomic_number_of_test}}</h2>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
                 <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} </h3>
-                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-avg-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Average Test Positivity Rate</h4>
-                  <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
+                  <h2 class="text-success">{{ number_format($avg_asymptomic_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Average # of Performed Tests</h4>
-                  <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
+                  <h2 class="text-success">{{ $avg_asymptomic_number_of_test }}</h2>
                 </div>
               </div>
             </div>
