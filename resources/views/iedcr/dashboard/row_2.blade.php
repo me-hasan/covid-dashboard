@@ -388,9 +388,14 @@
 
             $(".map_click_2").on('click', function (){
                 var districtId = $(this).attr('id');
+                if(sessionStorage.row_2_districtId) {
+                    $("#"+sessionStorage.row_2_districtId).find('path').css({fill:sessionStorage.row_2_districtColor});
+                }
+                sessionStorage.row_2_districtId = districtId;
+                sessionStorage.row_2_districtColor = $(this).find('path').attr('fill');
                 var district = districtId.replace("two_", "");
                 InfectedCaseData_ajax_call(district);
-                $('.fill_color').css({fill:"#FCAA94"});
+             //   $('.fill_color').css({fill:"#FCAA94"});
                 $(this).find('path').addClass('fill_color');
                 $(this).find('path').css({fill:"#705ec8"});
               //  $(this).find('path').css({"stroke-width":"4"});
