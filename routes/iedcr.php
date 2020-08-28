@@ -26,6 +26,10 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
     // test positivity pdf
     Route::get('generate-test-positive-rate-excel', 'TestPositiveController@generateTestPositiveRateExcel')->name('iedcr.generate-test-positive-rate-excel');
 
+    Route::get('generate-asymptomic-test-positive-rate-excel', 'TestPositiveController@generateAsymptomicTestPositiveRateExcel')->name('iedcr.generate-asymptomic-test-positive-rate-excel');
+
     Route::get('generate-today-test-positive-excel', 'TestPositiveController@generateTodayTestPositiveExcel')->name('iedcr.generate-today-test-positive-excel');
+
+    Route::get('generate-avg-test-positive-excel', 'TestPositiveController@generateAvgTestPositiveExcel')->name('iedcr.generate-avg-test-positive-excel');
 });
 

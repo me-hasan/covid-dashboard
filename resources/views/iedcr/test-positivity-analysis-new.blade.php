@@ -84,16 +84,19 @@
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-avg-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>  
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Average Test Positivity Rate</h4>
-                  <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
+                  <h2 class="text-success">{{ number_format($avg_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Average # of Performed Tests</h4>
-                  <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
+                  <h2 class="text-success">{{ $avg_number_of_test }}</h2>
                 </div>
               </div>
             </div>
@@ -188,7 +191,10 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Test Positivity for Asymptomatic Patients</h3>
-                <div class="card-options"> <!-- <i class="fa fa-table mr-2 text-success"></i> --> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-asymptomic-test-positive-rate-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div id="time-series-trend"></div>
@@ -373,7 +379,8 @@
         },
         
         xAxis: {
-          categories: ["21\/07\/2020","22\/07\/2020","23\/07\/2020","24\/07\/2020","25\/07\/2020","26\/07\/2020","27\/07\/2020","28\/07\/2020","29\/07\/2020","30\/07\/2020","31\/07\/2020","01\/08\/2020","02\/08\/2020","03\/08\/2020","04\/08\/2020","05\/08\/2020","06\/08\/2020","07\/08\/2020","08\/08\/2020","09\/08\/2020"]       },
+          categories: <?php echo json_encode($asymptomicTestPositiveDate);?>       
+        },
         
         yAxis: {
           title: {
@@ -382,7 +389,8 @@
           labels: {
             //enabled: false,
             formatter: function() {
-               return this.value+'%';
+               return this.value;
+               // return this.value+'%';
             }
           }
         },
@@ -403,7 +411,7 @@
         
         colors: ['#ef4b4b'],
         
-        series: [{"type":"area","name":"Test Positivity Rate","data":[5.6,4.3,12.21,7.83,5.36,4.65,5.17,4.58,3.66,4.9,4.88,3.7,5.03,4.22,2.49,2.77,2.18,2,2.33,1.8],"marker":{"symbol":"circle"}}]    
+        series: [{"type":"area","name":"Test Positivity Rate","data":[<?php echo $asymptomicTestPositiveData;?>],"marker":{"symbol":"circle"}}]    
 
     });
     </script>
