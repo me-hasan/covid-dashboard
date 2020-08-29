@@ -388,11 +388,20 @@
 
             $(".map_click_2").on('click', function (){
                 var districtId = $(this).attr('id');
+                if (typeof(Storage) !== "undefined") {
+                    if (sessionStorage.row_2_districtId) {
+                        $("#" + sessionStorage.row_2_districtId).find('path').css({fill: sessionStorage.row_2_districtColor});
+                    }
+                    sessionStorage.row_2_districtId = districtId;
+                    sessionStorage.row_2_districtColor = $(this).find('path').attr('fill');
+                } else {
+                    $('.fill_color').css({fill:"#FCAA94"});
+                }
                 var district = districtId.replace("two_", "");
                 InfectedCaseData_ajax_call(district);
-                $('.fill_color').css({ fill: "#FCAA94" });
+             //   $('.fill_color').css({fill:"#FCAA94"});
                 $(this).find('path').addClass('fill_color');
-                $(this).find('path').attr('fill','#705ec8');
+                $(this).find('path').css({fill:"#705ec8"});
             })
 
             function InfectedCaseData_ajax_call(district){
@@ -414,12 +423,12 @@
                             var genderData = data.gender_wise_infected_data;
                             var ageWiseInfectData = data.age_wise_infected_data;
                             var timeseriesDate = data.ininfectedTrend_date;
-                            var ininfectedTrend_date = data.timeseriesDate;
+                            var infectedTrend_data = data.infectedTrend_data;
                             var div_name = data.div_name;
                             var div_data = data.div_data;
                             caseByGender(genderData[0],genderData[1]);
                             death_by_age(ageWiseInfectData);
-                            timeSeriesData(timeseriesDate,ininfectedTrend_date);
+                            timeSeriesData(timeseriesDate,infectedTrend_data);
                             case_by_age(div_name, div_data);
                         } else {
                             alert("Something Went Wrong");
@@ -478,7 +487,7 @@
                 });
             }
 
-            function timeSeriesData(timeseries_Date,ininfectedTrend_data) {
+            function timeSeriesData(timeseries_Date,infectedTrend_data) {
                 Highcharts.chart('time-seris-graph', {
                     chart: {
                         height: 200
@@ -534,7 +543,7 @@
 
                     colors: ['#ffab00', '#38cb89', '#ef4b4b', '#5323a7'],
 
-                    series: [{"type":"area","name":"INFECTED","data":ininfectedTrend_data,"marker":{"symbol":"circle"}}]			});
+                    series: [{"type":"area","name":"INFECTED","data":infectedTrend_data,"marker":{"symbol":"circle"}}]			});
             }
 
             function death_by_age(ageWiseInfectData) {

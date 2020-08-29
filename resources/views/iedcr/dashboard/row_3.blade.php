@@ -272,11 +272,19 @@ $inputData = request()->all();
 
             $(".map_click_3").on('click', function (){
                 var districtId = $(this).attr('id');
+                if (typeof(Storage) !== "undefined") {
+                    if(sessionStorage.row_3_districtId) {
+                        $("#"+sessionStorage.row_3_districtId).find('path').css({fill:sessionStorage.row_3_districtColor});
+                    }
+                    sessionStorage.row_3_districtId = districtId;
+                    sessionStorage.row_3_districtColor = $(this).find('path').attr('fill');
+                } else {
+                    $('.fill_color').css({fill:"#FCAA94"});
+                }
                 var district = districtId.replace("three_", "");
                 test_positivity_ajax_call(district);
-                $('.fill_color').css({ fill: "#FCAA94" });
                 $(this).find('path').addClass('fill_color');
-                $(this).find('path').attr('fill','#705ec8');
+                $(this).find('path').css({fill:"#705ec8"});
             })
 
             function test_positivity_ajax_call(district) {

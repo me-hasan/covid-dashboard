@@ -1,7 +1,14 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Conformance Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.conformance_analysis') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
-<?php 
+<?php
   $sd_1='';
   $ss_1='';
   $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-conformance-analysis')->get();

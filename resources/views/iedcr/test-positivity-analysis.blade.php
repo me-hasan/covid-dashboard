@@ -1,5 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Test Positivity Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.dashboard') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
 
   <?php
@@ -13,7 +20,7 @@
     $tpr_data = \Illuminate\Support\Facades\DB::table('tpr_data')
                 ->where('date', DB::raw("(select max(date) from tpr_data)"))
                 ->orderBy('id', 'ASC')->get();
-    
+
 
     $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-test-positivity-analysis')->get();
     foreach ($data_source_description as $row) {
@@ -134,7 +141,7 @@
                                             </thead>
                                             <tbody>
                                             <?php foreach($tpr_data as $row){  ?>
-                                            
+
                                             <tr>
                                                 <td>{{$row->district}}</td>
                                                 <td>-</td>
@@ -192,12 +199,12 @@
 
     <script type="text/javascript">
         /* Time Seris Graph */
-        <?php 
+        <?php
 
             $date_arr = $tp_arr = array();
 
             foreach($tpr_national_testpositivity_trend as $row){
-                
+
               $date_arr[] = date('d\/m\/Y', strtotime($row->date));
               $tp_arr[] = number_format($row->test_positivity_rate, 2, '.', '');
             }
@@ -230,7 +237,7 @@
 
             xAxis: {
                 categories: <?php echo json_encode($date_arr);?>
-              
+
             },
 
             yAxis: {
@@ -279,8 +286,8 @@
                                 break;
                             }
                         }
-            
-            
+
+
             ?>
             $('#<?php echo $row->district; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php

@@ -1,5 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Test Positivity Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.test_positivity_analysis') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
 
   <?php
@@ -14,7 +21,7 @@
     $tpr_data = \Illuminate\Support\Facades\DB::table('tpr_data')
                 ->where('date', DB::raw("(select max(date) from tpr_data)"))
                 ->orderBy('id', 'ASC')->get();
-    
+
 
     $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-test-positivity-analysis')->get();
     foreach ($data_source_description as $row) {
@@ -102,8 +109,8 @@
             </div>
           </div>
         </div>
-        <!-- End Row-1 --> 
-        
+        <!-- End Row-1 -->
+
         <!-- Row-2 -->
         <div class="row">
           <div class="col-xl-12 col-md-12">
@@ -116,9 +123,11 @@
               </div>
               <div class="card-body">
                 <div class="row mt-4">
+
                   <div class="col-lg-4"> 
                        <!-- @include('iedcr.bd-map-html') -->
                        @include('iedcr.dashboard.test-positivity-page-map')
+
                   </div>
                   <div class="col-lg-8">
                     <div class="expanel expanel-default">
@@ -135,8 +144,10 @@
                               </tr>
                             </thead>
                             <tbody>
+
                               <?php foreach($geoLocationWiseTestPositivity as $row){  ?>
                                             
+
                                   <tr>
                                       <td>{{$row->District}}</td>
                                       <td>{{ date('Y-m-d', strtotime($row->Date)) ?? '-'}}</td>
@@ -161,8 +172,8 @@
             </div>
           </div>
         </div>
-        <!-- End Row-2 --> 
-        
+        <!-- End Row-2 -->
+
         <!-- Row-3 -->
         <div class="row">
           <div class="col-xl-12 col-md-12">
@@ -186,8 +197,8 @@
             </div>
           </div>
         </div>
-        <!-- End Row-3 --> 
-        
+        <!-- End Row-3 -->
+
         <!-- Row-4 -->
         <div class="row">
           <div class="col-xl-8 col-lg-8 col-md-12">
@@ -263,7 +274,7 @@
             </div>
           </div>
         </div>
-        <!-- End Row-4 --> 
+        <!-- End Row-4 -->
     <!-- End Row-3 -->
 @endsection
 
@@ -271,6 +282,7 @@
 
     <script type="text/javascript">
         /* Time Seris Graph */
+
 
         Highcharts.chart('test-positivity-trend', {
             chart: {
@@ -296,8 +308,10 @@
             },
 
             xAxis: {
+
                 categories: <?php echo json_encode($testPositiveDate);?>
               
+
             },
 
             yAxis: {
@@ -340,6 +354,7 @@
               $str=$row->District;
               $str='three_'.$row->District;
 
+
               foreach($_colorCodes as $_colorRange => $_colorCode){
                   if($row->test_positivity <= $_colorRange){
                       $_groupColorCode = $_colorCode;
@@ -347,6 +362,7 @@
                       break;
                   }
               }
+
             ?>
             $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
@@ -377,22 +393,23 @@
         subtitle: {
           text: ''
         },
-        
+
         legend: {
           enabled:false,
           layout: 'horizontal',
           align: 'center',
           verticalAlign: 'top'
         },
-        
+
         credits:{
           enabled:false
         },
-        
+
         xAxis: {
+
           categories: <?php echo json_encode($asymptomicTestPositiveDate);?>       
         },
-        
+
         yAxis: {
           title: {
             text: ''
@@ -405,7 +422,7 @@
             }
           }
         },
-        
+
         plotOptions: {
           series: {
             fillOpacity:0,
@@ -419,10 +436,11 @@
             }
           }
         },
-        
+
         colors: ['#ef4b4b'],
-        
+
         series: [{"type":"area","name":"Test Positivity Rate","data":[<?php echo $asymptomicTestPositiveData;?>],"marker":{"symbol":"circle"}}]    
+
 
     });
     </script>

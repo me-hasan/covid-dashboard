@@ -1239,27 +1239,30 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
             $_ageWiseInfectData[] = isset($infectedAge->_60_Plus) ? (float)$infectedAge->_60_Plus : 0;
             $date_arr = $infected_arr =  array();
 
-            if($ininfectedTrend && $ininfectedTrend != '' &&count($ininfectedTrend)) {
+            if($ininfectedTrend && $ininfectedTrend != '' && count($ininfectedTrend)) {
                 foreach($ininfectedTrend as $row){
 
                     $date_arr[] = date('d\/m\/Y', strtotime($row->Date));
-                    $infected_arr[] = $row->infected_count;
+                    $infected_arr[] = (double)$row->infected_count;
                 }
             }
 
             $div_name = $div_data = array();
 
-            foreach($ininfectedPopulation as $row){
+            if($ininfectedPopulation != "" && count($ininfectedPopulation)) {
 
-                $div_name[] = $row->zone; //  need to be dynamic
-                $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
+                foreach($ininfectedPopulation as $row){
 
+                    $div_name[] = $row->zone; //  need to be dynamic
+                    $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
+
+                }
             }
 
             $infected = implode(",", $infected_arr);
 
             /*dd(json_encode($_ageWiseInfectData));*/
-            $result['infectedTrend_data'] = $infected;
+            $result['infectedTrend_data'] = $infected_arr;
             $result['ininfectedTrend_date'] = $date_arr;
             $result['infectedTrend_string'] = $infected;
             $result['gender_wise_infected_data'] = $_genderWiseInfectData;
@@ -1268,9 +1271,10 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
             $result['div_name'] = $div_name;
             $result['div_data'] = $div_data;
             $result['status'] = 'success';
+
         }catch (\Exception $exception) {
             $result['status'] = 'failed';
-            \Log::error('National Infected Case Data:'. $exception->getMessage().'---'.$exception->getFile());
+            \Log::error('National Infected Case Data:'. $exception->getMessage().'---'.$exception->getFile().'---'.$exception->getLine());
         }
 
       return $result;
