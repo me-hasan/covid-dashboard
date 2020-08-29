@@ -1,7 +1,14 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Syndromic Surveillance')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.syndromic_surveillance') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
-<?php 
+<?php
 ini_set('error_reporting', 0);
 $_rawDataSet = $_nationalLevelDataSet = $_mobilityTypeData = array();
 $_ss_infoData = \Illuminate\Support\Facades\DB::table('ss_data')->get();

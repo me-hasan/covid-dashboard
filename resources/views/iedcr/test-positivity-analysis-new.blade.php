@@ -1,5 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Test Positivity Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.test_positivity_analysis') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
 
   <?php
@@ -13,7 +20,7 @@
     $tpr_data = \Illuminate\Support\Facades\DB::table('tpr_data')
                 ->where('date', DB::raw("(select max(date) from tpr_data)"))
                 ->orderBy('id', 'ASC')->get();
-    
+
 
     $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-test-positivity-analysis')->get();
     foreach ($data_source_description as $row) {
@@ -92,8 +99,8 @@
             </div>
           </div>
         </div>
-        <!-- End Row-1 --> 
-        
+        <!-- End Row-1 -->
+
         <!-- Row-2 -->
         <div class="row">
           <div class="col-xl-12 col-md-12">
@@ -104,7 +111,7 @@
               </div>
               <div class="card-body">
                 <div class="row mt-4">
-                  <div class="col-lg-4"> 
+                  <div class="col-lg-4">
                        @include('iedcr.bd-map-html')
                   </div>
                   <div class="col-lg-8">
@@ -123,7 +130,7 @@
                             </thead>
                             <tbody>
                               <?php foreach($tpr_data as $row){  ?>
-                                            
+
                                   <tr>
                                       <td>{{$row->district}}</td>
                                       <td>-</td>
@@ -148,8 +155,8 @@
             </div>
           </div>
         </div>
-        <!-- End Row-2 --> 
-        
+        <!-- End Row-2 -->
+
         <!-- Row-3 -->
         <div class="row">
           <div class="col-xl-12 col-md-12">
@@ -173,8 +180,8 @@
             </div>
           </div>
         </div>
-        <!-- End Row-3 --> 
-        
+        <!-- End Row-3 -->
+
         <!-- Row-4 -->
         <div class="row">
           <div class="col-xl-8 col-lg-8 col-md-12">
@@ -237,7 +244,7 @@
             </div>
           </div>
         </div>
-        <!-- End Row-4 --> 
+        <!-- End Row-4 -->
     <!-- End Row-3 -->
 @endsection
 
@@ -245,12 +252,12 @@
 
     <script type="text/javascript">
         /* Time Seris Graph */
-        <?php 
+        <?php
 
             $date_arr = $tp_arr = array();
 
             foreach($tpr_national_testpositivity_trend as $row){
-                
+
               $date_arr[] = date('d\/m\/Y', strtotime($row->date));
               $tp_arr[] = number_format($row->test_positivity_rate, 2, '.', '');
             }
@@ -283,7 +290,7 @@
 
             xAxis: {
                 categories: <?php echo json_encode($date_arr);?>
-              
+
             },
 
             yAxis: {
@@ -332,8 +339,8 @@
                                 break;
                             }
                         }
-            
-            
+
+
             ?>
             $('#<?php echo $row->district; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
@@ -365,21 +372,21 @@
         subtitle: {
           text: ''
         },
-        
+
         legend: {
           enabled:false,
           layout: 'horizontal',
           align: 'center',
           verticalAlign: 'top'
         },
-        
+
         credits:{
           enabled:false
         },
-        
+
         xAxis: {
           categories: ["21\/07\/2020","22\/07\/2020","23\/07\/2020","24\/07\/2020","25\/07\/2020","26\/07\/2020","27\/07\/2020","28\/07\/2020","29\/07\/2020","30\/07\/2020","31\/07\/2020","01\/08\/2020","02\/08\/2020","03\/08\/2020","04\/08\/2020","05\/08\/2020","06\/08\/2020","07\/08\/2020","08\/08\/2020","09\/08\/2020"]       },
-        
+
         yAxis: {
           title: {
             text: ''
@@ -391,7 +398,7 @@
             }
           }
         },
-        
+
         plotOptions: {
           series: {
             fillOpacity:0,
@@ -405,10 +412,10 @@
             }
           }
         },
-        
+
         colors: ['#ef4b4b'],
-        
-        series: [{"type":"area","name":"Test Positivity Rate","data":[5.6,4.3,12.21,7.83,5.36,4.65,5.17,4.58,3.66,4.9,4.88,3.7,5.03,4.22,2.49,2.77,2.18,2,2.33,1.8],"marker":{"symbol":"circle"}}]    
+
+        series: [{"type":"area","name":"Test Positivity Rate","data":[5.6,4.3,12.21,7.83,5.36,4.65,5.17,4.58,3.66,4.9,4.88,3.7,5.03,4.22,2.49,2.77,2.18,2,2.33,1.8],"marker":{"symbol":"circle"}}]
 
     });
     </script>
