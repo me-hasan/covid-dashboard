@@ -1,5 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Risk Zone Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.risk_zone_analysis') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
     <?php
     use Carbon\Carbon;ini_set('error_reporting', 0);
