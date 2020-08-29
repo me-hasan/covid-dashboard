@@ -179,17 +179,17 @@
                             </tr>
                             <tr>
                                 <td>Dhaka City</td>
-                                <th>7037</th>
-                                <td>4794</td>
-                                <th>307</th>
-                                <td>97</td>
+                                <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
+                                <td>{{$dhaka_hospital->Admitted_General_Beds}}</td>
+                                <th>{{$dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds}}</th>
+                                <td>{{$dhaka_hospital->Admitted_ICU_Beds}}</td>
                             </tr>
                             <tr>
                                 <td>Chittagong City</td>
-                                <th>782</th>
-                                <td>562</td>
-                                <th>39</th>
-                                <td>18</td>
+                                <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
+                                <td>{{$ctg_hospital->Admitted_General_Beds}}</td>
+                                <th>{{$ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds}}</th>
+                                <td>{{$ctg_hospital->Admitted_ICU_Beds}}</td>
                             </tr>
                             <tr>
                                 <td>Others</td>
@@ -301,7 +301,7 @@
 </div>
 
 @push('custom_script')
-<script>
+<script type="text/javascript">
     Highcharts.chart('hospital_general_beds', {
         chart: {
             type: 'pie',
