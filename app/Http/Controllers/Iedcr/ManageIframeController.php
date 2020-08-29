@@ -39,7 +39,8 @@ class ManageIframeController extends Controller
     }
     public function syndromic_surveillance() {
         return view('iedcr.syndromic-surveillance');
-    } public function test_positivity_analysis() {
-        return view('iedcr.test-positivity-analysis-new');
-    }
+    } 
+    // public function test_positivity_analysis() {
+    //     return view('iedcr.test-positivity-analysis-new');
+    // }
 }

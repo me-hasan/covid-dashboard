@@ -14,6 +14,7 @@
     $sd_1=$sd_2=$sd_3='';
     $ss_1=$ss_2=$ss_3='';
     $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
+
     $tpr_national_testpositivity_trend = \Illuminate\Support\Facades\DB::table('tpr_national_testpositivity_trend')->get();
     $tpr_today = \Illuminate\Support\Facades\DB::table('tpr_today')->orderBy('id', 'DESC')->first();
     $tpr_average = \Illuminate\Support\Facades\DB::table('tpr_average')->orderBy('id', 'DESC')->first();
@@ -45,7 +46,10 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Test Positivity Rate</h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-test-positive-rate-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div id="test-positivity-trend"></div>
@@ -69,31 +73,37 @@
           <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-today-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                  <h2 class="text-success">{{ number_format($tpr_today->test_positivity_rate, 2, '.', '')  }}%</h2>
+                  <h2 class="text-success">{{ number_format($today_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Number of Performed Tests</h4>
-                  <h2 class="text-success">{{ $tpr_today->total_tests }}</h2>
+                  <h2 class="text-success">{{ $today_number_of_test }}</h2>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-avg-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>  
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Average Test Positivity Rate</h4>
-                  <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
+                  <h2 class="text-success">{{ number_format($avg_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Average # of Performed Tests</h4>
-                  <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
+                  <h2 class="text-success">{{ $avg_number_of_test }}</h2>
                 </div>
               </div>
             </div>
@@ -107,12 +117,17 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Geo Location Wise Test Positivity Rate​</h3>
-                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <a href="{{route('iedcr.generate-geo-location-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
+                </div>
               </div>
               <div class="card-body">
                 <div class="row mt-4">
-                  <div class="col-lg-4">
-                       @include('iedcr.bd-map-html')
+
+                  <div class="col-lg-4"> 
+                       <!-- @include('iedcr.bd-map-html') -->
+                       @include('iedcr.dashboard.test-positivity-page-map')
+
                   </div>
                   <div class="col-lg-8">
                     <div class="expanel expanel-default">
@@ -129,12 +144,14 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <?php foreach($tpr_data as $row){  ?>
+
+                              <?php foreach($geoLocationWiseTestPositivity as $row){  ?>
+                                            
 
                                   <tr>
-                                      <td>{{$row->district}}</td>
-                                      <td>-</td>
-                                      <td>{{$row->total}}</td>
+                                      <td>{{$row->District}}</td>
+                                      <td>{{ date('Y-m-d', strtotime($row->Date)) ?? '-'}}</td>
+                                      <td>{{$row->total_test}}</td>
                                       <td>{{$row->positive}}</td>
                                       <td>{{ number_format($row->test_positivity,2) }}</td>
                                   </tr>
@@ -188,7 +205,10 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Test Positivity for Asymptomatic Patients</h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-asymptomic-test-positive-rate-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div id="time-series-trend"></div>
@@ -212,33 +232,43 @@
           <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <!-- <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3> -->
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-today-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Today’s Test Positivity Rate</h4>
-                  <h2 class="text-success">{{$tpr_today->test_positivity_rate}}%</h2>
+                  <h2 class="text-success">{{ number_format($today_asymptomic_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Number of Performed Tests</h4>
-                  <h2 class="text-success">{{$tpr_today->total_tests}}</h2>
+                  <h2 class="text-success">{{$today_asymptomic_number_of_test}}</h2>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} </h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <!-- <h3 class="card-title text-ash" style="font-size: 12px;">
+                  Data Date: 
+                  {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - 
+                  {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} 
+                </h3> -->
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
+                  <a href="{{route('iedcr.generate-avg-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
                   <h4 class="text-ash">Average Test Positivity Rate</h4>
-                  <h2 class="text-success">{{ number_format($tpr_average->avg_positivity_rate, 2, '.', '')  }}%</h2>
+                  <h2 class="text-success">{{ number_format($avg_asymptomic_test_positive_rate, 2, '.', '')  }}%</h2>
                 </div>
                 <div class="card-body text-center border-0">
                   <h4 class="text-ash">Average # of Performed Tests</h4>
-                  <h2 class="text-success">{{ $tpr_average->avg_total_test }}</h2>
+                  <h2 class="text-success">{{ $avg_asymptomic_number_of_test }}</h2>
                 </div>
               </div>
             </div>
@@ -252,19 +282,8 @@
 
     <script type="text/javascript">
         /* Time Seris Graph */
-        <?php
 
-            $date_arr = $tp_arr = array();
 
-            foreach($tpr_national_testpositivity_trend as $row){
-
-              $date_arr[] = date('d\/m\/Y', strtotime($row->date));
-              $tp_arr[] = number_format($row->test_positivity_rate, 2, '.', '');
-            }
-
-            $tp_rate = implode(",", $tp_arr);
-
-        ?>
         Highcharts.chart('test-positivity-trend', {
             chart: {
                 height: 330
@@ -289,7 +308,9 @@
             },
 
             xAxis: {
-                categories: <?php echo json_encode($date_arr);?>
+
+                categories: <?php echo json_encode($testPositiveDate);?>
+              
 
             },
 
@@ -321,33 +342,33 @@
 
             colors: ['#ef4b4b'],
 
-            series: [{"type":"area","name":"TEST POSITIVITY RATE","data":[<?php echo $tp_rate;?>],"marker":{"symbol":"circle"}}]
+            series: [{"type":"area","name":"TEST POSITIVITY RATE","data":[<?php echo $testPositiveData;?>],"marker":{"symbol":"circle"}}]
         });
 
         // Map JS Data
         $(document).ready(function(){
-            /* <?php print_r($_districtWiseData); ?> */
             <?php
             $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '30' => '#F37366', '50' => '#E5515D', '75' => '#CD3E52', '100' => '#ed2355');
             $_existDataGroups = array();
-            foreach($tpr_data as $row){
+            foreach($geoLocationWiseTestPositivity as $row){
+              $str=$row->District;
+              $str='three_'.$row->District;
 
-                foreach($_colorCodes as $_colorRange => $_colorCode){
-                            if($row->test_positivity <= $_colorRange){
-                                $_groupColorCode = $_colorCode;
-                                $_existDataGroups[$_colorRange] = $_colorCode;
-                                break;
-                            }
-                        }
 
+              foreach($_colorCodes as $_colorRange => $_colorCode){
+                  if($row->test_positivity <= $_colorRange){
+                      $_groupColorCode = $_colorCode;
+                      $_existDataGroups[$_colorRange] = $_colorCode;
+                      break;
+                  }
+              }
 
             ?>
-            $('#<?php echo $row->district; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
             }
             ?>
 
-            /* <?php print_r($_existDataGroups); ?> */
             <?php
             $_groupColorData = NULL;
             $_startData = 0;
@@ -385,7 +406,9 @@
         },
 
         xAxis: {
-          categories: ["21\/07\/2020","22\/07\/2020","23\/07\/2020","24\/07\/2020","25\/07\/2020","26\/07\/2020","27\/07\/2020","28\/07\/2020","29\/07\/2020","30\/07\/2020","31\/07\/2020","01\/08\/2020","02\/08\/2020","03\/08\/2020","04\/08\/2020","05\/08\/2020","06\/08\/2020","07\/08\/2020","08\/08\/2020","09\/08\/2020"]       },
+
+          categories: <?php echo json_encode($asymptomicTestPositiveDate);?>       
+        },
 
         yAxis: {
           title: {
@@ -394,7 +417,8 @@
           labels: {
             //enabled: false,
             formatter: function() {
-               return this.value+'%';
+               return this.value;
+               // return this.value+'%';
             }
           }
         },
@@ -415,7 +439,8 @@
 
         colors: ['#ef4b4b'],
 
-        series: [{"type":"area","name":"Test Positivity Rate","data":[5.6,4.3,12.21,7.83,5.36,4.65,5.17,4.58,3.66,4.9,4.88,3.7,5.03,4.22,2.49,2.77,2.18,2,2.33,1.8],"marker":{"symbol":"circle"}}]
+        series: [{"type":"area","name":"Test Positivity Rate","data":[<?php echo $asymptomicTestPositiveData;?>],"marker":{"symbol":"circle"}}]    
+
 
     });
     </script>
