@@ -2,8 +2,7 @@
     $divisions = DB::table('upazila')->distinct()->get('division');
 @endphp
 
-<div class="d-flex order-lg-2 ml-auto">
-    <form action="{{ route('iedcr.dashboard') }}" class="d-flex order-lg-12 ml-auto">
+
         <div class="form-group mb-0 mt-3">
             <div class="custom-controls-stacked d-flex">
                 <label class="custom-control custom-radio mr-2">
@@ -68,8 +67,7 @@
                 </div>
             </div>
         </div>
-    </form>
-</div>
+
 
 
 @push('custom_script')

@@ -1,5 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Corona Tracing Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.corona_tracing_analysis') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
 <?php
   $sd_1=$sd_2=$sd_3='';

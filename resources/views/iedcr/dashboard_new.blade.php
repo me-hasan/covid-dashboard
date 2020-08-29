@@ -1,36 +1,40 @@
 @extends('iedcr.default')
 @section('search_view')
-    @include('iedcr.search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.dashboard') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
 @endsection
 @section('content')
 
-<!-- Row-1 -->
-@include('iedcr.dashboard.row_1')
-<!-- End Row-1 -->
+    <!-- Row-1 -->
+    @include('iedcr.dashboard.row_1')
+    <!-- End Row-1 -->
 
-<!-- Row-2 -->
-@include('iedcr.dashboard.row_2')
-<!-- End Row-2 -->
+    <!-- Row-2 -->
+    @include('iedcr.dashboard.row_2')
+    <!-- End Row-2 -->
 
-<!-- Row-3 -->
-@include('iedcr.dashboard.row_3')
-<!-- End Row-3 -->
+    <!-- Row-3 -->
+    @include('iedcr.dashboard.row_3')
+    <!-- End Row-3 -->
 
-<!-- Row-4 -->
-@include('iedcr.dashboard.row_4')
-<!-- End Row-4 -->
+    <!-- Row-4 -->
+    @include('iedcr.dashboard.row_4')
+    <!-- End Row-4 -->
 
-<!-- Row-5 -->
-@include('iedcr.dashboard.row_5')
-<!-- End Row-5 -->
+    <!-- Row-5 -->
+    @include('iedcr.dashboard.row_5')
+    <!-- End Row-5 -->
 
-<!-- Row-6 -->
-@include('iedcr.dashboard.row_6')
-<!-- End Row-6 -->
+    <!-- Row-6 -->
+    @include('iedcr.dashboard.row_6')
+    <!-- End Row-6 -->
 
-<!-- Row-7 -->
-@include('iedcr.dashboard.row_7')
-<!-- End Row -7 -->
+    <!-- Row-7 -->
+    @include('iedcr.dashboard.row_7')
+    <!-- End Row -7 -->
 
 
 
@@ -56,12 +60,12 @@
                 var barChartDataSource = [{
                     name: 'Infected',
                     data: [
-                        <?php
-                          foreach($hda_time_series as $row){
+                            <?php
+                            foreach($hda_time_series as $row){
 
-                              $date_arr = date('d-M', strtotime($row->date));
-                        ?>
-                              ["<?=$date_arr?>",<?=$row->infected?>],
+                            $date_arr = date('d-M', strtotime($row->date));
+                            ?>
+                        ["<?=$date_arr?>",<?=$row->infected?>],
 
                         <?php  } ?>
 
@@ -72,14 +76,14 @@
             }else if(modalType == 'line'){
                 <?php
 
-                  $div_arr = $infected_arr =  array();
+                $div_arr = $infected_arr =  array();
 
-                  foreach($hda_population_wise_infected as $row){
+                foreach($hda_population_wise_infected as $row){
 
-                      $div_arr[] = $row->division;
-                      $infected_arr[] = $row->total_infected;
-                  }
-                    $infected = implode(",", $infected_arr);
+                    $div_arr[] = $row->division;
+                    $infected_arr[] = $row->total_infected;
+                }
+                $infected = implode(",", $infected_arr);
 
                 ?>
 

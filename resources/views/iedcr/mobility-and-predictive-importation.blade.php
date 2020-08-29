@@ -1,5 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Mobility And Predictive Importation')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.mobility_and_predictive_importation') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
     <?php
     ini_set('error_reporting', 0);
