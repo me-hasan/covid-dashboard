@@ -1074,6 +1074,8 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
     $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
     SUM(alocatedGeneralBed) AS 'General_Beds',
     SUM(alocatedICUBed) AS 'ICU_Beds',
+    SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+    SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
     ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
     ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
 
@@ -1222,7 +1224,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
             $ininfectedPopulation = $this->divDistUpaInfectedPopulation($request);
             $infectedAge = $this->upazillaLevelInfectedAge($request);
             $infectedGender = $this->upazillaLevelInfectedGender($request);
-            $ininfectedTrend = $this->nationalInfectedTrend($request);
+            $ininfectedTrend = $this->divDislInfectedTrend($request);
 
             $_genderWiseInfectData = array();
 
