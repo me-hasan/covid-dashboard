@@ -1,7 +1,14 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Conformance Analysis')
+@section('search_view')
+    <div class="d-flex order-lg-2 ml-auto">
+        <form action="{{ route('iedcr.conformance_analysis') }}" class="d-flex order-lg-12 ml-auto">
+            @include('iedcr.search_view')
+        </form>
+    </div>
+@endsection
 @section('content')
-<?php 
+<?php
   $sd_1='';
   $ss_1='';
   $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-conformance-analysis')->get();
@@ -69,15 +76,15 @@
           </div>
         </div>
         <!-- End Row-1 -->
-        
+
         <div class="row">
           <div class="col-xl-12 col-md-12">
             <div id="iframeData" class="text-center"></div>
           </div>
         </div>
-        
+
         <!-- Row-3 -->
-        
+
         <div class="row d-none">
           <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card">
@@ -98,11 +105,11 @@
             </div>
           </div>
         </div>
-        
-        <!-- End Row-3 --> 
-        
+
+        <!-- End Row-3 -->
+
         <!-- Row-2 -->
-        
+
         <div class="row d-none">
           <div class="col-xl-12 col-md-12">
             <div class="card">
@@ -167,7 +174,7 @@
             </div>
           </div>
         </div>
- 
+
 @endsection
 
 @section('scripts')
@@ -175,17 +182,17 @@
 <script type="text/javascript">
       // Age Wise Death Distribution
 
-      <?php 
+      <?php
         $camera_no_arr = $masked_arr = array();
-      
+
           foreach($con_barchart_data as $row){
-            
+
                 $camera_no_arr[] = $row->camera_no;
                 $masked_arr[] = (float)$row->masked;
           }
           $camera_no = implode(",",$camera_no_arr);
           $masked = implode(",",$masked_arr);
-        
+
       ?>
             Highcharts.chart('camera-wise-barchart', {
         chart: {
@@ -229,11 +236,11 @@
         },
         colors: ['#ef4b4b'],
         series: [{"name":"Camera","data":[<?php echo $masked; ?>]}]     });
-    </script> 
+    </script>
     <!-- End Row-2 -->
 <script type="text/javascript">
             $(document).ready(function(){
-                $('#iframeData').html('<iframe width="933" height="525" src="https://www.youtube.com/embed/86WspkDtXrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');                
+                $('#iframeData').html('<iframe width="933" height="525" src="https://www.youtube.com/embed/86WspkDtXrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
             });
         </script>
 

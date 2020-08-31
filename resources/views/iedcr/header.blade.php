@@ -48,4 +48,12 @@
 
 <!-- Custom CSS by eGen -->
 <link id="theme" href="{{ asset('assets/css/custom.css?v=5') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .fill_color{
+            fill: #705ec8;
+        }
+        .stroke_color{
+            stroke:#705ec8;
+        }
+    </style>
 </head>

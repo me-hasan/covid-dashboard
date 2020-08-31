@@ -14,6 +14,7 @@ if(count($testPositivityByAge)) {
     }
 
 }
+//dd(json_encode($row_data));
 $genderWiseData = array();
 $maleData = 0;
 $femaleData = 0;
@@ -115,12 +116,12 @@ $inputData = request()->all();
             <div class="card-body">
                 <div class="card-body mt-3 text-center">
                     <h4 class="gray-600">Sample Collection to Test</h4>
-                    <h3 class="text-success">{!! round($avg_sample_to_test_lag_time,2) !!} Days</h3>
+                    <h3 class="text-success "><span class="avg_sample_test_lag">{!! round($avg_sample_to_test_lag_time,2) !!}</span> Days</h3>
                 </div>
                 <hr />
                 <div class="card-body mb-4 text-center">
                     <h4>Test to Result</h4>
-                    <h3 class="text-success">{!! round($avg_test_to_report_lag_time,2) !!} Days</h3>
+                    <h3 class="text-success"><span class="avg_sample_report_lag">{!! round($avg_test_to_report_lag_time,2) !!}</span> Days</h3>
                 </div>
                 <div class="card-body">
                     <div class="card-body">
@@ -233,16 +234,18 @@ $inputData = request()->all();
         });
 
     </script>
-    {{--<script type="text/javascript">
+
+    <script type="text/javascript">
         // Map JS Data
         $(document).ready(function(){
 
             <?php
             $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
             $_existDataGroups = array();
-            foreach($testPositivityByAge as $testPositivityVal){
+            foreach($testPositivityMap as $_mobInDistrictVal){
 
-            $str='three_'.$testPositivityVal->District;
+            $str=$_mobInDistrictVal->District;
+            $str='three_'.$_mobInDistrictVal->District;
             /*if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
                 $str='Cox';
             }elseif ($_mobInDistrictVal->District=='Narail') {
@@ -252,22 +255,164 @@ $inputData = request()->all();
             }*/
 
             $_groupColorCode = NULL;
-            /*foreach($_colorCodes as $_colorRange => $_colorCode){
-                if((int)$_mobInDistrictVal->Infected <= $_colorRange){
+            foreach($_colorCodes as $_colorRange => $_colorCode){
+                if((int)$_mobInDistrictVal->Test_Positivity <= $_colorRange){
                     $_groupColorCode = $_colorCode;
                     $_existDataGroups[$_colorRange] = $_colorCode;
                     break;
                 }
 
-            }*/
+            }
+
             ?>
             $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
             }
             ?>
 
+            $(".map_click_3").on('click', function (){
+                var districtId = $(this).attr('id');
+                if (typeof(Storage) !== "undefined") {
+                    if(sessionStorage.row_3_districtId) {
+                        $("#"+sessionStorage.row_3_districtId).find('path').css({fill:sessionStorage.row_3_districtColor});
+                    }
+                    sessionStorage.row_3_districtId = districtId;
+                    sessionStorage.row_3_districtColor = $(this).find('path').attr('fill');
+                } else {
+                    $('.fill_color').css({fill:"#FCAA94"});
+                }
+                var district = districtId.replace("three_", "");
+                test_positivity_ajax_call(district);
+                $(this).find('path').addClass('fill_color');
+                $(this).find('path').css({fill:"#705ec8"});
+            })
+
+            function test_positivity_ajax_call(district) {
+                var result;
+                var maleData;
+                var femaleData;
+                var test_positivity_age_data;
+                var url = new URL('{!! route('iedcr.test_positivity_data') !!}');
+                var search_params = url.searchParams;
+                search_params.append('district',district);
+                search_params.append('hierarchy_level','divisional');
+                $.ajax({
+
+                    type:"GET",
+                    url:url.toString(),
+                    success: function(data) {
+                        if(data.status == 'success'){
+                            maleData = data.maleData;
+                            femaleData = data.femaleData;
+                            test_positivity_age_data = data.test_positivity_age_data;
+                            testPositivityGenderData(maleData,femaleData);
+                            testPositivityAgeData(test_positivity_age_data);
+                            $('.avg_sample_test_lag').text(data.avg_sample_to_test_lag_time);
+                            $('.avg_sample_report_lag').text(data.avg_test_to_report_lag_time);
+                        } else {
+                            alert("Something Went Wrong");
+                        }
+                        result = data;
+                    }
+                });
+            }
+
+            function testPositivityGenderData(maleData,femaleData) {
+                Highcharts.chart('death_by_gender', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie',
+                        height: 180
+                    },
+                    title: {
+                        text: ''
+                    },
+                    credits:{
+                        enabled:false
+                    },
+                    legend:{
+                        enabled:true,
+                        labelFormatter: function () {
+                            return this.name+': <b> '+this.y + '%</b>';
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    colors: ['#ffa600', '#00ffcb'],
+                    series: [{
+                        name: 'Infected',
+                        colorByPoint: true,
+                        data:  [{"name":"Male","y":maleData},{"name":"Female","y":femaleData}]
+                    }]
+                });
+            }
+
+            function testPositivityAgeData(test_positivity_age_data){
+
+                Highcharts.chart('test_positivity_rate', {
+                    chart: {
+                        type: 'column',
+                        height: 180
+                    },
+                    title: {
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    credits:{
+                        enabled:false
+                    },
+                    legend:{
+                        enabled:false
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        },
+                        labels: {
+                            formatter: function() {
+                                return this.value+"%";
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: ["0-10","11--20","21-30","31-40","41-50","51-60","60+"]				},
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y}%</b>',
+                        /*valueSuffix: ' cm',
+                        shared: true*/
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    colors: ['#ef4b4b'],
+                    series: [{"name":"Death","data":test_positivity_age_data}]
+                });
+            }
 
 
         });
-    </script>--}}
+    </script>
 @endpush

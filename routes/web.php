@@ -32,7 +32,9 @@ Route::get('/dashboard', 'cabinet\DashboardController@covid24Hours')->name('dash
 Route::get('/dataframe', 'cabinet\DashboardController@dataFrameData')->name('cabinet.dataframe');
 
 // iedcr route
-
+/*get test positivity data*/
+Route::get('test-positivity-data','iedcr\IedcrDashboardController@getTestPositivityData')->name('iedcr.test_positivity_data')->middleware(['auth', 'permission:iedcr-dashboard']);
+Route::get('get-nationwide-infected-cases-data','iedcr\IedcrDashboardController@nationalInfectedCaseData')->name('iedcr.nationalInfectedCaseData')->middleware(['auth', 'permission:iedcr-dashboard']);
 Route::get('/iedcr/dashboard', 'iedcr\IedcrDashboardController@index')->name('iedcr.dashboard')->middleware(['auth', 'permission:iedcr-dashboard']);
 
 Route::get('/iedcr/generate-gender-excel', 'iedcr\IedcrDashboardController@generateInfectedGenderExcel')->name('iedcr.generate-gender-excel');
@@ -46,6 +48,12 @@ Route::get('/iedcr/generate-division-death-excel', 'iedcr\IedcrDashboardControll
 Route::get('/iedcr/generate-death-by-age-group-excel', 'iedcr\IedcrDashboardController@generateDeathByAgeGroupExcel')->name('iedcr.generate-death-by-age-group-excel');
 Route::get('/iedcr/generate-death-by-gender-excel', 'iedcr\IedcrDashboardController@generateDeathByGenderExcel')->name('iedcr.generate-death-by-gender-excel');
 
+//risk-zone analysis excel
+Route::get('/iedcr/zone-info-excel', 'iedcr\IedcrDashboardController@generateZoneInfoExcel')->name('iedcr.generate-zone-info-excel');
+Route::get('/iedcr/weekly-change-excel', 'iedcr\IedcrDashboardController@generateWeeklyChangeExcel')->name('iedcr.generate-weekly-change-excel');
+Route::get('/iedcr/weekly-last-zone', 'iedcr\IedcrDashboardController@generateLastZoneExcel')->name('iedcr.generate-last-zone-excel');
+Route::get('/iedcr/weekly-change-status', 'iedcr\IedcrDashboardController@generateChangeStatusExcel')->name('iedcr.generate-change-status-excel');
+Route::get('/iedcr/weekly-current-zone', 'iedcr\IedcrDashboardController@generateCurrentZoneExcel')->name('iedcr.generate-current-zone-excel');
 
 Route::prefix('admin')->group(function () {
     Route::get('division/districts','UserController@getDistrictFromDivision')->name('get-district-from-division');

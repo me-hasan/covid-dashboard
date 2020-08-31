@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\iedcr;
 
+use Carbon\Carbon;
 use DB;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -47,7 +48,7 @@ class IedcrDashboardController extends Controller
 
       $ininfectedMap = $this->divDisInfectedMap($request);
 
-      $ininfectedPopulation = $this->nationalInfectedPopulation($request->division);
+      $ininfectedPopulation = $this->divDistUpaInfectedPopulation($request);
     }else{
      // Nationwide Infected Gender Distribution
       $infectedGender = $this->nationalInfectedGender();
@@ -62,7 +63,6 @@ class IedcrDashboardController extends Controller
       // Nantionwide Infectd Person Population
       $ininfectedPopulation = $this->nationalInfectedPopulation();
     }
-
     //death case for map
     $row5_data['death_case_map'] = $this->deathCaseMap($request);
     $death_case_two_week = $this->deathCaseTwoWeek($request);
@@ -95,7 +95,7 @@ class IedcrDashboardController extends Controller
     $testPositivityByGender =  $this->testPositivitybyGender($request);
     $avgDelayTimeData =  $this->avgDelayTime($request);
     $nationalSynPredict = $this->nationalSyndromic($request);
-
+    $testPositivityMap = $this->testPositivityMap($request);
     $death_by_gender = $this->deathByGender();
     $row5_data['male_death_percentage'] = number_format((float)$death_by_gender['male_death_percentage'], 2, '.', '');
     $row5_data['female_death_percentage'] = number_format((float)$death_by_gender['female_death_percentage'], 2, '.', '');
@@ -108,7 +108,7 @@ class IedcrDashboardController extends Controller
           $mobility_list  = $this->nationWideMobilityInOut($request);
       }
 
-      $mobility_in = $mobility_out = $subscriber = [];
+      $mobilityDate = $mobility_in = $mobility_out = $subscriber = [];
 
       foreach ($mobility_list as $mobility) {
           $mobilityDate[] = $mobility->Calculated_date;
@@ -125,7 +125,7 @@ class IedcrDashboardController extends Controller
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
       'dhaka_hospital','ctg_hospital',
-      'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict'));
+      'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict','testPositivityMap'));
   }
 
   private function nationalInfectedGender()
@@ -158,7 +158,7 @@ class IedcrDashboardController extends Controller
 
     if($request->division && $request->district && $request->upazila){
       $getUpazillaLevelInfectedGender = DB::select("select Upazila, F, M from Div_Dist_Upz_Infected_Gender where Upazila like '%".$str_upa."%' group by Upazila;");
-    }elseif($request->division && $request->district){
+    }elseif($request->district){
       $getUpazillaLevelInfectedGender = DB::select("select District, F, M from Div_Dist_Upz_Infected_Gender where District like '%".$str_dis."%' group by District;");
     }elseif($request->division){
       $getUpazillaLevelInfectedGender = DB::select("select Division, F, M from Div_Dist_Upz_Infected_Gender where Division like '%".$request->division."%' group by Division;");
@@ -205,7 +205,7 @@ class IedcrDashboardController extends Controller
 
     if($request->division && $request->district && $request->upazila){
       $getUpazillaLevelInfectedAge = DB::select("select Upazila, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Upazila like '%".$str_upa."%' group by Upazila;");
-    }elseif($request->division && $request->district){
+    }elseif( $request->district){
       $getUpazillaLevelInfectedAge = DB::select("select District, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where District like '%".$str_dis."%' group by District;");
     }elseif($request->division){
       $getUpazillaLevelInfectedAge = DB::select("select Division, _0_10, _11_20, _21_30, _31_40, _41_50, _51_60, _60_Plus from Div_Dist_Upz_Infected_age where Division like '%".$request->division."%' group by Division;");
@@ -227,7 +227,7 @@ class IedcrDashboardController extends Controller
   private function divDislInfectedTrend($request)
   {
       $qry_str= " ";
-    
+
       if($request->from_date!=''){
         $qry_str= " AND DATE(Date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
@@ -242,15 +242,15 @@ class IedcrDashboardController extends Controller
        $str_upa= 'cox';
     }
 
-    
-      if($request->division && $request->district){
+
+      if( $request->district){
         $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date ");
       }elseif($request->division){
         $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(infected_person) as infected_count from div_dist_upz_infected_trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date ");
       }
-      
+
       return $getDivDisLevelInfectedTrend ?? '';
-    
+
 
   }
 
@@ -456,7 +456,7 @@ class IedcrDashboardController extends Controller
   /*test positivity start*/
     public function  testPositivitybyAge($request) {
 
-    
+
         $searchQuery = '';
         if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
             if($request->has('division') && $request->division != ''){
@@ -568,6 +568,45 @@ class IedcrDashboardController extends Controller
 
         return $testPositivesqlGenderQueryData;
 
+    }
+
+    public function testPositivityMap($request) {
+        $searchQuery = '';
+        if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+
+            if($request->has('district') && $request->district != ''){
+                $groupBy = 'district';
+                $district = $request->district;
+                if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                    $district= 'cox';
+                }
+                $searchQuery = " and  district like '%".$district."%' ";
+            }
+
+        }
+
+        if($searchQuery != '') {
+            $testPositivityMapSql = "select A.District, (A.Positive/B.Total)*100 as 'Test_Positivity' from
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Positive'
+from lab_clean_data
+where test_result='Positive' ". $searchQuery."  group by district) as A
+inner join
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Total'
+from lab_clean_data
+where test_result='Positive' or test_result='Negative' group by district) as B using(District)";
+        } else {
+            $testPositivityMapSql = "select A.District, (A.Positive/B.Total)*100 as 'Test_Positivity' from
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Positive'
+from lab_clean_data
+where test_result='Positive' group by district) as A
+inner join
+(select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Total'
+from lab_clean_data
+where test_result='Positive' or test_result='Negative' group by district) as B using(District)";
+        }
+
+        $testMapData = \Illuminate\Support\Facades\DB::select($testPositivityMapSql);
+        return $testMapData;
     }
 
     public function avgDelayTime($request) {
@@ -709,7 +748,7 @@ class IedcrDashboardController extends Controller
       } else {
           if($request->division && $request->district && $request->upazila){
               $mobility = DB::select("select Calculated_date, Division, District, Upazila, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Upazila like '%".$str_upa."%' group by Calculated_date, Upazila");
-          }elseif($request->division && $request->district){
+          }elseif($request->district){
               $mobility = DB::select("select Calculated_date, Division, District, sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where District like '%".$str_dis."%' group by Calculated_date, District");
           }elseif($request->division){
               $mobility = DB::select("select Calculated_date,Division,sum(mobility_in)  as 'mobility_in', sum(mobility_out) as 'mobility_out', sum(Num_subscriber) as 'Num_subscriber' from calculated_mobility where Division='".$request->division."' group by Calculated_date, Division");
@@ -820,7 +859,7 @@ class IedcrDashboardController extends Controller
 
   public function generateInfectedPerLacExcel(Request $request){
      if($request->division){
-        $per_pac_Data = $this->nationalInfectedPopulation($request->division);
+        $per_pac_Data = $this->divDistUpaInfectedPopulation($request);
      }else{
         $per_pac_Data = $this->nationalInfectedPopulation();
      }
@@ -829,13 +868,183 @@ class IedcrDashboardController extends Controller
       $data = [];
       if(sizeof($per_pac_Data) > 0){
           foreach ($per_pac_Data as $key => $row) {
-              $data[$i]['Division'] =  $row->Division;
+              $data[$i]['Division'] =  $row->zone;
               $data[$i]['Cases Per Lac'] =  number_format($row->Cases_Per_Lac,2);
               $i++;
           }
       }
      $list = collect($data);
       return (new FastExcel($list))->download('infected_per_lac.xlsx');
+  }
+
+  /**
+     * Generate risk analysis zone info
+     * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
+  public function generateZoneInfoExcel() {
+
+      $_zoneInfo   = \Illuminate\Support\Facades\DB::select("select A.id, A.Zone_Name, A.Current_Status, A.Last_Status, A.Total_Cases_14_Days, A.Declaration_Date from
+(select TABLE1.id as 'id', TABLE1.Zone_Name as 'Zone_Name', TABLE1.Current_Status as 'Current_Status',
+TABLE1.Last_Status as 'Last_Status', TABLE1.Confirmed_case as 'Total_Cases_14_Days', TABLE2.date_of_declaration as 'Declaration_Date'
+from (select t1.zone_map_id as 'id', t1.risk_zone_name_new as 'Zone_Name', t1.covid_zone as 'Current_Status', t2.covid_zone as 'Last_Status',
+t1.total_case_in_risk_zone_14_days as 'Confirmed_case' from
+(select zone_map_id, risk_zone_name_new, covid_zone, total_case_in_risk_zone_14_days from zone_details
+where date_of_declaration=(select max(date_of_declaration) from zone_details)) as t1
+inner join
+(select zone_map_id,covid_zone from zone_details where date_of_declaration=
+(SELECT date_of_declaration FROM
+(SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2)
+AS date_of_declaration ORDER BY date_of_declaration limit 1)) as t2
+using(zone_map_id)) as TABLE1 inner join
+(select zone_map_id, covid_zone, date_of_declaration from zone_details)
+as TABLE2 where TABLE2.zone_map_id = TABLE1.id
+ORDER BY TABLE1.id) as A
+where A.Declaration_Date=
+(
+SELECT Declaration_Date FROM
+(select TABLE1.id as 'id', TABLE1.Zone_Name as 'Zone_Name', TABLE1.Current_Status as 'Current_Status', TABLE1.Last_Status as 'Last_Status', TABLE2.date_of_declaration as 'Declaration_Date' from (select t1.zone_map_id as 'id', t1.risk_zone_name_new as 'Zone_Name', t1.covid_zone as 'Current_Status', t2.covid_zone as 'Last_Status' from
+(select zone_map_id, risk_zone_name_new, covid_zone from zone_details
+where date_of_declaration=(select max(date_of_declaration) from zone_details)) as t1
+inner join
+(select zone_map_id,covid_zone from zone_details where date_of_declaration=
+(SELECT date_of_declaration FROM
+(SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2)
+AS date_of_declaration ORDER BY date_of_declaration limit 1)) as t2
+using(zone_map_id)) as TABLE1 inner join
+(select zone_map_id, covid_zone, date_of_declaration from zone_details)
+as TABLE2 where TABLE2.zone_map_id = TABLE1.id
+ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
+) order by id");
+
+      $i=0;
+      $data = [];
+      if(sizeof($_zoneInfo) > 0){
+          foreach ($_zoneInfo as $key => $row) {
+              $data[$i]['Date'] =  Carbon::parse($row->Declaration_Date)->format('Y-m-d');
+              $data[$i]['Zone Name'] =  $row->Zone_Name;
+              $data[$i]['Current Status'] =  $row->Current_Status;
+              $data[$i]['Last Status'] =  $row->Last_Status;
+              $data[$i]['Total Cases 14 Days'] =  number_format($row->Total_Cases_14_Days);
+              $i++;
+          }
+      }
+
+      $list = collect($data);
+      return (new FastExcel($list))->download('risk_analysis_zone_info.xlsx');
+  }
+
+    /**
+     * Generate weekly changes excel
+     * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
+    public function generateWeeklyChangeExcel() {
+      $_weeklyChangeForRed     = \Illuminate\Support\Facades\DB::select("select date_of_declaration as 'Week_day', count(zone_map_id) as 'Number_of_Red_Zone' from zone_details where covid_zone='Red' group by date_of_declaration");
+      $_weeklyChangeForYellow  = \Illuminate\Support\Facades\DB::select("select date_of_declaration as 'Week_day', count(zone_map_id) as 'Number_of_Yellow_Zone' from zone_details where covid_zone='Yellow' group by date_of_declaration");
+      $_weeklyChangeForGreen   = \Illuminate\Support\Facades\DB::select("select date_of_declaration as 'Week_day', count(zone_map_id) as 'Number_of_Green_Zone' from zone_details where covid_zone='Green' group by date_of_declaration");
+
+      $weeklyChangeDate = $weeklyRedData = $weeklyYellowData =  $weeklyGreenData = $week_data = [];
+
+      foreach ($_weeklyChangeForRed as $key => $weeklyChangeData){
+          $weeklyChangeDate[] = Carbon::parse($weeklyChangeData->Week_day)->format('Y-m-d');
+          $weeklyRedData[] = $weeklyChangeData->Number_of_Red_Zone;
+      }
+      foreach ($_weeklyChangeForYellow as $key => $weeklyChangeYellowData){
+          $weeklyYellowData[] = $weeklyChangeYellowData->Number_of_Yellow_Zone;
+      }
+      foreach ($_weeklyChangeForGreen as $key => $weeklyChangeGreenData){
+          $weeklyGreenData[] = $weeklyChangeGreenData->Number_of_Green_Zone;
+      }
+
+      foreach ($weeklyChangeDate as $key => $weeklyDate){
+          $result[$key] = array(
+              'Date'                    => $weeklyChangeDate[$key],
+              'Red Weekly Change'       => $weeklyRedData[$key],
+              'Yellow Weekly Change'    => $weeklyYellowData[$key],
+              'Green Weekly Change'     => $weeklyGreenData[$key],
+          );
+      }
+
+        $list = collect($result);
+        return (new FastExcel($list))->download('weekly_change_data.xlsx');
+    }
+
+  public function generateLastZoneExcel() {
+      $_lastRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+
+      $lastZoneStatus = [];
+      $lastZoneStatus[0]['Last Red Zone']   = $_lastRedZoneStatusData[0]->total_id;
+      $lastZoneStatus[0]['Last Yellow Zone'] = $_lastYellowZoneStatusData[0]->total_id;
+      $lastZoneStatus[0]['Last Green Zone']  = $_lastGreenZoneStatusData[0]->total_id;
+
+      $list = collect($lastZoneStatus);
+      return (new FastExcel($list))->download('last_zone_status_info.xlsx');
+  }
+
+  protected function generateChangeStatusExcel() {
+
+      $_redToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_redToYellowChange = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_redToGreenChange  = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+
+      $_yellowToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_yellowToYellowChange = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_yellowToGreenChange  = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+
+      $_greenToRedChange    = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Red' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_greenToYellowChange = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Yellow' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+      $_greenToGreenChange  = \Illuminate\Support\Facades\DB::select("select count(distinct(last_week_green.zone_map_id)) as total_id from (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1) ) as last_week_green inner join (select zone_map_id from zone_details where covid_zone='Green' and date_of_declaration= (select max(date_of_declaration) from zone_details)) as curr_week_red USING (zone_map_id) ORDER BY zone_map_id");
+
+      $changeStatus = [];
+      $changeStatus[0]['Red to Red']    = $_redToRedChange[0]->total_id;
+      $changeStatus[0]['Red to Yellow'] = $_redToYellowChange[0]->total_id;
+      $changeStatus[0]['Red to Green']  = $_redToGreenChange[0]->total_id;
+      $changeStatus[0]['Yellow to Red']  = $_yellowToRedChange[0]->total_id;
+      $changeStatus[0]['Yellow to Yellow']  = $_yellowToYellowChange[0]->total_id;
+      $changeStatus[0]['Yellow to Green']  = $_yellowToGreenChange[0]->total_id;
+      $changeStatus[0]['Green to Red']  = $_greenToRedChange[0]->total_id;
+      $changeStatus[0]['Green to Yellow']  = $_greenToYellowChange[0]->total_id;
+      $changeStatus[0]['Green to Green']  = $_greenToGreenChange[0]->total_id;
+
+      $list = collect($changeStatus);
+      return (new FastExcel($list))->download('change_status_info.xlsx');
+  }
+
+  protected function generateCurrentZoneExcel() {
+
+      $_currentRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
+      $_currentYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration = (select max(date_of_declaration) from zone_details)");
+      $_currentGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(select max(date_of_declaration) from zone_details)");
+
+      //Last zone sql start
+      $_lastRedZoneStatusData    = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Red' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastYellowZoneStatusData = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Yellow' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+      $_lastGreenZoneStatusData  = \Illuminate\Support\Facades\DB::select("select count(zone_map_id) as total_id from zone_details where covid_zone='Green' and date_of_declaration=(SELECT date_of_declaration FROM (SELECT distinct(date_of_declaration) FROM zone_details ORDER BY date_of_declaration desc limit 2) AS date_of_declaration ORDER BY date_of_declaration limit 1)");
+
+
+      $_currentRedZoneChangeData = (($_currentRedZoneStatusData[0]->total_id - $_lastRedZoneStatusData[0]->total_id))*100/$_lastRedZoneStatusData[0]->total_id;
+      $_currentYellowZoneChangeData    = (($_currentYellowZoneStatusData[0]->total_id - $_lastYellowZoneStatusData[0]->total_id))*100/$_lastYellowZoneStatusData[0]->total_id;
+      $_currentGreenZoneChangeData  = (($_currentGreenZoneStatusData[0]->total_id - $_lastGreenZoneStatusData[0]->total_id))*100/$_lastGreenZoneStatusData[0]->total_id;
+
+      $currentZoneStatus = [];
+      $currentZoneStatus[0]['Current Red Zone']    = $_currentRedZoneStatusData[0]->total_id;
+      $currentZoneStatus[0]['Red Changes(%)']    = number_format($_currentRedZoneChangeData);
+      $currentZoneStatus[0]['Current Yellow Zone'] = $_currentYellowZoneStatusData[0]->total_id;
+      $currentZoneStatus[0]['Yellow Changes(%)'] = number_format($_currentYellowZoneChangeData);
+      $currentZoneStatus[0]['Current Green Zone']  = $_currentGreenZoneStatusData[0]->total_id;
+      $currentZoneStatus[0]['Green Changes(%)']  = number_format($_currentGreenZoneChangeData);
+
+      $list = collect($currentZoneStatus);
+      return (new FastExcel($list))->download('current_zone_status_info.xlsx');
   }
 
   public function generateInfectedAgeGroupExcel(Request $request){
@@ -865,6 +1074,8 @@ class IedcrDashboardController extends Controller
     $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
     SUM(alocatedGeneralBed) AS 'General_Beds',
     SUM(alocatedICUBed) AS 'ICU_Beds',
+    SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+    SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
     ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
     ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
 
@@ -912,14 +1123,163 @@ class IedcrDashboardController extends Controller
     }
     //dd($str);
     $getNationalInfectedPopulation = DB::select("
-        select B.Division, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
+        select B.Division as zone, (A.Infected*100000)/B.Pop as 'Cases_Per_Lac' from
         (select Division, sum(infected) as 'Infected' from Div_Dist_Upz_Infected_Geography group by Division) as A
 
-        inner join 
-        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division 
-    ".$str." 
+        inner join
+        (select Division, sum(population) as 'Pop' from bbs_coded_pop_upz group by Division) as B on A.Division=B.Division
+    ".$str."
 
     ");
     return $getNationalInfectedPopulation ?? '';
+  }
+
+  private function divDistUpaInfectedPopulation($request)
+  {
+
+    $str_dis= $request->district;
+    $str_upa= $request->upazila;
+    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+       $str_dis= 'cox';
+    }
+
+    if($request->upazila=="COX'S BAZAR SADAR" || $request->upazila=="cox's bazar sadar"){
+       $str_upa= 'cox';
+    }
+
+    if($request->division && $request->district && $request->upazila){
+      $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where Upazila  like '%".$str_upa."%' ");
+    }elseif($request->district){
+     $getNationalInfectedPopulation = DB::select(" select District,Upazila AS zone,Cases_Per_Lac from cases_per_lac_dist_filter where District  like '%".$str_dis."%' ");
+    }elseif($request->division){
+      $getNationalInfectedPopulation = DB::select(" select Division,District as zone,Cases_Per_Lac from cases_per_lac_div_filter where Division like '%".$request->division."%' ");
+    }
+
+    return $getNationalInfectedPopulation ?? '';
+  }
+
+  public function getTestPositivityData(Request  $request) {
+        $result = [];
+        $avg_sample_to_test_lag_time = 0;
+        $avg_test_to_report_lag_time = 0;
+        $maleData = 0;
+        $femaleData = 0;
+        try {
+            $testPositivityAvgDelayTime = $this->avgDelayTime($request);
+            if(count($testPositivityAvgDelayTime)) {
+                foreach ($testPositivityAvgDelayTime as $avgDelay) {
+                    $avg_sample_to_test_lag_time = $avgDelay->avg_sample_to_test_lag_time ?? '';
+                    $avg_test_to_report_lag_time = $avgDelay->avg_test_to_report_lag_time ?? '';
+                    break;
+                }
+
+            }
+            $testPositivityByGender = $this->testPositivitybyGender($request);
+            if(count($testPositivityByGender)) {
+                foreach ($testPositivityByGender as $testPositiveGender) {
+                    $maleData = (double)$testPositiveGender->M ?? '';
+                    $femaleData = (double)$testPositiveGender->F ?? '';
+                    break;
+                }
+
+            }
+            $testPositivityByAge =  $this->testPositivitybyAge($request);
+            $row_data = array();
+            if(count($testPositivityByAge)) {
+                foreach ($testPositivityByAge as $testPositiveAge) {
+                    $row_data[] = (double)$testPositiveAge->_0_10 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_11_20 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_21_30 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_31_40 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_41_50 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_51_60 ?? '';
+                    $row_data[] = (double)$testPositiveAge->_60_Plus ?? '';
+                    break;
+                }
+
+            }
+
+            $result['avg_sample_to_test_lag_time'] = round($avg_sample_to_test_lag_time,2);
+            $result['avg_test_to_report_lag_time'] = round($avg_test_to_report_lag_time,2);
+            $result['maleData'] = $maleData;
+            $result['femaleData'] = $femaleData;
+            // $result['test_positivity_age_data'] = [05,10.6667,33.3333,16.6667,0,33.3333,0];
+            $result['test_positivity_age_data'] = $row_data;
+            $result['status'] = 'success';
+            /*$result['']*/
+
+        }catch (\Exception $exception) {
+            $result['status'] = 'failed';
+            \Log::error('get test positivity data:'. $exception->getMessage().'---'.$exception->getFile());
+        }
+
+        return $result;
+
+    }
+
+  public function nationalInfectedCaseData(Request $request) {
+        $result['status'] = 'failed';
+        try{
+
+            $ininfectedPopulation = $this->divDistUpaInfectedPopulation($request);
+            $infectedAge = $this->upazillaLevelInfectedAge($request);
+            $infectedGender = $this->upazillaLevelInfectedGender($request);
+            $ininfectedTrend = $this->divDislInfectedTrend($request);
+
+            $_genderWiseInfectData = array();
+
+            $_genderWiseInfectData[] = isset($infectedGender->M) ? (float)$infectedGender->M : 0;
+            $_genderWiseInfectData[] = isset($infectedGender->F) ? (float)$infectedGender->F : 0;
+            $_ageWiseInfectData = array();
+
+            $_ageWiseInfectData[] = isset($infectedAge->_0_10) ? (float)$infectedAge->_0_10 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_11_20) ? (float)$infectedAge->_11_20 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_21_30) ? (float)$infectedAge->_21_30 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_31_40) ? (float)$infectedAge->_31_40 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_41_50) ? (float)$infectedAge->_41_50 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_51_60) ? (float)$infectedAge->_51_60 : 0;
+            $_ageWiseInfectData[] = isset($infectedAge->_60_Plus) ? (float)$infectedAge->_60_Plus : 0;
+            $date_arr = $infected_arr =  array();
+
+            if($ininfectedTrend && $ininfectedTrend != '' && count($ininfectedTrend)) {
+                foreach($ininfectedTrend as $row){
+
+                    $date_arr[] = date('d\/m\/Y', strtotime($row->Date));
+                    $infected_arr[] = (double)$row->infected_count;
+                }
+            }
+
+            $div_name = $div_data = array();
+
+            if($ininfectedPopulation != "" && count($ininfectedPopulation)) {
+
+                foreach($ininfectedPopulation as $row){
+
+                    $div_name[] = $row->zone; //  need to be dynamic
+                    $div_data[] = (float)(number_format($row->Cases_Per_Lac, 2));
+
+                }
+            }
+
+            $infected = implode(",", $infected_arr);
+
+            /*dd(json_encode($_ageWiseInfectData));*/
+            $result['infectedTrend_data'] = $infected_arr;
+            $result['ininfectedTrend_date'] = $date_arr;
+            $result['infectedTrend_string'] = $infected;
+            $result['gender_wise_infected_data'] = $_genderWiseInfectData;
+            $result['age_wise_infected_data'] = $_ageWiseInfectData;
+            $result['age_wise_infected_data'] = $_ageWiseInfectData;
+            $result['div_name'] = $div_name;
+            $result['div_data'] = $div_data;
+            $result['status'] = 'success';
+
+        }catch (\Exception $exception) {
+            $result['status'] = 'failed';
+            \Log::error('National Infected Case Data:'. $exception->getMessage().'---'.$exception->getFile().'---'.$exception->getLine());
+        }
+
+      return $result;
+
   }
 }
