@@ -88,12 +88,14 @@
 
 <!-- INTERNAL Highhcart -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <!-- Custom js-->
 
 <script src="{{ asset('assets/js/custom_iedcr.js?v=2') }}"></script>
 <script src="{{ asset('assets/js/custom.js?v=2') }}"></script>
+
 
 @yield('scripts')
 @stack('custom_script')
