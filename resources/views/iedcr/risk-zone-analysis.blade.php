@@ -98,7 +98,7 @@ AS date_of_declaration ORDER BY date_of_declaration limit 1)) as t2
 using(zone_map_id)) as TABLE1 inner join
 (select zone_map_id, covid_zone, date_of_declaration from zone_details)
 as TABLE2 where TABLE2.zone_map_id = TABLE1.id
-ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date desc limit 1
+ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
 ) order by id");
 
 // dd($_zoneInfo);
