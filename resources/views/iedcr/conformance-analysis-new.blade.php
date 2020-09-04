@@ -28,13 +28,16 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Conformance Summary</h3>
-                <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <!-- <i class="fa fa-table mr-2 text-success"></i>  -->
+                  <a href="{{route('iedcr.generate-conformance-summary-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div class="row mt-4">
                   <div class="col-xl-12 col-lg-12 col-xm-12">
                     <div class="card-body text-center">
-                      <h1 class="text-success">{{ number_format($con_carddata->percent_people_wearing_masks,2) }}%</h1>
+                      <h1 class="text-success">{{ $getConformanceData['masked_percentage'] }}%</h1>
                       <h4 class="text-ash">of People are wearing mask.</h4>
                     </div>
                   </div>
@@ -42,19 +45,19 @@
                 <div class="row mt-4">
                   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
-                      <h2 class="text-success">{{ $con_carddata->total_face_detected }}</h2>
+                      <h2 class="text-success">{{ $getConformanceData['total_detection'] }}</h2>
                       <h4 class="text-ash">Total faced detected.</h4>
                     </div>
                   </div>
                   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
-                      <h2 class="text-success">{{ $con_carddata->total_masked_faces }}</h2>
+                      <h2 class="text-success">{{ $getConformanceData['total_masked_face'] }}</h2>
                       <h4 class="text-ash">Number of Masked Faces.</h4>
                     </div>
                   </div>
                   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card-body">
-                      <h2 class="text-success">{{ $con_carddata->total_non_masked_faces }}</h2>
+                      <h2 class="text-success">{{ $getConformanceData['total_non_masked_face'] }}</h2>
                       <h4 class="text-ash">Number of Non-Masked Faces.</h4>
                     </div>
                   </div>
@@ -65,7 +68,9 @@
           <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <div class="card-options"> <i class="fa fa-download text-danger"></i> </div>
+                <div class="card-options"> 
+                  <a href="{{route('iedcr.generate-camera-wise-data-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
+                </div>
               </div>
               <div class="card-body">
                 <div class="card-body text-center">
@@ -181,20 +186,7 @@
 
 <script type="text/javascript">
       // Age Wise Death Distribution
-
-      <?php
-        $camera_no_arr = $masked_arr = array();
-
-          foreach($con_barchart_data as $row){
-
-                $camera_no_arr[] = $row->camera_no;
-                $masked_arr[] = (float)$row->masked;
-          }
-          $camera_no = implode(",",$camera_no_arr);
-          $masked = implode(",",$masked_arr);
-
-      ?>
-            Highcharts.chart('camera-wise-barchart', {
+      Highcharts.chart('camera-wise-barchart', {
         chart: {
           type: 'column',
           height: 240
@@ -222,7 +214,7 @@
           }
         },
         xAxis: {
-          categories: [<?php echo $camera_no; ?>]       },
+          categories: [<?php echo implode(",",$getConformanceData['camera_ids']); ?>]       },
         tooltip: {
           pointFormat: '{series.name}: <b>{point.y}%</b>',
           /*valueSuffix: ' cm',
@@ -235,13 +227,13 @@
           }
         },
         colors: ['#ef4b4b'],
-        series: [{"name":"Camera","data":[<?php echo $masked; ?>]}]     });
+        series: [{"name":"Camera","data":[<?php echo implode(",",$getConformanceData['camera_mask_data']); ?>]}]     });
     </script>
     <!-- End Row-2 -->
 <script type="text/javascript">
-            $(document).ready(function(){
-                $('#iframeData').html('<iframe width="933" height="525" src="https://www.youtube.com/embed/86WspkDtXrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
-            });
-        </script>
+    $(document).ready(function(){
+        $('#iframeData').html('<iframe width="560" height="315" src="https://www.youtube.com/embed/86WspkDtXrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
+    });
+</script>
 
 @endsection
