@@ -541,9 +541,9 @@ class IedcrDashboardController extends Controller
 
         }
         if($searchQuery != '') {
-            $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
+            $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
         } else {
-            $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender group by Division";
+            $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender group by Division";
         }
 
 
@@ -636,7 +636,7 @@ where test_result='Positive' or test_result='Negative' group by district) as B u
 
         }
         if($searchQuery != '') {
-           // $testPositiveGendersqlQuery = "select Division, F, M from div_dist_upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
+           // $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
             $testPositiveGendersqlQuery = "Select Date,(sum(avg_sample_to_test_lag_time)/count(avg_sample_to_test_lag_time)) as 'avg_sample_to_test_lag_time', (sum(avg_test_to_report_lag_time)/count(avg_test_to_report_lag_time)) as 'avg_test_to_report_lag_time' from test_reporting_lag_per_upazila_aug07 ". $searchQuery."  group by ". $groupBy;;
         } else {
             $testPositiveGendersqlQuery = "Select Date,(sum(avg_sample_to_test_lag_time)/count(avg_sample_to_test_lag_time)) as 'avg_sample_to_test_lag_time', (sum(avg_test_to_report_lag_time)/count(avg_test_to_report_lag_time)) as 'avg_test_to_report_lag_time' from test_reporting_lag_per_upazila_aug07 group by date";
