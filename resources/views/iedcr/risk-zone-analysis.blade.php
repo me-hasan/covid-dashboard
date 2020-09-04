@@ -58,9 +58,9 @@
     }
 
     $_weeklyChangeData['Date']        = $weeklyChangeDate;
-    $_weeklyChangeData['Green Zone']  = $weeklyGreenData;
-    $_weeklyChangeData['Yellow Zone'] = $weeklyYellowData;
-    $_weeklyChangeData['Red Zone']    = $weeklyRedData;
+    $_weeklyChangeData['Green Zone']  = implode(",", $weeklyGreenData);
+    $_weeklyChangeData['Yellow Zone'] = implode(",", $weeklyYellowData);
+    $_weeklyChangeData['Red Zone']    = implode(",", $weeklyRedData);
 
     foreach($_weeklyChangeData as $_testPositvityTrendLabel => $_weeklyChangeTrendSet){
         if($_testPositvityTrendLabel == "Date") continue;
@@ -503,8 +503,18 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
           },
           colors: ['#38cb89', '#ffab00', '#ef4b4b'],
 
-         series: [{"type":"area","name":"GREEN ZONE","data":[8,69,71,72,77],"marker":{"symbol":"circle"}},{"type":"area","name":"YELLOW ZONE","data":[10,13,2,8,16],"marker":{"symbol":"circle"}},{"type":"area","name":"RED ZONE","data":[56,131,244,138,121],"marker":{"symbol":"circle"}}]
-      
+         series: [
+             {
+                 "type":"area","name":"GREEN ZONE","data":[<?php echo $_weeklyChangeData['Green Zone'] ?>],"marker":{"symbol":"circle"}
+                 },
+             {
+                 "type":"area","name":"YELLOW ZONE","data":[<?php echo $_weeklyChangeData['Yellow Zone'] ?>],"marker":{"symbol":"circle"}
+                 },
+             {
+                 "type":"area","name":"RED ZONE","data":[<?php echo $_weeklyChangeData['Red Zone'] ?>],"marker":{"symbol":"circle"}
+             }
+             ]
+          {{--series: <?php echo json_encode($_weeklyChangeTrendyData);?>--}}
       });
 
         $(document).ready(function(){
