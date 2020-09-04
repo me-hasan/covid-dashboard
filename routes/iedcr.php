@@ -17,7 +17,7 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     Route::get('corona-tracing-analysis', 'ManageIframeController@corona_tracing_analysis')->name('iedcr.corona_tracing_analysis')->middleware(['permission:iedcr-corona-tracking-analysis']);
 
-    Route::get('conformance-analysis', 'ManageIframeController@conformance_analysis')->name('iedcr.conformance_analysis')->middleware(['permission:iedcr-conformance-analysis']);
+    Route::get('conformance-analysis', 'ConformanceController@conformance_analysis')->name('iedcr.conformance_analysis')->middleware(['permission:iedcr-conformance-analysis']);
 
     Route::get('hospital-and-patient-analysis', 'ManageIframeController@hospital_and_patient_analysis')->name('iedcr.hospital_and_patient_analysis')->middleware(['permission:iedcr-hospital-and-patient-analysis']);
 
@@ -37,5 +37,10 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
     Route::get('generate-avg-asymptomic-test-positive-excel', 'TestPositiveController@generateAvgAsympTestPositiveExcel')->name('iedcr.generate-avg-asymptomic-test-positive-excel');
 
     Route::get('generate-geo-location-test-positive-excel', 'TestPositiveController@generateGeoLocationTestPositiveExcel')->name('iedcr.generate-geo-location-test-positive-excel');
+
+    // conformance pdf
+    Route::get('generate-conformance-summary-excel', 'ConformanceController@generateConformanceSummaryExcel')->name('iedcr.generate-conformance-summary-excel');
+
+    Route::get('generate-camera-wise-data-excel', 'ConformanceController@generateCameraWiseDataExcel')->name('iedcr.generate-camera-wise-data-excel');
 });
 

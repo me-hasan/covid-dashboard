@@ -35,9 +35,12 @@ class TestPositiveController extends Controller
         }
         $testPositiveDate = $test_positive = $asymptomic_test_positive= $asymptomicTestPositiveDate= [];
 
-        foreach ($test_positive_trend as $tptrend) {
-          $testPositiveDate[] = date('Y-m-d', strtotime($tptrend->date_of_test ?? $tptrend->Date));
-          $test_positive[]  = $tptrend->Test_Positive ?? $tptrend->Test_Positivity;
+        if(sizeof($test_positive_trend) > 0){
+            foreach ($test_positive_trend as $tptrend) {
+              $getDate = isset($tptrend->date) ?  $tptrend->date : $tptrend->Date;
+              $testPositiveDate[] = date('Y-m-d', strtotime($getDate));
+              $test_positive[]  = $tptrend->Test_Positivity;
+            }
         }
 
         $testPositiveData  = implode(",", $test_positive);
@@ -143,7 +146,7 @@ class TestPositiveController extends Controller
 
     private function nationWiseTestPositiveRate($request) {
         $getDateCondition = $this->getDateCondition($request, 'date_of_test');
-        $nationWiseTestPositive = DB::select("select date_of_test, ((count(sl_no) *100)/(select count(sl_no) from lab_clean_data)) as 'Test_Positive' from lab_clean_data where test_result='Positive' ".$getDateCondition." group by date_of_test order by date_of_test desc");
+        $nationWiseTestPositive = DB::select("select date_of_test as date, ((count(sl_no) *100)/(select count(sl_no) from lab_clean_data)) as 'Test_Positivity' from lab_clean_data where test_result='Positive' ".$getDateCondition." group by date_of_test order by date_of_test desc");
 
         return $nationWiseTestPositive ?? [];
     }
@@ -353,8 +356,9 @@ class TestPositiveController extends Controller
         $data = [];
         if(sizeof($test_positive_trend) > 0){
           foreach ($test_positive_trend as $key => $tptrend) {
-              $data[$i]['Date'] =  date('Y-m-d', strtotime($tptrend->date_of_test ?? $tptrend->Date));
-              $data[$i]['Positivity Rate'] =  $tptrend->Test_Positive ?? $tptrend->Test_Positivity;
+              $getDate = isset($tptrend->date) ?  $tptrend->date : $tptrend->Date;
+              $data[$i]['Date'] =  date('Y-m-d', strtotime($getDate));
+              $data[$i]['Positivity Rate'] =  $tptrend->Test_Positivity;
               $i++;
           }
         }

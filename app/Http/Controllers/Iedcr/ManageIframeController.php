@@ -25,9 +25,9 @@ class ManageIframeController extends Controller
     public function corona_tracing_analysis() {
         return view('iedcr.corona-tracing-analysis');
     }
-    public function conformance_analysis() {
-        return view('iedcr.conformance-analysis-new');
-    }
+    // public function conformance_analysis() {
+    //     return view('iedcr.conformance-analysis-new');
+    // }
     public function hospital_and_patient_analysis() {
         return view('iedcr.hospital-and-patient-analysis-new');
     }
