@@ -445,6 +445,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
 //          if($_testPositvityTrendLabel == "Date") continue;
 //          $_testPositvityTrendyData[] = array('type' => 'area', 'name' => strtoupper($_testPositvityTrendLabel), 'data' => $_testPositvityTrendSet, 'marker' => array('symbol' => 'circle'));
 //      }
+      // series: php echo json_encode($_weeklyChangeTrendyData);
       #print_r($_testPositvityTrendyDataTemp);
       #exit;
       ?>
@@ -502,8 +503,8 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
           },
           colors: ['#38cb89', '#ffab00', '#ef4b4b'],
 
-          {{--series: <?php echo json_encode($_testPositvityTrendyData);?>--}}
-          series: <?php echo json_encode($_weeklyChangeTrendyData);?>
+         series: [{"type":"area","name":"GREEN ZONE","data":[8,69,71,72,77],"marker":{"symbol":"circle"}},{"type":"area","name":"YELLOW ZONE","data":[10,13,2,8,16],"marker":{"symbol":"circle"}},{"type":"area","name":"RED ZONE","data":[56,131,244,138,121],"marker":{"symbol":"circle"}}]
+      
       });
 
         $(document).ready(function(){
