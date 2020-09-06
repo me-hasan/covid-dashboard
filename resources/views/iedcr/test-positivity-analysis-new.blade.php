@@ -13,14 +13,14 @@
     ini_set('error_reporting', 0);
     $sd_1=$sd_2=$sd_3='';
     $ss_1=$ss_2=$ss_3='';
-    $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
+    // $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
 
-    $tpr_national_testpositivity_trend = \Illuminate\Support\Facades\DB::table('tpr_national_testpositivity_trend')->get();
-    $tpr_today = \Illuminate\Support\Facades\DB::table('tpr_today')->orderBy('id', 'DESC')->first();
-    $tpr_average = \Illuminate\Support\Facades\DB::table('tpr_average')->orderBy('id', 'DESC')->first();
-    $tpr_data = \Illuminate\Support\Facades\DB::table('tpr_data')
-                ->where('date', DB::raw("(select max(date) from tpr_data)"))
-                ->orderBy('id', 'ASC')->get();
+    // $tpr_national_testpositivity_trend = \Illuminate\Support\Facades\DB::table('tpr_national_testpositivity_trend')->get();
+    // $tpr_today = \Illuminate\Support\Facades\DB::table('tpr_today')->orderBy('id', 'DESC')->first();
+    // $tpr_average = \Illuminate\Support\Facades\DB::table('tpr_average')->orderBy('id', 'DESC')->first();
+    // $tpr_data = \Illuminate\Support\Facades\DB::table('tpr_data')
+    //             ->where('date', DB::raw("(select max(date) from tpr_data)"))
+    //             ->orderBy('id', 'ASC')->get();
 
 
     $data_source_description = \Illuminate\Support\Facades\DB::table('data_source_description')->where('page_name','iedcr-test-positivity-analysis')->get();
