@@ -15,7 +15,7 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     Route::get('epidemiological-syndromic-indicator-analysis', 'ManageIframeController@epidemiological_syndromic_indicator_analysis')->name('iedcr.epidemiological_syndromic_indicator_analysis')->middleware(['permission:iedcr-epidemiological-and-syndromic-indicator-analysis']);
 
-    Route::get('corona-tracing-analysis', 'ManageIframeController@corona_tracing_analysis')->name('iedcr.corona_tracing_analysis')->middleware(['permission:iedcr-corona-tracking-analysis']);
+    Route::get('corona-tracing-analysis', 'CoronaTracingController@corona_tracing_analysis')->name('iedcr.corona_tracing_analysis')->middleware(['permission:iedcr-corona-tracking-analysis']);
 
     Route::get('conformance-analysis', 'ConformanceController@conformance_analysis')->name('iedcr.conformance_analysis')->middleware(['permission:iedcr-conformance-analysis']);
 
