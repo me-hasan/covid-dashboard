@@ -643,10 +643,16 @@
                 </p>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
+        <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
             <div class="card-body">
                 <h5 class="card-title">Data Source & Last Update Date</h5>
                 <p class="card-text">DGHS</p>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-6 col-xm-12">
+            <div class="card-body">
+                <h5 class="card-title">Note</h5>
+                <p class="card-text">Division,District,Upazila Filter Applicable.</p>
             </div>
         </div>
     </div>

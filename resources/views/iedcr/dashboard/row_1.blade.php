@@ -37,24 +37,24 @@ foreach ($data_source_description as  $row) {
         <div class="card overflow-hidden dash1-card border-0" onClick="modalContent_1('Infected (Last 7 Days)', 'bar', 'Infected Number', 'Date');" data-target="#modaldemo2" data-toggle="modal">
             <div class="card-body">
                 <p class=" mb-1 ">Infected (24 hours)</p>
-                <h4 class="mb-1 number-font">{{ number_format($hda_card->infected_24_hr) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">{{ round($hda_card->infected_24_hr_change) }}%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->infected_24_hrs) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">{{ number_format(((($hda_card->infected_24_hrs - $yesterday_card[0]->infected_24_hrs)*100)/($yesterday_card[0]->infected_24_hrs)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
         <div class="card overflow-hidden dash1-card border-0" onClick="modalContent_1('Total Infected', 'line', 'Total Infected Number', 'Date');" data-target="#modaldemo2" data-toggle="modal">
             <div class="card-body">
                 <p class=" mb-1 ">Total Infected</p>
-                <h4 class="mb-1 number-font">{{ number_format($hda_card->intefted_total) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">{{ round($hda_card->infected_total_change) }}%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->infected_total) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-warning">{{ number_format(((($hda_card->infected_total - $yesterday_card[0]->infected_total)*100)/($yesterday_card[0]->infected_total)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
         <div class="card overflow-hidden dash1-card border-0">
             <div class="card-body">
                 <p class=" mb-1 ">Recoverd (24 hours)</p>
-                <h4 class="mb-1 number-font">{{ number_format($hda_card->recovered_24_hr) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ round($hda_card->recovered_24_hr_change) }}%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->recovered_24_hrs) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ number_format(((($hda_card->recovered_24_hrs - $yesterday_card[0]->recovered_24_hrs)*100)/($yesterday_card[0]->recovered_24_hrs)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
@@ -62,7 +62,7 @@ foreach ($data_source_description as  $row) {
             <div class="card-body">
                 <p class=" mb-1">Total Recoverd</p>
                 <h4 class="mb-1 number-font">{{ number_format($hda_card->recovered_total) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ round($hda_card->recovered_total_change) }}%</span> </div>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ number_format(((($hda_card->recovered_total - $yesterday_card[0]->recovered_total)*100)/($yesterday_card[0]->recovered_total)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
@@ -85,8 +85,8 @@ foreach ($data_source_description as  $row) {
         <div class="card overflow-hidden dash1-card border-0">
             <div class="card-body">
                 <p class=" mb-1 ">Death (24 hours)</p>
-                <h4 class="mb-1 number-font">{{ number_format($hda_card->death_24_hr) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">{{ round($hda_card->death_24_hr_change) }}%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->death_24_hrs) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">{{ number_format(((($hda_card->death_24_hrs - $yesterday_card[0]->death_24_hrs)*100)/($yesterday_card[0]->death_24_hrs)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
@@ -94,15 +94,15 @@ foreach ($data_source_description as  $row) {
             <div class="card-body">
                 <p class=" mb-1">Total Death</p>
                 <h4 class="mb-1 number-font">{{ number_format($hda_card->death_total) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">{{ round($hda_card->death_total_change) }}%</span> </div>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-danger">{{ number_format(((($hda_card->death_total - $yesterday_card[0]->death_total)*100)/($yesterday_card[0]->death_total)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
         <div class="card overflow-hidden dash1-card border-0">
             <div class="card-body">
                 <p class=" mb-1 ">Test (24 hours)</p>
-                <h4 class="mb-1 number-font">{{ number_format($hda_card->test_24_hr) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-info">{{ round($hda_card->test_24_hr_change) }}%</span> </div>
+                <h4 class="mb-1 number-font">{{ number_format($hda_card->test_24_hrs) }}</h4>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-info">{{ number_format(((($hda_card->test_24_hrs - $yesterday_card[0]->test_24_hrs)*100)/($yesterday_card[0]->test_24_hrs)),2) }}%</span> </div>
         </div>
     </div>
     <div class="col-xl-2 col-lg-4 col-md-4 col-xm-6">
@@ -110,7 +110,7 @@ foreach ($data_source_description as  $row) {
             <div class="card-body">
                 <p class=" mb-1">Total Test</p>
                 <h4 class="mb-1 number-font">{{ number_format($hda_card->test_total) }}</h4>
-                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ round($hda_card->test_total_change) }}%</span> </div>
+                <small class="fs-12 text-muted">Compared to Last Day</small> <span class="ratio bg-success">{{ number_format(((($hda_card->test_total - $yesterday_card[0]->test_total)*100)/($yesterday_card[0]->test_total)),2) }}%</span> </div>
         </div>
     </div>
 </div>

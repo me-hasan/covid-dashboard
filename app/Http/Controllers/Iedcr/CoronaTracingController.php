@@ -43,9 +43,9 @@ class CoronaTracingController extends Controller
         inner join 
         (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.division");
 
-        $divisionObj['division'] = $divisionData[0]->division;
-        $divisionObj['avg_duration'] = number_format($divisionData[0]->avg_duration_minute, 2, '.', '');
-        $div_date = date('d/m/Y', strtotime($divisionData[0]->date));
+        $divisionObj['division'] = $divisionData[0]->division ?? null;
+        $divisionObj['avg_duration'] = isset($divisionData[0]->avg_duration_minute) ? number_format($divisionData[0]->avg_duration_minute, 2, '.', ''):null;
+        $div_date = isset($divisionData[0]->date) ? date('d/m/Y', strtotime($divisionData[0]->date)) : null;
         if(!in_array($div_date, $dateData, true)){
             array_push($dateData, $div_date);
         }
