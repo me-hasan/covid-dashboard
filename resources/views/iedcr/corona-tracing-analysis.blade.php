@@ -603,7 +603,7 @@
                 <div class="d-flex flex-row justify-content-end">
                     <div class="form-label pt-2 mr-2">Select Division</div>
                     <div>
-                        <select class="form-control btn-outline-primary">
+                        <select class="form-control btn-outline-primary division-select-holder">
                             <option value="DHAKA">ঢাকা </option>
                             <option value="RAJSHAHI">রাজশাহী </option>
                             <option value="MYMENSINGH">ময়মনসিংহ </option>
@@ -653,7 +653,21 @@
 
 @section('scripts')
 
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.division-select-holder').on('change', function(){
+                var division_val = $('.division-select-holder').val();
+                console.log('change');
+                var url = window.location.href;
+                var a = url.indexOf("?");
+                var b =  url.substring(a);
+                var c = url.replace(b,"");
+                url = c;
+                url += '?division='+division_val;
+                window.location.href = url;
+            });
+        });
+    </script>
     <script type="text/javascript">
         //Tracing Analysis Trend
         Highcharts.chart('tracing_analysis_trend', {
@@ -676,7 +690,7 @@
             },
 
             xAxis: {
-                categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
+                categories: @JSON($getTracingData['dateData'])
             },
 
             yAxis: {
@@ -698,9 +712,8 @@
             },
 
             colors: ["#ff0000", "#bfbfbf", "#bfbfbf"],
-            series: [{"type":"spline","name":"Division","data":[300,320,450,250,450,200,280,400,620,452,505,637],"marker":{"enabled": false, "symbol":"circle"}},
-                {"type":"spline","name":"Dhaka","data":[360,406,816,523,470,571,643,521,578,657,777,563],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'},
-                {"type":"spline","name":"Gopalgonj","data":[250,120,150,350,250,100,180,350,420,402,445,537],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'}]
+
+            series: @JSON($data)
         });
     </script>
 @endsection

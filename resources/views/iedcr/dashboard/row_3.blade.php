@@ -85,7 +85,7 @@ $inputData = request()->all();
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-12 col-md-12 ml-4">
+                    <div class="col-xl-6 col-md-12 ml-4">
                         <div id="color-group">
                             <div class="row gutters-xs">
                                 <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-10</span></div>
@@ -94,6 +94,13 @@ $inputData = request()->all();
                                 <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">31-40</span></div>
                                 <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">51-100</span></div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-md-12 ml-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Note</h5>
+                            <p class="card-text">Division and District Filter Applicable.</p>
                         </div>
                     </div>
                 </div>
