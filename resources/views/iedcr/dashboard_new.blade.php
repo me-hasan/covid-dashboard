@@ -63,9 +63,9 @@
                             <?php
                             foreach($hda_time_series as $row){
 
-                            $date_arr = date('d-M', strtotime($row->date));
+                            $date_arr = date('d-M', strtotime($row->report_date));
                             ?>
-                        ["<?=$date_arr?>",<?=$row->infected?>],
+                        ["<?=$date_arr?>",<?=$row->infected_24_hrs?>],
 
                         <?php  } ?>
 
@@ -80,8 +80,8 @@
 
                 foreach($hda_population_wise_infected as $row){
 
-                    $div_arr[] = $row->division;
-                    $infected_arr[] = $row->total_infected;
+                    $div_arr[] = $row->report_date;
+                    $infected_arr[] = $row->infected_total;
                 }
                 $infected = implode(",", $infected_arr);
 
