@@ -21,7 +21,8 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     Route::get('hospital-and-patient-analysis', 'ManageIframeController@hospital_and_patient_analysis')->name('iedcr.hospital_and_patient_analysis')->middleware(['permission:iedcr-hospital-and-patient-analysis']);
 
-    Route::get('mobility-and-predictive-importation', 'ManageIframeController@mobility_and_predictive_importation')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
+    //Route::get('mobility-and-predictive-importation', 'ManageIframeController@mobility_and_predictive_importation')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
+    Route::get('mobility-and-predictive-importation', 'MobilityAndPredictiveController@index')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
 
     // test positivity pdf
     Route::get('generate-test-positive-rate-excel', 'TestPositiveController@generateTestPositiveRateExcel')->name('iedcr.generate-test-positive-rate-excel');

@@ -1,12 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Mobility And Predictive Importation')
-@section('search_view')
+{{--@section('search_view')
     <div class="d-flex order-lg-2 ml-auto">
         <form action="{{ route('iedcr.mobility_and_predictive_importation') }}" class="d-flex order-lg-12 ml-auto">
             @include('iedcr.search_view')
         </form>
     </div>
-@endsection
+@endsection--}}
 @section('content')
     <?php
     ini_set('error_reporting', 0);
@@ -3561,57 +3561,7 @@
     </script>--}}
 
     <script type="text/javascript">
-        /*Highcharts.chart('mobility-predictive-importation', {
-title: {
-    text: ''
-},
 
-subtitle: {
-    text: ''
-},
-
-legend: {
-    layout: 'horizontal',
-    align: 'center',
-    verticalAlign: 'top'
-},
-
-credits:{
-    enabled:false
-},
-
-xAxis: {
-    categories: ["7\/11\/2020","7\/12\/2020","7\/13\/2020","7\/14\/2020","7\/15\/2020","7\/16\/2020","7\/17\/2020","7\/18\/2020","7\/19\/2020","7\/20\/2020","7\/21\/2020","7\/22\/2020"]				},
-
-yAxis: {
-    title: {
-        text: ''
-    },
-    labels: {
-        //enabled: false,
-        formatter: function() {
-           return this.value;
-        }
-    }
-},
-
-plotOptions: {
-    series: {
-        fillOpacity:0,
-        dataLabels:{
-            enabled:false,
-            color: 'black',
-            formatter:function() {
-                //var pcnt = (this.y / dataSum) * 100;
-                return Highcharts.numberFormat(this.y);
-            }
-        }
-    }
-},
-
-colors: ['#ffab00', '#BC2B4C'],
-
-series: [{"type":"area","name":"MOBILITY_IN","data":[3240407,4984095,4402780,4277036,4209642,4150570,4476457,4390471,4264385,4145872,4019036,4062227],"marker":{"symbol":"circle"}},{"type":"area","name":"MOBILITY_OUT","data":[3252671,5019431,4397381,4297795,4221432,4147585,4433316,4404118,4284599,4145092,4008273,4049201],"marker":{"symbol":"circle"}}]			});*/
 
         //Tracing Analysis Trend
         Highcharts.chart('mobility-predictive-importation', {
@@ -3634,7 +3584,7 @@ series: [{"type":"area","name":"MOBILITY_IN","data":[3240407,4984095,4402780,427
             },
 
             xAxis: {
-                categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
+                categories: {!! json_encode($categories) !!}
             },
 
             yAxis: {
@@ -3656,9 +3606,10 @@ series: [{"type":"area","name":"MOBILITY_IN","data":[3240407,4984095,4402780,427
             },
 
             colors: ["#ff0000", "#bfbfbf", "#bfbfbf"],
-            series: [{"type":"spline","name":"Division","data":[300,320,450,250,450,200,280,400,620,452,505,637],"marker":{"enabled": false, "symbol":"circle"}},
+            /*series: [{"type":"spline","name":"Division","data":[300,320,450,250,450,200,280,400,620,452,505,637],"marker":{"enabled": false, "symbol":"circle"}},
                 {"type":"spline","name":"Dhaka","data":[360,406,816,523,470,571,643,521,578,657,777,563],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'},
-                {"type":"spline","name":"Gopalgonj","data":[250,120,150,350,250,100,180,350,420,402,445,537],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'}]
+                {"type":"spline","name":"Gopalgonj","data":[250,120,150,350,250,100,180,350,420,402,445,537],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'}]*/
+            series: {!! json_encode($series_data) !!}
         });
 
         // Map JS Data
