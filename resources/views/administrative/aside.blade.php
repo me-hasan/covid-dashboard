@@ -1,48 +1,90 @@
-<!-- partial:partials/_sidebar.html -->
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <div class="alert alert-primary small last-updated-date" role="alert"> <strong><strong>শেষ আপডেট: ১১/০৮/২০২০</strong></strong> </div>
-    <ul class="nav">
-    <li class="nav-item @if(request()->get('datatype')!= null) active @endif"> <a class="nav-link" href="{{route('dashboard')}}"> <span class="menu-title">সামগ্রিক চিত্র</span> <i class="mdi mdi-home menu-icon"></i> </a> </li>
-    @can('cabinet-risk-zone-report')
-    <li class="nav-item @if(request()->get('datatype') == 'riskzone') active @endif   "> <a class="nav-link " href="{{route('cabinet.dataframe',['datatype'=>'riskzone'])}}"> <span class="menu-title">রিস্ক জোন রিপোর্ট</span> <i class="mdi mdi-chart-bar menu-icon"></i> </a> </li>
-    @endcan
+    <!--aside open-->
+    <aside class="app-sidebar">
+      <div class="app-sidebar__logo">
+        <a class="header-brand" href="">
+            <img src="{{ asset('assets/images/brand/corona-logo.webp') }}" class="header-brand-img desktop-lgo" alt="Logo">
+            <img src="{{ asset('assets/images/brand/logo1.png') }}" class="header-brand-img dark-logo" alt="Logo">
+            <img src="{{ asset('assets/images/brand/favicon.png') }}" class="header-brand-img mobile-logo" alt="Logo">
+            <img src="{{ asset('assets/images/brand/favicon1.png') }}" class="header-brand-img darkmobile-logo" alt="Logo">
+        </a>
+      </div>
+      <div class="app-sidebar__user">
+        <div class="dropdown user-pro-body text-center">
+          <div class="user-info">
+            <span class="text-muted app-sidebar__user-name text-sm">জাতীয় ড্যাশবোর্ড</span>
+          </div>
+        </div>
+      </div>
+      <ul class="side-menu app-sidebar3">
+        <li class="slide"> <a class="side-menu__item" href="{{route('dashboard')}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z"/>
+          </svg> <span class="side-menu__label">সামগ্রিক চিত্র</span></a> </li>
 
-    @can('cabinet-obility-of-affected-people')
-    <li class="nav-item @if(request()->get('datatype') == 'patientmobility')   active @endif   "> <a class="nav-link" href="{{route('cabinet.dataframe',['datatype'=>'patientmobility'])}}"> <span class="menu-title">আক্রান্ত ব্যাক্তির চলাচল</span> <i class="mdi mdi-nature-people menu-icon"></i> </a> </li>
-    @endcan
+        @can('cabinet-risk-zone-report')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'riskzone'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">রিস্ক জোন রিপোর্ট</span><i class="angle fa fa-angle-right"></i></a>
+        </li>
+        @endcan
 
-    @can('cabinet-mobility-of-citizen')
-    <li class="nav-item @if(request()->get('datatype') == 'citizenmobility')   active @endif  "> <a class="nav-link" href="{{route('cabinet.dataframe',['datatype'=>'citizenmobility'])}}"> <span class="menu-title">নাগরিক চলাচল</span> <i class="mdi mdi-pac-man menu-icon"></i> </a> </li>
-    @endcan
+        @can('iedcr-test-positivity-analysis')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'patientmobility'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">আক্রান্ত ব্যাক্তির চলাচল</span><i class="angle fa fa-angle-right"></i></a>
+        </li>
+        @endcan
+        
+       @can('cabinet-mobility-of-citizen')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'citizenmobility'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">নাগরিক চলাচল</span><i class="angle fa fa-angle-right"></i></a>
+        </li>
+        @endcan
+        
+        @can('cabinet-synoptic-surveillance-map')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'synnoptic_surveillance'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">সিনন্ড্রোমিক <br>সারভেইল্যান্স ম্যাপ</span><i class="angle fa fa-angle-right"></i></a>
+        </li>
+        @endcan
+        
+        @can('cabinet-civil-surgeon-report')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'ss_report'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">সিভিল সার্জন রিপোর্ট</span><i class="angle fa fa-angle-right"></i></a>
+        </li>
+        @endcan
 
-    @can('cabinet-synoptic-surveillance-map')
-    <li class="nav-item @if(request()->get('datatype') == 'synnoptic_surveillance')   active @endif"> <a class="nav-link" href="{{route('cabinet.dataframe',['datatype'=>'synnoptic_surveillance'])}}"> <span class="menu-title"> সিনন্ড্রোমিক সারভেইল্যান্স ম্যাপ</span> <i class="mdi mdi-map menu-icon"></i> </a> </li>
-    @endcan
+        @can('cabinet-social-distance-analysis')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'sdp_monitoring'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">সামাজিক দুরত্ব পর্যবেক্ষণ</span><i class="angle fa fa-angle-right"></i></a>
+          </li>
+        @endcan
 
-    @can('cabinet-civil-surgeon-report')
-    <li class="nav-item @if(request()->get('datatype') == 'ss_report')   active @endif"> <a class="nav-link" href="{{route('cabinet.dataframe',['datatype'=>'ss_report'])}}"> <span class="menu-title">সিভিল সার্জন রিপোর্ট</span> <i class="mdi mdi-chart-bar menu-icon"></i> </a> </li>
-    @endcan
-    <!-- <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="menu-title">এলার্ট সার্ভিস মনিটরিং</span>
-                <i class="mdi mdi-information menu-icon"></i>
-            </a>
-        </li>-->
+        @can('cabinet-deep-analysis')
+        <li class="slide"> <a class="side-menu__item"  href="{{route('cabinet.dataframe',['datatype'=>'analytics'])}}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/>
+          </svg> <span class="side-menu__label">এনালিটিক্স (বিশ্লেষণ</span><i class="angle fa fa-angle-right"></i></a>
+          
+        </li>
+        @endcan
 
-    @can('cabinet-social-distance-analysis')
-    <li class="nav-item @if(request()->get('datatype') == 'sdp_monitoring')   active @endif"> <a class="nav-link" href="{{route('cabinet.dataframe',['datatype'=>'sdp_monitoring'])}}"> <span class="menu-title">সামাজিক দুরত্ব পর্যবেক্ষণ</span> <i class="mdi mdi-eye menu-icon"></i> </a> </li>
-    @endcan
-
-    @can('cabinet-deep-analysis')
-    <li class="nav-item @if(request()->get('datatype') == 'analytics')   active @endif"> <a class="nav-link" href="{{route('cabinet.dataframe',['datatype'=>'analytics'])}}"> <span class="menu-title">এনালিটিক্স (বিশ্লেষণ)</span> <i class="mdi mdi-chart-arc menu-icon"></i> </a> </li>
-    @endcan
-
-    @can('dashboard-switch')
-    <li class="slide"> <a class="side-menu__item" href="{!! route('iedcr.dashboard') !!}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-      <path d="M0 0h24v24H0V0z" fill="none"/>
-      <path d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z"/>
-      </svg> <span class="side-menu__label">IEDCR Dashboard</span></a> </li>
-    @endcan
-    </ul>
-</nav>
-<!-- partial -->
+        @can('dashboard-switch')
+        <li class="slide"> <a class="side-menu__item" href="{!! route('iedcr.dashboard') !!}"> <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z"/>
+          </svg> <span class="side-menu__label">IEDCR Dashboard</span></a> </li>
+        @endcan
+        
+      </ul>
+    </aside>
+    <!--aside closed-->
