@@ -47,3 +47,21 @@
 .modal-dialog .modal-body .highcharts-container{margin: auto;}
 .modal-dialog .modal-header {background:#DDDDDD;}
 .modal-dialog .modal-header .modal-title{font-size: 20px;}
+
+.cabinet-top-cards .col-xl-2{padding-right: 0.35rem; padding-left: 0.35rem; max-width: 12.5%;}
+.cabinet-top-cards .col-xl-2 p,
+.cabinet-top-cards .col-xl-2 small{ font-size: 13px;}
+.cabinet-top-cards .card-body {padding: 1rem 1rem;}
+.cabinet-top-cards .dash1-card .ratio {
+    right: 0px;
+    top: 30px;
+    padding: 3px 6px;
+    font-size: 10px;
+    line-height: 15px;
+    color: #fff;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.line-chart-holder img{ max-width:65px;}
+
+.nav-tabs .nav-link.active{ background: none !important; color:#705ec8 !important;}
