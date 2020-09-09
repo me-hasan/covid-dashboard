@@ -1156,7 +1156,7 @@
                                                     </g>
                                                 </g>
                                             </g>
-                                            <g id="Laxmipur">
+                                            <g id="Lakshmipur">
                                                 <path fill="#FCAA94" stroke="#FFFFFF" stroke-miterlimit="10" d="M262.154,378.803l0.802-0.131c0-0.057,0-0.115,0-0.168
 				c0-0.563-0.563-2.061-0.563-2.061s-0.748-1.125-1.123-1.873s-0.375-2.996-0.375-2.996l1.123-1.873c0,0,0.75-0.281,1.123-0.938
 				c0.375-0.654-0.186-1.688-0.186-1.688s-0.375-0.748-1.311-1.313c-0.939-0.562-1.031-0.279-1.222-1.025c-0.188-0.75,0-0.75,0-1.125
@@ -3396,10 +3396,10 @@
                                     <div class="row">
                                         <div class="col-xl-5 col-md-6 mt-2 form-label pr-0">Select District</div>
                                         <div class="col-xl-7 col-md-6 pl-0">
-                                            <select class="form-control btn-outline-primary ">
+                                            <select class="form-control btn-outline-primary district-select-holder">
                                                 @if(count($districtList))
                                                     @foreach($districtList as $key=>$district)
-                                                        <option value="{!! $key !!}">{!! en2bnTranslation($key) !!}</option>
+                                                        <option  @if(request()->get('district') == $key) selected @endif value="{!! $key !!}">{!! en2bnTranslation($key) !!}</option>
                                                     @endforeach
                                                     @endif
                                             </select>
@@ -3460,13 +3460,23 @@
         $(document).ready(function(){
             $('.division-select-holder').on('change', function(){
                 var division_val = $('.division-select-holder').val();
-                console.log('change');
                 var url = window.location.href;
                 var a = url.indexOf("?");
                 var b =  url.substring(a);
                 var c = url.replace(b,"");
                 url = c;
                 url += '?division='+division_val;
+                window.location.href = url;
+            });
+            $('.district-select-holder').on('change', function(){
+                var division_val = $('.division-select-holder').val();
+                var district_val = $('.district-select-holder').val();
+                var url = window.location.href;
+                var a = url.indexOf("?");
+                var b =  url.substring(a);
+                var c = url.replace(b,"");
+                url = c;
+                url += '?division='+division_val+'&district='+district_val;
                 window.location.href = url;
             });
         });
@@ -3524,147 +3534,36 @@
 
         // Map JS Data
         $(document).ready(function(){
-            /* Array
-(
-[Barguna] => 35666
-[Barisal] => 89492
-[Bhola] => 49648
-[Patuakhali] => 57077
-[Pirojpur] => 35622
-[Bandarban] => 2270
-[Brahmanbaria] => 79581
-[Chandpur] => 42875
-[Chittagong] => 157994
-[Comilla] => 99343
-[Coxs_Bazar] => 11876
-[Feni] => 14821
-[Khagrachhari] => 1932
-[Lakshmipur] => 29266
-[Noakhali] => 34631
-[Rangamati] => 1474
-[Dhaka] => 109688
-[Faridpur] => 65703
-[Gazipur] => 172325
-[Gopalganj] => 37597
-[Kishoreganj] => 85459
-[Madaripur] => 38223
-[Manikganj] => 57645
-[Munshiganj] => 40165
-[Narayanganj] => 80703
-[Narsingdi] => 74252
-[Rajbari] => 32564
-[Shariatpur] => 19908
-[Tangail] => 132484
-[Jamalpur] => 45858
-[Mymensingh] => 114241
-[Netrakona] => 57731
-[Sherpur] => 19908
-[Bagerhat] => 41171
-[Chuadanga] => 23432
-[Jessore] => 56411
-[Jhenaidah ] => 43998
-[Khulna] => 74618
-[Kushtia] => 63007
-[Magura] => 26796
-[Meherpur] => 13389
-[Narail] => 18928
-[Satkhira] => 58320
-[Bogra] => 156330
-[Chapai_Nawabganj] => 54749
-[Jaipurhat] => 41035
-[Naogaon] => 123575
-[Natore] => 69619
-[Pabna] => 107451
-[Rajshahi] => 147333
-[Sirajganj] => 110265
-[Dinajpur] => 136300
-[Gaibandha] => 72684
-[Kurigram] => 55168
-[Lalmonirhat] => 44341
-[Nilphamari] => 67121
-[Panchagarh] => 40839
-[Rangpur] => 102821
-[Thakurgaon] => 57155
-[Habiganj] => 70225
-[Maulvi_Bazar] => 49026
-[Sunamganj] => 72031
-[Sylhet] => 136067
-)
-*/
-            $('#Barguna path').attr('fill', '#F37366');
-            $('#Barisal path').attr('fill', '#CD3E52');
-            $('#Bhola path').attr('fill', '#F37366');
-            $('#Patuakhali path').attr('fill', '#E5515D');
-            $('#Pirojpur path').attr('fill', '#F37366');
-            $('#Bandarban path').attr('fill', '#F69475');
-            $('#Brahmanbaria path').attr('fill', '#CD3E52');
-            $('#Chandpur path').attr('fill', '#F37366');
-            $('#Chittagong path').attr('fill', '#BC2B4C');
-            $('#Comilla path').attr('fill', '#CD3E52');
-            $('#Coxs_Bazar path').attr('fill', '#F69475');
-            $('#Feni path').attr('fill', '#F69475');
-            $('#Khagrachhari path').attr('fill', '#F69475');
-            $('#Lakshmipur path').attr('fill', '#F37366');
-            $('#Noakhali path').attr('fill', '#F37366');
-            $('#Rangamati path').attr('fill', '#F69475');
-            $('#Dhaka path').attr('fill', '#BC2B4C');
-            $('#Faridpur path').attr('fill', '#E5515D');
-            $('#Gazipur path').attr('fill', '#BC2B4C');
-            $('#Gopalganj path').attr('fill', '#F37366');
-            $('#Kishoreganj path').attr('fill', '#CD3E52');
-            $('#Madaripur path').attr('fill', '#F37366');
-            $('#Manikganj path').attr('fill', '#E5515D');
-            $('#Munshiganj path').attr('fill', '#F37366');
-            $('#Narayanganj path').attr('fill', '#CD3E52');
-            $('#Narsingdi path').attr('fill', '#CD3E52');
-            $('#Rajbari path').attr('fill', '#F37366');
-            $('#Shariatpur path').attr('fill', '#F69475');
-            $('#Tangail path').attr('fill', '#BC2B4C');
-            $('#Jamalpur path').attr('fill', '#F37366');
-            $('#Mymensingh path').attr('fill', '#BC2B4C');
-            $('#Netrakona path').attr('fill', '#E5515D');
-            $('#Sherpur path').attr('fill', '#F69475');
-            $('#Bagerhat path').attr('fill', '#F37366');
-            $('#Chuadanga path').attr('fill', '#F69475');
-            $('#Jessore path').attr('fill', '#E5515D');
-            $('#Jhenaidah  path').attr('fill', '#F37366');
-            $('#Khulna path').attr('fill', '#CD3E52');
-            $('#Kushtia path').attr('fill', '#E5515D');
-            $('#Magura path').attr('fill', '#F37366');
-            $('#Meherpur path').attr('fill', '#F69475');
-            $('#Narail path').attr('fill', '#F69475');
-            $('#Satkhira path').attr('fill', '#E5515D');
-            $('#Bogra path').attr('fill', '#BC2B4C');
-            $('#Chapai_Nawabganj path').attr('fill', '#E5515D');
-            $('#Jaipurhat path').attr('fill', '#F37366');
-            $('#Naogaon path').attr('fill', '#BC2B4C');
-            $('#Natore path').attr('fill', '#E5515D');
-            $('#Pabna path').attr('fill', '#BC2B4C');
-            $('#Rajshahi path').attr('fill', '#BC2B4C');
-            $('#Sirajganj path').attr('fill', '#BC2B4C');
-            $('#Dinajpur path').attr('fill', '#BC2B4C');
-            $('#Gaibandha path').attr('fill', '#CD3E52');
-            $('#Kurigram path').attr('fill', '#E5515D');
-            $('#Lalmonirhat path').attr('fill', '#F37366');
-            $('#Nilphamari path').attr('fill', '#E5515D');
-            $('#Panchagarh path').attr('fill', '#F37366');
-            $('#Rangpur path').attr('fill', '#BC2B4C');
-            $('#Thakurgaon path').attr('fill', '#E5515D');
-            $('#Habiganj path').attr('fill', '#CD3E52');
-            $('#Maulvi_Bazar path').attr('fill', '#F37366');
-            $('#Sunamganj path').attr('fill', '#CD3E52');
-            $('#Sylhet path').attr('fill', '#BC2B4C');
+            <?php
+            $_colorCodes = array( 25000 => '#F69475', 50000 => '#F37366', 70000 => '#E5515D', 100000 => '#CD3E52', 200000 => '#BC2B4C', 200001 => '#ed2355');
+            $_existDataGroups = array();
+            foreach($mobilityData as $_mobInDistrictVal){
 
-            /* Array
-(
-[50000] => #F37366
-[100000] => #CD3E52
-[70000] => #E5515D
-[25000] => #F69475
-[200000] => #BC2B4C
-)
-*/
-            $('#color-group').append('<div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-25000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">25001-50000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">50001-70000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">70001-100000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">100001-200000</span></div></div>');
+            $str=$_mobInDistrictVal->district;
+
+            if($str == "Cox's Bazar") {
+                $str = 'Coxs_Bazar';
+            }
+            $_groupColorCode = NULL;
+            foreach($_colorCodes as $_colorRange => $_colorCode){
+                if((int)$_mobInDistrictVal->predicted_importation <= $_colorRange){
+                    $_groupColorCode = $_colorCode;
+                    $_existDataGroups[$_colorRange] = $_colorCode;
+                    break;
+                } elseif((int)$_mobInDistrictVal->predicted_importation > 200001) {
+                    $_groupColorCode = "#ed2355";
+                }
+
+            }
+
+            ?>
+            $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            <?php
+            }
+            ?>
+
+
+            $('#color-group').append('<div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-25000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">25001-50000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">50001-70000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">70001-100000</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">100001-200000</span></div> <div class="col-auto"><span class="colorinput-color" style="background-color:#ed2355"></span><span class="group-color-label text-ash p-1">200000+</span></div></div>');
 
             $('#mobilityIframe').html('<iframe id="rtIframeData" width="100%" height="800" src="https://arcg.is/0OXj4S" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 
