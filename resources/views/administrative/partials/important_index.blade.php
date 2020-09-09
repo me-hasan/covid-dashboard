@@ -1,20 +1,20 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
-        <h5 class="card-header">বিভাগভিত্তিক গুরুত্বপূর্ণ সূচকের(KPI) সাপ্তাহিক পরিবর্তন</h5>
-        <div class="card-body daily-charge">
-            <div class="division-dd-wrapper top-dropdown">
-                <div class="d-flex">
-                    <label for="staticEmail" class="p-0 mr-2 mt-1">বিভাগ</label>
-                    <select class="form-control form-control-sm" id="staticEmail">
-                        <option>ঢাকা</option>
-                        <option>চট্টগ্রাম</option>
-                        <option>খুলনা</option>
-                        <option>বরিশাল</option>
-                        <option>রাজশাহী</option>
-                    </select>
-                </div>
+    	<div class="card-header">
+            <h5 class="card-title">বিভাগভিত্তিক গুরুত্বপূর্ণ সূচকের(KPI) সাপ্তাহিক পরিবর্তন</h5>
+            <div class="card-options d-none">
+                <label for="staticEmail" class="p-0 mr-2 mt-1">বিভাগ</label>
+                <select class="form-control form-control-sm" id="staticEmail">
+                    <option>ঢাকা</option>
+                    <option>চট্টগ্রাম</option>
+                    <option>খুলনা</option>
+                    <option>বরিশাল</option>
+                    <option>রাজশাহী</option>
+                </select>
             </div>
-            <table class="table table-sm table-bordered header-bg-color">
+        </div>
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap">
                 <thead>
                 <tr>
                     <th scope="col"><strong>গুরুত্বপূর্ণ সূচক(KPI)</strong></th>
@@ -88,14 +88,6 @@
                     <td class="bg-success">61.35%</td>
                     <td><span class="line-chart-holder"><img src="assets/images/line-chart-2.png"> </span></td>
                 </tr>
-                <!--<tr>
-                                    <th scope="row">TOTAL</th>
-                                    <td class="bg-secondary"><strong>35, 283</strong></td>
-                                    <td class="bg-secondary"><strong>45,907</strong></td>
-                                    <td class="bg-secondary"><strong>130,11%</strong></td>
-                                    <td><span class="line-chart-holder"><img src="assets/images/line-chart-2.png"> </span>
-                                    </td>
-                                </tr>-->
                 </tbody>
             </table>
         </div>
