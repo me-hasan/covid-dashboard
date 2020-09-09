@@ -18,9 +18,7 @@ class ManageIframeController extends Controller
     public function case_distribution_and_forecasting() {
         return view('iedcr.case-distribution-and-forecasting');
     }
-    public function epidemiological_syndromic_indicator_analysis() {
-        return view('iedcr.epidemiological-syndromic-indicator-analysis');
-    }
+    
     public function hospital_and_patient_analysis() {
         return view('iedcr.hospital-and-patient-analysis-new');
     }
