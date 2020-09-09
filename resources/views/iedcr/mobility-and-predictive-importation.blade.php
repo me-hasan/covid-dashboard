@@ -1,12 +1,12 @@
 @extends('iedcr.default')
 @section('bread_crumb_active','Mobility And Predictive Importation')
-@section('search_view')
+{{--@section('search_view')
     <div class="d-flex order-lg-2 ml-auto">
         <form action="{{ route('iedcr.mobility_and_predictive_importation') }}" class="d-flex order-lg-12 ml-auto">
             @include('iedcr.search_view')
         </form>
     </div>
-@endsection
+@endsection--}}
 @section('content')
     <?php
     ini_set('error_reporting', 0);
@@ -3378,15 +3378,15 @@
                                     <div class="row">
                                         <div class="col-xl-5 col-md-6 mt-2 form-label pr-0">Select Division</div>
                                         <div class="col-xl-7 col-md-6 pl-0">
-                                            <select class="form-control btn-outline-primary">
-                                                <option value="DHAKA">ঢাকা </option>
-                                                <option value="RAJSHAHI">রাজশাহী </option>
-                                                <option value="MYMENSINGH">ময়মনসিংহ </option>
-                                                <option value="KHULNA">খুলনা </option>
-                                                <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                                                <option value="BARISAL">বরিশাল </option>
-                                                <option value="RANGPUR">রংপুর </option>
-                                                <option value="SYLHET">সিলেট </option>
+                                            <select class="form-control btn-outline-primary division-select-holder">
+                                                <option value="DHAKA" @if(strtoupper(request()->get('division')) == 'DHAKA') selected @endif>ঢাকা </option>
+                                                <option value="RAJSHAHI" @if(strtoupper(request()->get('division')) == 'RAJSHAHI') selected @endif>রাজশাহী </option>
+                                                <option value="MYMENSINGH" @if(strtoupper(request()->get('division')) == 'MYMENSINGH') selected @endif>ময়মনসিংহ </option>
+                                                <option value="KHULNA" @if(strtoupper(request()->get('division')) == 'KHULNA') selected @endif>খুলনা </option>
+                                                <option value="CHITTAGONG" @if(strtoupper(request()->get('division')) == 'CHITTAGONG') selected @endif>চট্রগ্রাম </option>
+                                                <option value="BARISAL" @if(strtoupper(request()->get('division')) == 'BARISAL') selected @endif>বরিশাল </option>
+                                                <option value="RANGPUR" @if(strtoupper(request()->get('division')) == 'RANGPUR') selected @endif>রংপুর </option>
+                                                <option value="SYLHET" @if(strtoupper(request()->get('division')) == 'SYLHET') selected @endif>সিলেট </option>
                                             </select>
                                         </div>
                                     </div>
@@ -3396,15 +3396,12 @@
                                     <div class="row">
                                         <div class="col-xl-5 col-md-6 mt-2 form-label pr-0">Select District</div>
                                         <div class="col-xl-7 col-md-6 pl-0">
-                                            <select class="form-control btn-outline-primary">
-                                                <option value="DHAKA">ঢাকা </option>
-                                                <option value="RAJSHAHI">রাজশাহী </option>
-                                                <option value="MYMENSINGH">ময়মনসিংহ </option>
-                                                <option value="KHULNA">খুলনা </option>
-                                                <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                                                <option value="BARISAL">বরিশাল </option>
-                                                <option value="RANGPUR">রংপুর </option>
-                                                <option value="SYLHET">সিলেট </option>
+                                            <select class="form-control btn-outline-primary ">
+                                                @if(count($districtList))
+                                                    @foreach($districtList as $key=>$district)
+                                                        <option value="{!! $key !!}">{!! en2bnTranslation($key) !!}</option>
+                                                    @endforeach
+                                                    @endif
                                             </select>
                                         </div>
                                     </div>
@@ -3459,159 +3456,22 @@
 
 @section('scripts')
 
-    {{--<script type="text/javascript">
-        <?php
-        #print_r($_mobilityTypeData); exit;
-        $_mobilityTypekSeriesData = array();
-        foreach($_mobilityTypeData as $_mobilityTypeLabel => $_mobilityTypeValue){
-            #echo $$_mobilityTypeLabel; exit;
-
-            $_mobilityTypekSeriesData[] = array('type' => 'area', 'name' => strtoupper($_mobilityTypeLabel), 'data' => array_values($_mobilityTypeValue), 'marker' => array('symbol' => 'circle'));
-        }
-        #print_r($_seriesSetData);
-        #exit;
-        ?>
-        Highcharts.chart('mobility-predictive-importation', {
-            title: {
-                text: ''
-            },
-
-            subtitle: {
-                text: ''
-            },
-
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'top'
-            },
-
-            credits:{
-                enabled:false
-            },
-
-            xAxis: {
-                categories: <?php echo json_encode(array_values($_rawDataLabels));?>
-            },
-
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    //enabled: false,
-                    formatter: function() {
-                        return this.value;
-                    }
-                }
-            },
-
-            plotOptions: {
-                series: {
-                    fillOpacity:0,
-                    dataLabels:{
-                        enabled:false,
-                        color: 'black',
-                        formatter:function() {
-                            //var pcnt = (this.y / dataSum) * 100;
-                            return Highcharts.numberFormat(this.y);
-                        }
-                    }
-                }
-            },
-
-            colors: ['#ffab00', '#BC2B4C'],
-
-            series: <?php echo json_encode($_mobilityTypekSeriesData);?>
-        });
-
-        // Map JS Data
-        $(document).ready(function(){
-            /* <?php print_r($_districtWiseData); ?> */
-            <?php
-            $_colorCodes = array( '10' => '#FCAA94', '25000' => '#F69475', '50000' => '#F37366', '70000' => '#E5515D', '100000' => '#CD3E52', '200000' => '#BC2B4C');
-            $_existDataGroups = array();
-            foreach($_districtWiseData as $_mobInDistrictName => $_mobInDistrictVal){
-            $_groupColorCode = NULL;
-            foreach($_colorCodes as $_colorRange => $_colorCode){
-                if($_mobInDistrictVal <= $_colorRange){
-                    $_groupColorCode = $_colorCode;
-                    $_existDataGroups[$_colorRange] = $_colorCode;
-                    break;
-                }
-            }
-            ?>
-            $('#<?php echo $_mobInDistrictName; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
-            <?php
-            }
-            ?>
-
-            /* <?php print_r($_existDataGroups); ?> */
-            <?php
-            $_groupColorData = NULL;
-            $_startData = 0;
-            ksort($_existDataGroups);
-            foreach($_existDataGroups as $_colorRange => $_colorCode){
-                $_groupData.= '<div class="col-auto"><span class="colorinput-color" style="background-color:'.$_colorCode.'"></span><span class="group-color-label text-ash p-1">'.$_startData.'-'.$_colorRange.'</span></div>';
-                $_startData = $_colorRange+1;
-            }
-            ?>
-            $('#color-group').append('<div class="row gutters-xs"><?php echo $_groupData; ?></div>');
-        });
-    </script>--}}
-
     <script type="text/javascript">
-        /*Highcharts.chart('mobility-predictive-importation', {
-title: {
-    text: ''
-},
-
-subtitle: {
-    text: ''
-},
-
-legend: {
-    layout: 'horizontal',
-    align: 'center',
-    verticalAlign: 'top'
-},
-
-credits:{
-    enabled:false
-},
-
-xAxis: {
-    categories: ["7\/11\/2020","7\/12\/2020","7\/13\/2020","7\/14\/2020","7\/15\/2020","7\/16\/2020","7\/17\/2020","7\/18\/2020","7\/19\/2020","7\/20\/2020","7\/21\/2020","7\/22\/2020"]				},
-
-yAxis: {
-    title: {
-        text: ''
-    },
-    labels: {
-        //enabled: false,
-        formatter: function() {
-           return this.value;
-        }
-    }
-},
-
-plotOptions: {
-    series: {
-        fillOpacity:0,
-        dataLabels:{
-            enabled:false,
-            color: 'black',
-            formatter:function() {
-                //var pcnt = (this.y / dataSum) * 100;
-                return Highcharts.numberFormat(this.y);
-            }
-        }
-    }
-},
-
-colors: ['#ffab00', '#BC2B4C'],
-
-series: [{"type":"area","name":"MOBILITY_IN","data":[3240407,4984095,4402780,4277036,4209642,4150570,4476457,4390471,4264385,4145872,4019036,4062227],"marker":{"symbol":"circle"}},{"type":"area","name":"MOBILITY_OUT","data":[3252671,5019431,4397381,4297795,4221432,4147585,4433316,4404118,4284599,4145092,4008273,4049201],"marker":{"symbol":"circle"}}]			});*/
+        $(document).ready(function(){
+            $('.division-select-holder').on('change', function(){
+                var division_val = $('.division-select-holder').val();
+                console.log('change');
+                var url = window.location.href;
+                var a = url.indexOf("?");
+                var b =  url.substring(a);
+                var c = url.replace(b,"");
+                url = c;
+                url += '?division='+division_val;
+                window.location.href = url;
+            });
+        });
+    </script>
+    <script type="text/javascript">
 
         //Tracing Analysis Trend
         Highcharts.chart('mobility-predictive-importation', {
@@ -3634,7 +3494,7 @@ series: [{"type":"area","name":"MOBILITY_IN","data":[3240407,4984095,4402780,427
             },
 
             xAxis: {
-                categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
+                categories: {!! json_encode($categories) !!}
             },
 
             yAxis: {
@@ -3656,9 +3516,10 @@ series: [{"type":"area","name":"MOBILITY_IN","data":[3240407,4984095,4402780,427
             },
 
             colors: ["#ff0000", "#bfbfbf", "#bfbfbf"],
-            series: [{"type":"spline","name":"Division","data":[300,320,450,250,450,200,280,400,620,452,505,637],"marker":{"enabled": false, "symbol":"circle"}},
+            /*series: [{"type":"spline","name":"Division","data":[300,320,450,250,450,200,280,400,620,452,505,637],"marker":{"enabled": false, "symbol":"circle"}},
                 {"type":"spline","name":"Dhaka","data":[360,406,816,523,470,571,643,521,578,657,777,563],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'},
-                {"type":"spline","name":"Gopalgonj","data":[250,120,150,350,250,100,180,350,420,402,445,537],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'}]
+                {"type":"spline","name":"Gopalgonj","data":[250,120,150,350,250,100,180,350,420,402,445,537],"marker":{"enabled": false, "symbol":"circle"},dashStyle: 'shortdot'}]*/
+            series: {!! json_encode($series_data) !!}
         });
 
         // Map JS Data

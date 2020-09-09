@@ -13,7 +13,7 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     Route::get('syndromic-surveillance', 'ManageIframeController@syndromic_surveillance')->name('iedcr.syndromic_surveillance')->middleware(['permission:iedcr-syndromic-surveillance']);
 
-    Route::get('epidemiological-syndromic-indicator-analysis', 'ManageIframeController@epidemiological_syndromic_indicator_analysis')->name('iedcr.epidemiological_syndromic_indicator_analysis')->middleware(['permission:iedcr-epidemiological-and-syndromic-indicator-analysis']);
+    Route::get('epidemiological-syndromic-indicator-analysis', 'EpidemiologicalController@epidemiological_syndromic_indicator_analysis')->name('iedcr.epidemiological_syndromic_indicator_analysis')->middleware(['permission:iedcr-epidemiological-and-syndromic-indicator-analysis']);
 
     Route::get('corona-tracing-analysis', 'CoronaTracingController@corona_tracing_analysis')->name('iedcr.corona_tracing_analysis')->middleware(['permission:iedcr-corona-tracking-analysis']);
 
@@ -21,7 +21,8 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     Route::get('hospital-and-patient-analysis', 'ManageIframeController@hospital_and_patient_analysis')->name('iedcr.hospital_and_patient_analysis')->middleware(['permission:iedcr-hospital-and-patient-analysis']);
 
-    Route::get('mobility-and-predictive-importation', 'ManageIframeController@mobility_and_predictive_importation')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
+    //Route::get('mobility-and-predictive-importation', 'ManageIframeController@mobility_and_predictive_importation')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
+    Route::get('mobility-and-predictive-importation', 'MobilityAndPredictiveController@index')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
 
     // test positivity pdf
     Route::get('generate-test-positive-rate-excel', 'TestPositiveController@generateTestPositiveRateExcel')->name('iedcr.generate-test-positive-rate-excel');
