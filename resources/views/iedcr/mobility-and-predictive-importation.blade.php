@@ -3397,14 +3397,11 @@
                                         <div class="col-xl-5 col-md-6 mt-2 form-label pr-0">Select District</div>
                                         <div class="col-xl-7 col-md-6 pl-0">
                                             <select class="form-control btn-outline-primary ">
-                                                <option value="DHAKA">ঢাকা </option>
-                                                <option value="RAJSHAHI">রাজশাহী </option>
-                                                <option value="MYMENSINGH">ময়মনসিংহ </option>
-                                                <option value="KHULNA">খুলনা </option>
-                                                <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                                                <option value="BARISAL">বরিশাল </option>
-                                                <option value="RANGPUR">রংপুর </option>
-                                                <option value="SYLHET">সিলেট </option>
+                                                @if(count($districtList))
+                                                    @foreach($districtList as $key=>$district)
+                                                        <option value="{!! $key !!}">{!! en2bnTranslation($key) !!}</option>
+                                                    @endforeach
+                                                    @endif
                                             </select>
                                         </div>
                                     </div>
