@@ -43,5 +43,8 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
     Route::get('generate-conformance-summary-excel', 'ConformanceController@generateConformanceSummaryExcel')->name('iedcr.generate-conformance-summary-excel');
 
     Route::get('generate-camera-wise-data-excel', 'ConformanceController@generateCameraWiseDataExcel')->name('iedcr.generate-camera-wise-data-excel');
+
+    // epidemiology excel
+     Route::get('generate-zone-information-excel', 'EpidemiologicalController@generateZoneInfoRateExcel')->name('iedcr.generate-zone-information-excel');
 });
 

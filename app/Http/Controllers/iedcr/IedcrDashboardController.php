@@ -221,9 +221,9 @@ class IedcrDashboardController extends Controller
   {
     $qry_str= " ";
     if($request->from_date!='' && $request->to_date!=''){
-        $qry_str= " where  DATE(date_of_test) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
+        $qry_str= " where  DATE(test_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
-    $getNationalInfectedTrend = DB::select("select 'national' AS area, date_of_test as 'Date', count(id) as infected_count from infected_person ".$qry_str." group by date_of_test");
+    $getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person ".$qry_str." group by test_date");
     return $getNationalInfectedTrend ?? '';
   }
 
@@ -1092,8 +1092,15 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
     return $city_wise_hospital_details;
   }
   private function nationalInfectedMap()
-  {
-    $getNationalInfectedMap = DB::select("select District, sum(infected) as 'Infected', SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography  group by District");
+  { 
+    // new query
+    $getNationalInfectedMap = DB::select("
+        SELECT B.district AS District, SUM(Infected) AS 'Infected',SUBSTRING(B.district, 1, 4) AS ExtractString  FROM
+        (SELECT last_thana_code, COUNT(id) AS 'Infected'
+        FROM infected_person GROUP BY last_thana_code) AS A INNER JOIN bbs_coded_upazila_dist_div AS B
+        ON A.last_thana_code=B.upz_code GROUP BY B.district;
+
+      ");
     return $getNationalInfectedMap ;
   }
 
@@ -1110,7 +1117,13 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
     }
 
     if($request->division && $request->district){
-      $getDivDisLevelInfectedMap = DB::select("select District, sum(infected) as 'Infected',SUBSTRING(District, 1, 4) AS ExtractString from Div_Dist_Upz_Infected_Geography where District like '%".$str_dis."%' group by District");
+      // new query
+      $getDivDisLevelInfectedMap = DB::select("
+          SELECT B.district AS District, SUM(Infected) AS 'Infected',SUBSTRING(B.district, 1, 4) AS ExtractString  FROM
+          (SELECT last_thana_code, COUNT(id) AS 'Infected'
+          FROM infected_person GROUP BY last_thana_code) AS A INNER JOIN bbs_coded_upazila_dist_div AS B
+          ON A.last_thana_code=B.upz_code WHERE B.district LIKE '%".$str_dis."%' GROUP BY B.district;
+        ");
     }else{
       $getDivDisLevelInfectedMap = DB::select("SELECT District, SUM(infected) AS 'Infected', SUBSTRING(District, 1, 4) AS ExtractString FROM Div_Dist_Upz_Infected_Geography where Division like '%".$request->division."%' GROUP BY District;");
     }

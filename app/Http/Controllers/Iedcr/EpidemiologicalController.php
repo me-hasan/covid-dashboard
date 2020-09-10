@@ -99,5 +99,31 @@ class EpidemiologicalController extends Controller
         return $data;
     }
 
+    public function generateZoneInfoRateExcel(Request $request){
+        $zone_info  = $this->nationWise_zone_info($request);
+
+
+       $i=0;
+          $data = [];
+          if(sizeof($zone_info) > 0){
+              foreach ($zone_info as $key => $row) {
+                  $data[$i]['DIVISION'] =  $row->division;
+                  $data[$i]['DISTRICT'] =  $row->district;
+                  $data[$i]['UPAZILA'] =  $row->upazila;
+                  $data[$i]['CASES'] =  $row->cases;
+                  $data[$i]['RT VALUES'] =  '-';
+                  $data[$i]['DOUBLING RATE'] =  '-';
+                  $data[$i]['GROWTH RATE'] =  '-';
+                  $data[$i]['TEST POSITIVITY'] = number_format($row->test_positivity,2);
+                  $data[$i]['MOBILITY IN'] =  $row->mobility_in;
+                  $data[$i]['MOBILITY OUT'] =  $row->mobility_out;
+                 
+                  $i++;
+              }
+          }
+         $list = collect($data);
+          return (new FastExcel($list))->download('epidemiological_zone_info.xlsx');
+    }
+
 
 }

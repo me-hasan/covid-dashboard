@@ -115,7 +115,7 @@
 
                     <div class="card-options">
 
-                        <i class="fa fa-download"></i>
+                        <a href="{{route('iedcr.generate-zone-information-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a> 
 
                     </div>
 
