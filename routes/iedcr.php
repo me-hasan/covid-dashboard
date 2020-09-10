@@ -19,7 +19,7 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     Route::get('conformance-analysis', 'ConformanceController@conformance_analysis')->name('iedcr.conformance_analysis')->middleware(['permission:iedcr-conformance-analysis']);
 
-    Route::get('hospital-and-patient-analysis', 'ManageIframeController@hospital_and_patient_analysis')->name('iedcr.hospital_and_patient_analysis')->middleware(['permission:iedcr-hospital-and-patient-analysis']);
+    Route::get('hospital-and-patient-analysis', 'HospitalController@hospital_and_patient_analysis')->name('iedcr.hospital_and_patient_analysis')->middleware(['permission:iedcr-hospital-and-patient-analysis']);
 
     //Route::get('mobility-and-predictive-importation', 'ManageIframeController@mobility_and_predictive_importation')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
     Route::get('mobility-and-predictive-importation', 'MobilityAndPredictiveController@index')->name('iedcr.mobility_and_predictive_importation')->middleware(['permission:iedcr-mobility-and-predictive-information']);
@@ -46,5 +46,7 @@ Route::group(['namespace' => 'Iedcr','middleware' => 'auth'],function (){
 
     // epidemiology excel
      Route::get('generate-zone-information-excel', 'EpidemiologicalController@generateZoneInfoRateExcel')->name('iedcr.generate-zone-information-excel');
+    // Comorbidity excel
+     Route::get('generate-comorbidity-excel', 'HospitalController@generateComorbidityExcel')->name('iedcr.generate-comorbidity-excel');
 });
 

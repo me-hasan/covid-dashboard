@@ -585,17 +585,51 @@
     <!-- Row-1 -->
 
     <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Patient Comorbidity Analysis</h3>
-                    <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> <i class="fa fa-download text-danger"></i> </div>
-                </div>
-                <div class="card-body"> <img src="assets/images/chart/hospital-and-patient-analysis-1.jpg" alt="Patient Comorbidity Analysis" /> </div>
+  <div class="col-xl-12 col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Patient Comorbidity Analysis</h3>
+        <div class="card-options"> <i class="fa fa-table mr-2 text-success"></i> 
+       <a href="{{route('iedcr.generate-comorbidity-excel',request()->input())}}"> <i class="fa fa-download text-danger"></i></a> 
+         </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-3 col-md-3">
+            <div class="mx-auto chart-circle chart-circle-md chart-circle-primary mt-sm-0 mb-0" data-value="{{$diabetic_info->Diabetic_percentage/100}}" data-thickness="12" data-color="#60499a">
+              <div class="mx-auto chart-circle-value text-center fs-20">{{number_format($diabetic_info->Diabetic_percentage,2)}}% </div>
             </div>
+            <h3 class="card-title mt-3 text-center">Diabetic Patient</h3>
+          </div>
+          <div class="col-xl-3 col-md-3">
+            <div class="mx-auto chart-circle chart-circle-md chart-circle-primary mt-sm-0 mb-0" data-value="{{$heart_info->Heart_Failure_percentage/100}}" data-thickness="12" data-color="#60499a">
+              <div class="mx-auto chart-circle-value text-center fs-20">{{number_format($heart_info->Heart_Failure_percentage,2)}}%</div>
+            </div>
+            <h3 class="card-title mt-3 text-center">Heart Patient</h3>
+          </div>
+          <div class="col-xl-2 col-md-2">
+            <div class="mx-auto chart-circle chart-circle-md chart-circle-primary mt-sm-0 mb-0" data-value="{{$lunge_info->Asthma_percentage/100}}" data-thickness="12" data-color="#60499a">
+              <div class="mx-auto chart-circle-value text-center fs-20">{{number_format($lunge_info->Asthma_percentage,2)}}%</div>
+            </div>
+            <h3 class="card-title mt-3 text-center">Lunge Patient</h3>
+          </div>
+          <div class="col-xl-2 col-md-2">
+            <div class="mx-auto chart-circle chart-circle-md chart-circle-primary mt-sm-0 mb-0" data-value="{{$kidney_info->Kidney_percentage/100}}" data-thickness="12" data-color="#60499a">
+              <div class="mx-auto chart-circle-value text-center fs-20">{{number_format($kidney_info->Kidney_percentage,2)}}%</div>
+            </div>
+            <h3 class="card-title mt-3 text-center">Kidney Patient</h3>
+          </div>
+          <div class="col-xl-2 col-md-2">
+            <div class="mx-auto chart-circle chart-circle-md chart-circle-primary mt-sm-0 mb-0" data-value="{{$hypertension_info->Hypertension_percentage/100}}" data-thickness="12" data-color="#60499a">
+              <div class="mx-auto chart-circle-value text-center fs-20">{{number_format($hypertension_info->Hypertension_percentage,2)}}%</div>
+            </div>
+            <h3 class="card-title mt-3 text-center">Hypertension</h3>
+          </div>
         </div>
+      </div>
     </div>
-
+  </div>
+</div>
     <!-- End Row-1 -->
 
     <!-- Row-2 -->

@@ -587,7 +587,7 @@ class IedcrDashboardController extends Controller
             }
 
         }
-
+// new query
         if($searchQuery != '') {
 //             $testPositivityMapSql = "select A.District, (A.Positive/B.Total)*100 as 'Test_Positivity' from
 // (select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Positive'

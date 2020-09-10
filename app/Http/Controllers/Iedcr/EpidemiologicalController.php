@@ -11,11 +11,11 @@ class EpidemiologicalController extends Controller
 {
     
     public function epidemiological_syndromic_indicator_analysis(Request $request) {
-        if($request->division || $request->district || $request->upazila){
-            //$zone_information  = $this->divisionWiseTestPositiveRate($request);
-        }else{
+        // if($request->division || $request->district || $request->upazila){
+        //     //$zone_information  = $this->divisionWiseTestPositiveRate($request);
+        // }else{
             $zone_information  = $this->nationWise_zone_info($request);
-        }
+        //}
         
         return view('iedcr.epidemiological-syndromic-indicator-analysis',compact('zone_information'));
     }
