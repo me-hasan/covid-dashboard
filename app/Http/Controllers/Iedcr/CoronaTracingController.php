@@ -62,7 +62,7 @@ class CoronaTracingController extends Controller
 
         // dd($districtData);
 
-        Log::debug('get division corona tracing data: ' . json_encode($districtData));
+        Log::debug('get district corona tracing data: ' . json_encode($districtData));
 
         $newDistrictArr = [];
 
