@@ -19,9 +19,9 @@ class ManageIframeController extends Controller
         return view('iedcr.case-distribution-and-forecasting');
     }
     
-    public function hospital_and_patient_analysis() {
-        return view('iedcr.hospital-and-patient-analysis-new');
-    }
+    // public function hospital_and_patient_analysis() {
+    //     return view('iedcr.hospital-and-patient-analysis-new');
+    // }
     public function mobility_and_predictive_importation() {
         return view('iedcr.mobility-and-predictive-importation');
     }

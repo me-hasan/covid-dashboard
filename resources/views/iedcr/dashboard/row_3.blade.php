@@ -100,7 +100,7 @@ $inputData = request()->all();
                     <div class="col-xl-6 col-md-12 ml-4">
                         <div class="card-body">
                             <h5 class="card-title">Note</h5>
-                            <p class="card-text">Division and District Filter Applicable.</p>
+                            <p class="card-text">District Filter Applicable.</p>
                         </div>
                     </div>
                 </div>

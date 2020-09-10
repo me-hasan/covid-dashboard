@@ -11,11 +11,11 @@ class EpidemiologicalController extends Controller
 {
     
     public function epidemiological_syndromic_indicator_analysis(Request $request) {
-        if($request->division || $request->district || $request->upazila){
-            //$zone_information  = $this->divisionWiseTestPositiveRate($request);
-        }else{
+        // if($request->division || $request->district || $request->upazila){
+        //     //$zone_information  = $this->divisionWiseTestPositiveRate($request);
+        // }else{
             $zone_information  = $this->nationWise_zone_info($request);
-        }
+        //}
         
         return view('iedcr.epidemiological-syndromic-indicator-analysis',compact('zone_information'));
     }
@@ -97,6 +97,32 @@ class EpidemiologicalController extends Controller
         $data['today_asymp_number_of_test'] = $asymptomicTestCount[0]->Total ?? 0;
 
         return $data;
+    }
+
+    public function generateZoneInfoRateExcel(Request $request){
+        $zone_info  = $this->nationWise_zone_info($request);
+
+
+       $i=0;
+          $data = [];
+          if(sizeof($zone_info) > 0){
+              foreach ($zone_info as $key => $row) {
+                  $data[$i]['DIVISION'] =  $row->division;
+                  $data[$i]['DISTRICT'] =  $row->district;
+                  $data[$i]['UPAZILA'] =  $row->upazila;
+                  $data[$i]['CASES'] =  $row->cases;
+                  $data[$i]['RT VALUES'] =  '-';
+                  $data[$i]['DOUBLING RATE'] =  '-';
+                  $data[$i]['GROWTH RATE'] =  '-';
+                  $data[$i]['TEST POSITIVITY'] = number_format($row->test_positivity,2);
+                  $data[$i]['MOBILITY IN'] =  $row->mobility_in;
+                  $data[$i]['MOBILITY OUT'] =  $row->mobility_out;
+                 
+                  $i++;
+              }
+          }
+         $list = collect($data);
+          return (new FastExcel($list))->download('epidemiological_zone_info.xlsx');
     }
 
 

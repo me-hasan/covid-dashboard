@@ -604,14 +604,14 @@
                     <div class="form-label pt-2 mr-2">Select Division</div>
                     <div>
                         <select class="form-control btn-outline-primary division-select-holder">
-                            <option value="DHAKA">ঢাকা </option>
-                            <option value="RAJSHAHI">রাজশাহী </option>
-                            <option value="MYMENSINGH">ময়মনসিংহ </option>
-                            <option value="KHULNA">খুলনা </option>
-                            <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                            <option value="BARISAL">বরিশাল </option>
-                            <option value="RANGPUR">রংপুর </option>
-                            <option value="SYLHET">সিলেট </option>
+                            <option value="DHAKA" {{strtoupper(request()->input('division')) == 'DHAKA' ? 'selected' : ''}}>ঢাকা </option>
+                            <option value="RAJSHAHI" {{strtoupper(request()->input('division')) == 'RAJSHAHI' ? 'selected' : ''}}>রাজশাহী </option>
+                            <option value="MYMENSINGH" {{strtoupper(request()->input('division')) == 'MYMENSINGH' ? 'selected' : ''}}>ময়মনসিংহ </option>
+                            <option value="KHULNA" {{strtoupper(request()->input('division')) == 'KHULNA' ? 'selected' : ''}}>খুলনা </option>
+                            <option value="CHATTOGRAM" {{strtoupper(request()->input('division')) == 'CHATTOGRAM' ? 'selected' : ''}}>চট্রগ্রাম </option>
+                            <option value="BARISAL" {{strtoupper(request()->input('division')) == 'BARISAL' ? 'selected' : ''}}>বরিশাল </option>
+                            <option value="RANGPUR" {{strtoupper(request()->input('division')) == 'RANGPUR' ? 'selected' : ''}}>রংপুর </option>
+                            <option value="SYLHET" {{strtoupper(request()->input('division')) == 'SYLHET' ? 'selected' : ''}}>সিলেট </option>
                         </select>
                     </div>
                 </div>

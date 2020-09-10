@@ -10,8 +10,10 @@ class MobilityAndPredictiveController extends Controller
     //
     public function index(Request  $request) {
         $mobilityData = $this->getMobilityAndPredictiveControllerData($request);
+
         $divisionData = $mobilityData['divisionData'];
         $districtData = $mobilityData['districtData'] ?? '';
+        $mobilityMapData = [];
         $districtInfo = [];
         if(count($districtData)) {
             foreach ($districtData as $key=>$districtDatum){
@@ -25,7 +27,7 @@ class MobilityAndPredictiveController extends Controller
                 $categories[] = $mobilityDatum->date ?? '';
             }
         }
-
+        $mobilityMapData = $mobilityData['mobilityMapData'] ?? [];
 
         $seriesData = [];
 
@@ -45,6 +47,12 @@ class MobilityAndPredictiveController extends Controller
         $i = 1;
         if(count($districtData)) {
             foreach ($districtInfo as $key => $dist) {
+                if($request->has('district') && $request->district != ''){
+                    if($request->district != $key){
+                        continue;
+                    }
+                }
+
                 $seriesData[$i]['type'] = 'spline';
 
                 $seriesData[$i]['name'] = $key;
@@ -60,16 +68,22 @@ class MobilityAndPredictiveController extends Controller
         }
         $data['series_data'] = $seriesData;
         $data['categories'] = $categories;
-
+        $data['mobilityData'] = $mobilityMapData;
+       // dd($data);
         return view('iedcr.mobility-and-predictive-importation',$data);
     }
     public function getMobilityAndPredictiveControllerData($request) {
         $searchQuery = '';
+        $searchMapQuery= '';
 
         if($request->has('division') && $request->division != ''){
             $groupBy = 'division';
             $division = $request->division;
             $searchQuery = "where B.division = '". $division."'";
+            $searchMapQuery = "where B.division = '". $division."'";
+            if($request->has('district') && $request->district != ''){
+                $searchMapQuery .= "And B.district='".$request->district."'";
+            }
         }
 
         if($searchQuery != '') {
@@ -82,6 +96,10 @@ group by B.division, A.day";
 as 'predicted_importation'
 from v_mobility_predicted_importations as A inner join bbs_coded_upazila_dist_div as B on A.upazila_code=B.upz_code ".$searchQuery."
 group by B.district , A.day";
+            $mobilityMapDatasqlQuery = "select date_format(str_to_date(A.day, '%m/%d/%Y'), '%Y-%m-%d') as 'date', B.division, B.district, sum(A.predicted_importation)
+as 'predicted_importation'
+from v_mobility_predicted_importations as A inner join bbs_coded_upazila_dist_div as B on A.upazila_code=B.upz_code ".$searchMapQuery."
+group by B.district";
         } else {
             $mobilityPredictivesqlQuery = "select date_format(str_to_date(A.day, '%m/%d/%Y'), '%Y-%m-%d') as 'date', B.division, sum(A.predicted_importation)
 as 'predicted_importation'
@@ -91,6 +109,10 @@ group by B.division, A.day";
 as 'predicted_importation'
 from v_mobility_predicted_importations as A inner join bbs_coded_upazila_dist_div as B on A.upazila_code=B.upz_code where B.division = 'Dhaka'
 group by B.district , A.day";
+            $mobilityMapDatasqlQuery = "select date_format(str_to_date(A.day, '%m/%d/%Y'), '%Y-%m-%d') as 'date', B.division, B.district, sum(A.predicted_importation)
+as 'predicted_importation'
+from v_mobility_predicted_importations as A inner join bbs_coded_upazila_dist_div as B on A.upazila_code=B.upz_code where B.division = 'Dhaka'
+group by B.district";
         }
 
 
@@ -98,6 +120,7 @@ group by B.district , A.day";
         $mobilityPredictivesqlQueryData['divisionData'] = \Illuminate\Support\Facades\DB::select($mobilityPredictivesqlQuery);
         $mobilityPredictivesqlQueryData['districtData'] = \Illuminate\Support\Facades\DB::select($mobilityPredictiveDistrictsqlQuery);
         $mobilityPredictivesqlQueryData['districtList'] = \Illuminate\Support\Facades\DB::select($mobilityPredictiveDistrictsqlQuery);
+        $mobilityPredictivesqlQueryData['mobilityMapData'] = \Illuminate\Support\Facades\DB::select($mobilityMapDatasqlQuery);
         return $mobilityPredictivesqlQueryData;
     }
 
