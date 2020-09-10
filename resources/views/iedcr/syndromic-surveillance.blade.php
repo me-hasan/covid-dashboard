@@ -161,9 +161,9 @@ foreach($_rawDataSet as $_rowDataKey => $_rawDataRow){
                                 <tr>
                                     <td>{!! $ssData->division  ?? ' ' !!}</td>
                                     <td>{!! $ssData->district  ?? ' ' !!}</td>
-                                    <td>{!! $ssData->PCNPRS  ?? ' ' !!}</td>
-                                    <td>{!! $ssData->consisten_to_covide_19  ?? ' ' !!}</td>
-                                    <td>{!! $ssData->PCNPRHR  ?? ' ' !!}</td>
+                                    <td>{!! number_format($ssData->PCNPRS,2)  ?? ' ' !!}</td>
+                                    <td>{!! number_format($ssData->consisten_to_covide_19,2)  ?? ' ' !!}</td>
+                                    <td>{!! number_format($ssData->PCNPRHR,2)  ?? ' ' !!}</td>
                                 </tr>
                             @endforeach
                             </tbody>
