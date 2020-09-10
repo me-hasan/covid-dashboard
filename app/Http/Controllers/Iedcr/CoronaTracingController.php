@@ -6,6 +6,7 @@ use DB;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CoronaTracingController extends Controller
 {
@@ -50,6 +51,8 @@ class CoronaTracingController extends Controller
             array_push($dateData, $div_date);
         }
 
+        Log::debug('get division corona tracing data: ' . json_encode($divisionData));
+
         // dd($divisionData);
 
         $districtData = DB::select("select B.date, A.division, A.district, avg(ContactedDistance) as 'avg_distance_meter', avg(Duration)/60 as 'avg_duration_minute' from 
@@ -58,6 +61,8 @@ class CoronaTracingController extends Controller
             (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.district");
 
         // dd($districtData);
+
+        Log::debug('get division corona tracing data: ' . json_encode($districtData));
 
         $newDistrictArr = [];
 
