@@ -35,11 +35,15 @@ class TestPositiveController extends Controller
         }
         $testPositiveDate = $test_positive = $asymptomic_test_positive= $asymptomicTestPositiveDate= [];
 
+        // dd($test_positive_trend);
+
         if(sizeof($test_positive_trend) > 0){
             foreach ($test_positive_trend as $tptrend) {
-              $getDate = isset($tptrend->date) ?  $tptrend->date : $tptrend->Date;
-              $testPositiveDate[] = date('Y-m-d', strtotime($getDate));
-              $test_positive[]  = $tptrend->Test_Positivity;
+                if (isset($tptrend->date) &&  $tptrend->date ) {
+                    $getDate = $tptrend->date;
+                    $testPositiveDate[] = date('Y-m-d', strtotime($getDate));
+                    $test_positive[]  = $tptrend->Test_Positivity;
+                }
             }
         }
 
