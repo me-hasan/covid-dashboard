@@ -360,10 +360,12 @@ class TestPositiveController extends Controller
         $data = [];
         if(sizeof($test_positive_trend) > 0){
           foreach ($test_positive_trend as $key => $tptrend) {
-              $getDate = isset($tptrend->date) ?  $tptrend->date : $tptrend->Date;
-              $data[$i]['Date'] =  date('Y-m-d', strtotime($getDate));
-              $data[$i]['Positivity Rate'] =  $tptrend->Test_Positivity;
-              $i++;
+            if (isset($tptrend->date) &&  $tptrend->date ) {
+                $getDate = $tptrend->date;
+                  $data[$i]['Date'] =  date('Y-m-d', strtotime($getDate));
+                  $data[$i]['Positivity Rate'] =  $tptrend->Test_Positivity;
+                  $i++;
+            }
           }
         }
         $list = collect($data);
