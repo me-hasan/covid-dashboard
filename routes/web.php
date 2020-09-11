@@ -120,3 +120,4 @@ Route::prefix('iedcr')->group(function () {
 });
 
 
+Route::get('hpm-dashboard','Hpm\DashboardController@index')->name('hpm.dashboard');
