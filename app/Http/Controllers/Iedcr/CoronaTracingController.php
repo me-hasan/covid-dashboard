@@ -19,14 +19,14 @@ class CoronaTracingController extends Controller
         $data = [];
         $data[0]['type'] = 'spline';
         $data[0]['name'] = $getTracingData['divisionData']['division'];
-        $data[0]['data'][] = $getTracingData['divisionData']['avg_duration'];
+        $data[0]['data'] = $getTracingData['divisionData']['avg_duration'];
         $data[0]['marker']['enabled'] = false;
         $data[0]['marker']['symbol'] = 'circle';
         $i=1;
         foreach ($getTracingData['districtData'] as $key => $dist) {
             $data[$i]['type'] = 'spline';
             $data[$i]['name'] = $dist['district'];
-            $data[$i]['data'][] = $dist['avg_duration'];
+            $data[$i]['data'] = $dist['avg_duration'];
             $data[$i]['marker']['enabled'] = false;
             $data[$i]['marker']['symbol'] = 'circle';
             $data[$i]['dashStyle'] = "shortdot";
@@ -37,15 +37,34 @@ class CoronaTracingController extends Controller
     }
 
     private function getDivisonWiseData($division) {
-        $dateData = $districtInfo = [];
+        $dateData = $districtInfo = $divAvgInfo = [];
 
         $divisionData = DB::select("select B.date, A.division, avg(ContactedDistance) as 'avg_distance_meter', avg(Duration)/60 as 'avg_duration_minute' from 
         (select * from coronatracerbd_appuser_location group by  AppUserID) as A
         inner join 
         (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.division");
 
+
+        // dd($divisionData);
+
         $divisionObj['division'] = $divisionData[0]->division ?? null;
-        $divisionObj['avg_duration'] = isset($divisionData[0]->avg_duration_minute) ? number_format($divisionData[0]->avg_duration_minute, 2, '.', ''):null;
+
+        $j=0;
+        foreach ($divisionData as $key => $div) {
+            $div_date = date('d/m/Y', strtotime($div->date));
+            if(!in_array($div_date, $dateData, true)){
+                array_push($dateData, $div_date);
+            }
+            $getAvgDuration = number_format($div->avg_duration_minute, 2, '.', '');
+            $divAvgInfo[$j] = (float) $getAvgDuration;
+            $j++;
+        }
+
+        $divisionObj['avg_duration'] = $divAvgInfo;
+
+        // dd($divisionObj);
+
+
         $div_date = isset($divisionData[0]->date) ? date('d/m/Y', strtotime($divisionData[0]->date)) : null;
         if(!in_array($div_date, $dateData, true)){
             array_push($dateData, $div_date);
@@ -62,7 +81,7 @@ class CoronaTracingController extends Controller
 
         // dd($districtData);
 
-        Log::debug('get division corona tracing data: ' . json_encode($districtData));
+        Log::debug('get district corona tracing data: ' . json_encode($districtData));
 
         $newDistrictArr = [];
 

@@ -36,6 +36,7 @@ class TestPositiveController extends Controller
         $testPositiveDate = $test_positive = $asymptomic_test_positive= $asymptomicTestPositiveDate= [];
 
         // dd($test_positive_trend);
+        \Log::debug('test positive trend: ' . json_encode($test_positive_trend));
 
         if(sizeof($test_positive_trend) > 0){
             foreach ($test_positive_trend as $tptrend) {
@@ -53,6 +54,8 @@ class TestPositiveController extends Controller
         $geoLocationWiseTestPositivity = $this->getLocationWiseTestPositivity($request);
         // section 3
         $asymptomictest_positive_trend  = $this->asymptomicTestPositiveRate($request);
+        \Log::debug('asymptomictest positive trend: ' . json_encode($asymptomictest_positive_trend));
+        
         foreach ($asymptomictest_positive_trend as $tptrend) {
           $asymptomicTestPositiveDate[] = date('Y-m-d', strtotime($tptrend->event_date));
           $asymptomic_test_positive[]  = $tptrend->total;
@@ -360,10 +363,12 @@ class TestPositiveController extends Controller
         $data = [];
         if(sizeof($test_positive_trend) > 0){
           foreach ($test_positive_trend as $key => $tptrend) {
-              $getDate = isset($tptrend->date) ?  $tptrend->date : $tptrend->Date;
-              $data[$i]['Date'] =  date('Y-m-d', strtotime($getDate));
-              $data[$i]['Positivity Rate'] =  $tptrend->Test_Positivity;
-              $i++;
+            if (isset($tptrend->date) &&  $tptrend->date ) {
+                $getDate = $tptrend->date;
+                  $data[$i]['Date'] =  date('Y-m-d', strtotime($getDate));
+                  $data[$i]['Positivity Rate'] =  $tptrend->Test_Positivity;
+                  $i++;
+            }
           }
         }
         $list = collect($data);
