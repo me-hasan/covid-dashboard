@@ -8,7 +8,19 @@ use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function checkValidUser() {
+        if(auth()->user()->user_type != 'hpm'){
+            abort(401);
+        }
+    }
+
     public function index(Request  $request) {
+        $this->checkValidUser();
         $testPositivityMap = $this->testPositivityMap($request);
         $data['testPositivityMap'] = $testPositivityMap;
         return view('hpm.dashboard',$data);
