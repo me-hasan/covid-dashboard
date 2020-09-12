@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hpm;
 
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +12,11 @@ class DashboardController extends Controller
     public function index(Request  $request) {
         $testPositivityMap = $this->testPositivityMap($request);
         $data['testPositivityMap'] = $testPositivityMap;
+        // row 1 left side
+        $cumulativeInfection = $this->getCumulativeInfectionData($request);
+        $data['row1_left_trend_date'] = $cumulativeInfection['dateBangla'];
+        $data['row1_left_trend_infected_data'] = $cumulativeInfection['infected_person_date'];
+        // dd($data);
         return view('hpm.dashboard',$data);
     }
 
@@ -71,5 +77,50 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
             Log::error("test positivity error : ". $exception->getMessage());
         }
         return $testMapData;
+    }
+
+    private function getCumulativeInfectionData($request){
+        $dateEnglish = $dateBangla = $infected_person_date = [];
+        if($request->division){
+            $cumulativeData = DB::select("SELECT t.date,t.Division,
+                               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+                        FROM
+                        (SELECT
+                          Date, Division, sum(Infected_Person) as 'Infected_Person'
+                          FROM Div_Dist_Upz_Infected_Trend where Date is not null
+                          GROUP BY Date, Division ) as t
+                        JOIN (SELECT @running_total:=0) r
+                        WHERE division= '".$request->division."'
+                        ORDER BY t.date");
+        }else{
+            $cumulativeData = DB::select("SELECT t.date,
+                               @running_total:=@running_total + t.infected_person_count AS cumulative_infected_person
+                        FROM
+                        ( SELECT
+                          test_date as 'date',
+                          count(id) as 'infected_person_count'
+                          FROM infected_person where test_date is not null
+                          GROUP BY test_date ) t
+                        JOIN (SELECT @running_total:=0) r 
+                        ORDER BY t.date");
+        }
+        
+        foreach ($cumulativeData as $key => $inf) {
+            $get_date = date('Y-m-d', strtotime($inf->date));
+            $get_date_bangla = convertEnglishDateToBangla($inf->date);
+            if(!in_array($get_date, $dateEnglish, true)){
+                array_push($dateEnglish, $get_date);
+                array_push($dateBangla, $get_date_bangla);
+            }
+
+            array_push($infected_person_date, $inf->cumulative_infected_person);
+        }
+
+        $data['dateEnglish'] = $dateEnglish;
+        $data['dateBangla'] = $dateBangla;
+        $data['infected_person_date'] = $infected_person_date;
+
+        // dd($data);
+        return $data;
     }
 }
