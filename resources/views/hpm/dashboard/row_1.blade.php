@@ -1,5 +1,5 @@
 <!-- Start :: Disease Progression -->
-<div class="card">
+{{--<div class="card">
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card-header cart-height-customize">
@@ -56,6 +56,89 @@
                     <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
                     <div>
                         <select class="form-control btn-outline-primary">
+                            <option value="DHAKA">ঢাকা </option>
+                            <option value="RAJSHAHI">রাজশাহী </option>
+                            <option value="MYMENSINGH">ময়মনসিংহ </option>
+                            <option value="KHULNA">খুলনা </option>
+                            <option value="CHATTOGRAM">চট্রগ্রাম </option>
+                            <option value="BARISAL">বরিশাল </option>
+                            <option value="RANGPUR">রংপুর </option>
+                            <option value="SYLHET">সিলেট </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="district_comparision"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insight</h5>
+                <p class="card-text">
+                    Content will place here.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>--}}
+<div class="card">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card-header cart-height-customize">
+                <h3 class="card-title">রোগের অগ্রগতি</h3>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+            </div>
+            <div class="card-body">
+                <div id="national_infected_trend"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insight</h5>
+                <p class="card-text">
+                    Content will place here.
+                </p>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">অঞ্চল তুলনা</h3>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-end">
+                    <div class="form-label pt-2 mr-1">Division</div>
+                    <div>
+                        <select class="form-control btn-outline-primary">
+                            <option value="DHAKA">সব বিভাগ</option>
+                            <option value="DHAKA">ঢাকা </option>
+                            <option value="RAJSHAHI">রাজশাহী </option>
+                            <option value="MYMENSINGH">ময়মনসিংহ </option>
+                            <option value="KHULNA">খুলনা </option>
+                            <option value="CHATTOGRAM">চট্রগ্রাম </option>
+                            <option value="BARISAL">বরিশাল </option>
+                            <option value="RANGPUR">রংপুর </option>
+                            <option value="SYLHET">সিলেট </option>
+                        </select>
+                    </div>
+                    <div class="form-label pl-2 pt-2 mr-1">District</div>
+                    <div>
+                        <select class="form-control btn-outline-primary">
+                            <option value="DHAKA">সব জেলা </option>
+                            <option value="DHAKA">ঢাকা </option>
+                            <option value="RAJSHAHI">রাজশাহী </option>
+                            <option value="MYMENSINGH">ময়মনসিংহ </option>
+                            <option value="KHULNA">খুলনা </option>
+                            <option value="CHATTOGRAM">চট্রগ্রাম </option>
+                            <option value="BARISAL">বরিশাল </option>
+                            <option value="RANGPUR">রংপুর </option>
+                            <option value="SYLHET">সিলেট </option>
+                        </select>
+                    </div>
+                    <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
+                    <div>
+                        <select class="form-control btn-outline-primary">
+                            <option value="DHAKA">সব উপজিলা</option>
                             <option value="DHAKA">ঢাকা </option>
                             <option value="RAJSHAHI">রাজশাহী </option>
                             <option value="MYMENSINGH">ময়মনসিংহ </option>
