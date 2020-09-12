@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-5">
+                {{--<div class="row pt-5">
                     <div class="col-xl-5">
                         <div class="overflow-hidden">
                             <div class="card-body">
@@ -71,6 +71,79 @@
                         </div>
                     </div>
                     <div class="col-xl-5">
+                        <div id="weekly_comparision_infected_death"></div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Insight</h5>
+                            <p class="card-text">
+                                Content will place here.
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Policy</h5>
+                            <p class="card-text">
+                                Recommendation.
+                            </p>
+                        </div>
+                    </div>
+                </div>--}}
+                <div class="row pt-5">
+                    <div class="col-xl-5">
+                        <div class="overflow-hidden">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-2 fs-18 text-muted">
+                                            গত ১৪ দিনে পরীক্ষা
+                                        </div>
+                                        <h1 class="font-weight-bold mb-1">২৮,৭৬৬</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে ২৫ জন বেশি </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        <div class="mb-2 fs-18 text-muted">
+                                            গত ১৪ দিনে আক্রান্ত
+                                        </div>
+                                        <h1 class="font-weight-bold mb-1">১০,৪৮৭</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে ২৫ জন বেশি</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        <div class="mb-2 fs-18 text-muted">
+                                            গত ১৪ দিনে মৃত্যু
+                                        </div>
+                                        <h1 class="font-weight-bold mb-1">২০৬</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে ২৫ জন বেশি</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5">
+                        <div class="card-header">
+                            <h5 class="card-title">বিগত ৪২ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-row justify-content-end">
+                                <div class="form-label pl-2 pt-2 mr-1">District</div>
+                                <div>
+                                    <select class="form-control btn-outline-primary">
+                                        <option value="DHAKA">সব জেলা </option>
+                                        <option value="DHAKA">ঢাকা </option>
+                                        <option value="RAJSHAHI">রাজশাহী </option>
+                                        <option value="MYMENSINGH">ময়মনসিংহ </option>
+                                        <option value="KHULNA">খুলনা </option>
+                                        <option value="CHATTOGRAM">চট্রগ্রাম </option>
+                                        <option value="BARISAL">বরিশাল </option>
+                                        <option value="RANGPUR">রংপুর </option>
+                                        <option value="SYLHET">সিলেট </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div id="weekly_comparision_infected_death"></div>
                     </div>
                     <div class="col-xl-2">

@@ -4,11 +4,7 @@
         <div class="col-xl-12 col-md-12">
             <div class="card-header cart-height-customize">
                 <h3 class="card-title">রোগের অগ্রগতি</h3>
-                <div class="card-options">
-                    <div class="btn-list">
-                        <a href="#" class="btn btn-primary btn-sm">Details</a>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12">
