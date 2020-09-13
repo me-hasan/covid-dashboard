@@ -9,14 +9,51 @@ use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function checkValidUser() {
+        if(auth()->user()->user_type != 'hpm'){
+            abort(401);
+        }
+    }
+
     public function index(Request  $request) {
+        $this->checkValidUser();
         $testPositivityMap = $this->testPositivityMap($request);
+        $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+
+        $i = 0;
+        $divisionlist=[];
+        if(count($cumulativeInfectedPerson['division_data'])) {
+            foreach ($cumulativeInfectedPerson['division_data'] as $key => $dist) {
+                $seriesData[$i]['type'] = 'spline';
+                $seriesData[$i]['name'] = $key;
+                $seriesData[$i]['data'] = $dist ?? [];
+                $seriesData[$i]['marker']['enabled'] = false;
+                $seriesData[$i]['marker']['symbol'] = 'circle';
+                $divisionlist[] = $key;
+               // $seriesData[$i]['dashStyle'] = "shortdot";
+                $i++;
+            }
+
+
+        }
+        $data['series_data'] = json_encode($seriesData);
+        $data['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
         $data['testPositivityMap'] = $testPositivityMap;
+
         // row 1 left side
         $cumulativeInfection = $this->getCumulativeInfectionData($request);
         $data['row1_left_trend_date'] = $cumulativeInfection['dateBangla'];
         $data['row1_left_trend_infected_data'] = $cumulativeInfection['infected_person_date'];
         // dd($data);
+
+        $data['division_list'] = $divisionlist;
+
+
         return view('hpm.dashboard',$data);
     }
 
@@ -79,6 +116,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
         return $testMapData;
     }
 
+
     private function getCumulativeInfectionData($request){
         $dateEnglish = $dateBangla = $infected_person_date = [];
         if($request->division){
@@ -123,4 +161,109 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
         // dd($data);
         return $data;
     }
+
+    public function cumulativeInfectedPerson($request) {
+        try {
+            $searchQuery = '';
+            if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
+
+
+                if($request->has('district') && $request->district != ''){
+                    $groupBy = 'district';
+                    $district = $request->district;
+                    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
+                        $district= 'cox';
+                    }
+                    $searchQuery = " and  district like '%".$district."%' ";
+                }
+
+            }
+            if($searchQuery != '') {
+                $cumulativeSql = "SELECT t.date,t.Division,
+       @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+FROM
+(SELECT
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM Div_Dist_Upz_Infected_Trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
+            } else {
+                $cumulativeSql = "SELECT t.date,t.Division,
+       @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+FROM
+(SELECT
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM Div_Dist_Upz_Infected_Trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
+            }
+
+            $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
+        } catch (\Exception $exception) {
+            Log::error("test positivity error : ". $exception->getMessage());
+        }
+        $j=0;
+        $dateData = [];
+        $divisionData = [];
+        foreach ($cumulativeData as $key => $div) {
+            $div_date = date('d/m/Y', strtotime($div->date));
+
+            if(!in_array($div_date, $dateData)){
+                $dateData[] = $div_date;
+            }
+
+            $divisionData[$div->Division][] = (int)$div->cumulative_infected_person ?? 0;
+
+            /*$getAvgDuration = number_format($div->avg_duration_minute, 2, '.', '');
+            $divAvgInfo[$j] = (float) $getAvgDuration;*/
+            $j++;
+        }
+        $data['categories'] = $dateData;
+        $data['division_data'] = $divisionData;
+       // dd($data);
+        return $data;
+    }
+
+    public function getCumulativeInfectedData(Request $request) {
+        $result['status'] = 'failed';
+        try{
+
+            $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+
+            $i = 0;
+            if(count($cumulativeInfectedPerson['division_data'])) {
+                foreach ($cumulativeInfectedPerson['division_data'] as $key => $dist) {
+                    /*if($request->has('district') && $request->district != ''){
+                        if($request->district != $key){
+                            continue;
+                        }
+                    }*/
+
+                    $seriesData[$i]['type'] = 'spline';
+
+                    $seriesData[$i]['name'] = $key;
+                    $seriesData[$i]['data'] = $dist ?? [];
+                    $seriesData[$i]['marker']['enabled'] = false;
+                    $seriesData[$i]['marker']['symbol'] = 'circle';
+                    // $seriesData[$i]['dashStyle'] = "shortdot";
+                    $i++;
+                }
+
+
+            }
+            $result['se'] = json_encode($seriesData);
+            $result['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
+            $result['status'] = 'success';
+
+        }catch (\Exception $exception) {
+            $result['status'] = 'failed';
+            \Log::error('getCumulativeInfectedData:'. $exception->getMessage().'---'.$exception->getFile().'---'.$exception->getLine());
+        }
+
+        return $result;
+
+    }
+
 }
