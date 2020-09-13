@@ -139,10 +139,10 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
                           count(id) as 'infected_person_count'
                           FROM infected_person where test_date is not null
                           GROUP BY test_date ) t
-                        JOIN (SELECT @running_total:=0) r 
+                        JOIN (SELECT @running_total:=0) r
                         ORDER BY t.date");
         }
-        
+
         foreach ($cumulativeData as $key => $inf) {
             $get_date = date('Y-m-d', strtotime($inf->date));
             $get_date_bangla = convertEnglishDateToBangla($inf->date);
@@ -164,30 +164,27 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
 
     public function cumulativeInfectedPerson($request) {
         try {
+            $data['categories'] = [];
+            $data['division_data'] = [];
             $searchQuery = '';
-            if($request->has('hierarchy_level') && $request->hierarchy_level == 'divisional') {
 
 
-                if($request->has('district') && $request->district != ''){
-                    $groupBy = 'district';
-                    $district = $request->district;
-                    if($request->district=="COX'S BAZAR" || $request->district=="cox's bazar"){
-                        $district= 'cox';
-                    }
-                    $searchQuery = " and  district like '%".$district."%' ";
-                }
-
+            if($request->has('division') && count($request->division)) {
+                $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
+                $searchQuery = " AND  Division IN (". $divisionReqData.")";
             }
+
             if($searchQuery != '') {
                 $cumulativeSql = "SELECT t.date,t.Division,
        @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM Div_Dist_Upz_Infected_Trend where Date is not null
+  FROM Div_Dist_Upz_Infected_Trend where Date is not null  ".$searchQuery."
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
+
             } else {
                 $cumulativeSql = "SELECT t.date,t.Division,
        @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
@@ -198,30 +195,32 @@ FROM
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
+
             }
+            Log::info("cumulation sql: ". $cumulativeSql);
+
 
             $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
-        } catch (\Exception $exception) {
-            Log::error("test positivity error : ". $exception->getMessage());
-        }
-        $j=0;
-        $dateData = [];
-        $divisionData = [];
-        foreach ($cumulativeData as $key => $div) {
-            $div_date = date('d/m/Y', strtotime($div->date));
+            $j=0;
+            $dateData = [];
+            $divisionData = [];
+            foreach ($cumulativeData as $key => $div) {
+                $div_date = date('d/m/Y', strtotime($div->date));
 
-            if(!in_array($div_date, $dateData)){
-                $dateData[] = $div_date;
+                if(!in_array($div_date, $dateData)){
+                    $dateData[] = $div_date;
+                }
+
+                $divisionData[$div->Division][] = (int)$div->cumulative_infected_person ?? 0;
+
+                $j++;
             }
-
-            $divisionData[$div->Division][] = (int)$div->cumulative_infected_person ?? 0;
-
-            /*$getAvgDuration = number_format($div->avg_duration_minute, 2, '.', '');
-            $divAvgInfo[$j] = (float) $getAvgDuration;*/
-            $j++;
+            $data['categories'] = $dateData;
+            $data['division_data'] = $divisionData;
+        } catch (\Exception $exception) {
+            Log::error("cumulativeInfectedPerson error : ". $exception->getMessage());
         }
-        $data['categories'] = $dateData;
-        $data['division_data'] = $divisionData;
+
        // dd($data);
         return $data;
     }
@@ -231,15 +230,21 @@ ORDER BY t.date";
         try{
 
             $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
-
+            $cumulativeDisUpaZillaData = $this->cumulativeDivDistData($request);
+            $formattedData = [];
             $i = 0;
-            if(count($cumulativeInfectedPerson['division_data'])) {
-                foreach ($cumulativeInfectedPerson['division_data'] as $key => $dist) {
-                    /*if($request->has('district') && $request->district != ''){
-                        if($request->district != $key){
-                            continue;
-                        }
-                    }*/
+            if($request->has('district') && count($request['district'])){
+                $formattedData = $cumulativeDisUpaZillaData['districtData'];
+            } elseif($request->has('upazilla') && count($request['upazilla'])){
+                $formattedData = $cumulativeDisUpaZillaData['upazillaData'];
+            }else {
+                $formattedData = $cumulativeInfectedPerson['division_data'] ?? [];
+            }
+            if(count($formattedData)) {
+                foreach ($formattedData as $key => $dist) {
+                    if(isset($dist['bn'])){
+                        unset($dist['bn']);
+                    }
 
                     $seriesData[$i]['type'] = 'spline';
 
@@ -253,7 +258,9 @@ ORDER BY t.date";
 
 
             }
-            $result['se'] = json_encode($seriesData);
+            $result['district_data'] = $cumulativeDisUpaZillaData['districtData'] ?? [];
+            $result['upazillaData'] = $cumulativeDisUpaZillaData['upazillaData'] ?? [];
+            $result['series_data'] = json_encode($seriesData);
             $result['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
             $result['status'] = 'success';
 
@@ -263,6 +270,72 @@ ORDER BY t.date";
         }
 
         return $result;
+
+    }
+
+
+    private function cumulativeDivDistData($request) {
+        try{
+            $searchQuery = "";
+            $upzillaData = [];
+            $districtData = [];
+            if($request->has('division') && count($request->division)) {
+                $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
+                $searchQuery = " AND  Division IN (". $divisionReqData.")";
+            }
+            if($request->has('district') && count($request->district)) {
+                $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
+                $searchQuery = " AND  District IN (". $districtReqData.")";
+            }
+
+            if($request->has('upazilla') && count($request->upazilla)) {
+                $districtReqData = "'" . implode ( "', '", $request->upazilla ) . "'";
+                $searchQuery = " AND  Upazila IN (". $districtReqData.")";
+            }
+
+            $cumulativeSqlDistrictUpazilaSql = "SELECT t.date,t.Division, t.District,t.Upazila,
+       @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+FROM
+(SELECT
+  Date, Division, District, Upazila, sum(Infected_Person) as 'Infected_Person'
+  FROM Div_Dist_Upz_Infected_Trend where Date is not null  ".$searchQuery."
+  GROUP BY Date, Upazila ) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
+            $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+            $j=0;
+            $dateData = [];
+            $districtData = [];
+            foreach ($cumulativeDisUpaZillaData as $key => $div) {
+                $div_date = date('d/m/Y', strtotime($div->date));
+
+                if(!in_array($div_date, $dateData)){
+                    $dateData[] = $div_date;
+                }
+
+                $districtData[$div->District][] = (int)$div->cumulative_infected_person ?? 0;
+                $districtData[$div->District]['bn'] = en2bnTranslation($div->District);
+                $j++;
+            }
+            foreach ($cumulativeDisUpaZillaData as $key => $div) {
+                $upzillaDate = date('d/m/Y', strtotime($div->date));
+
+                if(!in_array($upzillaDate, $dateData)){
+                    $dateData[] = $upzillaDate;
+                }
+
+                $upzillaData[$div->Upazila][] = (int)$div->cumulative_infected_person ?? 0;
+                $upzillaData[$div->Upazila]['bn'] = en2bnTranslation($div->Upazila);
+                $j++;
+            }
+            $data['categories'] = $dateData;
+            $data['districtData'] = $districtData;
+            $data['upazillaData'] = $upzillaData;
+
+        }catch (\Exception $exception) {
+            Log::error("cumulativeDivDistData error : ". $exception->getMessage());
+        }
+        return $data;
 
     }
 
