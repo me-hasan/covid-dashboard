@@ -30,46 +30,23 @@
                     <div class="d-flex flex-row justify-content-end">
                         <div class="form-label pt-2 mr-1">Division</div>
                         <div>
-                            <select name="division[]"  class="selcet2 form-control btn-outline-primary">
-                                <option value="All">সব বিভাগ</option>
+                            <select name="division[]"  class="select2 form-control btn-outline-primary division_select" multiple="true">
+                                {{--<option value="All">সব বিভাগ</option>--}}
                                 @foreach($division_list as $division)
                                 <option value="{!! $division !!}">{!! en2bnTranslation($division) !!} </option>
                                 @endforeach
-                                {{--<option value="RAJSHAHI">রাজশাহী </option>
-                                <option value="MYMENSINGH">ময়মনসিংহ </option>
-                                <option value="KHULNA">খুলনা </option>
-                                <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                                <option value="BARISAL">বরিশাল </option>
-                                <option value="RANGPUR">রংপুর </option>
-                                <option value="SYLHET">সিলেট </option>--}}
                             </select>
                         </div>
                         <div class="form-label pl-2 pt-2 mr-1">District</div>
                         <div>
-                            <select name="district[]" class="form-control btn-outline-primary">
+                            <select name="district[]" class="select2 form-control btn-outline-primary select_district" multiple="true">
                                 <option value="DHAKA">সব জেলা </option>
-                                <option value="DHAKA">ঢাকা </option>
-                                <option value="RAJSHAHI">রাজশাহী </option>
-                                <option value="MYMENSINGH">ময়মনসিংহ </option>
-                                <option value="KHULNA">খুলনা </option>
-                                <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                                <option value="BARISAL">বরিশাল </option>
-                                <option value="RANGPUR">রংপুর </option>
-                                <option value="SYLHET">সিলেট </option>
                             </select>
                         </div>
                         <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
                         <div>
-                            <select name="upazila[]" class="form-control btn-outline-primary">
+                            <select name="upazila[]" class="select2 form-control btn-outline-primary select_upazilla" multiple="true">
                                 <option value="DHAKA">সব উপজিলা</option>
-                                <option value="DHAKA">ঢাকা </option>
-                                <option value="RAJSHAHI">রাজশাহী </option>
-                                <option value="MYMENSINGH">ময়মনসিংহ </option>
-                                <option value="KHULNA">খুলনা </option>
-                                <option value="CHATTOGRAM">চট্রগ্রাম </option>
-                                <option value="BARISAL">বরিশাল </option>
-                                <option value="RANGPUR">রংপুর </option>
-                                <option value="SYLHET">সিলেট </option>
                             </select>
                         </div>
                         <button class="btn btn-sm district_cms_search" type="submit" >Search </button>
@@ -117,7 +94,7 @@
             },
 
             xAxis: {
-                categories: @JSON($row1_left_trend_date)  
+                categories: @JSON($row1_left_trend_date)
             },
 
             yAxis: {
@@ -187,21 +164,35 @@
       //  directComparisionCall();
 
         function ajax_call(){
+
             let result;
             let url = new URL('{!! route('hpm.get_district_comparision') !!}');
-            let search_params = url.searchParams;
+            //let search_params = url.searchParams;
             //search_params.append('district',district);
-            search_params.append('hierarchy_level','divisional');
+           // search_params.append('hierarchy_level','divisional');
             $.ajax({
 
                 type:"GET",
                 url:url.toString(),
+                data: {
+                    'division': $('.division_select').val(),
+                    'district' : $('.select_district').val(),
+                    'upazilla' : $('.select_upazilla').val(),
+                },
                 timeout: 3000,
                 success: function(data) {
                     console.log(data);
                     if(data.status == 'success'){
 
-                        //directComparisionCall(data);
+                        directComparisionCall(data);
+
+                        if(data.district_data) {
+
+                            formatdistrictData(data.district_data);
+                        }
+                        if(data.upazillaData){
+                            formatUpazilladata(data.upazillaData);
+                        }
                     } else {
                         alert("Something Went Wrong");
                     }
@@ -210,6 +201,7 @@
         }
 
         function directComparisionCall(data) {
+            console.log(data.series_data);
             Highcharts.chart('district_comparision', {
                 title: {
                     text: ''
@@ -231,7 +223,7 @@
 
                 xAxis: {
                     //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
-                    categories: data.categories
+                    categories: JSON.parse(data.categories)
 
                 },
 
@@ -248,11 +240,34 @@
                 },
 
                 colors: ['#38cb89', '#ffa600', '#ef4b4b'],
-                series:  data.se
+                series:  JSON.parse(data.series_data)
             });
         }
+
+        function formatdistrictData(districtdata) {
+            var districtDataInfo  = districtdata;
+            var html = '';
+            console.log(districtDataInfo);
+            $.each(districtDataInfo, function(key, value) {
+                html += "<option value="+key+">"+value.bn+"</option>";
+            });
+            $('.select_district').html(html);
+        }
+
+        function formatUpazilladata(upazillaData) {
+            var upazillaDataInfo  = upazillaData;
+            var html = '';
+            //console.log(districtDataInfo);
+            $.each(upazillaDataInfo, function(key, value) {
+                html += "<option value="+key+">"+value.bn+"</option>";
+            });
+            $('.select_upazilla').html(html);
+        }
+
         $('.district_cms_search').on('click', function (e){
             e.preventDefault();
+
+            ajax_call();
 
         });
     </script>
