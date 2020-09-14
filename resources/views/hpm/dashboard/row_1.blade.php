@@ -170,6 +170,10 @@
             //let search_params = url.searchParams;
             //search_params.append('district',district);
            // search_params.append('hierarchy_level','divisional');
+            if($('.division_select').val() && $('.division_select').val()!='') {
+                $('.select_upazilla').val(null).trigger("change");
+            }
+
             if($('.select_district').val() && $('.select_district').val()!='') {
                 $('.division_select').val(null).trigger("change");
             }
