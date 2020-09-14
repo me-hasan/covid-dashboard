@@ -163,8 +163,8 @@
                                         <div class="mb-2 fs-18 text-muted">
                                             গত ১৪ দিনে পরীক্ষা
                                         </div>
-                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? $last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test : ' ' !!}</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? $last_14_days['getLast14DaysTestData'][0]->Difference : ' ' !!} জন বেশি </span>
+                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -172,8 +172,8 @@
                                         <div class="mb-2 fs-18 text-muted">
                                             গত ১৪ দিনে আক্রান্ত
                                         </div>
-                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? $last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person : ' ' !!} </h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? $last_14_days['getLast14DaysinfectedData'][0]->Difference : ' ' !!} জন বেশি</span>
+                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -181,8 +181,8 @@
                                         <div class="mb-2 fs-18 text-muted">
                                             গত ১৪ দিনে মৃত্যু
                                         </div>
-                                        <h1 class="font-weight-bold mb-1">২০৬</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে ২৫ জন বেশি</span>
+                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
                                     </div>
                                 </div>
                             </div>
