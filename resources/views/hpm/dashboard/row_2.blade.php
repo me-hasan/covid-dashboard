@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-xl-5">
                         <div class="card-header">
-                            <h5 class="card-title">বিগত ৪২ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
+                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-row justify-content-end">
