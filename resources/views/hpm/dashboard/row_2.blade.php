@@ -387,6 +387,9 @@
 
         $str=$_mobInDistrictVal->District;
         $str='three_'.$_mobInDistrictVal->District;
+        if(substr($_mobInDistrictVal->District,0,3)=='Cox'){
+            $str='Cox';
+        }
         /*if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
             $str='Cox';
         }elseif ($_mobInDistrictVal->District=='Narail') {
@@ -406,7 +409,7 @@
         }
 
         ?>
-        $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+        $("#<?php echo $str; ?> path").attr('fill', '<?php echo $_groupColorCode;?>');
         <?php
         }
         ?>
