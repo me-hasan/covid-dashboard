@@ -150,7 +150,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
                         FROM
                         (SELECT
                           Date, Division, sum(Infected_Person) as 'Infected_Person'
-                          FROM Div_Dist_Upz_Infected_Trend where Date is not null
+                          FROM div_dist_upz_infected_trend where Date is not null
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
                         WHERE division= '".$request->division."'
@@ -205,7 +205,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM Div_Dist_Upz_Infected_Trend where Date is not null  ".$searchQuery."
+  FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -216,7 +216,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM Div_Dist_Upz_Infected_Trend where Date is not null
+  FROM div_dist_upz_infected_trend where Date is not null
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -325,7 +325,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   Date, Division, District, Upazila, sum(Infected_Person) as 'Infected_Person'
-  FROM Div_Dist_Upz_Infected_Trend where Date is not null  ".$searchQuery."
+  FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
   GROUP BY Date, Upazila ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -500,11 +500,11 @@ ORDER BY t.date";
             if($searchQuery != '') {
                 /*infected_datasql*/
                 $getLast14DaysDataSql = "select @div_curr_fourtten_days_infected_person:=(select sum(Infected_Person)
-from Div_Dist_Upz_Infected_Trend where
+from div_dist_upz_infected_trend where
 date<=(select max(date) from Div_Dist_Upz_Infected_Trend)
 and date>DATE_SUB((select max(date) from Div_Dist_Upz_Infected_Trend), INTERVAL 14 DAY) ".$searchQuery.")";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
-                $getLast14DaysDataSql = "select @div_last_fourtten_days_infected_person:=(select sum(Infected_Person) from Div_Dist_Upz_Infected_Trend where
+                $getLast14DaysDataSql = "select @div_last_fourtten_days_infected_person:=(select sum(Infected_Person) from div_dist_upz_infected_trend where
 date<=DATE_SUB((select max(date) from Div_Dist_Upz_Infected_Trend), INTERVAL 14 DAY)
 and date>DATE_SUB(DATE_SUB((select max(date) from Div_Dist_Upz_Infected_Trend), INTERVAL 14 DAY), INTERVAL 14 DAY)  ".$searchQuery.")";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
