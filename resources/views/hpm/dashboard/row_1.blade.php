@@ -170,6 +170,9 @@
             //let search_params = url.searchParams;
             //search_params.append('district',district);
            // search_params.append('hierarchy_level','divisional');
+            /*if($('.select_district').val() && $('.select_district').val()!='') {
+
+            }*/
             $.ajax({
 
                 type:"GET",
