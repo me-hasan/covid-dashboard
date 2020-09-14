@@ -57,6 +57,9 @@ class LoginController extends Controller
                 case 'epidemiologist':
                     return RouteServiceProvider::IEDCR_DASHBOARD;
                     break;
+                case 'hpm':
+                    return RouteServiceProvider::HPM_DASHBOARD;
+                    break;
                 default:
                     return RouteServiceProvider::IEDCR_DASHBOARD;
                     break;
