@@ -1,5 +1,5 @@
 <!-- Start :: TESTING SCENARIO -->
-<div class="row">
+{{--<div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
@@ -36,58 +36,7 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="row pt-5">
-                    <div class="col-xl-5">
-                        <div class="overflow-hidden">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-2 fs-18 text-muted">
-                                            গত ১৪ দিনে পরীক্ষা
-                                        </div>
-                                        <h1 class="font-weight-bold mb-1">২৮,৭৬৬</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে ২৫ জন বেশি </span>
-                                    </div>
-                                </div>
-                                <div class="row mt-5">
-                                    <div class="col">
-                                        <div class="mb-2 fs-18 text-muted">
-                                            গত ১৪ দিনে আক্রান্ত
-                                        </div>
-                                        <h1 class="font-weight-bold mb-1">১০,৪৮৭</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে ২৫ জন বেশি</span>
-                                    </div>
-                                </div>
-                                <div class="row mt-5">
-                                    <div class="col">
-                                        <div class="mb-2 fs-18 text-muted">
-                                            গত ১৪ দিনে মৃত্যু
-                                        </div>
-                                        <h1 class="font-weight-bold mb-1">২০৬</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে ২৫ জন বেশি</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-5">
-                        <div id="weekly_comparision_infected_death"></div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="card-body">
-                            <h5 class="card-title">Insight</h5>
-                            <p class="card-text">
-                                Content will place here.
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Policy</h5>
-                            <p class="card-text">
-                                Recommendation.
-                            </p>
-                        </div>
-                    </div>
-                </div>--}}
+
                 <div class="row pt-5">
                     <div class="col-xl-5">
                         <div class="overflow-hidden">
@@ -164,6 +113,127 @@
             </div>
         </div>
     </div>
+</div>--}}
+<!-- End :: TESTING SCENARIO -->
+
+<!-- Start :: TESTING SCENARIO -->
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">পরীক্ষা পরিস্থিতি</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-12" id="infected_district_map">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <h3 class="card-title">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
+                                @include('hpm.dashboard.row_2_map')
+                                <div class="card-body">
+                                    <h5 class="card-title">Insight</h5>
+                                    <p class="card-text">
+                                        Content will place here.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-12">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <h3 class="card-title">প্রতি মিলিয়ন পরীক্ষা</h3>
+                                <div id="test_positivity_per_million"></div>
+                                <div class="card-body float-right">
+                                    <h5 class="card-title">Insight</h5>
+                                    <p class="card-text">
+                                        Content will place here.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-xl-4">
+                        <div class="overflow-hidden">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-2 fs-18 text-muted">
+                                            গত ১৪ দিনে পরীক্ষা
+                                        </div>
+                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        <div class="mb-2 fs-18 text-muted">
+                                            গত ১৪ দিনে আক্রান্ত
+                                        </div>
+                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        <div class="mb-2 fs-18 text-muted">
+                                            গত ১৪ দিনে মৃত্যু
+                                        </div>
+                                        <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="card-header">
+                            <h5 class="card-title">বিগত ৪২ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
+                            <div class="card-options">
+                                <div class="d-flex flex-row justify-content-end">
+                                    <div class="form-label pl-2 pt-2 mr-1">District</div>
+                                    <div>
+                                        <select class="form-control btn-outline-primary">
+                                            <option value="DHAKA">সব জেলা </option>
+                                            <option value="DHAKA">ঢাকা </option>
+                                            <option value="RAJSHAHI">রাজশাহী </option>
+                                            <option value="MYMENSINGH">ময়মনসিংহ </option>
+                                            <option value="KHULNA">খুলনা </option>
+                                            <option value="CHATTOGRAM">চট্রগ্রাম </option>
+                                            <option value="BARISAL">বরিশাল </option>
+                                            <option value="RANGPUR">রংপুর </option>
+                                            <option value="SYLHET">সিলেট </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="weekly_comparision_infected_death"></div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Insight</h5>
+                                    <p class="card-text">
+                                        Content will place here.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Policy</h5>
+                                    <p class="card-text">
+                                        Recommendation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End :: TESTING SCENARIO -->
 @push('custom_script')
@@ -217,10 +287,10 @@
     });
 
     // Weekly Comparision Infected Death
+    // Weekly Comparision Infected Death
     Highcharts.chart('weekly_comparision_infected_death', {
         chart: {
-            type: 'column'/*,
-					height: 180*/
+            zoomType: 'xy'
         },
         title: {
             text: ''
@@ -245,12 +315,10 @@
             }
         },
         xAxis: {
-            categories: ["১৬/০৮/২০২০ - ০১/০৮/২০২০","১৬/০৮/২০২০ - ০১/০৮/২০২০","১৬/০৮/২০২০ - ০১/০৮/২০২০"]
+            categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
         },
         tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>',
-            /*valueSuffix: ' cm',
-            shared: true*/
+            pointFormat: '{series.name}: <b>{point.y}</b>'
         },
         plotOptions: {
             column: {
@@ -261,16 +329,18 @@
         colors: ['#38cb89', '#ffa600', '#ef4b4b'],
         series: [{
             name: 'আক্রান্ত',
-            data: [5000, 7064, 4038]
+            type: 'column',
+            data: [300,320,450,250,450,200,280,400,620,452,505,637]
 
         }, {
             name: 'সংক্রমণ',
-            data: [6827, 7084, 6098]
+            type: 'column',
+            data: [360,406,816,523,470,571,643,521,578,657,777,563]
 
         }, {
             name: 'মৃত্যু',
-            data: [1083, 3078, 2098]
-
+            type: 'spline',
+            data: [160,206,316,423,270,371,543,421,378,557,377,463],
         }]
     });
 
