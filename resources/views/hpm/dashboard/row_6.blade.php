@@ -10,14 +10,14 @@
             <div class="row">
                 <div class="col-xl-1 col-md-1">
                     <div style="transform: rotate(-90deg);width: 219px;margin-left: -70px;margin-top: 100px;" class="fs-20">
-                        <br>Last 2 weeks (Sept 15- 30)</div>
+                        <br>Last 2 weeks (Sep 1- 14)</div>
                 </div>
                 <div class="col-xl-9 col-md-9">
                     <div class="table-responsive">
                         <table class="table table-bordered table-vcenter text-nowrap">
                             <thead >
                             <tr>
-                                <td colspan="4" class="text-center fs-18"><span class="text-danger">On Sept 30th</span>, 3rd and 4th week in the past: (Sept 1- 15)</td>
+                                <td colspan="4" class="text-center fs-18"><span class="text-danger">On {{date("M")}} {{date("d")}}th</span>, 3rd and 4th week in the past: (Aug 17 - 31) </td>
                             </tr>
                             </thead>
                             <tbody class="fs-20 text-center">
@@ -29,21 +29,21 @@
                             </tr>
                             <tr>
                                 <td>>= 15%</td>
-                                <td class="bg-danger">32</td>
-                                <td style="background: #fa9a29">10</td>
-                                <td style="background: #fa9a29">0</td>
+                                <td class="bg-danger">{{$rm_7->val}}</td>
+                                <td style="background: #fa9a29">{{$rm_4->val}}</td>
+                                <td style="background: #fa9a29">{{$rm_1->val}}</td>
                             </tr>
                             <tr>
                                 <td>5-15 %</td>
-                                <td style="background: #fa9a29">4</td>
-                                <td style="background: #feea1f">1</td>
-                                <td style="background: #94f925">6</td>
+                                <td style="background: #fa9a29">{{$rm_8->val}}</td>
+                                <td style="background: #feea1f">{{$rm_5->val}}</td>
+                                <td style="background: #94f925">{{$rm_2->val}}</td>
                             </tr>
                             <tr>
                                 <td><5%</td>
-                                <td style="background: #feea1f">5</td>
-                                <td style="background: #94f925">2</td>
-                                <td style="background: #00ff2e">4</td>
+                                <td style="background: #feea1f">{{$rm_9->val}}</td>
+                                <td style="background: #94f925">{{$rm_6->val}}</td>
+                                <td style="background: #00ff2e">{{$rm_3->val}}</td>
                             </tr>
                             </tbody>
                         </table>
