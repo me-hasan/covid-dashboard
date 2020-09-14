@@ -206,7 +206,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE() ".$searchQuery."
+  FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -217,7 +217,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE() 
+  FROM div_dist_upz_infected_trend where Date is not null 
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
