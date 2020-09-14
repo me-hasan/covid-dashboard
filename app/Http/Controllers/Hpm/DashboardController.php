@@ -153,7 +153,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
                           FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE()
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
-                        WHERE division= '".$request->division."'
+                        WHERE division= '".$request->division."' and t.date <= CURDATE()
                         ORDER BY t.date");
         }else{
             $cumulativeData = DB::select("SELECT t.date,
@@ -165,6 +165,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
                           FROM infected_person where test_date is not null AND test_date <= CURDATE()
                           GROUP BY test_date ) t
                         JOIN (SELECT @running_total:=0) r
+                        WHERE  t.date <= CURDATE()
                         ORDER BY t.date");
         }
 
