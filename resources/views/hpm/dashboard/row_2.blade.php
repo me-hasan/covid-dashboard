@@ -390,6 +390,9 @@
         if(substr($_mobInDistrictVal->District,0,3)=='Cox'){
             $str='Cox';
         }
+        if(substr($_mobInDistrictVal->District,0,4)=='Jhal'){
+            $str = 'three_Jhalakathi';
+        }
         /*if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
             $str='Cox';
         }elseif ($_mobInDistrictVal->District=='Narail') {
