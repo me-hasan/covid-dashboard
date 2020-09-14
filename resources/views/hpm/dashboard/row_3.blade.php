@@ -190,7 +190,7 @@
                     borderWidth: 0
                 }
             },
-            colors: ['#38cb89', '#ef4b4b'],
+            colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'Death',
                 data: [<?php echo $deathAge;?>]
