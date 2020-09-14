@@ -24,6 +24,24 @@ class DashboardController extends Controller
         $this->checkValidUser();
         $testPositivityMap = $this->testPositivityMap($request);
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+        // shamvil start
+            // row 4  
+            $data['dhaka_hospital'] = $dhaka_hospital=$this->city_wise_hospital('Dhaka');
+            $data['ctg_hospital'] = $ctg_hospital=$this->city_wise_hospital('Chittagong');
+
+            $data['dhaka_hospital_details'] = $dhaka_hospital_details=$this->city_wise_hospital_details('Dhaka');
+            $data['ctg_hospital_details'] = $ctg_hospital_details=$this->city_wise_hospital_details('Chittagong');
+            // row 6  
+            $data['rm_1'] = $this->risk_matrix_1();
+            $data['rm_2'] = $this->risk_matrix_2();
+            $data['rm_3'] = $this->risk_matrix_3();
+            $data['rm_4'] = $this->risk_matrix_4();
+            $data['rm_5'] = $this->risk_matrix_5();
+            $data['rm_6'] = $this->risk_matrix_6();
+            $data['rm_7'] = $this->risk_matrix_7();
+            $data['rm_8'] = $this->risk_matrix_8();
+            $data['rm_9'] = $this->risk_matrix_9();
+        // shamvil end
 
         $i = 0;
         $divisionlist=[];
@@ -338,5 +356,114 @@ ORDER BY t.date";
         return $data;
 
     }
+
+      private function city_wise_hospital($city)
+      {
+        $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
+        SUM(alocatedGeneralBed) AS 'General_Beds',
+        SUM(alocatedICUBed) AS 'ICU_Beds',
+        SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+        SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
+        ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
+        ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
+
+        return $city_wise_hospital[0];
+      }
+
+      private function city_wise_hospital_details($city)
+      {
+        $city_wise_hospital_details = DB::select("SELECT * FROM hospitaltemporarydata WHERE city='".$city."'");
+
+        return $city_wise_hospital_details;
+      }
+
+      private function risk_matrix_1(){
+        $risk_matrix = DB::select("select count(district) AS val from
+            (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
+            inner join 
+            (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
+
+        return $risk_matrix[0];
+      }
+
+      private function risk_matrix_2(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5 
+        and recrent15_avg_test_positivity<15) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
+
+        return $risk_matrix[0];
+      }
+
+      private function risk_matrix_3(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district)");
+
+        return $risk_matrix[0];
+      }
+
+      private function risk_matrix_4(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
+        past15_avg_test_positivity< 15) b using(district)");
+
+        return $risk_matrix[0];
+      }
+
+      private function risk_matrix_5(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
+        and recrent15_avg_test_positivity < 15) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
+        past15_avg_test_positivity < 15) b using(district)");
+
+        return $risk_matrix[0];
+      }
+
+      private function risk_matrix_6(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
+        past15_avg_test_positivity < 15) b using(district)");
+
+        return $risk_matrix[0];
+      }
+
+       private function risk_matrix_7(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
+
+        return $risk_matrix[0];
+      }
+
+      private function risk_matrix_8(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
+        and recrent15_avg_test_positivity<15) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
+
+        return $risk_matrix[0];
+      }
+
+     
+
+      private function risk_matrix_9(){
+        $risk_matrix = DB::select("select count(district) AS val from
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
+
+        return $risk_matrix[0];
+      }
 
 }
