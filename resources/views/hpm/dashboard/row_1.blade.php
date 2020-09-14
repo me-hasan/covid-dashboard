@@ -170,9 +170,12 @@
             //let search_params = url.searchParams;
             //search_params.append('district',district);
            // search_params.append('hierarchy_level','divisional');
-            /*if($('.select_district').val() && $('.select_district').val()!='') {
-
-            }*/
+            if($('.select_district').val() && $('.select_district').val()!='') {
+                $('.division_select').val(null).trigger("change");
+            }
+            if($('.select_upazilla').val() && $('.select_upazilla').val()!='') {
+                $('.select_district').val(null).trigger("change");
+            }
             $.ajax({
 
                 type:"GET",
