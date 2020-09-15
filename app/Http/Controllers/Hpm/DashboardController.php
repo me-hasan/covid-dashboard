@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     public function checkValidUser() {
@@ -26,13 +26,13 @@ class DashboardController extends Controller
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
 
         // shamvil start
-            // row 4  
+            // row 4
             $data['dhaka_hospital'] = $dhaka_hospital=$this->city_wise_hospital('Dhaka');
             $data['ctg_hospital'] = $ctg_hospital=$this->city_wise_hospital('Chittagong');
 
             $data['dhaka_hospital_details'] = $dhaka_hospital_details=$this->city_wise_hospital_details('Dhaka');
             $data['ctg_hospital_details'] = $ctg_hospital_details=$this->city_wise_hospital_details('Chittagong');
-            // row 6  
+            // row 6
             $data['rm_1'] = $this->risk_matrix_1();
             $data['rm_2'] = $this->risk_matrix_2();
             $data['rm_3'] = $this->risk_matrix_3();
@@ -217,7 +217,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null 
+  FROM div_dist_upz_infected_trend where Date is not null
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -391,7 +391,7 @@ ORDER BY t.date";
       private function risk_matrix_1(){
         $risk_matrix = DB::select("select count(district) AS val from
             (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-            inner join 
+            inner join
             (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
 
         return $risk_matrix[0];
@@ -399,9 +399,9 @@ ORDER BY t.date";
 
       private function risk_matrix_2(){
         $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5 
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
         and recrent15_avg_test_positivity<15) a
-        inner join 
+        inner join
         (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
 
         return $risk_matrix[0];
@@ -410,7 +410,7 @@ ORDER BY t.date";
       private function risk_matrix_3(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join 
+        inner join
         (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district)");
 
         return $risk_matrix[0];
@@ -419,8 +419,8 @@ ORDER BY t.date";
       private function risk_matrix_4(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
+        inner join
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and
         past15_avg_test_positivity< 15) b using(district)");
 
         return $risk_matrix[0];
@@ -430,8 +430,8 @@ ORDER BY t.date";
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
         and recrent15_avg_test_positivity < 15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
+        inner join
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and
         past15_avg_test_positivity < 15) b using(district)");
 
         return $risk_matrix[0];
@@ -440,8 +440,8 @@ ORDER BY t.date";
       private function risk_matrix_6(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
+        inner join
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and
         past15_avg_test_positivity < 15) b using(district)");
 
         return $risk_matrix[0];
@@ -450,7 +450,7 @@ ORDER BY t.date";
        private function risk_matrix_7(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-        inner join 
+        inner join
         (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
 
         return $risk_matrix[0];
@@ -460,18 +460,18 @@ ORDER BY t.date";
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
         and recrent15_avg_test_positivity<15) a
-        inner join 
+        inner join
         (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
 
         return $risk_matrix[0];
       }
 
-     
+
 
       private function risk_matrix_9(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join 
+        inner join
         (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
 
         return $risk_matrix[0];
