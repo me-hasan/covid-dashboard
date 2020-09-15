@@ -189,7 +189,7 @@
                     'district' : $('.select_district').val(),
                     'upazilla' : $('.select_upazilla').val(),
                 },
-                timeout: 3000,
+                timeout: 30000,
                 success: function(data) {
                     console.log(data);
                     if(data.status == 'success'){
