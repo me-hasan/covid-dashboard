@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function checkValidUser() {
@@ -23,16 +23,22 @@ class DashboardController extends Controller
     public function index(Request  $request) {
         $this->checkValidUser();
         $testPositivityMap = $this->testPositivityMap($request);
-        $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+       // $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+        $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
+        //dd($cumulativeInfectedPerson);
 
         // shamvil start
-            // row 4
+            // row 2  
+            $data['days_infected'] =$this->nation_wise_14_days_infected();
+            $data['days_death'] =$this->nation_wise_14_days_death();
+            $data['days_test_positivity'] =$this->nation_wise_14_days_test_positivity();
+            // row 4  
             $data['dhaka_hospital'] = $dhaka_hospital=$this->city_wise_hospital('Dhaka');
             $data['ctg_hospital'] = $ctg_hospital=$this->city_wise_hospital('Chittagong');
 
             $data['dhaka_hospital_details'] = $dhaka_hospital_details=$this->city_wise_hospital_details('Dhaka');
             $data['ctg_hospital_details'] = $ctg_hospital_details=$this->city_wise_hospital_details('Chittagong');
-            // row 6
+            // row 6  
             $data['rm_1'] = $this->risk_matrix_1();
             $data['rm_2'] = $this->risk_matrix_2();
             $data['rm_3'] = $this->risk_matrix_3();
@@ -156,17 +162,19 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
                         WHERE division= '".$request->division."' and t.date <= CURDATE()
                         ORDER BY t.date");
         }else{
-            $cumulativeData = DB::select("SELECT t.date,
-                               @running_total:=@running_total + t.infected_person_count AS cumulative_infected_person
-                        FROM
-                        ( SELECT
-                          test_date as 'date',
-                          count(id) as 'infected_person_count'
-                          FROM infected_person where test_date is not null AND test_date <= CURDATE()
-                          GROUP BY test_date ) t
-                        JOIN (SELECT @running_total:=0) r
-                        WHERE  t.date <= CURDATE()
-                        ORDER BY t.date");
+            // $cumulativeData = DB::select("SELECT t.date,
+            //                    @running_total:=@running_total + t.infected_person_count AS cumulative_infected_person
+            //             FROM
+            //             ( SELECT
+            //               test_date as 'date',
+            //               count(id) as 'infected_person_count'
+            //               FROM infected_person where test_date is not null AND test_date <= CURDATE()
+            //               GROUP BY test_date ) t
+            //             JOIN (SELECT @running_total:=0) r
+            //             WHERE  t.date <= CURDATE()
+            //             ORDER BY t.date");
+
+            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person FROM infected_cumulative ");
         }
 
         foreach ($cumulativeData as $key => $inf) {
@@ -186,6 +194,141 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
 
         // dd($data);
         return $data;
+    }
+
+    public function cumulativeInfectedPerson_nation($request) {
+
+        if($request->has('division') && is_array($request->division) && count($request->division)) {
+                
+        }
+
+           $cumulativeSql = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_dhk = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Dhaka'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_ctg = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Chittagong'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_barisal = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Barisal'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_khulna = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Khulna'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_rajshahi = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Rajshahi'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_rangpur = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Rangpur'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_syl = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Sylhet'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeSql_mym = "SELECT t.date,t.Division,
+               @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+        FROM
+        (SELECT
+          Date, Division, sum(Infected_Person) as 'Infected_Person'
+          FROM div_dist_upz_infected_trend where Date is not null and Division='Mymensingh'
+          GROUP BY Date, Division ) as t 
+        JOIN (SELECT @running_total:=0) r
+        ORDER BY t.date";
+
+        $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
+        $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk);
+        $cumulativeSql_ctg = \Illuminate\Support\Facades\DB::select($cumulativeSql_ctg);
+        $cumulativeSql_barisal = \Illuminate\Support\Facades\DB::select($cumulativeSql_barisal);
+        $cumulativeSql_khulna = \Illuminate\Support\Facades\DB::select($cumulativeSql_khulna);
+        $cumulativeSql_rajshahi = \Illuminate\Support\Facades\DB::select($cumulativeSql_rajshahi);
+        $cumulativeSql_rangpur = \Illuminate\Support\Facades\DB::select($cumulativeSql_rangpur);
+        $cumulativeSql_syl = \Illuminate\Support\Facades\DB::select($cumulativeSql_syl);
+        $cumulativeSql_mym = \Illuminate\Support\Facades\DB::select($cumulativeSql_mym);
+            $j=0;
+            $dateData = [];
+            $divisionData = [];
+            $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'cumulative_infected_person'));
+            $cumulativeData_2['Chittagong'] = array_map('intval',array_column($cumulativeSql_ctg,'cumulative_infected_person'));
+            $cumulativeData_2['Barisal'] = array_map('intval',array_column($cumulativeSql_barisal,'cumulative_infected_person'));
+            $cumulativeData_2['Khulna'] = array_map('intval',array_column($cumulativeSql_khulna,'cumulative_infected_person'));
+            $cumulativeData_2['Rajshahi'] = array_map('intval',array_column($cumulativeSql_rajshahi,'cumulative_infected_person'));
+            $cumulativeData_2['Rangpur'] = array_map('intval',array_column($cumulativeSql_rangpur,'cumulative_infected_person'));
+            $cumulativeData_2['Sylhet'] = array_map('intval',array_column($cumulativeSql_syl,'cumulative_infected_person'));
+            $cumulativeData_2['Mymensingh'] = array_map('intval',array_column($cumulativeSql_mym,'cumulative_infected_person'));
+             // + $cumulativeSql_ctg + $cumulativeSql_barisal + $cumulativeSql_khulna + $cumulativeSql_rajshahi + $cumulativeSql_rangpur + $cumulativeSql_syl + $cumulativeSql_mym ;
+            foreach ($cumulativeData as $key => $div) {
+                $div_date = date('d/m/Y', strtotime($div->date));
+
+                if(!in_array($div_date, $dateData)){
+                    $dateData[] = $div_date;
+                }
+
+                $divisionData[$div->Division][] = (int)$div->cumulative_infected_person ?? 0;
+
+                $j++;
+            }
+            $data['categories'] = $dateData;
+            $data['division_data'] = $cumulativeData_2;
+            //dd($data);
+            return $data;
+
     }
 
     public function cumulativeInfectedPerson($request) {
@@ -212,15 +355,8 @@ JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
 
             } else {
-                $cumulativeSql = "SELECT t.date,t.Division,
-       @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
-FROM
-(SELECT
-  Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null
-  GROUP BY Date, Division ) as t
-JOIN (SELECT @running_total:=0) r
-ORDER BY t.date";
+
+             return false;
 
             }
 
@@ -249,15 +385,17 @@ ORDER BY t.date";
             Log::error("cumulativeInfectedPerson error : ". $exception->getMessage());
         }
 
-       // dd($data);
+        //dd($data);
         return $data;
     }
 
     public function getCumulativeInfectedData(Request $request) {
         $result['status'] = 'failed';
         try{
+            $is_division=false;
 
-            $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+           // $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
+            $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
             $cumulativeDisUpaZillaData = $this->cumulativeDivDistData($request);
             $formattedData = [];
             $i = 0;
@@ -266,10 +404,17 @@ ORDER BY t.date";
             } elseif($request->has('upazilla') && count($request['upazilla'])){
                 $formattedData = $cumulativeDisUpaZillaData['upazillaData'];
             }else {
+                $is_division=true;
                 $formattedData = $cumulativeInfectedPerson['division_data'] ?? [];
             }
             if(count($formattedData)) {
                 foreach ($formattedData as $key => $dist) {
+                    if($is_division==true){
+                        if(isset($request['division']) && !in_array($key,$request['division'])){
+                            continue;
+                        }
+                    }
+                    //dd($key);
                     if(isset($dist['bn'])){
                         unset($dist['bn']);
                     }
@@ -391,7 +536,7 @@ ORDER BY t.date";
       private function risk_matrix_1(){
         $risk_matrix = DB::select("select count(district) AS val from
             (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-            inner join
+            inner join 
             (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
 
         return $risk_matrix[0];
@@ -399,9 +544,9 @@ ORDER BY t.date";
 
       private function risk_matrix_2(){
         $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
+        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5 
         and recrent15_avg_test_positivity<15) a
-        inner join
+        inner join 
         (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
 
         return $risk_matrix[0];
@@ -410,7 +555,7 @@ ORDER BY t.date";
       private function risk_matrix_3(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join
+        inner join 
         (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district)");
 
         return $risk_matrix[0];
@@ -419,8 +564,8 @@ ORDER BY t.date";
       private function risk_matrix_4(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-        inner join
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
         past15_avg_test_positivity< 15) b using(district)");
 
         return $risk_matrix[0];
@@ -430,8 +575,8 @@ ORDER BY t.date";
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
         and recrent15_avg_test_positivity < 15) a
-        inner join
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
         past15_avg_test_positivity < 15) b using(district)");
 
         return $risk_matrix[0];
@@ -440,8 +585,8 @@ ORDER BY t.date";
       private function risk_matrix_6(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and
+        inner join 
+        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
         past15_avg_test_positivity < 15) b using(district)");
 
         return $risk_matrix[0];
@@ -450,7 +595,7 @@ ORDER BY t.date";
        private function risk_matrix_7(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-        inner join
+        inner join 
         (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
 
         return $risk_matrix[0];
@@ -460,18 +605,18 @@ ORDER BY t.date";
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
         and recrent15_avg_test_positivity<15) a
-        inner join
+        inner join 
         (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
 
         return $risk_matrix[0];
       }
 
-
+     
 
       private function risk_matrix_9(){
         $risk_matrix = DB::select("select count(district) AS val from
         (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join
+        inner join 
         (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
 
         return $risk_matrix[0];
@@ -580,6 +725,51 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
         $data['getLast14DaysTestData'] = $getLast14DaysTestData;
         $data['getLast14DaysinfectedData'] = $getLast14DaysinfectedData;
         return $data;
+    }
+
+    private function nation_wise_14_days_infected(){
+        $nation_wise_14_days_infected = DB::select(" select * from (
+            SELECT
+               a.test_date,
+               a.infected,
+               Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
+                        FROM daily_infected_natn AS b
+                        WHERE DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 6
+                      ), 2 ) AS 'seven_dayMovingAvg'
+            FROM daily_infected_natn AS a 
+            ORDER BY a.test_date desc limit 14) T order by test_date ");
+
+        return $nation_wise_14_days_infected;
+    }
+
+    private function nation_wise_14_days_death(){
+        $nation_wise_14_days_death = DB::select(" select * from (
+        SELECT
+               a.date,
+               a.no_of_death,
+               Round( ( SELECT SUM(b.no_of_death) / COUNT(b.no_of_death)
+                        FROM death_number AS b
+                        WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                      ), 2 ) AS 'seven_dayMovingAvg'
+             FROM death_number AS a 
+             ORDER BY a.date desc limit 14) T order by date ");
+
+        return $nation_wise_14_days_death;
+    }
+
+    private function nation_wise_14_days_test_positivity(){
+        $nation_wise_14_days_test_positivity = DB::select(" SELECT * FROM (
+        SELECT
+               a.date,
+               a.test_positivity,
+               ROUND( ( SELECT SUM(b.test_positivity) / COUNT(b.test_positivity)
+                        FROM daily_test_positivity_natn AS b  
+                        WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6 
+                      ), 2 ) AS 'seven_dayMovingAvg'
+             FROM daily_test_positivity_natn AS a
+             ORDER BY a.date DESC LIMIT 14) T ORDER BY DATE ");
+
+        return $nation_wise_14_days_test_positivity;
     }
 
 
