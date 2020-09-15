@@ -189,7 +189,7 @@
                     'district' : $('.select_district').val(),
                     'upazilla' : $('.select_upazilla').val(),
                 },
-                timeout: 3000,
+                timeout: 30000,
                 success: function(data) {
                     console.log(data);
                     if(data.status == 'success'){
@@ -206,8 +206,16 @@
                     } else {
                         alert("Something Went Wrong");
                     }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
                 }
             });
+            return false;
         }
 
         function directComparisionCall(data) {
