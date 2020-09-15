@@ -206,6 +206,9 @@
                     } else {
                         alert("Something Went Wrong");
                     }
+                },
+                error: function(data){
+                    console.log(data);
                 }
             });
             return false;
