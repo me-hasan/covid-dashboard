@@ -208,6 +208,7 @@
                     }
                 }
             });
+            return false;
         }
 
         function directComparisionCall(data) {
