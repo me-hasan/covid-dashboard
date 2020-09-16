@@ -142,8 +142,14 @@
                     <div class="col-xl-8 col-lg-8 col-md-12">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
-                                <h3 class="card-title">প্রতি মিলিয়ন পরীক্ষা</h3>
-                                <div id="test_positivity_per_million"></div>
+                                <h3 class="card-title"></h3>
+                                <div class="card-body">
+                                    <div id="test_positivity_per_million"></div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">দক্ষিণ এশিয়ার দেশগুলাতো আক্রন্ত</h5>
+                                    <div id="country_wise_infected"></div>
+                                </div>
                                 <div class="card-body float-right">
                                     <h5 class="card-title">Insight</h5>
                                     <p class="card-text">
@@ -237,28 +243,13 @@
 </div>
 <!-- End :: TESTING SCENARIO -->
 @push('custom_script')
+
 <script>
     // Test Positivity Per Million
-   // Set up the chart
-        var chart = new Highcharts.Chart({
+   // South Country Wise Infected
+            Highcharts.chart('country_wise_infected', {
                 chart: {
-                    renderTo: 'test_positivity_per_million',
-                    margin: 100,
-                    type: 'scatter3d',
-                    animation: false,
-                    options3d: {
-                        enabled: true,
-                        alpha: 10,
-                        beta: 30,
-                        depth: 250,
-                        viewDistance: 5,
-                        fitToPlot: false,
-                        frame: {
-                            bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
-                            back: { size: 1, color: 'rgba(0,0,0,0.04)' },
-                            side: { size: 1, color: 'rgba(0,0,0,0.06)' }
-                        }
-                    }
+                    type: 'bar'
                 },
                 title: {
                     text: ''
@@ -266,59 +257,73 @@
                 subtitle: {
                     text: ''
                 },
-                plotOptions: {
-                    scatter: {
-                        width: 10,
-                        height: 10,
-                        depth: 10
-                    }
-                },
-                yAxis: {
-                    min: 0,
-                    max: 10,
-                    title: null
-                },
-                xAxis: {
-                    min: 0,
-                    max: 10,
-                    gridLineWidth: 1
-                },
-                zAxis: {
-                    min: 0,
-                    max: 10,
-                    showFirstLabel: false
-                },
-                legend: {
-                    enabled: false
-                },
                 credits:{
                     enabled:false
                 },
-                series: [{
-                    name: 'Data',
-                    colorByPoint: true,
-                    accessibility: {
-                        exposeAsGroupOnly: true
+                legend:{
+                    enabled:false
+                },
+                yAxis: {
+                    title: {
+                        text: ''
                     },
-                    data: [[1, 6, 5], [8, 7, 9], [1, 3, 4], [4, 6, 8], [5, 7, 7], [6, 9, 6],
-                            [7, 0, 5], [2, 3, 3], [3, 9, 8], [3, 6, 5], [4, 9, 4], [2, 3, 3],
-                            [6, 9, 9], [0, 7, 0], [7, 7, 9], [7, 2, 9], [0, 6, 2], [4, 6, 7],
-                            [3, 7, 7], [0, 1, 7], [2, 8, 6], [2, 3, 7], [6, 4, 8], [3, 5, 9],
-                            [7, 9, 5], [3, 1, 7], [4, 4, 2], [3, 6, 2], [3, 1, 6], [6, 8, 5],
-                            [6, 6, 7], [4, 1, 1], [7, 2, 7], [7, 7, 0], [8, 8, 9], [9, 4, 1],
-                            [8, 3, 4], [9, 8, 9], [3, 5, 3], [0, 2, 4], [6, 0, 2], [2, 1, 3],
-                            [5, 8, 9], [2, 1, 1], [9, 7, 6], [3, 0, 2], [9, 9, 0], [3, 4, 8],
-                            [2, 6, 1], [8, 9, 2], [7, 6, 5], [6, 3, 1], [9, 3, 1], [8, 9, 3],
-                            [9, 1, 0], [3, 8, 7], [8, 0, 0], [4, 9, 7], [8, 6, 2], [4, 3, 0],
-                            [2, 3, 5], [9, 1, 4], [1, 1, 4], [6, 0, 2], [6, 1, 6], [3, 8, 8],
-                            [8, 8, 7], [5, 5, 0], [3, 9, 6], [5, 4, 3], [6, 8, 3], [0, 1, 5],
-                            [6, 7, 3], [8, 3, 2], [3, 8, 3], [2, 1, 6], [4, 6, 7], [8, 9, 9],
-                            [5, 4, 2], [6, 1, 3], [6, 9, 5], [4, 8, 2], [9, 7, 4], [5, 4, 2],
-                            [9, 6, 1], [2, 7, 3], [4, 5, 4], [6, 8, 1], [3, 4, 0], [2, 2, 6],
-                            [5, 1, 2], [9, 9, 7], [6, 9, 9], [8, 4, 3], [4, 1, 7], [6, 2, 5],
-                            [0, 4, 9], [3, 5, 9], [6, 9, 1], [1, 9, 2]]
-                }]
-    });
+                    labels: {
+                        formatter: function() {
+                           return this.value;
+                        }
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                tooltip: {
+                  pointFormat: '{series.name}: <b>{point.y}</b>',
+                  /*valueSuffix: ' cm',
+                  shared: true*/
+                },
+                plotOptions: {
+                    /*column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },*/
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}'
+                        }
+                    }
+                },
+                colors: ['#c94b7d', '#7d5f9d', '#559590', '#b25b3f', '#5c687b'],
+                series: [
+                    {
+                        name: "Infected",
+                        colorByPoint: true,
+                        data: [
+                            {
+                                name: "India",
+                                y: 42.48
+                            },
+                            {
+                                name: "Nepal",
+                                y: 28.18
+                            },
+                            {
+                                name: "Pakistan",
+                                y: 13.44
+                            },
+                            {
+                                name: "Sri Lanka",
+                                y: 11.96
+                            },
+                            {
+                                name: "Bangladesh",
+                                y: 10.42
+                            }
+                        ]
+                    }
+                ]
+            });
 
     <?php
 
