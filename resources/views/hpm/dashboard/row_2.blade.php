@@ -190,7 +190,7 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="card-header">
-                            <h5 class="card-title">বিগত ৪২ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
+                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
                             <div class="card-options">
                                 <div class="d-flex flex-row justify-content-end">
                                     <div class="form-label pl-2 pt-2 mr-1">District</div>
@@ -320,7 +320,28 @@
                 }]
     });
 
-    // Weekly Comparision Infected Death
+    <?php
+
+        $date_arr = $infected_arr = $death_arr = $test_positivity_arr = array();
+
+        foreach($days_infected as $row){
+              $infected_arr[] = $row->seven_dayMovingAvg;
+        }
+        $infected = implode(",", $infected_arr);
+
+        foreach($days_death as $row){
+
+          $date_arr[] = date('d\/m\/Y', strtotime($row->date));
+          $death_arr[] = $row->seven_dayMovingAvg;
+        }
+        $death_info = implode(",", $death_arr);
+
+        foreach($days_test_positivity as $row){
+              $test_positivity_arr[] = $row->seven_dayMovingAvg;
+        }
+        $test_positivity = implode(",", $test_positivity_arr);
+
+    ?>
     // Weekly Comparision Infected Death
     Highcharts.chart('weekly_comparision_infected_death', {
         chart: {
@@ -349,7 +370,7 @@
             }
         },
         xAxis: {
-            categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
+            categories: <?php echo json_encode($date_arr);?>
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -360,21 +381,21 @@
                 borderWidth: 0
             }
         },
-        colors: ['#38cb89', '#ffa600', '#ef4b4b'],
+        colors: ['#38cb89', '#ef4b4b', '#ffa600'],
         series: [{
             name: 'আক্রান্ত',
             type: 'column',
-            data: [300,320,450,250,450,200,280,400,620,452,505,637]
-
-        }, {
-            name: 'সংক্রমণ',
-            type: 'column',
-            data: [360,406,816,523,470,571,643,521,578,657,777,563]
+            data: [<?php echo $infected;?>]
 
         }, {
             name: 'মৃত্যু',
+            type: 'column',
+            data: [<?php echo $death_info;?>]
+
+        }, {
+            name: 'সংক্রমণ',
             type: 'spline',
-            data: [160,206,316,423,270,371,543,421,378,557,377,463],
+            data: [<?php echo $test_positivity;?>],
         }]
     });
 
