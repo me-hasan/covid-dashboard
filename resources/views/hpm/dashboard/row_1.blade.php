@@ -9,10 +9,10 @@
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন</h3>
             </div>
             <div class="card-body">
-                <div id="national_infected_trend"></div>
+                <div id="national_dialy_infected_trend"></div>
             </div>
             <div class="card-body">
                 <h5 class="card-title">Insight</h5>
@@ -66,10 +66,148 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card-header cart-height-customize">
+                <h3 class="card-title">রোগের অগ্রগতি</h3>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+            </div>
+            <div class="card-body">
+                <div id="national_infected_trend"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insight</h5>
+                <p class="card-text">
+                    Content will place here.
+                </p>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">পরীক্ষা বনাম আক্রান্ত</h3>
+            </div>
+            <div class="card-body">
+                <div id="national_test_vs_infected_trend"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insight</h5>
+                <p class="card-text">
+                    Content will place here.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 <!-- End :: Disease Progression -->
 @push('custom_script')
     <script>
+
+
+            Highcharts.chart('national_dialy_infected_trend', {
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits:{
+                    enabled:false
+                },
+                legend:{
+                    enabled:true
+                },
+                yAxis: {
+                    title: {
+                        text: 'দৈনিক আক্রান্তের সংখ্যা'
+                    },
+                    labels: {
+                        formatter: function() {
+                           return this.value;
+                        }
+                    }
+                },
+                xAxis: {
+                    categories: ["\u09e6\u09ea\u09ae\u09be\u09b0","\u09e7\u09e7\u09ae\u09be\u09b0","\u09e7\u09ee\u09ae\u09be\u09b0","\u09e8\u09eb\u09ae\u09be\u09b0","\u09e6\u09e7\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ee\u098f\u09aa\u09cd\u09b0\u09bf","\u09e7\u09eb\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09e8\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09ef\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ec\u09ae\u09c7","\u09e7\u09e9\u09ae\u09c7","\u09e8\u09e6\u09ae\u09c7","\u09e8\u09ed\u09ae\u09c7","\u09e6\u09e9\u099c\u09c1\u09a8","\u09e7\u09e6\u099c\u09c1\u09a8","\u09e7\u09ed\u099c\u09c1\u09a8","\u09e8\u09ea\u099c\u09c1\u09a8","\u09e6\u09e7\u099c\u09c1\u09b2","\u09e6\u09ee\u099c\u09c1\u09b2","\u09e7\u09eb\u099c\u09c1\u09b2","\u09e7\u09ed\u099c\u09c1\u09b2","\u09e8\u09ea\u099c\u09c1\u09b2","\u09e9\u09e7\u099c\u09c1\u09b2"],
+                    tickInterval: 6
+                },
+                tooltip: {
+                  pointFormat: '{series.name}: <b>{point.y}</b>'
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                colors: ['#5a99d3', '#e97c30'],
+                series: [{
+                    name: 'দৈনিক আক্রান্ত',
+                    type: 'column',
+                    data: [0,100,180,558,739,854,918,1231,3772,5103,8719,7822,9738,8292,11140,13865,9489,7660,6258,2134,3323,958,834,323],
+
+                }, {
+                    name: 'দৈনিক আক্রান্ত (৫ দিনের  চলমান গড়)',
+                    type: 'spline',
+                    data: [0, 100,180,558,739,854,918,1231,3772,5103,8719,7822,9738,8292,11140,13865,9489,7660,6258,2134,3323,958,834,323],
+                }]
+            });
+
+        // National Test Vs Infected Trend
+            Highcharts.chart('national_test_vs_infected_trend', {
+                chart: {
+                    marginRight: 80 // like left
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits:{
+                    enabled:false
+                },
+                xAxis: {
+                    categories: ['01-Mar-2020', '15-Mar-2020', '01-Apr-2020', '15-Apr-2020', '01-May-2020', '15-May-2020', '01-Jun-2020', '15-Jun-2020', '01-Jul-2020', '15-Jul-2020', '01-Aug-2020', '15-Aug-2020', '01-Sep-2020', '15-Sep-2020'],
+                    tickInterval: 6
+                },
+                yAxis: [{
+                    lineWidth: 1,
+                    title: {
+                        text: 'Daily Cases Numbers'
+                    }
+                }, {
+                    lineWidth: 1,
+                    opposite: true,
+                    title: {
+                        text: 'Daily Tests Numbers'
+                    }
+                }],
+                colors: ['#9d4a2a', '#dfc825'],
+                series: [{
+                    name: 'Daily Cases (5-day moving agerage)',
+                    data: [29, 71, 106, 129, 144, 176, 135,59, 81, 96, 89, 59, 76, 65],
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                }, {
+                    name: 'Daily Tests (5-day moving agerage)',
+                    data: [144, 176, 135, 148, 216, 194, 95, 144, 176, 135, 148, 216, 194, 95],
+                    yAxis: 1,
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                }]
+            });
+            
         // Highcharts Infected and Forcast Chart
         Highcharts.chart('national_infected_trend', {
             chart: {
