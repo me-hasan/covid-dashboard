@@ -2,7 +2,7 @@
 <div class="card-body">
         <svg version="1.1" id="Bangladesh" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 410 548.051" enable-background="new 0 0 410 548.051" xml:space="preserve">
             <g  id="three_div_sylhet">
-                <g class="map_click_3" id="three_sylhet">
+                <g class="map_click_3" id="three_Sylhet">
                     <path fill="#FCAA94" stroke="#FFFFFF" stroke-miterlimit="10" d="M388.188,164.51l-0.621-1.443l-0.783-0.773l-0.012-0.004
 				l-2.043-0.889l0.021-0.02l0.67-0.609l-0.02-0.023l-0.314-0.418l-0.021-0.01l-0.771-0.381l-0.006-0.003l-2.666-1.981v-0.025
 				l-0.021-0.275l-0.012-0.006l-0.021-0.009l-1.433-0.521l-0.646-0.17l-0.002-0.01l-0.004-0.022l-0.162-0.854l-0.324-1.709
@@ -2943,7 +2943,7 @@
                         </g>
                     </g>
                 </g>
-                <g class="map_click_3" id="three_Dhaka_1_">
+                <g class="map_click_3" id="three_Dhaka">
                     <path fill="#FCAA94" stroke="#FFFFFF" stroke-miterlimit="10" d="M200.437,279.635c0.027-0.4-0.027-0.572,0.287-0.746
 				c0.314-0.172,0.4-0.113,0.572-0.199s0.373-0.229,0.602-0.43s0.143-0.26,0.43-0.43c0.287-0.174,0.4-0.316,0.631-0.488
 				s0.344-0.484,0.688-0.314c0.344,0.177,0.943,0.287,1.088,0.486c0.143,0.201,0.258,0.062,0.83,0.402
