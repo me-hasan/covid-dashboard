@@ -147,7 +147,8 @@
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">দক্ষিণ এশিয়ার দেশগুলাতো আক্রন্ত</h5>
+                                    <!-- <h5 class="card-title">দক্ষিণ এশিয়ার দেশগুলাতো আক্রন্ত</h5> -->
+                                    <h5 class="card-title">Test Per Cases for South Asian Countries</h5>
                                     <div id="country_wise_infected"></div>
                                 </div>
                                 <div class="card-body float-right">
@@ -294,31 +295,39 @@
                         }
                     }
                 },
-                colors: ['#c94b7d', '#7d5f9d', '#559590', '#b25b3f', '#5c687b'],
+                colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f', '#5c687b','#60b5d1','#3acc76'],
                 series: [
                     {
-                        name: "Infected",
+                        name: "Test Per Case",
                         colorByPoint: true,
                         data: [
                             {
-                                name: "India",
-                                y: 42.48
-                            },
-                            {
-                                name: "Nepal",
-                                y: 28.18
-                            },
-                            {
-                                name: "Pakistan",
-                                y: 13.44
+                                name: "Mayanmar",
+                                y: <?=$tests_per_case_Mayanmar->cumulative_tests_per_case;?>
                             },
                             {
                                 name: "Sri Lanka",
-                                y: 11.96
+                                y: <?=$tests_per_case_Sri->cumulative_tests_per_case;?>
+                            },
+                            {
+                                name: "Nepal",
+                                y: <?=$tests_per_case_Nepal->cumulative_tests_per_case;?>
+                            },
+                            {
+                                name: "Maldives",
+                                y: <?=$tests_per_case_Maldives->cumulative_tests_per_case;?>
+                            },
+                            {
+                                name: "India",
+                                y: <?=$tests_per_case_India->cumulative_tests_per_case;?>
+                            },
+                            {
+                                name: "Pakistan",
+                                y: <?=$tests_per_case_Pakistan->cumulative_tests_per_case;?>
                             },
                             {
                                 name: "Bangladesh",
-                                y: 10.42
+                                y: <?=$tests_per_case_Bangladesh->cumulative_tests_per_case;?>
                             }
                         ]
                     }
@@ -407,14 +416,15 @@
     $(document).ready(function(){
 
         <?php
-        $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+        //$_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+        $_colorCodes = array( '5' => '#fff51e', '15' => '#f87f2c', '500' => '#f43735');
         $_existDataGroups = array();
         foreach($testPositivityMap as $_mobInDistrictVal){
 
         $str=$_mobInDistrictVal->District;
         $str='three_'.$_mobInDistrictVal->District;
         if(substr($_mobInDistrictVal->District,0,3)=='Cox'){
-            $str='Cox';
+            $str='three_Cox_x27_s_Bazar';
         }
         if(substr($_mobInDistrictVal->District,0,4)=='Jhal'){
             $str = 'three_Jhalakathi';

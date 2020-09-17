@@ -109,7 +109,18 @@
 <!-- End :: Disease Progression -->
 @push('custom_script')
     <script>
+            <?php
+                $date_arr = $infected_arr = $avg_arr  = array();
 
+                foreach($nation_wide_MovingAvgInfected as $row){
+                      $date_arr[] = date('d\/m\/Y', strtotime($row->report_date));
+                      $infected_arr[] = $row->infected_24_hrs;
+                      $avg_arr[] = $row->five_dayMovingAvgInfected;
+                }
+                $infected = implode(",", $infected_arr);
+                $avg = implode(",", $avg_arr);
+
+            ?>
 
             Highcharts.chart('national_dialy_infected_trend', {
                 chart: {
@@ -137,9 +148,9 @@
                         }
                     }
                 },
-                xAxis: {
-                    categories: ["\u09e6\u09ea\u09ae\u09be\u09b0","\u09e7\u09e7\u09ae\u09be\u09b0","\u09e7\u09ee\u09ae\u09be\u09b0","\u09e8\u09eb\u09ae\u09be\u09b0","\u09e6\u09e7\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ee\u098f\u09aa\u09cd\u09b0\u09bf","\u09e7\u09eb\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09e8\u098f\u09aa\u09cd\u09b0\u09bf","\u09e8\u09ef\u098f\u09aa\u09cd\u09b0\u09bf","\u09e6\u09ec\u09ae\u09c7","\u09e7\u09e9\u09ae\u09c7","\u09e8\u09e6\u09ae\u09c7","\u09e8\u09ed\u09ae\u09c7","\u09e6\u09e9\u099c\u09c1\u09a8","\u09e7\u09e6\u099c\u09c1\u09a8","\u09e7\u09ed\u099c\u09c1\u09a8","\u09e8\u09ea\u099c\u09c1\u09a8","\u09e6\u09e7\u099c\u09c1\u09b2","\u09e6\u09ee\u099c\u09c1\u09b2","\u09e7\u09eb\u099c\u09c1\u09b2","\u09e7\u09ed\u099c\u09c1\u09b2","\u09e8\u09ea\u099c\u09c1\u09b2","\u09e9\u09e7\u099c\u09c1\u09b2"],
-                    tickInterval: 6
+                xAxis: {            
+                    categories: <?php echo json_encode($date_arr);?>
+                    
                 },
                 tooltip: {
                   pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -154,12 +165,12 @@
                 series: [{
                     name: 'দৈনিক আক্রান্ত',
                     type: 'column',
-                    data: [0,100,180,558,739,854,918,1231,3772,5103,8719,7822,9738,8292,11140,13865,9489,7660,6258,2134,3323,958,834,323],
+                    data: [<?php echo $infected;?>],
 
                 }, {
                     name: 'দৈনিক আক্রান্ত (৫ দিনের  চলমান গড়)',
                     type: 'spline',
-                    data: [0, 100,180,558,739,854,918,1231,3772,5103,8719,7822,9738,8292,11140,13865,9489,7660,6258,2134,3323,958,834,323],
+                    data: [<?php echo $avg;?>],
                 }]
             });
 
