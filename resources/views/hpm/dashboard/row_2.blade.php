@@ -429,6 +429,18 @@
         if(substr($_mobInDistrictVal->District,0,4)=='Jhal'){
             $str = 'three_Jhalakathi';
         }
+        if(substr($_mobInDistrictVal->District,0,5)=='Maulv'){
+            $str = 'three_Moulvibazar';
+        }
+        if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
+            $str = 'three_Chapainawabganj';
+        }
+        if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
+            $str = 'three_Chapainawabganj';
+        }
+        if(substr($_mobInDistrictVal->District,0,5)=='Jhena'){
+            $str = 'three_Jhenaidah';
+        }
         /*if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
             $str='Cox';
         }elseif ($_mobInDistrictVal->District=='Narail') {
