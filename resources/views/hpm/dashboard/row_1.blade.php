@@ -9,10 +9,10 @@
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন</h3>
             </div>
             <div class="card-body">
-                <div id="national_infected_trend"></div>
+                <div id="national_dialy_infected_trend"></div>
             </div>
             <div class="card-body">
                 <h5 class="card-title">Insight</h5>
@@ -66,10 +66,200 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card-header cart-height-customize">
+                <h3 class="card-title">রোগের অগ্রগতি</h3>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+            </div>
+            <div class="card-body">
+                <div id="national_infected_trend"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insight</h5>
+                <p class="card-text">
+                    Content will place here.
+                </p>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">পরীক্ষা বনাম আক্রান্ত</h3>
+            </div>
+            <div class="card-body">
+                <div id="national_test_vs_infected_trend"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insight</h5>
+                <p class="card-text">
+                    Content will place here.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 <!-- End :: Disease Progression -->
 @push('custom_script')
     <script>
+
+        <?php
+        use Carbon\Carbon;
+        $date_arr = $infected_arr = $avg_arr  = array();
+        //Daily test query
+        $dailyTests = DB::select("select * from (
+SELECT
+       a.report_date,
+       a.test_24_hrs,
+       Round( ( SELECT SUM(b.test_24_hrs) / COUNT(b.test_24_hrs)
+               FROM daily_data AS b
+	WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
+              ), 2 ) AS 'fiveDayMovingAvgTest'
+     FROM daily_data AS a
+     ORDER BY a.report_date) T order by report_date");
+
+        //Daily cases query
+        $dailyCases = DB::select("select * from (
+SELECT
+       a.report_date,
+       a.infected_24_hrs,
+       Round( ( SELECT SUM(b.infected_24_hrs) / COUNT(b.infected_24_hrs)
+               FROM daily_data AS b
+	WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
+              ), 2 ) AS 'fiveDayMovingAvgInfected'
+     FROM daily_data AS a
+     ORDER BY a.report_date) T order by report_date");
+
+        foreach ($dailyTests as $dailyTest) {
+            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
+            $totalTest[] = $dailyTest->fiveDayMovingAvgTest;
+        }
+
+        foreach ($dailyCases as $dailyCase) {
+            $totalCase[] = $dailyCase->fiveDayMovingAvgInfected;
+        }
+
+        $dateRange  = implode(",", $dateRange);
+        $totalTest  = implode(",", $totalTest);
+        $totalCase  = implode(",", $totalCase);
+
+  
+
+
+                foreach($nation_wide_MovingAvgInfected as $row){
+                      $date_arr[] = date('d\/m\/Y', strtotime($row->report_date));
+                      $infected_arr[] = $row->infected_24_hrs;
+                      $avg_arr[] = $row->five_dayMovingAvgInfected;
+                }
+                $infected = implode(",", $infected_arr);
+                $avg = implode(",", $avg_arr);
+
+            ?>
+
+            Highcharts.chart('national_dialy_infected_trend', {
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits:{
+                    enabled:false
+                },
+                legend:{
+                    enabled:true
+                },
+                yAxis: {
+                    title: {
+                        text: 'দৈনিক আক্রান্তের সংখ্যা'
+                    },
+                    labels: {
+                        formatter: function() {
+                           return this.value;
+                        }
+                    }
+                },
+                xAxis: {            
+                    categories: <?php echo json_encode($date_arr);?>
+                    
+                },
+                tooltip: {
+                  pointFormat: '{series.name}: <b>{point.y}</b>'
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                colors: ['#5a99d3', '#e97c30'],
+                series: [{
+                    name: 'দৈনিক আক্রান্ত',
+                    type: 'column',
+                    data: [<?php echo $infected;?>],
+
+                }, {
+                    name: 'দৈনিক আক্রান্ত (৫ দিনের  চলমান গড়)',
+                    type: 'spline',
+                    data: [<?php echo $avg;?>],
+                }]
+            });
+
+        // National Test Vs Infected Trend
+            Highcharts.chart('national_test_vs_infected_trend', {
+                chart: {
+                    marginRight: 80 // like left
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits:{
+                    enabled:false
+                },
+                xAxis: {
+                    categories: [<?php echo $dateRange;?>],
+                    tickInterval: 1
+                },
+                yAxis: [{
+                    lineWidth: 1,
+                    title: {
+                        text: 'Daily Cases Numbers'
+                    }
+                }, {
+                    lineWidth: 1,
+                    opposite: true,
+                    title: {
+                        text: 'Daily Tests Numbers'
+                    }
+                }],
+                colors: ['#9d4a2a', '#dfc825'],
+                series: [{
+                    name: 'Daily Cases (5-day moving agerage)',
+                    data: [<?php echo $totalCase;?>],
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                }, {
+                    name: 'Daily Tests (5-day moving agerage)',
+                    data: [<?php echo $totalTest;?>],
+                    yAxis: 1,
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                }]
+            });
+
         // Highcharts Infected and Forcast Chart
         Highcharts.chart('national_infected_trend', {
             chart: {
