@@ -231,7 +231,7 @@ SELECT
                 },
                 xAxis: {
                     categories: [<?php echo $dateRange;?>],
-                    tickInterval: 6
+                    tickInterval: 1
                 },
                 yAxis: [{
                     lineWidth: 1,
