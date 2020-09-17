@@ -289,7 +289,7 @@ SELECT
 
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'দৈনিক আক্রান্তের সংখ্যা'
                 }
             },
 
@@ -336,7 +336,7 @@ SELECT
 
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'দৈনিক আক্রান্তের সংখ্যা'
                 }
             },
 
