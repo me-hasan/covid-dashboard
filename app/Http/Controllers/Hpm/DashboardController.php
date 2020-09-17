@@ -767,13 +767,12 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
         $dailyTests = $dailyCases = [];
         if($request->division && $request->district && $request->upazila){
             $dailyTests = DB::select("select * from (
-            SELECT a.date, a.division, a.district, a.upazila, a.upz_code, a.no_of_test,
-                   Round( ( SELECT SUM(b.no_of_test) / COUNT(b.no_of_test)
+            SELECT a.date as report_date, a.division, a.district, a.upazila, a.NumberOfTest,
+                   Round( ( SELECT SUM(b.NumberOfTest) / COUNT(b.NumberOfTest)
                             FROM div_dist_upz_test_number AS b
                             WHERE b.upazila= '".$request->upazila."' and date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-                          ), 2 ) AS '5dayMovingAvg'
-                 FROM div_dist_upz_test_number AS a WHERE a.upazila= '".$request->upazila."' and date is not null ORDER BY a.date) T order by date");
-            dd($dailyTests);
+                          ), 2 ) AS 'fiveDayMovingAvgTest'
+                 FROM div_dist_upz_test_number AS a WHERE a.upazila= '".$request->upazila."' and date is not null ORDER BY a.date) T order by report_date");
             //Daily cases query
             $dailyCases = DB::select("select * from (
             SELECT
@@ -781,44 +780,43 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                    Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
                             FROM daily_infected_upz AS b
                             WHERE b.upazila= '".$request->upazila."' and test_date is not null and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
-                          ), 2 ) AS '5dayMovingAvg'
+                          ), 2 ) AS 'fiveDayMovingAvgInfected'
                  FROM daily_infected_upz AS a WHERE a.upazila= '".$request->upazila."' and test_date is not null
                  ORDER BY a.test_date) T order by test_date");
 
         } elseif($request->division && $request->district) {
             $dailyTests = DB::select("select * from (
             SELECT
-                   a.date, a.division, a.district,  a.no_of_test,
+                   a.date as report_date, a.division, a.district,  a.no_of_test,
                    Round( ( SELECT SUM(b.no_of_test) / COUNT(b.no_of_test)
                             FROM daily_test_number_dist AS b  
                             WHERE b.district = '".$request->district."' and 
                             date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-                        ), 2 ) AS '5dayMovingAvgTest'
+                        ), 2 ) AS 'fiveDayMovingAvgTest'
                  FROM daily_test_number_dist AS a where a.district = '".$request->district."' and date is not null
-                  ORDER BY a.date) T order by date");
-            //Daily cases query
+                  ORDER BY a.date) T order by report_date");
             $dailyCases = DB::select("select * from (
             SELECT
                    a.test_date, a.district, a.infected,
                    Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
                             FROM daily_infected_dist AS b
                             WHERE b.district= '".$request->district."' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
-                          ), 2 ) AS '5dayMovingAvg'
+                          ), 2 ) AS 'fiveDayMovingAvgInfected'
                  FROM daily_infected_dist AS a WHERE a.district= '".$request->district."'
                  ORDER BY a.test_date) T order by test_date");
 
         } elseif($request->division) {
             $dailyTests = DB::select("select * from (
             SELECT
-                   a.date, a.division, a.no_of_test,
+                   a.date as report_date , a.division, a.no_of_test,
                    Round( ( SELECT SUM(b.no_of_test) / COUNT(b.no_of_test)
                             FROM daily_test_number_div AS b  
                             WHERE b.division = '".$request->division."' and 
                             date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-                        ), 2 ) AS '5dayMovingAvgTest'
+                        ), 2 ) AS 'fiveDayMovingAvgTest'
                  FROM daily_test_number_div AS a where a.division = '".$request->division."' and date is not null
                  and date >= '2020-03-08'
-                  ORDER BY a.date) T order by date");
+                  ORDER BY a.date) T order by report_date");
             //Daily cases query
             $dailyCases = DB::select("select * from (
             SELECT
@@ -826,10 +824,11 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                    Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
                             FROM daily_infected_div AS b
                             WHERE b.division= '".$request->division."' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
-                          ), 2 ) AS '5dayMovingAvg'
+                          ), 2 ) AS 'fiveDayMovingAvgInfected'
                  FROM daily_infected_div AS a WHERE a.division= '".$request->division."'
                  and a.test_date >= '2020-03-08'
                  ORDER BY a.test_date) T order by test_date");
+//                        dd($dailyTests, $dailyCases);
         } else {
             $dailyTests = DB::select("select * from (
             SELECT
@@ -852,6 +851,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                               ), 2 ) AS 'fiveDayMovingAvgInfected'
                      FROM daily_data AS a
                      ORDER BY a.report_date) T order by report_date");
+
         }
 
         foreach ($dailyTests as $dailyTest) {
