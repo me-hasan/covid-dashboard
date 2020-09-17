@@ -109,8 +109,49 @@
 <!-- End :: Disease Progression -->
 @push('custom_script')
     <script>
-            <?php
-                $date_arr = $infected_arr = $avg_arr  = array();
+
+        <?php
+        use Carbon\Carbon;
+        $date_arr = $infected_arr = $avg_arr  = array();
+        //Daily test query
+        $dailyTests = DB::select("select * from (
+SELECT
+       a.report_date,
+       a.test_24_hrs,
+       Round( ( SELECT SUM(b.test_24_hrs) / COUNT(b.test_24_hrs)
+               FROM daily_data AS b
+	WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
+              ), 2 ) AS 'fiveDayMovingAvgTest'
+     FROM daily_data AS a
+     ORDER BY a.report_date) T order by report_date");
+
+        //Daily cases query
+        $dailyCases = DB::select("select * from (
+SELECT
+       a.report_date,
+       a.infected_24_hrs,
+       Round( ( SELECT SUM(b.infected_24_hrs) / COUNT(b.infected_24_hrs)
+               FROM daily_data AS b
+	WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
+              ), 2 ) AS 'fiveDayMovingAvgInfected'
+     FROM daily_data AS a
+     ORDER BY a.report_date) T order by report_date");
+
+        foreach ($dailyTests as $dailyTest) {
+            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
+            $totalTest[] = $dailyTest->fiveDayMovingAvgTest;
+        }
+
+        foreach ($dailyCases as $dailyCase) {
+            $totalCase[] = $dailyCase->fiveDayMovingAvgInfected;
+        }
+
+        $dateRange  = implode(",", $dateRange);
+        $totalTest  = implode(",", $totalTest);
+        $totalCase  = implode(",", $totalCase);
+
+  
+
 
                 foreach($nation_wide_MovingAvgInfected as $row){
                       $date_arr[] = date('d\/m\/Y', strtotime($row->report_date));
@@ -189,7 +230,7 @@
                     enabled:false
                 },
                 xAxis: {
-                    categories: ['01-Mar-2020', '15-Mar-2020', '01-Apr-2020', '15-Apr-2020', '01-May-2020', '15-May-2020', '01-Jun-2020', '15-Jun-2020', '01-Jul-2020', '15-Jul-2020', '01-Aug-2020', '15-Aug-2020', '01-Sep-2020', '15-Sep-2020'],
+                    categories: [<?php echo $dateRange;?>],
                     tickInterval: 6
                 },
                 yAxis: [{
@@ -207,18 +248,18 @@
                 colors: ['#9d4a2a', '#dfc825'],
                 series: [{
                     name: 'Daily Cases (5-day moving agerage)',
-                    data: [29, 71, 106, 129, 144, 176, 135,59, 81, 96, 89, 59, 76, 65],
+                    data: [<?php echo $totalCase;?>],
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }, {
                     name: 'Daily Tests (5-day moving agerage)',
-                    data: [144, 176, 135, 148, 216, 194, 95, 144, 176, 135, 148, 216, 194, 95],
+                    data: [<?php echo $totalTest;?>],
                     yAxis: 1,
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }]
             });
-            
+
         // Highcharts Infected and Forcast Chart
         Highcharts.chart('national_infected_trend', {
             chart: {
