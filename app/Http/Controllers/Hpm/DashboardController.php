@@ -339,6 +339,7 @@ ORDER BY t.date";
 
     public function getCumulativeInfectedData(Request $request) {
         $result['status'] = 'failed';
+        $seriesData=array();
         try{
             $is_division=false;
 
