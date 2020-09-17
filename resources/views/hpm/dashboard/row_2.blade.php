@@ -424,7 +424,7 @@
         $str=$_mobInDistrictVal->District;
         $str='three_'.$_mobInDistrictVal->District;
         if(substr($_mobInDistrictVal->District,0,3)=='Cox'){
-            $str='three_Cox_x27_s_Bazar';
+            $str='three_CoxBazar';
         }
         if(substr($_mobInDistrictVal->District,0,4)=='Jhal'){
             $str = 'three_Jhalakathi';
