@@ -35,11 +35,11 @@
                 enabled:false
             },
             legend:{
-                enabled:false
+                enabled:true
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'Percentage'
                 },
                 labels: {
                     formatter: function() {

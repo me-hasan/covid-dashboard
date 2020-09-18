@@ -165,7 +165,8 @@ SELECT
 
             Highcharts.chart('national_dialy_infected_trend', {
                 chart: {
-                    zoomType: 'xy'
+                    zoomType: 'xy',
+					height: 470
                 },
                 title: {
                     text: ''
@@ -209,7 +210,7 @@ SELECT
                     data: [<?php echo $infected;?>],
 
                 }, {
-                    name: 'দৈনিক আক্রান্ত (৫ দিনের  চলমান গড়)',
+                    name: 'দৈনিক আক্রান্ত (৫ দিনের  চলমান গড়)',
                     type: 'spline',
                     data: [<?php echo $avg;?>],
                 }]
@@ -263,7 +264,7 @@ SELECT
         // Highcharts Infected and Forcast Chart
         Highcharts.chart('national_infected_trend', {
             chart: {
-                height: 500
+                height: 390
             },
             title: {
                 text: ''
