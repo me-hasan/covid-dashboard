@@ -3601,11 +3601,13 @@
 				}else if($('input[name="ni_type"]').val() != null && $(this).val() == 'semisufficient'){
 					var color_code = '#ffab00';
 					$("svg #Dhaka path").attr('fill', color_code);
-					$("#Narail path").attr('fill', color_code);
-					$("#Khulna path").attr('fill', color_code);
-					$("#Barisal path").attr('fill', color_code);
-					$("#Sylhet path").attr('fill', color_code);
-					$("#Pirojpur path").attr('fill', color_code);
+					$("#Gopalgonj path").attr('fill', color_code);
+					$("#Naogaon path").attr('fill', color_code);
+					$("#Tangail path").attr('fill', color_code);
+					$("#Mymensingh path").attr('fill', color_code);
+					$("#Khagrachari path").attr('fill', color_code);
+					$("#Bandarban path").attr('fill', color_code);
+					$("#Rangamati path").attr('fill', color_code);
 				}else{
 					$('#hospital_capacity_map').append('<div class="text-danger">You need to select both options.</div>');
 				}
