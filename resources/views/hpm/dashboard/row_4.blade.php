@@ -32,38 +32,43 @@
                             <tbody class="fs-16">
                             <tr>
                                 <td></td>
-                                <td>Empty</td>
                                 <td>Occupancy</td>
                                 <td>Empty</td>
                                 <td>Occupancy</td>
+                                <td>Empty</td>
+                                
                             </tr>
                             <tr>
                                 <td>Overall Country</td>
-                                <th>15255</th>
                                 <td>10963</td>
+                                <th>15255</th>
+                                <td>263</td>
                                 <th>545</th>
-                                <td>213</td>
+                                
                             </tr>
                              <tr>
                                 <td>Dhaka City</td>
-                                <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$dhaka_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds}}</th>
+                                <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$dhaka_hospital->Admitted_ICU_Beds}}</td>
+                                <th>{{$dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds}}</th>
+                                
                             </tr>
                             <tr>
                                 <td>Chittagong City</td>
-                                <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$ctg_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds}}</th>
+                                <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$ctg_hospital->Admitted_ICU_Beds}}</td>
+                                <th>{{$ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds}}</th>
+                                
                             </tr>
                             <tr>
                                 <td>Others</td>
-                                <th>7436</th>
-                                <td>5607</td>
-                                <th>199</th>
-                                <td>98</td>
+                                <td>{{ 10963 - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
+                                <th>{{ 15255 - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )}}</th>
+                                <td>{{ 263 - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )}}</td>
+                                <th>{{ 545 - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds)}}</th>
+                                
                             </tr>
                             </tbody>
                         </table>
