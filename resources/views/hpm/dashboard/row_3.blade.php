@@ -168,7 +168,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Age'
+                    text: ''
                 },
                 labels: {
                     formatter: function() {
@@ -177,7 +177,10 @@
                 }
             },
             xAxis: {
-                categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"]
+                categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"],
+				title: {
+                    text: 'Age'
+                }
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>',

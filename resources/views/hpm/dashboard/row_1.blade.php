@@ -264,7 +264,7 @@ SELECT
         // Highcharts Infected and Forcast Chart
         Highcharts.chart('national_infected_trend', {
             chart: {
-                height: 365
+                height: 400
             },
             title: {
                 text: ''
