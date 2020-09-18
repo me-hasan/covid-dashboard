@@ -131,7 +131,7 @@
                     pointWidth: 30
                 }
             },
-            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f'],
+            colors: ['#38cb89', '#ffa600', '#ef4b4b'],
             series: [{
                 name: 'Doctor',
                 data: [5000, null, null, null]
@@ -166,7 +166,7 @@
                 enabled:false
             },
             legend:{
-                enabled:true
+                enabled:false
             },
             yAxis: {
                 title: {
@@ -179,10 +179,7 @@
                 }
             },
             xAxis: {
-                categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"],
-				title: {
-                    text: 'Age'
-                }
+                categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"]
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>',
