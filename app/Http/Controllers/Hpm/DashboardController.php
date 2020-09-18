@@ -763,7 +763,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
     }
 
     protected function getNationWiseTestsAndCases($request) {
-//dd($request->all());
+
         $dailyTests = $dailyCases = [];
         if($request->division && $request->district && $request->upazila){
             $dailyTests = DB::select("select * from (
@@ -855,7 +855,8 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
         }
 
         foreach ($dailyTests as $dailyTest) {
-            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
+//            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
+            $dateRange[] =  "'" .convertEnglishDateToBangla($dailyTest->report_date). "'";
             $totalTest[] = $dailyTest->fiveDayMovingAvgTest;
         }
 
