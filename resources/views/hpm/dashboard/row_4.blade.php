@@ -93,13 +93,13 @@
 						</div>
 						<div class="container fs-18">
 							<label class="checkbox-inline text-success">
-							  <input type="checkbox" name="availability" value="sufficient" class="w-4 h-4"><span class="pl-1">Sufficient (3)</span>
+							  <input type="checkbox" name="availability" value="sufficient" class="w-4 h-4"><span class="pl-1">Sufficient (4)</span>
 							</label>
 							<label class="checkbox-inline text-danger">
-							  <input type="checkbox" name="availability" value="insufficient" class="w-4 h-4"><span class="pl-1">Insufficient (2)</span>
+							  <input type="checkbox" name="availability" value="insufficient" class="w-4 h-4"><span class="pl-1">Insufficient (5)</span>
 							</label>
 							<label class="checkbox-inline text-warning">
-							  <input type="checkbox" name="availability" value="semisufficient" class="w-4 h-4"><span class="pl-1">Semi-Sufficient (5)</span>
+							  <input type="checkbox" name="availability" value="semisufficient" class="w-4 h-4"><span class="pl-1">Semi-Sufficient (7)</span>
 							</label>
 						</div>
 					</div>
