@@ -695,14 +695,14 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
     private function nation_wise_14_days_infected(){
         $nation_wise_14_days_infected = DB::select(" select * from (
             SELECT
-               a.test_date,
-               a.infected,
-               Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
-                        FROM daily_infected_natn AS b
-                        WHERE DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 6
+               a.report_date,
+               a.infected_24_hrs,
+               Round( ( SELECT SUM(b.infected_24_hrs) / COUNT(b.infected_24_hrs)
+                        FROM daily_data AS b
+                        WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 6
                       ), 2 ) AS 'seven_dayMovingAvg'
-            FROM daily_infected_natn AS a 
-            ORDER BY a.test_date desc limit 14) T order by test_date ");
+            FROM daily_data AS a 
+            ORDER BY a.report_date desc limit 14) T order by report_date ");
 
         return $nation_wise_14_days_infected;
     }

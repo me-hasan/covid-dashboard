@@ -34,12 +34,13 @@
 @push('custom_script')
     <script>
         <?php
-        use Illuminate\Support\Facades\DB;$getNationalInfectedAge = DB::select("select (A.zero_to_ten/A.Total)*100 as '_0_10',
-        (A.elv_to_twenty/A.Total)*100 AS '_11_20',
-        (A.twentyone_to_thirty/A.Total)*100 as '_21_30',
-        (A.thirtyone_to_forty/A.Total)*100 as '_31_40',
-        (A.fortyone_to_fifty/A.Total)*100 as '_41_50',
-        (A.fiftyone_to_sixty/A.Total)*100 as '_51_60', (A.sixtyone_to_hundred/A.Total)*100 as '_60_Plus', updt_date
+        use Illuminate\Support\Facades\DB;$getNationalInfectedAge = DB::select("select A.zero_to_ten/5 as '_0_10',
+        A.elv_to_twenty/5 AS '_11_20',
+        A.twentyone_to_thirty/5 as '_21_30',
+        A.thirtyone_to_forty/5 as '_31_40',
+        A.fortyone_to_fifty/5 as '_41_50',
+        A.fiftyone_to_sixty/5 as '_51_60', 
+        A.sixtyone_to_hundred/5 as '_60_Plus', updt_date
     from
     (SELECT
         max(date_of_test) as 'updt_date',
@@ -52,17 +53,17 @@
         SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
         SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
         FROM infected_person)
-    as A");
+    as A;");
 
         $_ageWiseInfectData = array();
 
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_0_10) ? (float)$getNationalInfectedAge[0]->_0_10 : 0;
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_11_20) ? (float)$getNationalInfectedAge[0]->_11_20 : 0;
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_21_30) ? (float)$getNationalInfectedAge[0]->_21_30 : 0;
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_31_40) ? (float)$getNationalInfectedAge[0]->_31_40 : 0;
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_41_50) ? (float)$getNationalInfectedAge[0]->_41_50 : 0;
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_51_60) ? (float)$getNationalInfectedAge[0]->_51_60 : 0;
-        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_60_Plus) ? (float)$getNationalInfectedAge[0]->_60_Plus : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_0_10) ? (int)$getNationalInfectedAge[0]->_0_10 : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_11_20) ? (int)$getNationalInfectedAge[0]->_11_20 : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_21_30) ? (int)$getNationalInfectedAge[0]->_21_30 : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_31_40) ? (int)$getNationalInfectedAge[0]->_31_40 : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_41_50) ? (int)$getNationalInfectedAge[0]->_41_50 : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_51_60) ? (int)$getNationalInfectedAge[0]->_51_60 : 0;
+        $_ageWiseInfectData[] = isset($getNationalInfectedAge[0]->_60_Plus) ? (int)$getNationalInfectedAge[0]->_60_Plus : 0;
         $_ageWiseInfectData  = implode(",", $_ageWiseInfectData);
 
         //Death section
@@ -73,8 +74,8 @@
         $i=0;
         foreach ($getAgeDeath as $key => $d) {
             if($i <= 6){
-                $calcPercentage = ($d->TotalDeath / $totalDeath) * 100;
-                array_push($deathAge, $calcPercentage);
+                //$calcPercentage = ($d->TotalDeath / $totalDeath) * 100;
+                array_push($deathAge, $d->TotalDeath);
                 $i++;
             }else{
                 break;

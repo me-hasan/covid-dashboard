@@ -165,13 +165,31 @@
                     <div class="col-xl-4">
                         <div class="overflow-hidden">
                             <div class="card-body">
+
+                <?php 
+                    $class_1='fa fa-arrow-up mr-1';                      
+                    if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1){ 
+                        $class_1='fa fa-arrow-down mr-1'; 
+                    }  
+
+                    $class_2='fa fa-arrow-up mr-1';                      
+                    if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1){ 
+                        $class_2='fa fa-arrow-down mr-1'; 
+                    } 
+
+                    $class_3='fa fa-arrow-up mr-1';                      
+                    if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1){ 
+                        $class_3='fa fa-arrow-down mr-1'; 
+                    } 
+                ?>    
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-2 fs-18 text-muted">
                                             গত ১৪ দিনে পরীক্ষা
                                         </div>
+
                                         <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                                        <span class="text-primary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -180,7 +198,7 @@
                                             গত ১৪ দিনে আক্রান্ত
                                         </div>
                                         <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                                        <span class="text-primary"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -189,7 +207,7 @@
                                             গত ১৪ দিনে মৃত্যু
                                         </div>
                                         <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+                                        <span class="text-primary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
                                     </div>
                                 </div>
                             </div>
@@ -339,19 +357,19 @@
         $date_arr = $infected_arr = $death_arr = $test_positivity_arr = array();
 
         foreach($days_infected as $row){
-              $infected_arr[] = $row->seven_dayMovingAvg;
+              $infected_arr[] = round($row->seven_dayMovingAvg);
         }
         $infected = implode(",", $infected_arr);
 
         foreach($days_death as $row){
 
           $date_arr[] = date('d\/m\/Y', strtotime($row->date));
-          $death_arr[] = $row->seven_dayMovingAvg;
+          $death_arr[] = round($row->seven_dayMovingAvg);
         }
         $death_info = implode(",", $death_arr);
 
         foreach($days_test_positivity as $row){
-              $test_positivity_arr[] = $row->seven_dayMovingAvg;
+              $test_positivity_arr[] = round($row->seven_dayMovingAvg);
         }
         $test_positivity = implode(",", $test_positivity_arr);
 
