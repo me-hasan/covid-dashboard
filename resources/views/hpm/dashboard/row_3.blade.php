@@ -129,7 +129,7 @@
                     pointWidth: 30
                 }
             },
-            colors: ['#38cb89', '#ffa600', '#ef4b4b'],
+            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f'],
             series: [{
                 name: 'Doctor',
                 data: [5000, null, null, null]
@@ -164,11 +164,11 @@
                 enabled:false
             },
             legend:{
-                enabled:false
+                enabled:true
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'Age'
                 },
                 labels: {
                     formatter: function() {

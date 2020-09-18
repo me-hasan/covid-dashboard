@@ -47,7 +47,7 @@
                                             গত ১৪ দিনে পরীক্ষা
                                         </div>
                                         <h1 class="font-weight-bold mb-1">২৮,৭৬৬</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে ২৫ জন বেশি </span>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে ২৫ জন বেশি </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -56,7 +56,7 @@
                                             গত ১৪ দিনে আক্রান্ত
                                         </div>
                                         <h1 class="font-weight-bold mb-1">১০,৪৮৭</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে ২৫ জন বেশি</span>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে ২৫ জন বেশি</span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -65,7 +65,7 @@
                                             গত ১৪ দিনে মৃত্যু
                                         </div>
                                         <h1 class="font-weight-bold mb-1">২০৬</h1>
-                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে ২৫ জন বেশি</span>
+                                        <span class="text-primary"><i class="fa fa-arrow-up mr-1"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে ২৫ জন বেশি</span>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-xl-5">
                         <div class="card-header">
-                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
+                            <h5 class="card-title">বিগত ১৪ দিনের আক্রান্ত - সংক্রমণ - মৃত্যু</h5>
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-row justify-content-end">
@@ -147,7 +147,7 @@
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-body">
-                                    <!-- <h5 class="card-title">দক্ষিণ এশিয়ার দেশগুলাতো আক্রন্ত</h5> -->
+                                    <!-- <h5 class="card-title">দক্ষিণ এশিয়ার দেশগুলাতো আক্রন্ত</h5> -->
                                     <h5 class="card-title">Test Per Cases for South Asian Countries</h5>
                                     <div id="country_wise_infected"></div>
                                 </div>
@@ -189,7 +189,7 @@
                                         </div>
 
                                         <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
-                                        <span class="text-primary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                                        <span class="text-primary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -198,7 +198,7 @@
                                             গত ১৪ দিনে আক্রান্ত
                                         </div>
                                         <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
-                                        <span class="text-primary"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                                        <span class="text-primary"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
@@ -207,7 +207,7 @@
                                             গত ১৪ দিনে মৃত্যু
                                         </div>
                                         <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
-                                        <span class="text-primary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+                                        <span class="text-primary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="card-header">
-                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা - সংক্রমণ - মৃত্যু</h5>
+                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা - মৃত্যু - সংক্রমণের হার</h5>
                             <div class="card-options">
                                 <div class="d-flex flex-row justify-content-end">
                                     <div class="form-label pl-2 pt-2 mr-1">District</div>
@@ -425,7 +425,7 @@
             data: [<?php echo $death_info;?>]
 
         }, {
-            name: 'সংক্রমণ',
+            name: 'সংক্রমণের হার',
             type: 'spline',
             data: [<?php echo $test_positivity;?>],
         }]
