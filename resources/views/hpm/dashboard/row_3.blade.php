@@ -68,8 +68,9 @@
 
         //Death section
 
-        $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
-        $totalDeath = $getAgeDeath->sum('TotalDeath');
+        // $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
+        // $totalDeath = $getAgeDeath->sum('TotalDeath');
+        $getAgeDeath = DB::select("select date, ageRange, TotalDeath from deathnationalagedistribution where date = (select max(date) from deathnationalagedistribution )");
         $deathAge = [];
         $i=0;
         foreach ($getAgeDeath as $key => $d) {
