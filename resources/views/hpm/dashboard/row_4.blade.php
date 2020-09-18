@@ -91,7 +91,7 @@
 							  <input type="radio" name="ni_type" value="coxy" class="w-4 h-4"><span class="pl-1">Central Oxy</span>
 							</label>
 						</div>
-						<div class="container fs-20">
+						<div class="container fs-18">
 							<label class="checkbox-inline text-success">
 							  <input type="checkbox" name="availability" value="sufficient" class="w-4 h-4"><span class="pl-1">Sufficient (3)</span>
 							</label>
