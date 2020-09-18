@@ -23,24 +23,24 @@
                             <tbody class="fs-20 text-center">
                             <tr>
                                 <td></td>
-                                <td>>= 15%</td>
-                                <td>5-15%</td>
-                                <td><5%</td>
+                                <td>High</td>
+                                <td>Medium</td>
+                                <td>Low</td>
                             </tr>
                             <tr>
-                                <td>>= 15%</td>
+                                <td>High</td>
                                 <td class="bg-danger">{{$rm_7->val}}</td>
                                 <td style="background: #fa9a29">{{$rm_4->val}}</td>
                                 <td style="background: #fa9a29">{{$rm_1->val}}</td>
                             </tr>
                             <tr>
-                                <td>5-15 %</td>
+                                <td>Medium</td>
                                 <td style="background: #fa9a29">{{$rm_8->val}}</td>
                                 <td style="background: #feea1f">{{$rm_5->val}}</td>
                                 <td style="background: #94f925">{{$rm_2->val}}</td>
                             </tr>
                             <tr>
-                                <td><5%</td>
+                                <td>Low</td>
                                 <td style="background: #feea1f">{{$rm_9->val}}</td>
                                 <td style="background: #94f925">{{$rm_6->val}}</td>
                                 <td style="background: #00ff2e">{{$rm_3->val}}</td>

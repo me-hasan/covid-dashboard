@@ -74,7 +74,7 @@
         foreach ($getAgeDeath as $key => $d) {
             if($i <= 6){
                 $calcPercentage = ($d->TotalDeath / $totalDeath) * 100;
-                array_push($deathAge, $calcPercentage);
+                array_push($deathAge, number_format($calcPercentage,2));
                 $i++;
             }else{
                 break;
