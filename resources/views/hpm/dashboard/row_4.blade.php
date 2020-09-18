@@ -77,6 +77,34 @@
             </div>
         </div>
         <div class="col-xl-4 col-md-4">
+        	<div class="card-body p-0 pt-2 m-0">
+				<div class="d-flex flex-row justify-content-start" id="hospital_capacity_map">
+					<div class="row">
+						<div class="container">
+							<label class="checkbox-inline text-primary">
+							  <input type="radio" name="ni_type" value="oxyc" checked><span class="pl-1">Oxy Cylineder</span>
+							</label>
+							<label class="checkbox-inline text-primary">
+							  <input type="radio" name="ni_type" value="nasalc"><span class="pl-1">Nasal Curnula</span>
+							</label>
+							<label class="checkbox-inline text-primary">
+							  <input type="radio" name="ni_type" value="coxy"><span class="pl-1">Central Oxy</span>
+							</label>
+						</div>
+						<div class="container">
+							<label class="checkbox-inline text-success">
+							  <input type="checkbox" name="availability" value="sufficient"><span class="pl-1">Sufficient (3)</span>
+							</label>
+							<label class="checkbox-inline text-danger">
+							  <input type="checkbox" name="availability" value="insufficient"><span class="pl-1">Insufficient (2)</span>
+							</label>
+							<label class="checkbox-inline text-warning">
+							  <input type="checkbox" name="availability" value="semisufficient"><span class="pl-1">Semi-Sufficient (5)</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
             <svg version="1.1" id="Bangladesh" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 410 548.051" enable-background="new 0 0 410 548.051" xml:space="preserve">
 	<g id="div_sylhet">
         <g id="sylhet">
@@ -3551,5 +3579,38 @@
                 ]
             }]
         });
+		
+		$(document).ready(function(e) {
+            $('input[name="availability"]').click(function(){
+				if($('input[name="ni_type"]').val() != null && $(this).val() == 'sufficient'){
+					var color_code = '#38cb89';
+					$("svg #Dhaka path").attr('fill', color_code);
+					$("#Narail path").attr('fill', color_code);
+					$("#Khulna path").attr('fill', color_code);
+					$("#Barisal path").attr('fill', color_code);
+					$("#Sylhet path").attr('fill', color_code);
+					$("#Pirojpur path").attr('fill', color_code);
+				}else if($('input[name="ni_type"]').val() != null && $(this).val() == 'insufficient'){
+					var color_code = '#ef4b4b';
+					$("svg #Rajshahi path").attr('fill', color_code);
+					$("#Rajbari path").attr('fill', color_code);
+					$("#Kurigram path").attr('fill', color_code);
+					$("#Bagerhat path").attr('fill', color_code);
+					$("#Satkhira path").attr('fill', color_code);
+					$("#Patuakhali path").attr('fill', color_code);
+				}else if($('input[name="ni_type"]').val() != null && $(this).val() == 'semisufficient'){
+					var color_code = '#ffab00';
+					$("svg #Dhaka path").attr('fill', color_code);
+					$("#Narail path").attr('fill', color_code);
+					$("#Khulna path").attr('fill', color_code);
+					$("#Barisal path").attr('fill', color_code);
+					$("#Sylhet path").attr('fill', color_code);
+					$("#Pirojpur path").attr('fill', color_code);
+				}else{
+					$('#hospital_capacity_map').append('<div class="text-danger">You need to select both options.</div>');
+				}
+			});
+        });
+		
     </script>
 @endpush
