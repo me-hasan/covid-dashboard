@@ -215,10 +215,10 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="card-header">
-                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা - মৃত্যু - সংক্রমণের হার</h5>
+                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা  সংক্রমণের হার</h5>
                             <div class="card-options">
                                 <div class="d-flex flex-row justify-content-end">
-                                    <div class="form-label pl-2 pt-2 mr-1">District</div>
+                                    <!-- <div class="form-label pl-2 pt-2 mr-1">District</div>
                                     <div>
                                         <select class="form-control btn-outline-primary">
                                             <option value="DHAKA">সব জেলা </option>
@@ -231,7 +231,7 @@
                                             <option value="RANGPUR">রংপুর </option>
                                             <option value="SYLHET">সিলেট </option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -374,62 +374,50 @@
         $test_positivity = implode(",", $test_positivity_arr);
 
     ?>
-    // Weekly Comparision Infected Death
+    // Weekly Comparision Infected Death  weekly_comparision_infected_death
     Highcharts.chart('weekly_comparision_infected_death', {
-        chart: {
-            zoomType: 'xy'
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits:{
-            enabled:false
-        },
-        legend:{
-            enabled:true
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function() {
-                    return this.value;
-                }
-            }
-        },
-        xAxis: {
-            categories: <?php echo json_encode($date_arr);?>
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#38cb89', '#ef4b4b', '#ffa600'],
-        series: [{
-            name: 'আক্রান্ত',
-            type: 'column',
-            data: [<?php echo $infected;?>]
-
-        }, {
-            name: 'মৃত্যু',
-            type: 'column',
-            data: [<?php echo $death_info;?>]
-
-        }, {
-            name: 'সংক্রমণের হার',
-            type: 'spline',
-            data: [<?php echo $test_positivity;?>],
-        }]
-    });
+                chart: {
+                    marginRight: 80 // like left
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits:{
+                    enabled:false
+                },
+                xAxis: {
+                    categories: ['01-Mar-2020', '15-Mar-2020', '01-Apr-2020', '15-Apr-2020', '01-May-2020', '15-May-2020', '01-Jun-2020', '15-Jun-2020', '01-Jul-2020', '15-Jul-2020', '01-Aug-2020', '15-Aug-2020', '01-Sep-2020', '15-Sep-2020'],
+                    tickInterval: 6
+                },
+                yAxis: [{
+                    lineWidth: 1,
+                    title: {
+                        text: 'আক্রান্ত'
+                    }
+                }, {
+                    lineWidth: 1,
+                    opposite: true,
+                    title: {
+                        text: 'পরীক্ষা'
+                    }
+                }],
+                colors: ['#9d4a2a', '#dfc825'],
+                series: [{
+                    name: 'আক্রান্ত',
+                    data: [29, 71, 106, 129, 144, 176, 135,59, 81, 96, 89, 59, 76, 65],
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                }, {
+                    name: 'পরীক্ষা',
+                    data: [144, 176, 135, 148, 216, 194, 95, 144, 176, 135, 148, 216, 194, 95],
+                    yAxis: 1,
+                    type: 'column',
+                    marker:{"enabled": false, "symbol":"circle"}
+                }]
+            });
 
     $(document).ready(function(){
 
