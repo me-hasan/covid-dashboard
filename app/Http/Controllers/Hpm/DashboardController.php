@@ -45,6 +45,7 @@ class DashboardController extends Controller
             $data['tests_per_case_Bangladesh'] =$this->tests_per_case_country('Bangladesh');
 
             // row 4
+            $data['nation_hospital'] = $dhaka_hospital=$this->nation_wide_hospital();
             $data['dhaka_hospital'] = $dhaka_hospital=$this->city_wise_hospital('Dhaka');
             $data['ctg_hospital'] = $ctg_hospital=$this->city_wise_hospital('Chittagong');
 
@@ -216,33 +217,33 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
         if($request->has('division') && is_array($request->division) && count($request->division)) {
 
         }
+            
+        $cumulativeSql = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng";
 
-           $cumulativeSql = "select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Dhaka' and date is not null group by Division, date order by Date";
+        $cumulativeSql_dhk = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng ";
 
-        $cumulativeSql_dhk = "select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Dhaka' and date is not null group by Division, date order by Date ";
+        $cumulativeSql_ctg = "select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Chittagong' group by division_eng, date order by date, division_eng  ";
 
-        $cumulativeSql_ctg = "select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Chittagong' and date is not null group by Division, date order by Date ";
+        $cumulativeSql_barisal = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Barisal' group by division_eng, date order by date, division_eng ";
 
-        $cumulativeSql_barisal = " select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Barisal' and date is not null group by Division, date order by Date";
+        $cumulativeSql_khulna = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Khulna' group by division_eng, date order by date, division_eng ";
 
-        $cumulativeSql_khulna = " select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Khulna' and date is not null group by Division, date order by Date";
+        $cumulativeSql_rajshahi = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Rajshahi' group by division_eng, date order by date, division_eng ";
 
-        $cumulativeSql_rajshahi = " select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Rajshahi' and date is not null group by Division, date order by Date";
+        $cumulativeSql_rangpur = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Rangpur' group by division_eng, date order by date, division_eng ";
 
-        $cumulativeSql_rangpur = " select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Rangpur' and date is not null group by Division, date order by Date";
+        $cumulativeSql_syl = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Sylhet' group by division_eng, date order by date, division_eng ";
 
-        $cumulativeSql_syl = " select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Sylhet' and date is not null group by Division, date order by Date";
-
-        $cumulativeSql_mym = " select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-        where Division='Mymensingh' and date is not null group by Division, date order by Date";
+        $cumulativeSql_mym = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
+        from district_wise_cases_covid where division_eng = 'Mymensingh' group by division_eng, date order by date, division_eng ";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
         $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk);
@@ -408,17 +409,18 @@ ORDER BY t.date";
             $districtData = [];
             if($request->has('division') && count($request->division)) {
                 $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
-                $searchQuery = " AND  Division IN (". $divisionReqData.")";
-
-                $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-                where date is not null ".$searchQuery." group by Division, date order by Date ";
+                $searchQuery = "   division_eng IN (". $divisionReqData.")";
+        
+                $cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District, '' as Upazila, sum(daily_cases) AS cumulative_infected_person 
+                from district_wise_cases_covid where ".$searchQuery."  group by division_eng, date order by date, division_eng ";
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
-                $searchQuery = " AND  District IN (". $districtReqData.")";
+                $searchQuery = "   district_city_eng IN (". $districtReqData.")";
+         
 
-                $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-                where date is not null  ".$searchQuery."  group by District, date order by date ";
+                $cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District, '' as Upazila, daily_cases as cumulative_infected_person
+                from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  ";
             }
 
             if($request->has('upazilla') && count($request->upazilla)) {
@@ -441,6 +443,7 @@ ORDER BY t.date";
 
 
             $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+            //dd($cumulativeDisUpaZillaData);
             $j=0;
             $dateData = [];
             $districtData = [];
@@ -478,15 +481,32 @@ ORDER BY t.date";
     }
 
 
+      private function nation_wide_hospital()
+      {
+        $nation_wide_hospital = DB::select(" select count(hospitalName) as '#_Hospital',
+            sum(alocatedGeneralBed) as 'General_Beds',
+            sum(alocatedICUBed) as 'ICU_Beds',
+            SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+            SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
+            ((sum(AdmittedGeneralBed)*100)/(sum(alocatedGeneralBed))) as 'percent_General_Beds_Occupied',
+            ((sum(AdmittedICUBed)*100)/(sum(alocatedICUBed))) as 'percent_ICU_Beds_Occupied' 
+            from hospitaltemporarydata where city='Country' and date = (select max(date) from hospitaltemporarydata) ");
+
+        return $nation_wide_hospital[0];
+      }
+
       private function city_wise_hospital($city)
       {
-        $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
-        SUM(alocatedGeneralBed) AS 'General_Beds',
-        SUM(alocatedICUBed) AS 'ICU_Beds',
+        
+
+        $city_wise_hospital = DB::select(" select count(hospitalName) as '#_Hospital',
+        sum(alocatedGeneralBed) as 'General_Beds',
+        sum(alocatedICUBed) as 'ICU_Beds',
         SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
         SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
-        ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
-        ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
+        ((sum(AdmittedGeneralBed)*100)/(sum(alocatedGeneralBed))) as 'percent_General_Beds_Occupied',
+        ((sum(AdmittedICUBed)*100)/(sum(alocatedICUBed))) as 'percent_ICU_Beds_Occupied' 
+        from hospitaltemporarydata where city='".$city."' and date = (select max(date) from hospitaltemporarydata) ");
 
         return $city_wise_hospital[0];
       }

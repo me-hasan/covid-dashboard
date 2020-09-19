@@ -68,11 +68,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xl-12 col-md-12">
-            <div class="card-header cart-height-customize">
-                <h3 class="card-title">রোগের অগ্রগতি</h3>
-            </div>
-        </div>
+        
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
                 <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
