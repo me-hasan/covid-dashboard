@@ -210,12 +210,12 @@
                                         <span class="text-primary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <div class="col-xl-8">
                         <div class="card-header">
-                            <h5 class="card-title">বিগত ১৪ দিনের পরীক্ষা  সংক্রমণের হার</h5>
+                            <h5 class="card-title">বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার</h5>
                             <div class="card-options">
                                 <div class="d-flex flex-row justify-content-end">
                                     <!-- <div class="form-label pl-2 pt-2 mr-1">District</div>
@@ -395,23 +395,23 @@
                 yAxis: [{
                     lineWidth: 1,
                     title: {
-                        text: 'আক্রান্ত'
+                        text: 'সংক্রমণ'
                     }
                 }, {
                     lineWidth: 1,
                     opposite: true,
                     title: {
-                        text: 'পরীক্ষা'
+                        text: 'সংক্রমণের হার'
                     }
                 }],
                 colors: ['#9d4a2a', '#dfc825'],
                 series: [{
-                    name: 'আক্রান্ত',
+                    name: 'সংক্রমণ',
                     data: [29, 71, 106, 129, 144, 176, 135,59, 81, 96, 89, 59, 76, 65],
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }, {
-                    name: 'পরীক্ষা',
+                    name: 'সংক্রমণের হার',
                     data: [144, 176, 135, 148, 216, 194, 95, 144, 176, 135, 148, 216, 194, 95],
                     yAxis: 1,
                     type: 'column',
