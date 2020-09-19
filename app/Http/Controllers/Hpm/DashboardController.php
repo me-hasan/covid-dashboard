@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hpm;
 
+use Carbon\Carbon;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,9 +29,9 @@ class DashboardController extends Controller
         //dd($cumulativeInfectedPerson);
 
         // shamvil start
-            // row 2  
+            // row 2
             $data['nation_wide_MovingAvgInfected'] =$this->nation_wide_five_dayMovingAvgInfected();
-            // row 2  
+            // row 2
             $data['days_infected'] =$this->nation_wise_14_days_infected();
             $data['days_death'] =$this->nation_wise_14_days_death();
             $data['days_test_positivity'] =$this->nation_wise_14_days_test_positivity();
@@ -43,13 +44,13 @@ class DashboardController extends Controller
             $data['tests_per_case_Pakistan'] =$this->tests_per_case_country('Pakistan');
             $data['tests_per_case_Bangladesh'] =$this->tests_per_case_country('Bangladesh');
 
-            // row 4  
+            // row 4
             $data['dhaka_hospital'] = $dhaka_hospital=$this->city_wise_hospital('Dhaka');
             $data['ctg_hospital'] = $ctg_hospital=$this->city_wise_hospital('Chittagong');
 
             $data['dhaka_hospital_details'] = $dhaka_hospital_details=$this->city_wise_hospital_details('Dhaka');
             $data['ctg_hospital_details'] = $ctg_hospital_details=$this->city_wise_hospital_details('Chittagong');
-            // row 6  
+            // row 6
             $data['rm_1'] = $this->risk_matrix_1();
             $data['rm_2'] = $this->risk_matrix_2();
             $data['rm_3'] = $this->risk_matrix_3();
@@ -61,6 +62,9 @@ class DashboardController extends Controller
             $data['rm_9'] = $this->risk_matrix_9();
         // shamvil end
 
+        //Test vs Cases (Robi)
+        $data['testsVsCases'] = $this->getNationWiseTestsAndCases($request);
+//dd($data['testsVsCases']);
 
         //dd($cumulativeInfectedPerson);
 
@@ -210,7 +214,7 @@ ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
     public function cumulativeInfectedPerson_nation($request) {
 
         if($request->has('division') && is_array($request->division) && count($request->division)) {
-                
+
         }
 
            $cumulativeSql = "select Division, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
@@ -572,7 +576,7 @@ ORDER BY t.date";
         return $risk_matrix[0];
       }
 
-     
+
 
       private function risk_matrix_9(){
         $risk_matrix = DB::select("select count(district) AS val from
@@ -758,5 +762,117 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
         return $five_dayMovingAvgInfected;
     }
 
+    protected function getNationWiseTestsAndCases($request) {
+
+        $dailyTests = $dailyCases = [];
+        if($request->division && $request->district && $request->upazila){
+            $dailyTests = DB::select("select * from (
+            SELECT a.date as report_date, a.division, a.district, a.upazila, a.NumberOfTest,
+                   Round( ( SELECT SUM(b.NumberOfTest) / COUNT(b.NumberOfTest)
+                            FROM div_dist_upz_test_number AS b
+                            WHERE b.upazila= '".$request->upazila."' and date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
+                          ), 2 ) AS 'fiveDayMovingAvgTest'
+                 FROM div_dist_upz_test_number AS a WHERE a.upazila= '".$request->upazila."' and date is not null ORDER BY a.date) T order by report_date");
+            //Daily cases query
+            $dailyCases = DB::select("select * from (
+            SELECT
+                   a.test_date, a.division, a.district, a.upazila, a.upz_code, a.infected,
+                   Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
+                            FROM daily_infected_upz AS b
+                            WHERE b.upazila= '".$request->upazila."' and test_date is not null and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
+                          ), 2 ) AS 'fiveDayMovingAvgInfected'
+                 FROM daily_infected_upz AS a WHERE a.upazila= '".$request->upazila."' and test_date is not null
+                 ORDER BY a.test_date) T order by test_date");
+
+        } elseif($request->division && $request->district) {
+            $dailyTests = DB::select("select * from (
+            SELECT
+                   a.date as report_date, a.division, a.district,  a.no_of_test,
+                   Round( ( SELECT SUM(b.no_of_test) / COUNT(b.no_of_test)
+                            FROM daily_test_number_dist AS b  
+                            WHERE b.district = '".$request->district."' and 
+                            date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
+                        ), 2 ) AS 'fiveDayMovingAvgTest'
+                 FROM daily_test_number_dist AS a where a.district = '".$request->district."' and date is not null
+                  ORDER BY a.date) T order by report_date");
+            $dailyCases = DB::select("select * from (
+            SELECT
+                   a.test_date, a.district, a.infected,
+                   Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
+                            FROM daily_infected_dist AS b
+                            WHERE b.district= '".$request->district."' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
+                          ), 2 ) AS 'fiveDayMovingAvgInfected'
+                 FROM daily_infected_dist AS a WHERE a.district= '".$request->district."'
+                 ORDER BY a.test_date) T order by test_date");
+
+        } elseif($request->division) {
+            $dailyTests = DB::select("select * from (
+            SELECT
+                   a.date as report_date , a.division, a.no_of_test,
+                   Round( ( SELECT SUM(b.no_of_test) / COUNT(b.no_of_test)
+                            FROM daily_test_number_div AS b  
+                            WHERE b.division = '".$request->division."' and 
+                            date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
+                        ), 2 ) AS 'fiveDayMovingAvgTest'
+                 FROM daily_test_number_div AS a where a.division = '".$request->division."' and date is not null
+                 and date >= '2020-03-08'
+                  ORDER BY a.date) T order by report_date");
+            //Daily cases query
+            $dailyCases = DB::select("select * from (
+            SELECT
+                   a.test_date, a.division, a.infected,
+                   Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
+                            FROM daily_infected_div AS b
+                            WHERE b.division= '".$request->division."' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
+                          ), 2 ) AS 'fiveDayMovingAvgInfected'
+                 FROM daily_infected_div AS a WHERE a.division= '".$request->division."'
+                 and a.test_date >= '2020-03-08'
+                 ORDER BY a.test_date) T order by test_date");
+//                        dd($dailyTests, $dailyCases);
+        } else {
+            $dailyTests = DB::select("select * from (
+            SELECT
+                   a.report_date,
+                   a.test_24_hrs,
+                   Round( ( SELECT SUM(b.test_24_hrs) / COUNT(b.test_24_hrs)
+                           FROM daily_data AS b
+                WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
+                          ), 2 ) AS 'fiveDayMovingAvgTest'
+                 FROM daily_data AS a
+                 ORDER BY a.report_date) T order by report_date");
+            //Daily cases query
+            $dailyCases = DB::select("select * from (
+                SELECT
+                       a.report_date,
+                       a.infected_24_hrs,
+                       Round( ( SELECT SUM(b.infected_24_hrs) / COUNT(b.infected_24_hrs)
+                               FROM daily_data AS b
+                    WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
+                              ), 2 ) AS 'fiveDayMovingAvgInfected'
+                     FROM daily_data AS a
+                     ORDER BY a.report_date) T order by report_date");
+
+        }
+
+        foreach ($dailyTests as $dailyTest) {
+//            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
+            $dateRange[] =  "'" .convertEnglishDateToBangla($dailyTest->report_date). "'";
+            $totalTest[] = $dailyTest->fiveDayMovingAvgTest;
+        }
+
+        foreach ($dailyCases as $dailyCase) {
+            $totalCase[] = $dailyCase->fiveDayMovingAvgInfected;
+        }
+
+        $dateRange  = implode(",", $dateRange);
+        $totalTest  = implode(",", $totalTest);
+        $totalCase  = implode(",", $totalCase);
+
+        return [
+            'totalTest' => $totalTest,
+            'totalCase' => $totalCase,
+            'dateRange' => $dateRange
+        ];
+    }
 
 }
