@@ -453,9 +453,7 @@
         if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
             $str = 'three_Chapainawabganj';
         }
-        if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
-            $str = 'three_Chapainawabganj';
-        }
+        
         if(substr($_mobInDistrictVal->District,0,5)=='Jhena'){
             $str = 'three_Jhenaidah';
         }

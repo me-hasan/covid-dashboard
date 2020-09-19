@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-4">
+        <!-- <div class="col-xl-4 col-md-4">
         	<div class="card-body p-0 pt-2 m-0">
 				<div class="d-flex flex-row justify-content-start" id="hospital_capacity_map">
 					<div class="row">
@@ -3453,7 +3453,7 @@
                     </g>
                 </g>
 </svg>								
-		</div>
+		</div> -->
     </div>
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-8 col-xm-12">
