@@ -43,12 +43,12 @@
                                 <option value="DHAKA">সব জেলা </option>
                             </select>
                         </div>
-                        <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
+                        <!-- <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
                         <div>
                             <select name="upazila[]" class="select2 form-control btn-outline-primary select_upazilla" multiple="true">
                                 <option value="DHAKA">সব উপজিলা</option>
                             </select>
-                        </div>
+                        </div> -->
                         <button class="btn btn-sm district_cms_search" type="submit" >Search </button>
                     </div>
 

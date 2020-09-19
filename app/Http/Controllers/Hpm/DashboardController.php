@@ -383,6 +383,85 @@ ORDER BY t.date";
     }
 
 
+    // private function cumulativeDivDistData($request) {
+    //     try{
+    //         $searchQuery = "";
+    //         $cumulativeSqlDistrictUpazilaSql = "";
+    //         $upzillaData = [];
+    //         $districtData = [];
+    //         if($request->has('division') && count($request->division)) {
+    //             $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
+    //             $searchQuery = " AND  Division IN (". $divisionReqData.")";
+
+    //             $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
+    //             where date is not null ".$searchQuery." group by Division, date order by Date ";
+    //         }
+    //         if($request->has('district') && count($request->district)) {
+    //             $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
+    //             $searchQuery = " AND  District IN (". $districtReqData.")";
+
+    //             $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
+    //             where date is not null  ".$searchQuery."  group by District, date order by date ";
+    //         }
+
+    //         if($request->has('upazilla') && count($request->upazilla)) {
+    //             $districtReqData = "'" . implode ( "', '", $request->upazilla ) . "'";
+    //             $searchQuery = " AND  Upazila IN (". $districtReqData.")";
+
+    //             $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, infected_person AS cumulative_infected_person from div_dist_upz_infected_trend 
+    //             where date is not null  ".$searchQuery."  order by date ";
+    //         }
+
+    //         // $cumulativeSqlDistrictUpazilaSql = "SELECT t.date,t.Division, t.District,t.Upazila,
+    //         //     @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
+    //         // FROM
+    //         // (SELECT
+    //         //   Date, Division, District, Upazila, sum(Infected_Person) as 'Infected_Person'
+    //         //   FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
+    //         //   GROUP BY Date, Upazila ) as t
+    //         // JOIN (SELECT @running_total:=0) r
+    //         // ORDER BY t.date";
+
+
+    //         $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+    //         //dd($cumulativeDisUpaZillaData);
+    //         $j=0;
+    //         $dateData = [];
+    //         $districtData = [];
+    //         foreach ($cumulativeDisUpaZillaData as $key => $div) {
+    //             $div_date = date('d/m/Y', strtotime($div->date));
+
+    //             if(!in_array($div_date, $dateData)){
+    //                 $dateData[] = $div_date;
+    //             }
+
+    //             $districtData[$div->District][] = (int)$div->cumulative_infected_person ?? 0;
+    //             $districtData[$div->District]['bn'] = en2bnTranslation($div->District);
+    //             $j++;
+    //         }
+    //         // 19-sep-2020
+    //         foreach ($cumulativeDisUpaZillaData as $key => $div) {
+    //             $upzillaDate = date('d/m/Y', strtotime($div->date));
+
+    //             if(!in_array($upzillaDate, $dateData)){
+    //                 $dateData[] = $upzillaDate;
+    //             }
+
+    //             $upzillaData[$div->Upazila][] = (int)$div->cumulative_infected_person ?? 0;
+    //             $upzillaData[$div->Upazila]['bn'] = en2bnTranslation($div->Upazila);
+    //             $j++;
+    //         }
+    //         $data['categories'] = $dateData;
+    //         $data['districtData'] = $districtData;
+    //         $data['upazillaData'] = $upzillaData;
+
+    //     }catch (\Exception $exception) {
+    //         Log::error("cumulativeDivDistData error : ". $exception->getMessage());
+    //     }
+    //     return $data;
+
+    // }
+
     private function cumulativeDivDistData($request) {
         try{
             $searchQuery = "";
@@ -391,17 +470,19 @@ ORDER BY t.date";
             $districtData = [];
             if($request->has('division') && count($request->division)) {
                 $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
-                $searchQuery = " AND  Division IN (". $divisionReqData.")";
-
-                $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-                where date is not null ".$searchQuery." group by Division, date order by Date ";
+                $searchQuery = "   division_eng IN (". $divisionReqData.")";
+        
+                $cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District,  sum(daily_cases) AS cumulative_infected_person 
+                from district_wise_cases_covid where ".$searchQuery."  group by division_eng, date order by date, division_eng ";
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
-                $searchQuery = " AND  District IN (". $districtReqData.")";
+                $searchQuery = "   district_city_eng IN (". $districtReqData.")";
+            
 
-                $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
-                where date is not null  ".$searchQuery."  group by District, date order by date ";
+                $cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District,  daily_cases as cumulative_infected_person
+                from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  ";
+                //dd($searchQuery);
             }
 
             if($request->has('upazilla') && count($request->upazilla)) {
@@ -440,17 +521,17 @@ ORDER BY t.date";
                 $j++;
             }
             // 19-sep-2020
-            foreach ($cumulativeDisUpaZillaData as $key => $div) {
-                $upzillaDate = date('d/m/Y', strtotime($div->date));
+            // foreach ($cumulativeDisUpaZillaData as $key => $div) {
+            //     $upzillaDate = date('d/m/Y', strtotime($div->date));
 
-                if(!in_array($upzillaDate, $dateData)){
-                    $dateData[] = $upzillaDate;
-                }
+            //     if(!in_array($upzillaDate, $dateData)){
+            //         $dateData[] = $upzillaDate;
+            //     }
 
-                $upzillaData[$div->Upazila][] = (int)$div->cumulative_infected_person ?? 0;
-                $upzillaData[$div->Upazila]['bn'] = en2bnTranslation($div->Upazila);
-                $j++;
-            }
+            //     $upzillaData[$div->Upazila][] = (int)$div->cumulative_infected_person ?? 0;
+            //     $upzillaData[$div->Upazila]['bn'] = en2bnTranslation($div->Upazila);
+            //     $j++;
+            // }
             $data['categories'] = $dateData;
             $data['districtData'] = $districtData;
             $data['upazillaData'] = $upzillaData;
