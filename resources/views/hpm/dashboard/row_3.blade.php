@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-xl-6 col-md-12">
+                    <!-- <div class="col-xl-6 col-md-12">
                         <div id="death_impact_bar"></div>
                         <div class="card-body">
                             <h5 class="card-title">Insight</h5>
@@ -14,7 +14,7 @@
                                 Content will place here.
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-xl-6 col-md-12">
                         <div id="age_wise_death_distribution"></div>
                         <div class="card-body">
@@ -68,8 +68,9 @@
 
         //Death section
 
-        $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
-        $totalDeath = $getAgeDeath->sum('TotalDeath');
+        // $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
+        // $totalDeath = $getAgeDeath->sum('TotalDeath');
+        $getAgeDeath = DB::select("select date, ageRange, TotalDeath from deathnationalagedistribution where date = (select max(date) from deathnationalagedistribution )");
         $deathAge = [];
         $i=0;
         foreach ($getAgeDeath as $key => $d) {
@@ -86,69 +87,69 @@
         ?>
 
         // Death Impact Bar
-        Highcharts.chart('death_impact_bar', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: ''
-            },
-            subtitle: {
-                text: ''
-            },
-            credits:{
-                enabled:false
-            },
-            legend:{
-                enabled:true
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    formatter: function() {
-                        return this.value;
-                    }
-                }
-            },
-            xAxis: {
-                categories: ["Death:","Death:","Death:", "Death:"],
-                labels: {
-                    enabled: false
-                }
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>'
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-                series: {
-                    pointWidth: 30
-                }
-            },
-            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f'],
-            series: [{
-                name: 'Doctor',
-                data: [5000, null, null, null]
+        // Highcharts.chart('death_impact_bar', {
+        //     chart: {
+        //         type: 'column'
+        //     },
+        //     title: {
+        //         text: ''
+        //     },
+        //     subtitle: {
+        //         text: ''
+        //     },
+        //     credits:{
+        //         enabled:false
+        //     },
+        //     legend:{
+        //         enabled:true
+        //     },
+        //     yAxis: {
+        //         title: {
+        //             text: ''
+        //         },
+        //         labels: {
+        //             formatter: function() {
+        //                 return this.value;
+        //             }
+        //         }
+        //     },
+        //     xAxis: {
+        //         categories: ["Death:","Death:","Death:", "Death:"],
+        //         labels: {
+        //             enabled: false
+        //         }
+        //     },
+        //     tooltip: {
+        //         pointFormat: '{series.name}: <b>{point.y}</b>'
+        //     },
+        //     plotOptions: {
+        //         column: {
+        //             pointPadding: 0.2,
+        //             borderWidth: 0
+        //         },
+        //         series: {
+        //             pointWidth: 30
+        //         }
+        //     },
+        //     colors: ['#38cb89', '#ffa600', '#ef4b4b'],
+        //     series: [{
+        //         name: 'Doctor',
+        //         data: [5000, null, null, null]
 
-            }, {
-                name: 'Police',
-                data: [null, 4084, null]
+        //     }, {
+        //         name: 'Police',
+        //         data: [null, 4084, null]
 
-            }, {
-                name: 'Banker',
-                data: [null, null, 2098, null]
+        //     }, {
+        //         name: 'Banker',
+        //         data: [null, null, 2098, null]
 
-            }, {
-                name: 'Nurse',
-                data: [null, null, null, 3500]
+        //     }, {
+        //         name: 'Nurse',
+        //         data: [null, null, null, 3500]
 
-            }]
-        });
+        //     }]
+        // });
 
         // Age Wise Death Distribution
         Highcharts.chart('age_wise_death_distribution', {
@@ -205,5 +206,6 @@
 
             }]
         });
+
     </script>
 @endpush

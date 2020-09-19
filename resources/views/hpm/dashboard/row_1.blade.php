@@ -68,11 +68,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xl-12 col-md-12">
-            <div class="card-header cart-height-customize">
-                <h3 class="card-title">রোগের অগ্রগতি</h3>
-            </div>
-        </div>
+        
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
                 <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
@@ -113,45 +109,6 @@
         <?php
         use Carbon\Carbon;
         $date_arr = $infected_arr = $avg_arr  = array();
-        //Daily test query
-        $dailyTests = DB::select("select * from (
-SELECT
-       a.report_date,
-       a.test_24_hrs,
-       Round( ( SELECT SUM(b.test_24_hrs) / COUNT(b.test_24_hrs)
-               FROM daily_data AS b
-	WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
-              ), 2 ) AS 'fiveDayMovingAvgTest'
-     FROM daily_data AS a
-     ORDER BY a.report_date) T order by report_date");
-
-        //Daily cases query
-        $dailyCases = DB::select("select * from (
-SELECT
-       a.report_date,
-       a.infected_24_hrs,
-       Round( ( SELECT SUM(b.infected_24_hrs) / COUNT(b.infected_24_hrs)
-               FROM daily_data AS b
-	WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
-              ), 2 ) AS 'fiveDayMovingAvgInfected'
-     FROM daily_data AS a
-     ORDER BY a.report_date) T order by report_date");
-
-        foreach ($dailyTests as $dailyTest) {
-            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
-            $totalTest[] = $dailyTest->fiveDayMovingAvgTest;
-        }
-
-        foreach ($dailyCases as $dailyCase) {
-            $totalCase[] = $dailyCase->fiveDayMovingAvgInfected;
-        }
-
-        $dateRange  = implode(",", $dateRange);
-        $totalTest  = implode(",", $totalTest);
-        $totalCase  = implode(",", $totalCase);
-
-  
-
 
                 foreach($nation_wide_MovingAvgInfected as $row){
                       $date_arr[] = date('d\/m\/Y', strtotime($row->report_date));
@@ -190,9 +147,9 @@ SELECT
                         }
                     }
                 },
-                xAxis: {            
+                xAxis: {
                     categories: <?php echo json_encode($date_arr);?>
-                    
+
                 },
                 tooltip: {
                   pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -231,7 +188,7 @@ SELECT
                     enabled:false
                 },
                 xAxis: {
-                    categories: [<?php echo $dateRange;?>],
+                    categories: [<?php echo $testsVsCases['dateRange'];?>],
                     tickInterval: 1
                 },
                 yAxis: [{
@@ -249,12 +206,12 @@ SELECT
                 colors: ['#9d4a2a', '#dfc825'],
                 series: [{
                     name: 'Daily Cases (5-day moving agerage)',
-                    data: [<?php echo $totalCase;?>],
+                    data: [<?php echo $testsVsCases['totalCase'];?>],
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }, {
                     name: 'Daily Tests (5-day moving agerage)',
-                    data: [<?php echo $totalTest;?>],
+                    data: [<?php echo $testsVsCases['totalTest'];?>],
                     yAxis: 1,
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}

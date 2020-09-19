@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 @push('custom_script')
     <script>

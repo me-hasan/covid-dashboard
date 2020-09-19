@@ -40,10 +40,10 @@
                             </tr>
                             <tr>
                                 <td>Overall Country</td>
-                                <td>10963</td>
-                                <th>15255</th>
-                                <td>263</td>
-                                <th>545</th>
+                                <td>{{$nation_hospital->Admitted_General_Beds}}</td>
+                                <th>{{$nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds}}</th>
+                                <td>{{$nation_hospital->Admitted_ICU_Beds}}</td>
+                                <th>{{$nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds}}</th>
                                 
                             </tr>
                              <tr>
@@ -64,10 +64,10 @@
                             </tr>
                             <tr>
                                 <td>Others</td>
-                                <td>{{ 10963 - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
-                                <th>{{ 15255 - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )}}</th>
-                                <td>{{ 263 - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )}}</td>
-                                <th>{{ 545 - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds)}}</th>
+                                <td>{{ $nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
+                                <th>{{ ($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )}}</th>
+                                <td>{{ $nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )}}</td>
+                                <th>{{ ($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds)}}</th>
                                 
                             </tr>
                             </tbody>
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-4">
+        <!-- <div class="col-xl-4 col-md-4">
         	<div class="card-body p-0 pt-2 m-0">
 				<div class="d-flex flex-row justify-content-start" id="hospital_capacity_map">
 					<div class="row">
@@ -3453,7 +3453,7 @@
                     </g>
                 </g>
 </svg>								
-		</div>
+		</div> -->
     </div>
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-8 col-xm-12">
@@ -3521,8 +3521,8 @@
                 type: 'pie',
                 name: 'Beds',
                 data: [
-                    ['Empty', 72.0],
-                    ['Occupancy', 28.0]
+                    ['Empty', <?=number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
+                    ['Occupancy', <?=number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
                 ]
             }]
         });
@@ -3575,8 +3575,8 @@
                 type: 'pie',
                 name: 'Beds',
                 data: [
-                    ['Empty', 39.0],
-                    ['Occupancy', 61.0]
+                    ['Empty', <?=number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
+                    ['Occupancy', <?=number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
                 ]
             }]
         });

@@ -906,7 +906,7 @@
                         </g>
                     </g>
                 </g>
-                <g class="map_click_3" id="three_Kishoreganj">
+                <g class="map_click_3" id="three_Kishoregonj">
                     <g>
                         <path fill="#FCAA94" stroke="#FFFFFF" stroke-miterlimit="10" d="M247.93,230.05c-0.104,0.006-0.185,0.024-0.242,0.054
 					c0.063,0.166,0.043,0.272-0.095,0.28l-0.008,0.001c0.076,0.275,0.433,0.699,0.854,1.227c0.724,0.904,2.119,1.972,2.574,2.756
