@@ -1,13 +1,59 @@
 <!-- Start :: Disease Progression -->
+<?php 
+    $class_1='fa fa-arrow-up mr-1';                      
+    if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1){ 
+        $class_1='fa fa-arrow-down mr-1'; 
+    }  
 
+    $class_2='fa fa-arrow-up mr-1';                      
+    if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1){ 
+        $class_2='fa fa-arrow-down mr-1'; 
+    } 
+
+    $class_3='fa fa-arrow-up mr-1';                      
+    if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1){ 
+        $class_3='fa fa-arrow-down mr-1'; 
+    } 
+?> 
 <div class="card">
+
     <div class="row">
-        <div class="col-xl-12 col-md-12">
-            <div class="card-header cart-height-customize">
-                <h3 class="card-title">রোগের অগ্রগতি</h3>
+        
+        <div class="col-xl-4 col-lg-4 col-md-12">
+            <div class="card-header">
+                <h5 class="card-title">গত ১৪ দিনে পরীক্ষা</h5>
+            </div>
+            <div class="card-body">
+                <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
+                <span class="text-primary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
         </div>
-        <div class="col-xl-6 col-lg-6 col-md-12">
+
+        <div class="col-xl-4 col-lg-4 col-md-12">
+            <div class="card-header">
+                <h5 class="card-title">গত ১৪ দিনে আক্রান্ত</h5>
+            </div>
+            <div class="card-body">
+                <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
+                <span class="text-primary"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-4 col-md-12">
+            <div class="card-header">
+                <h5 class="card-title">গত ১৪ দিনে মৃত্যু</h5>
+            </div>
+            <div class="card-body">
+                <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
+                <span class="text-primary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row">
+        
+        <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
                 <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন</h3>
             </div>
@@ -21,6 +67,10 @@
                 </p>
             </div>
         </div>
+        
+    </div>
+
+    <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
                 <h3 class="card-title">অঞ্চল তুলনা</h3>
@@ -65,9 +115,6 @@
                 </p>
             </div>
         </div>
-    </div>
-
-    <div class="row">
         
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
@@ -83,20 +130,7 @@
                 </p>
             </div>
         </div>
-        <div class="col-xl-6 col-lg-6 col-md-12">
-            <div class="card-header">
-                <h3 class="card-title">পরীক্ষা বনাম আক্রান্ত</h3>
-            </div>
-            <div class="card-body">
-                <div id="national_test_vs_infected_trend"></div>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Insight</h5>
-                <p class="card-text">
-                    Content will place here.
-                </p>
-            </div>
-        </div>
+        
     </div>
 </div>
 
@@ -173,50 +207,7 @@
                 }]
             });
 
-        // National Test Vs Infected Trend
-            Highcharts.chart('national_test_vs_infected_trend', {
-                chart: {
-                    marginRight: 80 // like left
-                },
-                title: {
-                    text: ''
-                },
-                subtitle: {
-                    text: ''
-                },
-                credits:{
-                    enabled:false
-                },
-                xAxis: {
-                    categories: [<?php echo $testsVsCases['dateRange'];?>],
-                    tickInterval: 1
-                },
-                yAxis: [{
-                    lineWidth: 1,
-                    title: {
-                        text: 'Daily Cases Numbers'
-                    }
-                }, {
-                    lineWidth: 1,
-                    opposite: true,
-                    title: {
-                        text: 'Daily Tests Numbers'
-                    }
-                }],
-                colors: ['#9d4a2a', '#dfc825'],
-                series: [{
-                    name: 'Daily Cases (5-day moving agerage)',
-                    data: [<?php echo $testsVsCases['totalCase'];?>],
-                    type: 'spline',
-                    marker:{"enabled": false, "symbol":"circle"}
-                }, {
-                    name: 'Daily Tests (5-day moving agerage)',
-                    data: [<?php echo $testsVsCases['totalTest'];?>],
-                    yAxis: 1,
-                    type: 'spline',
-                    marker:{"enabled": false, "symbol":"circle"}
-                }]
-            });
+        
 
         // Highcharts Infected and Forcast Chart
         Highcharts.chart('national_infected_trend', {
@@ -304,7 +295,7 @@
                 }
             },
 
-            colors: ['#38cb89', '#ffa600', '#ef4b4b'],
+            colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
             series:  {!! $series_data !!}
         });
 
@@ -405,7 +396,7 @@
                     }
                 },
 
-                colors: ['#38cb89', '#ffa600', '#ef4b4b'],
+               colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
                 series:  JSON.parse(data.series_data)
             });
         }

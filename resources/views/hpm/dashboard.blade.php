@@ -20,13 +20,15 @@
     @include('hpm.dashboard.row_2')
     <!-- End :: TESTING SCENARIO -->
 
+    <!-- Start :: Risk Matrix -->
+    @include('hpm.dashboard.row_6')
+    <!-- End :: Risk Matrix -->
+
     <!-- Start :: IMPACT IN POPULATION -->
     @include('hpm.dashboard.row_3')
     <!-- End :: IMPACT IN POPULATION -->
 
-    <!-- Start :: Risk Matrix -->
-    @include('hpm.dashboard.row_6')
-    <!-- End :: Risk Matrix -->
+    
 
     <!-- Start :: Hospital Condition -->
     @include('hpm.dashboard.row_4')
