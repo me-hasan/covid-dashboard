@@ -131,29 +131,11 @@ class DashboardController extends Controller
 // from lab_clean_data
 // where test_result='Positive' or test_result='Negative' group by district) as B using(District)";
 
-                $testPositivityMapSql = "SELECT T2.district AS District, SUM(T1.test_positivity)/COUNT(test_positivity) AS 'Test_Positivity' FROM
-(SELECT A.bbs_code AS 'bbs_code', (A.Positive/B.Total)*100 AS 'test_positivity' FROM
-(SELECT bbs_code, COUNT(id) AS 'Positive'
-FROM lab_clean_data
-WHERE test_result='Positive' ". $searchQuery." GROUP BY bbs_code) AS A
-INNER JOIN
-(SELECT bbs_code, COUNT(id) AS 'Total'
-FROM lab_clean_data
-WHERE test_result='Positive' OR test_result='Negative' GROUP BY bbs_code) AS B
-USING(bbs_code)) AS T1 INNER JOIN bbs_coded_upazila_dist_div AS T2
-ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
+                $testPositivityMapSql = " select district as District,round((positive_rate*100),2) as 'Test_Positivity' from test_positivity_rate_district 
+where date=((select max(date) from test_positivity_rate_district)) ". $searchQuery." ";
             } else {
-                $testPositivityMapSql = "SELECT T2.district AS District, SUM(T1.test_positivity)/COUNT(test_positivity) AS 'Test_Positivity' FROM
-(SELECT A.bbs_code AS 'bbs_code', (A.Positive/B.Total)*100 AS 'test_positivity' FROM
-(SELECT bbs_code, COUNT(id) AS 'Positive'
-FROM lab_clean_data
-WHERE test_result='Positive' GROUP BY bbs_code) AS A
-INNER JOIN
-(SELECT bbs_code, COUNT(id) AS 'Total'
-FROM lab_clean_data
-WHERE test_result='Positive' OR test_result='Negative' GROUP BY bbs_code) AS B
-USING(bbs_code)) AS T1 INNER JOIN bbs_coded_upazila_dist_div AS T2
-ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
+                $testPositivityMapSql = "select district as District,round((positive_rate*100),2) as 'Test_Positivity' from test_positivity_rate_district 
+where date=((select max(date) from test_positivity_rate_district))";
             }
 
             $testMapData = \Illuminate\Support\Facades\DB::select($testPositivityMapSql);
@@ -409,18 +391,17 @@ ORDER BY t.date";
             $districtData = [];
             if($request->has('division') && count($request->division)) {
                 $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
-                $searchQuery = "   division_eng IN (". $divisionReqData.")";
-        
-                $cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District, '' as Upazila, sum(daily_cases) AS cumulative_infected_person 
-                from district_wise_cases_covid where ".$searchQuery."  group by division_eng, date order by date, division_eng ";
+                $searchQuery = " AND  Division IN (". $divisionReqData.")";
+
+                $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
+                where date is not null ".$searchQuery." group by Division, date order by Date ";
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
-                $searchQuery = "   district_city_eng IN (". $districtReqData.")";
-         
+                $searchQuery = " AND  District IN (". $districtReqData.")";
 
-                $cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District, '' as Upazila, daily_cases as cumulative_infected_person
-                from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  ";
+                $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, sum(infected_person) AS cumulative_infected_person from div_dist_upz_infected_trend 
+                where date is not null  ".$searchQuery."  group by District, date order by date ";
             }
 
             if($request->has('upazilla') && count($request->upazilla)) {
@@ -458,6 +439,7 @@ ORDER BY t.date";
                 $districtData[$div->District]['bn'] = en2bnTranslation($div->District);
                 $j++;
             }
+            // 19-sep-2020
             foreach ($cumulativeDisUpaZillaData as $key => $div) {
                 $upzillaDate = date('d/m/Y', strtotime($div->date));
 
@@ -519,90 +501,146 @@ ORDER BY t.date";
       }
 
       private function risk_matrix_1(){
-        $risk_matrix = DB::select("select count(district) AS val from
-            (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-            inner join 
-            (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'low_to_high' from    
+    (select district from test_positivity_rate_district 
+    where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+            (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+    ) as last_week_low inner join 
+    (select district from test_positivity_rate_district 
+    where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+    (select max(date) from test_positivity_rate_district)) as curr_week_high
+USING (district) ORDER BY district ");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_2(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5 
-        and recrent15_avg_test_positivity<15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district) ");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'low_to_medium' from    
+    (select district  from test_positivity_rate_district
+    where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
+    (SELECT date FROM 
+    (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+    AS date ORDER BY date limit 1)
+    ) as last_week_low inner join 
+    (select district from test_positivity_rate_district 
+    where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+    (select max(date) from test_positivity_rate_district)) as curr_week_medium
+USING (district) ORDER BY district ");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_3(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity<5) b using(district)");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'low_to_low' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_low
+        USING (district) ORDER BY district ");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_4(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
-        past15_avg_test_positivity< 15) b using(district)");
+        $risk_matrix = DB::select("select count(distinct(last_week_low.district)) as 'medium_to_high' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_high
+        USING (district) ORDER BY district ");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_5(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
-        and recrent15_avg_test_positivity < 15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
-        past15_avg_test_positivity < 15) b using(district)");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'medium_to_medium' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_high
+        USING (district) ORDER BY district");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_6(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=5 and 
-        past15_avg_test_positivity < 15) b using(district)");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'medium_to_low' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_high
+        USING (district) ORDER BY district");
 
         return $risk_matrix[0];
       }
 
        private function risk_matrix_7(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_high' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_high
+        USING (district) ORDER BY district");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_8(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity>=5
-        and recrent15_avg_test_positivity<15) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_medium' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_high
+        USING (district) ORDER BY district");
 
         return $risk_matrix[0];
       }
 
 
-
       private function risk_matrix_9(){
-        $risk_matrix = DB::select("select count(district) AS val from
-        (select district from recrent15_avg_test_positivity where recrent15_avg_test_positivity<5) a
-        inner join 
-        (select district from past15_avg_test_positivity where past15_avg_test_positivity>=15) b using(district)");
+        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_low' from    
+        (select district  from test_positivity_rate_district 
+        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        (SELECT date FROM 
+        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2) 
+        AS date ORDER BY date limit 1)
+        ) as last_week_low inner join 
+        (select district from test_positivity_rate_district 
+        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
+        (select max(date) from test_positivity_rate_district)) as curr_week_high
+        USING (district) ORDER BY district");
 
         return $risk_matrix[0];
       }

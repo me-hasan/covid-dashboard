@@ -29,21 +29,21 @@
                             </tr>
                             <tr>
                                 <td>High</td>
-                                <td class="bg-danger">{{$rm_7->val}}</td>
-                                <td style="background: #fa9a29">{{$rm_4->val}}</td>
-                                <td style="background: #fa9a29">{{$rm_1->val}}</td>
+                                <td class="bg-danger">{{$rm_7->high_to_high}}</td>
+                                <td style="background: #fa9a29">{{$rm_8->high_to_medium}} </td>
+                                <td style="background: #fa9a29">{{$rm_9->high_to_low}}</td>
                             </tr>
                             <tr>
                                 <td>Medium</td>
-                                <td style="background: #fa9a29">{{$rm_8->val}}</td>
-                                <td style="background: #feea1f">{{$rm_5->val}}</td>
-                                <td style="background: #94f925">{{$rm_2->val}}</td>
+                                <td style="background: #fa9a29">{{$rm_4->medium_to_high}}</td>
+                                <td style="background: #feea1f">{{$rm_5->medium_to_medium}}</td>
+                                <td style="background: #94f925">{{$rm_6->medium_to_low}}</td>
                             </tr>
                             <tr>
                                 <td>Low</td>
-                                <td style="background: #feea1f">{{$rm_9->val}}</td>
-                                <td style="background: #94f925">{{$rm_6->val}}</td>
-                                <td style="background: #00ff2e">{{$rm_3->val}}</td>
+                                <td style="background: #feea1f">{{$rm_1->low_to_high}}</td>
+                                <td style="background: #94f925">{{$rm_2->low_to_medium}}</td>
+                                <td style="background: #00ff2e">{{$rm_3->low_to_low}}</td>
                             </tr>
                             </tbody>
                         </table>
