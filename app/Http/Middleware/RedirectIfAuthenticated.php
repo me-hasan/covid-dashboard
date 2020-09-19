@@ -24,15 +24,18 @@ class RedirectIfAuthenticated
 
         if (Auth::guard($guard)->check()) {
             $userType = auth()->user()->user_type;
-        
+
             // Check user role
             switch ($userType) {
                 case 'cabinet':
                     $redirectTo = RouteServiceProvider::CABINET_DASHBOARD;
-                    break; 
+                    break;
                 case 'epidemiologist':
                     $redirectTo = RouteServiceProvider::IEDCR_DASHBOARD;
-                    break; 
+                    break;
+                case 'hpm':
+                    $redirectTo = RouteServiceProvider::HPM_DASHBOARD;
+                    break;
                 default:
                     $redirectTo = RouteServiceProvider::IEDCR_DASHBOARD;
                     break;
