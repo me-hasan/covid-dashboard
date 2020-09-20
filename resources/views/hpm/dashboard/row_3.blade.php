@@ -179,7 +179,10 @@
                 enabled:false
             },
             legend:{
-                enabled:true
+                enabled:true,
+				itemStyle: {
+					fontSize: "18px"
+				}
             },
             yAxis: {
                 title: {

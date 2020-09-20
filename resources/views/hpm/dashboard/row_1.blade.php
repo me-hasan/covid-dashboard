@@ -207,7 +207,10 @@
                     enabled:false
                 },
                 legend:{
-                    enabled:true
+                    enabled:true,
+					itemStyle: {
+						fontSize: "18px"
+					}
                 },
                 yAxis: {
                     title: {
@@ -269,7 +272,10 @@
             legend: {
                 layout: 'horizontal',
                 align: 'center',
-                verticalAlign: 'bottom'
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "18px"
+				}
             },
 
             credits:{

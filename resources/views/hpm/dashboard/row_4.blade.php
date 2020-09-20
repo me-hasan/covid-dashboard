@@ -3489,7 +3489,11 @@
             },
             title: {
                 text: 'সাধারণ শয্যা',
-                y: 20
+                y: 20,
+				style: {
+					fontSize: 18,
+					fontFamily: 'SolaimanLipi'
+				}
             },
             credits:{
                 enabled:false
@@ -3498,7 +3502,10 @@
                 enabled:true,
                 labelFormatter: function () {
                     return this.name+': <b> '+this.y + '%</b>';
-                }
+                },
+				itemStyle: {
+					fontSize: "18px"
+				}
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -3540,10 +3547,17 @@
                     beta: 0
                 },
                 height: 250,
-                margin: [0, 0, 30, 0]
+                margin: [0, 0, 30, 0],
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
-                text: 'আইসিইউ শয্যা'
+                text: 'আইসিইউ শয্যা',
+				style: {
+					fontSize: 18,
+					fontFamily: 'SolaimanLipi'
+				}
             },
             credits:{
                 enabled:false
@@ -3552,7 +3566,10 @@
                 enabled:true,
                 labelFormatter: function () {
                     return this.name+': <b> '+this.y + '%</b>';
-                }
+                },
+				itemStyle: {
+					fontSize: "18px"
+				}
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
