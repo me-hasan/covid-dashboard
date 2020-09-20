@@ -194,9 +194,6 @@
                     zoomType: 'xy',
 					height: 470
                 },
-				style: {
-					fontFamily: 'SolaimanLipi'
-				},
                 title: {
                     text: ''
                 },
@@ -211,7 +208,11 @@
                 },
                 yAxis: {
                     title: {
-                        text: 'দৈনিক আক্রান্তের সংখ্যা'
+                        text: 'দৈনিক আক্রান্তের সংখ্যা',
+						style: {
+							fontSize: 16,
+							fontFamily: 'SolaimanLipi'
+						}
                     },
                     labels: {
                         formatter: function() {
