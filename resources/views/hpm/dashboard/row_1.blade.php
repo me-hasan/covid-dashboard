@@ -209,7 +209,7 @@
                 legend:{
                     enabled:true,
 					itemStyle: {
-						fontSize: "18px"
+						fontSize: "16px"
 					}
                 },
                 yAxis: {
@@ -274,7 +274,7 @@
                 align: 'center',
                 verticalAlign: 'bottom',
 				itemStyle: {
-					fontSize: "18px"
+					fontSize: "16px"
 				}
             },
 
