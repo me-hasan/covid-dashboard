@@ -204,13 +204,17 @@
                     enabled:false
                 },
                 legend:{
-                    enabled:true
+                    enabled:true,
+					style: {
+						fontSize: 16,
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 yAxis: {
                     title: {
                         text: 'দৈনিক আক্রান্তের সংখ্যা',
 						style: {
-							fontSize: 16,
+							fontSize: 18,
 							fontFamily: 'SolaimanLipi'
 						}
                     },
@@ -221,7 +225,11 @@
                     }
                 },
                 xAxis: {
-                    categories: <?php echo json_encode($date_arr);?>
+                    categories: <?php echo json_encode($date_arr);?>,
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
 
                 },
                 tooltip: {
