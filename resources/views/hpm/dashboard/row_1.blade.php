@@ -236,7 +236,7 @@
         // National Infected Trend
         Highcharts.chart('national_infected_trend', {
             chart: {
-                height: 470
+                height: 460
             },
             title: {
                 text: ''
