@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card-header cart-height-customize">
-                <h3 class="card-title">Nationwide Hospital Capacity and Occupancy</h3>
+                <h3 class="card-title">হাসপাতাল ধারণ ক্ষমতা এবং সংস্থান</h3>
             </div>
         </div>
         <div class="col-xl-8 col-md-12">
@@ -25,21 +25,21 @@
                             <thead >
                             <tr>
                                 <td></td>
-                                <td colspan="2" class="text-center fs-18">General Beds</td>
-                                <td colspan="2" class="text-center fs-18">ICU Beds</td>
+                                <td colspan="2" class="text-center fs-18">সাধারণ শয্যা</td>
+                                <td colspan="2" class="text-center fs-18">আইসিইউ  শয্যা</td>
                             </tr>
                             </thead>
                             <tbody class="fs-16">
                             <tr>
                                 <td></td>
-                                <td>Occupancy</td>
-                                <td>Empty</td>
-                                <td>Occupancy</td>
-                                <td>Empty</td>
+                                <td>ভর্তি</td>
+                                <td>খালি</td>
+                                <td>ভর্তি</td>
+                                <td>খালি</td>
                                 
                             </tr>
                             <tr>
-                                <td>Overall Country</td>
+                                <td>সারা দেশ</td>
                                 <td>{{$nation_hospital->Admitted_General_Beds}}</td>
                                 <th>{{$nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$nation_hospital->Admitted_ICU_Beds}}</td>
@@ -47,7 +47,7 @@
                                 
                             </tr>
                              <tr>
-                                <td>Dhaka City</td>
+                                <td>ঢাকা শহর</td>
                                 <td>{{$dhaka_hospital->Admitted_General_Beds}}</td>
                                 <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$dhaka_hospital->Admitted_ICU_Beds}}</td>
@@ -55,7 +55,7 @@
                                 
                             </tr>
                             <tr>
-                                <td>Chittagong City</td>
+                                <td>চট্টগ্রাম শহর</td>
                                 <td>{{$ctg_hospital->Admitted_General_Beds}}</td>
                                 <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$ctg_hospital->Admitted_ICU_Beds}}</td>
@@ -63,7 +63,7 @@
                                 
                             </tr>
                             <tr>
-                                <td>Others</td>
+                                <td>অন্যান্য</td>
                                 <td>{{ $nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
                                 <th>{{ ($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )}}</th>
                                 <td>{{ $nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )}}</td>
@@ -3472,7 +3472,7 @@
 </div>
 @push('custom_script')
     <script>
-        // Hospital General Beds
+        // Hospital সাধারণ শয্যা
         Highcharts.chart('hospital_general_beds', {
             chart: {
                 type: 'pie',
@@ -3485,7 +3485,7 @@
                 margin: [0, 0, 30, 0]
             },
             title: {
-                text: 'Hospital General Beds',
+                text: 'সাধারণ শয্যা',
                 y: 20
             },
             credits:{
@@ -3527,7 +3527,7 @@
             }]
         });
 
-        // Hospital ICU Beds
+        // Hospital আইসিইউ  শয্যা
         Highcharts.chart('hospital_icu_beds', {
             chart: {
                 type: 'pie',
@@ -3540,7 +3540,7 @@
                 margin: [0, 0, 30, 0]
             },
             title: {
-                text: 'Hospital ICU Beds'
+                text: 'আইসিইউ শয্যা'
             },
             credits:{
                 enabled:false
