@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Description</h5>
                         <p class="card-text">
-                            Description will place here.
+                            {{ $des_1->description_eng }}
                         </p>
                     </div>
                  </div>
@@ -125,7 +125,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Description</h5>
                         <p class="card-text">
-                            Description will place here.
+                            {{ $des_2->description_eng }}
                         </p>
                     </div>
                  </div>
@@ -152,7 +152,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Description</h5>
                         <p class="card-text">
-                            Description will place here.
+                           {{ $des_3->description_eng }}
                         </p>
                     </div>
                  </div>

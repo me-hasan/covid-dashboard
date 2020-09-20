@@ -22,7 +22,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Description</h5>
                                     <p class="card-text">
-                                        Description will place here.
+                                        {{ $des_4->description_eng }}
                                     </p>
                                 </div>
                              </div>
@@ -48,7 +48,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Description</h5>
                                     <p class="card-text">
-                                        Description will place here.
+                                        {{ $des_5->description_eng }}
                                     </p>
                                 </div>
                              </div>
@@ -305,7 +305,7 @@
                     enabled:false
                 },
                 xAxis: {
-                    categories: [<?php echo $testsVsCases['dateRange'];?>],
+                    categories: [<?php echo $forteen_day_infected['dateRange'];?>],
                     tickInterval: 1
                 },
                 yAxis: [{
@@ -322,13 +322,13 @@
                 }],
                 colors: ['#9d4a2a', '#dfc825'],
                 series: [{
-                    name: 'সংক্রমণ',
-                    data: [29, 71, 106, 129, 144, 176, 135,59, 81, 96, 89, 59, 76, 65],
+                    name: 'সংক্রমণের হার',
+                    data: [<?php echo $forteen_day_infected['total_test_positivity'];?>],
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }, {
-                    name: 'সংক্রমণের হার',
-                    data: [144, 176, 135, 148, 216, 194, 95, 144, 176, 135, 148, 216, 194, 95],
+                    name: 'সংক্রমণ',
+                    data: [<?php echo $forteen_day_infected['total_infected'];?>],
                     yAxis: 1,
                     type: 'column',
                     marker:{"enabled": false, "symbol":"circle"}

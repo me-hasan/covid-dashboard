@@ -29,9 +29,10 @@ class DashboardController extends Controller
         //dd($cumulativeInfectedPerson);
 
         // shamvil start
-            // row 2
+            // row 1
             $data['nation_wide_MovingAvgInfected'] =$this->nation_wide_five_dayMovingAvgInfected();
             // row 2
+            $data['forteen_day_infected'] = $this->get_14days_infected($request); // 14 days songcromon & songcromoner har
             $data['days_infected'] =$this->nation_wise_14_days_infected();
             $data['days_death'] =$this->nation_wise_14_days_death();
             $data['days_test_positivity'] =$this->nation_wise_14_days_test_positivity();
@@ -61,6 +62,18 @@ class DashboardController extends Controller
             $data['rm_7'] = $this->risk_matrix_7();
             $data['rm_8'] = $this->risk_matrix_8();
             $data['rm_9'] = $this->risk_matrix_9();
+
+            // description and insight
+            $data['des_1'] = $this->description_insight_1(); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+            $data['des_2'] = $this->description_insight_2(); //Daily New Cases by Region / অঞ্চল তুলনা
+            $data['des_3'] = $this->description_insight_3(); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+            $data['des_4'] = $this->description_insight_4(); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+            $data['des_5'] = $this->description_insight_5(); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+            $data['des_6'] = $this->description_insight_6(); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+            $data['des_7'] = $this->description_insight_7();
+            $data['des_8'] = $this->description_insight_8();
+            $data['des_9'] = $this->description_insight_9();
+            $data['des_10'] = $this->description_insight_10();
         // shamvil end
 
         //Test vs Cases (Robi)
@@ -1134,6 +1147,114 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
             'totalCase' => $totalCase,
             'dateRange' => $dateRange
         ];
+    }
+
+
+    protected function get_14days_infected($request) {
+
+        $infected = $test_positivity = [];
+        $dateRange = $total_infected = $total_test_positivity = [];
+        if($request->division && $request->district) {
+            $infected = DB::select(" select date as report_date, division_eng, district_city_eng, daily_cases as infected_24_hrs
+            from district_wise_cases_covid where district_city_eng = '".$request->district."'
+            order by date desc limit 14; ");
+        
+            $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.district, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
+            (select date_of_test, division, district, count(id) as 'pos' from districts_test_positivity 
+            where test_result='Positive' and district = '".$request->district."'
+            group by district,date_of_test order by date_of_test desc limit 14) 
+            as a inner join 
+            (select date_of_test, division, district, count(id) as 'tot' from districts_test_positivity
+            where district = '".$request->district."' 
+            group by district, date_of_test order by date_of_test desc limit 14) as b using(district, date_of_test)
+            order by a.date_of_test desc limit 14 ");
+
+        }elseif($request->division) {
+            $infected = DB::select(" select date as report_date, division_eng, sum(daily_cases) as infected_24_hrs 
+                from district_wise_cases_covid where division_eng = '".$request->division."'
+                group by division_eng, date 
+                order by date desc limit 14; ");
+        
+            $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
+            (select date_of_test, division, count(id) as 'pos' from districts_test_positivity 
+            where test_result='Positive' and division = '".$request->division."'
+            group by division,date_of_test order by date_of_test desc limit 14) 
+            as a inner join 
+            (select date_of_test, division, count(id) as 'tot' from districts_test_positivity
+            where division = '".$request->division."'
+            group by division, date_of_test order by date_of_test desc limit 14) as b using(division, date_of_test)
+            order by a.date_of_test desc limit 14 ");
+
+        } else { // national level
+            $infected = DB::select(" select report_date, infected_24_hrs from daily_data order by report_date desc limit 14 ");
+        
+            $test_positivity = DB::select(" select report_date, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
+            from daily_data order by report_date desc limit 14;");
+
+        }
+
+        foreach ($infected as $row){
+              $dateRange[] =  "'" .convertEnglishDateToBangla($row->report_date). "'";
+              $total_infected[] = $row->infected_24_hrs;
+        }
+
+        foreach ($test_positivity as $row) {
+            $total_test_positivity[] = $row->test_positivity;
+        }
+
+        $dateRange  = implode(",", $dateRange);
+        $total_infected  = implode(",", $total_infected);
+        $total_test_positivity  = implode(",", $total_test_positivity);
+
+        return [
+            'total_infected' => $total_infected,
+            'total_test_positivity' => $total_test_positivity,
+            'dateRange' => $dateRange
+        ];
+    }
+
+    private function description_insight_1(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Daily National Cases' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+    private function description_insight_2(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Daily New Cases by Region' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+    private function description_insight_3(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Total National Cases' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+    private function description_insight_4(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Daily Tests and Cases' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+    private function description_insight_5(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Tests vs Cases (Positivity Rate)' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+    private function description_insight_6(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Risk Map by District (14 Days)' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+    private function description_insight_7(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Total Tests Per Case in Neighboring Countries' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+
+    private function description_insight_8(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Movement of districts in terms of risk comparing current 14 days and previous 14 days' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+
+    private function description_insight_9(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Age cohort vs cases and death' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
+    }
+
+    private function description_insight_10(){
+        $des = DB::select("select * from hpm_description_insight where component_name_eng='Capacity & Resource' and date=(select max(date) from hpm_description_insight) ");
+        return $des[0];
     }
 
 }
