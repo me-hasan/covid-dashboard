@@ -72,7 +72,7 @@
                                 <h3 class="card-title">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
                                 @include('hpm.dashboard.row_2_map')
                                 <div class="row">        
-                                    <div class="col-xl-8 col-lg-8 col-md-6">
+                                    <div class="col-xl-7 col-lg-7 col-md-6">
                                         <div class="card-body">
                                             <h5 class="card-title">Description</h5>
                                             <p class="card-text">
@@ -80,11 +80,11 @@
                                             </p>
                                         </div>
                                      </div>
-                                     <div class="col-xl-4 col-lg-4 col-md-6">
+                                     <div class="col-xl-5 col-lg-5 col-md-6">
                                         <div class="card-body">
                                             <h5 class="card-title">Insight</h5>
                                             <p class="card-text">
-                                                Content will place here.
+                                                Place here.
                                             </p>
                                         </div>
                                      </div>
