@@ -200,8 +200,18 @@ where date=((select max(date) from test_positivity_rate_district))";
 
         }
             
-        $cumulativeSql = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
-        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng";
+        $cumulativeSql = " select * from (
+            SELECT
+               a.date,
+               a.division_eng,
+               a.daily_cases,
+               Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
+                        FROM division_wise_cases_covid AS b
+                        WHERE b.division_eng= 'Dhaka' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
+                      ), 2 ) AS '5dayMovingAvg'
+             FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Dhaka'
+             and a.date >= '2020-03-08'
+             ORDER BY a.date) T order by date";
 
         $cumulativeSql_dhk = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person 
         from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng ";
@@ -979,7 +989,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                 WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
                           ), 2 ) AS 'fiveDayMovingAvgTest'
                  FROM daily_data AS a
-                 ORDER BY a.report_date) T order by report_date");
+                 ORDER BY a.report_date) T where report_date>='2020-05-20' order by report_date ");
             //Daily cases query
             $dailyCases = DB::select("select * from (
                 SELECT
@@ -990,7 +1000,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                     WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
                               ), 2 ) AS 'fiveDayMovingAvgInfected'
                      FROM daily_data AS a
-                     ORDER BY a.report_date) T order by report_date");
+                     ORDER BY a.report_date) T  where report_date>='2020-05-20' order by report_date");
 
         }
 
