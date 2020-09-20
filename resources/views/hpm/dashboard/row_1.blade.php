@@ -224,14 +224,7 @@
                     }
                 },
                 xAxis: {
-                    categories: <?php echo json_encode($date_arr);?>,
-					labels: {
-						style: {
-							fontSize: 16,
-							fontFamily: 'SolaimanLipi'
-						}
-					}
-
+                    categories: <?php echo json_encode($date_arr);?>
                 },
                 tooltip: {
                   pointFormat: '{series.name}: <b>{point.y}</b>'
