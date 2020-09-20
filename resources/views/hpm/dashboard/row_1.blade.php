@@ -281,7 +281,11 @@
 
             yAxis: {
                 title: {
-                    text: 'দৈনিক আক্রান্তের সংখ্যা'
+                    text: 'দৈনিক আক্রান্তের সংখ্যা',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
                 }
             },
 
@@ -328,7 +332,11 @@
 
             yAxis: {
                 title: {
-                    text: 'দৈনিক আক্রান্তের সংখ্যা'
+                    text: 'দৈনিক আক্রান্তের সংখ্যা',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
                 }
             },
 
