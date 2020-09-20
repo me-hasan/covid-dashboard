@@ -49,7 +49,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-2">
+                <div class="col-xl-2 col-md-2 b1">
                     <div class="row">
                         <div class="col-xl-4 text-right">
                             <div class="pt-4">High Risk</div>
