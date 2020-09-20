@@ -21,7 +21,7 @@
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
-                                    <p class="card-text">
+                                    <p class="card-text b1">
                                         {{ $des_9->description_eng }}
                                     </p>
                                 </div>
@@ -191,7 +191,11 @@
             xAxis: {
                 categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"],
 				title: {
-                    text: 'Age'
+                    text: 'বয়স',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
                 }
             },
             tooltip: {
@@ -207,11 +211,11 @@
             },
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
-                name: 'Death',
+                name: 'মৃত্যু',
                 data: [<?php echo $deathAge;?>]
 
             }, {
-                name: 'Infected Person',
+                name: 'আক্রান্ত',
                 data: [<?php echo $_ageWiseInfectData;?>],
 
             }]

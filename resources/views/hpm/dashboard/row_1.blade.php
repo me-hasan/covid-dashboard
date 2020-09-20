@@ -192,7 +192,10 @@
             Highcharts.chart('national_dialy_infected_trend', {
                 chart: {
                     zoomType: 'xy',
-					height: 470
+					height: 470,
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''
@@ -224,7 +227,7 @@
                     categories: <?php echo json_encode($date_arr);?>,
 					labels: {
 						style: {
-							fontSize: 18,
+							fontSize: 16,
 							fontFamily: 'SolaimanLipi'
 						}
 					}
