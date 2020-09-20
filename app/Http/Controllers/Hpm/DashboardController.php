@@ -70,10 +70,10 @@ class DashboardController extends Controller
             $data['des_4'] = $this->description_insight_4(); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
             $data['des_5'] = $this->description_insight_5(); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
             $data['des_6'] = $this->description_insight_6(); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
-            $data['des_7'] = $this->description_insight_7();
-            $data['des_8'] = $this->description_insight_8();
-            $data['des_9'] = $this->description_insight_9();
-            $data['des_10'] = $this->description_insight_10();
+            $data['des_7'] = $this->description_insight_7(); // Test Per Cases For South Asian Countries
+            $data['des_8'] = $this->description_insight_8(); // Risk Matrix
+            $data['des_9'] = $this->description_insight_9(); //  IMPACT IN POPULATION
+            $data['des_10'] = $this->description_insight_10(); // Nationwide Hospital Capacity And Occupancy
         // shamvil end
 
         //Test vs Cases (Robi)
