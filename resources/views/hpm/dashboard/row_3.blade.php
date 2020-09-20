@@ -22,7 +22,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Description</h5>
                                     <p class="card-text">
-                                        Description will place here.
+                                        {{ $des_9->description_eng }}
                                     </p>
                                 </div>
                              </div>
