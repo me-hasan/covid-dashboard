@@ -60,12 +60,24 @@
             <div class="card-body">
                 <div id="national_dialy_infected_trend"></div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">Insight</h5>
-                <p class="card-text">
-                    Content will place here.
-                </p>
-            </div>
+            <div class="row">        
+                <div class="col-xl-8 col-lg-8 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text">
+                            Description will place here.
+                        </p>
+                    </div>
+                 </div>
+                 <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Insight</h5>
+                        <p class="card-text">
+                            Content will place here.
+                        </p>
+                    </div>
+                 </div>
+        	</div>
         </div>
         
     </div>
@@ -109,6 +121,12 @@
                 <div id="district_comparision"></div>
             </div>
             <div class="card-body">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">
+                    Description will place here.
+                </p>
+            </div>
+            <div class="card-body">
                 <h5 class="card-title">Insight</h5>
                 <p class="card-text">
                     Content will place here.
@@ -122,6 +140,12 @@
             </div>
             <div class="card-body">
                 <div id="national_infected_trend"></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">
+                    Description will place here.
+                </p>
             </div>
             <div class="card-body">
                 <h5 class="card-title">Insight</h5>
@@ -209,10 +233,10 @@
 
         
 
-        // Highcharts Infected and Forcast Chart
+        // National Infected Trend
         Highcharts.chart('national_infected_trend', {
             chart: {
-                height: 390
+                height: 470
             },
             title: {
                 text: ''
