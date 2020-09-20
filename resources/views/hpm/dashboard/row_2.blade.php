@@ -22,7 +22,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_4->description_eng }}
+                                        {{ $des_4->description_beng }}
                                     </p>
                                 </div>
                              </div>
@@ -30,7 +30,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
-                                        আমার সোনার বাংলা
+                                        {{ $des_4->insight_beng }}
                                     </p>
                                 </div>
                              </div>
@@ -48,7 +48,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_5->description_eng }}
+                                        {{ $des_5->description_beng }}
                                     </p>
                                 </div>
                              </div>
@@ -56,7 +56,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
-                                        আমার সোনার বাংলা
+                                         {{ $des_5->insight_beng }}
                                     </p>
                                 </div>
                              </div>
@@ -76,7 +76,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                               {{ $des_6->description_eng }}
+                                                {{ $des_6->description_beng }}
                                             </p>
                                         </div>
                                      </div>
@@ -84,7 +84,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                                             <p class="card-text b1">
-                                                Place here.
+                                                {{ $des_6->insight_beng }}
                                             </p>
                                         </div>
                                      </div>
@@ -108,7 +108,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                                {{ $des_7->description_eng }}
+                                                {{ $des_7->description_beng }}
                                             </p>
                                         </div>
                                      </div>
@@ -116,7 +116,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                                             <p class="card-text b1">
-                                                আমার সোনার বাংলা
+                                                {{ $des_7->insight_beng }}
                                             </p>
                                         </div>
                                      </div>

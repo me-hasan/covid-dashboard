@@ -64,7 +64,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_1->description_eng }}
+                            {{ $des_1->description_beng }}
                         </p>
                     </div>
                  </div>
@@ -72,7 +72,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            আমার সোনার বাংলা
+                            {{ $des_1->insight_beng }}
                         </p>
                     </div>
                  </div>
@@ -124,7 +124,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text">
-                            {{ $des_2->description_eng }}
+                            {{ $des_2->description_beng }}
                         </p>
                     </div>
                  </div>
@@ -132,7 +132,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            আমার সোনার বাংলা
+                            {{ $des_2->insight_beng }}
                         </p>
                     </div>
                  </div>
@@ -151,7 +151,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text">
-                           {{ $des_3->description_eng }}
+                           {{ $des_3->description_beng }}
                         </p>
                     </div>
                  </div>
@@ -159,7 +159,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            আমার সোনার বাংলা
+                            {{ $des_3->insight_beng }}
                         </p>
                     </div>
                  </div>

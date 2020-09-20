@@ -1186,10 +1186,10 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
             order by a.date_of_test desc limit 14 ");
 
         } else { // national level
-            $infected = DB::select(" select report_date, infected_24_hrs from daily_data order by report_date desc limit 14 ");
+            $infected = DB::select(" SELECT * FROM (SELECT report_date, infected_24_hrs FROM daily_data ORDER BY report_date DESC LIMIT 14) a ORDER BY a.report_date ASC ");
         
             $test_positivity = DB::select(" select report_date, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
-            from daily_data order by report_date desc limit 14;");
+            from daily_data order by report_date desc limit 14 ");
 
         }
 

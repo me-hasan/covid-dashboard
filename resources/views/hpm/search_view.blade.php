@@ -8,22 +8,20 @@
                 <label class="custom-control custom-radio mr-2">
                     <input type="radio" class="custom-control-input hierarchy_level natioanl_level" name="hierarchy_level"
                            value="national" @php if (request()->get('hierarchy_level') != 'divisional') { echo "checked"; } @endphp>
-                    <span class="custom-control-label">জাতীয় পর্যায়</span> </label>
+                    <span class="custom-control-label">জাতীয় পর্যায়</span> </label>
                 <label class="custom-control custom-radio mr-2">
                     <input type="radio" class="custom-control-input hierarchy_level divisional_level" name="hierarchy_level"
                            value="divisional" @php if (request()->get('hierarchy_level') == 'divisional') { echo "checked"; } @endphp>
-                    <span class="custom-control-label">বিভাগীয় পর্যায়</span> </label>
+                    <span class="custom-control-label">বিভাগীয় পর্যায়</span> </label>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-body p-0">
                 <div class="btn-group mt-2 mb-2 mr-1">
                     <select class="btn btn-outline-primary dropdown-toggle division" name="division" id="">
-                        <option value="">
-                            All Division
-                        </option>
+                        <option value="">সকল বিভাগ</option>
                         @foreach($divisions as $division)
-                            <option @if(request()->get('division') == $division->division) selected @endif value="{{$division->division}}">{{$division->division}}</option>
+                            <option @if(request()->get('division') == $division->division) selected @endif value="{{$division->division}}">{{en2bnTranslation($division->division)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -31,15 +29,15 @@
                     <select class="btn btn-outline-primary dropdown-toggle district" name="district" id="">
 
                         @if(request()->has('district') && request()->get('district') != '')
-                            <option value="{{ request()->get('district') }}">{{ request()->get('district') }}</option>
+                            <option value="{{ request()->get('district') }}">{{ en2bnTranslation(request()->get('district')) }}</option>
                         @endif
-                        <option value="">All Districts</option>
+                        <option value="">সকল জেলা</option>
 
 
 
                     </select>
                 </div>
-                <div class="btn-group mt-2 mb-2 mr-1" style="display:none;">
+                <div class="btn-group mt-2 mb-2 mr-1 d-none">
                     <select class="btn btn-outline-primary dropdown-toggle upazilla" name="upazila" id="">
                         <option value="">
                             All Upazilla
@@ -88,8 +86,9 @@
                     console.log(data);
                     if (data.status == 1) {
                         $('.district').empty();
-                        html = '<option value="">Select District</option>';
+                        html = '<option value="">সকল জেলা</option>';
                         for (var i = 0; i < data.data.length; i++) {
+                            var selected_dist_bn="{{ htmlentities(request()->get('district')) }}";
                             var selectedDistrict = "{{ htmlentities(request()->get('district')) }}";
                             var selectedValue = '';
                             if (selectedDistrict == htmlEntities(data.data[i].district)) {
