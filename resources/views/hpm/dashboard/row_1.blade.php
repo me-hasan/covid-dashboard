@@ -253,7 +253,10 @@
         // National Infected Trend
         Highcharts.chart('national_infected_trend', {
             chart: {
-                height: 460
+                height: 460,
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
                 text: ''
@@ -304,7 +307,13 @@
         });
 
         Highcharts.chart('district_comparision', {
-            title: {
+            chart: {
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
+			
+			title: {
                 text: ''
             },
 

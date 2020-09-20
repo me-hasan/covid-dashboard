@@ -3482,7 +3482,10 @@
                     beta: 0
                 },
                 height: 250,
-                margin: [0, 0, 30, 0]
+                margin: [0, 0, 30, 0],
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
                 text: 'সাধারণ শয্যা',

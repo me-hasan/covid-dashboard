@@ -137,7 +137,10 @@
    // South Country Wise Infected
             Highcharts.chart('country_wise_infected', {
                 chart: {
-                    type: 'bar'
+                    type: 'bar',
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''
@@ -225,7 +228,10 @@
             Highcharts.chart('national_test_vs_infected_trend', {
                 chart: {
                     marginRight: 80, // like left
-					height: 420
+					height: 420,
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''

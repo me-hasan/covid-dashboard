@@ -164,7 +164,10 @@
         // Age Wise Death Distribution
         Highcharts.chart('age_wise_death_distribution', {
             chart: {
-                type: 'bar'
+                type: 'bar',
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
                 text: ''
