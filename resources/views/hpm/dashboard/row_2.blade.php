@@ -268,12 +268,12 @@
                 }],
                 colors: ['#9d4a2a', '#dfc825'],
                 series: [{
-                    name: 'Daily Cases (5-day moving agerage)',
+                    name: 'দৈনিক আক্রান্ত (৫-দিনের চলমান গড়)',
                     data: [<?php echo $testsVsCases['totalCase'];?>],
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }, {
-                    name: 'Daily Tests (5-day moving agerage)',
+                    name: 'দৈনিক পরীক্ষা (৫-দিনের চলমান গড়)',
                     data: [<?php echo $testsVsCases['totalTest'];?>],
                     yAxis: 1,
                     type: 'spline',
@@ -306,7 +306,10 @@
     // Weekly Comparision Infected Death  weekly_comparision_infected_death
     Highcharts.chart('weekly_comparision_infected_death', {
                 chart: {
-                    marginRight: 80 // like left
+                    marginRight: 80, // like left
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''
@@ -316,6 +319,12 @@
                 },
                 credits:{
                     enabled:false
+                },
+				legend: {
+                    enabled:true,
+					itemStyle: {
+						fontSize: "16px"
+					}
                 },
                 xAxis: {
                     categories: [<?php echo $forteen_day_infected['dateRange'];?>],

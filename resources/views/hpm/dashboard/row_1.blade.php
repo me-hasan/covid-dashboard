@@ -330,7 +330,10 @@
             legend: {
                 layout: 'horizontal',
                 align: 'center',
-                verticalAlign: 'bottom'
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "16px"
+				}
             },
 
             credits:{
@@ -435,7 +438,10 @@
                 legend: {
                     layout: 'horizontal',
                     align: 'center',
-                    verticalAlign: 'bottom'
+                    verticalAlign: 'bottom',
+					itemStyle: {
+						fontSize: "16px"
+					}
                 },
 
                 credits:{
