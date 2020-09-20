@@ -371,7 +371,7 @@
 
         $_groupColorCode = NULL;
         foreach($_colorCodes as $_colorRange => $_colorCode){
-            if((int)$_mobInDistrictVal->Test_Positivity <= $_colorRange){
+            if((int)$_mobInDistrictVal->Test_Positivity < $_colorRange){
                 $_groupColorCode = $_colorCode;
                 $_existDataGroups[$_colorRange] = $_colorCode;
                 break;
