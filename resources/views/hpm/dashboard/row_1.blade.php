@@ -18,34 +18,33 @@
 <div class="card">
 
     <div class="row">
-        <h1 class="b1">গত ১৪ দিনে পরীক্ষা</h1>
         <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card-header">
-                <h5 class="card-title">গত ১৪ দিনে পরীক্ষা</h5>
+                <h5 class="card-title b1">গত ১৪ দিনে পরীক্ষা</h5>
             </div>
             <div class="card-body">
                 <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
-                <span class="text-primary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                <span class="text-primary b1"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
         </div>
 
         <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card-header">
-                <h5 class="card-title">গত ১৪ দিনে আক্রান্ত</h5>
+                <h5 class="card-title b1">গত ১৪ দিনে আক্রান্ত</h5>
             </div>
             <div class="card-body">
                 <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
-                <span class="text-primary"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                <span class="text-primary b1"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
         </div>
 
         <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card-header">
-                <h5 class="card-title">গত ১৪ দিনে মৃত্যু</h5>
+                <h5 class="card-title b1">গত ১৪ দিনে মৃত্যু</h5>
             </div>
             <div class="card-body">
                 <h1 class="font-weight-bold mb-1">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
-                <span class="text-primary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+                <span class="text-primary b1"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
             </div>
         </div>
         
@@ -55,7 +54,7 @@
         
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
-                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন</h3>
+                <h3 class="card-title b1">সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন</h3>
             </div>
             <div class="card-body">
                 <div id="national_dialy_infected_trend"></div>
@@ -63,7 +62,7 @@
             <div class="row">        
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Description</h5>
+                        <h5 class="card-title">বর্ণনা</h5>
                         <p class="card-text">
                             {{ $des_1->description_eng }}
                         </p>
@@ -71,7 +70,7 @@
                  </div>
                  <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Insight</h5>
+                        <h5 class="card-title">বিশ্লেষণ</h5>
                         <p class="card-text">
                             Content will place here.
                         </p>
@@ -85,24 +84,24 @@
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title">অঞ্চল তুলনা</h3>
+                <h3 class="card-title b1">অঞ্চল তুলনা</h3>
             </div>
             <div class="card-body">
                 <form action="">
                     <div class="d-flex flex-row justify-content-end">
-                        <div class="form-label pt-2 mr-1">Division</div>
+                        <div class="form-label pt-2 mr-1 b1">বিভাগ</div>
                         <div>
                             <select name="division[]"  class="select2 form-control btn-outline-primary division_select" multiple="true">
                                 {{--<option value="All">সব বিভাগ</option>--}}
                                 @foreach($division_list as $division)
-                                <option value="{!! $division !!}">{!! en2bnTranslation($division) !!} </option>
+                                <option value="{!! $division !!}" class="b1">{!! en2bnTranslation($division) !!} </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-label pl-2 pt-2 mr-1">District</div>
                         <div>
                             <select name="district[]" class="select2 form-control btn-outline-primary select_district" multiple="true">
-                                <option value="DHAKA">সব জেলা </option>
+                                <option value="DHAKA" class="b1">সব জেলা </option>
                             </select>
                         </div>
                         <!-- <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
@@ -111,7 +110,7 @@
                                 <option value="DHAKA">সব উপজিলা</option>
                             </select>
                         </div> -->
-                        <button class="btn btn-sm district_cms_search" type="submit" >Search </button>
+                        <button class="btn btn-sm district_cms_search" type="submit" >অনুসন্ধান</button>
                     </div>
 
                 </form>
@@ -123,7 +122,7 @@
             <div class="row">        
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Description</h5>
+                        <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text">
                             {{ $des_2->description_eng }}
                         </p>
@@ -131,7 +130,7 @@
                  </div>
                  <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Insight</h5>
+                        <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text">
                             Content will place here.
                         </p>
@@ -142,7 +141,7 @@
         
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+                <h3 class="card-title b1">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
             </div>
             <div class="card-body">
                 <div id="national_infected_trend"></div>
@@ -150,7 +149,7 @@
             <div class="row">        
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Description</h5>
+                        <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text">
                            {{ $des_3->description_eng }}
                         </p>
@@ -158,7 +157,7 @@
                  </div>
                  <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Insight</h5>
+                        <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text">
                             Content will place here.
                         </p>
