@@ -17,13 +17,24 @@
                         <div class="card-body">
                             <div id="national_test_vs_infected_trend"></div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Insight</h5>
-                            <p class="card-text">
-                                Content will place here. 
-                            </p>
-                        </div>
-                        
+                        <div class="row">        
+                            <div class="col-xl-8 col-lg-8 col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Description</h5>
+                                    <p class="card-text">
+                                        Description will place here.
+                                    </p>
+                                </div>
+                             </div>
+                             <div class="col-xl-4 col-lg-4 col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Insight</h5>
+                                    <p class="card-text">
+                                        Content will place here.
+                                    </p>
+                                </div>
+                             </div>
+                        </div>                       
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
@@ -32,11 +43,23 @@
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Insight</h5>
-                            <p class="card-text">
-                                Content will place here. 
-                            </p>
+                        <div class="row">        
+                            <div class="col-xl-8 col-lg-8 col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Description</h5>
+                                    <p class="card-text">
+                                        Description will place here.
+                                    </p>
+                                </div>
+                             </div>
+                             <div class="col-xl-4 col-lg-4 col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-title">Insight</h5>
+                                    <p class="card-text">
+                                        Content will place here.
+                                    </p>
+                                </div>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -48,12 +71,24 @@
                             
                                 <h3 class="card-title">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
                                 @include('hpm.dashboard.row_2_map')
-                                <div class="card-body">
-                                    <h5 class="card-title">Insight</h5>
-                                    <p class="card-text">
-                                        Content will place here.
-                                    </p>
-                                </div>
+                                <div class="row">        
+                                    <div class="col-xl-7 col-lg-7 col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Description</h5>
+                                            <p class="card-text">
+                                                Description will place here.
+                                            </p>
+                                        </div>
+                                     </div>
+                                     <div class="col-xl-5 col-lg-5 col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Insight</h5>
+                                            <p class="card-text">
+                                                Place here.
+                                            </p>
+                                        </div>
+                                     </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -69,12 +104,24 @@
                                     <h5 class="card-title">Test Per Cases for South Asian Countries</h5>
                                     <div id="country_wise_infected"></div>
                                 </div>
-                                <div class="card-body float-right">
-                                    <h5 class="card-title">Insight</h5>
-                                    <p class="card-text">
-                                        Content will place here.
-                                    </p>
-                                </div>
+                                <div class="row">        
+                                    <div class="col-xl-8 col-lg-8 col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Description</h5>
+                                            <p class="card-text">
+                                                Description will place here.
+                                            </p>
+                                        </div>
+                                     </div>
+                                     <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Insight</h5>
+                                            <p class="card-text">
+                                                Content will place here.
+                                            </p>
+                                        </div>
+                                     </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -175,10 +222,11 @@
                 ]
             });
 
-// National Test Vs Infected Trend
+			// National Test Vs Infected Trend
             Highcharts.chart('national_test_vs_infected_trend', {
                 chart: {
-                    marginRight: 80 // like left
+                    marginRight: 80, // like left
+					height: 420
                 },
                 title: {
                     text: ''
