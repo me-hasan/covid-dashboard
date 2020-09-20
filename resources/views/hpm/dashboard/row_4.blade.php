@@ -21,7 +21,7 @@
             <div class="row pt-2 pr-3">
                 <div class="col-xl-12 col-md-12">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-vcenter text-nowrap">
+                        <table class="table table-bordered table-vcenter text-nowrap b1">
                             <thead >
                             <tr>
                                 <td></td>
@@ -3519,10 +3519,10 @@
             colors: ['#5a99d3', '#e97c30'],
             series: [{
                 type: 'pie',
-                name: 'Beds',
+                name: 'শয্যা',
                 data: [
-                    ['Empty', <?=number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
-                    ['Occupancy', <?=number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?=number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
+                    ['খালি', <?=number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
                 ]
             }]
         });
@@ -3573,10 +3573,10 @@
             colors: ['#5a99d3', '#e97c30'],
             series: [{
                 type: 'pie',
-                name: 'Beds',
+                name: 'শয্যা',
                 data: [
-                    ['Empty', <?=number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
-                    ['Occupancy', <?=number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?=number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
+                    ['খালি', <?=number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
                 ]
             }]
         });
