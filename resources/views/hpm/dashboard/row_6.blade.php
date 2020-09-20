@@ -63,6 +63,25 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
                     </div>
                 </div>
             </div>
+
+            <div class="row">        
+                <div class="col-xl-8 col-lg-8 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text">
+                            {{ $des_8->description_eng }}
+                        </p>
+                    </div>
+                 </div>
+                 <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Insight</h5>
+                        <p class="card-text">
+                            Content will place here.
+                        </p>
+                    </div>
+                 </div>
+            </div>
         </div>
     </div>
 </div>
