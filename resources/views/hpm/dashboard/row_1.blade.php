@@ -332,7 +332,8 @@
                 align: 'center',
                 verticalAlign: 'bottom',
 				itemStyle: {
-					fontSize: "16px"
+					fontSize: "16px",
+					fontWeight: "normal"
 				}
             },
 
@@ -440,7 +441,8 @@
                     align: 'center',
                     verticalAlign: 'bottom',
 					itemStyle: {
-						fontSize: "16px"
+						fontSize: "16px",
+						fontWeight: "normal"
 					}
                 },
 

@@ -181,7 +181,8 @@
             legend:{
                 enabled:true,
 				itemStyle: {
-					fontSize: "16px"
+					fontSize: "16px",
+					fontWeight: "normal"
 				}
             },
             yAxis: {

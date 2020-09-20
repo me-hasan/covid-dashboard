@@ -3504,7 +3504,8 @@
                     return this.name+': <b> '+this.y + '%</b>';
                 },
 				itemStyle: {
-					fontSize: "16px"
+					fontSize: "16px",
+					fontWeight: "normal"
 				}
             },
             tooltip: {

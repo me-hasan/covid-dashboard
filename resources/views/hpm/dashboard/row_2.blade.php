@@ -242,6 +242,12 @@
                 credits:{
                     enabled:false
                 },
+				legend: {
+					itemStyle: {
+						fontSize: "16px",
+						fontWeight: "normal"
+					}
+                },
                 xAxis: {
                     categories: [<?php echo $testsVsCases['dateRange'];?>],
                     tickInterval: 1

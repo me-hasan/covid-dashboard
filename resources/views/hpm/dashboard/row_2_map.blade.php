@@ -3352,7 +3352,7 @@
         </svg>
     <div class="col-xl-12 col-md-12 ml-4">
         <div id="color-group" class="infected-color-group-">
-            <div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#fff51e"></span><span class="group-color-label text-ash p-1">Low Risk</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f87f2c"></span><span class="group-color-label text-ash p-1">Medium Risk</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f43735"></span><span class="group-color-label text-ash p-1">High Risk</span></div></div>
+            <div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#fff51e"></span><span class="group-color-label text-ash p-1">উচ্চ ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f87f2c"></span><span class="group-color-label text-ash p-1">মধ্যম ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f43735"></span><span class="group-color-label text-ash p-1">উচ্চ ঝুঁকিপূর্ণ</span></div></div>
         </div>
     </div>
     </div>
