@@ -2,14 +2,14 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">IMPACT IN POPULATION</h3>
+                <h3 class="card-title b1">জনসংখ্যায় প্রভাব</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <!-- <div class="col-xl-6 col-md-12">
                         <div id="death_impact_bar"></div>
                         <div class="card-body">
-                            <h5 class="card-title">Insight</h5>
+                            <h5 class="card-title b1">বিশ্লেষণ</h5>
                             <p class="card-text">
                                 Content will place here.
                             </p>
@@ -20,7 +20,7 @@
                         <div class="row">        
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Description</h5>
+                                    <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text">
                                         {{ $des_9->description_eng }}
                                     </p>
@@ -28,10 +28,8 @@
                              </div>
                              <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Insight</h5>
-                                    <p class="card-text">
-                                        Content will place here.
-                                    </p>
+                                    <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                    <p class="card-text b1">আমার সোনার বাংলা</p>
                                 </div>
                              </div>
                         </div>

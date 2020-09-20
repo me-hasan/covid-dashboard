@@ -242,11 +242,13 @@
                 },
                 yAxis: [{
                     lineWidth: 1,
-                    text: 'দৈনিক আক্রান্তের সংখ্যা',
-					style: {
-						fontSize: 18,
-						fontFamily: 'SolaimanLipi'
-					}
+                    title: {
+                        text: 'দৈনিক আক্রান্তের সংখ্যা',
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
+                    }
                 }, {
                     lineWidth: 1,
                     opposite: true,
@@ -316,7 +318,7 @@
                 yAxis: [{
                     lineWidth: 1,
                     title: {
-                        text: 'সংক্রমণ',
+                        text: 'সংক্রমণের হার',
 						style: {
 							fontSize: 18,
 							fontFamily: 'SolaimanLipi'
@@ -326,7 +328,7 @@
                     lineWidth: 1,
                     opposite: true,
                     title: {
-                        text: 'সংক্রমণের হার',
+                        text: 'সংক্রমণ',
 						style: {
 							fontSize: 18,
 							fontFamily: 'SolaimanLipi'

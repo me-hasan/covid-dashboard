@@ -222,9 +222,11 @@
                 },
                 xAxis: {
                     categories: <?php echo json_encode($date_arr);?>,
-					style: {
-						fontSize: 18,
-						fontFamily: 'SolaimanLipi'
+					labels: {
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
 					}
 
                 },
