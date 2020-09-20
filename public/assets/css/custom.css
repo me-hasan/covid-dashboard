@@ -174,4 +174,8 @@
     color: #fff !important;
 }
 
-.b1{font-family: 'SolaimanLipi';}
+.b1{font-family: 'SolaimanLipi' !important;}
+
+body{color: #000 !important;}
+
+.card-title{font-size: 20px !important; font-weight: normal !important;}
