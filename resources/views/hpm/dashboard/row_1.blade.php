@@ -18,7 +18,7 @@
 <div class="card">
 
     <div class="row">
-        
+        <h1 class="b1">গত ১৪ দিনে পরীক্ষা</h1>
         <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card-header">
                 <h5 class="card-title">গত ১৪ দিনে পরীক্ষা</h5>
