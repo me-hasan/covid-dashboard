@@ -120,18 +120,24 @@
             <div class="card-body">
                 <div id="district_comparision"></div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">Description</h5>
-                <p class="card-text">
-                    Description will place here.
-                </p>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Insight</h5>
-                <p class="card-text">
-                    Content will place here.
-                </p>
-            </div>
+            <div class="row">        
+                <div class="col-xl-8 col-lg-8 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text">
+                            Description will place here.
+                        </p>
+                    </div>
+                 </div>
+                 <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Insight</h5>
+                        <p class="card-text">
+                            Content will place here.
+                        </p>
+                    </div>
+                 </div>
+        	</div>
         </div>
         
         <div class="col-xl-6 col-lg-6 col-md-12">
@@ -141,18 +147,24 @@
             <div class="card-body">
                 <div id="national_infected_trend"></div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">Description</h5>
-                <p class="card-text">
-                    Description will place here.
-                </p>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Insight</h5>
-                <p class="card-text">
-                    Content will place here.
-                </p>
-            </div>
+            <div class="row">        
+                <div class="col-xl-8 col-lg-8 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text">
+                            Description will place here.
+                        </p>
+                    </div>
+                 </div>
+                 <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Insight</h5>
+                        <p class="card-text">
+                            Content will place here.
+                        </p>
+                    </div>
+                 </div>
+        	</div>
         </div>
         
     </div>
