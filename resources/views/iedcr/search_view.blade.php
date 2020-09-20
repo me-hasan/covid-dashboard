@@ -8,11 +8,11 @@
                 <label class="custom-control custom-radio mr-2">
                     <input type="radio" class="custom-control-input hierarchy_level natioanl_level" name="hierarchy_level"
                            value="national" @php if (request()->get('hierarchy_level') != 'divisional') { echo "checked"; } @endphp>
-                    <span class="custom-control-label">National Level</span> </label>
+                    <span class="custom-control-label">জাতীয় পর্যায়</span> </label>
                 <label class="custom-control custom-radio mr-2">
                     <input type="radio" class="custom-control-input hierarchy_level divisional_level" name="hierarchy_level"
                            value="divisional" @php if (request()->get('hierarchy_level') == 'divisional') { echo "checked"; } @endphp>
-                    <span class="custom-control-label">Divisional Level</span> </label>
+                    <span class="custom-control-label">বিভাগীয় পর্যায়</span> </label>
             </div>
         </div>
         <div class="panel panel-default">

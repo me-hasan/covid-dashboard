@@ -45,7 +45,9 @@
 
 <!-- Color Skin css -->
 <link id="theme" href="{{ asset('assets/colors/color1.css') }}" rel="stylesheet" type="text/css"/>
-
+<style>
+@import url('https://fonts.maateen.me/solaiman-lipi/font.css');
+</style>
 <!-- Custom CSS by eGen -->
 <link id="theme" href="{{ asset('assets/css/custom.css?v=5') }}" rel="stylesheet" type="text/css"/>
     <style>
@@ -56,4 +58,5 @@
             stroke:#705ec8;
         }
     </style>
+
 </head>
