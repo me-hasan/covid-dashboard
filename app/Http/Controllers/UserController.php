@@ -134,13 +134,31 @@ class UserController extends Controller
         }
     }
 
+    // public function getDistrictFromDivision(Request $request)
+    // {
+    //     if(isset($request->division)) {
+    //         $districts = DB::table('upazila')->where('division',$request->division)->distinct()->get('district');
+    //         $response = array(
+    //             'status' => 1,
+    //             'data' => $districts,
+    //             'message' => 'District data has successfully retrieved.',
+    //         );
+    //         return $response;
+    //     }
+    // }
+
     public function getDistrictFromDivision(Request $request)
     {
+        $data = [];
         if(isset($request->division)) {
             $districts = DB::table('upazila')->where('division',$request->division)->distinct()->get('district');
+            foreach ($districts as $key=>$districtData) {
+                $districtData->district_bn = en2bnTranslation($districtData->district);
+                $data[] = $districtData;
+            }
             $response = array(
                 'status' => 1,
-                'data' => $districts,
+                'data' => $data,
                 'message' => 'District data has successfully retrieved.',
             );
             return $response;
