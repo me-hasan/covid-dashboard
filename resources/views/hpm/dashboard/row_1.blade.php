@@ -1,18 +1,18 @@
 <!-- Start :: Disease Progression -->
 <?php 
-    $class_1='fa fa-arrow-up mr-1';                      
+    $class_1='fa fa-arrow-up mr-1 text-danger';                      
     if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1){ 
-        $class_1='fa fa-arrow-down mr-1'; 
+        $class_1='fa fa-arrow-down mr-1 text-success'; 
     }  
 
-    $class_2='fa fa-arrow-up mr-1';                      
+    $class_2='fa fa-arrow-up mr-1 text-danger';                      
     if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1){ 
-        $class_2='fa fa-arrow-down mr-1'; 
+        $class_2='fa fa-arrow-down mr-1 text-success'; 
     } 
 
-    $class_3='fa fa-arrow-up mr-1';                      
+    $class_3='fa fa-arrow-up mr-1 text-danger';                      
     if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1){ 
-        $class_3='fa fa-arrow-down mr-1'; 
+        $class_3='fa fa-arrow-down mr-1 text-success'; 
     } 
 ?> 
 <div class="card">
@@ -110,7 +110,7 @@
                                 <option value="DHAKA">সব উপজিলা</option>
                             </select>
                         </div> -->
-                        <button class="btn btn-sm district_cms_search" type="submit" >অনুসন্ধান</button>
+                        <button class="btn btn-sm district_cms_search b1" type="submit" >অনুসন্ধান</button>
                     </div>
 
                 </form>
