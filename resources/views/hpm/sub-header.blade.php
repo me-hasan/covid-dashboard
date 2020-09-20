@@ -3,7 +3,7 @@
 <div class="app-header header">
     <div class="container-fluid">
         <div class="d-flex">
-            <a class="header-brand" href="{!! route('iedcr.dashboard') !!}">
+            <a class="header-brand" href="{!! route('hpm.dashboard') !!}">
                 <img src="{{ asset('assets/images/brand/corona-logo.webp') }}" class="header-brand-img desktop-lgo"
                      alt="Logo">
                 <img src="{{ asset('assets/images/brand/logo1.png') }}" class="header-brand-img dark-logo" alt="Logo">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-@include('iedcr.header')
+@include('hpm.header')
 
 <body class="app sidebar-mini">
 
@@ -15,21 +15,21 @@
 <div class="page">
   <div class="page-main">
 
-    @include('iedcr.aside')
+    <!-- @include('iedcr.aside') -->
 
     <!-- App-Content -->
     <div class="app-content main-content">
       <div class="side-app">
 
-        @include('iedcr.sub-header')
+        @include('hpm.sub-header')
 
         <!--Page header-->
         <div class="page-header">
           <div class="page-leftheader">
             <!--<h4 class="page-title mb-0">Hi! Welcome Back</h4>-->
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#"><i class="fe fe-home mr-2 fs-14"></i>Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page"><a href="#">@yield('bread_crumb_active','dashboard')</a></li>
+              <li class="breadcrumb-item"><a href="{!! route('hpm.dashboard') !!}"><i class="fe fe-home mr-2 fs-14 b1"></i>হোম</a></li>
+              <li class="breadcrumb-item active b1" aria-current="page"><a href="#">@yield('bread_crumb_active','ড্যাশবোর্ড')</a></li>
             </ol>
           </div>
           <!--<div class="page-rightheader">
@@ -65,6 +65,6 @@
 <!-- Back to top -->
 <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
-@include('iedcr.footer')
+@include('hpm.footer')
 </body>
 </html>
