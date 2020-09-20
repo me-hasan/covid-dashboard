@@ -64,7 +64,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_1->description_eng }}
+                            {{ $des_1->description_beng }}
                         </p>
                     </div>
                  </div>
@@ -72,7 +72,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            আমার সোনার বাংলা
+                            {{ $des_1->insight_beng }}
                         </p>
                     </div>
                  </div>
@@ -124,7 +124,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text">
-                            {{ $des_2->description_eng }}
+                            {{ $des_2->description_beng }}
                         </p>
                     </div>
                  </div>
@@ -132,7 +132,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            আমার সোনার বাংলা
+                            {{ $des_2->insight_beng }}
                         </p>
                     </div>
                  </div>
@@ -151,7 +151,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text">
-                           {{ $des_3->description_eng }}
+                           {{ $des_3->description_beng }}
                         </p>
                     </div>
                  </div>
@@ -159,7 +159,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            আমার সোনার বাংলা
+                            {{ $des_3->insight_beng }}
                         </p>
                     </div>
                  </div>
@@ -192,11 +192,11 @@
             Highcharts.chart('national_dialy_infected_trend', {
                 chart: {
                     zoomType: 'xy',
-					height: 470
+					height: 470,
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
-				style: {
-					fontFamily: 'SolaimanLipi'
-				},
                 title: {
                     text: ''
                 },
@@ -207,11 +207,18 @@
                     enabled:false
                 },
                 legend:{
-                    enabled:true
+                    enabled:true,
+					itemStyle: {
+						fontSize: "16px"
+					}
                 },
                 yAxis: {
                     title: {
-                        text: 'দৈনিক আক্রান্তের সংখ্যা'
+                        text: 'দৈনিক আক্রান্তের সংখ্যা',
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
                     },
                     labels: {
                         formatter: function() {
@@ -221,7 +228,6 @@
                 },
                 xAxis: {
                     categories: <?php echo json_encode($date_arr);?>
-
                 },
                 tooltip: {
                   pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -250,7 +256,10 @@
         // National Infected Trend
         Highcharts.chart('national_infected_trend', {
             chart: {
-                height: 460
+                height: 460,
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
                 text: ''
@@ -263,7 +272,10 @@
             legend: {
                 layout: 'horizontal',
                 align: 'center',
-                verticalAlign: 'bottom'
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "16px"
+				}
             },
 
             credits:{
@@ -276,7 +288,11 @@
 
             yAxis: {
                 title: {
-                    text: 'দৈনিক আক্রান্তের সংখ্যা'
+                    text: 'দৈনিক আক্রান্তের সংখ্যা',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
                 }
             },
 
@@ -297,7 +313,13 @@
         });
 
         Highcharts.chart('district_comparision', {
-            title: {
+            chart: {
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
+			
+			title: {
                 text: ''
             },
 
@@ -308,7 +330,10 @@
             legend: {
                 layout: 'horizontal',
                 align: 'center',
-                verticalAlign: 'bottom'
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "16px"
+				}
             },
 
             credits:{
@@ -323,7 +348,11 @@
 
             yAxis: {
                 title: {
-                    text: 'দৈনিক আক্রান্তের সংখ্যা'
+                    text: 'দৈনিক আক্রান্তের সংখ্যা',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
                 }
             },
 
@@ -409,7 +438,10 @@
                 legend: {
                     layout: 'horizontal',
                     align: 'center',
-                    verticalAlign: 'bottom'
+                    verticalAlign: 'bottom',
+					itemStyle: {
+						fontSize: "16px"
+					}
                 },
 
                 credits:{

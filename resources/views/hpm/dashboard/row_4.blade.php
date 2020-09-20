@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card-header cart-height-customize">
-                <h3 class="card-title">Nationwide Hospital Capacity and Occupancy</h3>
+                <h3 class="card-title">হাসপাতাল ধারণ ক্ষমতা এবং সংস্থান</h3>
             </div>
         </div>
         <div class="col-xl-8 col-md-12">
@@ -21,25 +21,25 @@
             <div class="row pt-2 pr-3">
                 <div class="col-xl-12 col-md-12">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-vcenter text-nowrap">
+                        <table class="table table-bordered table-vcenter text-nowrap b1">
                             <thead >
                             <tr>
                                 <td></td>
-                                <td colspan="2" class="text-center fs-18">General Beds</td>
-                                <td colspan="2" class="text-center fs-18">ICU Beds</td>
+                                <td colspan="2" class="text-center fs-18">সাধারণ শয্যা</td>
+                                <td colspan="2" class="text-center fs-18">আইসিইউ  শয্যা</td>
                             </tr>
                             </thead>
                             <tbody class="fs-16">
                             <tr>
                                 <td></td>
-                                <td>Occupancy</td>
-                                <td>Empty</td>
-                                <td>Occupancy</td>
-                                <td>Empty</td>
+                                <td>ভর্তি</td>
+                                <td>খালি</td>
+                                <td>ভর্তি</td>
+                                <td>খালি</td>
                                 
                             </tr>
                             <tr>
-                                <td>Overall Country</td>
+                                <td>সারা দেশ</td>
                                 <td>{{$nation_hospital->Admitted_General_Beds}}</td>
                                 <th>{{$nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$nation_hospital->Admitted_ICU_Beds}}</td>
@@ -47,7 +47,7 @@
                                 
                             </tr>
                              <tr>
-                                <td>Dhaka City</td>
+                                <td>ঢাকা শহর</td>
                                 <td>{{$dhaka_hospital->Admitted_General_Beds}}</td>
                                 <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$dhaka_hospital->Admitted_ICU_Beds}}</td>
@@ -55,7 +55,7 @@
                                 
                             </tr>
                             <tr>
-                                <td>Chittagong City</td>
+                                <td>চট্টগ্রাম শহর</td>
                                 <td>{{$ctg_hospital->Admitted_General_Beds}}</td>
                                 <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
                                 <td>{{$ctg_hospital->Admitted_ICU_Beds}}</td>
@@ -63,7 +63,7 @@
                                 
                             </tr>
                             <tr>
-                                <td>Others</td>
+                                <td>অন্যান্য</td>
                                 <td>{{ $nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
                                 <th>{{ ($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )}}</th>
                                 <td>{{ $nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )}}</td>
@@ -3458,21 +3458,21 @@
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-8 col-xm-12">
             <div class="card-body">
-                <h5 class="card-title">Description</h5>
-                <p class="card-text"> {{ $des_10->description_eng }}</p>
+                <h5 class="card-title b1">বর্ণনা</h5>
+                <p class="card-text">  {{ $des_10->description_beng }}</p>
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-xm-12">
             <div class="card-body">
-                <h5 class="card-title">Insight</h5>
-                <p class="card-text">Content here.</p>
+                <h5 class="card-title b1">বিশ্লেষণ</h5>
+                <p class="card-text b1">{{ $des_10->insight_beng }}</p>
             </div>
         </div>
     </div>
 </div>
 @push('custom_script')
     <script>
-        // Hospital General Beds
+        // Hospital সাধারণ শয্যা
         Highcharts.chart('hospital_general_beds', {
             chart: {
                 type: 'pie',
@@ -3482,11 +3482,18 @@
                     beta: 0
                 },
                 height: 250,
-                margin: [0, 0, 30, 0]
+                margin: [0, 0, 30, 0],
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
-                text: 'Hospital General Beds',
-                y: 20
+                text: 'সাধারণ শয্যা',
+                y: 20,
+				style: {
+					fontSize: 18,
+					fontFamily: 'SolaimanLipi'
+				}
             },
             credits:{
                 enabled:false
@@ -3495,7 +3502,10 @@
                 enabled:true,
                 labelFormatter: function () {
                     return this.name+': <b> '+this.y + '%</b>';
-                }
+                },
+				itemStyle: {
+					fontSize: "16px"
+				}
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -3519,15 +3529,15 @@
             colors: ['#5a99d3', '#e97c30'],
             series: [{
                 type: 'pie',
-                name: 'Beds',
+                name: 'শয্যা',
                 data: [
-                    ['Empty', <?=number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
-                    ['Occupancy', <?=number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?=number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
+                    ['খালি', <?=number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
                 ]
             }]
         });
 
-        // Hospital ICU Beds
+        // Hospital আইসিইউ  শয্যা
         Highcharts.chart('hospital_icu_beds', {
             chart: {
                 type: 'pie',
@@ -3537,10 +3547,17 @@
                     beta: 0
                 },
                 height: 250,
-                margin: [0, 0, 30, 0]
+                margin: [0, 0, 30, 0],
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
-                text: 'Hospital ICU Beds'
+                text: 'আইসিইউ শয্যা',
+				style: {
+					fontSize: 18,
+					fontFamily: 'SolaimanLipi'
+				}
             },
             credits:{
                 enabled:false
@@ -3549,7 +3566,10 @@
                 enabled:true,
                 labelFormatter: function () {
                     return this.name+': <b> '+this.y + '%</b>';
-                }
+                },
+				itemStyle: {
+					fontSize: "16px"
+				}
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -3573,10 +3593,10 @@
             colors: ['#5a99d3', '#e97c30'],
             series: [{
                 type: 'pie',
-                name: 'Beds',
+                name: 'শয্যা',
                 data: [
-                    ['Empty', <?=number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
-                    ['Occupancy', <?=number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?=number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
+                    ['খালি', <?=number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
                 ]
             }]
         });
