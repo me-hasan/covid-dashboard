@@ -27,14 +27,14 @@
 
            @yield('search_view')
             <div class="form-group mb-0 mt-3">
-                <div class="custom-controls-stacked d-flex">
+                <!-- <div class="custom-controls-stacked d-flex">
                     <label class="custom-control custom-radio mr-2">
                         <input type="radio" class="custom-control-input" name="lang" value="en" checked>
                         <span class="custom-control-label">EN</span> </label>
                     <label class="custom-control custom-radio mr-2">
                         <input type="radio" class="custom-control-input" name="lang" value="bn" disabled>
                         <span class="custom-control-label">BN</span> </label>
-                </div>
+                </div> -->
             </div>
 
             <div class="dropdown">
