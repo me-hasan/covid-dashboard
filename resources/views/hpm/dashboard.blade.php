@@ -1,9 +1,9 @@
-@extends('iedcr.default')
+@extends('hpm.default')
 
 @section('search_view')
     <div class="d-flex order-lg-2 ml-auto">
         <form action="{{ route('hpm.dashboard') }}" class="d-flex order-lg-12 ml-auto">
-            @include('iedcr.search_view')
+            @include('hpm.search_view')
         </form>
     </div>
 @endsection
