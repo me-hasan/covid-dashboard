@@ -69,14 +69,14 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_8->description_eng }}
+                             {{ $des_8->description_beng }}
                         </p>
                     </div>
                  </div>
                  <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
-                        <p class="card-text b1">আমার সোনার বাংলা</p>
+                        <p class="card-text b1">{{ $des_8->insight_beng }}</p>
                     </div>
                  </div>
             </div>
