@@ -94,7 +94,8 @@
                             if (selectedDistrict == htmlEntities(data.data[i].district)) {
                                 selectedValue = 'selected';
                             }
-                            html += '<option ' + selectedValue +' value="' + htmlEntities(data.data[i].district) + '">' + data.data[i].district + '</option>';
+                            //html += '<option ' + selectedValue +' value="' + htmlEntities(data.data[i].district) + '">' + data.data[i].district + '</option>';
+                            html += '<option ' + selectedValue +' value="' + htmlEntities(data.data[i].district) + '">' + data.data[i].district_bn + '</option>';
                         }
                         $('.district').append(html);
                     }

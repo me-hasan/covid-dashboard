@@ -1173,7 +1173,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
             $infected = DB::select(" select date as report_date, division_eng, sum(daily_cases) as infected_24_hrs 
                 from district_wise_cases_covid where division_eng = '".$request->division."'
                 group by division_eng, date 
-                order by date desc limit 14; ");
+                order by date desc limit 14 ");
         
             $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
             (select date_of_test, division, count(id) as 'pos' from districts_test_positivity 
