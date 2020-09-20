@@ -88,7 +88,7 @@ class DashboardController extends Controller
         if(count($cumulativeInfectedPerson['division_data'])) {
             foreach ($cumulativeInfectedPerson['division_data'] as $key => $dist) {
                 $seriesData[$i]['type'] = 'spline';
-                $seriesData[$i]['name'] = $key;
+                $seriesData[$i]['name'] = en2bnTranslation($key);
                 $seriesData[$i]['data'] = $dist ?? [];
                 $seriesData[$i]['marker']['enabled'] = false;
                 $seriesData[$i]['marker']['symbol'] = 'circle';
@@ -358,10 +358,10 @@ SELECT
             $cumulativeData_2['Mymensingh'] = array_map('intval',array_column($cumulativeSql_mym,'cumulative_infected_person'));
              // + $cumulativeSql_ctg + $cumulativeSql_barisal + $cumulativeSql_khulna + $cumulativeSql_rajshahi + $cumulativeSql_rangpur + $cumulativeSql_syl + $cumulativeSql_mym ;
             foreach ($cumulativeData as $key => $div) {
-                $div_date = date('d/m/Y', strtotime($div->date));
+                $div_date = date('d-M-Y', strtotime($div->date));
 
-                if(!in_array($div_date, $dateData)){
-                    $dateData[] = $div_date;
+                if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
+                    $dateData[] =  convertEnglishDateToBangla($div_date);
                 }
 
                 $divisionData[$div->division_eng][] = (int)$div->cumulative_infected_person ?? 0;
@@ -466,7 +466,7 @@ ORDER BY t.date";
 
                     $seriesData[$i]['type'] = 'spline';
 
-                    $seriesData[$i]['name'] = $key;
+                    $seriesData[$i]['name'] = en2bnTranslation($key);
                     $seriesData[$i]['data'] = $dist ?? [];
                     $seriesData[$i]['marker']['enabled'] = false;
                     $seriesData[$i]['marker']['symbol'] = 'circle';
@@ -644,10 +644,15 @@ SELECT
             $dateData = [];
             $districtData = [];
             foreach ($cumulativeDisUpaZillaData as $key => $div) {
-                $div_date = date('d/m/Y', strtotime($div->date));
+              /*  $div_date = date('d/m/Y', strtotime($div->date));
 
                 if(!in_array($div_date, $dateData)){
                     $dateData[] = $div_date;
+                }*/
+                $div_date = date('d-M-Y', strtotime($div->date));
+
+                if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
+                    $dateData[] =  convertEnglishDateToBangla($div_date);
                 }
 
                 $districtData[$div->district_city_eng][] = (int)$div->cumulative_infected_person ?? 0;
@@ -1158,28 +1163,28 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
             $infected = DB::select(" select date as report_date, division_eng, district_city_eng, daily_cases as infected_24_hrs
             from district_wise_cases_covid where district_city_eng = '".$request->district."'
             order by date desc limit 14; ");
-        
+
             $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.district, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
-            (select date_of_test, division, district, count(id) as 'pos' from districts_test_positivity 
+            (select date_of_test, division, district, count(id) as 'pos' from districts_test_positivity
             where test_result='Positive' and district = '".$request->district."'
-            group by district,date_of_test order by date_of_test desc limit 14) 
-            as a inner join 
+            group by district,date_of_test order by date_of_test desc limit 14)
+            as a inner join
             (select date_of_test, division, district, count(id) as 'tot' from districts_test_positivity
-            where district = '".$request->district."' 
+            where district = '".$request->district."'
             group by district, date_of_test order by date_of_test desc limit 14) as b using(district, date_of_test)
             order by a.date_of_test desc limit 14 ");
 
         }elseif($request->division) {
-            $infected = DB::select(" select date as report_date, division_eng, sum(daily_cases) as infected_24_hrs 
+            $infected = DB::select(" select date as report_date, division_eng, sum(daily_cases) as infected_24_hrs
                 from district_wise_cases_covid where division_eng = '".$request->division."'
-                group by division_eng, date 
+                group by division_eng, date
                 order by date desc limit 14 ");
-        
+
             $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
-            (select date_of_test, division, count(id) as 'pos' from districts_test_positivity 
+            (select date_of_test, division, count(id) as 'pos' from districts_test_positivity
             where test_result='Positive' and division = '".$request->division."'
-            group by division,date_of_test order by date_of_test desc limit 14) 
-            as a inner join 
+            group by division,date_of_test order by date_of_test desc limit 14)
+            as a inner join
             (select date_of_test, division, count(id) as 'tot' from districts_test_positivity
             where division = '".$request->division."'
             group by division, date_of_test order by date_of_test desc limit 14) as b using(division, date_of_test)
@@ -1187,9 +1192,10 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
 
         } else { // national level
             $infected = DB::select(" SELECT * FROM (SELECT report_date, infected_24_hrs FROM daily_data ORDER BY report_date DESC LIMIT 14) a ORDER BY a.report_date ASC ");
-        
-            $test_positivity = DB::select(" select report_date, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
-            from daily_data order by report_date desc limit 14 ");
+
+
+            $test_positivity = DB::select(" SELECT * FROM (SELECT report_date, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 AS 'test_positivity'
+            FROM daily_data ORDER BY report_date DESC LIMIT 14)a ORDER BY a.report_date ASC  ");
 
         }
 
