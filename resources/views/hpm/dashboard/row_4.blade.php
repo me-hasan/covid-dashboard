@@ -3458,7 +3458,7 @@
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-8 col-xm-12">
             <div class="card-body">
-                <h5 class="card-title">Insight</h5>
+                <h5 class="card-title">Description</h5>
                 <p class="card-text">Content here.</p>
             </div>
         </div>
