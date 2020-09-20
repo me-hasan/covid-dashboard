@@ -204,11 +204,7 @@
                     enabled:false
                 },
                 legend:{
-                    enabled:true,
-					style: {
-						fontSize: 16,
-						fontFamily: 'SolaimanLipi'
-					}
+                    enabled:true
                 },
                 yAxis: {
                     title: {
