@@ -2,14 +2,14 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">IMPACT IN POPULATION</h3>
+                <h3 class="card-title b1">জনসংখ্যায় প্রভাব</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <!-- <div class="col-xl-6 col-md-12">
                         <div id="death_impact_bar"></div>
                         <div class="card-body">
-                            <h5 class="card-title">Insight</h5>
+                            <h5 class="card-title b1">বিশ্লেষণ</h5>
                             <p class="card-text">
                                 Content will place here.
                             </p>
@@ -20,18 +20,16 @@
                         <div class="row">        
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Description</h5>
-                                    <p class="card-text">
+                                    <h5 class="card-title b1">বর্ণনা</h5>
+                                    <p class="card-text b1">
                                         {{ $des_9->description_eng }}
                                     </p>
                                 </div>
                              </div>
                              <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Insight</h5>
-                                    <p class="card-text">
-                                        Content will place here.
-                                    </p>
+                                    <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                    <p class="card-text b1">আমার সোনার বাংলা</p>
                                 </div>
                              </div>
                         </div>
@@ -166,7 +164,10 @@
         // Age Wise Death Distribution
         Highcharts.chart('age_wise_death_distribution', {
             chart: {
-                type: 'bar'
+                type: 'bar',
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
             },
             title: {
                 text: ''
@@ -178,7 +179,10 @@
                 enabled:false
             },
             legend:{
-                enabled:true
+                enabled:true,
+				itemStyle: {
+					fontSize: "16px"
+				}
             },
             yAxis: {
                 title: {
@@ -193,7 +197,11 @@
             xAxis: {
                 categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"],
 				title: {
-                    text: 'Age'
+                    text: 'বয়স',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
                 }
             },
             tooltip: {
@@ -209,11 +217,11 @@
             },
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
-                name: 'Death',
+                name: 'মৃত্যু',
                 data: [<?php echo $deathAge;?>]
 
             }, {
-                name: 'Infected Person',
+                name: 'আক্রান্ত',
                 data: [<?php echo $_ageWiseInfectData;?>],
 
             }]

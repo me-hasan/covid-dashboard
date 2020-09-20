@@ -5,14 +5,14 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">পরীক্ষা পরিস্থিতি</h3>
+                <h5 class="card-title b1">পরীক্ষা পরিস্থিতি</h3>
             </div>
             <div class="card-body">
 
                 <div class="row pt-5">
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h3 class="card-title">পরীক্ষা বনাম আক্রান্ত</h3>
+                            <h5 class="card-title b1">পরীক্ষা বনাম আক্রান্ত</h3>
                         </div>
                         <div class="card-body">
                             <div id="national_test_vs_infected_trend"></div>
@@ -20,17 +20,17 @@
                         <div class="row">        
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Description</h5>
-                                    <p class="card-text">
+                                    <h5 class="card-title b1">বর্ণনা</h5>
+                                    <p class="card-text b1">
                                         {{ $des_4->description_eng }}
                                     </p>
                                 </div>
                              </div>
                              <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Insight</h5>
-                                    <p class="card-text">
-                                        Content will place here.
+                                    <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                    <p class="card-text b1">
+                                        আমার সোনার বাংলা
                                     </p>
                                 </div>
                              </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h3 class="card-title">বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার</h3>
+                            <h5 class="card-title b1">বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার</h3>
                         </div>
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
@@ -46,17 +46,17 @@
                         <div class="row">        
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Description</h5>
-                                    <p class="card-text">
+                                    <h5 class="card-title b1">বর্ণনা</h5>
+                                    <p class="card-text b1">
                                         {{ $des_5->description_eng }}
                                     </p>
                                 </div>
                              </div>
                              <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="card-body">
-                                    <h5 class="card-title">Insight</h5>
-                                    <p class="card-text">
-                                        Content will place here.
+                                    <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                    <p class="card-text b1">
+                                        আমার সোনার বাংলা
                                     </p>
                                 </div>
                              </div>
@@ -69,21 +69,21 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
                             
-                                <h3 class="card-title">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
+                                <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
                                 @include('hpm.dashboard.row_2_map')
                                 <div class="row">        
                                     <div class="col-xl-7 col-lg-7 col-md-6">
                                         <div class="card-body">
-                                            <h5 class="card-title">Description</h5>
-                                            <p class="card-text">
+                                            <h5 class="card-title b1">বর্ণনা</h5>
+                                            <p class="card-text b1">
                                                {{ $des_6->description_eng }}
                                             </p>
                                         </div>
                                      </div>
                                      <div class="col-xl-5 col-lg-5 col-md-6">
                                         <div class="card-body">
-                                            <h5 class="card-title">Insight</h5>
-                                            <p class="card-text">
+                                            <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                            <p class="card-text b1">
                                                 Place here.
                                             </p>
                                         </div>
@@ -95,29 +95,28 @@
                     <div class="col-xl-8 col-lg-8 col-md-12">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
-                                <h3 class="card-title"></h3>
+                                <h5 class="card-title b1"></h3>
                                 <div class="card-body">
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-body">
-                                    <!-- <h5 class="card-title">দক্ষিণ এশিয়ার দেশগুলাতো আক্রন্ত</h5> -->
-                                    <h5 class="card-title">Test Per Cases for South Asian Countries</h5>
+                                    <h5 class="card-title b1">দক্ষিণ এশিয়ার দেশগুলোতে আক্রান্তের বিপরীতে পরীক্ষার সংখ্যা</h5>
                                     <div id="country_wise_infected"></div>
                                 </div>
                                 <div class="row">        
                                     <div class="col-xl-8 col-lg-8 col-md-6">
                                         <div class="card-body">
-                                            <h5 class="card-title">Description</h5>
-                                            <p class="card-text">
+                                            <h5 class="card-title b1">বর্ণনা</h5>
+                                            <p class="card-text b1">
                                                 {{ $des_7->description_eng }}
                                             </p>
                                         </div>
                                      </div>
                                      <div class="col-xl-4 col-lg-4 col-md-6">
                                         <div class="card-body">
-                                            <h5 class="card-title">Insight</h5>
-                                            <p class="card-text">
-                                                Content will place here.
+                                            <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                            <p class="card-text b1">
+                                                আমার সোনার বাংলা
                                             </p>
                                         </div>
                                      </div>
@@ -138,7 +137,10 @@
    // South Country Wise Infected
             Highcharts.chart('country_wise_infected', {
                 chart: {
-                    type: 'bar'
+                    type: 'bar',
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''
@@ -190,31 +192,31 @@
                         colorByPoint: true,
                         data: [
                             {
-                                name: "Mayanmar",
+                                name: "মিয়ানমার",
                                 y: <?=$tests_per_case_Mayanmar->cumulative_tests_per_case;?>
                             },
                             {
-                                name: "Sri Lanka",
+                                name: "শ্রীলঙ্কা",
                                 y: <?=$tests_per_case_Sri->cumulative_tests_per_case;?>
                             },
                             {
-                                name: "Nepal",
+                                name: "নেপাল",
                                 y: <?=$tests_per_case_Nepal->cumulative_tests_per_case;?>
                             },
                             {
-                                name: "Maldives",
+                                name: "মালদ্বীপ",
                                 y: <?=$tests_per_case_Maldives->cumulative_tests_per_case;?>
                             },
                             {
-                                name: "India",
+                                name: "ভারত",
                                 y: <?=$tests_per_case_India->cumulative_tests_per_case;?>
                             },
                             {
-                                name: "Pakistan",
+                                name: "পাকিস্তান",
                                 y: <?=$tests_per_case_Pakistan->cumulative_tests_per_case;?>
                             },
                             {
-                                name: "Bangladesh",
+                                name: "বাংলাদেশ",
                                 y: <?=$tests_per_case_Bangladesh->cumulative_tests_per_case;?>
                             }
                         ]
@@ -226,7 +228,10 @@
             Highcharts.chart('national_test_vs_infected_trend', {
                 chart: {
                     marginRight: 80, // like left
-					height: 420
+					height: 420,
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''
@@ -244,23 +249,31 @@
                 yAxis: [{
                     lineWidth: 1,
                     title: {
-                        text: 'Daily Cases Numbers'
+                        text: 'দৈনিক আক্রান্তের সংখ্যা',
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
                     }
                 }, {
                     lineWidth: 1,
                     opposite: true,
                     title: {
-                        text: 'Daily Tests Numbers'
+                        text: 'দৈনিক পরীক্ষার সংখ্যা',
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
                     }
                 }],
                 colors: ['#9d4a2a', '#dfc825'],
                 series: [{
-                    name: 'Daily Cases (5-day moving agerage)',
+                    name: 'দৈনিক আক্রান্ত (৫-দিনের চলমান গড়)',
                     data: [<?php echo $testsVsCases['totalCase'];?>],
                     type: 'spline',
                     marker:{"enabled": false, "symbol":"circle"}
                 }, {
-                    name: 'Daily Tests (5-day moving agerage)',
+                    name: 'দৈনিক পরীক্ষা (৫-দিনের চলমান গড়)',
                     data: [<?php echo $testsVsCases['totalTest'];?>],
                     yAxis: 1,
                     type: 'spline',
@@ -293,7 +306,10 @@
     // Weekly Comparision Infected Death  weekly_comparision_infected_death
     Highcharts.chart('weekly_comparision_infected_death', {
                 chart: {
-                    marginRight: 80 // like left
+                    marginRight: 80, // like left
+					style: {
+						fontFamily: 'SolaimanLipi'
+					}
                 },
                 title: {
                     text: ''
@@ -304,6 +320,12 @@
                 credits:{
                     enabled:false
                 },
+				legend: {
+                    enabled:true,
+					itemStyle: {
+						fontSize: "16px"
+					}
+                },
                 xAxis: {
                     categories: [<?php echo $forteen_day_infected['dateRange'];?>],
                     tickInterval: 1
@@ -311,13 +333,21 @@
                 yAxis: [{
                     lineWidth: 1,
                     title: {
-                        text: 'সংক্রমণ '
+                        text: 'সংক্রমণের হার',
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
                     }
                 }, {
                     lineWidth: 1,
                     opposite: true,
                     title: {
-                        text: 'সংক্রমণের হার '
+                        text: 'সংক্রমণ',
+						style: {
+							fontSize: 18,
+							fontFamily: 'SolaimanLipi'
+						}
                     }
                 }],
                 colors: ['#9d4a2a', '#dfc825'],
