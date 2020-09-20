@@ -226,7 +226,7 @@
             Highcharts.chart('national_test_vs_infected_trend', {
                 chart: {
                     marginRight: 80, // like left
-					height: 470
+					height: 440
                 },
                 title: {
                     text: ''
