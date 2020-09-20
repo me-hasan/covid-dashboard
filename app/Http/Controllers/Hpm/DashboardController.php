@@ -1157,39 +1157,39 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
         if($request->division && $request->district) {
             $infected = DB::select(" select date as report_date, division_eng, district_city_eng, daily_cases as infected_24_hrs
             from district_wise_cases_covid where district_city_eng = '".$request->district."'
-            order by date desc limit 14; ");
+            order by date asc limit 14; ");
         
             $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.district, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
             (select date_of_test, division, district, count(id) as 'pos' from districts_test_positivity 
             where test_result='Positive' and district = '".$request->district."'
-            group by district,date_of_test order by date_of_test desc limit 14) 
+            group by district,date_of_test order by date_of_test asc limit 14) 
             as a inner join 
             (select date_of_test, division, district, count(id) as 'tot' from districts_test_positivity
             where district = '".$request->district."' 
-            group by district, date_of_test order by date_of_test desc limit 14) as b using(district, date_of_test)
-            order by a.date_of_test desc limit 14 ");
+            group by district, date_of_test order by date_of_test asc limit 14) as b using(district, date_of_test)
+            order by a.date_of_test asc limit 14 ");
 
         }elseif($request->division) {
             $infected = DB::select(" select date as report_date, division_eng, sum(daily_cases) as infected_24_hrs 
                 from district_wise_cases_covid where division_eng = '".$request->division."'
                 group by division_eng, date 
-                order by date desc limit 14; ");
+                order by date asc limit 14; ");
         
             $test_positivity = DB::select(" select a.date_of_test as report_date, a.division, a.pos, b.tot, (a.pos/b.tot)*100 as 'test_positivity' from
             (select date_of_test, division, count(id) as 'pos' from districts_test_positivity 
             where test_result='Positive' and division = '".$request->division."'
-            group by division,date_of_test order by date_of_test desc limit 14) 
+            group by division,date_of_test order by date_of_test asc limit 14) 
             as a inner join 
             (select date_of_test, division, count(id) as 'tot' from districts_test_positivity
             where division = '".$request->division."'
-            group by division, date_of_test order by date_of_test desc limit 14) as b using(division, date_of_test)
-            order by a.date_of_test desc limit 14 ");
+            group by division, date_of_test order by date_of_test asc limit 14) as b using(division, date_of_test)
+            order by a.date_of_test asc limit 14 ");
 
         } else { // national level
-            $infected = DB::select(" select report_date, infected_24_hrs from daily_data order by report_date desc limit 14 ");
+            $infected = DB::select(" select report_date, infected_24_hrs from daily_data order by report_date asc limit 14 ");
         
             $test_positivity = DB::select(" select report_date, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
-            from daily_data order by report_date desc limit 14;");
+            from daily_data order by report_date asc limit 14;");
 
         }
 
