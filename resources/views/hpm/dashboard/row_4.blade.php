@@ -3532,8 +3532,8 @@
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?= convertEnglishDigitToBangla(number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2));?>],
-                    ['খালি', <?= convertEnglishDigitToBangla(number_format($nation_hospital->percent_General_Beds_Occupied,2));?>]
+                    ['ভর্তি', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
+                    ['খালি', <?= number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
                 ]
             }]
         });
@@ -3597,8 +3597,8 @@
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?= convertEnglishDigitToBangla(number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2));?>],
-                    ['খালি', <?= convertEnglishDigitToBangla(number_format($nation_hospital->percent_ICU_Beds_Occupied,2));?>]
+                    ['ভর্তি', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
+                    ['খালি', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
                 ]
             }]
         });
