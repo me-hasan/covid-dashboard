@@ -180,7 +180,7 @@
         $date_arr = $infected_arr = $avg_arr  = array();
 
                 foreach($nation_wide_MovingAvgInfected as $row){
-                      $date_arr[] = date('d\/m\/Y', strtotime($row->report_date));
+                      $date_arr[] = convertEnglishDateToBangla($row->report_date);
                       $infected_arr[] = $row->infected_24_hrs;
                       $avg_arr[] = $row->five_dayMovingAvgInfected;
                 }
