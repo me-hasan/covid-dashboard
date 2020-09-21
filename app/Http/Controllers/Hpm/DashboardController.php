@@ -731,7 +731,7 @@ SELECT
         AS date ORDER BY date limit 1)
     ) as last_week_low inner join
     (select district from test_positivity_rate_district
-    where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+    where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
     (select max(date) from test_positivity_rate_district)) as curr_week_high
 USING (district) ORDER BY district ");
 
@@ -747,7 +747,7 @@ USING (district) ORDER BY district ");
     AS date ORDER BY date limit 1)
     ) as last_week_low inner join
     (select district from test_positivity_rate_district
-    where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+    where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
     (select max(date) from test_positivity_rate_district)) as curr_week_medium
 USING (district) ORDER BY district ");
 
@@ -773,13 +773,13 @@ USING (district) ORDER BY district ");
       private function risk_matrix_4(){
         $risk_matrix = DB::select("select count(distinct(last_week_low.district)) as 'medium_to_high' from
         (select district  from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
         (SELECT date FROM
         (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
         AS date ORDER BY date limit 1)
         ) as last_week_low inner join
         (select district from test_positivity_rate_district
-        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
         (select max(date) from test_positivity_rate_district)) as curr_week_high
         USING (district) ORDER BY district ");
 
@@ -789,13 +789,13 @@ USING (district) ORDER BY district ");
       private function risk_matrix_5(){
         $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'medium_to_medium' from
         (select district  from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
         (SELECT date FROM
         (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
         AS date ORDER BY date limit 1)
         ) as last_week_low inner join
         (select district from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
         (select max(date) from test_positivity_rate_district)) as curr_week_high
         USING (district) ORDER BY district");
 
@@ -805,7 +805,7 @@ USING (district) ORDER BY district ");
       private function risk_matrix_6(){
         $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'medium_to_low' from
         (select district  from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
         (SELECT date FROM
         (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
         AS date ORDER BY date limit 1)
@@ -821,13 +821,13 @@ USING (district) ORDER BY district ");
        private function risk_matrix_7(){
         $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_high' from
         (select district  from test_positivity_rate_district
-        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
         (SELECT date FROM
         (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
         AS date ORDER BY date limit 1)
         ) as last_week_low inner join
         (select district from test_positivity_rate_district
-        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
         (select max(date) from test_positivity_rate_district)) as curr_week_high
         USING (district) ORDER BY district");
 
@@ -837,13 +837,13 @@ USING (district) ORDER BY district ");
       private function risk_matrix_8(){
         $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_medium' from
         (select district  from test_positivity_rate_district
-        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
         (SELECT date FROM
         (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
         AS date ORDER BY date limit 1)
         ) as last_week_low inner join
         (select district from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
         (select max(date) from test_positivity_rate_district)) as curr_week_high
         USING (district) ORDER BY district");
 
@@ -854,7 +854,7 @@ USING (district) ORDER BY district ");
       private function risk_matrix_9(){
         $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_low' from
         (select district  from test_positivity_rate_district
-        where positive_rate>=0.15 and district<>'Missing Form' and district<>'NA' and date=
+        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
         (SELECT date FROM
         (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
         AS date ORDER BY date limit 1)

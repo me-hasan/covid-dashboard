@@ -28,7 +28,7 @@ $today = convertEnglishDateToBangla(date('Y-m-d'));
                         <table class="table table-bordered table-vcenter text-nowrap b1">
                             <thead >
                             <tr>
-                                <td colspan="4" class="text-center fs-18"><span class="text-danger">আজ {{ $today }}</span>, বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_start}} - {{$last_week_end}} ) </td>
+                                <td colspan="4" class="text-center fs-18"><span class="text-danger">আজ {{ $today }}</span>, বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} ) </td>
                             </tr>
                             </thead>
                             <tbody class="fs-20 text-center">
