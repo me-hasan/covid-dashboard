@@ -36,7 +36,7 @@
                                 <td>খালি</td>
                                 <td>ভর্তি</td>
                                 <td>খালি</td>
-                                
+
                             </tr>
                             <tr>
                                 <td>সারা দেশ</td>
@@ -44,7 +44,7 @@
                                 <th>{{ convertEnglishDigitToBangla($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) }}</th>
                                 <td>{{ convertEnglishDigitToBangla($nation_hospital->Admitted_ICU_Beds) }}</td>
                                 <th>{{ convertEnglishDigitToBangla($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) }}</th>
-                                
+
                             </tr>
                              <tr>
                                 <td>ঢাকা শহর</td>
@@ -52,7 +52,7 @@
                                 <th>{{ convertEnglishDigitToBangla($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds)}}</th>
                                 <td>{{ convertEnglishDigitToBangla($dhaka_hospital->Admitted_ICU_Beds) }}</td>
                                 <th>{{ convertEnglishDigitToBangla($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds) }}</th>
-                                
+
                             </tr>
                             <tr>
                                 <td>চট্টগ্রাম শহর</td>
@@ -60,7 +60,7 @@
                                 <th>{{ convertEnglishDigitToBangla($ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds) }}</th>
                                 <td>{{ convertEnglishDigitToBangla($ctg_hospital->Admitted_ICU_Beds) }}</td>
                                 <th>{{ convertEnglishDigitToBangla($ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds) }}</th>
-                                
+
                             </tr>
                             <tr>
                                 <td>অন্যান্য</td>
@@ -68,7 +68,7 @@
                                 <th>{{ convertEnglishDigitToBangla(($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )) }}</th>
                                 <td>{{ convertEnglishDigitToBangla($nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )) }}</td>
                                 <th>{{ convertEnglishDigitToBangla(($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds)) }}</th>
-                                
+
                             </tr>
                             </tbody>
                         </table>
@@ -3452,7 +3452,7 @@
                         </g>
                     </g>
                 </g>
-</svg>								
+</svg>
 		</div> -->
     </div>
     <div class="row">
@@ -3602,7 +3602,7 @@
                 ]
             }]
         });
-		
+
 		$(document).ready(function(e) {
             $('input[name="availability"]').click(function(){
 				if($('input[name="ni_type"]').val() != null && $(this).val() == 'sufficient'){
@@ -3636,6 +3636,6 @@
 				}
 			});
         });
-		
+
     </script>
 @endpush

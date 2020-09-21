@@ -1,20 +1,20 @@
 <!-- Start :: Disease Progression -->
-<?php 
-    $class_1='fa fa-arrow-up mr-1 text-danger';                      
-    if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1){ 
-        $class_1='fa fa-arrow-down mr-1 text-success'; 
-    }  
+<?php
+    $class_1='fa fa-arrow-up mr-1 text-danger';
+    if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1){
+        $class_1='fa fa-arrow-down mr-1 text-success';
+    }
 
-    $class_2='fa fa-arrow-up mr-1 text-danger';                      
-    if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1){ 
-        $class_2='fa fa-arrow-down mr-1 text-success'; 
-    } 
+    $class_2='fa fa-arrow-up mr-1 text-danger';
+    if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1){
+        $class_2='fa fa-arrow-down mr-1 text-success';
+    }
 
-    $class_3='fa fa-arrow-up mr-1 text-danger';                      
-    if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1){ 
-        $class_3='fa fa-arrow-down mr-1 text-success'; 
-    } 
-?> 
+    $class_3='fa fa-arrow-up mr-1 text-danger';
+    if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1){
+        $class_3='fa fa-arrow-down mr-1 text-success';
+    }
+?>
 <div class="card">
 
     <div class="row">
@@ -47,11 +47,11 @@
                 <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
             </div>
         </div>
-        
+
     </div>
 
     <div class="row">
-        
+
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
                 <h3 class="card-title b1">সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন</h3>
@@ -59,7 +59,7 @@
             <div class="card-body">
                 <div id="national_dialy_infected_trend"></div>
             </div>
-            <div class="row">        
+            <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
@@ -78,7 +78,7 @@
                  </div>
         	</div>
         </div>
-        
+
     </div>
 
     <div class="row">
@@ -119,7 +119,7 @@
             <div class="card-body">
                 <div id="district_comparision"></div>
             </div>
-            <div class="row">        
+            <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
@@ -138,7 +138,7 @@
                  </div>
         	</div>
         </div>
-        
+
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
                 <h3 class="card-title b1">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
@@ -146,7 +146,7 @@
             <div class="card-body">
                 <div id="national_infected_trend"></div>
             </div>
-            <div class="row">        
+            <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
@@ -165,7 +165,7 @@
                  </div>
         	</div>
         </div>
-        
+
     </div>
 </div>
 
@@ -223,7 +223,7 @@
                     },
                     labels: {
                         formatter: function() {
-                           return this.value;
+                           return englishToBangla(this.value);
                         }
                     }
                 },
@@ -252,7 +252,20 @@
                 }]
             });
 
-        
+        function englishToBangla(num) {
+            var num = new Number(num).toLocaleString("bn-BD");
+            return num;
+        }
+
+        var finalEnlishToBanglaNumber={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+
+        String.prototype.getDigitBanglaFromEnglish = function() {
+            var retStr = this;
+            for (var x in finalEnlishToBanglaNumber) {
+                retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+            }
+            return retStr;
+        };
 
         // National Infected Trend
         Highcharts.chart('national_infected_trend', {
@@ -295,6 +308,11 @@
 						fontSize: 18,
 						fontFamily: 'SolaimanLipi'
 					}
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
                 }
             },
 
@@ -320,7 +338,7 @@
 					fontFamily: 'SolaimanLipi'
 				}
             },
-			
+
 			title: {
                 text: ''
             },
@@ -356,6 +374,11 @@
 						fontSize: 18,
 						fontFamily: 'SolaimanLipi'
 					}
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
                 }
             },
 
@@ -461,6 +484,11 @@
                 yAxis: {
                     title: {
                         text: ''
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
                     }
                 },
 

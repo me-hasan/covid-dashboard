@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <div id="national_test_vs_infected_trend"></div>
                         </div>
-                        <div class="row">        
+                        <div class="row">
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
@@ -34,7 +34,7 @@
                                     </p>
                                 </div>
                              </div>
-                        </div>                       
+                        </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
@@ -43,7 +43,7 @@
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
                         </div>
-                        <div class="row">        
+                        <div class="row">
                             <div class="col-xl-8 col-lg-8 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
@@ -68,10 +68,10 @@
                     <div class="col-xl-4 col-lg-4 col-md-12" id="infected_district_map">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
-                            
+
                                 <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
                                 @include('hpm.dashboard.row_2_map')
-                                <div class="row">        
+                                <div class="row">
                                     <div class="col-xl-7 col-lg-7 col-md-6">
                                         <div class="card-body">
                                             <h5 class="card-title b1">বর্ণনা</h5>
@@ -88,7 +88,7 @@
                                             </p>
                                         </div>
                                      </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                                     <h5 class="card-title b1">দক্ষিণ এশিয়ার দেশগুলোতে আক্রান্তের বিপরীতে পরীক্ষার সংখ্যা</h5>
                                     <div id="country_wise_infected"></div>
                                 </div>
-                                <div class="row">        
+                                <div class="row">
                                     <div class="col-xl-8 col-lg-8 col-md-6">
                                         <div class="card-body">
                                             <h5 class="card-title b1">বর্ণনা</h5>
@@ -120,7 +120,7 @@
                                             </p>
                                         </div>
                                      </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                     },
                     labels: {
                         formatter: function() {
-                           return this.value;
+                           return englishToBangla(this.value);
                         }
                     }
                 },
@@ -265,6 +265,11 @@
 							fontSize: 18,
 							fontFamily: 'SolaimanLipi'
 						}
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
                     }
                 }, {
                     lineWidth: 1,
@@ -275,6 +280,11 @@
 							fontSize: 18,
 							fontFamily: 'SolaimanLipi'
 						}
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
                     }
                 }],
                 colors: ['#9d4a2a', '#dfc825'],
@@ -350,6 +360,11 @@
 							fontSize: 18,
 							fontFamily: 'SolaimanLipi'
 						}
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
                     }
                 }, {
                     lineWidth: 1,
@@ -360,6 +375,11 @@
 							fontSize: 18,
 							fontFamily: 'SolaimanLipi'
 						}
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
                     }
                 }],
                 colors: ['#dfc825','#9d4a2a'],
@@ -399,7 +419,7 @@
         if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
             $str = 'three_Chapainawabganj';
         }
-        
+
         if(substr($_mobInDistrictVal->District,0,5)=='Jhena'){
             $str = 'three_Jhenaidah';
         }
@@ -429,5 +449,6 @@
 
 
     });
+
 </script>
 @endpush
