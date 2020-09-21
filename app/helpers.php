@@ -18,6 +18,22 @@ if (! function_exists('en2bnTranslation')) {
     }
 }
 
+if (! function_exists('thousandSeparator')) {
+    /**
+     * thousand Separator
+     */
+    function thousandSeparator($en_number)
+    {
+        $bn = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০"];
+        $en = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
+        $separate_data = number_format( $en_number , 2 , '.' , ',' );
+        $bn_number = str_replace($en, $bn, $separate_data);
+
+        return $bn_number;
+    }
+}
+
 if (! function_exists('mapDivisionColor')) {
     /**
      * English to bangla translation
