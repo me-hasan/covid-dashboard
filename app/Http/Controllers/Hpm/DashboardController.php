@@ -888,6 +888,8 @@ USING (district) ORDER BY district ");
                 $searchQuery .= " AND  Upazila = '". $upazilla."'";
             }
 
+            $searchQuery = ''; // fridge 
+
             if($searchQuery != '') {
                 /*infected_datasql*/
                 $getLast14DaysDataSql = "select @div_curr_fourtten_days_infected_person:=(select sum(Infected_Person)
