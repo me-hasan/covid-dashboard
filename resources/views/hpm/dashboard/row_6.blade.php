@@ -30,19 +30,19 @@
                             <tr>
                                 <td>উচ্চ ঝুঁকিপূর্ণ</td>
                                 <td class="bg-danger">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}</td>
-                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} </td>
-                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}</td>
+                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} </td>
+                                <td style="background: #fa9a29"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}</td>
                             </tr>
                             <tr>
                                 <td>মধ্যম ঝুঁকিপূর্ণ</td>
-                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }}</td>
+                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} </td>
                                 <td style="background: #feea1f">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}</td>
-                                <td style="background: #94f925">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }}</td>
+                                <td style="background: #94f925">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}</td>
                             </tr>
                             <tr>
                                 <td>কম ঝুঁকিপূর্ণ</td>
-                                <td style="background: #feea1f">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }}</td>
-                                <td style="background: #94f925">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}</td>
+                                <td style="background: #feea1f">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}</td>
+                                <td style="background: #94f925">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} </td>
                                 <td style="background: #00ff2e">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}</td>
                             </tr>
                             </tbody>
