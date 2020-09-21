@@ -40,34 +40,34 @@
                             </tr>
                             <tr>
                                 <td>সারা দেশ</td>
-                                <td>{{$nation_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds}}</th>
-                                <td>{{$nation_hospital->Admitted_ICU_Beds}}</td>
-                                <th>{{$nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds}}</th>
+                                <td>{{ convertEnglishDigitToBangla($nation_hospital->Admitted_General_Beds)}}</td>
+                                <th>{{ convertEnglishDigitToBangla($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) }}</th>
+                                <td>{{ convertEnglishDigitToBangla($nation_hospital->Admitted_ICU_Beds) }}</td>
+                                <th>{{ convertEnglishDigitToBangla($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) }}</th>
                                 
                             </tr>
                              <tr>
                                 <td>ঢাকা শহর</td>
-                                <td>{{$dhaka_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
-                                <td>{{$dhaka_hospital->Admitted_ICU_Beds}}</td>
-                                <th>{{$dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds}}</th>
+                                <td>{{ convertEnglishDigitToBangla($dhaka_hospital->Admitted_General_Beds) }}</td>
+                                <th>{{ convertEnglishDigitToBangla($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds)}}</th>
+                                <td>{{ convertEnglishDigitToBangla($dhaka_hospital->Admitted_ICU_Beds) }}</td>
+                                <th>{{ convertEnglishDigitToBangla($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds) }}</th>
                                 
                             </tr>
                             <tr>
                                 <td>চট্টগ্রাম শহর</td>
-                                <td>{{$ctg_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
-                                <td>{{$ctg_hospital->Admitted_ICU_Beds}}</td>
-                                <th>{{$ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds}}</th>
+                                <td>{{ convertEnglishDigitToBangla($ctg_hospital->Admitted_General_Beds) }}</td>
+                                <th>{{ convertEnglishDigitToBangla($ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds) }}</th>
+                                <td>{{ convertEnglishDigitToBangla($ctg_hospital->Admitted_ICU_Beds) }}</td>
+                                <th>{{ convertEnglishDigitToBangla($ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds) }}</th>
                                 
                             </tr>
                             <tr>
                                 <td>অন্যান্য</td>
-                                <td>{{ $nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
-                                <th>{{ ($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )}}</th>
-                                <td>{{ $nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )}}</td>
-                                <th>{{ ($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds)}}</th>
+                                <td>{{ convertEnglishDigitToBangla($nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds)) }}</td>
+                                <th>{{ convertEnglishDigitToBangla(($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds )) }}</th>
+                                <td>{{ convertEnglishDigitToBangla($nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds )) }}</td>
+                                <th>{{ convertEnglishDigitToBangla(($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds)) }}</th>
                                 
                             </tr>
                             </tbody>
@@ -3532,8 +3532,8 @@
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?=number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
-                    ['খালি', <?=number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?= convertEnglishDigitToBangla(number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2));?>],
+                    ['খালি', <?= convertEnglishDigitToBangla(number_format($nation_hospital->percent_General_Beds_Occupied,2));?>]
                 ]
             }]
         });
@@ -3596,8 +3596,8 @@
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?=number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
-                    ['খালি', <?=number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?= convertEnglishDigitToBangla(number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2));?>],
+                    ['খালি', <?= convertEnglishDigitToBangla(number_format($nation_hospital->percent_ICU_Beds_Occupied,2));?>]
                 ]
             }]
         });
