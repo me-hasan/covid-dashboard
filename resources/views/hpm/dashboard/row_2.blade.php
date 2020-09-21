@@ -362,26 +362,26 @@
 						}
                     }
                 }],
-                colors: ['#9d4a2a', '#dfc825'],
+                colors: ['#dfc825','#9d4a2a'],
                 series: [{
-                    name: 'সংক্রমণের হার',
-                    data: [<?php echo $forteen_day_infected['total_test_positivity'];?>],
-                    type: 'spline',
-                    marker:{"enabled": false, "symbol":"circle"}
-                }, {
                     name: 'সংক্রমণ',
                     data: [<?php echo $forteen_day_infected['total_infected'];?>],
                     yAxis: 1,
                     type: 'column',
                     marker:{"enabled": false, "symbol":"circle"}
-                }]
+                },{
+                    name: 'সংক্রমণের হার',
+                    data: [<?php echo $forteen_day_infected['total_test_positivity'];?>],
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                } ]
             });
 
     $(document).ready(function(){
 
         <?php
         //$_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
-        $_colorCodes = array( '5' => '#fff51e', '15' => '#f87f2c', '500' => '#f43735');
+        $_colorCodes = array( '5' => '#fff51e', '12' => '#f87f2c', '500' => '#f43735');
         $_existDataGroups = array();
         foreach($testPositivityMap as $_mobInDistrictVal){
 
