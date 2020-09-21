@@ -49,7 +49,7 @@
 <link id="theme" href="{{ asset('assets/fonts/solaiman-lipi/fonts.css') }}" rel="stylesheet" type="text/css"/>
 
 <!-- Custom CSS by eGen -->
-<link id="theme" href="{{ asset('assets/css/custom.css?v=8') }}" rel="stylesheet" type="text/css"/>
+<link id="theme" href="{{ asset('assets/css/custom.css?v=9') }}" rel="stylesheet" type="text/css"/>
     <style>
         .fill_color{
             fill: #705ec8;

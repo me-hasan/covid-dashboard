@@ -24,7 +24,7 @@
             </div>
             <div class="card-body">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
-                <span class="text-muted b1 fs-16"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                <span class="text-muted b1 fs-16"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} টি @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
             </div>
             <div class="card-body">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
-                <span class="text-muted b1 fs-16"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
+                <span class="text-muted b1 fs-16"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} টি @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
             </div>
             <div class="card-body">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
-                <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন  @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+                <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? convertEnglishDigitToBangla(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} টি @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
             </div>
         </div>
         
@@ -123,7 +123,7 @@
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
-                        <p class="card-text">
+                        <p class="card-text b1">
                             {{ $des_2->description_beng }}
                         </p>
                     </div>
@@ -150,7 +150,7 @@
                 <div class="col-xl-8 col-lg-8 col-md-6">
                     <div class="card-body">
                         <h5 class="card-title b1">বর্ণনা</h5>
-                        <p class="card-text">
+                        <p class="card-text b1">
                            {{ $des_3->description_beng }}
                         </p>
                     </div>
@@ -209,7 +209,8 @@
                 legend:{
                     enabled:true,
 					itemStyle: {
-						fontSize: "16px"
+						fontSize: "16px",
+						fontWeight: "normal"
 					}
                 },
                 yAxis: {
@@ -274,7 +275,8 @@
                 align: 'center',
                 verticalAlign: 'bottom',
 				itemStyle: {
-					fontSize: "16px"
+					fontSize: "16px",
+					fontWeight: "normal"
 				}
             },
 

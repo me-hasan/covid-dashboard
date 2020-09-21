@@ -15,10 +15,10 @@
                             </p>
                         </div>
                     </div> -->
-                    <div class="col-xl-6 col-md-12">
+                    <div class="col-xl-8 col-md-12">
                         <div id="age_wise_death_distribution"></div>
                         <div class="row">        
-                            <div class="col-xl-8 col-lg-8 col-md-6">
+                            <div class="col-xl-6 col-lg-6 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
@@ -26,7 +26,7 @@
                                     </p>
                                 </div>
                              </div>
-                             <div class="col-xl-4 col-lg-4 col-md-6">
+                             <div class="col-xl-6 col-lg-6 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">{{ $des_9->insight_beng }}</p>
@@ -196,7 +196,7 @@
                 }
             },
             xAxis: {
-                categories: ["0-10","11-20","21-30","31-40","41-50","51-60","61+"],
+                categories: ["০-১০","১১-২০","২১-৩০","৩১-৪০","৪১-৫০","৫১-৬০","৬১+"],
 				title: {
                     text: 'বয়স',
 					style: {
@@ -206,9 +206,7 @@
                 }
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>',
-                /*valueSuffix: ' cm',
-                shared: true*/
+                pointFormat: '{series.name}: <b>{point.y}</b>'
             },
             plotOptions: {
                 column: {

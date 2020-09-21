@@ -3459,7 +3459,7 @@
         <div class="col-xl-8 col-lg-8 col-md-8 col-xm-12">
             <div class="card-body">
                 <h5 class="card-title b1">বর্ণনা</h5>
-                <p class="card-text">  {{ $des_10->description_beng }}</p>
+                <p class="card-text b1"> {{ $des_10->description_beng }}</p>
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-xm-12">
@@ -3532,8 +3532,8 @@
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?= convertEnglishDigitToBangla(number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2));?>],
-                    ['খালি', <?= convertEnglishDigitToBangla(number_format($nation_hospital->percent_General_Beds_Occupied,2));?>]
+                    ['ভর্তি', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
+                    ['খালি', <?= number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
                 ]
             }]
         });
@@ -3569,7 +3569,8 @@
                     return this.name+': <b> '+this.y + '%</b>';
                 },
 				itemStyle: {
-					fontSize: "16px"
+					fontSize: "16px",
+					fontWeight: "normal"
 				}
             },
             tooltip: {
@@ -3596,8 +3597,8 @@
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?= convertEnglishDigitToBangla(number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2));?>],
-                    ['খালি', <?= convertEnglishDigitToBangla(number_format($nation_hospital->percent_ICU_Beds_Occupied,2));?>]
+                    ['ভর্তি', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
+                    ['খালি', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
                 ]
             }]
         });
