@@ -62,6 +62,8 @@ class DashboardController extends Controller
             $data['rm_7'] = $this->risk_matrix_7();
             $data['rm_8'] = $this->risk_matrix_8();
             $data['rm_9'] = $this->risk_matrix_9();
+            $data['first_week'] = $this->first_week();
+            $data['last_week'] = $this->last_week();
 
             // description and insight
             $data['des_1'] = $this->description_insight_1(); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
@@ -1261,6 +1263,21 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
     private function description_insight_10(){
         $des = DB::select("select * from hpm_description_insight where component_name_eng='Capacity & Resource' and date=(select max(date) from hpm_description_insight) ");
         return $des[0];
+    }
+
+    private function first_week(){
+        $first_week = DB::select("select max(date) as 'first_2_weeks_start',
+        DATE_SUB((select max(date) from test_positivity_rate_district), INTERVAL 14 DAY) 
+        as 'first_2_weeks_end' from test_positivity_rate_district;  ");
+                return $first_week[0];
+    }
+
+    private function last_week(){
+        $last_week = DB::select("SELECT DISTINCT DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY) 
+        AS 'last_2_weeks_start',
+        DATE_SUB(DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY), INTERVAL 14 DAY)
+        AS 'last_2_weeks_ends' FROM test_positivity_rate_district;  ");
+        return $last_week[0];
     }
 
 }
