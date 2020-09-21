@@ -205,8 +205,14 @@
 					}
                 }
             },
-            tooltip: {
+            /*tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
+
+            },*/
+            tooltip: {
+                formatter: function() {
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                }
             },
             plotOptions: {
                 column: {

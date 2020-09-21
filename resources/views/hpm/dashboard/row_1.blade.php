@@ -188,7 +188,6 @@
                 $avg = implode(",", $avg_arr);
 
             ?>
-
             Highcharts.chart('national_dialy_infected_trend', {
                 chart: {
                     zoomType: 'xy',
@@ -231,7 +230,9 @@
                     categories: <?php echo json_encode($date_arr);?>
                 },
                 tooltip: {
-                  pointFormat: '{series.name}: <b>{point.y}</b>'
+                    formatter: function() {
+                        return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                    }
                 },
                 plotOptions: {
                     column: {
@@ -300,7 +301,11 @@
             xAxis: {
                 categories: @JSON($row1_left_trend_date)
             },
-
+            tooltip: {
+            formatter: function() {
+                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+            }
+        },
             yAxis: {
                 title: {
                     text: 'দৈনিক আক্রান্তের সংখ্যা',
@@ -321,6 +326,7 @@
                     fillOpacity:0
                 }
             },
+
 
             colors: ["#00008b"],
             series: [{
@@ -366,6 +372,11 @@
                 categories: {!! $categories !!}
 
             },
+            tooltip: {
+            formatter: function() {
+                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+            }
+        },
 
             yAxis: {
                 title: {
@@ -481,6 +492,11 @@
 
                 },
 
+                tooltip: {
+                    formatter: function() {
+                        return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                    }
+                },
                 yAxis: {
                     title: {
                         text: ''

@@ -3501,7 +3501,7 @@
             legend:{
                 enabled:true,
                 labelFormatter: function () {
-                    return this.name+': <b> '+this.y + '%</b>';
+                    return this.name+': <b> '+englishToBangla(this.y) + '%</b>';
                 },
 				itemStyle: {
 					fontSize: "16px",
@@ -3509,7 +3509,10 @@
 				}
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                formatter: function() {
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                }
             },
             accessibility: {
                 point: {
@@ -3566,7 +3569,7 @@
             legend:{
                 enabled:true,
                 labelFormatter: function () {
-                    return this.name+': <b> '+this.y + '%</b>';
+                    return this.name+': <b> '+englishToBangla(this.y) + '%</b>';
                 },
 				itemStyle: {
 					fontSize: "16px",
@@ -3574,7 +3577,10 @@
 				}
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                formatter: function() {
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                }
             },
             accessibility: {
                 point: {
