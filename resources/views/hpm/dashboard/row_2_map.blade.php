@@ -1,4 +1,3 @@
-
 <div class="card-body">
         <svg version="1.1" id="Bangladesh" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 410 548.051" enable-background="new 0 0 410 548.051" xml:space="preserve">
             <g  id="three_div_sylhet">
@@ -3352,7 +3351,7 @@
         </svg>
     <div class="col-xl-12 col-md-12 ml-4">
         <div id="color-group" class="infected-color-group-">
-            <div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#fff51e"></span><span class="group-color-label text-ash p-1">উচ্চ ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f87f2c"></span><span class="group-color-label text-ash p-1">মধ্যম ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f43735"></span><span class="group-color-label text-ash p-1">উচ্চ ঝুঁকিপূর্ণ</span></div></div>
+            <div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#fff51e"></span><span class="group-color-label text-ash p-1">কম ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f87f2c"></span><span class="group-color-label text-ash p-1">মধ্যম ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f43735"></span><span class="group-color-label text-ash p-1">উচ্চ ঝুঁকিপূর্ণ</span></div></div>
         </div>
     </div>
     </div>

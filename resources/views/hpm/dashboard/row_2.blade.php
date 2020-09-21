@@ -96,7 +96,7 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <h5 class="card-title b1"></h3>
-                                <div class="card-body">
+                                <div class="card-body d-none">
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-body">
@@ -165,7 +165,12 @@
                     }
                 },
                 xAxis: {
-                    type: 'category'
+                    type: 'category',
+					labels: {
+						style: {
+							fontSize: '16px'
+						}
+					}
                 },
                 tooltip: {
                   pointFormat: '{series.name}: <b>{point.y}</b>',
@@ -329,7 +334,8 @@
 				legend: {
                     enabled:true,
 					itemStyle: {
-						fontSize: "16px"
+						fontSize: "16px",
+						fontWeight: "normal"
 					}
                 },
                 xAxis: {
