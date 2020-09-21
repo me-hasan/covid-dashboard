@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card-header cart-height-customize">
-                <h3 class="card-title">হাসপাতাল ধারণ ক্ষমতা এবং সংস্থান</h3>
+                <h3 class="card-title b1">হাসপাতাল ধারণ ক্ষমতা এবং সংস্থান</h3>
             </div>
         </div>
         <div class="col-xl-8 col-md-12">
