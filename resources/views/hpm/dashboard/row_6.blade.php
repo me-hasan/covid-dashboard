@@ -1,4 +1,15 @@
 <!-- Start :: Risk Matrix -->
+<?php 
+
+$first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start); 
+$first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end); 
+
+
+$last_week_start = convertEnglishDateToBangla($last_week->last_2_weeks_start); 
+$last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends); 
+$today = convertEnglishDateToBangla(date('Y-m-d')); 
+?>
+
 <div class="card">
     <div class="row">
         <div class="col-xl-12 col-md-12">
@@ -10,14 +21,14 @@
             <div class="row">
                 <div class="col-xl-1 col-md-1">
                     <div style="transform: rotate(-90deg);width: 219px;margin-left: -70px;margin-top: 100px;" class="fs-20 b1">
-                        <br>বিগত ২ সপ্তাহ (সেপ্টেম্বর ১ -১৪)</div>
+                        <br>বিগত ২ সপ্তাহ ( {{$first_week_end}} - {{$first_week_start}} )</div>
                 </div>
                 <div class="col-xl-9 col-md-9">
                     <div class="table-responsive">
                         <table class="table table-bordered table-vcenter text-nowrap b1">
                             <thead >
                             <tr>
-                                <td colspan="4" class="text-center fs-18"><span class="text-danger">On {{date("M")}} {{date("d")}}th</span>, বিগত ৩য় ও ৪র্থ সপ্তাহ: (আগস্ট ১৭ - ৩১) </td>
+                                <td colspan="4" class="text-center fs-18"><span class="text-danger">আজ {{ $today }}</span>, বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_start}} - {{$last_week_end}} ) </td>
                             </tr>
                             </thead>
                             <tbody class="fs-20 text-center">
