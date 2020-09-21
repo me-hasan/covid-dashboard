@@ -41,6 +41,7 @@ class RedirectIfAuthenticated
                     break;
             }
             return redirect($redirectTo);
+            //return redirect()->intended($redirectTo);
         }
 
         return $next($request);

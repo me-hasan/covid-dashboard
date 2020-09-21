@@ -16,9 +16,7 @@ use Spatie\Permission\Models\Permission;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login2');
-});
+Route::get('/','Auth\LoginController@showLoginForm');
 
 Auth::routes();
 
