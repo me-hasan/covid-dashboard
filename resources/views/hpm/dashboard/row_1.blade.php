@@ -42,8 +42,10 @@
             <div class="card-header pb-0">
                 <h5 class="card-title b1">গত ১৪ দিনে মৃত্যু</h5>
             </div>
+
             <div class="card-body pt-0 pb-2">
-                <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? thousandSeparator($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death) : ' ' !!}</h1>
+                <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? thousandSeparator($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}</h1>
+
                 <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? thousandSeparator(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
             </div>
         </div>
