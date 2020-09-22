@@ -388,7 +388,8 @@
                     formatter: function() {
                         return englishToBangla(this.value);
                     }
-                }
+                },
+                min:0,
             }, {
                 lineWidth: 1,
                 opposite: true,
