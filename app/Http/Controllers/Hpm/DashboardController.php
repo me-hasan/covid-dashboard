@@ -229,127 +229,95 @@ where date=((select max(date) from test_positivity_rate_district))";
 
         }
 
+        $cumulativeSql = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date;";
 
-        /*$cumulativeSql = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person
-        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng";*/
-        $cumulativeSql = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Dhaka' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Dhaka'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_dhk = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date;";
 
-        /*$cumulativeSql_dhk = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person
-        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng ";*/
-        $cumulativeSql_dhk = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Dhaka' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Dhaka'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_ctg = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Chittagong'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_ctg = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Chittagong' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Chittagong'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_barisal = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Barisal'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_barisal = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Barisal' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Barisal'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_khulna = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Khulna'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_khulna = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Khulna' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Khulna'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_rajshahi = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Rajshahi'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date ";
 
-        $cumulativeSql_rajshahi = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Rajshahi' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Rajshahi'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date ";
+        $cumulativeSql_rangpur = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Rangpur'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date ";
 
-        $cumulativeSql_rangpur = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Rangpur' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Rangpur'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_syl = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Sylhet'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_syl = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Sylhet' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Sylhet'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
-
-        $cumulativeSql_mym = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Mymensingh' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Mymensingh'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date ";
+        $cumulativeSql_mym = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Mymensingh'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date ";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
      //   dd($cumulativeData);
@@ -364,14 +332,14 @@ SELECT
             $j=0;
             $dateData = [];
             $divisionData = [];
-            $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'cumulative_infected_person'));
-            $cumulativeData_2['Chittagong'] = array_map('intval',array_column($cumulativeSql_ctg,'cumulative_infected_person'));
-            $cumulativeData_2['Barisal'] = array_map('intval',array_column($cumulativeSql_barisal,'cumulative_infected_person'));
-            $cumulativeData_2['Khulna'] = array_map('intval',array_column($cumulativeSql_khulna,'cumulative_infected_person'));
-            $cumulativeData_2['Rajshahi'] = array_map('intval',array_column($cumulativeSql_rajshahi,'cumulative_infected_person'));
-            $cumulativeData_2['Rangpur'] = array_map('intval',array_column($cumulativeSql_rangpur,'cumulative_infected_person'));
-            $cumulativeData_2['Sylhet'] = array_map('intval',array_column($cumulativeSql_syl,'cumulative_infected_person'));
-            $cumulativeData_2['Mymensingh'] = array_map('intval',array_column($cumulativeSql_mym,'cumulative_infected_person'));
+            $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'total_cases'));
+            $cumulativeData_2['Chittagong'] = array_map('intval',array_column($cumulativeSql_ctg,'total_cases'));
+            $cumulativeData_2['Barisal'] = array_map('intval',array_column($cumulativeSql_barisal,'total_cases'));
+            $cumulativeData_2['Khulna'] = array_map('intval',array_column($cumulativeSql_khulna,'total_cases'));
+            $cumulativeData_2['Rajshahi'] = array_map('intval',array_column($cumulativeSql_rajshahi,'total_cases'));
+            $cumulativeData_2['Rangpur'] = array_map('intval',array_column($cumulativeSql_rangpur,'total_cases'));
+            $cumulativeData_2['Sylhet'] = array_map('intval',array_column($cumulativeSql_syl,'total_cases'));
+            $cumulativeData_2['Mymensingh'] = array_map('intval',array_column($cumulativeSql_mym,'total_cases'));
              // + $cumulativeSql_ctg + $cumulativeSql_barisal + $cumulativeSql_khulna + $cumulativeSql_rajshahi + $cumulativeSql_rangpur + $cumulativeSql_syl + $cumulativeSql_mym ;
             foreach ($cumulativeData as $key => $div) {
                 $div_date = date('d-M-Y', strtotime($div->date));
@@ -380,7 +348,7 @@ SELECT
                     $dateData[] =  convertEnglishDateToBangla($div_date);
                 }
 
-                $divisionData[$div->division_eng][] = (int)$div->cumulative_infected_person ?? 0;
+                $divisionData[$div->division_eng][] = (int)$div->total_cases ?? 0;
 
                 $j++;
             }
@@ -597,19 +565,7 @@ ORDER BY t.date";
                 $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
                 $searchQuery = "  (". $divisionReqData.")";
 
-                $cumulativeSqlDistrictUpazilaSql = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.district_city_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM district_wise_cases_covid AS b
-                WHERE b.division_eng  IN ".$searchQuery."and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM district_wise_cases_covid AS a WHERE a.division_eng IN  ".$searchQuery."
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+                $cumulativeSqlDistrictUpazilaSql = "SELECT * FROM `district_wise_cases_covid` WHERE `division_eng` IN ".$searchQuery;
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
@@ -619,19 +575,8 @@ SELECT
                 /*$cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District,  daily_cases as cumulative_infected_person
                 from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  "; */
 
-                $cumulativeSqlDistrictUpazilaSql = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.district_city_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM district_wise_cases_covid AS b
-                WHERE b.district_city_eng IN ".$searchQuery."  and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM district_wise_cases_covid AS a WHERE a.district_city_eng IN ".$searchQuery."
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+                $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid
+where district_city_eng IN ".$searchQuery." group by date;";
                 //dd($searchQuery);
             }
 
@@ -642,16 +587,6 @@ SELECT
                 $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, infected_person AS cumulative_infected_person from div_dist_upz_infected_trend
                 where date is not null  ".$searchQuery."  order by date ";
             }
-
-            // $cumulativeSqlDistrictUpazilaSql = "SELECT t.date,t.Division, t.District,t.Upazila,
-            //     @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
-            // FROM
-            // (SELECT
-            //   Date, Division, District, Upazila, sum(Infected_Person) as 'Infected_Person'
-            //   FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
-            //   GROUP BY Date, Upazila ) as t
-            // JOIN (SELECT @running_total:=0) r
-            // ORDER BY t.date";
 
 
             $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
@@ -671,7 +606,7 @@ SELECT
                     $dateData[] =  convertEnglishDateToBangla($div_date);
                 }
 
-                $districtData[$div->district_city_eng][] = (int)$div->cumulative_infected_person ?? 0;
+                $districtData[$div->district_city_eng][] = (int)$div->total_cases ?? 0;
                 $districtData[$div->district_city_eng]['bn'] = en2bnTranslation($div->district_city_eng);
                 $j++;
             }
@@ -902,7 +837,7 @@ USING (district) ORDER BY district ");
                 $searchQuery .= " AND  Upazila = '". $upazilla."'";
             }
 
-            $searchQuery = ''; // fridge 
+            $searchQuery = ''; // fridge
 
             if($searchQuery != '') {
                 /*infected_datasql*/
