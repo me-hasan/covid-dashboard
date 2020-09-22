@@ -30,7 +30,7 @@ class DashboardController extends Controller
 
         // shamvil start
             // row 1
-            $data['nation_wide_MovingAvgInfected'] =$this->nation_wide_five_dayMovingAvgInfected();
+            $data['nation_wide_MovingAvgInfected'] =$this->nation_wide_five_dayMovingAvgInfected($request);
             // row 2
             $data['forteen_day_infected'] = $this->get_14days_infected($request); // 14 days songcromon & songcromoner har
             $data['days_infected'] =$this->nation_wise_14_days_infected();
@@ -162,8 +162,22 @@ where date=((select max(date) from test_positivity_rate_district))";
 
 
     private function getCumulativeInfectionData($request){
+        $dateQuery = 'Where True';
+        if($request->has('from_date') && $request->from_date != '') {
+            $dateQuery .= ' AND date >='. "'".$request->from_date."'";
+        }
+        if($request->has('to_date') && $request->to_date != '') {
+                $dateQuery .= ' AND date <='. "'".$request->to_date."'";
+        }
         $dateEnglish = $dateBangla = $infected_person_date = [];
         if($request->division){
+            $dateQuery = 'Where True';
+            if($request->has('from_date') && $request->from_date != '') {
+                $dateQuery .= ' AND t.date >='. "'".$request->from_date."'";
+            }
+            if($request->has('to_date') && $request->to_date != '') {
+                $dateQuery .= ' AND t.date <='. "'".$request->to_date."'";
+            }
             $cumulativeData = DB::select("SELECT t.date,t.Division,
                                @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
                         FROM
@@ -172,7 +186,7 @@ where date=((select max(date) from test_positivity_rate_district))";
                           FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE()
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
-                        WHERE division= '".$request->division."' and t.date <= CURDATE()
+                        WHERE division= '".$request->division."' and t.date <= CURDATE() $dateQuery
                         ORDER BY t.date");
         }else{
             // $cumulativeData = DB::select("SELECT t.date,
@@ -187,7 +201,7 @@ where date=((select max(date) from test_positivity_rate_district))";
             //             WHERE  t.date <= CURDATE()
             //             ORDER BY t.date");
 
-            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person FROM infected_cumulative ");
+            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person   FROM infected_cumulative $dateQuery");
         }
 
         foreach ($cumulativeData as $key => $inf) {
@@ -215,127 +229,95 @@ where date=((select max(date) from test_positivity_rate_district))";
 
         }
 
+        $cumulativeSql = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date;";
 
-        /*$cumulativeSql = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person
-        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng";*/
-        $cumulativeSql = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Dhaka' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Dhaka'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_dhk = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date;";
 
-        /*$cumulativeSql_dhk = " select date, division_eng as Division, sum(daily_cases) AS cumulative_infected_person
-        from district_wise_cases_covid where division_eng = 'Dhaka' group by division_eng, date order by date, division_eng ";*/
-        $cumulativeSql_dhk = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Dhaka' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Dhaka'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_ctg = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Chittagong'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_ctg = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Chittagong' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Chittagong'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_barisal = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Barisal'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_barisal = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Barisal' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Barisal'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_khulna = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Khulna'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_khulna = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Khulna' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Khulna'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_rajshahi = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Rajshahi'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date ";
 
-        $cumulativeSql_rajshahi = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Rajshahi' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Rajshahi'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date ";
+        $cumulativeSql_rangpur = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Rangpur'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date ";
 
-        $cumulativeSql_rangpur = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Rangpur' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Rangpur'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+        $cumulativeSql_syl = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Sylhet'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date";
 
-        $cumulativeSql_syl = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Sylhet' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Sylhet'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
-
-        $cumulativeSql_mym = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM division_wise_cases_covid AS b
-                WHERE b.division_eng= 'Mymensingh' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM division_wise_cases_covid AS a WHERE a.division_eng= 'Mymensingh'
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date ";
+        $cumulativeSql_mym = "SELECT t.date,t.division_eng,
+       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+FROM
+(SELECT
+  date, division_eng, sum(daily_cases) as 'daily_cases'
+  FROM division_wise_cases_covid where date is not null and division_eng='Mymensingh'
+  GROUP BY date) as t
+JOIN (SELECT @running_total:=0) r
+ORDER BY t.date ";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
      //   dd($cumulativeData);
@@ -350,14 +332,14 @@ SELECT
             $j=0;
             $dateData = [];
             $divisionData = [];
-            $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'cumulative_infected_person'));
-            $cumulativeData_2['Chittagong'] = array_map('intval',array_column($cumulativeSql_ctg,'cumulative_infected_person'));
-            $cumulativeData_2['Barisal'] = array_map('intval',array_column($cumulativeSql_barisal,'cumulative_infected_person'));
-            $cumulativeData_2['Khulna'] = array_map('intval',array_column($cumulativeSql_khulna,'cumulative_infected_person'));
-            $cumulativeData_2['Rajshahi'] = array_map('intval',array_column($cumulativeSql_rajshahi,'cumulative_infected_person'));
-            $cumulativeData_2['Rangpur'] = array_map('intval',array_column($cumulativeSql_rangpur,'cumulative_infected_person'));
-            $cumulativeData_2['Sylhet'] = array_map('intval',array_column($cumulativeSql_syl,'cumulative_infected_person'));
-            $cumulativeData_2['Mymensingh'] = array_map('intval',array_column($cumulativeSql_mym,'cumulative_infected_person'));
+            $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'total_cases'));
+            $cumulativeData_2['Chittagong'] = array_map('intval',array_column($cumulativeSql_ctg,'total_cases'));
+            $cumulativeData_2['Barisal'] = array_map('intval',array_column($cumulativeSql_barisal,'total_cases'));
+            $cumulativeData_2['Khulna'] = array_map('intval',array_column($cumulativeSql_khulna,'total_cases'));
+            $cumulativeData_2['Rajshahi'] = array_map('intval',array_column($cumulativeSql_rajshahi,'total_cases'));
+            $cumulativeData_2['Rangpur'] = array_map('intval',array_column($cumulativeSql_rangpur,'total_cases'));
+            $cumulativeData_2['Sylhet'] = array_map('intval',array_column($cumulativeSql_syl,'total_cases'));
+            $cumulativeData_2['Mymensingh'] = array_map('intval',array_column($cumulativeSql_mym,'total_cases'));
              // + $cumulativeSql_ctg + $cumulativeSql_barisal + $cumulativeSql_khulna + $cumulativeSql_rajshahi + $cumulativeSql_rangpur + $cumulativeSql_syl + $cumulativeSql_mym ;
             foreach ($cumulativeData as $key => $div) {
                 $div_date = date('d-M-Y', strtotime($div->date));
@@ -366,7 +348,7 @@ SELECT
                     $dateData[] =  convertEnglishDateToBangla($div_date);
                 }
 
-                $divisionData[$div->division_eng][] = (int)$div->cumulative_infected_person ?? 0;
+                $divisionData[$div->division_eng][] = (int)$div->total_cases ?? 0;
 
                 $j++;
             }
@@ -583,19 +565,7 @@ ORDER BY t.date";
                 $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
                 $searchQuery = "  (". $divisionReqData.")";
 
-                $cumulativeSqlDistrictUpazilaSql = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.district_city_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM district_wise_cases_covid AS b
-                WHERE b.division_eng  IN ".$searchQuery."and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM district_wise_cases_covid AS a WHERE a.division_eng IN  ".$searchQuery."
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+                $cumulativeSqlDistrictUpazilaSql = "SELECT * FROM `district_wise_cases_covid` WHERE `division_eng` IN ".$searchQuery;
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
@@ -605,19 +575,8 @@ SELECT
                 /*$cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District,  daily_cases as cumulative_infected_person
                 from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  "; */
 
-                $cumulativeSqlDistrictUpazilaSql = "select * from (
-SELECT
-       a.date,
-       a.division_eng,
-       a.district_city_eng,
-       a.daily_cases,
-       Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-                FROM district_wise_cases_covid AS b
-                WHERE b.district_city_eng IN ".$searchQuery."  and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
-              ), 2 ) AS 'cumulative_infected_person'
-     FROM district_wise_cases_covid AS a WHERE a.district_city_eng IN ".$searchQuery."
-     and a.date >= '2020-03-08'
-     ORDER BY a.date) T order by date";
+                $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid
+where district_city_eng IN ".$searchQuery." group by date;";
                 //dd($searchQuery);
             }
 
@@ -628,16 +587,6 @@ SELECT
                 $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, infected_person AS cumulative_infected_person from div_dist_upz_infected_trend
                 where date is not null  ".$searchQuery."  order by date ";
             }
-
-            // $cumulativeSqlDistrictUpazilaSql = "SELECT t.date,t.Division, t.District,t.Upazila,
-            //     @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
-            // FROM
-            // (SELECT
-            //   Date, Division, District, Upazila, sum(Infected_Person) as 'Infected_Person'
-            //   FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
-            //   GROUP BY Date, Upazila ) as t
-            // JOIN (SELECT @running_total:=0) r
-            // ORDER BY t.date";
 
 
             $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
@@ -657,7 +606,7 @@ SELECT
                     $dateData[] =  convertEnglishDateToBangla($div_date);
                 }
 
-                $districtData[$div->district_city_eng][] = (int)$div->cumulative_infected_person ?? 0;
+                $districtData[$div->district_city_eng][] = (int)$div->total_cases ?? 0;
                 $districtData[$div->district_city_eng]['bn'] = en2bnTranslation($div->district_city_eng);
                 $j++;
             }
@@ -888,7 +837,7 @@ USING (district) ORDER BY district ");
                 $searchQuery .= " AND  Upazila = '". $upazilla."'";
             }
 
-            $searchQuery = ''; // fridge 
+            $searchQuery = ''; // fridge
 
             if($searchQuery != '') {
                 /*infected_datasql*/
@@ -1028,7 +977,15 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
         return $tests_per_case_country[0];
     }
 
-    private function nation_wide_five_dayMovingAvgInfected(){
+    private function nation_wide_five_dayMovingAvgInfected($request){
+        $searchQuery = 'Where True';
+        if($request->has('from_date') && $request->from_date != '') {
+            $searchQuery .= ' AND T.report_date >='. "'".$request->from_date."'";
+        }
+        if($request->has('to_date') && $request->to_date != '') {
+                $searchQuery .= ' AND T.report_date <='. "'".$request->to_date."'";
+        }
+
         $five_dayMovingAvgInfected = DB::select(" SELECT * FROM (
         SELECT
                a.report_date,
@@ -1038,13 +995,31 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
             WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
                       ), 2 ) AS 'five_dayMovingAvgInfected'
              FROM daily_data AS a
-             ORDER BY a.report_date) T ORDER BY report_date ");
+             ORDER BY a.report_date) T $searchQuery ORDER BY report_date ");
 
 
         return $five_dayMovingAvgInfected;
     }
 
     protected function getNationWiseTestsAndCases($request) {
+        $dateQuery = ' Where TRUE';
+        if($request->has('from_date') && $request->from_date != '') {
+            $dateQuery .= ' AND  T.report_date >='. "'".$request->from_date."'";
+        }
+        if($request->has('to_date') && $request->to_date != '') {
+                $dateQuery .= ' AND T.report_date <='. "'".$request->to_date."'";
+        }
+        $testDateQuery = ' Where TRUE';
+        if($request->has('from_date') && $request->from_date != '') {
+            $testDateQuery .= ' AND T.test_date >='. "'".$request->from_date."'";
+        }
+        if($request->has('to_date') && $request->to_date != '') {
+            if($testDateQuery == '') {
+                $testDateQuery .= ' AND T.test_date <= '. "'".$request->to_date."'";
+            } else {
+                $testDateQuery .= ' AND T.test_date <='. "'".$request->to_date."'";
+            }
+        }
 
         $dailyTests = $dailyCases = [];
         $dateRange = $totalTest = $totalCase = [];
@@ -1055,7 +1030,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                             FROM div_dist_upz_test_number AS b
                             WHERE b.upazila= '".$request->upazila."' and date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
                           ), 2 ) AS 'fiveDayMovingAvgTest'
-                 FROM div_dist_upz_test_number AS a WHERE a.upazila= '".$request->upazila."' and date is not null ORDER BY a.date) T order by report_date");
+                 FROM div_dist_upz_test_number AS a WHERE a.upazila= '".$request->upazila."' and date is not null ORDER BY a.date) T  $dateQuery order by report_date");
             //Daily cases query
             $dailyCases = DB::select("select * from (
             SELECT
@@ -1065,7 +1040,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                             WHERE b.upazila= '".$request->upazila."' and test_date is not null and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
                           ), 2 ) AS 'fiveDayMovingAvgInfected'
                  FROM daily_infected_upz AS a WHERE a.upazila= '".$request->upazila."' and test_date is not null
-                 ORDER BY a.test_date) T order by test_date");
+                 ORDER BY a.test_date) T $testDateQuery order by test_date");
 
         } elseif($request->division && $request->district) {
             $dailyTests = DB::select("select * from (
@@ -1077,7 +1052,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                             date is not null and DATEDIFF(a.date, b.date) BETWEEN 0 AND 4
                         ), 2 ) AS 'fiveDayMovingAvgTest'
                  FROM daily_test_number_dist AS a where a.district = '".$request->district."' and date is not null
-                  ORDER BY a.date) T order by report_date");
+                  ORDER BY a.date) T $dateQuery order by report_date");
             $dailyCases = DB::select("select * from (
             SELECT
                    a.test_date, a.district, a.infected,
@@ -1086,7 +1061,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                             WHERE b.district= '".$request->district."' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
                           ), 2 ) AS 'fiveDayMovingAvgInfected'
                  FROM daily_infected_dist AS a WHERE a.district= '".$request->district."'
-                 ORDER BY a.test_date) T order by test_date");
+                 ORDER BY a.test_date) T $testDateQuery order by test_date");
 
         } elseif($request->division) {
             $dailyTests = DB::select("select * from (
@@ -1099,7 +1074,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                         ), 2 ) AS 'fiveDayMovingAvgTest'
                  FROM daily_test_number_div AS a where a.division = '".$request->division."' and date is not null
                  and date >= '2020-03-08'
-                  ORDER BY a.date) T order by report_date");
+                  ORDER BY a.date) T $dateQuery order by report_date");
             //Daily cases query
             $dailyCases = DB::select("select * from (
             SELECT
@@ -1110,7 +1085,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                           ), 2 ) AS 'fiveDayMovingAvgInfected'
                  FROM daily_infected_div AS a WHERE a.division= '".$request->division."'
                  and a.test_date >= '2020-03-08'
-                 ORDER BY a.test_date) T order by test_date");
+                 ORDER BY a.test_date) T $testDateQuery order by test_date");
 //                        dd($dailyTests, $dailyCases);
         } else {
             $dailyTests = DB::select("select * from (
@@ -1122,7 +1097,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                 WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
                           ), 2 ) AS 'fiveDayMovingAvgTest'
                  FROM daily_data AS a
-                 ORDER BY a.report_date) T where report_date>='2020-05-20' order by report_date ");
+                 ORDER BY a.report_date) T  $dateQuery AND report_date>='2020-05-20' order by report_date ");
             //Daily cases query
             $dailyCases = DB::select("select * from (
                 SELECT
@@ -1133,7 +1108,7 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
                     WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4
                               ), 2 ) AS 'fiveDayMovingAvgInfected'
                      FROM daily_data AS a
-                     ORDER BY a.report_date) T  where report_date>='2020-05-20' order by report_date");
+                     ORDER BY a.report_date) T $dateQuery  AND report_date>='2020-05-20' order by report_date");
 
         }
 
@@ -1269,13 +1244,13 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),2) 
 
     private function first_week(){
         $first_week = DB::select("select max(date) as 'first_2_weeks_start',
-        DATE_SUB((select max(date) from test_positivity_rate_district), INTERVAL 14 DAY) 
+        DATE_SUB((select max(date) from test_positivity_rate_district), INTERVAL 14 DAY)
         as 'first_2_weeks_end' from test_positivity_rate_district;  ");
                 return $first_week[0];
     }
 
     private function last_week(){
-        $last_week = DB::select("SELECT DISTINCT DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY) 
+        $last_week = DB::select("SELECT DISTINCT DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY)
         AS 'last_2_weeks_start',
         DATE_SUB(DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY), INTERVAL 14 DAY)
         AS 'last_2_weeks_ends' FROM test_positivity_rate_district;  ");
