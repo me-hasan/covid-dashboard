@@ -24,7 +24,7 @@
         @include('hpm.sub-header')
 
         <!--Page header-->
-        <div class="page-header">
+        <div class="page-header mt-0 mb-1">
           <div class="page-leftheader">
             <!--<h4 class="page-title mb-0">Hi! Welcome Back</h4>-->
             <ol class="breadcrumb">
