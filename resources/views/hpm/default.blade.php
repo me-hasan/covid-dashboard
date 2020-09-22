@@ -53,7 +53,7 @@
   <footer class="footer">
     <div class="container">
       <div class="row align-items-center flex-row-reverse">
-        <div class="col-md-12 col-sm-12 text-center">কপিরাইট © ২০২০ <a href="#">কাভিড-১৯, জাতীয় ড্যাশবোর্ড</a>। সকল অধিকার সংরক্ষিত। </div>
+        <div class="col-md-12 col-sm-12 text-center b1">কপিরাইট © ২০২০ <a href="#">কাভিড-১৯, জাতীয় ড্যাশবোর্ড</a>। সকল অধিকার সংরক্ষিত। </div>
       </div>
     </div>
   </footer>
