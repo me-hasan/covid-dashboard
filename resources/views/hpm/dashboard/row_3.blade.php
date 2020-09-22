@@ -17,7 +17,7 @@
                     </div> -->
                     <div class="col-xl-8 col-md-12">
                         <div id="age_wise_death_distribution"></div>
-                        <div class="row">        
+                        <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
@@ -49,7 +49,7 @@
         A.twentyone_to_thirty/5 as '_21_30',
         A.thirtyone_to_forty/5 as '_31_40',
         A.fortyone_to_fifty/5 as '_41_50',
-        A.fiftyone_to_sixty/5 as '_51_60', 
+        A.fiftyone_to_sixty/5 as '_51_60',
         A.sixtyone_to_hundred/5 as '_60_Plus', updt_date
     from
     (SELECT
@@ -191,7 +191,7 @@
                 },
                 labels: {
                     formatter: function() {
-                        return this.value;
+                        return englishToBangla(this.value);
                     }
                 }
             },
@@ -205,8 +205,14 @@
 					}
                 }
             },
-            tooltip: {
+            /*tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
+
+            },*/
+            tooltip: {
+                formatter: function() {
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                }
             },
             plotOptions: {
                 column: {
