@@ -199,7 +199,6 @@
             Highcharts.chart('national_dialy_infected_trend', {
                 chart: {
                     zoomType: 'xy',
-					height: 470,
 					style: {
 						fontFamily: 'SolaimanLipi'
 					}
