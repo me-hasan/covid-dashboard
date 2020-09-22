@@ -4,12 +4,12 @@
 <!-- Meta data -->
 <meta charset="UTF-8">
 <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
-<meta content="National Dashboard - IEDCR Version" name="description">
+<meta content="জাতীয় ড্যাশবোর্ড" name="description">
 <meta content="eGenration Limited" name="author">
 <meta name="keywords" content=""/>
 
 <!-- Title -->
-<title>National Dashboard - HPM Version</title>
+<title>জাতীয় ড্যাশবোর্ড</title>
 
 <!--Favicon -->
 <link rel="icon" href="{{ asset('assets/images/brand/favicon.ico') }}" type="image/x-icon"/>
