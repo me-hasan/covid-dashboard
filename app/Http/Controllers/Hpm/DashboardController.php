@@ -583,18 +583,22 @@ ORDER BY t.date";
                 $searchQuery = "  (". $divisionReqData.")";
 
                 $cumulativeSqlDistrictUpazilaSql = "SELECT * FROM `district_wise_cases_covid` WHERE `division_eng` IN ".$searchQuery;
+                $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
                 $searchQuery = "   (". $districtReqData.")";
+                $districts = $request->district;
+                $cumulativeDisUpaZillaData = [];
+                if(count($districts)) {
+                    foreach ($districts as $district) {
 
+                        $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid where district_city_eng='".$district."' $dateQuery group by date;";
 
-                /*$cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District,  daily_cases as cumulative_infected_person
-                from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  "; */
+                        $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+                    }
+                }
 
-                $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid
-where district_city_eng IN ".$searchQuery." $dateQuery group by date;";
-                //dd($searchQuery);
             }
 
             if($request->has('upazilla') && count($request->upazilla)) {
@@ -606,26 +610,29 @@ where district_city_eng IN ".$searchQuery." $dateQuery group by date;";
             }
 
 
-            $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+            //$cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+            //dd($cumulativeDisUpaZillaData);
             //dd($cumulativeDisUpaZillaData);
             $j=0;
             $dateData = [];
             $districtData = [];
-            foreach ($cumulativeDisUpaZillaData as $key => $div) {
-              /*  $div_date = date('d/m/Y', strtotime($div->date));
+            foreach ($cumulativeDisUpaZillaData as $key => $districtDataInfo) {
+                if(count($districtDataInfo)){
+                    foreach ($districtDataInfo as $div){
 
-                if(!in_array($div_date, $dateData)){
-                    $dateData[] = $div_date;
-                }*/
-                $div_date = date('d-M-Y', strtotime($div->date));
+                        $div_date = date('d-M-Y', strtotime($div->date));
 
-                if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
-                    $dateData[] =  convertEnglishDateToBangla($div_date);
+                        if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
+                            $dateData[] =  convertEnglishDateToBangla($div_date);
+                        }
+
+                        $districtData[$div->district_city_eng][] = (int)$div->total_cases ?? 0;
+                        $districtData[$div->district_city_eng]['bn'] = en2bnTranslation($div->district_city_eng);
+                        $j++;
+                    }
                 }
+                //dd($div);
 
-                $districtData[$div->district_city_eng][] = (int)$div->total_cases ?? 0;
-                $districtData[$div->district_city_eng]['bn'] = en2bnTranslation($div->district_city_eng);
-                $j++;
             }
             // 19-sep-2020
             // foreach ($cumulativeDisUpaZillaData as $key => $div) {
