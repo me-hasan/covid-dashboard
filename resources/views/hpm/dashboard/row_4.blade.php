@@ -3469,7 +3469,7 @@
                 <p class="card-text b1"> {{ $des_10->description_beng }}</p>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-5 col-md-5 col-xm-6">
+        <div class="col-xl-5 col-lg-5 col-md-5 col-xm-6">
             <div class="card-body">
                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                 <p class="card-text b1">{{ $des_10->insight_beng }}</p>
