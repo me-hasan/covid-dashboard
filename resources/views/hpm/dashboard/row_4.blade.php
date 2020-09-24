@@ -76,6 +76,12 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-4 col-md-4">
+        	<div class="card-body p-0 pt-2 m-0">
+            	<div id="hospital_beds_trend"></div>
+            </div>
+        </div>
+        
         <!-- <div class="col-xl-4 col-md-4">
         	<div class="card-body p-0 pt-2 m-0">
 				<div class="d-flex flex-row justify-content-start" id="hospital_capacity_map">
@@ -3642,6 +3648,81 @@
 				}
 			});
         });
+		
+        // Hospital Beds Trend
+        Highcharts.chart('hospital_beds_trend', {
+            chart: {
+                height: 460,
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
+            title: {
+                text: ''
+            },
 
+            subtitle: {
+                text: ''
+            },
+
+            legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "16px",
+					fontWeight: "normal"
+				}
+            },
+
+            credits:{
+                enabled:false
+            },
+
+            xAxis: {
+                categories: ["\u09e7\u09e8 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09e9 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ea \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09eb \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ec \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ed \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ee \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ef \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e6 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e7 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e8 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e9 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0"]            },
+            tooltip: {
+            formatter: function() {
+                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+            }
+        },
+            yAxis: {
+                title: {
+                    text: 'খালি শয্যা সংখ্যার শতকরা হার',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    fillOpacity:0
+                }
+            },
+
+
+            colors: ["#00008b"],
+            series: [{
+                name: 'সাধারণ শয্যা',
+                data: [2.1,3.1,4.2,5.3,6.4,7.6,8.9,10.9,11,12.13,14.6,],
+                type : 'area',
+                marker:{symbol:'circle'}
+
+            },
+			{
+                name: 'সাধারণ শয্যা',
+                data: [10.1,9.1,8.2,6.3,5.4,9.6,7.9,11.9,8,12.16,18.6,],
+                type : 'area',
+                marker:{symbol:'circle'}
+
+            }],
+        });
     </script>
 @endpush
