@@ -3685,7 +3685,7 @@
 			},
             tooltip: {
 				formatter: function() {
-					return ${this.series.name}+': <b>'+${englishToBangla(this.y)}+'%</b>';
+					return `${this.series.name}: <b>${englishToBangla(this.y)}%</b>`;
 				}
         	},
             yAxis: {
