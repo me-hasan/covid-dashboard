@@ -3518,7 +3518,7 @@
             tooltip: {
                 //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                 formatter: function() {
-                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                    return '${this.series.name}: <b>${englishToBangla(this.y)}%</b>';
                 }
             },
             accessibility: {
