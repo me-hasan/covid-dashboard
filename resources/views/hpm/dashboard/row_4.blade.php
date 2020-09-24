@@ -3462,13 +3462,13 @@
 		</div> -->
     </div>
     <div class="row">
-        <div class="col-xl-8 col-lg-8 col-md-8 col-xm-12">
+        <div class="col-xl-8 col-lg-7 col-md-7 col-xm-6">
             <div class="card-body">
                 <h5 class="card-title b1">বর্ণনা</h5>
                 <p class="card-text b1"> {{ $des_10->description_beng }}</p>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-4 col-xm-12">
+        <div class="col-xl-4 col-lg-5 col-md-5 col-xm-6">
             <div class="card-body">
                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                 <p class="card-text b1">{{ $des_10->insight_beng }}</p>
