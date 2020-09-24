@@ -78,6 +78,7 @@
         </div>
         <div class="col-xl-5 col-md-6">
         	<div class="card-body p-0 pt-2 m-0">
+           		<h5 class="card-title b1">হাসপাতালের খালি শয্যা সংখ্যার দৈনিক শতকরা হার</h5>
             	<div id="hospital_beds_trend"></div>
             </div>
         </div>
