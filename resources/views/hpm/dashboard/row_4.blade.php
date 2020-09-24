@@ -3518,7 +3518,7 @@
             tooltip: {
                 //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                 formatter: function() {
-                    return '${this.series.name}: <b>${englishToBangla(this.y)}%</b>';
+                    return '${this.series.name}: <b>${englishToBangla(this.y)}</b>';
                 }
             },
             accessibility: {
@@ -3684,7 +3684,7 @@
                 categories: ["\u09e7\u09e8 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09e9 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ea \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09eb \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ec \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ed \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ee \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ef \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e6 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e7 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e8 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e9 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0"]            },
             tooltip: {
             formatter: function() {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                return '${this.series.name}: <b>${englishToBangla(this.y)}%</b>';
             }
         },
             yAxis: {
