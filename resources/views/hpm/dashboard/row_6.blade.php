@@ -1,6 +1,5 @@
 <!-- Start :: Risk Matrix -->
 <?php 
-
 $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start); 
 $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end); 
 
@@ -31,7 +30,7 @@ $today = convertEnglishDateToBangla(date('Y-m-d'));
                                 <td colspan="4" class="text-center fs-18"><span class="text-danger">আজ {{ $today }}</span>, বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} ) </td>
                             </tr>
                             </thead>
-                            <tbody class="fs-20 text-center">
+                            <tbody class="fs-20 text-center risk_matrix">
                             <tr>
                                 <td></td>
                                 <td>উচ্চ ঝুঁকিপূর্ণ</td>
@@ -40,21 +39,21 @@ $today = convertEnglishDateToBangla(date('Y-m-d'));
                             </tr>
                             <tr>
                                 <td>উচ্চ ঝুঁকিপূর্ণ</td>
-                                <td class="bg-danger">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}</td>
-                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} </td>
-                                <td style="background: #fa9a29"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}</td>
+                                <td class="bg-danger" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}</td>
+                                <td class="bg-danger" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} </td>
+                                <td class="bg-danger" data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}</td>
                             </tr>
                             <tr>
                                 <td>মধ্যম ঝুঁকিপূর্ণ</td>
-                                <td style="background: #fa9a29">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} </td>
-                                <td style="background: #feea1f">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}</td>
-                                <td style="background: #94f925">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}</td>
+                                <td style="background: #00ff2e" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} </td>
+                                <td style="background: #feea1f" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}</td>
+                                <td class="bg-danger" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}</td>
                             </tr>
                             <tr>
                                 <td>কম ঝুঁকিপূর্ণ</td>
-                                <td style="background: #feea1f">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}</td>
-                                <td style="background: #94f925">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} </td>
-                                <td style="background: #00ff2e">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}</td>
+                                <td style="background: #00ff2e" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}</td>
+                                <td style="background: #00ff2e" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} </td>
+                                <td style="background: #00ff2e" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -95,3 +94,288 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
     </div>
 </div>
 <!-- End :: Risk Matrix -->
+
+<!-- Strat :: Modal Content -->
+
+<div class="d-none">
+    <div id="risk_popup_table_content" class="table-responsive b1">
+        <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <thead>
+            <tr>
+                <th class="border-bottom-0">জেলা</th>
+                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            <tr>
+                <td>ঢাকা</td>
+                <td>০.৯৩</td>
+                <td>০.৬৯</td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- End :: Modal Content -->
+
+@push('custom_script')
+	<script type="text/javascript">
+		$(document).ready(function(e) {
+			
+			//Details display datatable
+			function hospitalDataModal(){
+				$('#risk_table_popup').DataTable( {
+					responsive: true,
+					"pageLength": 8,
+					"order": [[ 2, "desc" ]],
+					language: {
+						searchPlaceholder: 'Search...',
+						sSearch: '',
+						lengthMenu: '_MENU_',
+					},
+					columnDefs: [{
+						className: "text-center",
+						targets: "_all"
+					}],
+					responsive: {
+						details: {
+							display: $.fn.dataTable.Responsive.display.modal( {
+								header: function ( row ) {
+									var data = row.data();
+									return 'Details for '+data[0]+' '+data[1];
+								}
+							} ),
+							renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+								tableClass: 'table border mb-0'
+							} )
+						}
+					}
+				});
+			}
+					
+			$('.risk_matrix tr td[data-toggle="modal"]').click(function(){
+				$('.modal-title').html('Risk Matrix');
+				$('#modalContent').html($('#risk_popup_table_content').html());
+				hospitalDataModal();
+			});
+		});
+    </script>
+@endpush
