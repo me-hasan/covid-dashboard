@@ -5,7 +5,7 @@
                 <h3 class="card-title b1">হাসপাতাল ধারণ ক্ষমতা এবং সংস্থান</h3>
             </div>
         </div>
-        <div class="col-xl-8 col-md-12">
+        <div class="col-xl-7 col-md-6">
             <div class="row">
                 <div class="col-xl-6 col-md-12">
                     <div class="card-body1">
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-4">
+        <div class="col-xl-5 col-md-6">
         	<div class="card-body p-0 pt-2 m-0">
             	<div id="hospital_beds_trend"></div>
             </div>
@@ -3696,7 +3696,7 @@
                 },
                 labels: {
                     formatter: function() {
-                        return englishToBangla(this.value);
+                        return englishToBangla(this.value)+'%';
                     }
                 }
             },
@@ -3708,7 +3708,7 @@
             },
 
 
-            colors: ["#00008b"],
+            colors: ['#9d4a2a', '#dfc825'],
             series: [{
                 name: 'সাধারণ শয্যা',
                 data: [2.1,3.1,4.2,5.3,6.4,7.6,8.9,10.9,11,12.13,14.6,],
