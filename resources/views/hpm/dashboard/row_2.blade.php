@@ -3,14 +3,14 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title b1">পরীক্ষা পরিস্থিতি</h3>
+                <h5 class="card-title b1">পরীক্ষা পরিস্থিতি</h5>
             </div>
             <div class="card-body">
 
                 <div class="row pt-5">
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">পরীক্ষা বনাম আক্রান্ত</h3>
+                            <h5 class="card-title b1">পরীক্ষা বনাম আক্রান্ত</h5>
                         </div>
                         <div class="card-body">
                             <div id="national_test_vs_infected_trend"></div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার</h3>
+                            <h5 class="card-title b1">বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার</h5>
                         </div>
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
@@ -67,7 +67,7 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
 
-                                <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h3>
+                                <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h5>
                                     @include('hpm.dashboard.row_2_map')
                                     <div class="row">
                                         <div class="col-xl-7 col-lg-7 col-md-6">
@@ -93,7 +93,7 @@
                     <div class="col-xl-8 col-lg-8 col-md-12">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
-                                <h5 class="card-title b1"></h3>
+                                <h5 class="card-title b1"></h5>
                                     <div class="card-body d-none">
                                         <div id="test_positivity_per_million"></div>
                                     </div>
@@ -284,7 +284,8 @@
                     formatter: function() {
                         return englishToBangla(this.value);
                     }
-                }
+                },
+                min:0,
             }, {
                 lineWidth: 1,
                 opposite: true,
@@ -299,7 +300,8 @@
                     formatter: function() {
                         return englishToBangla(this.value);
                     }
-                }
+                },
+                min:0,
             }],
             colors: ['#9d4a2a', '#dfc825'],
             series: [{
