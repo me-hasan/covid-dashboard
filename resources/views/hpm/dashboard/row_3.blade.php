@@ -15,27 +15,32 @@
                             </p>
                         </div>
                     </div> -->
-                    <div class="col-xl-8 col-md-12">
+                    <div class="col-xl-4 col-md-12">
                         <div id="age_wise_death_distribution"></div>
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6">
-                                <div class="card-body">
-                                    <h5 class="card-title b1">বর্ণনা</h5>
-                                    <p class="card-text b1">
-                                        {{ $des_9->description_beng }}
-                                    </p>
-                                </div>
-                             </div>
-                             <div class="col-xl-6 col-lg-6 col-md-6">
-                                <div class="card-body">
-                                    <h5 class="card-title b1">বিশ্লেষণ</h5>
-                                    <p class="card-text b1">{{ $des_9->insight_beng }}</p>
-                                </div>
-                             </div>
-                        </div>
+                    </div>
+                    <div class="col-xl4 col-md-12">
+                        <div id="age_wise_death_distribution_1"></div>
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div id="age_wise_death_distribution_2"></div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title b1">বর্ণনা</h5>
+                            <p class="card-text b1">
+                                {{ $des_9->description_beng }}
+                            </p>
+                        </div>
+                     </div>
+                     <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title b1">বিশ্লেষণ</h5>
+                            <p class="card-text b1">{{ $des_9->insight_beng }}</p>
+                        </div>
+                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -231,6 +236,146 @@
 
             }]
         });
+		
+        // Age Wise Death Distribution 1
+        Highcharts.chart('age_wise_death_distribution_1', {
+            chart: {
+                type: 'bar',
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            credits:{
+                enabled:false
+            },
+            legend:{
+                enabled:true,
+				itemStyle: {
+					fontSize: "16px",
+					fontWeight: "normal"
+				}
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
+                }
+            },
+            xAxis: {
+                categories: ["০-১০","১১-২০","২১-৩০","৩১-৪০","৪১-৫০","৫১-৬০","৬১+"],
+				title: {
+                    text: 'বয়স',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
+                }
+            },
+            /*tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
 
+            },*/
+            tooltip: {
+                formatter: function() {
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            colors: ['#ef4b4b', '#38cb89'],
+            series: [{
+                name: 'মৃত্যু',
+                data: [<?php echo $deathAge;?>]
+
+            }, {
+                name: 'আক্রান্ত',
+                data: [<?php echo $_ageWiseInfectData;?>],
+
+            }]
+        });
+        // Age Wise Death Distribution 2
+        Highcharts.chart('age_wise_death_distribution_2', {
+            chart: {
+                type: 'bar',
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            credits:{
+                enabled:false
+            },
+            legend:{
+                enabled:true,
+				itemStyle: {
+					fontSize: "16px",
+					fontWeight: "normal"
+				}
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
+                }
+            },
+            xAxis: {
+                categories: ["০-১০","১১-২০","২১-৩০","৩১-৪০","৪১-৫০","৫১-৬০","৬১+"],
+				title: {
+                    text: 'বয়স',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
+                }
+            },
+            /*tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+
+            },*/
+            tooltip: {
+                formatter: function() {
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            colors: ['#ef4b4b', '#38cb89'],
+            series: [{
+                name: 'মৃত্যু',
+                data: [<?php echo $deathAge;?>]
+
+            }, {
+                name: 'আক্রান্ত',
+                data: [<?php echo $_ageWiseInfectData;?>],
+
+            }]
+        });
     </script>
 @endpush
