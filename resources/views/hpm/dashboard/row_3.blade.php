@@ -18,7 +18,7 @@
                     <div class="col-xl-4 col-md-12">
                         <div id="age_wise_death_distribution"></div>
                     </div>
-                    <div class="col-xl4 col-md-12">
+                    <div class="col-xl-4 col-md-12">
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
