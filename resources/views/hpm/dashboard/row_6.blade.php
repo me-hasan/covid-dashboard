@@ -97,7 +97,7 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
 
 <!-- Strat :: Modal Content -->
 
-<div class="d-none" id="risk_popup_table_content">
+<div class="d-none11" id="risk_popup_table_content">
     <div class="table-responsive b1">
         <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
             <thead>
