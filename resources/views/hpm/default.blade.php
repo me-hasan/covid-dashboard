@@ -19,7 +19,7 @@
 
     <!-- App-Content -->
     <div class="app-content main-content">
-      <div class="side-app">
+      <div class="side-app pt-0">
 
         @include('hpm.sub-header')
 

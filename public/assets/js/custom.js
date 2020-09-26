@@ -390,9 +390,6 @@
 
 $(document).ready(function(e) {
     //Details display datatable
-
-
-    //
     function modalDataTableFunc(){
         $('#dtable_popup').DataTable( {
             responsive: true,
@@ -422,47 +419,6 @@ $(document).ready(function(e) {
             }
         });
     }
-
-    function modalDataTableFunc_dhk(){
-        $('#dtable_popup_dhk').DataTable( {
-            responsive: true,
-            "pageLength": 8,
-            "order": [[ 2, "desc" ]],
-            language: {
-                searchPlaceholder: 'Search...',
-                sSearch: '',
-                lengthMenu: '_MENU_',
-            },
-            columnDefs: [{
-                className: "text-center",
-                targets: "_all"
-            }],
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal( {
-                        header: function ( row ) {
-                            var data = row.data();
-                            return 'Details for '+data[0]+' '+data[1];
-                        }
-                    } ),
-                    renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
-                        tableClass: 'table border mb-0'
-                    } )
-                }
-            }
-        });
-    }
-    $("#ctg_hospital_popup_content").click(function (){
-        $('.modal-title').html('Chittagong Hospital Data Table');
-        $('#modalContent').html($('#ctg_hospital_popup_table_content').html());
-        modalDataTableFunc();
-    });
-
-    $("#dhk_hospital_popup_content").click(function(){
-        $('.modal-title').html('Dhaka Hospital Data Table');
-        $('#modalContent').html($('#dhk_hospital_popup_table_content').html());
-        modalDataTableFunc_dhk();
-    });
 });
 
 /* Population Wise Infection */
