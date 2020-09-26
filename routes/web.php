@@ -15,7 +15,9 @@ use Spatie\Permission\Models\Permission;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('hellow',function(){
+    return en2bnTranslation('CHITTAGONG');
+});
 Route::get('/','Auth\LoginController@showLoginForm');
 
 Auth::routes();

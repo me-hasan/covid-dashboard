@@ -66,16 +66,16 @@ class DashboardController extends Controller
             $data['last_week'] = $this->last_week();
 
             // description and insight
-            $data['des_1'] = $this->description_insight_1(); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
-            $data['des_2'] = $this->description_insight_2(); //Daily New Cases by Region / অঞ্চল তুলনা
-            $data['des_3'] = $this->description_insight_3(); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
-            $data['des_4'] = $this->description_insight_4(); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
-            $data['des_5'] = $this->description_insight_5(); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
-            $data['des_6'] = $this->description_insight_6(); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
-            $data['des_7'] = $this->description_insight_7(); // Test Per Cases For South Asian Countries
-            $data['des_8'] = $this->description_insight_8(); // Risk Matrix
-            $data['des_9'] = $this->description_insight_9(); //  IMPACT IN POPULATION
-            $data['des_10'] = $this->description_insight_10(); // Nationwide Hospital Capacity And Occupancy
+            $data['des_1'] = $this->description_insight_qry('Daily National Cases'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+            $data['des_2'] = $this->description_insight_qry('Daily New Cases by Region'); //Daily New Cases by Region / অঞ্চল তুলনা
+            $data['des_3'] = $this->description_insight_qry('Total National Cases'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+            $data['des_4'] = $this->description_insight_qry('Daily Tests and Cases'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+            $data['des_5'] = $this->description_insight_qry('Tests vs Cases (Positivity Rate)'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+            $data['des_6'] = $this->description_insight_qry('Risk Map by District (14 Days)'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+            $data['des_7'] = $this->description_insight_qry('Total Tests Per Case in Neighboring Countries'); // Test Per Cases For South Asian Countries
+            $data['des_8'] = $this->description_insight_qry('Movement of districts in terms of risk comparing current 14 days and previous 14 days'); // Risk Matrix
+            $data['des_9'] = $this->description_insight_qry('Age cohort vs cases and death'); //  IMPACT IN POPULATION
+            $data['des_10'] = $this->description_insight_qry('Capacity & Resource'); // Nationwide Hospital Capacity And Occupancy
         // shamvil end
 
         //Test vs Cases (Robi)
@@ -996,11 +996,14 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
     }
 
     private function tests_per_case_country($country){
-        $tests_per_case_country = DB::select("select * from countries_tests_per_case
-        where country = '".$country."'
-        and date = (select max(date) from countries_tests_per_case where country = '".$country."')");
+        $country_component=str_replace(" ","_",strtoupper($country));
+        $seconds = 86400;
+        $tests_per_case_country = cache()->remember('tests_per_case_country.'.$country_component, $seconds, function () use($country) {
+            return DB::select("select * from countries_tests_per_case
+            where country = '".$country."'
+            and date = (select max(date) from countries_tests_per_case where country = '".$country."')");
 
-
+        });
         return $tests_per_case_country[0];
     }
 
@@ -1223,6 +1226,14 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
             'total_test_positivity' => $total_test_positivity,
             'dateRange' => $dateRange
         ];
+    }
+
+    private function description_insight_qry($component_name_eng){
+        $component=str_replace(" ","_",strtoupper($component_name_eng));
+        $des= cache()->rememberForever('hpm_description_insight.'.$component,  function () use($component_name_eng) {
+            return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
+        });
+        return $des[0];
     }
 
     private function description_insight_1(){
