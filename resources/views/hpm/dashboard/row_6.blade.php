@@ -97,8 +97,8 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
 
 <!-- Strat :: Modal Content -->
 
-<div class="d-none11" id="risk_popup_table_content">
-    <div class="table-responsive b1">
+<div class="d-none">
+    <div id="risk_popup_table_content" class="table-responsive b1">
         <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
             <thead>
             <tr>
@@ -338,7 +338,7 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
 
 @push('custom_script')
 	<script type="text/javascript">
-		$(document).ready(function(e) {
+		$(document).ready(function($) {
 			
 			//Details display datatable
 			//function hospitalDataModal(){
