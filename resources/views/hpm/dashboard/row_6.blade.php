@@ -62,8 +62,8 @@ $today = convertEnglishDateToBangla(date('Y-m-d'));
                 <div class="col-xl-2 col-md-2 b1">
                     <div class="row">
                         <div class="col-xl-4 text-right">
-                            <div class="pt-4">উচ্চ ঝুঁকিপূর্ণ</div>
-                            <div class="pt-9 mt-9">কম ঝুঁকিপূর্ণ</div>
+                            <div class="pt-4">অবস্তার অবনতি</div>
+                            <div class="pt-9 mt-9">অবস্তার উন্নতি</div>
                         </div>
                         <div class="col-xl-8">
                             <div>গ্রাডিয়েন্ট</div>
@@ -341,7 +341,7 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
 		$(document).ready(function(e) {
 			
 			//Details display datatable
-			function hospitalDataModal(){
+			//function hospitalDataModal(){
 				$('#risk_table_popup').DataTable( {
 					responsive: true,
 					"pageLength": 8,
@@ -369,12 +369,12 @@ background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
 						}
 					}
 				});
-			}
+			//}
 					
 			$('.risk_matrix tr td[data-toggle="modal"]').click(function(){
 				$('.modal-title').html('Risk Matrix');
 				$('#modalContent').html($('#risk_popup_table_content').html());
-				hospitalDataModal();
+				//hospitalDataModal();
 			});
 		});
     </script>
