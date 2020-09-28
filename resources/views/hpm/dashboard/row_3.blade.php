@@ -86,6 +86,7 @@
         // $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
         // $totalDeath = $getAgeDeath->sum('TotalDeath');
         $getAgeDeath = DB::select("select date, ageRange, TotalDeath from deathnationalagedistribution where date = (select max(date) from deathnationalagedistribution )");
+//        dd($getAgeDeath);
         $deathAge = [];
         $i=0;
         foreach ($getAgeDeath as $key => $d) {
@@ -99,6 +100,116 @@
         }
 
         $deathAge  = implode(",", $deathAge);
+
+        //Code by Robi
+        $current_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
+(A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
+from
+(SELECT
+    max(test_date) as 'updt_date',
+    SUM(IF(age < 10,1,0)) as 'zero_to_ten',
+    SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
+    SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
+    SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
+    SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
+    SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
+    SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
+    SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
+    FROM infected_person
+    where month(date_of_test) =         month(curdate())
+    and year(date_of_test) = year(curdate())) as A");
+        $current_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()) and year(date) = year(curdate())");
+
+        $cur_infected = $cur_death = [];
+        foreach ($current_infecteds as $key => $current_infected) {
+            array_push($cur_infected, $current_infected->infected_0_10);
+            array_push($cur_infected, $current_infected->infected_11_20);
+            array_push($cur_infected, $current_infected->infected_21_30);
+            array_push($cur_infected, $current_infected->infected_31_40);
+            array_push($cur_infected, $current_infected->infected_41_50);
+            array_push($cur_infected, $current_infected->infected_51_60);
+            array_push($cur_infected, $current_infected->infected_60_plus);
+        }
+        $cur_infected  = implode(",", $cur_infected);
+
+        foreach ($current_deaths as $key => $current_death) {
+            array_push($cur_death, $current_death->total_death);
+        }
+        $cur_death  = implode(",", $cur_death);
+
+
+        $pre_month_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
+(A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
+from
+(SELECT
+    max(test_date) as 'updt_date',
+    SUM(IF(age < 10,1,0)) as 'zero_to_ten',
+    SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
+    SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
+    SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
+    SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
+    SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
+    SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
+    SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
+    FROM infected_person
+    where month(date_of_test) = month(curdate()- INTERVAL 1 MONTH)
+    and year(date_of_test) = year(curdate()- INTERVAL 1 MONTH))
+as A");
+        $pre_month_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()- INTERVAL 1 MONTH) and year(date) = year(curdate()- INTERVAL 1 MONTH)");
+
+        $previous_month__infected = $previous_month__death = [];
+        foreach ($pre_month_infecteds as $key => $pre_month_infected) {
+            array_push($previous_month__infected, $pre_month_infected->infected_0_10);
+            array_push($previous_month__infected, $pre_month_infected->infected_11_20);
+            array_push($previous_month__infected, $pre_month_infected->infected_21_30);
+            array_push($previous_month__infected, $pre_month_infected->infected_31_40);
+            array_push($previous_month__infected, $pre_month_infected->infected_41_50);
+            array_push($previous_month__infected, $pre_month_infected->infected_51_60);
+            array_push($previous_month__infected, $pre_month_infected->infected_60_plus);
+        }
+        $previous_month__infected  = implode(",", $previous_month__infected);
+
+        foreach ($pre_month_deaths as $key => $pre_month_death) {
+            array_push($previous_month__death, $pre_month_death->total_death);
+        }
+        $previous_month__death  = implode(",", $previous_month__death);
+
+        $pre_pre_month_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
+(A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
+from
+(SELECT
+    max(test_date) as 'updt_date',
+    SUM(IF(age < 10,1,0)) as 'zero_to_ten',
+    SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
+    SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
+    SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
+    SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
+    SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
+    SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
+    SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
+    FROM infected_person
+    where month(date_of_test) = month(curdate()- INTERVAL 2 MONTH)
+    and year(date_of_test) = year(curdate()- INTERVAL 2 MONTH))
+as A");
+        $pre_pre_month_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()- INTERVAL 2 MONTH) and year(date) = year(curdate()- INTERVAL 2 MONTH)");
+
+        $previous_previous_month__infected = $previous_previous_month__death = [];
+        foreach ($pre_pre_month_infecteds as $key => $pre_pre_month_infected) {
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_0_10);
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_11_20);
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_21_30);
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_31_40);
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_41_50);
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_51_60);
+            array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_60_plus);
+        }
+        $previous_previous_month__infected  = implode(",", $previous_previous_month__infected);
+
+        foreach ($pre_pre_month_deaths as $key => $pre_pre_month_death) {
+            array_push($previous_previous_month__death, $pre_pre_month_death->total_death);
+        }
+        $previous_previous_month__death  = implode(",", $previous_previous_month__death);
+
         ?>
 
         // Death Impact Bar
@@ -228,15 +339,17 @@
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'মৃত্যু',
-                data: [<?php echo $deathAge;?>]
+                {{--data: [<?php echo $deathAge;?>]--}}
+                data: [<?php echo $cur_death;?>]
 
             }, {
                 name: 'আক্রান্ত',
-                data: [<?php echo $_ageWiseInfectData;?>],
+                data: [<?php echo $cur_infected;?>],
+                {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
 
             }]
         });
-		
+
         // Age Wise Death Distribution 1
         Highcharts.chart('age_wise_death_distribution_1', {
             chart: {
@@ -299,11 +412,13 @@
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'মৃত্যু',
-                data: [<?php echo $deathAge;?>]
+                data: [<?php echo $previous_month__death;?>]
+                {{--data: [<?php echo $deathAge;?>]--}}
 
             }, {
                 name: 'আক্রান্ত',
-                data: [<?php echo $_ageWiseInfectData;?>],
+                {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
+                data: [<?php echo $previous_month__infected;?>],
 
             }]
         });
@@ -369,11 +484,13 @@
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'মৃত্যু',
-                data: [<?php echo $deathAge;?>]
+                data: [<?php echo $previous_previous_month__death;?>]
+                {{--data: [<?php echo $deathAge;?>]--}}
 
             }, {
                 name: 'আক্রান্ত',
-                data: [<?php echo $_ageWiseInfectData;?>],
+                {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
+                data: [<?php echo $previous_previous_month__infected;?>],
 
             }]
         });

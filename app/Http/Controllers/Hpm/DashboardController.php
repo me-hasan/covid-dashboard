@@ -66,16 +66,16 @@ class DashboardController extends Controller
             $data['last_week'] = $this->last_week();
 
             // description and insight
-            $data['des_1'] = $this->description_insight_1(); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
-            $data['des_2'] = $this->description_insight_2(); //Daily New Cases by Region / অঞ্চল তুলনা
-            $data['des_3'] = $this->description_insight_3(); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
-            $data['des_4'] = $this->description_insight_4(); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
-            $data['des_5'] = $this->description_insight_5(); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
-            $data['des_6'] = $this->description_insight_6(); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
-            $data['des_7'] = $this->description_insight_7(); // Test Per Cases For South Asian Countries
-            $data['des_8'] = $this->description_insight_8(); // Risk Matrix
-            $data['des_9'] = $this->description_insight_9(); //  IMPACT IN POPULATION
-            $data['des_10'] = $this->description_insight_10(); // Nationwide Hospital Capacity And Occupancy
+            $data['des_1'] = $this->description_insight_qry('Daily National Cases'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+            $data['des_2'] = $this->description_insight_qry('Daily New Cases by Region'); //Daily New Cases by Region / অঞ্চল তুলনা
+            $data['des_3'] = $this->description_insight_qry('Total National Cases'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+            $data['des_4'] = $this->description_insight_qry('Daily Tests and Cases'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+            $data['des_5'] = $this->description_insight_qry('Tests vs Cases (Positivity Rate)'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+            $data['des_6'] = $this->description_insight_qry('Risk Map by District (14 Days)'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+            $data['des_7'] = $this->description_insight_qry('Total Tests Per Case in Neighboring Countries'); // Test Per Cases For South Asian Countries
+            $data['des_8'] = $this->description_insight_qry('Movement of districts in terms of risk comparing current 14 days and previous 14 days'); // Risk Matrix
+            $data['des_9'] = $this->description_insight_qry('Age cohort vs cases and death'); //  IMPACT IN POPULATION
+            $data['des_10'] = $this->description_insight_qry('Capacity & Resource'); // Nationwide Hospital Capacity And Occupancy
         // shamvil end
 
         //Test vs Cases (Robi)
@@ -228,13 +228,21 @@ where date=((select max(date) from test_positivity_rate_district))";
         if($request->has('division') && is_array($request->division) && count($request->division)) {
 
         }
+        $dateQuery = ' AND TRUE';
+        if($request->has('from_date') && $request->from_date != '') {
+            $dateQuery .= ' AND  date >='. "'".$request->from_date."'";
+        }
+        if($request->has('to_date') && $request->to_date != '') {
+            $dateQuery .= ' AND date <='. "'".$request->to_date."'";
+        }
+
 
         $cumulativeSql = "SELECT t.date,t.division_eng,
        @running_total:=@running_total + t.daily_cases AS 'total_cases'
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka'
+  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date;";
@@ -244,7 +252,7 @@ ORDER BY t.date;";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka'
+  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date;";
@@ -254,7 +262,7 @@ ORDER BY t.date;";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Chittagong'
+  FROM division_wise_cases_covid where date is not null and division_eng='Chittagong' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -264,7 +272,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Barisal'
+  FROM division_wise_cases_covid where date is not null and division_eng='Barisal' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -274,7 +282,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Khulna'
+  FROM division_wise_cases_covid where date is not null and division_eng='Khulna' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -284,7 +292,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Rajshahi'
+  FROM division_wise_cases_covid where date is not null and division_eng='Rajshahi' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date ";
@@ -294,7 +302,7 @@ ORDER BY t.date ";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Rangpur'
+  FROM division_wise_cases_covid where date is not null and division_eng='Rangpur' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date ";
@@ -304,7 +312,7 @@ ORDER BY t.date ";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Sylhet'
+  FROM division_wise_cases_covid where date is not null and division_eng='Sylhet' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
@@ -314,7 +322,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Mymensingh'
+  FROM division_wise_cases_covid where date is not null and division_eng='Mymensingh' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date ";
@@ -561,23 +569,36 @@ ORDER BY t.date";
             $cumulativeSqlDistrictUpazilaSql = "";
             $upzillaData = [];
             $districtData = [];
+
+            $dateQuery = ' AND TRUE';
+            if($request->has('from_date') && $request->from_date != '') {
+                $dateQuery .= ' AND  date >='. "'".$request->from_date."'";
+            }
+            if($request->has('to_date') && $request->to_date != '') {
+                $dateQuery .= ' AND date <='. "'".$request->to_date."'";
+            }
+
             if($request->has('division') && count($request->division)) {
                 $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
                 $searchQuery = "  (". $divisionReqData.")";
 
                 $cumulativeSqlDistrictUpazilaSql = "SELECT * FROM `district_wise_cases_covid` WHERE `division_eng` IN ".$searchQuery;
+                $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
             }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
                 $searchQuery = "   (". $districtReqData.")";
+                $districts = $request->district;
+                $cumulativeDisUpaZillaData = [];
+                if(count($districts)) {
+                    foreach ($districts as $district) {
 
+                        $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid where district_city_eng='".$district."' $dateQuery group by date;";
 
-                /*$cumulativeSqlDistrictUpazilaSql = " select date, division_eng as Division, district_city_eng as District,  daily_cases as cumulative_infected_person
-                from district_wise_cases_covid where ".$searchQuery." order by date, division_eng  "; */
+                        $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+                    }
+                }
 
-                $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid
-where district_city_eng IN ".$searchQuery." group by date;";
-                //dd($searchQuery);
             }
 
             if($request->has('upazilla') && count($request->upazilla)) {
@@ -589,26 +610,29 @@ where district_city_eng IN ".$searchQuery." group by date;";
             }
 
 
-            $cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+            //$cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+            //dd($cumulativeDisUpaZillaData);
             //dd($cumulativeDisUpaZillaData);
             $j=0;
             $dateData = [];
             $districtData = [];
-            foreach ($cumulativeDisUpaZillaData as $key => $div) {
-              /*  $div_date = date('d/m/Y', strtotime($div->date));
+            foreach ($cumulativeDisUpaZillaData as $key => $districtDataInfo) {
+                if(count($districtDataInfo)){
+                    foreach ($districtDataInfo as $div){
 
-                if(!in_array($div_date, $dateData)){
-                    $dateData[] = $div_date;
-                }*/
-                $div_date = date('d-M-Y', strtotime($div->date));
+                        $div_date = date('d-M-Y', strtotime($div->date));
 
-                if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
-                    $dateData[] =  convertEnglishDateToBangla($div_date);
+                        if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
+                            $dateData[] =  convertEnglishDateToBangla($div_date);
+                        }
+
+                        $districtData[$div->district_city_eng][] = (int)$div->total_cases ?? 0;
+                        $districtData[$div->district_city_eng]['bn'] = en2bnTranslation($div->district_city_eng);
+                        $j++;
+                    }
                 }
+                //dd($div);
 
-                $districtData[$div->district_city_eng][] = (int)$div->total_cases ?? 0;
-                $districtData[$div->district_city_eng]['bn'] = en2bnTranslation($div->district_city_eng);
-                $j++;
             }
             // 19-sep-2020
             // foreach ($cumulativeDisUpaZillaData as $key => $div) {
@@ -672,146 +696,92 @@ where district_city_eng IN ".$searchQuery." group by date;";
       }
 
       private function risk_matrix_1(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'low_to_high' from
-    (select district from test_positivity_rate_district
-    where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-            (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-    ) as last_week_low inner join
-    (select district from test_positivity_rate_district
-    where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
-    (select max(date) from test_positivity_rate_district)) as curr_week_high
-USING (district) ORDER BY district ");
+        $risk_matrix = DB::select(" select count(l.district) as 'low_to_high' from
+        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
+        using(district) ");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_2(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'low_to_medium' from
-    (select district  from test_positivity_rate_district
-    where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
-    (SELECT date FROM
-    (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-    AS date ORDER BY date limit 1)
-    ) as last_week_low inner join
-    (select district from test_positivity_rate_district
-    where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
-    (select max(date) from test_positivity_rate_district)) as curr_week_medium
-USING (district) ORDER BY district ");
+        $risk_matrix = DB::select(" select count(l.district) as 'low_to_medium' from
+        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
+        using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_3(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'low_to_low' from
-        (select district  from test_positivity_rate_district
-        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_low
-        USING (district) ORDER BY district ");
+        $risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
+        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
+        using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_4(){
-        $risk_matrix = DB::select("select count(distinct(last_week_low.district)) as 'medium_to_high' from
-        (select district  from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_high
-        USING (district) ORDER BY district ");
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
+        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
+        using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_5(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'medium_to_medium' from
-        (select district  from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_high
-        USING (district) ORDER BY district");
+        $risk_matrix = DB::select(" select count(l.district) as 'medium_to_medium' from
+        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
+        using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_6(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'medium_to_low' from
-        (select district  from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_high
-        USING (district) ORDER BY district");
+        $risk_matrix = DB::select(" select count(l.district) as 'medium_to_low' from
+        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
+        using(district) ");
 
         return $risk_matrix[0];
       }
 
        private function risk_matrix_7(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_high' from
-        (select district  from test_positivity_rate_district
-        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_high
-        USING (district) ORDER BY district");
+        $risk_matrix = DB::select(" select count(l.district) as 'high_to_high' from
+        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
+        using(district) ");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_8(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_medium' from
-        (select district  from test_positivity_rate_district
-        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate>=0.05 and positive_rate<0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_high
-        USING (district) ORDER BY district");
+        $risk_matrix = DB::select(" select count(l.district) as 'high_to_medium' from
+        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
+        using(district) ");
 
         return $risk_matrix[0];
       }
 
 
       private function risk_matrix_9(){
-        $risk_matrix = DB::select(" select count(distinct(last_week_low.district)) as 'high_to_low' from
-        (select district  from test_positivity_rate_district
-        where positive_rate>=0.12 and district<>'Missing Form' and district<>'NA' and date=
-        (SELECT date FROM
-        (SELECT distinct(date) FROM test_positivity_rate_district ORDER BY date desc limit 2)
-        AS date ORDER BY date limit 1)
-        ) as last_week_low inner join
-        (select district from test_positivity_rate_district
-        where positive_rate<0.05 and district<>'Missing Form' and district<>'NA' and date=
-        (select max(date) from test_positivity_rate_district)) as curr_week_high
-        USING (district) ORDER BY district");
+        $risk_matrix = DB::select(" select count(l.district) as 'high_to_low' from
+        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
+        using(district) ");
 
         return $risk_matrix[0];
       }
@@ -837,7 +807,7 @@ USING (district) ORDER BY district ");
                 $searchQuery .= " AND  Upazila = '". $upazilla."'";
             }
 
-            $searchQuery = ''; // fridge 
+            $searchQuery = ''; // fridge
 
             if($searchQuery != '') {
                 /*infected_datasql*/
@@ -869,14 +839,14 @@ date>DATE_SUB(DATE_SUB((select max(date) from Div_Dist_Upz_Test_Number), INTERVA
 
             } else {
                 /*infected_datasql*/
-                $getLast14DaysDataSql = "select @nat_curr_fourtten_days_infected_person:=(select sum(infected_24_hrs) 
-from daily_data where report_date<=(select max(report_date) 
-from daily_data) and report_date>DATE_SUB((select max(report_date) 
+                $getLast14DaysDataSql = "select @nat_curr_fourtten_days_infected_person:=(select sum(infected_24_hrs)
+from daily_data where report_date<=(select max(report_date)
+from daily_data) and report_date>DATE_SUB((select max(report_date)
 from daily_data), INTERVAL 14 DAY))";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
-                $getLast14DaysDataSql = "select @nat_last_fourtten_days_infected_person:=(select sum(infected_24_hrs) from daily_data where 
-report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and 
-report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data), 
+                $getLast14DaysDataSql = "select @nat_last_fourtten_days_infected_person:=(select sum(infected_24_hrs) from daily_data where
+report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and
+report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
 INTERVAL 14 DAY), INTERVAL 14 DAY))";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_infected_person as 'curr_fourtten_days_infected_person', @nat_last_fourtten_days_infected_person as 'last_fourtten_days_infected_person',
@@ -884,14 +854,14 @@ round((@nat_curr_fourtten_days_infected_person-@nat_last_fourtten_days_infected_
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
 
                 /*testData sql*/
-                $getLast14DaysDataSql = "select @nat_curr_fourtten_days_test:=(select sum(test_24_hrs) 
-from daily_data where report_date<=(select max(report_date) 
-from daily_data) and report_date>DATE_SUB((select max(report_date) 
+                $getLast14DaysDataSql = "select @nat_curr_fourtten_days_test:=(select sum(test_24_hrs)
+from daily_data where report_date<=(select max(report_date)
+from daily_data) and report_date>DATE_SUB((select max(report_date)
 from daily_data), INTERVAL 14 DAY))";
                 $getLast14DaysTestData = DB::select($getLast14DaysDataSql);
-                $getLast14DaysDataSql ="select @nat_last_fourtten_days_test:=(select sum(test_24_hrs) from daily_data where 
-report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and 
-report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data), 
+                $getLast14DaysDataSql ="select @nat_last_fourtten_days_test:=(select sum(test_24_hrs) from daily_data where
+report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and
+report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
 INTERVAL 14 DAY), INTERVAL 14 DAY))";
                 $getLast14DaysTestData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_test as 'curr_fourtten_days_test', @nat_last_fourtten_days_test as 'last_fourtten_days__test',
@@ -899,14 +869,14 @@ round((@nat_curr_fourtten_days_test-@nat_last_fourtten_days_test),0) as 'Differe
                 $getLast14DaysTestData = DB::select($getLast14DaysDataSql);
 
                 /*death data*/
-                $getLast14DaysDataSql = "select @nat_curr_fourtten_days_death:=(select sum(death_24_hrs) 
-from daily_data where report_date<=(select max(report_date) 
-from daily_data) and report_date>DATE_SUB((select max(report_date) 
+                $getLast14DaysDataSql = "select @nat_curr_fourtten_days_death:=(select sum(death_24_hrs)
+from daily_data where report_date<=(select max(report_date)
+from daily_data) and report_date>DATE_SUB((select max(report_date)
 from daily_data), INTERVAL 14 DAY))";
                 $getLast14DaysDeathData = DB::select($getLast14DaysDataSql);
-                $getLast14DaysDataSql ="select @nat_last_fourtten_days_infected_death:=(select sum(death_24_hrs) from daily_data where 
-report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and 
-report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data), 
+                $getLast14DaysDataSql ="select @nat_last_fourtten_days_infected_death:=(select sum(death_24_hrs) from daily_data where
+report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and
+report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
 INTERVAL 14 DAY), INTERVAL 14 DAY))";
                 $getLast14DaysDeathData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_death as 'curr_fourtten_days_death', @nat_last_fourtten_days_infected_death as 'last_fourtten_days_infected_death',
@@ -972,11 +942,14 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
     }
 
     private function tests_per_case_country($country){
-        $tests_per_case_country = DB::select("select * from countries_tests_per_case
-        where country = '".$country."'
-        and date = (select max(date) from countries_tests_per_case where country = '".$country."')");
+        $country_component=str_replace(" ","_",strtoupper($country));
+        $seconds = 86400;
+        $tests_per_case_country = cache()->remember('tests_per_case_country.'.$country_component, $seconds, function () use($country) {
+            return DB::select("select * from countries_tests_per_case
+            where country = '".$country."'
+            and date = (select max(date) from countries_tests_per_case where country = '".$country."')");
 
-
+        });
         return $tests_per_case_country[0];
     }
 
@@ -1201,6 +1174,14 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
         ];
     }
 
+    private function description_insight_qry($component_name_eng){
+        $component=str_replace(" ","_",strtoupper($component_name_eng));
+        $des= cache()->rememberForever('hpm_description_insight.'.$component,  function () use($component_name_eng) {
+            return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
+        });
+        return $des[0];
+    }
+
     private function description_insight_1(){
         $des = DB::select("select * from hpm_description_insight where component_name_eng='Daily National Cases' and date=(select max(date) from hpm_description_insight) ");
         return $des[0];
@@ -1246,17 +1227,17 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
     }
 
     private function first_week(){
-        $first_week = DB::select("select max(date) as 'first_2_weeks_start',
-        DATE_SUB((select max(date) from test_positivity_rate_district), INTERVAL 14 DAY)
-        as 'first_2_weeks_end' from test_positivity_rate_district;  ");
+        $first_week = DB::select("SELECT MAX(date_of_test) AS 'first_2_weeks_start',
+        DATE_SUB((SELECT MAX(date_of_test) FROM lab_clean_data), INTERVAL 14 DAY) 
+        AS 'first_2_weeks_end' FROM lab_clean_data  ");
                 return $first_week[0];
     }
 
     private function last_week(){
-        $last_week = DB::select("SELECT DISTINCT DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY)
-        AS 'last_2_weeks_start',
-        DATE_SUB(DATE_SUB((SELECT MAX(DATE) FROM test_positivity_rate_district), INTERVAL 14 DAY), INTERVAL 14 DAY)
-        AS 'last_2_weeks_ends' FROM test_positivity_rate_district;  ");
+        $last_week = DB::select("select distinct DATE_SUB((select max(date_of_test) from lab_clean_data), INTERVAL 14 DAY) 
+        as 'last_2_weeks_start',
+        DATE_SUB(DATE_SUB((select max(date_of_test) from lab_clean_data), INTERVAL 14 DAY), INTERVAL 14 DAY)
+        as 'last_2_weeks_ends' from test_positivity_rate_district ");
         return $last_week[0];
     }
 

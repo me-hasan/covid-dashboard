@@ -82,7 +82,7 @@
             	<div id="hospital_beds_trend"></div>
             </div>
         </div>
-        
+
         <!-- <div class="col-xl-4 col-md-4">
         	<div class="card-body p-0 pt-2 m-0">
 				<div class="d-flex flex-row justify-content-start" id="hospital_capacity_map">
@@ -3479,6 +3479,26 @@
 </div>
 @push('custom_script')
     <script>
+        <?php
+        use Illuminate\Support\Facades\DB;
+
+       $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
+as 'GeneralBedVacancyRate',
+(((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
+from hospitaltemporarydata group by date");
+
+        $dates = $general_beds = $icu_beds =[];
+        foreach ($vacancy_beds as $key => $vacancy_bed) {
+            $dates[]        = "'" .convertEnglishDateToBangla($vacancy_bed->date). "'";;
+            $general_beds[] = $vacancy_bed->GeneralBedVacancyRate;
+            $icu_beds[]     = $vacancy_bed->ICUVacancyRate;
+        }
+
+        $hospital_vacancy_dates     = implode(",", $dates);
+        $hospital_vacancy_generals  = implode(",", $general_beds);
+        $hospital_vacancy_icus      = implode(",", $icu_beds);
+//        dd($hospital_vacancy_dates , $hospital_vacancy_generals, $hospital_vacancy_icus);
+       ?>
         // Hospital সাধারণ শয্যা
         Highcharts.chart('hospital_general_beds', {
             chart: {
@@ -3649,7 +3669,7 @@
 				}
 			});
         });
-		
+
         // Hospital Beds Trend
         Highcharts.chart('hospital_beds_trend', {
             chart: {
@@ -3681,7 +3701,7 @@
             },
 
             xAxis: {
-                categories: ["\u09e7\u09e8 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09e9 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ea \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09eb \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ec \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ed \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ee \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e7\u09ef \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e6 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e7 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e8 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0","\u09e8\u09e9 \u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0"]
+                categories: [<?php echo $hospital_vacancy_dates;?>]
 			},
             tooltip: {
 				formatter: function() {
@@ -3713,14 +3733,14 @@
             colors: ['#dfc825', '#9d4a2a'],
             series: [{
                 name: 'সাধারণ শয্যা',
-                data: [2.1,3.1,4.2,5.3,6.4,7.6,8.9,10.9,11,12.13,14.6,],
+                data: [<?php echo $hospital_vacancy_generals;?>],
                 type : 'area',
                 marker:{symbol:'circle'}
 
             },
 			{
                 name: 'আইসিইউ শয্যা',
-                data: [10.1,9.1,8.2,6.3,5.4,9.6,7.9,11.9,8,12.16,18.6,],
+                data: [<?php echo $hospital_vacancy_icus;?>],
                 type : 'area',
                 marker:{symbol:'circle'}
 

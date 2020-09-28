@@ -440,6 +440,8 @@
                     'division': $('.division_select').val(),
                     'district' : $('.select_district').val(),
                     'upazilla' : $('.select_upazilla').val(),
+                    'from_date':'{!! request()->get('from_date') !!}',
+                    'to_date':'{!! request()->get('to_date') !!}'
                 },
                 timeout: 30000,
                 success: function(data) {

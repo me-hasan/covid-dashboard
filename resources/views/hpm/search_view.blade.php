@@ -1,5 +1,7 @@
 @php
-    $divisions = DB::table('upazila')->distinct()->get('division');
+    $divisions= cache()->rememberForever('hpm_division_list',  function () {
+            return DB::table('upazila')->distinct()->get('division');
+    });
 @endphp
 
 
