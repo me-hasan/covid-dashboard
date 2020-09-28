@@ -3485,7 +3485,7 @@
        $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
 as 'GeneralBedVacancyRate',
 (((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
-from hospitaltemporarydata group by date");
+from hospitaltemporarydata group by date ORDER BY date");
 
         $dates = $general_beds = $icu_beds =[];
         foreach ($vacancy_beds as $key => $vacancy_bed) {
