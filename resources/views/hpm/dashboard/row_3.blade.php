@@ -102,22 +102,31 @@
         $deathAge  = implode(",", $deathAge);
 
         //Code by Robi
-        $current_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
-(A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
-from
-(SELECT
-    max(test_date) as 'updt_date',
-    SUM(IF(age < 10,1,0)) as 'zero_to_ten',
-    SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
-    SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
-    SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
-    SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
-    SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
-    SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
-    SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
-    FROM infected_person
-    where month(date_of_test) =         month(curdate())
-    and year(date_of_test) = year(curdate())) as A");
+        $current_infecteds =
+        DB::select("select A.zero_to_ten as 'infected_0_10', 
+            A.elv_to_twenty as 'infected_11_20',
+            A.twentyone_to_thirty as 'infected_21_30',
+            A.thirtyone_to_forty as 'infected_31_40',
+            A.fortyone_to_fifty as 'infected_41_50', 
+            A.fiftyone_to_sixty as 'infected_51_60', 
+            A.sixtyone_to_hundred as 'infected_60_plus'
+            from
+            (SELECT
+                max(test_date) as 'updt_date',
+                SUM(IF(age < 10,1,0)) as 'zero_to_ten',
+                SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
+                SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
+                SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
+                SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
+                SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
+                SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
+                SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
+                FROM infected_person
+                where month(date_of_test) = month(curdate())
+                and year(date_of_test) = year(curdate()))
+            as A;");
+
+
         $current_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()) and year(date) = year(curdate())");
 
         $cur_infected = $cur_death = [];
@@ -138,23 +147,29 @@ from
         $cur_death  = implode(",", $cur_death);
 
 
-        $pre_month_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
-(A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
-from
-(SELECT
-    max(test_date) as 'updt_date',
-    SUM(IF(age < 10,1,0)) as 'zero_to_ten',
-    SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
-    SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
-    SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
-    SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
-    SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
-    SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
-    SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
-    FROM infected_person
-    where month(date_of_test) = month(curdate()- INTERVAL 1 MONTH)
-    and year(date_of_test) = year(curdate()- INTERVAL 1 MONTH))
-as A");
+        $pre_month_infecteds = DB::select("
+            select A.zero_to_ten as 'infected_0_10', 
+            A.elv_to_twenty as 'infected_11_20',
+            A.twentyone_to_thirty as 'infected_21_30',
+            A.thirtyone_to_forty as 'infected_31_40',
+            A.fortyone_to_fifty as 'infected_41_50', 
+            A.fiftyone_to_sixty as 'infected_51_60', 
+            A.sixtyone_to_hundred as 'infected_60_plus'
+            from
+            (SELECT
+                max(test_date) as 'updt_date',
+                SUM(IF(age < 10,1,0)) as 'zero_to_ten',
+                SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
+                SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
+                SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
+                SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
+                SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
+                SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
+                SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
+                FROM infected_person
+                where month(date_of_test) = month(curdate()- INTERVAL 1 MONTH)
+                and year(date_of_test) = year(curdate()- INTERVAL 1 MONTH))
+            as A;");
         $pre_month_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()- INTERVAL 1 MONTH) and year(date) = year(curdate()- INTERVAL 1 MONTH)");
 
         $previous_month__infected = $previous_month__death = [];
@@ -174,23 +189,29 @@ as A");
         }
         $previous_month__death  = implode(",", $previous_month__death);
 
-        $pre_pre_month_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
-(A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
-from
-(SELECT
-    max(test_date) as 'updt_date',
-    SUM(IF(age < 10,1,0)) as 'zero_to_ten',
-    SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
-    SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
-    SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
-    SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
-    SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
-    SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
-    SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
-    FROM infected_person
-    where month(date_of_test) = month(curdate()- INTERVAL 2 MONTH)
-    and year(date_of_test) = year(curdate()- INTERVAL 2 MONTH))
-as A");
+        $pre_pre_month_infecteds = DB::select(" 
+            select A.zero_to_ten as 'infected_0_10', 
+            A.elv_to_twenty as 'infected_11_20',
+            A.twentyone_to_thirty as 'infected_21_30',
+            A.thirtyone_to_forty as 'infected_31_40',
+            A.fortyone_to_fifty as 'infected_41_50', 
+            A.fiftyone_to_sixty as 'infected_51_60', 
+            A.sixtyone_to_hundred as 'infected_60_plus'
+            from
+            (SELECT
+                max(test_date) as 'updt_date',
+                SUM(IF(age < 10,1,0)) as 'zero_to_ten',
+                SUM(IF(age BETWEEN 11 and 20,1,0)) as 'elv_to_twenty',
+                SUM(IF(age BETWEEN 21 and 30,1,0)) as 'twentyone_to_thirty',
+                SUM(IF(age BETWEEN 31 and 40,1,0)) as 'thirtyone_to_forty',
+                SUM(IF(age BETWEEN 41 and 50,1,0)) as 'fortyone_to_fifty',
+                SUM(IF(age BETWEEN 51 and 60,1,0)) as 'fiftyone_to_sixty',
+                SUM(IF(age BETWEEN 61 and 100,1,0)) as 'sixtyone_to_hundred',
+                SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
+                FROM infected_person
+                where month(date_of_test) = month(curdate()- INTERVAL 2 MONTH)
+                and year(date_of_test) = year(curdate()- INTERVAL 2 MONTH))
+            as A;");
         $pre_pre_month_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()- INTERVAL 2 MONTH) and year(date) = year(curdate()- INTERVAL 2 MONTH)");
 
         $previous_previous_month__infected = $previous_previous_month__death = [];
