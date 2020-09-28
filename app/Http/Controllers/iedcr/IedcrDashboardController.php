@@ -223,7 +223,7 @@ class IedcrDashboardController extends Controller
     if($request->from_date!='' && $request->to_date!=''){
         $qry_str= " and  DATE(test_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
-    $getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date");
+    $getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date ORDER BY test_date");
      
     return $getNationalInfectedTrend ?? '';
   }
@@ -248,9 +248,9 @@ class IedcrDashboardController extends Controller
 
 
       if( $request->district){
-        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date ");
+        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date order by Date");
       }elseif($request->division){
-        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date ");
+        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date order by Date");
       }
 
       return $getDivDisLevelInfectedTrend ?? '';
