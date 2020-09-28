@@ -10,11 +10,11 @@ if (! function_exists('en2bnTranslation')) {
     function en2bnTranslation($en_text)
     {
         $uppercas_text = strtoupper($en_text);
-       
+
         $translation= cache()->rememberForever('translate.'.$uppercas_text,  function () use($uppercas_text) {
             return DB::table('translate')->where('word_en', $uppercas_text)->first();
         });
-        
+
         if(!is_null($translation)){
             return $translation->word_bn;
         } else {
@@ -82,7 +82,7 @@ if (! function_exists('mapDivisionColor')) {
     }
 
     function convertEnglishDigitToBangla($string) {
-        $formattedData = str_replace(['1','2','3','4','5','6','7','8','9','0','-'],['১','২','৩','৪','৫','৬','৭','৮','৯','০',''],$string);
+        $formattedData = str_replace(['1','2','3','4','5','6','7','8','9','0','-','.'],['১','২','৩','৪','৫','৬','৭','৮','৯','০','','.'],$string);
         return $formattedData;
 
     }
