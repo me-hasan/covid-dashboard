@@ -118,8 +118,9 @@ from
     FROM infected_person
     where month(date_of_test) =         month(curdate())
     and year(date_of_test) = year(curdate())) as A");
+        $current_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()) and year(date) = year(curdate())");
 
-        $cur_infected = [];
+        $cur_infected = $cur_death = [];
         foreach ($current_infecteds as $key => $current_infected) {
             array_push($cur_infected, $current_infected->infected_0_10);
             array_push($cur_infected, $current_infected->infected_11_20);
@@ -130,6 +131,12 @@ from
             array_push($cur_infected, $current_infected->infected_60_plus);
         }
         $cur_infected  = implode(",", $cur_infected);
+
+        foreach ($current_deaths as $key => $current_death) {
+            array_push($cur_death, $current_death->total_death);
+        }
+        $cur_death  = implode(",", $cur_death);
+
 
         $pre_month_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
 (A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
@@ -148,8 +155,9 @@ from
     where month(date_of_test) = month(curdate()- INTERVAL 1 MONTH)
     and year(date_of_test) = year(curdate()- INTERVAL 1 MONTH))
 as A");
+        $pre_month_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()- INTERVAL 1 MONTH) and year(date) = year(curdate()- INTERVAL 1 MONTH)");
 
-        $previous_month__infected = [];
+        $previous_month__infected = $previous_month__death = [];
         foreach ($pre_month_infecteds as $key => $pre_month_infected) {
             array_push($previous_month__infected, $pre_month_infected->infected_0_10);
             array_push($previous_month__infected, $pre_month_infected->infected_11_20);
@@ -160,6 +168,11 @@ as A");
             array_push($previous_month__infected, $pre_month_infected->infected_60_plus);
         }
         $previous_month__infected  = implode(",", $previous_month__infected);
+
+        foreach ($pre_month_deaths as $key => $pre_month_death) {
+            array_push($previous_month__death, $pre_month_death->total_death);
+        }
+        $previous_month__death  = implode(",", $previous_month__death);
 
         $pre_pre_month_infecteds = DB::select("select (A.zero_to_ten/A.Total)*100 as 'infected_0_10',(A.elv_to_twenty/A.Total)*100 as 'infected_11_20', (A.twentyone_to_thirty/A.Total)*100 as 'infected_21_30',(A.thirtyone_to_forty/A.Total)*100 as 'infected_31_40',
 (A.fortyone_to_fifty/A.Total)*100 as 'infected_41_50', (A.fiftyone_to_sixty/A.Total)*100 as 'infected_51_60', (A.sixtyone_to_hundred/A.Total)*100 as 'infected_60_plus'
@@ -178,8 +191,9 @@ from
     where month(date_of_test) = month(curdate()- INTERVAL 2 MONTH)
     and year(date_of_test) = year(curdate()- INTERVAL 2 MONTH))
 as A");
+        $pre_pre_month_deaths = DB::select("select * from death_national_age_hpm where month(date) = month(curdate()- INTERVAL 2 MONTH) and year(date) = year(curdate()- INTERVAL 2 MONTH)");
 
-        $previous_previous_month__infected = [];
+        $previous_previous_month__infected = $previous_previous_month__death = [];
         foreach ($pre_pre_month_infecteds as $key => $pre_pre_month_infected) {
             array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_0_10);
             array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_11_20);
@@ -190,6 +204,12 @@ as A");
             array_push($previous_previous_month__infected, $pre_pre_month_infected->infected_60_plus);
         }
         $previous_previous_month__infected  = implode(",", $previous_previous_month__infected);
+
+        foreach ($pre_pre_month_deaths as $key => $pre_pre_month_death) {
+            array_push($previous_previous_month__death, $pre_pre_month_death->total_death);
+        }
+        $previous_previous_month__death  = implode(",", $previous_previous_month__death);
+
         ?>
 
         // Death Impact Bar
@@ -319,7 +339,8 @@ as A");
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'মৃত্যু',
-                data: [<?php echo $deathAge;?>]
+                {{--data: [<?php echo $deathAge;?>]--}}
+                data: [<?php echo $cur_death;?>]
 
             }, {
                 name: 'আক্রান্ত',
@@ -391,7 +412,8 @@ as A");
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'মৃত্যু',
-                data: [<?php echo $deathAge;?>]
+                data: [<?php echo $previous_month__death;?>]
+                {{--data: [<?php echo $deathAge;?>]--}}
 
             }, {
                 name: 'আক্রান্ত',
@@ -462,7 +484,8 @@ as A");
             colors: ['#ef4b4b', '#38cb89'],
             series: [{
                 name: 'মৃত্যু',
-                data: [<?php echo $deathAge;?>]
+                data: [<?php echo $previous_previous_month__death;?>]
+                {{--data: [<?php echo $deathAge;?>]--}}
 
             }, {
                 name: 'আক্রান্ত',
