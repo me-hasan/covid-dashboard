@@ -69,7 +69,7 @@
 
                                 <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h5>
                                     {{-- @include('hpm.dashboard.row_2_map') --}}
-                                    <div class="card-body">
+                                    <div class="card-body pl-0 pr-0">
                                     	<div id="iframeData"></div>
                                     </div>
                                     <div class="row">
@@ -135,7 +135,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');				
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="410" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');				
 			});	
         // Test Positivity Per Million
         // South Country Wise Infected
