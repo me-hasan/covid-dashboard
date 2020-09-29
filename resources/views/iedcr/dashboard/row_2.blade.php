@@ -378,6 +378,17 @@
             $str = 'two_Jhalakathi';
             }
 
+            if(substr($_mobInDistrictVal->District,0,5)=='Maulv'){
+                $str = 'two_Moulvibazar';
+            }
+            if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
+                $str = 'two_Chapainawabganj';
+            }
+
+            if(substr($_mobInDistrictVal->District,0,5)=='Jhena'){
+                $str = 'two_Jhenaidah';
+            }
+
             $_groupColorCode = NULL;
             foreach($_colorCodes as $_colorRange => $_colorCode){
                 if((int)$_mobInDistrictVal->Infected <= $_colorRange){
