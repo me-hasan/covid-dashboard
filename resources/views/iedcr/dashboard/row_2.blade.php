@@ -69,12 +69,12 @@
                 <div class="col-xl-12 col-md-12 ml-4">
                     <div id="color-group">
                         <div class="row gutters-xs">
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-5</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">6-10</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">11-50</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">51-100</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">101-500</span></div>
-                            <div class="col-auto"><span class="colorinput-color" style="background-color:#ed2355"></span><span class="group-color-label text-ash p-1">501-1000</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-100</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">101-500</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">501-1000</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">1001-5000</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">5001-10000</span></div>
+                            <div class="col-auto"><span class="colorinput-color" style="background-color:#ed2355"></span><span class="group-color-label text-ash p-1">10001-20000</span></div>
                         </div>
                     </div>
                 </div>
@@ -358,7 +358,7 @@
         $(document).ready(function(){
 
             <?php
-            $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '5000' => '#ed2355');
+            $_colorCodes = array( '100' => '#FCAA94', '500' => '#F69475', '1000' => '#F37366', '5000' => '#E5515D', '10000' => '#CD3E52', '20000' => '#ed2355');
             $_existDataGroups = array();
             foreach($ininfectedMap as $_mobInDistrictVal){
 
