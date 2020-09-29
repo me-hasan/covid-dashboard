@@ -16,15 +16,15 @@
                         </div>
                     </div> -->
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">{{convertEnglishDateToBangla(date('F'))}} ১ থেকে {{convertEnglishDigitToBangla(date('d'))}}</h5>
+                    	<h5 class="card-title b1"> ১ থেকে {{convertEnglishDateToBangla(Date('F'))}} পর্যন্ত</h5>
                         <div id="age_wise_death_distribution"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">{{convertEnglishDateToBangla(date('F', strtotime(date('F')." last month")))}}</h5>
+                    	<h5 class="card-title b1"> ১ থেকে {{convertEnglishDateToBangla(Date('F', strtotime(Date('F')." last month")))}} পর্যন্ত</h5>
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">মার্চ ৬ থেকে {{convertEnglishDateToBangla(date('F', strtotime(date('F', strtotime(date('F')." last month"))." last month")))}} পর্যন্ত</h5>
+                    	<h5 class="card-title b1">মার্চ ৬ থেকে {{convertEnglishDateToBangla(Date('F', strtotime(Date('F', strtotime(Date('F')." last month"))." last month")))}} পর্যন্ত</h5>
                         <div id="age_wise_death_distribution_2"></div>
                     </div>
                 </div>
