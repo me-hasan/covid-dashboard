@@ -221,9 +221,10 @@ class IedcrDashboardController extends Controller
   {
     $qry_str= " ";
     if($request->from_date!='' && $request->to_date!=''){
-        $qry_str= " and  DATE(test_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
+        $qry_str= " and  DATE(report_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
-    $getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date ORDER BY test_date");
+    //$getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date ORDER BY test_date");
+    $getNationalInfectedTrend = DB::select("select 'national' AS area, report_date as 'Date', infected_24_hrs as infected_count from daily_data where report_date is not NULL ".$qry_str." ORDER BY report_date");
 
     return $getNationalInfectedTrend ?? '';
   }

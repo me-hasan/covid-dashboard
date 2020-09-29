@@ -261,7 +261,7 @@ $inputData = request()->all();
                 $str = 'three_Chapainawabganj';
             }
 
-            if(substr($_mobInDistrictVal->District,0,5)=='Kish'){
+            if(substr($_mobInDistrictVal->District,0,5)=='Kisho'){
                 $str = 'three_Kish';
             }
 
