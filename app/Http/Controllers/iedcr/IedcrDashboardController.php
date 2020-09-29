@@ -224,7 +224,7 @@ class IedcrDashboardController extends Controller
         $qry_str= " and  DATE(test_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
     $getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date ORDER BY test_date");
-     
+
     return $getNationalInfectedTrend ?? '';
   }
 
@@ -590,38 +590,33 @@ class IedcrDashboardController extends Controller
         }
 // new query
         if($searchQuery != '') {
-//             $testPositivityMapSql = "select A.District, (A.Positive/B.Total)*100 as 'Test_Positivity' from
-// (select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Positive'
-// from lab_clean_data
-// where test_result='Positive' ". $searchQuery."  group by district) as A
-// inner join
-// (select district as 'District', max(date_of_test) as 'last_date', count(id) as 'Total'
-// from lab_clean_data
-// where test_result='Positive' or test_result='Negative' group by district) as B using(District)";
-
-            $testPositivityMapSql = "SELECT T2.district AS District, SUM(T1.test_positivity)/COUNT(test_positivity) AS 'Test_Positivity' FROM
+            /*$testPositivityMapSql = "SELECT T2.district AS District, SUM(T1.test_positivity)/COUNT(test_positivity) AS 'Test_Positivity' FROM
 (SELECT A.bbs_code AS 'bbs_code', (A.Positive/B.Total)*100 AS 'test_positivity' FROM
 (SELECT bbs_code, COUNT(id) AS 'Positive'
 FROM lab_clean_data
 WHERE test_result='Positive' ". $searchQuery." GROUP BY bbs_code) AS A
-INNER JOIN 
+INNER JOIN
 (SELECT bbs_code, COUNT(id) AS 'Total'
 FROM lab_clean_data
-WHERE test_result='Positive' OR test_result='Negative' GROUP BY bbs_code) AS B 
-USING(bbs_code)) AS T1 INNER JOIN bbs_coded_upazila_dist_div AS T2 
-ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
+WHERE test_result='Positive' OR test_result='Negative' GROUP BY bbs_code) AS B
+USING(bbs_code)) AS T1 INNER JOIN bbs_coded_upazila_dist_div AS T2
+ON T1.bbs_code=T2.upz_code GROUP BY T2.district";*/
+            $testPositivityMapSql = " select district as District,round((positive_rate*100),2) as 'Test_Positivity' from test_positivity_rate_district
+where date=((select max(date) from test_positivity_rate_district)) ". $searchQuery." ";
         } else {
-            $testPositivityMapSql = "SELECT T2.district AS District, SUM(T1.test_positivity)/COUNT(test_positivity) AS 'Test_Positivity' FROM
+            /*$testPositivityMapSql = "SELECT T2.district AS District, SUM(T1.test_positivity)/COUNT(test_positivity) AS 'Test_Positivity' FROM
 (SELECT A.bbs_code AS 'bbs_code', (A.Positive/B.Total)*100 AS 'test_positivity' FROM
 (SELECT bbs_code, COUNT(id) AS 'Positive'
 FROM lab_clean_data
 WHERE test_result='Positive' GROUP BY bbs_code) AS A
-INNER JOIN 
+INNER JOIN
 (SELECT bbs_code, COUNT(id) AS 'Total'
 FROM lab_clean_data
-WHERE test_result='Positive' OR test_result='Negative' GROUP BY bbs_code) AS B 
-USING(bbs_code)) AS T1 INNER JOIN bbs_coded_upazila_dist_div AS T2 
-ON T1.bbs_code=T2.upz_code GROUP BY T2.district";
+WHERE test_result='Positive' OR test_result='Negative' GROUP BY bbs_code) AS B
+USING(bbs_code)) AS T1 INNER JOIN bbs_coded_upazila_dist_div AS T2
+ON T1.bbs_code=T2.upz_code GROUP BY T2.district";*/
+            $testPositivityMapSql = "select district as District,round((positive_rate*100),2) as 'Test_Positivity' from test_positivity_rate_district
+where date=((select max(date) from test_positivity_rate_district))";
         }
 
         $testMapData = \Illuminate\Support\Facades\DB::select($testPositivityMapSql);
@@ -1108,7 +1103,7 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
     return $city_wise_hospital_details;
   }
   private function nationalInfectedMap()
-  { 
+  {
     // new query
     $getNationalInfectedMap = DB::select("
         SELECT B.district AS District, SUM(Infected) AS 'Infected',SUBSTRING(B.district, 1, 4) AS ExtractString  FROM

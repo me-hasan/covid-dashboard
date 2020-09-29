@@ -86,14 +86,8 @@ $inputData = request()->all();
                         </div>
                     </div>
                     <div class="col-xl-6 col-md-12 ml-4">
-                        <div id="color-group">
-                            <div class="row gutters-xs">
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#F69475"></span><span class="group-color-label text-ash p-1">0-10</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#F37366"></span><span class="group-color-label text-ash p-1">11-20</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#E5515D"></span><span class="group-color-label text-ash p-1">21-30</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#CD3E52"></span><span class="group-color-label text-ash p-1">31-40</span></div>
-                                <div class="col-auto"><span class="colorinput-color" style="background-color:#BC2B4C"></span><span class="group-color-label text-ash p-1">51-100</span></div>
-                            </div>
+                        <div id="color-group" class="infected-color-group-">
+                            <div class="row gutters-xs"><div class="col-auto"><span class="colorinput-color" style="background-color:#fff51e"></span><span class="group-color-label text-ash p-1">কম ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f87f2c"></span><span class="group-color-label text-ash p-1">মধ্যম ঝুঁকিপূর্ণ</span></div><div class="col-auto"><span class="colorinput-color" style="background-color:#f43735"></span><span class="group-color-label text-ash p-1">উচ্চ ঝুঁকিপূর্ণ</span></div></div>
                         </div>
                     </div>
 
@@ -247,12 +241,29 @@ $inputData = request()->all();
         $(document).ready(function(){
 
             <?php
-            $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+            //$_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+            $_colorCodes = array( '5' => '#fff51e', '12' => '#f87f2c', '500' => '#f43735');
             $_existDataGroups = array();
             foreach($testPositivityMap as $_mobInDistrictVal){
 
             $str=$_mobInDistrictVal->District;
             $str='three_'.$_mobInDistrictVal->District;
+            if(substr($_mobInDistrictVal->District,0,3)=='Cox'){
+                $str='three_CoxBazar';
+            }
+            if(substr($_mobInDistrictVal->District,0,4)=='Jhal'){
+                $str = 'three_Jhalakathi';
+            }
+            if(substr($_mobInDistrictVal->District,0,5)=='Maulv'){
+                $str = 'three_Moulvibazar';
+            }
+            if(substr($_mobInDistrictVal->District,0,5)=='Chapa'){
+                $str = 'three_Chapainawabganj';
+            }
+
+            if(substr($_mobInDistrictVal->District,0,5)=='Jhena'){
+                $str = 'three_Jhenaidah';
+            }
             /*if(substr($_mobInDistrictVal->ExtractString,0,3)=='Cox'){
                 $str='Cox';
             }elseif ($_mobInDistrictVal->District=='Narail') {
@@ -263,7 +274,7 @@ $inputData = request()->all();
 
             $_groupColorCode = NULL;
             foreach($_colorCodes as $_colorRange => $_colorCode){
-                if((int)$_mobInDistrictVal->Test_Positivity <= $_colorRange){
+                if((int)$_mobInDistrictVal->Test_Positivity < $_colorRange){
                     $_groupColorCode = $_colorCode;
                     $_existDataGroups[$_colorRange] = $_colorCode;
                     break;
@@ -272,7 +283,7 @@ $inputData = request()->all();
             }
 
             ?>
-            $('#<?php echo $str; ?> path').attr('fill', '<?php echo $_groupColorCode;?>');
+            $("#<?php echo $str; ?> path").attr('fill', '<?php echo $_groupColorCode;?>');
             <?php
             }
             ?>
