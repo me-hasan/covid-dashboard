@@ -3482,10 +3482,12 @@
         <?php
         use Illuminate\Support\Facades\DB;
 
-       $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
+       $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100) 
 as 'GeneralBedVacancyRate',
-(((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
-from hospitaltemporarydata group by date ORDER BY date");
+(((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate' 
+from hospitaltemporarydata
+where city = 'Country' 
+group by date ORDER BY date ");
 
         $dates = $general_beds = $icu_beds =[];
         foreach ($vacancy_beds as $key => $vacancy_bed) {
@@ -3538,7 +3540,7 @@ from hospitaltemporarydata group by date ORDER BY date");
             tooltip: {
                 //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                 formatter: function() {
-                    return '${this.series.name}: <b>${englishToBangla(this.y)}</b>';
+                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
                 }
             },
             accessibility: {
@@ -3562,8 +3564,8 @@ from hospitaltemporarydata group by date ORDER BY date");
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>],
-                    ['খালি', <?= number_format($nation_hospital->percent_General_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?= number_format($nation_hospital->percent_General_Beds_Occupied,2);?>],
+                    ['খালি', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>]
                 ]
             }]
         });
@@ -3630,8 +3632,8 @@ from hospitaltemporarydata group by date ORDER BY date");
                 type: 'pie',
                 name: 'শয্যা',
                 data: [
-                    ['ভর্তি', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>],
-                    ['খালি', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>]
+                    ['ভর্তি', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>],
+                    ['খালি', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>]
                 ]
             }]
         });

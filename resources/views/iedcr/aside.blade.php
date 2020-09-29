@@ -11,7 +11,7 @@
       <div class="app-sidebar__user">
         <div class="dropdown user-pro-body text-center">
           <div class="user-info">
-            <span class="text-muted app-sidebar__user-name text-sm">জাতীয় ড্যাশবোর্ড</span>
+            <span class="text-muted app-sidebar__user-name text-sm">National Dashboard</span>
           </div>
         </div>
       </div>
