@@ -248,9 +248,9 @@ class IedcrDashboardController extends Controller
 
 
       if( $request->district){
-        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date order by Date");
+        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(Infected_Person) as infected_count from div_dist_upz_infected_trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date order by Date");
       }elseif($request->division){
-        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date order by Date");
+        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(Infected_Person) as infected_count from div_dist_upz_infected_trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date order by Date");
       }
 
       return $getDivDisLevelInfectedTrend ?? '';
