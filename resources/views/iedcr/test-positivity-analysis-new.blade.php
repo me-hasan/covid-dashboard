@@ -349,7 +349,22 @@
             foreach($geoLocationWiseTestPositivity as $row){
               $str=$row->District;
               $str='three_'.$row->District;
+              if(substr($row->District,0,3)=='Cox'){
+                $str='three_CoxBazar';
+              }
+              if(substr($row->District,0,4)=='Jhal'){
+                  $str = 'three_Jhalakathi';
+              }
+              if(substr($row->District,0,5)=='Maulv'){
+                  $str = 'three_Moulvibazar';
+              }
+              if(substr($row->District,0,5)=='Chapa'){
+                  $str = 'three_Chapainawabganj';
+              }
 
+              if(substr($row->District,0,5)=='Jhena'){
+                  $str = 'three_Jhenaidah';
+              }
 
               foreach($_colorCodes as $_colorRange => $_colorCode){
                   if($row->test_positivity <= $_colorRange){
