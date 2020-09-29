@@ -358,7 +358,7 @@
         $(document).ready(function(){
 
             <?php
-            $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '1000' => '#ed2355');
+            $_colorCodes = array( '5' => '#FCAA94', '10' => '#F69475', '50' => '#F37366', '100' => '#E5515D', '500' => '#CD3E52', '5000' => '#ed2355');
             $_existDataGroups = array();
             foreach($ininfectedMap as $_mobInDistrictVal){
 
