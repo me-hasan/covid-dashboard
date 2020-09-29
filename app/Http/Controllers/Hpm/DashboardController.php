@@ -170,23 +170,30 @@ where date=((select max(date) from test_positivity_rate_district))";
                 $dateQuery .= ' AND date <='. "'".$request->to_date."'";
         }
         $dateEnglish = $dateBangla = $infected_person_date = [];
-        if($request->division){
-            $dateQuery = 'Where True';
+        if($request->division || $request->district){
+            $dateQuery = 'AND True';
             if($request->has('from_date') && $request->from_date != '') {
                 $dateQuery .= ' AND t.date >='. "'".$request->from_date."'";
             }
             if($request->has('to_date') && $request->to_date != '') {
                 $dateQuery .= ' AND t.date <='. "'".$request->to_date."'";
             }
-            $cumulativeData = DB::select("SELECT t.date,t.Division,
+            if($request->has('division')){
+                $dateQuery .= ' AND Division ='. "'".$request->division."'";
+            }
+            if($request->has('district')) {
+                $dateQuery .= ' AND District ='. "'".$request->district."'";
+            }
+
+            $cumulativeData = DB::select("SELECT t.date,t.Division,t.District,
                                @running_total:=@running_total + t.Infected_Person AS cumulative_infected_person
                         FROM
                         (SELECT
-                          Date, Division, sum(Infected_Person) as 'Infected_Person'
+                          Date, Division, District, sum(Infected_Person) as 'Infected_Person'
                           FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE()
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
-                        WHERE division= '".$request->division."' and t.date <= CURDATE() $dateQuery
+                        WHERE  t.date <= CURDATE() $dateQuery
                         ORDER BY t.date");
         }else{
             // $cumulativeData = DB::select("SELECT t.date,
@@ -1228,13 +1235,13 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
 
     private function first_week(){
         $first_week = DB::select("SELECT MAX(date_of_test) AS 'first_2_weeks_start',
-        DATE_SUB((SELECT MAX(date_of_test) FROM lab_clean_data), INTERVAL 14 DAY) 
+        DATE_SUB((SELECT MAX(date_of_test) FROM lab_clean_data), INTERVAL 14 DAY)
         AS 'first_2_weeks_end' FROM lab_clean_data  ");
                 return $first_week[0];
     }
 
     private function last_week(){
-        $last_week = DB::select("select distinct DATE_SUB((select max(date_of_test) from lab_clean_data), INTERVAL 14 DAY) 
+        $last_week = DB::select("select distinct DATE_SUB((select max(date_of_test) from lab_clean_data), INTERVAL 14 DAY)
         as 'last_2_weeks_start',
         DATE_SUB(DATE_SUB((select max(date_of_test) from lab_clean_data), INTERVAL 14 DAY), INTERVAL 14 DAY)
         as 'last_2_weeks_ends' from test_positivity_rate_district ");
