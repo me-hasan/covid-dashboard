@@ -15,7 +15,7 @@
 <div class="page">
   <div class="page-main">
 
-    <!-- @include('iedcr.aside') -->
+    <!-- @include('hpm.aside') -->
 
     <!-- App-Content -->
     <div class="app-content main-content">

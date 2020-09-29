@@ -10,7 +10,7 @@
 @section('content')
 
   <?php
-    ini_set('error_reporting', 0);
+    //ini_set('error_reporting', 0);
     $sd_1=$sd_2=$sd_3='';
     $ss_1=$ss_2=$ss_3='';
     // $_currentStatusData = $_zoneInformationDataSet = $_dataTableLabels = $_changeStatusDataSet = $_genderWiseDeathDataSet = $_timeSeriesDataSet = $_genderWiseInfectDataSet = $_averageDelayTimeDataSet = NULL;
@@ -232,7 +232,7 @@
           <div class="col-xl-4 col-lg-4 col-md-12">
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <!-- <h3 class="card-title text-ash" style="font-size: 12px;">Data Date: {{ \Carbon\Carbon::parse($tpr_today->date)->format('d/m/Y')}} </h3> -->
+                
                 <div class="card-options"> 
                   <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
                   <a href="{{route('iedcr.generate-today-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
@@ -251,11 +251,7 @@
             </div>
             <div class="card">
               <div class="card-header border-0 pb-0 pt-0 bg-before-none">
-                <!-- <h3 class="card-title text-ash" style="font-size: 12px;">
-                  Data Date: 
-                  {{ \Carbon\Carbon::parse($tpr_average->from_date)->format('d/m/Y')}} - 
-                  {{ \Carbon\Carbon::parse($tpr_average->till_date)->format('d/m/Y')}} 
-                </h3> -->
+               
                 <div class="card-options"> 
                   <!-- <i class="fa fa-table mr-2 text-success"></i> --> 
                   <a href="{{route('iedcr.generate-avg-asymptomic-test-positive-excel',request()->input())}}"><i class="fa fa-download text-danger"></i></a>
@@ -353,7 +349,22 @@
             foreach($geoLocationWiseTestPositivity as $row){
               $str=$row->District;
               $str='three_'.$row->District;
+              if(substr($row->District,0,3)=='Cox'){
+                $str='three_CoxBazar';
+              }
+              if(substr($row->District,0,4)=='Jhal'){
+                  $str = 'three_Jhalakathi';
+              }
+              if(substr($row->District,0,5)=='Maulv'){
+                  $str = 'three_Moulvibazar';
+              }
+              if(substr($row->District,0,5)=='Chapa'){
+                  $str = 'three_Chapainawabganj';
+              }
 
+              if(substr($row->District,0,5)=='Jhena'){
+                  $str = 'three_Jhenaidah';
+              }
 
               foreach($_colorCodes as $_colorRange => $_colorCode){
                   if($row->test_positivity <= $_colorRange){
@@ -372,6 +383,7 @@
             <?php
             $_groupColorData = NULL;
             $_startData = 0;
+            $_groupData='';
             ksort($_existDataGroups);
             foreach($_existDataGroups as $_colorRange => $_colorCode){
                 $_groupData.= '<div class="col-auto"><span class="colorinput-color" style="background-color:'.$_colorCode.'"></span><span class="group-color-label text-ash p-1">'.$_startData.'-'.$_colorRange.'</span></div>';
