@@ -68,7 +68,10 @@
                             <div class="col-xl-12 col-lg-12 col-md-12">
 
                                 <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h5>
-                                    @include('hpm.dashboard.row_2_map')
+                                    {{-- @include('hpm.dashboard.row_2_map') --}}
+                                    <div class="card-body pl-0 pr-0">
+                                    	<div id="iframeData"></div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-xl-7 col-lg-7 col-md-6">
                                             <div class="card-body">
@@ -128,9 +131,12 @@
     </div>
 </div>
 <!-- End :: TESTING SCENARIO -->
-@push('custom_script')
 
+@push('custom_script')
     <script>
+			$(document).ready(function(){
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="410" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');				
+			});	
         // Test Positivity Per Million
         // South Country Wise Infected
         Highcharts.chart('country_wise_infected', {
