@@ -244,7 +244,7 @@ where date=((select max(date) from test_positivity_rate_district))";
         }
 
 
-        $cumulativeSql = "SELECT t.date,t.division_eng,
+        /*$cumulativeSql = "SELECT t.date,t.division_eng,
        @running_total:=@running_total + t.daily_cases AS 'total_cases'
 FROM
 (SELECT
@@ -252,87 +252,96 @@ FROM
   FROM division_wise_cases_covid where date is not null and division_eng='Dhaka' $dateQuery
   GROUP BY date) as t
 JOIN (SELECT @running_total:=0) r
-ORDER BY t.date;";
-
-        $cumulativeSql_dhk = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+ORDER BY t.date;";*/
+        $cumulativeSql = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
 FROM
 (SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Dhaka' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
-ORDER BY t.date;";
-
-        $cumulativeSql_ctg = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
-FROM
-(SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Chittagong' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Dhaka' $dateQuery
 ORDER BY t.date";
 
-        $cumulativeSql_barisal = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+        $cumulativeSql_dhk = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
 FROM
 (SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Barisal' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Dhaka' $dateQuery
 ORDER BY t.date";
 
-        $cumulativeSql_khulna = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+        $cumulativeSql_ctg = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
 FROM
 (SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Khulna' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Chittagong' $dateQuery
 ORDER BY t.date";
 
-        $cumulativeSql_rajshahi = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+        $cumulativeSql_barisal = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
 FROM
 (SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Rajshahi' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
-ORDER BY t.date ";
-
-        $cumulativeSql_rangpur = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
-FROM
-(SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Rangpur' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
-ORDER BY t.date ";
-
-        $cumulativeSql_syl = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
-FROM
-(SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Sylhet' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Barisal' $dateQuery
 ORDER BY t.date";
 
-        $cumulativeSql_mym = "SELECT t.date,t.division_eng,
-       @running_total:=@running_total + t.daily_cases AS 'total_cases'
+        $cumulativeSql_khulna = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
 FROM
 (SELECT
-  date, division_eng, sum(daily_cases) as 'daily_cases'
-  FROM division_wise_cases_covid where date is not null and division_eng='Mymensingh' $dateQuery
-  GROUP BY date) as t
-JOIN (SELECT @running_total:=0) r
-ORDER BY t.date ";
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Khulna' $dateQuery
+ORDER BY t.date";
+
+        $cumulativeSql_rajshahi = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
+FROM
+(SELECT
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Rajshahi ' $dateQuery
+ORDER BY t.date";
+
+        $cumulativeSql_rangpur = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
+FROM
+(SELECT
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Rangpur ' $dateQuery
+ORDER BY t.date";
+
+        $cumulativeSql_syl = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
+FROM
+(SELECT
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Sylhet ' $dateQuery
+ORDER BY t.date";
+
+        $cumulativeSql_mym = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
+FROM
+(SELECT
+  Date, Division, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, Division ) as t
+JOIN (SELECT @running_total:=0) r where division='Mymensingh ' $dateQuery
+ORDER BY t.date";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql);
      //   dd($cumulativeData);
@@ -600,7 +609,16 @@ ORDER BY t.date";
                 if(count($districts)) {
                     foreach ($districts as $district) {
 
-                        $cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid where district_city_eng='".$district."' $dateQuery group by date;";
+                        //$cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid where district_city_eng='".$district."' $dateQuery group by date;";
+                        $cumulativeSqlDistrictUpazilaSql = "SELECT t.date,t.Division, t.District as 'district_city_eng', Infected_Person,
+       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
+FROM
+(SELECT
+  Date, Division, District, sum(Infected_Person) as 'Infected_Person'
+  FROM div_dist_upz_infected_trend where Date is not null
+  GROUP BY Date, District ) as t
+JOIN (SELECT @running_total:=0) r where district = '".$district."' $dateQuery
+ORDER BY t.date;";
 
                         $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
                     }
