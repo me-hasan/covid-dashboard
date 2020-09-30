@@ -78,6 +78,7 @@ class IedcrDashboardController extends Controller
     // common functions
 
     //Hospital City Wise
+    $nation_hospital = $this->nation_wide_hospital();
     $dhaka_hospital=$this->city_wise_hospital('Dhaka');
     $ctg_hospital=$this->city_wise_hospital('Chittagong');
 
@@ -127,7 +128,7 @@ class IedcrDashboardController extends Controller
      return view('iedcr.dashboard_new',compact('hda_card','yesterday_card','data_source_description','infectedGender','infectedAge','ininfectedTrend',
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
-      'dhaka_hospital','ctg_hospital',
+      'nation_hospital','dhaka_hospital','ctg_hospital',
       'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict','testPositivityMap'));
   }
 
@@ -548,7 +549,17 @@ class IedcrDashboardController extends Controller
         if($searchQuery != '') {
             $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
         } else {
-            $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender group by Division";
+            $testPositiveGendersqlQuery = "SELECT (Female/(Female+Male))*100 AS 'F',(Male/(Female+Male))*100 AS 'M', updt_date
+              FROM
+              (SELECT T1.F AS 'Female',T2.M AS 'Male',T1.last_date AS 'updt_date'
+              FROM
+              (SELECT MAX(date_of_test) AS 'last_date',COUNT(id) AS 'F'
+              FROM lab_clean_data
+              WHERE sex='Female' AND test_result='Positive') AS T1
+              INNER JOIN
+              (SELECT MAX(date_of_test) AS 'last_date',COUNT(id) AS 'M'
+              FROM lab_clean_data
+              WHERE sex='Male' AND test_result='Positive') AS T2) AS A ";
         }
 
 
@@ -1084,17 +1095,32 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
       return (new FastExcel($list))->download('infected_age_group.xlsx');
   }
 
+  private function nation_wide_hospital()
+      {
+        $nation_wide_hospital = DB::select(" select count(hospitalName) as '#_Hospital',
+            sum(alocatedGeneralBed) as 'General_Beds',
+            sum(alocatedICUBed) as 'ICU_Beds',
+            SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+            SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
+            ((sum(AdmittedGeneralBed)*100)/(sum(alocatedGeneralBed))) as 'percent_General_Beds_Occupied',
+            ((sum(AdmittedICUBed)*100)/(sum(alocatedICUBed))) as 'percent_ICU_Beds_Occupied'
+            from hospitaltemporarydata where city='Country' and date = (select max(date) from hospitaltemporarydata) ");
+
+        return $nation_wide_hospital[0];
+  }
+
   private function city_wise_hospital($city)
   {
-    $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
-    SUM(alocatedGeneralBed) AS 'General_Beds',
-    SUM(alocatedICUBed) AS 'ICU_Beds',
-    SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
-    SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
-    ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
-    ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
+      $city_wise_hospital = DB::select(" select count(hospitalName) as '#_Hospital',
+      sum(alocatedGeneralBed) as 'General_Beds',
+      sum(alocatedICUBed) as 'ICU_Beds',
+      SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+      SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
+      ((sum(AdmittedGeneralBed)*100)/(sum(alocatedGeneralBed))) as 'percent_General_Beds_Occupied',
+      ((sum(AdmittedICUBed)*100)/(sum(alocatedICUBed))) as 'percent_ICU_Beds_Occupied'
+      from hospitaltemporarydata where city='".$city."' and date = (select max(date) from hospitaltemporarydata) ");
 
-    return $city_wise_hospital[0];
+      return $city_wise_hospital[0];
   }
 
   private function city_wise_hospital_details($city)
