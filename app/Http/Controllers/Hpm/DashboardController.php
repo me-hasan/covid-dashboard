@@ -968,8 +968,35 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
         if($request->has('to_date') && $request->to_date != '') {
                 $searchQuery .= ' AND T.report_date <='. "'".$request->to_date."'";
         }
+        if($request->has('division') && $request->division && $request->district == '') {
 
-        $five_dayMovingAvgInfected = DB::select(" SELECT * FROM (
+            $five_dayMovingAvgInfected = DB::select("select * from (
+SELECT
+       a.test_date as report_date,
+       a.division,
+       a.infected as infected_24_hrs,
+       Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
+                FROM daily_infected_div AS b
+                WHERE b.division= '$request->division' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
+              ), 2 ) AS 'five_dayMovingAvgInfected'
+     FROM daily_infected_div AS a WHERE a.division= '$request->division'
+     and a.test_date >= '2020-03-08'
+     ORDER BY a.test_date) T $searchQuery order by report_date");
+        } elseif($request->has('district') && $request->district) {
+            $five_dayMovingAvgInfected = DB::select("select * from (
+SELECT
+       a.test_date as report_date,
+       a.district,
+       a.infected as infected_24_hrs,
+       Round( ( SELECT SUM(b.infected) / COUNT(b.infected)
+                FROM daily_infected_dist AS b
+                WHERE b.district= '$request->district' and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
+              ), 2 ) AS 'five_dayMovingAvgInfected'
+     FROM daily_infected_dist AS a WHERE a.district= '$request->district'
+     and a.test_date >= '2020-03-08'
+     ORDER BY a.test_date) T $searchQuery order by report_date");
+        } else {
+            $five_dayMovingAvgInfected = DB::select(" SELECT * FROM (
         SELECT
                a.report_date,
                a.infected_24_hrs,
@@ -979,7 +1006,10 @@ round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) 
                       ), 2 ) AS 'five_dayMovingAvgInfected'
              FROM daily_data AS a
              ORDER BY a.report_date) T $searchQuery ORDER BY report_date ");
+        }
 
+
+       // dd($five_dayMovingAvgInfected);
 
         return $five_dayMovingAvgInfected;
     }
