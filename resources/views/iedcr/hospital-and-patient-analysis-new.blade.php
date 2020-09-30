@@ -83,41 +83,47 @@
                                 </tr>
                                 </thead>
                                 <tbody class="fs-16">
-                                <tr>
-                                    <td></td>
-                                    <td>Empty</td>
-                                    <td>Occupancy</td>
-                                    <td>Empty</td>
-                                    <td>Occupancy</td>
-                                </tr>
-                                <tr>
-                                    <td>Overall Country</td>
-                                    <th>15255</th>
-                                    <td>10963</td>
-                                    <th>545</th>
-                                    <td>213</td>
-                                </tr>
-                                <tr>
-                                    <td>Dhaka City</td>
-                                    <th>7037</th>
-                                    <td>4794</td>
-                                    <th>307</th>
-                                    <td>97</td>
-                                </tr>
-                                <tr>
-                                    <td>Chittagong City</td>
-                                    <th>782</th>
-                                    <td>562</td>
-                                    <th>39</th>
-                                    <td>18</td>
-                                </tr>
-                                <tr>
-                                    <td>Others</td>
-                                    <th>7436</th>
-                                    <td>5607</td>
-                                    <th>199</th>
-                                    <td>98</td>
-                                </tr>
+                                
+                                    <tr>
+                                        <td></td>
+                                        <td>Occupancy</td>
+                                        <td>Empty</td>
+                                        <td>Occupancy</td>
+                                        <td>Empty</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Overall Country</td>
+                                        <td>{{ $nation_hospital->Admitted_General_Beds}}</td>
+                                        <th>{{ $nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds }}</th>
+                                        <td>{{ $nation_hospital->Admitted_ICU_Beds }}</td>
+                                        <th>{{ $nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds }}</th>
+
+                                    </tr>
+                                     <tr>
+                                        <td>Dhaka City</td>
+                                        <td>{{ $dhaka_hospital->Admitted_General_Beds }}</td>
+                                        <th>{{ $dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
+                                        <td>{{ $dhaka_hospital->Admitted_ICU_Beds }}</td>
+                                        <th>{{ $dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds }}</th>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Chittagong City</td>
+                                        <td>{{ $ctg_hospital->Admitted_General_Beds }}</td>
+                                        <th>{{ $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds }}</th>
+                                        <td>{{ $ctg_hospital->Admitted_ICU_Beds }}</td>
+                                        <th>{{ $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds }}</th>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Others</td>
+                                        <td>{{ $nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
+                                        <th>{{ ($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds ) }}</th>
+                                        <td>{{ $nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds ) }}</td>
+                                        <th>{{ ($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds) }}</th>
+
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -795,8 +801,8 @@
                 type: 'pie',
                 name: 'Beds',
                 data: [
-                    ['Empty', 72.0],
-                    ['Occupancy', 28.0]
+                    ['Occupancy', <?= number_format($nation_hospital->percent_General_Beds_Occupied,2);?>],
+                    ['Empty', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>]
                 ]
             }]
         });
@@ -848,8 +854,8 @@
                 type: 'pie',
                 name: 'Beds',
                 data: [
-                    ['Empty', 39.0],
-                    ['Occupancy', 61.0]
+                    ['Occupancy', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>],
+                    ['Empty', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>]
                 ]
             }]
         });
