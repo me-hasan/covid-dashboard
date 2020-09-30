@@ -78,6 +78,7 @@ class IedcrDashboardController extends Controller
     // common functions
 
     //Hospital City Wise
+    $nation_hospital = $this->nation_wide_hospital();
     $dhaka_hospital=$this->city_wise_hospital('Dhaka');
     $ctg_hospital=$this->city_wise_hospital('Chittagong');
 
@@ -127,7 +128,7 @@ class IedcrDashboardController extends Controller
      return view('iedcr.dashboard_new',compact('hda_card','yesterday_card','data_source_description','infectedGender','infectedAge','ininfectedTrend',
       'row5_data', 'mobilityDate','mobilityInData','mobilityOutData', 'testPositivityByAge','testPositivityByGender','avgDelayTimeData',
       'ininfectedTrend','ininfectedMap','ininfectedPopulation','hda_time_series','hda_population_wise_infected',
-      'dhaka_hospital','ctg_hospital',
+      'nation_hospital','dhaka_hospital','ctg_hospital',
       'dhaka_hospital_details','ctg_hospital_details','nationalSynPredict','testPositivityMap'));
   }
 
@@ -221,9 +222,10 @@ class IedcrDashboardController extends Controller
   {
     $qry_str= " ";
     if($request->from_date!='' && $request->to_date!=''){
-        $qry_str= " and  DATE(test_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
+        $qry_str= " and  DATE(report_date) BETWEEN '".$request->from_date."' AND '".$request->to_date."' " ;
       }
-    $getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date ORDER BY test_date");
+    //$getNationalInfectedTrend = DB::select("select 'national' AS area, test_date as 'Date', count(id) as infected_count from infected_person where test_date is not NULL ".$qry_str." group by test_date ORDER BY test_date");
+    $getNationalInfectedTrend = DB::select("select 'national' AS area, report_date as 'Date', infected_24_hrs as infected_count from daily_data where report_date is not NULL ".$qry_str." ORDER BY report_date");
 
     return $getNationalInfectedTrend ?? '';
   }
@@ -248,9 +250,9 @@ class IedcrDashboardController extends Controller
 
 
       if( $request->district){
-        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date order by Date");
+        $getDivDisLevelInfectedTrend = DB::select("select District as area, Date, sum(Infected_Person) as infected_count from div_dist_upz_infected_trend where District like '%".$str_dis."%'  ".$qry_str." group by District, Date order by Date");
       }elseif($request->division){
-        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(Infected_Person) as infected_count from Div_Dist_Upz_Infected_Trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date order by Date");
+        $getDivDisLevelInfectedTrend = DB::select("select Division as area, Date, sum(Infected_Person) as infected_count from div_dist_upz_infected_trend where Division like '%".$request->division."%'  ".$qry_str." group by Division, Date order by Date");
       }
 
       return $getDivDisLevelInfectedTrend ?? '';
@@ -314,22 +316,23 @@ class IedcrDashboardController extends Controller
   private function divisionDeathDistribution($request, $is_excel=false)
   {
     $division_name = $request->division ?? '';
+    $max_date = DB::table('deathdivisionaldistribution')->orderBy('date', 'desc')->first()->date;
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
 
     if($division_name != ''){
       if($is_excel){
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->where('division','like',$division_name)->get();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->where('division','like',$division_name)->get();
       }else{
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->where('division','like',$division_name)->pluck('percentageOfDeath')->toArray();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->where('division','like',$division_name)->pluck('percentageOfDeath')->toArray();
       }
 
     }else{
       if($is_excel){
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->get();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->get();
       }else{
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->pluck('percentageOfDeath')->toArray();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->pluck('percentageOfDeath')->toArray();
       }
 
     }
@@ -344,7 +347,7 @@ class IedcrDashboardController extends Controller
       $deathByGender = DB::table('deathnationalgenderdistribution')->get();
       return $deathByGender;
     }else{
-      $deathByGender = DB::select("SELECT * FROM deathnationalgenderdistribution WHERE date like (select max(date) from deathnationalgenderdistribution)");
+      $deathByGender = DB::select("SELECT date,gender,TotalDeath FROM deathnationalgenderdistribution WHERE date = (select max(date) from deathnationalgenderdistribution)");
 
       $total_death = $deathByGender[0]->TotalDeath + $deathByGender[1]->TotalDeath;
       $data['male_death_percentage'] = ($deathByGender[0]->TotalDeath / $total_death) * 100;
@@ -359,7 +362,10 @@ class IedcrDashboardController extends Controller
 
   private function deathByAgeGroup($is_excel=false)
   {
-    $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
+    $max_date = DB::table('deathnationalagedistribution')->orderBy('date', 'desc')->first()->date;
+    $getAgeDeath = DB::table('deathnationalagedistribution')->select('date','ageRange','TotalDeath')->whereDate('date',$max_date)->groupby('ageRange')->get();
+
+    // dd($getAgeDeath);
 
     if($is_excel){
       return $getAgeDeath;
@@ -547,7 +553,17 @@ class IedcrDashboardController extends Controller
         if($searchQuery != '') {
             $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender ". $searchQuery."  group by ". $groupBy;
         } else {
-            $testPositiveGendersqlQuery = "select Division, F, M from Div_Dist_Upz_test_positivity_gender group by Division";
+            $testPositiveGendersqlQuery = "SELECT (Female/(Female+Male))*100 AS 'F',(Male/(Female+Male))*100 AS 'M', updt_date
+              FROM
+              (SELECT T1.F AS 'Female',T2.M AS 'Male',T1.last_date AS 'updt_date'
+              FROM
+              (SELECT MAX(date_of_test) AS 'last_date',COUNT(id) AS 'F'
+              FROM lab_clean_data
+              WHERE sex='Female' AND test_result='Positive') AS T1
+              INNER JOIN
+              (SELECT MAX(date_of_test) AS 'last_date',COUNT(id) AS 'M'
+              FROM lab_clean_data
+              WHERE sex='Male' AND test_result='Positive') AS T2) AS A ";
         }
 
 
@@ -1083,17 +1099,32 @@ ORDER BY TABLE1.id) AS Declaration_Date group by Declaration_Date  limit 1
       return (new FastExcel($list))->download('infected_age_group.xlsx');
   }
 
+  private function nation_wide_hospital()
+      {
+        $nation_wide_hospital = DB::select(" select count(hospitalName) as '#_Hospital',
+            sum(alocatedGeneralBed) as 'General_Beds',
+            sum(alocatedICUBed) as 'ICU_Beds',
+            SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+            SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
+            ((sum(AdmittedGeneralBed)*100)/(sum(alocatedGeneralBed))) as 'percent_General_Beds_Occupied',
+            ((sum(AdmittedICUBed)*100)/(sum(alocatedICUBed))) as 'percent_ICU_Beds_Occupied'
+            from hospitaltemporarydata where city='Country' and date = (select max(date) from hospitaltemporarydata) ");
+
+        return $nation_wide_hospital[0];
+  }
+
   private function city_wise_hospital($city)
   {
-    $city_wise_hospital = DB::select("SELECT COUNT(hospitalName) AS 'tot_Hospital',
-    SUM(alocatedGeneralBed) AS 'General_Beds',
-    SUM(alocatedICUBed) AS 'ICU_Beds',
-    SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
-    SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
-    ((SUM(AdmittedGeneralBed)*100)/(SUM(alocatedGeneralBed))) AS 'percent_General_Beds_Occupied',
-    ((SUM(AdmittedICUBed)*100)/(SUM(alocatedICUBed))) AS 'percent_ICU_Beds_Occupied' FROM hospitaltemporarydata WHERE city='".$city."'");
+      $city_wise_hospital = DB::select(" select count(hospitalName) as '#_Hospital',
+      sum(alocatedGeneralBed) as 'General_Beds',
+      sum(alocatedICUBed) as 'ICU_Beds',
+      SUM(AdmittedGeneralBed) AS 'Admitted_General_Beds',
+      SUM(AdmittedICUBed) AS 'Admitted_ICU_Beds',
+      ((sum(AdmittedGeneralBed)*100)/(sum(alocatedGeneralBed))) as 'percent_General_Beds_Occupied',
+      ((sum(AdmittedICUBed)*100)/(sum(alocatedICUBed))) as 'percent_ICU_Beds_Occupied'
+      from hospitaltemporarydata where city='".$city."' and date = (select max(date) from hospitaltemporarydata) ");
 
-    return $city_wise_hospital[0];
+      return $city_wise_hospital[0];
   }
 
   private function city_wise_hospital_details($city)

@@ -42,7 +42,7 @@ class CoronaTracingController extends Controller
         $divisionData = DB::select("select B.date, A.division, avg(ContactedDistance) as 'avg_distance_meter', avg(Duration)/60 as 'avg_duration_minute' from 
         (select * from coronatracerbd_appuser_location group by  AppUserID) as A
         inner join 
-        (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.division");
+        (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.division order by B.date");
 
 
         // dd($divisionData);
@@ -77,7 +77,7 @@ class CoronaTracingController extends Controller
         $districtData = DB::select("select B.date, A.division, A.district, avg(ContactedDistance) as 'avg_distance_meter', avg(Duration)/60 as 'avg_duration_minute' from 
             (select * from coronatracerbd_appuser_location group by  AppUserID) as A
             inner join 
-            (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.district");
+            (select * from information_contacts group by  AppUserID) as B using(AppUserID) where A.division='".$division."' group by B.date, A.district order by B.date");
 
         // dd($districtData);
 

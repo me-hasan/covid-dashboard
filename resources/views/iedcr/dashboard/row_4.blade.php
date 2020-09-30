@@ -1,122 +1,3 @@
-{{--<div class="card">
-    <div class="row">
-        <div class="col-xl-12 col-md-12">
-            <div class="card-header cart-height-customize">
-                <h3 class="card-title">Nationwide Hospital Capacity and Occupancy</h3>
-                <div class="card-options">
-                    <div class="btn-list">
-@can('iedcr-hospital-and-patient-analysis')
-                    <a href="{!! route('iedcr.hospital_and_patient_analysis') !!}" class="btn btn-primary btn-sm">Details</a>
-@endcan
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6 col-md-6">
-            <div class="card-header">
-                <h3 class="card-title">Dhaka City</h3>
-                <div class="card-options">
-                    <div class="btn-list"> <a href="#" class="btn btn-primary btn-sm" id="dhk_hospital_popup_content" data-target="#modaldemo1" data-toggle="modal">Details</a> </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row pl-4 pr-4">
-                    <div class="col-xl-7 col-lg-7 col-md-7 col-xm-12">
-                        <h5>Total Number of Hospitals</h5>
-                    </div>
-                    <div class="col-xl-5 col-lg-5 col-md-5 col-xm-12">
-                        <h3 class="text-success text-center">{{$dhaka_hospital->tot_Hospital}}</h3>
-                    </div>
-                </div>
-                <div class="row pl-4 pr-4">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h5 class="text-center"># General Beds</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h5 class="text-center"># Isolation Beds</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h3 class="text-success text-center">{{$dhaka_hospital->General_Beds}}</h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h3 class="text-success text-center">{{$dhaka_hospital->ICU_Beds}}</h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h5 class="text-center">Occupied</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h5 class="text-center">Occupied</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h3 class="text-success text-center">{{number_format($dhaka_hospital->percent_General_Beds_Occupied,2)}}%</h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h3 class="text-success text-center">{{number_format($dhaka_hospital->percent_ICU_Beds_Occupied,2)}}%</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6 col-md-6">
-            <div class="card-header">
-                <h3 class="card-title">Chittagong City</h3>
-                <div class="card-options">
-                    <div class="btn-list"> <a href="#" class="btn btn-primary btn-sm" id="ctg_hospital_popup_content" data-target="#modaldemo1" data-toggle="modal">Details</a> </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row pl-4 pr-4">
-                    <div class="col-xl-7 col-lg-7 col-md-7 col-xm-12">
-                        <h5>Total Number of Hospitals</h5>
-                    </div>
-                    <div class="col-xl-5 col-lg-5 col-md-5 col-xm-12">
-                        <h3 class="text-success text-center">{{$ctg_hospital->tot_Hospital}}</h3>
-                    </div>
-                </div>
-                <div class="row pl-4 pr-4">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h5 class="text-center"># General Beds</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h5 class="text-center"># Isolation Beds</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h3 class="text-success text-center">{{$ctg_hospital->General_Beds}}</h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h3 class="text-success text-center">{{$ctg_hospital->ICU_Beds}}</h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h5 class="text-center">Occupied</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h5 class="text-center">Occupied</h5>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-xm-12">
-                        <h3 class="text-success text-center">{{number_format($ctg_hospital->percent_General_Beds_Occupied,2)}}%</h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6col-xm-12">
-                        <h3 class="text-success text-center">{{number_format($ctg_hospital->percent_General_Beds_Occupied,2)}}%</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-8 col-lg-6 col-md-6 col-xm-12">
-            <div class="card-body">
-                <h5 class="card-title">Short Description</h5>
-                <p class="card-text">Content here.</p>
-            </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
-            <div class="card-body">
-                <h5 class="card-title">Data Source & Last Update Date</h5>
-                <p class="card-text">DGHS</p>
-            </div>
-        </div>
-    </div>
-</div>--}}
-
 
 <!-- Row -->
 <div class="card">
@@ -163,40 +44,46 @@
                             </tr>
                             </thead>
                             <tbody class="fs-16">
+                            
                             <tr>
                                 <td></td>
-                                <td>Empty</td>
                                 <td>Occupancy</td>
                                 <td>Empty</td>
                                 <td>Occupancy</td>
+                                <td>Empty</td>
+
                             </tr>
                             <tr>
                                 <td>Overall Country</td>
-                                <th>15255</th>
-                                <td>10963</td>
-                                <th>545</th>
-                                <td>213</td>
+                                <td>{{ $nation_hospital->Admitted_General_Beds}}</td>
+                                <th>{{ $nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds }}</th>
+                                <td>{{ $nation_hospital->Admitted_ICU_Beds }}</td>
+                                <th>{{ $nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds }}</th>
+
                             </tr>
-                            <tr>
+                             <tr>
                                 <td>Dhaka City</td>
-                                <th>{{$dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
-                                <td>{{$dhaka_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds}}</th>
-                                <td>{{$dhaka_hospital->Admitted_ICU_Beds}}</td>
+                                <td>{{ $dhaka_hospital->Admitted_General_Beds }}</td>
+                                <th>{{ $dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds}}</th>
+                                <td>{{ $dhaka_hospital->Admitted_ICU_Beds }}</td>
+                                <th>{{ $dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds }}</th>
+
                             </tr>
                             <tr>
                                 <td>Chittagong City</td>
-                                <th>{{$ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds}}</th>
-                                <td>{{$ctg_hospital->Admitted_General_Beds}}</td>
-                                <th>{{$ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds}}</th>
-                                <td>{{$ctg_hospital->Admitted_ICU_Beds}}</td>
+                                <td>{{ $ctg_hospital->Admitted_General_Beds }}</td>
+                                <th>{{ $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds }}</th>
+                                <td>{{ $ctg_hospital->Admitted_ICU_Beds }}</td>
+                                <th>{{ $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds }}</th>
+
                             </tr>
                             <tr>
                                 <td>Others</td>
-                                <th>7436</th>
-                                <td>5607</td>
-                                <th>199</th>
-                                <td>98</td>
+                                <td>{{ $nation_hospital->Admitted_General_Beds - ($dhaka_hospital->Admitted_General_Beds + $ctg_hospital->Admitted_General_Beds) }}</td>
+                                <th>{{ ($nation_hospital->General_Beds - $nation_hospital->Admitted_General_Beds) - ($dhaka_hospital->General_Beds - $dhaka_hospital->Admitted_General_Beds + $ctg_hospital->General_Beds - $ctg_hospital->Admitted_General_Beds ) }}</th>
+                                <td>{{ $nation_hospital->Admitted_ICU_Beds - ($dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->Admitted_ICU_Beds ) }}</td>
+                                <th>{{ ($nation_hospital->ICU_Beds - $nation_hospital->Admitted_ICU_Beds) - ($dhaka_hospital->ICU_Beds - $dhaka_hospital->Admitted_ICU_Beds + $ctg_hospital->ICU_Beds - $ctg_hospital->Admitted_ICU_Beds) }}</th>
+
                             </tr>
                             </tbody>
                         </table>
@@ -356,8 +243,8 @@
             type: 'pie',
             name: 'Beds',
             data: [
-                ['Empty', 72.0],
-                ['Occupancy', 28.0]
+                ['Occupancy', <?= number_format($nation_hospital->percent_General_Beds_Occupied,2);?>],
+                ['Empty', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied),2);?>]
             ]
         }]
     });
@@ -409,8 +296,8 @@
             type: 'pie',
             name: 'Beds',
             data: [
-                ['Empty', 39.0],
-                ['Occupancy', 61.0]
+                ['Occupancy', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied,2);?>],
+                ['Empty', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied),2);?>]
             ]
         }]
     });
