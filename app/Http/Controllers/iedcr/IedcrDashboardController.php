@@ -316,22 +316,23 @@ class IedcrDashboardController extends Controller
   private function divisionDeathDistribution($request, $is_excel=false)
   {
     $division_name = $request->division ?? '';
+    $max_date = DB::table('deathdivisionaldistribution')->orderBy('date', 'desc')->first()->date;
     if($division_name != '' && strtolower($division_name) == 'chittagong'){
       $division_name = 'Chattogram';
     }
 
     if($division_name != ''){
       if($is_excel){
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->where('division','like',$division_name)->get();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->where('division','like',$division_name)->get();
       }else{
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->where('division','like',$division_name)->pluck('percentageOfDeath')->toArray();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->where('division','like',$division_name)->pluck('percentageOfDeath')->toArray();
       }
 
     }else{
       if($is_excel){
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->get();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->get();
       }else{
-        $getDivisionDeath = DB::table('deathdivisionaldistribution')->pluck('percentageOfDeath')->toArray();
+        $getDivisionDeath = DB::table('deathdivisionaldistribution')->select('date','division','TotalDeath','percentageOfDeath')->whereDate('date',$max_date)->pluck('percentageOfDeath')->toArray();
       }
 
     }
@@ -346,7 +347,7 @@ class IedcrDashboardController extends Controller
       $deathByGender = DB::table('deathnationalgenderdistribution')->get();
       return $deathByGender;
     }else{
-      $deathByGender = DB::select("SELECT * FROM deathnationalgenderdistribution WHERE date like (select max(date) from deathnationalgenderdistribution)");
+      $deathByGender = DB::select("SELECT date,gender,TotalDeath FROM deathnationalgenderdistribution WHERE date = (select max(date) from deathnationalgenderdistribution)");
 
       $total_death = $deathByGender[0]->TotalDeath + $deathByGender[1]->TotalDeath;
       $data['male_death_percentage'] = ($deathByGender[0]->TotalDeath / $total_death) * 100;
@@ -361,7 +362,10 @@ class IedcrDashboardController extends Controller
 
   private function deathByAgeGroup($is_excel=false)
   {
-    $getAgeDeath = DB::table('deathnationalagedistribution')->groupby('ageRange')->get();
+    $max_date = DB::table('deathnationalagedistribution')->orderBy('date', 'desc')->first()->date;
+    $getAgeDeath = DB::table('deathnationalagedistribution')->select('date','ageRange','TotalDeath')->whereDate('date',$max_date)->groupby('ageRange')->get();
+
+    // dd($getAgeDeath);
 
     if($is_excel){
       return $getAgeDeath;
