@@ -193,7 +193,7 @@ where date=((select max(date) from test_positivity_rate_district))";
                           FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE()
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
-                        WHERE  t.date <= CURDATE() $dateQuery
+                        WHERE  t.date <= CURDATE() and t.date >= '2020-03-04' $dateQuery
                         ORDER BY t.date");
         }else{
             // $cumulativeData = DB::select("SELECT t.date,
@@ -401,7 +401,7 @@ ORDER BY t.date";
 FROM
 (SELECT
   Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null  ".$searchQuery."
+  FROM div_dist_upz_infected_trend where Date is not null and Date >= '2020-03-04' ".$searchQuery."
   GROUP BY Date, Division ) as t
 JOIN (SELECT @running_total:=0) r
 ORDER BY t.date";
