@@ -52,6 +52,7 @@ class TestPositiveController extends Controller
 
         // section 2
         $geoLocationWiseTestPositivity = $this->getLocationWiseTestPositivity($request);
+
         // section 3
         $asymptomictest_positive_trend  = $this->asymptomicTestPositiveRate($request);
         \Log::debug('asymptomictest positive trend: ' . json_encode($asymptomictest_positive_trend));
@@ -95,10 +96,16 @@ class TestPositiveController extends Controller
             $locationWiseTestPositive = DB::select("select date,division,district, sum(total_test) as 'total_test',sum(positive) as 'positive', 
                 ((sum(positive)*100)/sum(total_test)) as 'test_positivity' from Geo_location_wise_test_positivity where division like '%".$request->division."%' ".$getDateCondition." group by division order by date desc");
         }else{
-            $locationWiseTestPositive = DB::select("select date,division,district, sum(total_test) as 'total_test',sum(positive) as 'positive' ,
-                ((sum(positive)*100)/sum(total_test)) as 'test_positivity' from Geo_location_wise_test_positivity group by district order by date desc");
-        }
+            // $locationWiseTestPositive = DB::select("select date,division,district, sum(total_test) as 'total_test',sum(positive) as 'positive' ,
+            //     ((sum(positive)*100)/sum(total_test)) as 'test_positivity' from Geo_location_wise_test_positivity group by district order by date desc");
 
+            $locationWiseTestPositive = DB::select("select a.district as District, a.total_tests as total_test, a.date_of_test as Date, a.positive_tests as positive, round((a.positive_tests/a.total_tests), 2)*100 
+                as 'test_positivity' from
+                (select district, date_of_test, count(*) as total_tests,
+                sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data
+                where district is not null and district <> 'Missing Form' 
+                group by district order by district) as a");
+        }
         
         // dd($locationWiseTestPositive);
 
@@ -152,8 +159,13 @@ class TestPositiveController extends Controller
     }
 
     private function nationWiseTestPositiveRate($request) {
-        $getDateCondition = $this->getDateCondition($request, 'date_of_test');
-        $nationWiseTestPositive = DB::select("select date_of_test as date, ((count(sl_no) *100)/(select count(sl_no) from lab_clean_data)) as 'Test_Positivity' from lab_clean_data where test_result='Positive' ".$getDateCondition." group by date_of_test order by date_of_test desc");
+        $getDateCondition = $this->getDateCondition($request, 'report_date',true);
+        // $nationWiseTestPositive = DB::select("select date_of_test as date, ((count(sl_no) *100)/(select count(sl_no) from lab_clean_data)) as 'Test_Positivity' from lab_clean_data where test_result='Positive' ".$getDateCondition." group by date_of_test order by date_of_test desc");
+
+        $nationWiseTestPositive = DB::select("select report_date as date, (infected_24_hrs/test_24_hrs)*100 as 'Test_Positivity'
+                                from daily_data ".$getDateCondition);
+
+        // dd($nationWiseTestPositive);
 
         return $nationWiseTestPositive ?? [];
     }
@@ -187,15 +199,18 @@ class TestPositiveController extends Controller
     }
 
     private function todayNationWiseTestPositiveRate($request) {
-        $todayNationWiseTestPositive = DB::select("select ((A.Number_of_PT*100)/ (select count(sl_no) from lab_clean_data where date_of_test= (select max(date_of_test) from lab_clean_data) )) as today_test_positivity from (select count(test_result) as 'Number_of_PT' from lab_clean_data where test_result='Positive' and date_of_test= (select max(date_of_test) from lab_clean_data)) as A");
+        $todayNationWiseTestPositive = DB::select("select report_date, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity'
+                                    from daily_data where report_date= (select max(report_date) from daily_data)");
 
-        $todayNumberOfTest = DB::select("select count(sl_no) as NumberOfTest from lab_clean_data where date_of_test=
-                            (select max(date_of_test) from lab_clean_data)");
+        $todayNumberOfTest = DB::select("select report_date, test_24_hrs as 'performed_tests'
+                            from daily_data where report_date= (select max(report_date) from daily_data)");
 
         // dd($todayNationWiseTestPositive[0]->today_test_positivity);
 
-        $data['today_test_positive_rate'] = $todayNationWiseTestPositive[0]->today_test_positivity ?? 0;
-        $data['today_number_of_test'] = $todayNumberOfTest[0]->NumberOfTest ?? 0;
+        $data['today_test_positive_rate'] = $todayNationWiseTestPositive[0]->test_positivity ?? 0;
+        $data['today_number_of_test'] = $todayNumberOfTest[0]->performed_tests ?? 0;
+
+        // dd($data);
 
         return $data;
     }
@@ -236,21 +251,27 @@ class TestPositiveController extends Controller
     }
 
     private function avgNationWiseTestPositiveRate($request) {
-        $getDateCondition = $this->getDateCondition($request,'date_of_test', true);
-        $getDateCondition1 = $this->getDateCondition($request,'date_of_test');
-        $avgNationWiseTestPositive = DB::select("select (sum(A.Test_Positivity)/count(A.date_of_test)) as 'Avg_Test_Positivity' from
-                                        (select date_of_test, ((count(sl_no) *100)/
-                                        (select count(sl_no)
-                                        from lab_clean_data ".$getDateCondition.")) as 'Test_Positivity'
-                                        from lab_clean_data where test_result='Positive' ".$getDateCondition1." group by date_of_test) as A");
+        // $getDateCondition = $this->getDateCondition($request,'date_of_test', true);
+        $getDateCondition1 = $this->getDateCondition($request,'report_date');
 
-        $avgNumberOfTest = DB::select("select (count(sl_no)/(select count(distinct(date_of_test)) from lab_clean_data)) as 'AVG_Test' from lab_clean_data");
+        // $avgNationWiseTestPositive = DB::select("select (sum(A.Test_Positivity)/count(A.date_of_test)) as 'Avg_Test_Positivity' from
+        //                                 (select date_of_test, ((count(sl_no) *100)/
+        //                                 (select count(sl_no)
+        //                                 from lab_clean_data ".$getDateCondition.")) as 'Test_Positivity'
+        //                                 from lab_clean_data where test_result='Positive' ".$getDateCondition1." group by date_of_test) as A")
+
+        $avgNationWiseTestPositive = DB::select("select avg(test_positivity) as 'avg_test_positivity' from
+                                    (select report_date, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity'
+                                    from daily_data where infected_24_hrs is not null and test_24_hrs is not null ".$getDateCondition1.") a");
+
+        $avgNumberOfTest = DB::select("select avg(test_24_hrs) as 'avg_performed_tests' from daily_data");
 
         // dd($avgNationWiseTestPositive[0]->Avg_Test_Positivity);
 
-        $data['avg_test_positive_rate'] = $avgNationWiseTestPositive[0]->Avg_Test_Positivity ?? 0;
-        $data['avg_number_of_test'] = $avgNumberOfTest[0]->AVG_Test ?? 0;
+        $data['avg_test_positive_rate'] = $avgNationWiseTestPositive[0]->avg_test_positivity ?? 0;
+        $data['avg_number_of_test'] = $avgNumberOfTest[0]->avg_performed_tests ?? 0;
 
+        // dd($data);
         return $data;
     }
 
