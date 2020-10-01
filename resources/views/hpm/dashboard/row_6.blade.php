@@ -95,21 +95,21 @@ using(district)");
                                 </tr>
                                 <tr>
                                     <td>উচ্চ ঝুঁকিপূর্ণ</td>
-                                    <td class="bg-danger high_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}</td>
-                                    <td class="bg-danger medium_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} </td>
-                                    <td class="bg-danger low_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;" class="bg-danger high_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;" class="bg-danger medium_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;" class="bg-danger low_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}টি জেলা</td>
                                 </tr>
                                 <tr>
                                     <td>মধ্যম ঝুঁকিপূর্ণ</td>
-                                    <td style="background: #00ff2e" class="high_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} </td>
-                                    <td style="background: #feea1f" class="medium_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}</td>
-                                    <td class="bg-danger low_to_medium_modal_click"  data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="high_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}}টি জেলা</td>
+                                    <td style="background: #feea1f; cursor: pointer;text-decoration: underline;" class="medium_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}টি জেলা</td>
+                                    <td style="cursor: pointer;text-decoration: underline;" class="bg-danger low_to_medium_modal_click"  data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}টি জেলা</td>
                                 </tr>
                                 <tr>
                                     <td>কম ঝুঁকিপূর্ণ</td>
-                                    <td style="background: #00ff2e" class="high_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}</td>
-                                    <td style="background: #00ff2e" class="medium_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} </td>
-                                    <td style="background: #00ff2e" class="low_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="high_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}টি জেলা</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="medium_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }}টি জেলা</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="low_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}টি জেলা</td>
                                 </tr>
                                 </tbody>
                             </table>
