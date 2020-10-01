@@ -1,4 +1,4 @@
-    <!-- Start :: Risk Matrix -->
+    <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
     $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
     $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end);
@@ -155,19 +155,19 @@ using(district)");
 
     <div class="d-none">
         <div id="high_to_high_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap dataTable">
                 <thead>
                 <tr>
-                    <th class="border-bottom-0">জেলা</th>
-                    <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                    <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                    <th class="border-bottom-0 b1">জেলা</th>
+                    <th class="border-bottom-0 b1">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                    <th class="border-bottom-0 b1">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
                 </tr>
                 </thead>
                 <tbody>
                 @if(count($high_to_high_table_contentData))
                     @foreach($high_to_high_table_contentData as $item)
-                        <tr>
-                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                        <tr class="b1">
+                            <td >{!! en2bnTranslation($item->district) !!}</td>
                             <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
                             <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
 
@@ -179,7 +179,7 @@ using(district)");
             </table>
         </div>
         <div id="medium_to_high_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -202,7 +202,7 @@ using(district)");
             </table>
         </div>
         <div id="low_to_high_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -225,7 +225,7 @@ using(district)");
             </table>
         </div>
         <div id="high_to_medium_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -248,7 +248,7 @@ using(district)");
             </table>
         </div>
         <div id="medium_to_medium_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -271,7 +271,7 @@ using(district)");
             </table>
         </div>
         <div id="low_to_medium_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -294,7 +294,7 @@ using(district)");
             </table>
         </div>
         <div id="high_to_low_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -317,7 +317,7 @@ using(district)");
             </table>
         </div>
         <div id="medium_to_low_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -340,7 +340,7 @@ using(district)");
             </table>
         </div>
         <div id="low_to_low_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -360,17 +360,19 @@ using(district)");
                     @endforeach
                 @endif
                 </tbody>
+
             </table>
         </div>
     </div>
     <!-- End :: Modal Content -->
 
     @push('custom_script')
+        <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function($) {
 
-
-                /* $('#risk_table_popup').DataTable( {
+              //  $('#high_to_low_table_content .dataTable').DataTable();
+                 /*$('#high_to_low_table_content .dataTable').DataTable( {
                      responsive: true,
                      "pageLength": 8,
                      "order": [[ 2, "desc" ]],
@@ -452,6 +454,7 @@ using(district)");
                     $('#modalContent').html($('#low_to_low_table_content').html());
                     //hospitalDataModal();
                 });
+
             });
         </script>
     @endpush
