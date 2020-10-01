@@ -133,16 +133,16 @@
                 <div id="district_comparision"></div>
             </div>
             <div class="row">
-                <div class="col-xl-8 col-lg-8 col-md-6">
-                    <div class="card-body">
+                <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                    <div class="card-body pl-0 pr-0 text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
                             {{ $des_2->description_beng }}
                         </p>
                     </div>
                  </div>
-                 <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="card-body">
+                 <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="card-body pr-0 text-justify">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
                             {{ $des_2->insight_beng }}
@@ -160,16 +160,16 @@
                 <div id="national_infected_trend"></div>
             </div>
             <div class="row">
-                <div class="col-xl-8 col-lg-8 col-md-6">
-                    <div class="card-body">
+                <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                    <div class="card-body pl-0 pr-0 text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
                            {{ $des_3->description_beng }}
                         </p>
                     </div>
                  </div>
-                 <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="card-body">
+                 <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="card-body pr-0 text-justify">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
                             {{ $des_3->insight_beng }}
