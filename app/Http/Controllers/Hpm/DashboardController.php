@@ -656,7 +656,7 @@ SELECT
        a.daily_cases,
        Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
                 FROM division_district_infected AS b
-                WHERE b.district = '".$district."' $dateQuery and test_date >= '2020-01-02' and test_date is not null
+                WHERE b.district = '".$district."' $dateQuery  and test_date is not null
                 and DATEDIFF(a.test_date, b.test_date) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
      FROM division_district_infected AS a WHERE a.district = '".$district."' and test_date is not null
