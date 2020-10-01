@@ -103,7 +103,10 @@
                         <div class="form-label pl-2 pt-2 mr-1 b1">জেলা</div>
                         <div>
                             <select name="district[]" class="select2 form-control btn-outline-primary select_district" multiple="true">
-                                <option value="DHAKA" class="b1">সব জেলা </option>
+                                <!-- <option value="DHAKA" class="b1">সব জেলা </option> -->
+                                @foreach($district_list as $district)
+                                <option value="{!! $district->district !!}" class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                @endforeach
                             </select>
                         </div>
                         <!-- <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
