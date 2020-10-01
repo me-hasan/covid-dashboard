@@ -112,7 +112,7 @@ class DashboardController extends Controller
         // dd($data);
 
         $data['division_list'] = $divisionlist;
-       
+
         $data['district_list'] = cache()->rememberForever('district_list',  function () {
             return DB::table('div_dist')->get();
         });
@@ -658,7 +658,7 @@ ORDER BY t.date;";*/
 SELECT
        a.test_date as date,
        a.division,
-       a.district,
+       a.district as 'district_city_eng',
        a.daily_cases,
        Round( ( SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
                 FROM division_district_infected AS b
@@ -686,6 +686,7 @@ SELECT
             //$cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
             //dd($cumulativeDisUpaZillaData);
             //dd($cumulativeDisUpaZillaData);
+           // dd($cumulativeDisUpaZillaData);
             $j=0;
             $dateData = [];
             $districtData = [];

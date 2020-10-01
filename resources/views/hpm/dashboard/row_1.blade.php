@@ -181,7 +181,7 @@
 
     </div>
 </div>
-
+<input class="selected_area_comparision" type="hidden" name="selected_area_comparision" value="division"/>
 
 
 <!-- End :: Disease Progression -->
@@ -425,12 +425,21 @@
             //let search_params = url.searchParams;
             //search_params.append('district',district);
            // search_params.append('hierarchy_level','divisional');
+
             if($('.division_select').val() && $('.division_select').val()!='') {
                 $('.select_upazilla').val(null).trigger("change");
+
             }
 
             if($('.select_district').val() && $('.select_district').val()!='') {
-                $('.division_select').val(null).trigger("change");
+                console.log($('.selected_area_comparision').val());
+                if($('.selected_area_comparision').val()=='district') {
+                    $('.select_district').val(null).trigger("change");
+                } else {
+                    $('.division_select').val(null).trigger("change");
+                    $('.selected_area_comparision').val('district');
+                }
+
             }
             if($('.select_upazilla').val() && $('.select_upazilla').val()!='') {
                 $('.select_district').val(null).trigger("change");
@@ -453,10 +462,10 @@
 
                         directComparisionCall(data);
 
-                        if(data.district_data) {
+                        /*if(data.district_data) {
 
                             formatdistrictData(data.district_data);
-                        }
+                        }*/
                         if(data.upazillaData){
                             formatUpazilladata(data.upazillaData);
                         }
