@@ -103,7 +103,10 @@
                         <div class="form-label pl-2 pt-2 mr-1 b1">জেলা</div>
                         <div>
                             <select name="district[]" class="select2 form-control btn-outline-primary select_district" multiple="true">
-                                <option value="DHAKA" class="b1">সব জেলা </option>
+                                <!-- <option value="DHAKA" class="b1">সব জেলা </option> -->
+                                @foreach($district_list as $district)
+                                <option value="{!! $district->district !!}" class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                @endforeach
                             </select>
                         </div>
                         <!-- <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
@@ -178,7 +181,7 @@
 
     </div>
 </div>
-
+<input class="selected_area_comparision" type="hidden" name="selected_area_comparision" value="division"/>
 
 
 <!-- End :: Disease Progression -->
@@ -422,12 +425,27 @@
             //let search_params = url.searchParams;
             //search_params.append('district',district);
            // search_params.append('hierarchy_level','divisional');
-            if($('.division_select').val() && $('.division_select').val()!='') {
-                $('.select_upazilla').val(null).trigger("change");
-            }
+
+
 
             if($('.select_district').val() && $('.select_district').val()!='') {
-                $('.division_select').val(null).trigger("change");
+                console.log($('.selected_area_comparision').val());
+                if(($('.division_select').val() != '') && ($('.selected_area_comparision').val()=='district')) {
+                    $('.select_district').val(null).trigger("change");
+                } else {
+                    if($('.division_select').val() && $('.division_select').val()!='') {
+                        $('.division_select').val(null).trigger("change");
+                    }
+                    $('.selected_area_comparision').val('district');
+                }
+
+            }
+            if($('.division_select').val() && $('.division_select').val()!='') {
+                $('.select_upazilla').val(null).trigger("change");
+                if($('.selected_area_comparision').val()=='district') {
+                    $('.selected_area_comparision').val('division');
+                }
+
             }
             if($('.select_upazilla').val() && $('.select_upazilla').val()!='') {
                 $('.select_district').val(null).trigger("change");
@@ -450,10 +468,10 @@
 
                         directComparisionCall(data);
 
-                        if(data.district_data) {
+                        /*if(data.district_data) {
 
                             formatdistrictData(data.district_data);
-                        }
+                        }*/
                         if(data.upazillaData){
                             formatUpazilladata(data.upazillaData);
                         }
