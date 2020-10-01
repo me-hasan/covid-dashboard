@@ -16,16 +16,16 @@
                             <div id="national_test_vs_infected_trend"></div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-8 col-lg-8 col-md-6">
-                                <div class="card-body">
+                            <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                                <div class="card-body pl-0 pr-0 text-justify">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
                                         {{ $des_4->description_beng }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                <div class="card-body">
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="card-body pr-0 text-justify">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
                                         {{ $des_4->insight_beng }}
@@ -42,16 +42,16 @@
                             <div id="weekly_comparision_infected_death"></div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-8 col-lg-8 col-md-6">
-                                <div class="card-body">
+                             <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                                <div class="card-body pl-0 pr-0 text-justify">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
                                         {{ $des_5->description_beng }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                <div class="card-body">
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="card-body pr-0 text-justify">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
                                         {{ $des_5->insight_beng }}
@@ -73,16 +73,16 @@
                                     <div id="iframeData"></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xl-7 col-lg-7 col-md-6">
-                                        <div class="card-body">
+                                     <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                                        <div class="card-body pl-0 pr-0 text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
                                                 {{ $des_6->description_beng }}
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-xl-5 col-lg-5 col-md-6">
-                                        <div class="card-body">
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="card-body pr-0 text-justify">
                                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                                             <p class="card-text b1">
                                                 {{ $des_6->insight_beng }}
@@ -105,16 +105,16 @@
                                         <div id="country_wise_infected"></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xl-8 col-lg-8 col-md-6 pr-0">
-                                            <div class="card-body pl-0 pr-0">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                                            <div class="card-body pl-0 pr-0 text-justify">
                                                 <h5 class="card-title b1">বর্ণনা</h5>
                                                 <p class="card-text b1">
                                                     {{ $des_7->description_beng }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <div class="card-body pl-0 pr-0">
+                                        <div class="col-xl-6 col-lg-6 col-md-6">
+                                            <div class="card-body pr-0 text-justify">
                                                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                                                 <p class="card-text b1">
                                                     {{ $des_7->insight_beng }}
@@ -135,7 +135,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="410" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');				
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');				
 			});	
         // Test Positivity Per Million
         // South Country Wise Infected
