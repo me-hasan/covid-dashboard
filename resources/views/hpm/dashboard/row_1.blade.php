@@ -430,10 +430,12 @@
 
             if($('.select_district').val() && $('.select_district').val()!='') {
                 console.log($('.selected_area_comparision').val());
-                if($('.selected_area_comparision').val()=='district') {
+                if(($('.division_select').val() != '') && ($('.selected_area_comparision').val()=='district')) {
                     $('.select_district').val(null).trigger("change");
                 } else {
-                    $('.division_select').val(null).trigger("change");
+                    if($('.division_select').val() && $('.division_select').val()!='') {
+                        $('.division_select').val(null).trigger("change");
+                    }
                     $('.selected_area_comparision').val('district');
                 }
 
