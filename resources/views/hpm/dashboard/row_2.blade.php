@@ -203,40 +203,41 @@
                     }
                 }
             },
-            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f', '#5c687b','#60b5d1','#3acc76'],
+            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f', '#5c687b','#3acc76','#60b5d1'],
             series: [
                 {
                     name: "Test Per Case",
                     colorByPoint: true,
                     data: [
                         {
-                            name: "মিয়ানমার",
-                            y: <?=$tests_per_case_Mayanmar->cumulative_tests_per_case;?>
-                        },
-                        {
-                            name: "শ্রীলঙ্কা",
-                            y: <?=$tests_per_case_Sri->cumulative_tests_per_case;?>
-                        },
-                        {
-                            name: "নেপাল",
-                            y: <?=$tests_per_case_Nepal->cumulative_tests_per_case;?>
-                        },
-                        {
                             name: "মালদ্বীপ",
-                            y: <?=$tests_per_case_Maldives->cumulative_tests_per_case;?>
+                            y: <?=number_format($tests_per_case_Maldives->cumulative_tests_per_case,2);?>
                         },
                         {
                             name: "ভারত",
-                            y: <?=$tests_per_case_India->cumulative_tests_per_case;?>
+                            y: <?=number_format($tests_per_case_India->cumulative_tests_per_case,2);?>
+                        },
+                        {
+                            name: "নেপাল",
+                            y: <?=number_format($tests_per_case_Nepal->cumulative_tests_per_case,2);?>
                         },
                         {
                             name: "পাকিস্তান",
-                            y: <?=$tests_per_case_Pakistan->cumulative_tests_per_case;?>
+                            y: <?=number_format($tests_per_case_Pakistan->cumulative_tests_per_case,2);?>
+                        },
+                        {
+                            name: "শ্রীলঙ্কা",
+                            y: <?=number_format($tests_per_case_Sri->cumulative_tests_per_case,2);?>
                         },
                         {
                             name: "বাংলাদেশ",
-                            y: <?=$tests_per_case_Bangladesh->cumulative_tests_per_case;?>
+                            y: <?=number_format($tests_per_case_Bangladesh->cumulative_tests_per_case,2);?>
+                        },
+                        {
+                            name: "মিয়ানমার",
+                            y: <?=number_format($tests_per_case_Mayanmar->cumulative_tests_per_case,2);?>
                         }
+                         
                     ]
                 }
             ]

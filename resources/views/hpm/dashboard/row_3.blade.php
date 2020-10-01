@@ -360,7 +360,7 @@
                     borderWidth: 0
                 }
             },
-            colors: ['#ef4b4b', '#38cb89'],
+            colors: ['#ef4b4b', '#feea1f'],
             series: [{
                 name: 'মৃত্যু',
                 {{--data: [<?php echo $deathAge;?>]--}}
@@ -433,7 +433,7 @@
                     borderWidth: 0
                 }
             },
-            colors: ['#ef4b4b', '#38cb89'],
+            colors: ['#ef4b4b', '#feea1f'],
             series: [{
                 name: 'মৃত্যু',
                 data: [<?php echo $previous_month__death;?>]
@@ -505,7 +505,7 @@
                     borderWidth: 0
                 }
             },
-            colors: ['#ef4b4b', '#38cb89'],
+            colors: ['#ef4b4b', '#feea1f'],
             series: [{
                 name: 'মৃত্যু',
                 data: [<?php echo $previous_previous_month__death;?>]
