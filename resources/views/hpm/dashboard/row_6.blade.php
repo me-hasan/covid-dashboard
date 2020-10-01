@@ -1,4 +1,4 @@
-    <!-- Start :: Risk Matrix -->
+    <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
     $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
     $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end);
@@ -95,21 +95,21 @@ using(district)");
                                 </tr>
                                 <tr>
                                     <td>উচ্চ ঝুঁকিপূর্ণ</td>
-                                    <td class="bg-danger high_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}</td>
-                                    <td class="bg-danger medium_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} </td>
-                                    <td class="bg-danger low_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;" class="bg-danger high_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;" class="bg-danger medium_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;" class="bg-danger low_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}টি জেলা</td>
                                 </tr>
                                 <tr>
                                     <td>মধ্যম ঝুঁকিপূর্ণ</td>
-                                    <td style="background: #00ff2e" class="high_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} </td>
-                                    <td style="background: #feea1f" class="medium_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}</td>
-                                    <td class="bg-danger low_to_medium_modal_click"  data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="high_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}}টি জেলা</td>
+                                    <td style="background: #feea1f; cursor: pointer;text-decoration: underline;" class="medium_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}টি জেলা</td>
+                                    <td style="cursor: pointer;text-decoration: underline;" class="bg-danger low_to_medium_modal_click"  data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}টি জেলা</td>
                                 </tr>
                                 <tr>
                                     <td>কম ঝুঁকিপূর্ণ</td>
-                                    <td style="background: #00ff2e" class="high_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}</td>
-                                    <td style="background: #00ff2e" class="medium_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} </td>
-                                    <td style="background: #00ff2e" class="low_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="high_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}টি জেলা</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="medium_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }}টি জেলা</td>
+                                    <td style="background: #00ff2e; cursor: pointer;text-decoration: underline;" class="low_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}টি জেলা</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -155,19 +155,19 @@ using(district)");
 
     <div class="d-none">
         <div id="high_to_high_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap dataTable">
                 <thead>
                 <tr>
-                    <th class="border-bottom-0">জেলা</th>
-                    <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                    <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                    <th class="border-bottom-0 b1">জেলা</th>
+                    <th class="border-bottom-0 b1">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                    <th class="border-bottom-0 b1">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
                 </tr>
                 </thead>
                 <tbody>
                 @if(count($high_to_high_table_contentData))
                     @foreach($high_to_high_table_contentData as $item)
-                        <tr>
-                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                        <tr class="b1">
+                            <td >{!! en2bnTranslation($item->district) !!}</td>
                             <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
                             <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
 
@@ -179,7 +179,7 @@ using(district)");
             </table>
         </div>
         <div id="medium_to_high_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -202,7 +202,7 @@ using(district)");
             </table>
         </div>
         <div id="low_to_high_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -225,7 +225,7 @@ using(district)");
             </table>
         </div>
         <div id="high_to_medium_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -248,7 +248,7 @@ using(district)");
             </table>
         </div>
         <div id="medium_to_medium_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -271,7 +271,7 @@ using(district)");
             </table>
         </div>
         <div id="low_to_medium_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -294,7 +294,7 @@ using(district)");
             </table>
         </div>
         <div id="high_to_low_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -317,7 +317,7 @@ using(district)");
             </table>
         </div>
         <div id="medium_to_low_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -340,7 +340,7 @@ using(district)");
             </table>
         </div>
         <div id="low_to_low_table_content" class="table-responsive b1">
-            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap">
+            <table id="risk_table_popup" class="table table-striped table-bordered text-nowrap b1 dataTable">
                 <thead>
                 <tr>
                     <th class="border-bottom-0">জেলা</th>
@@ -360,17 +360,19 @@ using(district)");
                     @endforeach
                 @endif
                 </tbody>
+
             </table>
         </div>
     </div>
     <!-- End :: Modal Content -->
 
     @push('custom_script')
+        <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function($) {
 
-
-                /* $('#risk_table_popup').DataTable( {
+              //  $('#high_to_low_table_content .dataTable').DataTable();
+                 /*$('#high_to_low_table_content .dataTable').DataTable( {
                      responsive: true,
                      "pageLength": 8,
                      "order": [[ 2, "desc" ]],
@@ -400,58 +402,59 @@ using(district)");
 
 
                 $('.high_to_high_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#high_to_high_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.medium_to_high_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#medium_to_high_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.low_to_high_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#low_to_high_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.high_to_medium_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#high_to_medium_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.medium_to_medium_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#medium_to_medium_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.low_to_medium_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#low_to_medium_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.high_to_low_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#high_to_low_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.medium_to_low_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#medium_to_low_table_content').html());
                     //hospitalDataModal();
                 });
 
                 $('.low_to_low_modal_click').click(function(){
-                    $('.modal-title').html('Risk Matrix');
+                    $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#low_to_low_table_content').html());
                     //hospitalDataModal();
                 });
+
             });
         </script>
     @endpush
