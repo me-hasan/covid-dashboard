@@ -426,10 +426,7 @@
             //search_params.append('district',district);
            // search_params.append('hierarchy_level','divisional');
 
-            if($('.division_select').val() && $('.division_select').val()!='') {
-                $('.select_upazilla').val(null).trigger("change");
 
-            }
 
             if($('.select_district').val() && $('.select_district').val()!='') {
                 console.log($('.selected_area_comparision').val());
@@ -438,6 +435,13 @@
                 } else {
                     $('.division_select').val(null).trigger("change");
                     $('.selected_area_comparision').val('district');
+                }
+
+            }
+            if($('.division_select').val() && $('.division_select').val()!='') {
+                $('.select_upazilla').val(null).trigger("change");
+                if($('.selected_area_comparision').val()=='district') {
+                    $('.selected_area_comparision').val('division');
                 }
 
             }
