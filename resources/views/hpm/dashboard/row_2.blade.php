@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার</h5>
+                            <h5 class="card-title b1">বিগত ১৪ দিনের সংক্রমণ ও শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)</h5>
                         </div>
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
@@ -63,37 +63,37 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-12" id="infected_district_map">
+                    <div class="col-xl-6 col-lg-6 col-md-12" id="infected_district_map">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
 
                                 <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h5>
-                                    {{-- @include('hpm.dashboard.row_2_map') --}}
-                                    <div class="card-body pl-0 pr-0">
-                                    	<div id="iframeData"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-7 col-lg-7 col-md-6">
-                                            <div class="card-body">
-                                                <h5 class="card-title b1">বর্ণনা</h5>
-                                                <p class="card-text b1">
-                                                    {{ $des_6->description_beng }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-5 col-lg-5 col-md-6">
-                                            <div class="card-body">
-                                                <h5 class="card-title b1">বিশ্লেষণ</h5>
-                                                <p class="card-text b1">
-                                                    {{ $des_6->insight_beng }}
-                                                </p>
-                                            </div>
+                                {{-- @include('hpm.dashboard.row_2_map') --}}
+                                <div class="card-body pl-0 pr-0">
+                                    <div id="iframeData"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-7 col-lg-7 col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title b1">বর্ণনা</h5>
+                                            <p class="card-text b1">
+                                                {{ $des_6->description_beng }}
+                                            </p>
                                         </div>
                                     </div>
+                                    <div class="col-xl-5 col-lg-5 col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                            <p class="card-text b1">
+                                                {{ $des_6->insight_beng }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-8 col-lg-8 col-md-12">
+                    <div class="col-xl-6 col-lg-6 col-md-12">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <h5 class="card-title b1"></h5>
@@ -101,12 +101,12 @@
                                         <div id="test_positivity_per_million"></div>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title b1">দক্ষিণ এশিয়ার দেশগুলোতে আক্রান্তের বিপরীতে পরীক্ষার সংখ্যা</h5>
+                                        <h5 class="card-title b1">দক্ষিন এশিয়ার দেশগুলোতে প্রতি ১০০০ এ পরীক্ষা সংখ্যা</h5>
                                         <div id="country_wise_infected"></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xl-8 col-lg-8 col-md-6">
-                                            <div class="card-body">
+                                        <div class="col-xl-8 col-lg-8 col-md-6 pr-0">
+                                            <div class="card-body pl-0 pr-0">
                                                 <h5 class="card-title b1">বর্ণনা</h5>
                                                 <p class="card-text b1">
                                                     {{ $des_7->description_beng }}
@@ -114,7 +114,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <div class="card-body">
+                                            <div class="card-body pl-0 pr-0">
                                                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                                                 <p class="card-text b1">
                                                     {{ $des_7->insight_beng }}
@@ -206,7 +206,7 @@
             colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f', '#5c687b','#3acc76','#60b5d1'],
             series: [
                 {
-                    name: "Test Per Case",
+                    name: "প্রতি ১০০০ এ পরীক্ষা সংখ্যা",
                     colorByPoint: true,
                     data: [
                         {
@@ -385,7 +385,7 @@
             yAxis: [{
                 lineWidth: 1,
                 title: {
-                    text: 'সংক্রমণের হার',
+                    text: 'শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)',
                     style: {
                         fontSize: 18,
                         fontFamily: 'SolaimanLipi'
@@ -421,7 +421,7 @@
                 type: 'column',
                 marker:{"enabled": false, "symbol":"circle"}
             },{
-                name: 'সংক্রমণের হার',
+                name: 'শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)',
                 data: [<?php echo $forteen_day_infected['total_test_positivity'];?>],
                 type: 'spline',
                 marker:{"enabled": false, "symbol":"circle"}
