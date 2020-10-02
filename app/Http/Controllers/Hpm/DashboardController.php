@@ -1280,10 +1280,13 @@ SELECT
 
     private function description_insight_qry($component_name_eng){
         $component=str_replace(" ","_",strtoupper($component_name_eng));
-        $des= cache()->rememberForever('hpm_description_insight.'.$component,  function () use($component_name_eng) {
-            return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
-        });
-        return $des[0];
+        // $des= cache()->rememberForever('hpm_description_insight.'.$component,  function () use($component_name_eng) {
+        //     return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
+        // });
+        $des= DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
+       
+        if (isset($des[0])){ return $des[0];}else{return null; }
+        
     }
 
     private function description_insight_1(){

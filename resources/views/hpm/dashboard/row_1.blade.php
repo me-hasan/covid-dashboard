@@ -63,22 +63,26 @@
                 <div id="national_dialy_infected_trend"></div>
             </div>
             <div class="row">
+
                 <div class="col-xl-12 col-lg-12 col-md-16">
                     <div class="card-body pt-0">
+
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_1->description_beng }}
+                            {{ $des_1->description_beng ?? '' }}
                         </p>
                     </div>
                  </div>
-                 <div class="col-xl-4 col-lg-4 col-md-6 d-none">
+
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6 d-none">
+
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_1->insight_beng }}
+                            {{ $des_1->insight_beng ?? '' }}
                         </p>
                     </div>
-                 </div>
+                 </div> -->
         	</div>
         </div>
     </div>
@@ -136,21 +140,24 @@
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
+
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_2->description_beng }}
+                            {{ $des_2->description_beng ?? '' }}
                         </p>
                     </div>
                  </div>
-                 <div class="col-xl-6 col-lg-6 col-md-6 d-none">
-                    <div class="card-body pr-0 text-justify">
+
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_2->insight_beng }}
+                            {{ $des_2->insight_beng ?? '' }}
                         </p>
                     </div>
-                 </div>
+                 </div> -->
         	</div>
         </div>
 
@@ -163,21 +170,24 @@
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
+
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                           {{ $des_3->description_beng }}
+                           {{ $des_3->description_beng ?? '' }}
                         </p>
                     </div>
                  </div>
-                 <div class="col-xl-6 col-lg-6 col-md-6 d-none">
-                    <div class="card-body text-justify">
+
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_3->insight_beng }}
+                            {{ $des_3->insight_beng ?? '' }}
                         </p>
                     </div>
-                 </div>
+                 </div> -->
         	</div>
         </div>
 

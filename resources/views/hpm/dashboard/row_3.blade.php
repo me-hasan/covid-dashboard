@@ -33,16 +33,18 @@
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
-                                {{ $des_9->description_beng }}
+                                {{ $des_9->description_beng ?? '' }}
                             </p>
                         </div>
                      </div>
-                     <div class="col-xl-6 col-lg-6 col-md-6 d-none">
+
+                     <!-- <div class="col-xl-6 col-lg-6 col-md-6">
+
                         <div class="card-body">
                             <h5 class="card-title b1">বিশ্লেষণ</h5>
-                            <p class="card-text b1">{{ $des_9->insight_beng }}</p>
+                            <p class="card-text b1">{{ $des_9->insight_beng ?? '' }}</p>
                         </div>
-                     </div>
+                     </div> -->
                 </div>
             </div>
         </div>
@@ -363,13 +365,12 @@
             colors: ['#ef4b4b', '#feea1f'],
             series: [{
                 name: 'মৃত্যু',
-                {{--data: [<?php echo $deathAge;?>]--}}
                 data: [<?php echo $cur_death;?>]
 
             }, {
                 name: 'আক্রান্ত',
                 data: [<?php echo $cur_infected;?>]
-                {{--data: [<?php echo $_ageWiseInfectData;?>]--}}
+
 
             }]
         });
