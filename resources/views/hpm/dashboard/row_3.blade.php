@@ -33,7 +33,7 @@
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
-                                {{ $des_9->description_beng }}
+                                {{ $des_9->description_beng ?? '' }}
                             </p>
                         </div>
                      </div>
@@ -42,7 +42,7 @@
 
                         <div class="card-body">
                             <h5 class="card-title b1">বিশ্লেষণ</h5>
-                            <p class="card-text b1">{{ $des_9->insight_beng }}</p>
+                            <p class="card-text b1">{{ $des_9->insight_beng ?? '' }}</p>
                         </div>
                      </div> -->
                 </div>

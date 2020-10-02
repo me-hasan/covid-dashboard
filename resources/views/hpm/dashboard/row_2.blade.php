@@ -23,7 +23,7 @@
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_4->description_beng }}
+                                        {{ $des_4->description_beng ?? ''}}
                                     </p>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
 
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
-                                        {{ $des_4->insight_beng }}
+                                        {{ $des_4->insight_beng ?? ''}}
                                     </p>
                                 </div>
                             </div> -->
@@ -55,7 +55,7 @@
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_5->description_beng }}
+                                        {{ $des_5->description_beng ?? ''}}
                                     </p>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
 
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
-                                        {{ $des_5->insight_beng }}
+                                        {{ $des_5->insight_beng ?? ''}}
                                     </p>
                                 </div>
                             </div> -->
@@ -91,7 +91,7 @@
                                         <div class="card-body text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                                {{ $des_6->description_beng }}
+                                                {{ $des_6->description_beng ?? '' }}
                                             </p>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                         <div class="card-body pr-0 text-justify">
                                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                                             <p class="card-text b1">
-                                                {{ $des_6->insight_beng }}
+                                                {{ $des_6->insight_beng ?? ''}}
                                             </p>
                                         </div>
 
@@ -129,7 +129,7 @@
                                         <div class="card-body text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                                {{ $des_7->description_beng }}
+                                                {{ $des_7->description_beng ?? ''}}
                                             </p>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
 
                                                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                                                 <p class="card-text b1">
-                                                    {{ $des_7->insight_beng }}
+                                                    {{ $des_7->insight_beng ?? ''}}
                                                 </p>
                                             </div>
                                         </div>

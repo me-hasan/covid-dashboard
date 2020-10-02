@@ -135,7 +135,7 @@ using(district)");
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
-                                {{ $des_8->description_beng }}
+                                {{ $des_8->description_beng ?? ''}}
                             </p>
                         </div>
                     </div>
@@ -144,7 +144,7 @@ using(district)");
 
                         <div class="card-body">
                             <h5 class="card-title b1">বিশ্লেষণ</h5>
-                            <p class="card-text b1">{{ $des_8->insight_beng }}</p>
+                            <p class="card-text b1">{{ $des_8->insight_beng ?? ''}}</p>
                         </div>
                     </div> -->
                 </div>

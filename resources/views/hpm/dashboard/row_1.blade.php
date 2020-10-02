@@ -69,7 +69,7 @@
 
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_1->description_beng }}
+                            {{ $des_1->description_beng ?? '' }}
                         </p>
                     </div>
                  </div>
@@ -79,7 +79,7 @@
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_1->insight_beng }}
+                            {{ $des_1->insight_beng ?? '' }}
                         </p>
                     </div>
                  </div> -->
@@ -144,7 +144,7 @@
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_2->description_beng }}
+                            {{ $des_2->description_beng ?? '' }}
                         </p>
                     </div>
                  </div>
@@ -154,7 +154,7 @@
 
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_2->insight_beng }}
+                            {{ $des_2->insight_beng ?? '' }}
                         </p>
                     </div>
                  </div> -->
@@ -174,7 +174,7 @@
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                           {{ $des_3->description_beng }}
+                           {{ $des_3->description_beng ?? '' }}
                         </p>
                     </div>
                  </div>
@@ -184,7 +184,7 @@
 
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_3->insight_beng }}
+                            {{ $des_3->insight_beng ?? '' }}
                         </p>
                     </div>
                  </div> -->
