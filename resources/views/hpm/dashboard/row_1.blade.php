@@ -22,7 +22,7 @@
             <div class="card-header pb-0">
                 <h5 class="card-title b1">গত ১৪ দিনে পরীক্ষা</h5>
             </div>
-            <div class="card-body pt-0 pb-2">
+            <div class="card-body pt-0">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? thousandSeparator($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}</h1>
                 <span class="text-muted b1 fs-16"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে পরীক্ষার চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? thousandSeparator(floor($last_14_days['getLast14DaysTestData'][0]->Difference)) : ' ' !!} টি @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
@@ -32,7 +32,7 @@
             <div class="card-header pb-0">
                 <h5 class="card-title b1">গত ১৪ দিনে আক্রান্ত</h5>
             </div>
-            <div class="card-body pt-0 pb-2">
+            <div class="card-body pt-0">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? thousandSeparator($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!} </h1>
                 <span class="text-muted b1 fs-16"><i class="{{$class_2}}"></i> পূর্ববর্তী ১৪ দিনে আক্রান্তের চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? thousandSeparator(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1) কম  @else বেশি @endif </span>
             </div>
@@ -43,7 +43,7 @@
                 <h5 class="card-title b1">গত ১৪ দিনে মৃত্যু</h5>
             </div>
 
-            <div class="card-body pt-0 pb-2">
+            <div class="card-body pt-0">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? thousandSeparator($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}</h1>
 
                 <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? thousandSeparator(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
@@ -51,26 +51,31 @@
         </div>
 
     </div>
+</div>
 
+<div class="card">
     <div class="row">
-
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1">সংক্রমণের দৈনিক পরিবর্তন</h3>
+                <h3 class="card-title b1">দৈনিক আক্রান্তের সংখ্যা: বর্তমান পরিসংখ্যান মহামারিটির ক্রমহ্রাসমান অবস্থাকে নির্দেশ করছে।</h3>
             </div>
             <div class="card-body">
                 <div id="national_dialy_infected_trend"></div>
             </div>
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="card-body">
+
+                <div class="col-xl-12 col-lg-12 col-md-16">
+                    <div class="card-body pt-0">
+
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
                             {{ $des_1->description_beng }}
                         </p>
                     </div>
                  </div>
-                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
+
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6 d-none">
+
                     <div class="card-body">
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
@@ -80,13 +85,14 @@
                  </div> -->
         	</div>
         </div>
-
     </div>
+</div>
 
+<div class="card">
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1">অঞ্চল তুলনা</h3>
+                <h3 class="card-title b1">অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা: যে বিভাগগুলোতে প্রতিদিনের সংক্রমণের সংখ্যা ব্যাপকভাবে ওঠানামা করে সে বিভাগগুলোতে পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন।</h3>
             </div>
             <div class="card-body">
                 <form action="">
@@ -134,15 +140,18 @@
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="card-body">
+
+                    <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
                             {{ $des_2->description_beng }}
                         </p>
                     </div>
                  </div>
+
                  <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
+
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
                             {{ $des_2->insight_beng }}
@@ -154,22 +163,25 @@
 
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1">সংক্রমণের ক্রমবর্ধমান পরিবর্তন</h3>
+                <h3 class="card-title b1">সংক্রমণের ক্রমবর্ধমান পরিবর্তন: রেখাটি তীর্যক অবস্থায় মহামারীটির ক্রমশ অবনতি ইঙ্গিত করছে। তবে যেখানে সমতল দেখা যাচ্ছে সে সময় (আগস্ট) থেকে অবস্থার উন্নতি নির্দেশ করছে।</h3>
             </div>
             <div class="card-body">
                 <div id="national_infected_trend"></div>
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="card-body">
+
+                    <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
                            {{ $des_3->description_beng }}
                         </p>
                     </div>
                  </div>
+
                  <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
+
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
                             {{ $des_3->insight_beng }}

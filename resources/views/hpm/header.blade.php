@@ -1,4 +1,3 @@
-
 <head>
 
 <!-- Meta data -->
@@ -42,6 +41,7 @@
 
 <!-- INTERNAL C3 Charts css-->
 <link href="{{ asset('assets/plugins/charts-c3/c3-chart.css') }}" rel="stylesheet" />
+
     {{--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />--}}
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 <!-- Color Skin css -->
@@ -52,7 +52,10 @@
 <!-- Custom CSS by eGen -->
 <link id="theme" href="{{ asset('assets/css/custom.css?v=9') }}" rel="stylesheet" type="text/css"/>
     <style>
-        .fill_color{
+        body{ 
+			font-family: 'SolaimanLipi', 'Roboto', sans-serif;
+		}
+		.fill_color{
             fill: #705ec8;
         }
         .stroke_color{

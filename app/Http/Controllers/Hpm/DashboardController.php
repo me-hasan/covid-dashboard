@@ -1283,7 +1283,8 @@ SELECT
         $des= cache()->rememberForever('hpm_description_insight.'.$component,  function () use($component_name_eng) {
             return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
         });
-        return $des[0];
+        if (isset($des[0])){ return $des[0];}else{ return null;} 
+        
     }
 
     private function description_insight_1(){
