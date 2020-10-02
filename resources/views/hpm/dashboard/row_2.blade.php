@@ -16,15 +16,15 @@
                             <div id="national_test_vs_infected_trend"></div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
-                                <div class="card-body pl-0 pr-0 text-justify">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card-body text-justify">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
                                         {{ $des_4->description_beng }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="col-xl-6 col-lg-6 col-md-6 d-none">
                                 <div class="card-body pr-0 text-justify">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
@@ -42,15 +42,15 @@
                             <div id="weekly_comparision_infected_death"></div>
                         </div>
                         <div class="row">
-                             <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
-                                <div class="card-body pl-0 pr-0 text-justify">
+                             <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card-body text-justify">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
                                         {{ $des_5->description_beng }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="col-xl-6 col-lg-6 col-md-6 d-none">
                                 <div class="card-body pr-0 text-justify">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
@@ -62,26 +62,27 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row pt-5 border-top border-primary">
                     <div class="col-xl-6 col-lg-6 col-md-12" id="infected_district_map">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
-
-                                <h5 class="card-title b1">টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ: সর্বাধিক ঝুঁকিপূর্ণ জেলাগুলোতে (লাল) পরীক্ষার সংখ্যার বিপরীতে আক্রান্তের হারও (টেস্ট পজিটিভিটি রেট) সবচেয়ে বেশি। এটি নির্দেশ করে যে, সেখানে আরও বেশি করে পরীক্ষা করা দরকার।</h5>
+								<div class="card-header">
+                                	<h5 class="card-title b1">টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ: সর্বাধিক ঝুঁকিপূর্ণ জেলাগুলোতে (লাল) পরীক্ষার সংখ্যার বিপরীতে আক্রান্তের হারও (টেস্ট পজিটিভিটি রেট) সবচেয়ে বেশি। এটি নির্দেশ করে যে, সেখানে আরও বেশি করে পরীক্ষা করা দরকার।</h5>
+                                </div>
                                 {{-- @include('hpm.dashboard.row_2_map') --}}
                                 <div class="card-body pl-0 pr-0">
                                     <div id="iframeData"></div>
                                 </div>
                                 <div class="row">
-                                     <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
-                                        <div class="card-body pl-0 pr-0 text-justify">
+                                     <div class="col-xl-12 col-lg-12 col-md-12">
+                                        <div class="card-body text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
                                                 {{ $des_6->description_beng }}
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 d-done">
                                         <div class="card-body pr-0 text-justify">
                                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                                             <p class="card-text b1">
@@ -96,32 +97,34 @@
                     <div class="col-xl-6 col-lg-6 col-md-12">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
-                                <h5 class="card-title b1"></h5>
-                                    <div class="card-body d-none">
-                                        <div id="test_positivity_per_million"></div>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title b1">দক্ষিণ এশিয়ার দেশগুলোতে পরীক্ষার তুলনা: দক্ষিণ এশিয়ার দেশ গুলোতে দেখা যাচ্ছে যে, প্রতি ১০০০ জনগণের মধ্যে বাংলাদেশে ১০ জনের কোভিড-১৯ পরীক্ষা করা হয়। যা অন্যান্য দেশের তুলনায় অনেক কম।</h5>
-                                        <div id="country_wise_infected"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
-                                            <div class="card-body pl-0 pr-0 text-justify">
-                                                <h5 class="card-title b1">বর্ণনা</h5>
-                                                <p class="card-text b1">
-                                                    {{ $des_7->description_beng }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6">
-                                            <div class="card-body pr-0 text-justify">
-                                                <h5 class="card-title b1">বিশ্লেষণ</h5>
-                                                <p class="card-text b1">
-                                                    {{ $des_7->insight_beng }}
-                                                </p>
-                                            </div>
+                                <h5 class="card-title b1 d-none"></h5>
+                                <div class="card-body d-none">
+                                    <div id="test_positivity_per_million"></div>
+                                </div>
+                                <div class="card-header">
+                                	<h5 class="card-title b1">দক্ষিণ এশিয়ার দেশগুলোতে পরীক্ষার তুলনা: দক্ষিণ এশিয়ার দেশ গুলোতে দেখা যাচ্ছে যে, প্রতি ১০০০ জনগণের মধ্যে বাংলাদেশে ১০ জনের কোভিড-১৯ পরীক্ষা করা হয়। যা অন্যান্য দেশের তুলনায় অনেক কম।</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="country_wise_infected"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12">
+                                        <div class="card-body text-justify">
+                                            <h5 class="card-title b1">বর্ণনা</h5>
+                                            <p class="card-text b1">
+                                                {{ $des_7->description_beng }}
+                                            </p>
                                         </div>
                                     </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 d-none">
+                                        <div class="card-body pr-0 text-justify">
+                                            <h5 class="card-title b1">বিশ্লেষণ</h5>
+                                            <p class="card-text b1">
+                                                {{ $des_7->insight_beng }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -156,7 +159,11 @@
                 enabled:false
             },
             legend:{
-                enabled:false
+                enabled:true,
+				itemStyle: {
+                    fontSize: "16px",
+                    fontWeight: "normal"
+                }
             },
             yAxis: {
                 title: {
