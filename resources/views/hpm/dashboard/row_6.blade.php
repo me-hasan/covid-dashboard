@@ -131,7 +131,7 @@ using(district)");
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-8 col-lg-8 col-md-6">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
@@ -139,7 +139,7 @@ using(district)");
                             </p>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="col-xl-4 col-lg-4 col-md-6 d-none">
                         <div class="card-body">
                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                             <p class="card-text b1">{{ $des_8->insight_beng }}</p>

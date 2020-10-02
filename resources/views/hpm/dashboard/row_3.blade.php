@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
@@ -37,7 +37,7 @@
                             </p>
                         </div>
                      </div>
-                     <div class="col-xl-6 col-lg-6 col-md-6">
+                     <div class="col-xl-6 col-lg-6 col-md-6 d-none">
                         <div class="card-body">
                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                             <p class="card-text b1">{{ $des_9->insight_beng }}</p>
