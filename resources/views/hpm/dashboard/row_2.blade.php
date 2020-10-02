@@ -18,7 +18,7 @@
                         <div class="row">
 
 
-                            <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="card-body pl-0 pr-0 text-justify">
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
@@ -50,7 +50,7 @@
                         <div class="row">
 
 
-                             <div class="col-xl-6 col-lg-6 col-md-6 pr-0">
+                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="card-body pl-0 pr-0 text-justify">
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
@@ -133,7 +133,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                    <!--<div class="col-xl-4 col-lg-4 col-md-6">
                                             <div class="card-body">
 
                                                 <h5 class="card-title b1">বিশ্লেষণ</h5>
@@ -141,7 +141,7 @@
                                                     {{ $des_7->insight_beng ?? ''}}
                                                 </p>
                                             </div>
-                                        </div>
+                                        </div>-->
                                 </div>
                             </div>
                         </div>
