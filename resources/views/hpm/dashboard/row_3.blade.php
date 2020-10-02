@@ -16,11 +16,11 @@
                         </div>
                     </div> -->
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা অক্টোবর - ৩১শে অক্টোবর</h5>
+                    	<h5 class="card-title b1">১লা অক্টোবর - ২রা অক্টোবর</h5>
                         <div id="age_wise_death_distribution"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা সেপ্টেম্বর - ৩১শে সেপ্টেম্বর</h5>
+                    	<h5 class="card-title b1">১লা সেপ্টেম্বর - ৩০শে সেপ্টেম্বর</h5>
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
