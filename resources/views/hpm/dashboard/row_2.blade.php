@@ -16,7 +16,7 @@
                             <div id="national_test_vs_infected_trend"></div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-8 col-lg-8 col-md-6">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
@@ -24,14 +24,14 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6">
+                            <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
                                         {{ $des_4->insight_beng }}
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -42,7 +42,7 @@
                             <div id="weekly_comparision_infected_death"></div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-8 col-lg-8 col-md-6">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
@@ -50,14 +50,14 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6">
+                            <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="card-body">
                                     <h5 class="card-title b1">বিশ্লেষণ</h5>
                                     <p class="card-text b1">
                                         {{ $des_5->insight_beng }}
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                                     	<div id="iframeData"></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xl-7 col-lg-7 col-md-6">
+                                        <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="card-body">
                                                 <h5 class="card-title b1">বর্ণনা</h5>
                                                 <p class="card-text b1">
@@ -81,14 +81,14 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="col-xl-5 col-lg-5 col-md-6">
+                                        <!-- <div class="col-xl-5 col-lg-5 col-md-6">
                                             <div class="card-body">
                                                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                                                 <p class="card-text b1">
                                                     {{ $des_6->insight_beng }}
                                                 </p>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                         <div id="country_wise_infected"></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xl-8 col-lg-8 col-md-6">
+                                        <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="card-body">
                                                 <h5 class="card-title b1">বর্ণনা</h5>
                                                 <p class="card-text b1">
@@ -113,14 +113,14 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                                             <div class="card-body">
                                                 <h5 class="card-title b1">বিশ্লেষণ</h5>
                                                 <p class="card-text b1">
                                                     {{ $des_7->insight_beng }}
                                                 </p>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                             </div>
                         </div>
