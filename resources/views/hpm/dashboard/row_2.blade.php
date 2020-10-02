@@ -82,7 +82,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 d-done">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 d-none">
                                         <div class="card-body pr-0 text-justify">
                                             <h5 class="card-title b1">বিশ্লেষণ</h5>
                                             <p class="card-text b1">
