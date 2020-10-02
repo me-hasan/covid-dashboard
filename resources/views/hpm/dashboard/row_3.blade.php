@@ -2,7 +2,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title b1">জনসংখ্যায় প্রভাব</h3>
+                <h3 class="card-title b1">বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা: যেমনটি ধারণা করা হয়েছিল সে অনুযায়ীই বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে। তবে সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি। আশাব্যঞ্জক বিষয় হচ্ছে যে, শিশু এবং  কিশোর-কিশোরীদের মধ্যে এ সংক্রমণের মাত্রা অপেক্ষাকৃত কম।</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -368,8 +368,8 @@
 
             }, {
                 name: 'আক্রান্ত',
-                data: [<?php echo $cur_infected;?>],
-                {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
+                data: [<?php echo $cur_infected;?>]
+                {{--data: [<?php echo $_ageWiseInfectData;?>]--}}
 
             }]
         });
@@ -442,7 +442,7 @@
             }, {
                 name: 'আক্রান্ত',
                 {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-                data: [<?php echo $previous_month__infected;?>],
+                data: [<?php echo $previous_month__infected;?>]
 
             }]
         });
@@ -514,7 +514,7 @@
             }, {
                 name: 'আক্রান্ত',
                 {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-                data: [<?php echo $previous_previous_month__infected;?>],
+                data: [<?php echo $previous_previous_month__infected;?>]
 
             }]
         });

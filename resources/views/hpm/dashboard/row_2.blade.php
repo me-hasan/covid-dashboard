@@ -10,7 +10,7 @@
                 <div class="row pt-5">
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">পরীক্ষা বনাম আক্রান্ত</h5>
+                            <h5 class="card-title b1">জাতীয় পর্যায়ে দৈনিক পরীক্ষা ও আক্রান্তের তুলনা: সেপ্টেম্বর মাস থেকে পরীক্ষার সংখ্যা অপরিবর্তীত থাকায় আক্রান্তের সংখ্যা হ্রাস পেয়েছে। তবে পরীক্ষার পরিমাণ আরও বৃদ্ধি করতে পারলে মহামারীটি আরও ভালভাবে পর্যবেক্ষণ করা সম্ভব হবে।</h5>
                         </div>
                         <div class="card-body">
                             <div id="national_test_vs_infected_trend"></div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">বিগত ১৪ দিনের সংক্রমণ ও শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)</h5>
+                            <h5 class="card-title b1">গত ১৪ দিনে সংক্রমণের সংখ্যা ও টেস্ট পজিটিভিটি রেট: টেস্ট পজিটিভিটি রেট ১২% থেকে কমে আসার প্রবণতা মহামারীটির ক্রমহ্রাসমান অবস্থাকে ঈঙ্গিত করছে।</h5>
                         </div>
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
@@ -67,7 +67,7 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
 
-                                <h5 class="card-title b1">পরীক্ষা ভিত্তিক ঝুঁকি</h5>
+                                <h5 class="card-title b1">টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ: সর্বাধিক ঝুঁকিপূর্ণ জেলাগুলোতে (লাল) পরীক্ষার সংখ্যার বিপরীতে আক্রান্তের হারও (টেস্ট পজিটিভিটি রেট) সবচেয়ে বেশি। এটি নির্দেশ করে যে, সেখানে আরও বেশি করে পরীক্ষা করা দরকার।</h5>
                                 {{-- @include('hpm.dashboard.row_2_map') --}}
                                 <div class="card-body pl-0 pr-0">
                                     <div id="iframeData"></div>
@@ -101,7 +101,7 @@
                                         <div id="test_positivity_per_million"></div>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title b1">দক্ষিন এশিয়ার দেশগুলোতে প্রতি ১০০০ এ পরীক্ষা সংখ্যা</h5>
+                                        <h5 class="card-title b1">দক্ষিণ এশিয়ার দেশগুলোতে পরীক্ষার তুলনা: দক্ষিণ এশিয়ার দেশ গুলোতে দেখা যাচ্ছে যে, প্রতি ১০০০ জনগণের মধ্যে বাংলাদেশে ১০ জনের কোভিড-১৯ পরীক্ষা করা হয়। যা অন্যান্য দেশের তুলনায় অনেক কম।</h5>
                                         <div id="country_wise_infected"></div>
                                     </div>
                                     <div class="row">
