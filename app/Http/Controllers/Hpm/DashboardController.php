@@ -786,6 +786,9 @@ ORDER BY t.date";
                 $cumulativeDisUpaZillaData = [];
                 if(count($districts)) {
                     foreach ($districts as $district) {
+                        if($district == 'Jhalakati') {
+                            $district = 'Jhalokati';
+                        }
 
                         $cumulativeSqlDistrictUpazilaSql = "SELECT
        a.thedate,
