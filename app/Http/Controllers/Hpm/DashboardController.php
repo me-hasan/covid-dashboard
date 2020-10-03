@@ -815,7 +815,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (SELECT thedate, division, district, daily_cases FROM
 (SELECT thedate FROM calendardate WHERE thedate >= '2020-05-20' AND thedate <=
 (SELECT MAX(test_date) FROM
-division_district_infected WHERE district = '".$district."')) AS T1
+division_district_infected WHERE district = '".$district."') ) AS T1
 LEFT JOIN
 (SELECT test_date, division, district, daily_cases FROM  division_district_infected
 WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date WHERE T2.district IS NOT NULL) AS Q) AS a $dateQuery";
@@ -841,7 +841,7 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date WHERE T2.dist
                 if(count($districtDataInfo)){
                     foreach ($districtDataInfo as $div){
 
-                        $div_date = date('d/m/Y', strtotime($div->thedate));
+                        $div_date = date('d-M-Y', strtotime($div->thedate));
 
                         if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
                             $dateData[] =  convertEnglishDateToBangla($div_date);
