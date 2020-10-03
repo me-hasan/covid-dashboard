@@ -2,7 +2,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title b1">বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা: যেমনটি ধারণা করা হয়েছিল সে অনুযায়ীই বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে। তবে সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি। আশাব্যঞ্জক বিষয় হচ্ছে যে, শিশু এবং  কিশোর-কিশোরীদের মধ্যে এ সংক্রমণের মাত্রা অপেক্ষাকৃত কম।</h3>
+                <h3 class="card-title b1"><strong>বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা</strong>: যেমনটি ধারণা করা হয়েছিল সে অনুযায়ীই বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে। তবে সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি। আশাব্যঞ্জক বিষয় হচ্ছে যে, শিশু এবং  কিশোর-কিশোরীদের মধ্যে এ সংক্রমণের মাত্রা অপেক্ষাকৃত কম।</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -16,15 +16,15 @@
                         </div>
                     </div> -->
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা সেপ্টেম্বর - ২৯শে সেপ্টেম্বর</h5>
+                    	<h5 class="card-title b1">১লা অক্টোবর - ২রা অক্টোবর</h5>
                         <div id="age_wise_death_distribution"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা আগস্ট - ৩১শে আগস্ট</h5>
+                    	<h5 class="card-title b1">১লা সেপ্টেম্বর - ৩০শে সেপ্টেম্বর</h5>
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">৬ই মার্চ - ৩১শে জুলাই</h5>
+                    	<h5 class="card-title b1">৬ই মার্চ - ৩১শে আগস্ট</h5>
                         <div id="age_wise_death_distribution_2"></div>
                     </div>
                 </div>
