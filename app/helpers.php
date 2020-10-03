@@ -11,9 +11,12 @@ if (! function_exists('en2bnTranslation')) {
     {
         $uppercas_text = strtoupper($en_text);
 
-        $translation= cache()->rememberForever('translate.'.$uppercas_text,  function () use($uppercas_text) {
-            return DB::table('translate')->where('word_en', $uppercas_text)->first();
-        });
+        // $translation= cache()->rememberForever('translate.'.$uppercas_text,  function () use($uppercas_text) {
+        //     return DB::table('translate')->where('word_en', $uppercas_text)->first();
+        // });
+
+        $translation= DB::table('translate')->where('word_en', $uppercas_text)->first();
+        
 
         if(!is_null($translation)){
             return $translation->word_bn;
