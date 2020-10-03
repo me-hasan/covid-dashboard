@@ -113,9 +113,10 @@ class DashboardController extends Controller
 
         $data['division_list'] = $divisionlist;
 
-        $data['district_list'] = cache()->rememberForever('district_list',  function () {
-            return DB::table('div_dist')->get();
-        });
+        $data['district_list'] = DB::table('div_dist')->get();
+        // $data['district_list'] = cache()->rememberForever('district_list',  function () {
+        //     return DB::table('div_dist')->get();
+        // });
 
 
         $data['last_14_days'] = $this->getLast14DaysData($request);
@@ -814,10 +815,10 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (SELECT thedate, division, district, daily_cases FROM
 (SELECT thedate FROM calendardate WHERE thedate >= '2020-05-20' AND thedate <=
 (SELECT MAX(test_date) FROM
-division_district_infected WHERE district = '".$district."')) AS T1
+division_district_infected WHERE district = '".$district."') ) AS T1
 LEFT JOIN
 (SELECT test_date, division, district, daily_cases FROM  division_district_infected
-WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date) AS Q) AS a $dateQuery";
+WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date WHERE T2.district IS NOT NULL) AS Q) AS a $dateQuery";
 
                         $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
                     }
@@ -849,7 +850,7 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date) AS Q) AS a $
                             $dateData[] =  $div_date;
                         }*/
 
-                        $districtData[$div->district][] = (int)$div->total_cases ?? 0;
+                        $districtData[$div->district][] = (float)$div->total_cases ?? 0;
                         $districtData[$div->district]['bn'] = en2bnTranslation($div->district);
                         $j++;
                     }
@@ -869,6 +870,7 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date) AS Q) AS a $
             //     $upzillaData[$div->Upazila]['bn'] = en2bnTranslation($div->Upazila);
             //     $j++;
             // }
+            //dd($dateData);
             $data['categories'] = $dateData;
             $data['districtData'] = $districtData;
             $data['upazillaData'] = $upzillaData;
