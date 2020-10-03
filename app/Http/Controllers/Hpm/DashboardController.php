@@ -622,6 +622,7 @@ ORDER BY t.date";
            // $cumulativeInfectedPerson = $this->cumulativeInfectedPerson($request);
             $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
             $cumulativeDisUpaZillaData = $this->cumulativeDivDistData($request);
+
             $formattedData = [];
             $i = 0;
             if($request->has('district') && count($request['district'])){
@@ -659,7 +660,12 @@ ORDER BY t.date";
             $result['district_data'] = $cumulativeDisUpaZillaData['districtData'] ?? [];
             $result['upazillaData'] = $cumulativeDisUpaZillaData['upazillaData'] ?? [];
             $result['series_data'] = json_encode($seriesData);
-            $result['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
+            if($is_division) {
+                $result['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
+            } else {
+                $result['categories'] = json_encode($cumulativeDisUpaZillaData['categories']) ?? [];
+            }
+
             $result['status'] = 'success';
 
         }catch (\Exception $exception) {
@@ -767,13 +773,13 @@ ORDER BY t.date";
                 $dateQuery .= ' AND thedate <='. "'".$request->to_date."'";
             }
 
-            if($request->has('division') && count($request->division)) {
-                $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
-                $searchQuery = "  (". $divisionReqData.")";
-
-                $cumulativeSqlDistrictUpazilaSql = "SELECT * FROM `district_wise_cases_covid` WHERE `division_eng` IN ".$searchQuery;
-                $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
-            }
+//            f($request->has('division') && count($request->division)) {
+//                $divisionReqData = "'" . implode ( "', '", $request->division ) . "'";
+//                $searchQuery = "  (". $divisionReqData.")";
+//
+//                $cumulativeSqlDistrictUpazilaSql = "SELECT * FROM `district_wise_cases_covid` WHERE `division_eng` IN ".$searchQuery;
+//                $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+//            }
             if($request->has('district') && count($request->district)) {
                 $districtReqData = "'" . implode ( "', '", $request->district ) . "'";
                 $searchQuery = "   (". $districtReqData.")";
@@ -781,17 +787,10 @@ ORDER BY t.date";
                 $cumulativeDisUpaZillaData = [];
                 if(count($districts)) {
                     foreach ($districts as $district) {
+                        if($district == 'Jhalakati') {
+                            $district = 'Jhalokati';
+                        }
 
-                        //$cumulativeSqlDistrictUpazilaSql = "select * from district_wise_cases_covid where district_city_eng='".$district."' $dateQuery group by date;";
-                        /*$cumulativeSqlDistrictUpazilaSql = "SELECT t.date,t.Division, t.District as 'district_city_eng', Infected_Person,
-       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
-FROM
-(SELECT
-  Date, Division, District, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null
-  GROUP BY Date, District ) as t
-JOIN (SELECT @running_total:=0) r where district = '".$district."' $dateQuery
-ORDER BY t.date;";*/
                         $cumulativeSqlDistrictUpazilaSql = "SELECT
        a.thedate,
        a.division,
@@ -827,19 +826,14 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date WHERE T2.dist
 
             }
 
-            if($request->has('upazilla') && count($request->upazilla)) {
+            /*if($request->has('upazilla') && count($request->upazilla)) {
                 $districtReqData = "'" . implode ( "', '", $request->upazilla ) . "'";
                 $searchQuery = " AND  Upazila IN (". $districtReqData.")";
 
                 $cumulativeSqlDistrictUpazilaSql = " select Division, District, Upazila, date, infected_person AS cumulative_infected_person from div_dist_upz_infected_trend
                 where date is not null  ".$searchQuery."  order by date ";
-            }
+            }*/
 
-
-            //$cumulativeDisUpaZillaData = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
-            //dd($cumulativeDisUpaZillaData);
-            //dd($cumulativeDisUpaZillaData);
-           // dd($cumulativeDisUpaZillaData);
             $j=0;
             $dateData = [];
             $districtData = [];
@@ -852,6 +846,9 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date WHERE T2.dist
                         if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
                             $dateData[] =  convertEnglishDateToBangla($div_date);
                         }
+                        /*if(!in_array($div_date, $dateData)){
+                            $dateData[] =  $div_date;
+                        }*/
 
                         $districtData[$div->district][] = (float)$div->total_cases ?? 0;
                         $districtData[$div->district]['bn'] = en2bnTranslation($div->district);
@@ -1440,7 +1437,7 @@ SELECT
         // return $des[0];
 
         $des= DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
-       
+
         if (isset($des[0])){ return $des[0];}else{return null; }
     }
 
