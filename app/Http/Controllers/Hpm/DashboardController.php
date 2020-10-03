@@ -496,10 +496,12 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
 (select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
 (select max(test_date) from
+
 division_infected where division = 'Mymensingh')) as T1
 left join
 (select test_date, division, daily_cases from  division_infected
 where division = 'Mymensingh') as T2 on T1.thedate=T2.test_date) as R) AS b
+
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
 FROM
@@ -1436,6 +1438,7 @@ SELECT
         //     return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
         // });
         // return $des[0];
+
         $des= DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
        
         if (isset($des[0])){ return $des[0];}else{return null; }
