@@ -818,7 +818,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 division_district_infected WHERE district = '".$district."') ) AS T1
 LEFT JOIN
 (SELECT test_date, division, district, daily_cases FROM  division_district_infected
-WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date WHERE T2.district IS NOT NULL) AS Q) AS a $dateQuery";
+WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date ) AS Q) AS a $dateQuery";
 
                         $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
                     }
