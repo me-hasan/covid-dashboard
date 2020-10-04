@@ -49,7 +49,8 @@ class ComponentController extends Controller
 
             $componentNames = getComponentName();
             $getComponenName =  $componentNames[$request->component_name];
-            $component_id = sprintf('%03d',$request->component_name);
+            // $component_id = sprintf('%03d',$request->component_name);
+            $component_id = $request->component_name;
 
             $isExist = DB::table('hpm_description_insight')->where('component_id', $component_id)->first();
             if($isExist){

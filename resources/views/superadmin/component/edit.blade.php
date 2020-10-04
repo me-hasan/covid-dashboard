@@ -13,7 +13,7 @@
                         <label for="recipient-name" class="control-label mb-10">Component Name : <span style="color:red">*</span></label>
                         <select class="form-control" name="component_name">
                             @foreach(getComponentName() as $key => $value)
-                            <option value="{{$key}}" {{sprintf('%03d',$key) == $component->component_id ? 'selected' : ''}}>{{$value}}</option>
+                            <option value="{{$key}}" {{ $key == $component->component_id ? 'selected' : '' }}>{{$value}}</option>
                             @endforeach
                         </select>
                     </div>
