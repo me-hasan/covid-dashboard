@@ -92,51 +92,11 @@
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1"><strong>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</strong>: যে বিভাগগুলোতে প্রতিদিনের সংক্রমণের সংখ্যা ব্যাপকভাবে ওঠানামা করে সে বিভাগগুলোতে পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন।</h3>
+                <h3 class="card-title b1"></h3>
             </div>
+            
             <div class="card-body">
-                <form action="">
-                    <div class="d-flex flex-row justify-content-end">
-                        <div class="form-label pt-2 mr-1 b1">বিভাগ</div>
-                        <div>
-                            <select name="division[]"  class="select2 form-control btn-outline-primary division_select" multiple="true">
-                                {{--<option value="All">সব বিভাগ</option>--}}
-                                @foreach($division_list as $division)
-                                <option value="{!! $division !!}" class="b1">{!! en2bnTranslation($division) !!} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-label pl-2 pt-2 mr-1 b1">জেলা</div>
-                        <div>
-                            <select name="district[]" class="select2 form-control btn-outline-primary select_district" multiple="true">
-                                <!-- <option value="DHAKA" class="b1">সব জেলা </option> -->
-                                @foreach($district_list as $district)
-                                <option value="{!! $district->district !!}" class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <!-- <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
-                        <div>
-                            <select name="upazila[]" class="select2 form-control btn-outline-primary select_upazilla" multiple="true">
-                                <option value="DHAKA">সব উপজিলা</option>
-                            </select>
-                        </div> -->
-                        <button class="btn btn-sm district_cms_search b1" type="submit" >
-                        	<svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
-                                 height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
-                                 focusable="false">
-                                <path d="M0 0h24v24H0V0z" fill="none"/>
-                                <path
-                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-            <div class="card-body">
-                <div id="district_comparision"></div>
+                <div id="test_positivity_rate_trend"></div>
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -192,6 +152,78 @@
         </div>
 
     </div>
+    
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title b1"><strong>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</strong>: যে বিভাগগুলোতে প্রতিদিনের সংক্রমণের সংখ্যা ব্যাপকভাবে ওঠানামা করে সে বিভাগগুলোতে পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন।</h3>
+            </div>
+            <div class="card-body">
+                <form action="">
+                    <div class="d-flex flex-row justify-content-end">
+                        <div class="form-label pt-2 mr-1 b1">বিভাগ</div>
+                        <div>
+                            <select name="division[]"  class="select2 form-control btn-outline-primary division_select" multiple="true">
+                                {{--<option value="All">সব বিভাগ</option>--}}
+                                @foreach($division_list as $division)
+                                <option value="{!! $division !!}" class="b1">{!! en2bnTranslation($division) !!} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-label pl-2 pt-2 mr-1 b1">জেলা</div>
+                        <div>
+                            <select name="district[]" class="select2 form-control btn-outline-primary select_district" multiple="true">
+                                <!-- <option value="DHAKA" class="b1">সব জেলা </option> -->
+                                @foreach($district_list as $district)
+                                <option value="{!! $district->district !!}" class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- <div class="form-label pl-2 pt-2 mr-1">Upazila</div>
+                        <div>
+                            <select name="upazila[]" class="select2 form-control btn-outline-primary select_upazilla" multiple="true">
+                                <option value="DHAKA">সব উপজিলা</option>
+                            </select>
+                        </div> -->
+                        <button class="btn btn-sm district_cms_search b1" type="submit" >
+                        	<svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
+                                 height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
+                                 focusable="false">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="card-body">
+                <div id="district_comparision"></div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="card-body text-justify">
+                        <h5 class="card-title b1">বর্ণনা</h5>
+                        <p class="card-text b1">
+                            {{ $des_2->description_beng ?? '' }}
+                        </p>
+                    </div>
+                 </div>
+                 
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+
+                        <h5 class="card-title b1">বিশ্লেষণ</h5>
+                        <p class="card-text b1">
+                            {{ $des_2->insight_beng ?? '' }}
+                        </p>
+                    </div>
+                 </div> -->
+        	</div>
+        </div>
+    </div>
 </div>
 <input class="selected_area_comparision" type="hidden" name="selected_area_comparision" value="division"/>
 
@@ -201,16 +233,16 @@
     <script>
 
         <?php
-        use Carbon\Carbon;
-        $date_arr = $infected_arr = $avg_arr  = array();
-
-                foreach($nation_wide_MovingAvgInfected as $row){
-                      $date_arr[] = convertEnglishDateToBangla($row->report_date);
-                      $infected_arr[] = $row->infected_24_hrs;
-                      $avg_arr[] = $row->five_dayMovingAvgInfected;
-                }
-                $infected = implode(",", $infected_arr);
-                $avg = implode(",", $avg_arr);
+			use Carbon\Carbon;
+			$date_arr = $infected_arr = $avg_arr  = array();
+			
+			foreach($nation_wide_MovingAvgInfected as $row){
+			  $date_arr[] = convertEnglishDateToBangla($row->report_date);
+			  $infected_arr[] = $row->infected_24_hrs;
+			  $avg_arr[] = $row->five_dayMovingAvgInfected;
+			}
+			$infected = implode(",", $infected_arr);
+			$avg = implode(",", $avg_arr);
 
             ?>
             Highcharts.chart('national_dialy_infected_trend', {
@@ -361,8 +393,75 @@
 
             }],
         });
+		
+		// Test Positivity Trend
+		Highcharts.chart('test_positivity_rate_trend', {
+            chart: {
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
 
-        Highcharts.chart('district_comparision', {
+			title: {
+                text: ''
+            },
+
+            subtitle: {
+                text: ''
+            },
+
+            legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "16px",
+					fontWeight: "normal"
+				}
+            },
+
+            credits:{
+                enabled:false
+            },
+
+            xAxis: {
+                categories: {!! $categories !!}
+
+            },
+			
+            tooltip: {
+				formatter: function() {
+					return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+				}
+        	},
+			
+            yAxis: {
+                title: {
+                    text: 'দৈনিক আক্রান্তের সংখ্যা',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    fillOpacity:0
+                }
+            },
+
+            colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
+            series:  {!! $series_data !!}
+        });
+
+        // District Comparision
+		Highcharts.chart('district_comparision', {
             chart: {
 				style: {
 					fontFamily: 'SolaimanLipi'
