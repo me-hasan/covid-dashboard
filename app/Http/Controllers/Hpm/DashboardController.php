@@ -580,12 +580,12 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.test_date) as Q) as a $dat
         $dateData = [];
         $divisionData = [];
 
-        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, 
-        a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100 as 'test_positivity' 
-        from (select date_of_test, district, count(*) as total_tests,
-        sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data 
-        WHERE date_of_test is not null and date_of_test >= '2020-03-04' and district = 'Dhaka'
-        group by district, date_of_test) as a order by a.date_of_test;";
+        $cumulativeSql_dhk_sql = "SELECT a.date_of_test, a.district, a.total_tests, a.positive_tests, ROUND((a.positive_tests/a.total_tests), 2)*100 
+AS 'test_positivity' FROM
+(SELECT DATE(date_of_test) AS 'date_of_test', district, COUNT(*) AS total_tests,
+SUM(test_result LIKE 'positive') AS positive_tests FROM lab_clean_data 
+WHERE date_of_test IS NOT NULL AND date_of_test >= '2020-03-04' AND district = 'Dhaka'
+GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test;";
         
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
         $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
