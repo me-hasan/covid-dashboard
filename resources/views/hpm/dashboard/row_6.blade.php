@@ -8,6 +8,11 @@ overflow: auto;
 display: block;
 }
 
+.my-custom-scrollbar thead th {
+  position: sticky;
+  top: 0;
+}
+
     </style>
     <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
