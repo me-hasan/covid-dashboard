@@ -92,6 +92,70 @@
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
+                <h3 class="card-title b1"></h3>
+            </div>
+            
+            <div class="card-body">
+                <div id="test_positivity_rate_trend"></div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+
+                    <div class="card-body text-justify">
+                        <h5 class="card-title b1">বর্ণনা</h5>
+                        <p class="card-text b1">
+                            {{-- $des_2->description_beng ?? '' --}}
+                        </p>
+                    </div>
+                 </div>
+
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+
+                        <h5 class="card-title b1">বিশ্লেষণ</h5>
+                        <p class="card-text b1">
+                            {{ $des_2->insight_beng ?? '' }}
+                        </p>
+                    </div>
+                 </div> -->
+        	</div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card-header">
+                <h3 class="card-title b1"><strong>সংক্রমণের ক্রমবর্ধমান পরিবর্তন</strong>: রেখাটি তীর্যক অবস্থায় মহামারীটির ক্রমশ অবনতি ইঙ্গিত করছে। তবে যেখানে সমতল দেখা যাচ্ছে সে সময় (আগস্ট) থেকে অবস্থার উন্নতি নির্দেশ করছে।</h3>
+            </div>
+            <div class="card-body">
+                <div id="national_infected_trend"></div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+
+                    <div class="card-body text-justify">
+                        <h5 class="card-title b1">বর্ণনা</h5>
+                        <p class="card-text b1">
+                           {{ $des_3->description_beng ?? '' }}
+                        </p>
+                    </div>
+                 </div>
+
+                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="card-body">
+
+                        <h5 class="card-title b1">বিশ্লেষণ</h5>
+                        <p class="card-text b1">
+                            {{ $des_3->insight_beng ?? '' }}
+                        </p>
+                    </div>
+                 </div> -->
+        	</div>
+        </div>
+
+    </div>
+    
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="card-header">
                 <h3 class="card-title b1"><strong>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</strong>: যে বিভাগগুলোতে প্রতিদিনের সংক্রমণের সংখ্যা ব্যাপকভাবে ওঠানামা করে সে বিভাগগুলোতে পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন।</h3>
             </div>
             <div class="card-body">
@@ -140,7 +204,6 @@
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
-
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
@@ -148,7 +211,7 @@
                         </p>
                     </div>
                  </div>
-
+                 
                  <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
 
@@ -160,37 +223,6 @@
                  </div> -->
         	</div>
         </div>
-
-        <div class="col-xl-6 col-lg-6 col-md-12">
-            <div class="card-header">
-                <h3 class="card-title b1"><strong>সংক্রমণের ক্রমবর্ধমান পরিবর্তন</strong>: রেখাটি তীর্যক অবস্থায় মহামারীটির ক্রমশ অবনতি ইঙ্গিত করছে। তবে যেখানে সমতল দেখা যাচ্ছে সে সময় (আগস্ট) থেকে অবস্থার উন্নতি নির্দেশ করছে।</h3>
-            </div>
-            <div class="card-body">
-                <div id="national_infected_trend"></div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-
-                    <div class="card-body text-justify">
-                        <h5 class="card-title b1">বর্ণনা</h5>
-                        <p class="card-text b1">
-                           {{ $des_3->description_beng ?? '' }}
-                        </p>
-                    </div>
-                 </div>
-
-                 <!-- <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="card-body">
-
-                        <h5 class="card-title b1">বিশ্লেষণ</h5>
-                        <p class="card-text b1">
-                            {{ $des_3->insight_beng ?? '' }}
-                        </p>
-                    </div>
-                 </div> -->
-        	</div>
-        </div>
-
     </div>
 </div>
 <input class="selected_area_comparision" type="hidden" name="selected_area_comparision" value="division"/>
@@ -201,16 +233,16 @@
     <script>
 
         <?php
-        use Carbon\Carbon;
-        $date_arr = $infected_arr = $avg_arr  = array();
-
-                foreach($nation_wide_MovingAvgInfected as $row){
-                      $date_arr[] = convertEnglishDateToBangla($row->report_date);
-                      $infected_arr[] = $row->infected_24_hrs;
-                      $avg_arr[] = $row->five_dayMovingAvgInfected;
-                }
-                $infected = implode(",", $infected_arr);
-                $avg = implode(",", $avg_arr);
+			use Carbon\Carbon;
+			$date_arr = $infected_arr = $avg_arr  = array();
+			
+			foreach($nation_wide_MovingAvgInfected as $row){
+			  $date_arr[] = convertEnglishDateToBangla($row->report_date);
+			  $infected_arr[] = $row->infected_24_hrs;
+			  $avg_arr[] = $row->five_dayMovingAvgInfected;
+			}
+			$infected = implode(",", $infected_arr);
+			$avg = implode(",", $avg_arr);
 
             ?>
             Highcharts.chart('national_dialy_infected_trend', {
@@ -361,8 +393,75 @@
 
             }],
         });
+		
+		// Test Positivity Trend
+		Highcharts.chart('test_positivity_rate_trend', {
+            chart: {
+				style: {
+					fontFamily: 'SolaimanLipi'
+				}
+            },
 
-        Highcharts.chart('district_comparision', {
+			title: {
+                text: ''
+            },
+
+            subtitle: {
+                text: ''
+            },
+
+            legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+				itemStyle: {
+					fontSize: "16px",
+					fontWeight: "normal"
+				}
+            },
+
+            credits:{
+                enabled:false
+            },
+
+            xAxis: {
+                categories: {!! $categories !!}
+
+            },
+			
+            tooltip: {
+				formatter: function() {
+					return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+				}
+        	},
+			
+            yAxis: {
+                title: {
+                    text: 'দৈনিক টেস্ট পসিটিভিটি রেট',
+					style: {
+						fontSize: 18,
+						fontFamily: 'SolaimanLipi'
+					}
+                },
+                labels: {
+                    formatter: function() {
+                        return englishToBangla(this.value);
+                    }
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    fillOpacity:0
+                }
+            },
+
+            colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
+            series:  {!! $series_data !!}
+        });
+
+        // District Comparision
+		Highcharts.chart('district_comparision', {
             chart: {
 				style: {
 					fontFamily: 'SolaimanLipi'
