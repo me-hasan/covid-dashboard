@@ -146,25 +146,25 @@ using(district)");
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
-                                            <td>Low -> High</td>
-                                            <td>Medium -> Low</td>
-                                            <td>High</td>
-                                            <td>High -> Medium</td>
-                                            <td>High -> Low</td>
+                                            <td class="text-center">Low -> High</td>
+                                            <td class="text-center">Medium -> Low</td>
+                                            <td class="text-center">High</td>
+                                            <td class="text-center">High -> Medium</td>
+                                            <td class="text-center">High -> Low</td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td>Low -> Medium</td>
-                                            <td>Medium</td>
-                                            <td>Medium -> Low</td>
-                                            <td></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">Low -> Medium</td>
+                                            <td class="text-center">Medium</td>
+                                            <td class="text-center">Medium -> Low</td>
+                                            <td class="text-center"></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Low</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">Low</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
                                         </tr>
                                     </tbody>
                                 </table>
