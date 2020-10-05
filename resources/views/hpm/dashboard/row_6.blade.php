@@ -1,3 +1,14 @@
+    <style type="text/css">
+    .my-custom-scrollbar {
+position: relative;
+height: 400px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+    </style>
     <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
     $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
@@ -133,8 +144,8 @@ using(district)");
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-vcenter text-nowrap b1">
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" >
+                                <table class="table table-bordered table-vcenter text-nowrap b1" >
                                     <thead>
                                         <tr>
                                             <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
@@ -565,6 +576,7 @@ using(district)");
         <script type="text/javascript">
             $(document).ready(function($) {
 
+    
               //  $('#high_to_low_table_content .dataTable').DataTable();
                  /*$('#high_to_low_table_content .dataTable').DataTable( {
                      responsive: true,
