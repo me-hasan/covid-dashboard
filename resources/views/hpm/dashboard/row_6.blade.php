@@ -137,11 +137,11 @@ using(district)");
                                 <table class="table table-bordered table-vcenter text-nowrap b1">
                                     <thead>
                                         <tr>
-                                            <th class="text-center fs-18">Significant worsening</th>
-                                            <th class="text-center fs-18">Worsening</th>
-                                            <th class="text-center fs-18">No change</th>
-                                            <th class="text-center fs-18">Improving</th>
-                                            <th class="text-center fs-18">Significant improvement</th>
+                                            <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">Significant worsening</th>
+                                            <th class="bg-danger text-center fs-18" style="color: #FFF;">Worsening</th>
+                                            <th class="text-center fs-18" style="background: #cccccc;">No change</th>
+                                            <th class="text-center fs-18" style="background: #feea1f;">Improving</th>
+                                            <th class="text-center fs-18" style="background: #b9ff00;">Significant improvement</th>
                                         </tr>
                                     </thead>
                                     <tbody class="fs-16">
