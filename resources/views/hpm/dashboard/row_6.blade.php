@@ -1,3 +1,19 @@
+    <style type="text/css">
+    .my-custom-scrollbar {
+position: relative;
+height: 400px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+.my-custom-scrollbar thead th {
+  position: sticky;
+  top: 0;
+}
+
+    </style>
     <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
     $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
@@ -133,8 +149,8 @@ using(district)");
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-vcenter text-nowrap b1">
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" >
+                                <table class="table table-bordered table-vcenter text-nowrap b1" >
                                     <thead>
                                         <tr>
                                             <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
@@ -146,26 +162,175 @@ using(district)");
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
-                                            <td class="text-center">কম -> উচ্চ</td>
-                                            <td class="text-center">মধ্যম -> কম</td>
-                                            <td class="text-center">উচ্চ</td>
-                                            <td class="text-center">উচ্চ -> মধ্যম</td>
-                                            <td class="text-center">উচ্চ -> কম</td>
+                                            <td class="text-center">রাঙ্গামাটি</td>
+                                            <td class="text-center">নরসিংদী</td>
+                                            <td class="text-center">টাঙ্গাইল</td>
+                                            <td class="text-center">শরীয়তপুর</td>
+                                            <td class="text-center">নাটোর</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">জয়পুরহাট</td>
+                                            <td class="text-center">কিশোরগঞ্জ </td>
+                                            <td class="text-center">মুন্সীগঞ্জ</td>
+                                            <td class="text-center">গাজীপুর</td>
+                                            <td class="text-center">নারায়ণগঞ্জ</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">দিনাজপুর</td>
+                                            <td class="text-center">রংপুর</td>
+                                            <td class="text-center">চট্টগ্রাম</td>
+                                            <td class="text-center">রাজবাড়ী</td>
+                                            <td class="text-center">শেরপুর</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">মানিকগঞ্জ</td>
+                                            <td class="text-center">মাদারীপুর</td>
+                                            <td class="text-center">গাইবান্ধা</td>
+                                            <td class="text-center">জামালপুর</td>
+                                            <td class="text-center">চুয়াডাঙ্গা</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">নীলফামারী</td>
+                                            <td class="text-center">চাঁদপুর</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">লালমনরিহাট</td>
+                                            <td class="text-center">নোয়াখালী</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">ঠাকুরগাঁও</td>
+                                            <td class="text-center">পিরোজপুর</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">ব্রাহ্মণবাড়ীয়া</td>
+                                            <td class="text-center">খাগড়াছড়ি</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">ঢাকা</td>
+                                            <td class="text-center">নওগাঁ</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">গোপালগঞ্জ</td>
+                                            <td class="text-center">বরিশাল</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">কুমিল্লা</td>
+                                            <td class="text-center">ফেনী</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">ফরিদপুর</td>
+                                            <td class="text-center">কক্সবাজার</td>
+                                        </tr>
+                                        <tr>
+                                           <td class="text-center"></td>
+                                            <td class="text-center">বাগেরহাট</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">রাজশাহী</td>
+                                            <td class="text-center">পটুয়াখালী</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center"></td>
-                                            <td class="text-center">কম -> মধ্যম</td>
-                                            <td class="text-center">মধ্যম</td>
-                                            <td class="text-center">মধ্যম -> কম</td>
                                             <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">খুলনা</td>
+                                            <td class="text-center">বরগুনা</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center"></td>
                                             <td class="text-center"></td>
-                                            <td class="text-center">কম</td>
                                             <td class="text-center"></td>
-                                            <td class="text-center"></td>
+                                            <td class="text-center">কুড়গ্রিাম</td>
+                                            <td class="text-center">ঝালকাঠি</td>
                                         </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">ভোলা</td>
+                                            <td class="text-center">ঝিনাইদাহ</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">মৌলভীবাজার </td>
+                                            <td class="text-center">মহেরেপুর</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">সুনামগঞ্জ</td>
+                                            <td class="text-center">যশোর</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">সিলেট</td>
+                                            <td class="text-center">কুষ্টিয়া</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">হবিগঞ্জ</td>
+                                            <td class="text-center">বান্দরবান</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">পাবনা</td>
+                                            <td class="text-center">সিরাজগঞ্জ</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">সাতক্ষীরা</td>
+                                            <td class="text-center">বগুড়া</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">চাঁপাইনবাবগঞ্জ </td>
+                                            <td class="text-center">নড়াইল</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">লক্ষ্মীপুর</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">ময়মনসিংহ</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">নেত্রকোনা</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">মাগুরা</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">পঞ্চগড়</td>
+                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -416,6 +581,7 @@ using(district)");
         <script type="text/javascript">
             $(document).ready(function($) {
 
+    
               //  $('#high_to_low_table_content .dataTable').DataTable();
                  /*$('#high_to_low_table_content .dataTable').DataTable( {
                      responsive: true,

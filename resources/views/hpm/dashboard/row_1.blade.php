@@ -425,7 +425,7 @@
             },
 
             xAxis: {
-                categories: {!! $categories !!}
+                categories: {!! $categories_dhk !!}
 
             },
 			
@@ -457,7 +457,7 @@
             },
 
             colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
-            series:  {!! $series_data !!}
+            series:  {!! $series_data_dhk !!}
         });
 
         // District Comparision

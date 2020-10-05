@@ -109,6 +109,13 @@ Route::prefix('admin')->group(function () {
         Route::put('role/edit/{role_id}','RoleController@update')->name('edit-role');
         Route::delete('role/{role_id}','RoleController@destroy');
         // role management routes ending
+
+        // component management routes for admin
+        Route::get('components','ComponentController@index')->name('all-components');
+        Route::post('component/create','ComponentController@store')->name('create-component');
+
+        Route::put('component/edit/{component_id}','ComponentController@update')->name('edit-component');
+        // component management routes ending
     });
 
 

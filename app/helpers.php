@@ -89,4 +89,16 @@ if (! function_exists('mapDivisionColor')) {
         return $formattedData;
 
     }
+
+    if(!function_exists('getComponentName'))
+    {
+        function getComponentName()
+        {
+            return [
+                '101'=> 'দৈনিক দেশব্যাপী সংক্রামতি',
+                '102'=> 'অঞ্চল অনুসারে দৈনিক নতুন সংক্রমণ',
+                '103'=> 'মোট দেশব্যাপী সংক্রামতি',
+            ];
+        }
+    }
 }
