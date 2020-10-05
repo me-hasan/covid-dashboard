@@ -104,7 +104,7 @@
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_2->description_beng ?? '' }}
+                            {{-- $des_2->description_beng ?? '' --}}
                         </p>
                     </div>
                  </div>
@@ -437,7 +437,7 @@
 			
             yAxis: {
                 title: {
-                    text: 'দৈনিক আক্রান্তের সংখ্যা',
+                    text: 'দৈনিক টেস্ট পসিটিভিটি রেট',
 					style: {
 						fontSize: 18,
 						fontFamily: 'SolaimanLipi'
