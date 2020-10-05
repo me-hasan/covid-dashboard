@@ -136,138 +136,33 @@ using(district)");
                             <div class="table-responsive">
                                 <table class="table table-bordered table-vcenter text-nowrap b1">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center fs-18">Significant worsening</th>
-                                        <th class="text-center fs-18">Worsening</th>
-                                        <th class="text-center fs-18">No change</th>
-                                        <th class="text-center fs-18">Improving</th>
-                                        <th class="text-center fs-18">Significant improvement</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center fs-18">Significant worsening</th>
+                                            <th class="text-center fs-18">Worsening</th>
+                                            <th class="text-center fs-18">No change</th>
+                                            <th class="text-center fs-18">Improving</th>
+                                            <th class="text-center fs-18">Significant improvement</th>
+                                        </tr>
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
+                                            <td>Low -> High</td>
+                                            <td>Medium -> Low</td>
+                                            <td>High</td>
+                                            <td>High -> Medium</td>
+                                            <td>High -> Low</td>
+                                        </tr>
+                                        <tr>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>Low -> Medium</td>
+                                            <td>Medium</td>
+                                            <td>Medium -> Low</td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>Low</td>
                                             <td></td>
                                             <td></td>
                                         </tr>
