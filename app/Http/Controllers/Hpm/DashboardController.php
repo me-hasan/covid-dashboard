@@ -66,16 +66,16 @@ class DashboardController extends Controller
             $data['last_week'] = $this->last_week();
 
             // description and insight
-            $data['des_1'] = $this->description_insight_qry('Daily National Cases'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
-            $data['des_2'] = $this->description_insight_qry('Daily New Cases by Region'); //Daily New Cases by Region / অঞ্চল তুলনা
-            $data['des_3'] = $this->description_insight_qry('Total National Cases'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
-            $data['des_4'] = $this->description_insight_qry('Daily Tests and Cases'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
-            $data['des_5'] = $this->description_insight_qry('Tests vs Cases (Positivity Rate)'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
-            $data['des_6'] = $this->description_insight_qry('Risk Map by District (14 Days)'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
-            $data['des_7'] = $this->description_insight_qry('Total Tests Per Case in Neighboring Countries'); // Test Per Cases For South Asian Countries
-            $data['des_8'] = $this->description_insight_qry('Movement of districts in terms of risk comparing current 14 days and previous 14 days'); // Risk Matrix
-            $data['des_9'] = $this->description_insight_qry('Age cohort vs cases and death'); //  IMPACT IN POPULATION
-            $data['des_10'] = $this->description_insight_qry('Capacity & Resource'); // Nationwide Hospital Capacity And Occupancy
+            $data['des_1'] = $this->description_insight_qry('101'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+            $data['des_2'] = $this->description_insight_qry('201'); //Daily New Cases by Region / অঞ্চল তুলনা
+            $data['des_3'] = $this->description_insight_qry('202'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+            $data['des_4'] = $this->description_insight_qry('301'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+            $data['des_5'] = $this->description_insight_qry('302'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+            $data['des_6'] = $this->description_insight_qry('303'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+            $data['des_7'] = $this->description_insight_qry('304'); // Test Per Cases For South Asian Countries
+            $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
+            $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
+            $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
         // shamvil end
 
         //Test vs Cases (Robi)
@@ -104,6 +104,25 @@ class DashboardController extends Controller
         $data['series_data'] = json_encode($seriesData);
         $data['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
         $data['testPositivityMap'] = $testPositivityMap;
+
+        // 5 oct
+        $cumulativeInfectedPerson_onlyDhaka = $this->cumulativeInfectedPerson_dhaka();
+        $k = 0;
+        $dhk_divisionlist=[];
+        $dhk_seriesData = [];
+        if(count($cumulativeInfectedPerson_onlyDhaka['division_data'])) {
+            foreach ($cumulativeInfectedPerson_onlyDhaka['division_data'] as $key => $dist) {
+                $dhk_seriesData[$k]['type'] = 'spline';
+                $dhk_seriesData[$k]['name'] = en2bnTranslation($key);
+                $dhk_seriesData[$k]['data'] = $dist ?? [];
+                $dhk_seriesData[$k]['marker']['enabled'] = false;
+                $dhk_seriesData[$k]['marker']['symbol'] = 'circle';
+                $dhk_divisionlist[] = $key;
+                $k++;
+            }
+        }
+        $data['series_data_dhk'] = json_encode($dhk_seriesData);
+        $data['categories_dhk'] = json_encode($cumulativeInfectedPerson_onlyDhaka['categories']) ?? [];
 
         // row 1 left side
         $cumulativeInfection = $this->getCumulativeInfectionData($request);
@@ -554,6 +573,39 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.test_date) as Q) as a $dat
             return $data;
 
     }
+
+     public function cumulativeInfectedPerson_dhaka(){
+        $j=0;
+        $data = [];
+        $dateData = [];
+        $divisionData = [];
+
+        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, 
+        a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100 as 'test_positivity' 
+        from (select date_of_test, district, count(*) as total_tests,
+        sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data 
+        WHERE date_of_test is not null and date_of_test >= '2020-03-04' and district = 'Dhaka'
+        group by district, date_of_test) as a order by a.date_of_test;";
+        
+        $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
+        $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
+        $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'test_positivity'));
+
+        foreach ($cumulativeData as $key => $div) {
+                $div_date = date('d-M-Y', strtotime($div->date_of_test));
+
+                if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
+                    $dateData[] =  convertEnglishDateToBangla($div_date);
+                }
+                $divisionData[$div->district][] = (float)$div->test_positivity ?? 0;
+                $j++;
+        }
+        $data['categories'] = $dateData;
+        $data['division_data'] = $cumulativeData_2;
+        //dd($data);
+        return $data;
+
+     }
 
     public function cumulativeInfectedPerson($request) {
         try {
@@ -1429,14 +1481,15 @@ SELECT
         ];
     }
 
-    private function description_insight_qry($component_name_eng){
-        $component=str_replace(" ","_",strtoupper($component_name_eng));
+    private function description_insight_qry($component_code){
+        $component=str_replace(" ","_",strtoupper($component_code));
         // $des= cache()->rememberForever('hpm_description_insight.'.$component,  function () use($component_name_eng) {
         //     return DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
         // });
         // return $des[0];
 
-        $des= DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
+        //$des= DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
+        $des= DB::select("select * from hpm_description_insight where component_id='".$component_code."' and date=(select max(date) from hpm_description_insight);");
 
         if (isset($des[0])){ return $des[0];}else{return null; }
     }
