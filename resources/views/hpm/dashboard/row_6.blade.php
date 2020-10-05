@@ -136,140 +136,35 @@ using(district)");
                             <div class="table-responsive">
                                 <table class="table table-bordered table-vcenter text-nowrap b1">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center fs-18">Significant worsening</th>
-                                        <th class="text-center fs-18">Worsening</th>
-                                        <th class="text-center fs-18">No change</th>
-                                        <th class="text-center fs-18">Improving</th>
-                                        <th class="text-center fs-18">Significant improvement</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
+                                            <th class="bg-danger text-center fs-18" style="color: #FFF;">অবস্থার অবনতি</th>
+                                            <th class="text-center fs-18" style="background: #cccccc;">অপরিবর্তিত মধ্যম ঝুঁকি</th>
+                                            <th class="text-center fs-18" style="background: #feea1f;">অবস্থার উন্নতি</th>
+                                            <th class="text-center fs-18" style="background: #b9ff00;">অবস্থার লক্ষণীয় উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
+                                        </tr>
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-center">কম -> উচ্চ</td>
+                                            <td class="text-center">মধ্যম -> কম</td>
+                                            <td class="text-center">উচ্চ</td>
+                                            <td class="text-center">উচ্চ -> মধ্যম</td>
+                                            <td class="text-center">উচ্চ -> কম</td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">কম -> মধ্যম</td>
+                                            <td class="text-center">মধ্যম</td>
+                                            <td class="text-center">মধ্যম -> কম</td>
+                                            <td class="text-center"></td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">কম</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
                                         </tr>
                                     </tbody>
                                 </table>
