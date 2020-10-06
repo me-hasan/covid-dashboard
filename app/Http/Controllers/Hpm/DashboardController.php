@@ -585,7 +585,7 @@ AS 'test_positivity' FROM
 (SELECT DATE(date_of_test) AS 'date_of_test', district, COUNT(*) AS total_tests,
 SUM(test_result LIKE 'positive') AS positive_tests FROM lab_clean_data 
 WHERE date_of_test IS NOT NULL AND date_of_test >= '2020-03-04' AND district = 'Dhaka'
-GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test;";
+GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test";
         
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
         $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);

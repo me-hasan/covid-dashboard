@@ -16,7 +16,7 @@
                         </div>
                     </div> -->
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা অক্টোবর - ৫ই অক্টোবর</h5>
+                    	<h5 class="card-title b1">১লা অক্টোবর - ৬ই অক্টোবর</h5>
                         <div id="age_wise_death_distribution"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
