@@ -843,7 +843,7 @@ ORDER BY t.date";
                             $district = 'Jhalokati';
                         }
 
-                        if($district == 'Coxs Bazar') {
+                        if($district == 'Coxs Bazar' || $district == 'Cox Bazar') {
                             $district ="Cox\'s Bazar";
                         }
 
