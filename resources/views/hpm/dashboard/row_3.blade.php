@@ -2,7 +2,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title b1">{{ $des_9->component_name_beng ?? '' }}</h3>
+                <h3 class="card-title b1">{!! $des_9->component_name_beng ?? '' !!}</h3>
             </div>
             <div class="card-body">
                 <div class="row">

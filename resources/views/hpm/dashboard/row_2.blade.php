@@ -10,7 +10,7 @@
                 <div class="row pt-5">
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">{{ $des_4->component_name_beng ?? '' }}</h5>
+                            <h5 class="card-title b1">{!! $des_4->component_name_beng ?? '' !!}</h5>
                         </div>
                         <div class="card-body">
                             <div id="national_test_vs_infected_trend"></div>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="card-header">
-                            <h5 class="card-title b1">{{ $des_5->component_name_beng ?? '' }}</h5>
+                            <h5 class="card-title b1">{!! $des_5->component_name_beng ?? '' !!}</h5>
                         </div>
                         <div class="card-body">
                             <div id="weekly_comparision_infected_death"></div>
@@ -80,7 +80,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-12">
 
 								<div class="card-header">
-                                	<h5 class="card-title b1">{{ $des_6->component_name_beng ?? '' }}</h5>
+                                	<h5 class="card-title b1">{!! $des_6->component_name_beng ?? '' !!}</h5>
                                 </div>
 
                                 <div class="card-body pl-0 pr-0">
@@ -119,7 +119,7 @@
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-header">
-                                	<h5 class="card-title b1">{{ $des_7->component_name_beng ?? '' }}</h5>
+                                	<h5 class="card-title b1">{!! $des_7->component_name_beng ?? '' !!}</h5>
                                 </div>
                                 <div class="card-body">
                                     <div id="country_wise_infected"></div>

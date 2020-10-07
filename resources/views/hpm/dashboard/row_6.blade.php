@@ -85,7 +85,7 @@ using(district)");
         <div class="row">
             <div class="col-xl-12 col-md-12">
                 <div class="card-header cart-height-customize">
-                    <h3 class="card-title b1">{{ $des_8->component_name_beng ?? '' }}</h3>
+                    <h3 class="card-title b1">{!! $des_8->component_name_beng ?? '' !!}</h3>
                 </div>
             </div>
             <div class="card-body">

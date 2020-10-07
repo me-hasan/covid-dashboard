@@ -57,7 +57,7 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1">{{ $des_1->component_name_beng ?? '' }}</h3>
+                <h3 class="card-title b1">{!! $des_1->component_name_beng ?? '' !!}</h3>
             </div>
             <div class="card-body">
                 <div id="national_dialy_infected_trend"></div>
@@ -123,7 +123,7 @@
 
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1">{{ $des_3->component_name_beng ?? '' }}</h3>
+                <h3 class="card-title b1">{!! $des_3->component_name_beng ?? '' !!}</h3>
             </div>
             <div class="card-body">
                 <div id="national_infected_trend"></div>
@@ -156,7 +156,7 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1">{{ $des_2->component_name_beng ?? '' }}</h3>
+                <h3 class="card-title b1">{!! $des_2->component_name_beng ?? '' !!}</h3>
             </div>
             <div class="card-body">
                 <form action="">
