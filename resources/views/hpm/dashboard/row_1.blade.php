@@ -57,7 +57,7 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1"><strong>দৈনিক আক্রান্তের সংখ্যা</strong>: বর্তমান পরিসংখ্যান মহামারিটির ক্রমহ্রাসমান অবস্থাকে নির্দেশ করছে।</h3>
+                <h3 class="card-title b1">{{ $des_1->component_name_beng ?? '' }}</h3>
             </div>
             <div class="card-body">
                 <div id="national_dialy_infected_trend"></div>
@@ -123,7 +123,7 @@
 
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1"><strong>সংক্রমণের ক্রমবর্ধমান পরিবর্তন</strong>: রেখাটি তীর্যক অবস্থায় মহামারীটির ক্রমশ অবনতি ইঙ্গিত করছে। তবে যেখানে সমতল দেখা যাচ্ছে সে সময় (আগস্ট) থেকে অবস্থার উন্নতি নির্দেশ করছে।</h3>
+                <h3 class="card-title b1">{{ $des_3->component_name_beng ?? '' }}</h3>
             </div>
             <div class="card-body">
                 <div id="national_infected_trend"></div>
@@ -156,7 +156,7 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
-                <h3 class="card-title b1"><strong>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</strong>: যে বিভাগগুলোতে প্রতিদিনের সংক্রমণের সংখ্যা ব্যাপকভাবে ওঠানামা করে সে বিভাগগুলোতে পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন।</h3>
+                <h3 class="card-title b1">{{ $des_2->component_name_beng ?? '' }}</h3>
             </div>
             <div class="card-body">
                 <form action="">

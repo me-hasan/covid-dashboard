@@ -85,7 +85,7 @@ using(district)");
         <div class="row">
             <div class="col-xl-12 col-md-12">
                 <div class="card-header cart-height-customize">
-                    <h3 class="card-title b1"><strong>গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান</strong>: প্রত্যেক জেলার ক্ষেত্রে সময়ের সাথে সাথে ঝুঁকির পরিবর্তনগুলো অবশ্যই লক্ষ্য রাখতে হবে। এই ছক দেখে খেয়াল করতে হবে যে লাল ঘরে কোন জেলাগুলো রয়েছে এবং তাদের অবস্থা উন্নতির দিকে কেন যাচ্ছে না।</h3>
+                    <h3 class="card-title b1">{{ $des_8->component_name_beng ?? '' }}</h3>
                 </div>
             </div>
             <div class="card-body">
