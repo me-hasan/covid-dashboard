@@ -2,7 +2,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title b1"><strong>বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা</strong>: যেমনটি ধারণা করা হয়েছিল সে অনুযায়ীই বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে। তবে সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি। আশাব্যঞ্জক বিষয় হচ্ছে যে, শিশু এবং  কিশোর-কিশোরীদের মধ্যে এ সংক্রমণের মাত্রা অপেক্ষাকৃত কম।</h3>
+                <h3 class="card-title b1">{!! $des_9->component_name_beng ?? '' !!}</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -16,15 +16,15 @@
                         </div>
                     </div> -->
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা অক্টোবর - ৫ই অক্টোবর</h5>
+                    	<h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!} -{!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}ই {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</h5>
                         <div id="age_wise_death_distribution"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা সেপ্টেম্বর - ৩০শে সেপ্টেম্বর</h5>
+                    	<h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!} - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}</h5>
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">৬ই মার্চ - ৩১শে আগস্ট</h5>
+                    	<h5 class="card-title b1">৬ই মার্চ - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->format('F')) !!}</h5>
                         <div id="age_wise_death_distribution_2"></div>
                     </div>
                 </div>
@@ -108,12 +108,12 @@
 
         //Code by Robi
         $current_infecteds =
-        DB::select("select A.zero_to_ten as 'infected_0_10', 
+        DB::select("select A.zero_to_ten as 'infected_0_10',
             A.elv_to_twenty as 'infected_11_20',
             A.twentyone_to_thirty as 'infected_21_30',
             A.thirtyone_to_forty as 'infected_31_40',
-            A.fortyone_to_fifty as 'infected_41_50', 
-            A.fiftyone_to_sixty as 'infected_51_60', 
+            A.fortyone_to_fifty as 'infected_41_50',
+            A.fiftyone_to_sixty as 'infected_51_60',
             A.sixtyone_to_hundred as 'infected_60_plus'
             from
             (SELECT
@@ -153,12 +153,12 @@
 
 
         $pre_month_infecteds = DB::select("
-            select A.zero_to_ten as 'infected_0_10', 
+            select A.zero_to_ten as 'infected_0_10',
             A.elv_to_twenty as 'infected_11_20',
             A.twentyone_to_thirty as 'infected_21_30',
             A.thirtyone_to_forty as 'infected_31_40',
-            A.fortyone_to_fifty as 'infected_41_50', 
-            A.fiftyone_to_sixty as 'infected_51_60', 
+            A.fortyone_to_fifty as 'infected_41_50',
+            A.fiftyone_to_sixty as 'infected_51_60',
             A.sixtyone_to_hundred as 'infected_60_plus'
             from
             (SELECT
@@ -194,13 +194,13 @@
         }
         $previous_month__death  = implode(",", $previous_month__death);
 
-        $pre_pre_month_infecteds = DB::select(" 
-            select A.zero_to_ten as 'infected_0_10', 
+        $pre_pre_month_infecteds = DB::select("
+            select A.zero_to_ten as 'infected_0_10',
             A.elv_to_twenty as 'infected_11_20',
             A.twentyone_to_thirty as 'infected_21_30',
             A.thirtyone_to_forty as 'infected_31_40',
-            A.fortyone_to_fifty as 'infected_41_50', 
-            A.fiftyone_to_sixty as 'infected_51_60', 
+            A.fortyone_to_fifty as 'infected_41_50',
+            A.fiftyone_to_sixty as 'infected_51_60',
             A.sixtyone_to_hundred as 'infected_60_plus'
             from
             (SELECT

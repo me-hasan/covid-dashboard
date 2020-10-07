@@ -580,13 +580,13 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.test_date) as Q) as a $dat
         $dateData = [];
         $divisionData = [];
 
-        $cumulativeSql_dhk_sql = "SELECT a.date_of_test, a.district, a.total_tests, a.positive_tests, ROUND((a.positive_tests/a.total_tests), 2)*100 
-AS 'test_positivity' FROM
-(SELECT DATE(date_of_test) AS 'date_of_test', district, COUNT(*) AS total_tests,
-SUM(test_result LIKE 'positive') AS positive_tests FROM lab_clean_data 
-WHERE date_of_test IS NOT NULL AND date_of_test >= '2020-03-04' AND district = 'Dhaka'
-GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test;";
-        
+        $cumulativeSql_dhk_sql = "SELECT a.date_of_test, a.district, a.total_tests, a.positive_tests, ROUND((a.positive_tests/a.total_tests), 2)*100
+        AS 'test_positivity' FROM
+        (SELECT DATE(date_of_test) AS 'date_of_test', district, COUNT(*) AS total_tests,
+        SUM(test_result LIKE 'positive') AS positive_tests FROM lab_clean_data
+        WHERE date_of_test IS NOT NULL AND date_of_test >= '2020-03-04' AND district = 'Dhaka'
+        GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test";
+
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
         $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
         $cumulativeData_2['Dhaka'] = array_map('intval',array_column($cumulativeSql_dhk,'test_positivity'));
@@ -843,6 +843,10 @@ ORDER BY t.date";
                             $district = 'Jhalokati';
                         }
 
+                        if($district == 'Coxs Bazar' || $district == 'Cox Bazar') {
+                            $district ="Cox\'s Bazar";
+                        }
+
                         $cumulativeSqlDistrictUpazilaSql = "SELECT
        a.thedate,
        a.division,
@@ -872,7 +876,7 @@ LEFT JOIN
 (SELECT test_date, division, district, daily_cases FROM  division_district_infected
 WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date ) AS Q) AS a $dateQuery";
 
-                        $cumulativeDisUpaZillaData[] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
+                        $cumulativeDisUpaZillaData[$district] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
                     }
                 }
 
@@ -898,12 +902,11 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date ) AS Q) AS a 
                         if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
                             $dateData[] =  convertEnglishDateToBangla($div_date);
                         }
-                        /*if(!in_array($div_date, $dateData)){
-                            $dateData[] =  $div_date;
-                        }*/
-
-                        $districtData[$div->district][] = (float)$div->total_cases ?? 0;
-                        $districtData[$div->district]['bn'] = en2bnTranslation($div->district);
+                        if($key == "Cox\'s Bazar") {
+                            $key ='Coxs Bazar';
+                        }
+                        $districtData[strtolower($key)][] = (float)$div->total_cases ?? 0;
+                        $districtData[strtolower($key)]['bn'] = en2bnTranslation($key);
                         $j++;
                     }
                 }
