@@ -99,9 +99,9 @@ class TestPositiveController extends Controller
             // $locationWiseTestPositive = DB::select("select date,division,district, sum(total_test) as 'total_test',sum(positive) as 'positive' ,
             //     ((sum(positive)*100)/sum(total_test)) as 'test_positivity' from Geo_location_wise_test_positivity group by district order by date desc");
 
-            $locationWiseTestPositive = DB::select("select a.district as District, a.total_tests as total_test, a.date_of_test as Date, a.positive_tests as positive, round((a.positive_tests/a.total_tests), 2)*100 
+            $locationWiseTestPositive = DB::select("select a.district, a.total_tests as total_test, a.positive_tests as positive, round((a.positive_tests/a.total_tests), 2)*100 
                 as 'test_positivity' from
-                (select district, date_of_test, count(*) as total_tests,
+                (select district, count(*) as total_tests,
                 sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data
                 where district is not null and district <> 'Missing Form' 
                 group by district order by district) as a");

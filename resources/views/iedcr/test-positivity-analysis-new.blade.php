@@ -150,7 +150,7 @@
 
                                   <tr>
                                       <td>{{$row->District}}</td>
-                                      <td>{{ date('Y-m-d', strtotime($row->Date)) ?? '-'}}</td>
+                                      
                                       <td>{{$row->total_test}}</td>
                                       <td>{{$row->positive}}</td>
                                       <td>{{ number_format($row->test_positivity,2) }}</td>
