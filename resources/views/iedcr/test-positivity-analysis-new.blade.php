@@ -137,7 +137,6 @@
                             <thead>
                               <tr>
                                 <th class="border-bottom-0">District</th>
-                                <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Total</th>
                                 <th class="border-bottom-0">Positive</th>
                                 <th class="border-bottom-0">Test Positivity</th>
