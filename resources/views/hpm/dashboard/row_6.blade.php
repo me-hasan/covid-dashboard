@@ -24,17 +24,17 @@ display: block;
     $last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends);
     $today = convertEnglishDateToBangla(date('Y-m-d'));
     $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-    r.test_positivity as 'recent_test_positivity' from
-    (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
-    inner join
-    (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
-    using(district)");
+r.test_positivity as 'recent_test_positivity' from
+(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
+using(district)");
     $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-    r.test_positivity as 'recent_test_positivity' from
-    (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-    inner join
-    (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
-    using(district)");
+r.test_positivity as 'recent_test_positivity' from
+(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
+using(district)");
 
     $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
@@ -72,12 +72,15 @@ r.test_positivity as 'recent_test_positivity' from
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5) as r
 using(district)");
-    $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
+    $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select * from
+(select l.district  from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5) as r
-using(district)");
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)) as ll
+union all
+(select district from recent_14_days_test_positivity_district where total_tests<=100)");
 
     ?>
 
@@ -145,7 +148,7 @@ using(district)");
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card-body">
@@ -337,7 +340,7 @@ using(district)");
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card-body">
@@ -563,8 +566,8 @@ using(district)");
                     @foreach($low_to_low_table_contentData as $item)
                         <tr>
                             <td>{!! en2bnTranslation($item->district) !!}</td>
-                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity ?? '') !!}</td>
+                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity ?? '') !!}</td>
 
                         </tr>
                     @endforeach
@@ -581,7 +584,7 @@ using(district)");
         <script type="text/javascript">
             $(document).ready(function($) {
 
-    
+
               //  $('#high_to_low_table_content .dataTable').DataTable();
                  /*$('#high_to_low_table_content .dataTable').DataTable( {
                      responsive: true,
