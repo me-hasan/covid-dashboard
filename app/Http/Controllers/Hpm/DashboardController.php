@@ -976,92 +976,111 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date ) AS Q) AS a 
       }
 
       private function risk_matrix_1(){
-        $risk_matrix = DB::select(" select count(l.district) as 'low_to_high' from
-        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'low_to_high' from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=12
+ and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_2(){
-        $risk_matrix = DB::select(" select count(l.district) as 'low_to_medium' from
-        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
-        using(district)");
+        $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=5
+and test_positivity<12 and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_3(){
-        $risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
-        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-        using(district)");
+        /*$risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5) as r
+using(district)");*/
+        $risk_matrix = DB::select("select count(*) as 'low_to_low' from
+(select * from
+(select l.district  from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)) as ll
+union all
+(select district from recent_14_days_test_positivity_district where total_tests<=100)) as a");
+
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_4(){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
-        using(district)");
+(select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=12
+and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_5(){
-        $risk_matrix = DB::select(" select count(l.district) as 'medium_to_medium' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
-        using(district)");
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_medium' from
+(select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=5 and
+test_positivity<12 and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_6(){
-        $risk_matrix = DB::select(" select count(l.district) as 'medium_to_low' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_low' from
+(select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
        private function risk_matrix_7(){
-        $risk_matrix = DB::select(" select count(l.district) as 'high_to_high' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_high' from
+(select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=12
+ and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_8(){
-        $risk_matrix = DB::select(" select count(l.district) as 'high_to_medium' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_medium' from
+(select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=5
+and test_positivity<12 and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
 
       private function risk_matrix_9(){
-        $risk_matrix = DB::select(" select count(l.district) as 'high_to_low' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_low' from
+(select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
