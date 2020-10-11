@@ -290,11 +290,11 @@ ORDER BY t.date";*/
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
 (select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(test_date) from
+(select max(date_of_test) from
 division_infected where division = 'Dhaka')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
-where division = 'Dhaka') as T2 on T1.thedate=T2.test_date) as R) AS b
+(select date_of_test, division, daily_cases from  division_infected
+where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
 FROM
@@ -302,11 +302,11 @@ FROM
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
 (select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(test_date) from
+(select max(date_of_test) from
 division_infected where division = 'Dhaka')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
-where division = 'Dhaka') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
+(select date_of_test, division, daily_cases from  division_infected
+where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_dhk = "select
        a.thedate,
@@ -318,11 +318,11 @@ where division = 'Dhaka') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuer
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
 (select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(test_date) from
+(select max(date_of_test) from
 division_infected where division = 'Dhaka')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
-where division = 'Dhaka') as T2 on T1.thedate=T2.test_date) as R) AS b
+(select date_of_test, division, daily_cases from  division_infected
+where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
 FROM
@@ -333,7 +333,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'Dhaka')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'Dhaka') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
 
         $cumulativeSql_ctg = "select
@@ -349,7 +349,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'Chittagong')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'Chittagong') as T2 on T1.thedate=T2.test_date) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
@@ -361,7 +361,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'Chittagong')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'Chittagong') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
 
         $cumulativeSql_barisal = "select
@@ -377,7 +377,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'barisal')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'barisal') as T2 on T1.thedate=T2.test_date) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
@@ -389,7 +389,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'barisal')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'barisal') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
 
         $cumulativeSql_khulna = "select
@@ -405,7 +405,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'khulna')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'khulna') as T2 on T1.thedate=T2.test_date) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
@@ -417,7 +417,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'khulna')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'khulna') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
 
         $cumulativeSql_rajshahi = "select
@@ -433,7 +433,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'rajshahi')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'rajshahi') as T2 on T1.thedate=T2.test_date) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
@@ -445,7 +445,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'rajshahi')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'rajshahi') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
 
         $cumulativeSql_rangpur = "select
@@ -461,7 +461,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'rangpur')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'rangpur') as T2 on T1.thedate=T2.test_date) as R) AS b
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
@@ -473,7 +473,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select max(test_date) from
 division_infected where division = 'rangpur')) as T1
 left join
-(select test_date, division, daily_cases from  division_infected
+(select date_of_test as test_date, division, daily_cases from  division_infected
 where division = 'rangpur') as T2 on T1.thedate=T2.test_date) as Q) as a $dateQuery";
 
         $cumulativeSql_syl = "select
@@ -976,92 +976,111 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.test_date ) AS Q) AS a 
       }
 
       private function risk_matrix_1(){
-        $risk_matrix = DB::select(" select count(l.district) as 'low_to_high' from
-        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'low_to_high' from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=12
+ and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_2(){
-        $risk_matrix = DB::select(" select count(l.district) as 'low_to_medium' from
-        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
-        using(district)");
+        $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=5
+and test_positivity<12 and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_3(){
-        $risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
-        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-        using(district)");
+        /*$risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5) as r
+using(district)");*/
+        $risk_matrix = DB::select("select count(*) as 'low_to_low' from
+(select * from
+(select l.district  from
+(select district from last_14_days_test_positivity_district where test_positivity<5) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)) as ll
+union all
+(select district from recent_14_days_test_positivity_district where total_tests<=100)) as a");
+
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_4(){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
-        using(district)");
+(select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=12
+and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_5(){
-        $risk_matrix = DB::select(" select count(l.district) as 'medium_to_medium' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
-        using(district)");
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_medium' from
+(select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=5 and
+test_positivity<12 and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_6(){
-        $risk_matrix = DB::select(" select count(l.district) as 'medium_to_low' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_low' from
+(select district from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
        private function risk_matrix_7(){
-        $risk_matrix = DB::select(" select count(l.district) as 'high_to_high' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=12) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_high' from
+(select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=12
+ and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
       private function risk_matrix_8(){
-        $risk_matrix = DB::select(" select count(l.district) as 'high_to_medium' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_medium' from
+(select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity>=5
+and test_positivity<12 and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
 
 
       private function risk_matrix_9(){
-        $risk_matrix = DB::select(" select count(l.district) as 'high_to_low' from
-        (select district from last_14_days_test_positivity_district where test_positivity>=12) as l
-        inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-        using(district) ");
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_low' from
+(select district from last_14_days_test_positivity_district where test_positivity>=12) as l
+inner join
+(select district from recent_14_days_test_positivity_district where test_positivity<5
+and total_tests>100) as r
+using(district)");
 
         return $risk_matrix[0];
       }
