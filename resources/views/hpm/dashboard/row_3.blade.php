@@ -16,17 +16,19 @@
                         </div>
                     </div> -->
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!} -{!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}ই {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</h5>
-                        <div id="age_wise_death_distribution"></div>
+                        <h5 class="card-title b1">৬ই মার্চ - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->format('F')) !!}</h5>
+                        <div id="age_wise_death_distribution_2"></div>
                     </div>
+                    
                     <div class="col-xl-4 col-md-12">
                     	<h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!} - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}</h5>
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">৬ই মার্চ - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->format('F')) !!}</h5>
-                        <div id="age_wise_death_distribution_2"></div>
+                        <h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!} -{!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}ই {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</h5>
+                        <div id="age_wise_death_distribution"></div>
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
