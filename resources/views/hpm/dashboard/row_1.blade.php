@@ -287,7 +287,7 @@
                 },
                 tooltip: {
                     formatter: function() {
-                        return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                        return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
                     }
                 },
                 plotOptions: {
@@ -359,7 +359,7 @@
             },
             tooltip: {
             formatter: function() {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
             }
         },
             yAxis: {
@@ -431,7 +431,7 @@
 
             tooltip: {
 				formatter: function() {
-					return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                    return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
 				}
         	},
 
