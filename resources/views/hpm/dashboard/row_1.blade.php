@@ -94,7 +94,7 @@
             <div class="card-header">
                 <h3 class="card-title b1"></h3>
             </div>
-            
+
             <div class="card-body">
                 <div id="test_positivity_rate_trend"></div>
             </div>
@@ -152,7 +152,7 @@
         </div>
 
     </div>
-    
+
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card-header">
@@ -211,7 +211,7 @@
                         </p>
                     </div>
                  </div>
-                 
+
                  <!-- <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-body">
 
@@ -235,7 +235,7 @@
         <?php
 			use Carbon\Carbon;
 			$date_arr = $infected_arr = $avg_arr  = array();
-			
+
 			foreach($nation_wide_MovingAvgInfected as $row){
 			  $date_arr[] = convertEnglishDateToBangla($row->report_date);
 			  $infected_arr[] = $row->infected_24_hrs;
@@ -393,7 +393,7 @@
 
             }],
         });
-		
+
 		// Test Positivity Trend
 		Highcharts.chart('test_positivity_rate_trend', {
             chart: {
@@ -428,13 +428,13 @@
                 categories: {!! $categories_dhk !!}
 
             },
-			
+
             tooltip: {
 				formatter: function() {
 					return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
 				}
         	},
-			
+
             yAxis: {
                 title: {
                     text: 'দৈনিক টেস্ট পসিটিভিটি রেট',
@@ -492,12 +492,13 @@
 
             xAxis: {
                 //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
-                categories: {!! $categories !!}
-
+                categories: {!! $categories !!},
+                endOnTick: true,
+                showLastLabel: true,
             },
             tooltip: {
             formatter: function() {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                return `${this.series.name}( ${this.x} ) : <b>${englishToBangla(this.y)}</b>`;
             }
         },
 
@@ -628,13 +629,19 @@
 
                 xAxis: {
                     //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
-                    categories: JSON.parse(data.categories)
+                    categories: JSON.parse(data.categories),
+                    labels:{
+                        //type: 'datetime',
+                        showLastLabel: true,
+                        endOnTick: true
+                    },
+
 
                 },
 
                 tooltip: {
                     formatter: function() {
-                        return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                        return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
                     }
                 },
                 yAxis: {
