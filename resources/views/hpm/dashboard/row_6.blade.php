@@ -210,14 +210,14 @@ foreach ($low_to_low_table_contentData as $result) {
                                         <tr>
                                             <td class="text-center">{{ implode(", ",$low_to_high) }}</td>
                                             <td class="text-center">{{ implode(", ",$medium_to_high) }}</td>
-                                            <td class="text-center">{{ implode(", ",$medium_to_medium) }}</td>
+                                            <td class="text-center" rowspan="2">{{ implode(", ",$medium_to_medium) }}</td>
                                             <td class="text-center">{{ implode(", ",$medium_to_low) }}</td>
                                             <td class="text-center">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">{{ implode(", ",$high_to_high) }}</td>
                                             <td class="text-center">{{ implode(", ",$low_to_medium) }}</td>
-                                            <td class="text-center">{{ implode(", ",$low_to_low) }}</td>
+                                           
                                             <td class="text-center">{{ implode(", ",$high_to_medium) }}</td>
                                             <td class="text-center">{{ implode(", ",$low_to_low) }}</td>
                                         </tr>
