@@ -29,60 +29,58 @@ display: block;
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
 using(district)");
     $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
 using(district)");
 
     $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
 using(district)");
     $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
 using(district)");
     $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
 using(district)");
     $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
 using(district)");
     $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 AND total_tests>100) as r
 using(district)");
     $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>100) as r
 using(district)");
-    $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select * from
-(select l.district  from
-(select district from last_14_days_test_positivity_district where test_positivity<5) as l
-inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<5
-and total_tests>100) as r
-using(district)) as ll
-union all
-(select district from recent_14_days_test_positivity_district where total_tests<=100)");
+    $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" select l.district as 'district',l.test_positivity as 'last_test_positivity',
+    r.test_positivity as 'recent_test_positivity'  from
+    (select district, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
+    inner join
+    (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 
+    and total_tests>100) as r
+    using(district) ");
 
 $high_to_high = array();
 foreach ($high_to_high_table_contentData as $result) {
@@ -159,20 +157,20 @@ foreach ($low_to_low_table_contentData as $result) {
                                 </tr>
                                 <tr>
                                     <td>উচ্চ ঝুঁকিপূর্ণ</td>
-                                    <td  style="cursor: pointer;text-decoration: underline;background: #ff0000;" class=" high_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}টি জেলা</td>
-                                    <td  style="cursor: pointer;text-decoration: underline;background: #a2f92c;" class=" medium_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }}টি জেলা</td>
-                                    <td  style="cursor: pointer;text-decoration: underline;background: #1ad433;" class=" low_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_1->low_to_high) }}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;background: #ff0000;" class="high_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_7->high_to_high)}}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;background: #a2f92c;" class="high_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}}টি জেলা</td>
+                                    <td  style="cursor: pointer;text-decoration: underline;background: #1ad433;" class="high_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">   {{ convertEnglishDigitToBangla($rm_9->high_to_low)}}টি জেলা</td>
                                 </tr>
                                 <tr>
                                     <td>মধ্যম ঝুঁকিপূর্ণ</td>
-                                    <td style="background: #ffa500; cursor: pointer;text-decoration: underline;" class="high_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}}টি জেলা</td>
+                                    <td style="background: #ffa500; cursor: pointer;text-decoration: underline;" class="medium_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }}টি জেলা  </td>
                                     <td style="background: #cbc5c5; cursor: pointer;text-decoration: underline;" class="medium_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }}টি জেলা</td>
-                                    <td style="cursor: pointer;text-decoration: underline;background: #a2f92c;" class="low_to_medium_modal_click"  data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}টি জেলা</td>
+                                    <td style="cursor: pointer;text-decoration: underline;background: #a2f92c;" class="medium_to_low_modal_click"  data-target="#modaldemo1" data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }}টি জেলা</td>
                                 </tr>
                                 <tr>
                                     <td>কম ঝুঁকিপূর্ণ</td>
-                                    <td style="background: #ff0000; cursor: pointer;text-decoration: underline;" class="high_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_9->high_to_low)}}টি জেলা</td>
-                                    <td style="background: #ffa500; cursor: pointer;text-decoration: underline;" class="medium_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_6->medium_to_low) }}টি জেলা</td>
+                                    <td style="background: #ff0000; cursor: pointer;text-decoration: underline;" class="low_to_high_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }}টি জেলা</td>
+                                    <td style="background: #ffa500; cursor: pointer;text-decoration: underline;" class="low_to_medium_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }}টি জেলা  </td>
                                     <td style="background: #1ad433; cursor: pointer;text-decoration: underline;" class="low_to_low_modal_click" data-target="#modaldemo1" data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }}টি জেলা</td>
                                 </tr>
                                 </tbody>
@@ -212,14 +210,14 @@ foreach ($low_to_low_table_contentData as $result) {
                                         <tr>
                                             <td class="text-center">{{ implode(", ",$low_to_high) }}</td>
                                             <td class="text-center">{{ implode(", ",$medium_to_high) }}</td>
-                                            <td class="text-center">{{ implode(", ",$medium_to_medium) }}</td>
+                                            <td class="text-center" rowspan="2">{{ implode(", ",$medium_to_medium) }}</td>
                                             <td class="text-center">{{ implode(", ",$medium_to_low) }}</td>
                                             <td class="text-center">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">{{ implode(", ",$high_to_high) }}</td>
                                             <td class="text-center">{{ implode(", ",$low_to_medium) }}</td>
-                                            <td class="text-center">{{ implode(", ",$low_to_low) }}</td>
+                                           
                                             <td class="text-center">{{ implode(", ",$high_to_medium) }}</td>
                                             <td class="text-center">{{ implode(", ",$low_to_low) }}</td>
                                         </tr>
