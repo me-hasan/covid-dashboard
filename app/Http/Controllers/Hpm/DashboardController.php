@@ -580,12 +580,15 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as Q) as a $
         $dateData = [];
         $divisionData = [];
 
-        $cumulativeSql_dhk_sql = "SELECT a.date_of_test, a.district, a.total_tests, a.positive_tests, ROUND((a.positive_tests/a.total_tests), 2)*100
-        AS 'test_positivity' FROM
-        (SELECT DATE(date_of_test) AS 'date_of_test', district, COUNT(*) AS total_tests,
-        SUM(test_result LIKE 'positive') AS positive_tests FROM lab_clean_data
-        WHERE date_of_test IS NOT NULL AND date_of_test >= '2020-03-04' AND district = 'Dhaka'
-        GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test";
+
+        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100 
+        as 'test_positivity' from
+        (select date(date_of_test) as 'date_of_test', district, count(*) as total_tests,
+        sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data 
+        WHERE date_of_test is not null and date_of_test >= '2020-05-20' 
+        and date_of_test <=date_sub(curdate(), interval 7 day)
+        and district = 'Dhaka'
+        group by district, date(date_of_test)) as a order by a.date_of_test";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
         $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
@@ -998,22 +1001,13 @@ using(district)");
       }
 
       private function risk_matrix_3(){
-        /*$risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
-(select district from last_14_days_test_positivity_district where test_positivity<5) as l
-inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-using(district)");*/
-        $risk_matrix = DB::select("select count(*) as 'low_to_low' from
-(select * from
-(select l.district  from
-(select district from last_14_days_test_positivity_district where test_positivity<5) as l
-inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<5
-and total_tests>100) as r
-using(district)) as ll
-union all
-(select district from recent_14_days_test_positivity_district where total_tests<=100)) as a");
-
+        $risk_matrix = DB::select(" select count(l.district) as 'low_to_low'   from
+        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity<5 
+        and total_tests>100) as r
+        using(district)");
+        
 
         return $risk_matrix[0];
       }
