@@ -30,57 +30,57 @@ r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
 
     $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 AND total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
 (select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>100) as r
-using(district)");
+using(district) ORDER BY r.test_positivity DESC");
     $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" select l.district as 'district',l.test_positivity as 'last_test_positivity',
     r.test_positivity as 'recent_test_positivity'  from
     (select district, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
     inner join
     (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 
     and total_tests>100) as r
-    using(district) ");
+    using(district) ORDER BY r.test_positivity DESC");
 
 $high_to_high = array();
 foreach ($high_to_high_table_contentData as $result) {
