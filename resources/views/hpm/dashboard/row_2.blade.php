@@ -149,7 +149,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				//$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 			});
 
             // Test Positivity Trend
