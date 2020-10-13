@@ -870,7 +870,7 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, district, daily_cases from  division_district_infected
-where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
+where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery ORDER BY thedate";
 
                         $cumulativeDisUpaZillaData[$district] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
                     }
@@ -898,7 +898,7 @@ where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as 
                         if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
                             $dateData[] =  convertEnglishDateToBangla($div_date);
                         }
-                        if($key == "Cox\'s Bazar") {
+                        if($key == "Cox\'s Bazar" || $key == 'Cox Bazar') {
                             $key ='Coxs Bazar';
                         }
                         $districtData[strtolower($key)][] = (float)$div->total_cases ?? 0;
