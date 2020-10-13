@@ -119,29 +119,22 @@
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-header">
-                                	<h5 class="card-title b1">{!! $des_7->component_name_beng ?? '' !!}</h5>
+                                	<h5 class="card-title b1">
+{{--                                        {!! $des_7->component_name_beng ?? '' !!}--}}
+                                    </h5>
                                 </div>
                                 <div class="card-body">
-                                    <div id="country_wise_infected"></div>
+{{--                                    <div id="country_wise_infected"></div>--}}
+                                    <div id="test_positivity_rate_trend"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12">
                                         <div class="card-body text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                                {{ $des_7->description_beng ?? ''}}
                                             </p>
                                         </div>
                                     </div>
-                                    <!--<div class="col-xl-4 col-lg-4 col-md-6">
-                                            <div class="card-body">
-
-                                                <h5 class="card-title b1">বিশ্লেষণ</h5>
-                                                <p class="card-text b1">
-                                                    {{ $des_7->insight_beng ?? ''}}
-                                                </p>
-                                            </div>
-                                        </div>-->
                                 </div>
                             </div>
                         </div>
@@ -156,117 +149,75 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');				
-			});	
-        // Test Positivity Per Million
-        // South Country Wise Infected
-        Highcharts.chart('country_wise_infected', {
-            chart: {
-                type: 'bar',
-                style: {
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
-            title: {
-                text: ''
-            },
-            subtitle: {
-                text: ''
-            },
-            credits:{
-                enabled:false
-            },
-            legend:{
-                enabled:true,
-				itemStyle: {
-                    fontSize: "16px",
-                    fontWeight: "normal"
-                }
-            },
-            yAxis: {
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+			});
+
+            // Test Positivity Trend
+            Highcharts.chart('test_positivity_rate_trend', {
+                chart: {
+                    style: {
+                        fontFamily: 'SolaimanLipi'
+                    }
+                },
+
                 title: {
                     text: ''
                 },
-                labels: {
+
+                subtitle: {
+                    text: ''
+                },
+
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    itemStyle: {
+                        fontSize: "16px",
+                        fontWeight: "normal"
+                    }
+                },
+
+                credits:{
+                    enabled:false
+                },
+
+                xAxis: {
+                    categories: {!! $categories_dhk !!}
+
+                },
+
+                tooltip: {
                     formatter: function() {
-                        return englishToBangla(this.value);
+                        return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
                     }
-                }
-            },
-            xAxis: {
-                type: 'category',
-                labels: {
-                    style: {
-                        fontSize: '16px'
-                    }
-                }
-            },
-            tooltip: {
-                /* pointFormat: function() {
-                     return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-                 }*/
-                formatter: function() {
-                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-                }
-                /*valueSuffix: ' cm',
-                shared: true*/
-            },
-            plotOptions: {
-                /*column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },*/
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        //format: '{point.y:.1f}'
-                        //format: '{point.y:.1f}'
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'দৈনিক টেস্ট পসিটিভিটি রেট',
+                        style: {
+                            fontSize: 18,
+                            fontFamily: 'SolaimanLipi'
+                        }
+                    },
+                    labels: {
                         formatter: function() {
-                            return `${englishToBangla(this.y)}`;
+                            return englishToBangla(this.value);
                         }
                     }
-                }
-            },
-            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f', '#5c687b','#3acc76','#60b5d1'],
-            series: [
-                {
-                    name: "প্রতি ১০০০ এ পরীক্ষা সংখ্যা",
-                    colorByPoint: true,
-                    data: [
-                        {
-                            name: "মালদ্বীপ",
-                            y: <?=number_format($tests_per_case_Maldives->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "ভারত",
-                            y: <?=number_format($tests_per_case_India->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "নেপাল",
-                            y: <?=number_format($tests_per_case_Nepal->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "পাকিস্তান",
-                            y: <?=number_format($tests_per_case_Pakistan->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "শ্রীলঙ্কা",
-                            y: <?=number_format($tests_per_case_Sri->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "বাংলাদেশ",
-                            y: <?=number_format($tests_per_case_Bangladesh->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "মিয়ানমার",
-                            y: <?=number_format($tests_per_case_Mayanmar->cumulative_tests_per_case,2);?>
-                        }
-                         
-                    ]
-                }
-            ]
-        });
+                },
+
+                plotOptions: {
+                    series: {
+                        fillOpacity:0
+                    }
+                },
+
+                colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
+                series:  {!! $series_data_dhk !!}
+            });
+
 
         // National Test Vs Infected Trend
         Highcharts.chart('national_test_vs_infected_trend', {

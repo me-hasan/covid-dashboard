@@ -268,19 +268,7 @@ where date=((select max(date) from test_positivity_rate_district))";
             $dateQuery .= ' AND thedate <='. "'".$request->to_date."'";
         }
 
-
-
-        /*$cumulativeSql = "SELECT t.date,t.Division as 'division_eng', t.Infected_Person,
-       @running_total:=@running_total + t.Infected_Person AS 'total_cases'
-FROM
-(SELECT
-  Date, Division, sum(Infected_Person) as 'Infected_Person'
-  FROM div_dist_upz_infected_trend where Date is not null
-  GROUP BY Date, Division ) as t
-JOIN (SELECT @running_total:=0) r where division='Dhaka' $dateQuery
-ORDER BY t.date";*/
-
-        $cumulativeSql = "select
+        /*$cumulativeSql = "select
        a.thedate,
        a.division,
        a.daily_cases,
@@ -304,12 +292,37 @@ COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
 (select max(date_of_test) from
 division_infected where division = 'Dhaka')) as T1
+left join
+(select date_of_test, division, daily_cases from  division_infected
+where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";*/
+        $cumulativeSql = "select
+	   a.thedate,
+       a.division,
+       a.daily_cases,
+       Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
+                FROM
+                (select thedate, division,
+COALESCE(daily_cases, 0) AS daily_cases FROM
+(select thedate, division, daily_cases from
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
+left join
+(select date_of_test, division, daily_cases from  division_infected
+where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as R) AS b
+                where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
+              ), 2 ) AS 'total_cases'
+FROM
+(select thedate, division,
+COALESCE(daily_cases, 0) AS daily_cases FROM
+(select thedate, division, daily_cases from
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_dhk = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -317,9 +330,8 @@ where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQ
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'Dhaka')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -329,15 +341,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'Dhaka')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_ctg = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -345,9 +356,8 @@ where division = 'Dhaka') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQ
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'Chittagong')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Chittagong') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -357,15 +367,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'Chittagong')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Chittagong') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_barisal = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -373,9 +382,8 @@ where division = 'Chittagong') as T2 on T1.thedate=T2.date_of_test) as Q) as a $
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'barisal')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'barisal') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -385,15 +393,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'barisal')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'barisal') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_khulna = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -401,9 +408,8 @@ where division = 'barisal') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dat
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'khulna')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'khulna') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -413,15 +419,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'khulna')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'khulna') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_rajshahi = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -429,9 +434,8 @@ where division = 'khulna') as T2 on T1.thedate=T2.date_of_test) as Q) as a $date
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'rajshahi')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'rajshahi') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -441,15 +445,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'rajshahi')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'rajshahi') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_rangpur = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -457,9 +460,8 @@ where division = 'rajshahi') as T2 on T1.thedate=T2.date_of_test) as Q) as a $da
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'rangpur')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'rangpur') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -469,15 +471,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'rangpur')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'rangpur') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
 
         $cumulativeSql_syl = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -485,9 +486,8 @@ where division = 'rangpur') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dat
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'sylhet')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'sylhet') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -497,15 +497,14 @@ FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'sylhet')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'sylhet') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
         //Mymensingh
         $cumulativeSql_mym = "select
-       a.thedate,
+	   a.thedate,
        a.division,
        a.daily_cases,
        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
@@ -513,23 +512,19 @@ where division = 'sylhet') as T2 on T1.thedate=T2.date_of_test) as Q) as a $date
                 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-
-division_infected where division = 'Mymensingh')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as R) AS b
-
                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
 FROM
 (select thedate, division,
 COALESCE(daily_cases, 0) AS daily_cases FROM
 (select thedate, division, daily_cases from
-(select thedate from calendardate where thedate >= '2020-05-20' and thedate <=
-(select max(date_of_test) from
-division_infected where division = 'Mymensingh')) as T1
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
 left join
 (select date_of_test, division, daily_cases from  division_infected
 where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery";
@@ -580,12 +575,15 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as Q) as a $
         $dateData = [];
         $divisionData = [];
 
-        $cumulativeSql_dhk_sql = "SELECT a.date_of_test, a.district, a.total_tests, a.positive_tests, ROUND((a.positive_tests/a.total_tests), 2)*100
-        AS 'test_positivity' FROM
-        (SELECT DATE(date_of_test) AS 'date_of_test', district, COUNT(*) AS total_tests,
-        SUM(test_result LIKE 'positive') AS positive_tests FROM lab_clean_data
-        WHERE date_of_test IS NOT NULL AND date_of_test >= '2020-03-04' AND district = 'Dhaka'
-        GROUP BY district, DATE(date_of_test)) AS a ORDER BY a.date_of_test";
+
+        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100
+        as 'test_positivity' from
+        (select date(date_of_test) as 'date_of_test', district, count(*) as total_tests,
+        sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data
+        WHERE date_of_test is not null and date_of_test >= '2020-05-20'
+        and date_of_test <=date_sub(curdate(), interval 7 day)
+        and district = 'Dhaka'
+        group by district, date(date_of_test)) as a order by a.date_of_test";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
         $cumulativeSql_dhk = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
@@ -847,34 +845,32 @@ ORDER BY t.date";
                             $district ="Cox\'s Bazar";
                         }
 
-                        $cumulativeSqlDistrictUpazilaSql = "SELECT
-       a.thedate,
+                        $cumulativeSqlDistrictUpazilaSql = "select
+	   a.thedate,
        a.division,
        a.district,
        a.daily_cases,
-       ROUND((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
+       Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
                 FROM
-                (SELECT thedate, division, district,
+                (select thedate, division, district,
 COALESCE(daily_cases, 0) AS daily_cases FROM
-(SELECT thedate, division, district, daily_cases FROM
-(SELECT thedate FROM calendardate WHERE thedate >= '2020-05-20' AND thedate <=
-(SELECT MAX(date_of_test) FROM
-division_district_infected WHERE district = '".$district."')) AS T1
-LEFT JOIN
-(SELECT date_of_test, division, district, daily_cases FROM  division_district_infected
-WHERE district = '".$district."') AS T2 ON T1.thedate=T2.date_of_test) AS R) AS b
-                WHERE DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
+(select thedate, division, district, daily_cases from
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
+left join
+(select date_of_test, division, district, daily_cases from  division_district_infected
+where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as R) AS b
+                where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 4
               ), 2 ) AS 'total_cases'
 FROM
-(SELECT thedate, division, district,
+(select thedate, division, district,
 COALESCE(daily_cases, 0) AS daily_cases FROM
-(SELECT thedate, division, district, daily_cases FROM
-(SELECT thedate FROM calendardate WHERE thedate >= '2020-05-20' AND thedate <=
-(SELECT MAX(date_of_test) FROM
-division_district_infected WHERE district = '".$district."') ) AS T1
-LEFT JOIN
-(SELECT date_of_test, division, district, daily_cases FROM  division_district_infected
-WHERE district = '".$district."') AS T2 ON T1.thedate=T2.date_of_test ) AS Q) AS a $dateQuery";
+(select thedate, division, district, daily_cases from
+(select thedate from calendardate where thedate >= '2020-05-20'
+and thedate <= date_sub(curdate(), interval 7 day)) as T1
+left join
+(select date_of_test, division, district, daily_cases from  division_district_infected
+where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as a $dateQuery ORDER BY thedate";
 
                         $cumulativeDisUpaZillaData[$district] = \Illuminate\Support\Facades\DB::select($cumulativeSqlDistrictUpazilaSql);
                     }
@@ -902,7 +898,7 @@ WHERE district = '".$district."') AS T2 ON T1.thedate=T2.date_of_test ) AS Q) AS
                         if(!in_array(convertEnglishDateToBangla($div_date), $dateData)){
                             $dateData[] =  convertEnglishDateToBangla($div_date);
                         }
-                        if($key == "Cox\'s Bazar") {
+                        if($key == "Cox\'s Bazar" || $key == 'Cox Bazar') {
                             $key ='Coxs Bazar';
                         }
                         $districtData[strtolower($key)][] = (float)$div->total_cases ?? 0;
@@ -998,21 +994,12 @@ using(district)");
       }
 
       private function risk_matrix_3(){
-        /*$risk_matrix = DB::select(" select count(l.district) as 'low_to_low' from
-(select district from last_14_days_test_positivity_district where test_positivity<5) as l
-inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<5) as r
-using(district)");*/
-        $risk_matrix = DB::select("select count(*) as 'low_to_low' from
-(select * from
-(select l.district  from
-(select district from last_14_days_test_positivity_district where test_positivity<5) as l
-inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<5
-and total_tests>100) as r
-using(district)) as ll
-union all
-(select district from recent_14_days_test_positivity_district where total_tests<=100)) as a");
+        $risk_matrix = DB::select(" select count(l.district) as 'low_to_low'   from
+        (select district from last_14_days_test_positivity_district where test_positivity<5) as l
+        inner join
+        (select district from recent_14_days_test_positivity_district where test_positivity<5
+        and total_tests>100) as r
+        using(district)");
 
 
         return $risk_matrix[0];
