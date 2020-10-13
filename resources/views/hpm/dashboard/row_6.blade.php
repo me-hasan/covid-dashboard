@@ -1,4 +1,5 @@
     <style type="text/css">
+    
     .my-custom-scrollbar {
 position: relative;
 
@@ -14,6 +15,43 @@ display: block;
 }
 
 .my-custom-scrollbar td { white-space:pre-wrap; word-wrap:break-word }
+
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
 
     </style>
     <!-- Start :: ঝুঁকি পর্যালোচনা -->
@@ -140,7 +178,7 @@ foreach ($low_to_low_table_contentData as $result) {
                         <div style="transform: rotate(-90deg);width: 219px;margin-left: -70px;margin-top: 100px;" class="fs-20 b1">
                             <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )</div>
                     </div>
-                    <div class="col-xl-11 col-md-11">
+                    <div class="col-xl-9 col-md-9">
                         <div class="table-responsive">
                             <table class="table table-bordered table-vcenter text-nowrap b1">
                                 <thead >
@@ -177,26 +215,27 @@ foreach ($low_to_low_table_contentData as $result) {
                             </table>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-1 col-md-1 b1">
+                    <div class="col-xl-2 col-md-2 b1">
                         <div class="row">
-                            <div class="col-xl-4 text-right">
-                                <div class="pt-4">অবস্থার অবনতি</div>
-                                <div class="pt-9 mt-9">অবস্থার উন্নতি</div>
+                           
+                            <div class="col-xl-12">
+                                <div class="slidecontainer">
+                                     <p>জেলা ভিত্তিক নুন্নতম পরীক্ষা সংখ্যা: <span id="demo"></span></p>
+                                     <input type="range" min="50" max="300" value="100" class="slider" id="myRange">
+                                </div>
                             </div>
-                            <div class="col-xl-8">
-                                <div>গ্রাডিয়েন্ট</div>
-                                <div style="width: 50px; height: 250px;background: rgb(244,55,53);
-    background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
+                            <div class="col-xl-12">
+                                
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <!-- <div class="card-body"> -->
                             <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" >
-                                <table class="table table-bordered table-vcenter text-nowrap b1" >
+                                <table class="table table-bordered table-vcenter text-nowrap b1"  >
                                     <thead>
                                         <tr>
                                             <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
@@ -208,12 +247,27 @@ foreach ($low_to_low_table_contentData as $result) {
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
+                                            <td class="text-center" style="background: #ff0000;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
+                                            <td class="text-center" style="background: #ffa500;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
+                                            <td class="text-center"  rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
+                                            <td class="text-center" style="background: #a2f92c;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</td>
+                                            <td class="text-center" style="background: #1ad433;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</td>
+                                        </tr>
+
+                                        <tr>
                                             <td class="text-center">{{ implode(", ",$low_to_high) }}</td>
                                             <td class="text-center">{{ implode(", ",$medium_to_high) }}</td>
-                                            <td class="text-center" rowspan="2">{{ implode(", ",$medium_to_medium) }}</td>
+                                            
                                             <td class="text-center">{{ implode(", ",$medium_to_low) }}</td>
                                             <td class="text-center">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
+                                        <tr>
+                                            <td class="text-center" style="background: #ff0000;" >অপরিবর্তিত উচ্চ ঝুঁকি </td>
+                                            <td class="text-center" style="background: #ffa500;" >কম ঝুঁকি থেকে মধ্যম ঝুঁকি </td>
+                                            <td class="text-center" style="background: #a2f92c;" >উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</td>
+                                            <td class="text-center" style="background: #1ad433;" >অপরিবর্তিত কম ঝুঁকি </td>
+                                        </tr>
+
                                         <tr>
                                             <td class="text-center">{{ implode(", ",$high_to_high) }}</td>
                                             <td class="text-center">{{ implode(", ",$low_to_medium) }}</td>
@@ -470,8 +524,20 @@ foreach ($low_to_low_table_contentData as $result) {
 
     @push('custom_script')
         <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        
+        <script type="text/javascript">
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("demo");
+            output.innerHTML = slider.value;
+
+            slider.oninput = function() {
+              output.innerHTML = this.value;
+            }
+        </script>
         <script type="text/javascript">
             $(document).ready(function($) {
+
+
 
 
               //  $('#high_to_low_table_content .dataTable').DataTable();
