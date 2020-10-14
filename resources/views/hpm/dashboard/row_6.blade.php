@@ -1,6 +1,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" />
     <style type="text/css">
-    
+
     .my-custom-scrollbar {
 position: relative;
 
@@ -127,7 +127,7 @@ using(district) ORDER BY r.test_positivity DESC");
     r.test_positivity as 'recent_test_positivity'  from
     (select district, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
     inner join
-    (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 
+    (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<5
     and total_tests>100) as r
     using(district) ORDER BY r.test_positivity DESC");
 
@@ -228,7 +228,7 @@ foreach ($low_to_low_table_contentData as $result) {
                     </div>
                     <div class="col-xl-2 col-md-2 b1">
                         <div class="row">
-                           
+
                             <div class="col-xl-12">
                                 <div class="slidecontainer">
                                      <p>জেলা ভিত্তিক নুন্নতম পরীক্ষা সংখ্যা: <span id="demo"></span></p>
@@ -239,7 +239,7 @@ foreach ($low_to_low_table_contentData as $result) {
 
                                 সর্বচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">3</span></span>
                                 <input id="ex12c" type="text"/><br/>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -271,7 +271,7 @@ foreach ($low_to_low_table_contentData as $result) {
                                         <tr>
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_high) }}</td>
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$medium_to_high) }}</td>
-                                            
+
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$medium_to_low) }}</td>
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
@@ -285,11 +285,11 @@ foreach ($low_to_low_table_contentData as $result) {
                                         <tr>
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_high) }}</td>
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_medium) }}</td>
-                                           
+
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_medium) }}</td>
                                             <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_low) }}</td>
                                         </tr>
-                                       
+
 
                                     </tbody>
                                 </table>
@@ -539,25 +539,26 @@ foreach ($low_to_low_table_contentData as $result) {
     @push('custom_script')
         <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
-        <script type="text/javascript">
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("demo");
-            output.innerHTML = slider.value;
 
-            slider.oninput = function() {
-              output.innerHTML = this.value;
-            }
-        </script>
+
+
         <script type="text/javascript">
             $(document).ready(function($) {
+                var slider = document.getElementById("myRange");
+                var output = document.getElementById("demo");
+                output.innerHTML = slider.value;
 
+                slider.oninput = function() {
+                    output.innerHTML = this.value;
+                }
 
 //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
 $("#ex12c").slider({ id: "slider12c", min: 0, max: 10, range: true, value: [3, 7] });
 
 $("#ex12c").on("slide", function(slideEvt) {
-    
+
     $("#ex6SliderVal").text(slideEvt.value);
+    myrange_ajax_call();
 });
 
               //  $('#high_to_low_table_content .dataTable').DataTable();
@@ -589,7 +590,59 @@ $("#ex12c").on("slide", function(slideEvt) {
                      }
                  });*/
 
+                $('#myRange').on('click', function (){
+                   myrange_ajax_call();
 
+                });
+                /*$('#ex12c').on('click', function (){
+                    alert('ss');
+                    myrange_ajax_call();
+                });*/
+
+                function myrange_ajax_call(){
+
+                    let result;
+                    let url = new URL('{!! route('hpm.getRiskMatricData') !!}');
+                    $.ajax({
+
+                        type:"GET",
+                        url:url.toString(),
+                        data: {
+                            'test_count': $('#myRange').val(),
+                            'test_positive_data_rate' : $('#ex12c').val(),
+                        },
+                        timeout: 30000,
+                        success: function(data) {
+                            if(data.status == 'success'){
+
+                                rangeChange(data.result_data);
+                            } else {
+                                alert("Something Went Wrong");
+                            }
+                        },
+                        error: function (request, status, error) {
+                            console.log("Request Param");
+                            console.log(request.responseText);
+                            console.log("Status Param");
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
+                    return false;
+                }
+
+                function rangeChange(data) {
+
+                    $('.high_to_high_modal_click').html(englishToBangla(data.high_to_high)+' টি জেলা');
+                    $('.high_to_low_modal_click').html(englishToBangla(data.high_to_low)+' টি জেলা');
+                    $('.high_to_medium_modal_click').html(englishToBangla(data.high_to_medium)+' টি জেলা');
+                    $('.low_to_high_modal_click').html(englishToBangla(data.low_to_high)+' টি জেলা');
+                    $('.low_to_low_modal_click').html(englishToBangla(data.low_to_low)+' টি জেলা');
+                    $('.medium_to_high_modal_click').html(englishToBangla(data.medium_to_high)+' টি জেলা');
+                    $('.medium_to_low_modal_click').html(englishToBangla(data.medium_to_low)+' টি জেলা');
+                    $('.medium_to_medium_modal_click').html(englishToBangla(data.medium_to_medium)+' টি জেলা');
+
+                }
                 $('.high_to_high_modal_click').click(function(){
                     $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#high_to_high_table_content').html());
