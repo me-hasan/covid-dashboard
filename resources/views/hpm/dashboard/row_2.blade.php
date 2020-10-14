@@ -149,7 +149,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://public.tableau.com/shared/KCWJ6J7MR?:display_count=y&:origin=viz_share_link" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://public.tableau.com/shared/KCWJ6J7MR?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 			});
 
             // Test Positivity Trend
