@@ -1,3 +1,4 @@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" />
     <style type="text/css">
     
     .my-custom-scrollbar {
@@ -52,7 +53,17 @@ display: block;
   cursor: pointer;
 }
 
+#slider12a .slider-track-high, #slider12c .slider-track-high {
+    background: green;
+}
 
+#slider12b .slider-track-low, #slider12c .slider-track-low {
+    background: red;
+}
+
+#slider12c .slider-selection {
+    background: white;
+}
     </style>
     <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
@@ -224,7 +235,10 @@ foreach ($low_to_low_table_contentData as $result) {
                                      <input type="range" min="50" max="300" value="100" class="slider" id="myRange">
                                 </div>
                             </div>
-                            <div class="col-xl-12">
+                            <div class="col-xl-12"><br/><br/>
+
+                                সর্বচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">3</span></span>
+                                <input id="ex12c" type="text"/><br/>
                                 
                             </div>
                         </div>
@@ -524,7 +538,7 @@ foreach ($low_to_low_table_contentData as $result) {
 
     @push('custom_script')
         <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
         <script type="text/javascript">
             var slider = document.getElementById("myRange");
             var output = document.getElementById("demo");
@@ -538,7 +552,13 @@ foreach ($low_to_low_table_contentData as $result) {
             $(document).ready(function($) {
 
 
+//$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
+$("#ex12c").slider({ id: "slider12c", min: 0, max: 10, range: true, value: [3, 7] });
 
+$("#ex12c").on("slide", function(slideEvt) {
+    
+    $("#ex6SliderVal").text(slideEvt.value);
+});
 
               //  $('#high_to_low_table_content .dataTable').DataTable();
                  /*$('#high_to_low_table_content .dataTable').DataTable( {
