@@ -99,7 +99,8 @@
 
             <div class="card-body">
 {{--                <div id="test_positivity_rate_trend"></div>--}}
-                <div id="country_wise_infected"></div>
+{{--                <div id="country_wise_infected"></div> --}}
+                    <div id="iframe_country_wise_infected"></div>
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -235,6 +236,9 @@
 <!-- End :: Disease Progression -->
 @push('custom_script')
     <script>
+    $(document).ready(function(){
+                $('#iframe_country_wise_infected').html('<iframe id="rtIframeData_1" width="100%" height="600" src="http://dashboard.corona.gov.bd/SouthAsianCountriesTestsPer1000Caeses" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    });
 
         <?php
 			use Carbon\Carbon;

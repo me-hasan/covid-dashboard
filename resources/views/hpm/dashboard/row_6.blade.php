@@ -235,45 +235,45 @@ foreach ($low_to_low_table_contentData as $result) {
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <!-- <div class="card-body"> -->
                             <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" >
-                                <table class="table table-bordered table-vcenter text-nowrap b1"  >
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
-                                            <th class=" text-center fs-18" style="color: #FFF;background: #ffa500;">অবস্থার অবনতি</th>
-                                            <th class="text-center fs-18" style="background: #cbc5c5;">অপরিবর্তিত মধ্যম ঝুঁকি</th>
-                                            <th class="text-center fs-18" style="background: #a2f92c;">অবস্থার উন্নতি</th>
-                                            <th class="text-center fs-18" style="background: #1ad433;">অবস্থার লক্ষণীয় উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
+                                <table class="table table-bordered table-vcenter text-nowrap  b1"  >
+                                    <thead style="border:2px solid black;">
+                                        <tr >
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
+                                            <th class=" text-center fs-18" style="border:2px solid black; color: #FFF;background: #ffa500;">অবস্থার অবনতি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #cbc5c5;">অপরিবর্তিত মধ্যম ঝুঁকি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #a2f92c;">অবস্থার উন্নতি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #1ad433;">অবস্থার লক্ষণীয় উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
                                         </tr>
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
-                                            <td class="text-center" style="background: #ff0000;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
-                                            <td class="text-center" style="background: #ffa500;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
-                                            <td class="text-center"  rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
-                                            <td class="text-center" style="background: #a2f92c;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</td>
-                                            <td class="text-center" style="background: #1ad433;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</td>
+                                            <td class="text-center" style="border:2px solid black;background: #d42b1a;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black;background: #d4851a;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
+                                            <td class="text-center"  style="border:2px solid black;" rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
+                                            <td class="text-center" style="border:2px solid black;background: #add41a;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</td>
+                                            <td class="text-center" style="border:2px solid black;background: #34ab0e;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-center">{{ implode(", ",$low_to_high) }}</td>
-                                            <td class="text-center">{{ implode(", ",$medium_to_high) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_high) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$medium_to_high) }}</td>
                                             
-                                            <td class="text-center">{{ implode(", ",$medium_to_low) }}</td>
-                                            <td class="text-center">{{ implode(", ",$high_to_low) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$medium_to_low) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-center" style="background: #ff0000;" >অপরিবর্তিত উচ্চ ঝুঁকি </td>
-                                            <td class="text-center" style="background: #ffa500;" >কম ঝুঁকি থেকে মধ্যম ঝুঁকি </td>
-                                            <td class="text-center" style="background: #a2f92c;" >উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</td>
-                                            <td class="text-center" style="background: #1ad433;" >অপরিবর্তিত কম ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black; background: #d42b1a;" >অপরিবর্তিত উচ্চ ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black; background: #d4851a;" >কম ঝুঁকি থেকে মধ্যম ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black; background: #add41a;" >উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</td>
+                                            <td class="text-center" style="border:2px solid black; background: #34ab0e;" >অপরিবর্তিত কম ঝুঁকি </td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-center">{{ implode(", ",$high_to_high) }}</td>
-                                            <td class="text-center">{{ implode(", ",$low_to_medium) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_high) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_medium) }}</td>
                                            
-                                            <td class="text-center">{{ implode(", ",$high_to_medium) }}</td>
-                                            <td class="text-center">{{ implode(", ",$low_to_low) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_medium) }}</td>
+                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_low) }}</td>
                                         </tr>
                                        
 
