@@ -231,13 +231,13 @@ foreach ($low_to_low_table_contentData as $result) {
 
                             <div class="col-xl-12">
                                 <div class="slidecontainer">
-                                     <p>জেলা ভিত্তিক নুন্নতম পরীক্ষা সংখ্যা: <span id="demo"></span></p>
+                                     <p>জেলা ভিত্তিক নুন্নতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('100') !!}</span></p>
                                      <input type="range" min="50" max="300" value="100" class="slider" id="myRange">
                                 </div>
                             </div>
                             <div class="col-xl-12"><br/><br/>
 
-                                সর্বচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">3</span></span>
+                                সর্বচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">{!! convertEnglishDigitToBangla('5,12') !!}</span>
                                 <input id="ex12c" type="text"/><br/>
 
                             </div>
@@ -263,17 +263,17 @@ foreach ($low_to_low_table_contentData as $result) {
                                         <tr>
                                             <td class="text-center" style="border:2px solid black;background: #d42b1a;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
                                             <td class="text-center" style="border:2px solid black;background: #d4851a;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
-                                            <td class="text-center"  style="border:2px solid black;" rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
+                                            <td class="text-center medium_to_medium_district"  style="border:2px solid black;" rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
                                             <td class="text-center" style="border:2px solid black;background: #add41a;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</td>
                                             <td class="text-center" style="border:2px solid black;background: #34ab0e;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_high) }}</td>
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$medium_to_high) }}</td>
+                                            <td class="text-center low_to_high_district" style="border:2px solid black;">{{ implode(", ",$low_to_high) }}</td>
+                                            <td class="text-center medium_to_high_district" style="border:2px solid black;">{{ implode(", ",$medium_to_high) }}</td>
 
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$medium_to_low) }}</td>
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_low) }}</td>
+                                            <td class="text-center medium_to_low_district" style="border:2px solid black;">{{ implode(", ",$medium_to_low) }}</td>
+                                            <td class="text-center high_to_low_district" style="border:2px solid black;">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center" style="border:2px solid black; background: #d42b1a;" >অপরিবর্তিত উচ্চ ঝুঁকি </td>
@@ -283,11 +283,11 @@ foreach ($low_to_low_table_contentData as $result) {
                                         </tr>
 
                                         <tr>
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_high) }}</td>
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_medium) }}</td>
+                                            <td class="text-center high_to_high_district" style="border:2px solid black;">{{ implode(", ",$high_to_high) }}</td>
+                                            <td class="text-center low_to_medium_district" style="border:2px solid black;">{{ implode(", ",$low_to_medium) }}</td>
 
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$high_to_medium) }}</td>
-                                            <td class="text-center" style="border:2px solid black;">{{ implode(", ",$low_to_low) }}</td>
+                                            <td class="text-center high_to_medium_district" style="border:2px solid black;">{{ implode(", ",$high_to_medium) }}</td>
+                                            <td class="text-center low_to_low_district" style="border:2px solid black;">{{ implode(", ",$low_to_low) }}</td>
                                         </tr>
 
 
@@ -546,18 +546,17 @@ foreach ($low_to_low_table_contentData as $result) {
             $(document).ready(function($) {
                 var slider = document.getElementById("myRange");
                 var output = document.getElementById("demo");
-                output.innerHTML = slider.value;
+              //  output.innerHTML = englishToBangla(slider.value);
 
                 slider.oninput = function() {
-                    output.innerHTML = this.value;
+                    output.innerHTML = englishToBangla(this.value);
                 }
 
 //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
-$("#ex12c").slider({ id: "slider12c", min: 0, max: 10, range: true, value: [3, 7] });
+$("#ex12c").slider({ id: "slider12c", min: 0, max: 12, range: true, value: [5, 12] });
 
 $("#ex12c").on("slide", function(slideEvt) {
-
-    $("#ex6SliderVal").text(slideEvt.value);
+    $("#ex6SliderVal").text(englishToBangla(slideEvt.value[0])+','+englishToBangla(slideEvt.value[1]));
     myrange_ajax_call();
 });
 
@@ -592,7 +591,6 @@ $("#ex12c").on("slide", function(slideEvt) {
 
                 $('#myRange').on('click', function (){
                    myrange_ajax_call();
-
                 });
                 /*$('#ex12c').on('click', function (){
                     alert('ss');
@@ -615,7 +613,7 @@ $("#ex12c").on("slide", function(slideEvt) {
                         success: function(data) {
                             if(data.status == 'success'){
 
-                                rangeChange(data.result_data);
+                                rangeChange(data.result_data,data.risk_matrix_data);
                             } else {
                                 alert("Something Went Wrong");
                             }
@@ -631,7 +629,7 @@ $("#ex12c").on("slide", function(slideEvt) {
                     return false;
                 }
 
-                function rangeChange(data) {
+                function rangeChange(data,risk_matrix_data) {
 
                     $('.high_to_high_modal_click').html(englishToBangla(data.high_to_high)+' টি জেলা');
                     $('.high_to_low_modal_click').html(englishToBangla(data.high_to_low)+' টি জেলা');
@@ -641,6 +639,28 @@ $("#ex12c").on("slide", function(slideEvt) {
                     $('.medium_to_high_modal_click').html(englishToBangla(data.medium_to_high)+' টি জেলা');
                     $('.medium_to_low_modal_click').html(englishToBangla(data.medium_to_low)+' টি জেলা');
                     $('.medium_to_medium_modal_click').html(englishToBangla(data.medium_to_medium)+' টি জেলা');
+                    /*modal data*/
+                    $('#high_to_high_table_content tbody').html(risk_matrix_data.high_to_high_table_contentData);
+                    $('#medium_to_high_table_content tbody').html(risk_matrix_data.medium_to_high_table_contentData);
+                    $('#low_to_high_table_content tbody').html(risk_matrix_data.low_to_high_table_contentData);
+                    $('#high_to_medium_table_content tbody').html(risk_matrix_data.high_to_medium_table_contentData);
+                    $('#medium_to_medium_table_content tbody').html(risk_matrix_data.medium_to_medium_table_contentData);
+                    $('#low_to_medium_table_content tbody').html(risk_matrix_data.low_to_medium_table_contentData);
+                    $('#high_to_low_table_content tbody').html(risk_matrix_data.high_to_low_table_contentData);
+                    $('#medium_to_low_table_content tbody').html(risk_matrix_data.medium_to_low_table_contentData);
+                    $('#low_to_low_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+                    /*district data*/
+                    $('.high_to_high_district').html(risk_matrix_data.high_to_high_district_name);
+                    $('.high_to_low_district').html(risk_matrix_data.high_to_low_district_name);
+                    $('.high_to_medium_district').html(risk_matrix_data.high_to_medium_district_name);
+                    $('.low_to_high_district').html(risk_matrix_data.low_to_high_district_name);
+                    $('.low_to_medium_district').html(risk_matrix_data.low_to_medium_district_name);
+                    $('.low_to_low_district').html(risk_matrix_data.low_to_low_district_name);
+                    $('.medium_to_high_district').html(risk_matrix_data.medium_to_high_district_name);
+                    $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
+                    $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
+
+
 
                 }
                 $('.high_to_high_modal_click').click(function(){

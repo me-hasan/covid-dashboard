@@ -86,7 +86,7 @@ if (! function_exists('mapDivisionColor')) {
     if(!function_exists('convertEnglishDigitToBangla')) {
         function convertEnglishDigitToBangla($string)
         {
-            $formattedData = str_replace(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '.'], ['১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯', '০', '', '.'], $string);
+            $formattedData = str_replace(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '.',','], ['১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯', '০', '', '.',','], $string);
             return $formattedData;
 
         }
