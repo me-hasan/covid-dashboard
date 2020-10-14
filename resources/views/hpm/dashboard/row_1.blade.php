@@ -291,7 +291,14 @@
                     }
                 },
                 xAxis: {
-                    categories: <?php echo json_encode($date_arr);?>
+                    categories: <?php echo json_encode($date_arr);?>,
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
                 },
                 tooltip: {
                     formatter: function() {
@@ -362,8 +369,15 @@
                 enabled:false
             },
 
-            xAxis: {
-                categories: @JSON($row1_left_trend_date)
+            xAxis:{
+                    categories: @JSON($row1_left_trend_date),
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
             },
             tooltip: {
             formatter: function() {
@@ -434,10 +448,15 @@
             },
 
             xAxis: {
-                //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
-                categories: {!! $categories !!},
-
-            },
+                    categories: {!! $categories !!},
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
             tooltip: {
             formatter: function() {
                 return `${this.series.name}( ${this.x} ) : <b>${englishToBangla(this.y)}</b>`;
@@ -570,15 +589,14 @@
                 },
 
                 xAxis: {
-                    //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
                     categories: JSON.parse(data.categories),
-                    labels:{
-                        //type: 'datetime',
-                        showLastLabel: true,
-                        endOnTick: true
-                    },
-
-
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
                 },
 
                 tooltip: {

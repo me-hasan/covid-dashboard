@@ -243,10 +243,17 @@
                     fontWeight: "normal"
                 }
             },
+            
             xAxis: {
-                categories: [<?php echo $testsVsCases['dateRange'];?>],
-                tickInterval: 1
-            },
+                    categories: [<?php echo $testsVsCases['dateRange'];?>],
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
             tooltip: {
 
                 formatter: function() {
@@ -347,10 +354,17 @@
                     fontWeight: "normal"
                 }
             },
+           
             xAxis: {
-                categories: [<?php echo $forteen_day_infected['dateRange'];?>],
-                tickInterval: 1
-            },
+                    categories: [<?php echo $forteen_day_infected['dateRange'];?>],
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
             tooltip: {
 
                 formatter: function() {
