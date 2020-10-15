@@ -231,13 +231,13 @@ foreach ($low_to_low_table_contentData as $result) {
 
                             <div class="col-xl-12">
                                 <div class="slidecontainer">
-                                     <p>জেলা ভিত্তিক নুন্নতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('100') !!}</span></p>
+                                     <p>জেলা ভিত্তিক  ন্যূনতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('100') !!}</span></p>
                                      <input type="range" min="50" max="300" value="100" class="slider" id="myRange">
                                 </div>
                             </div>
                             <div class="col-xl-12"><br/><br/>
 
-                                সর্বচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">{!! convertEnglishDigitToBangla('5,12') !!}</span>
+                                সর্বোচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">{!! convertEnglishDigitToBangla('5,12') !!}</span>
                                 <input id="ex12c" type="text"/><br/>
 
                             </div>
