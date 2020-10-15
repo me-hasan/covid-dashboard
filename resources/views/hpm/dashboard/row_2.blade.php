@@ -144,12 +144,12 @@
         </div>
     </div>
 </div>
-<!-- End :: TESTING SCENARIO -->
+<!-- End :: TESTING SCENARIO https://arcg.is/1Xb0yP0 -->
 
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://arcg.is/1Xb0yP0" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://public.tableau.com/shared/KCWJ6J7MR?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 			});
 
             // Test Positivity Trend
@@ -243,10 +243,17 @@
                     fontWeight: "normal"
                 }
             },
+            
             xAxis: {
-                categories: [<?php echo $testsVsCases['dateRange'];?>],
-                tickInterval: 1
-            },
+                    categories: [<?php echo $testsVsCases['dateRange'];?>],
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
             tooltip: {
 
                 formatter: function() {
@@ -347,10 +354,17 @@
                     fontWeight: "normal"
                 }
             },
+           
             xAxis: {
-                categories: [<?php echo $forteen_day_infected['dateRange'];?>],
-                tickInterval: 1
-            },
+                    categories: [<?php echo $forteen_day_infected['dateRange'];?>],
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
             tooltip: {
 
                 formatter: function() {

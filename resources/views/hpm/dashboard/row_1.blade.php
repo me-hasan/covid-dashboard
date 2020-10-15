@@ -99,7 +99,8 @@
 
             <div class="card-body">
 {{--                <div id="test_positivity_rate_trend"></div>--}}
-                <div id="country_wise_infected"></div>
+
+                    <div id="iframe_country_wise_infected"></div>
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -235,6 +236,9 @@
 <!-- End :: Disease Progression -->
 @push('custom_script')
     <script>
+    $(document).ready(function(){
+                $('#iframe_country_wise_infected').html('<iframe id="rtIframeData_1" width="100%" height="600" src="http://dashboard.corona.gov.bd/SouthAsianCountriesTestsPer1000Caeses" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    });
 
         <?php
 			use Carbon\Carbon;
@@ -287,7 +291,14 @@
                     }
                 },
                 xAxis: {
-                    categories: <?php echo json_encode($date_arr);?>
+                    categories: <?php echo json_encode($date_arr);?>,
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
                 },
                 tooltip: {
                     formatter: function() {
@@ -358,8 +369,15 @@
                 enabled:false
             },
 
-            xAxis: {
-                categories: @JSON($row1_left_trend_date)
+            xAxis:{
+                    categories: @JSON($row1_left_trend_date),
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
             },
             tooltip: {
             formatter: function() {
@@ -399,116 +417,6 @@
         });
 
 
-
-        // South Country Wise Infected
-        Highcharts.chart('country_wise_infected', {
-            chart: {
-                type: 'bar',
-                style: {
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
-            title: {
-                text: ''
-            },
-            subtitle: {
-                text: ''
-            },
-            credits:{
-                enabled:false
-            },
-            legend:{
-                enabled:true,
-                itemStyle: {
-                    fontSize: "16px",
-                    fontWeight: "normal"
-                }
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    formatter: function() {
-                        return englishToBangla(this.value);
-                    }
-                }
-            },
-            xAxis: {
-                type: 'category',
-                labels: {
-                    style: {
-                        fontSize: '16px'
-                    }
-                }
-            },
-            tooltip: {
-                /* pointFormat: function() {
-                     return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-                 }*/
-                formatter: function() {
-                    return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-                }
-                /*valueSuffix: ' cm',
-                shared: true*/
-            },
-            plotOptions: {
-                /*column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },*/
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        //format: '{point.y:.1f}'
-                        //format: '{point.y:.1f}'
-                        formatter: function() {
-                            return `${englishToBangla(this.y)}`;
-                        }
-                    }
-                }
-            },
-            colors: ['#c94b7d', '#7d5f9d', '#817376', '#b25b3f', '#5c687b','#3acc76','#60b5d1'],
-            series: [
-                {
-                    name: "প্রতি ১০০০ এ পরীক্ষা সংখ্যা",
-                    colorByPoint: true,
-                    data: [
-                        {
-                            name: "মালদ্বীপ",
-                            y: <?=number_format($tests_per_case_Maldives->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "ভারত",
-                            y: <?=number_format($tests_per_case_India->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "নেপাল",
-                            y: <?=number_format($tests_per_case_Nepal->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "পাকিস্তান",
-                            y: <?=number_format($tests_per_case_Pakistan->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "শ্রীলঙ্কা",
-                            y: <?=number_format($tests_per_case_Sri->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "বাংলাদেশ",
-                            y: <?=number_format($tests_per_case_Bangladesh->cumulative_tests_per_case,2);?>
-                        },
-                        {
-                            name: "মিয়ানমার",
-                            y: <?=number_format($tests_per_case_Mayanmar->cumulative_tests_per_case,2);?>
-                        }
-
-                    ]
-                }
-            ]
-        });
-
         // District Comparision
 		Highcharts.chart('district_comparision', {
             chart: {
@@ -540,10 +448,15 @@
             },
 
             xAxis: {
-                //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
-                categories: {!! $categories !!},
-
-            },
+                    categories: {!! $categories !!},
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
             tooltip: {
             formatter: function() {
                 return `${this.series.name}( ${this.x} ) : <b>${englishToBangla(this.y)}</b>`;
@@ -676,15 +589,14 @@
                 },
 
                 xAxis: {
-                    //categories: ["07\/11\/2020","08\/11\/2020","09\/11\/2020","10\/11\/2020","11\/11\/2020","12\/11\/2020","13\/11\/2020","14\/11\/2020","15\/11\/2020","16\/11\/2020","17\/11\/2020","18\/11\/2020"]
                     categories: JSON.parse(data.categories),
-                    labels:{
-                        //type: 'datetime',
-                        showLastLabel: true,
-                        endOnTick: true
-                    },
-
-
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                           return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
                 },
 
                 tooltip: {

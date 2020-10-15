@@ -129,6 +129,7 @@ Route::prefix('iedcr')->group(function () {
 
 Route::get('hpm-dashboard','Hpm\DashboardController@index')->name('hpm.dashboard');
 Route::get('hpm-get-district-comparision-data','Hpm\DashboardController@getCumulativeInfectedData')->name('hpm.get_district_comparision');
+Route::get('hpm-risk-matrix-data','Hpm\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData');
 Route::get('/admin/f5', function () {
 
     // auth()->user()->roles()->attach(1);

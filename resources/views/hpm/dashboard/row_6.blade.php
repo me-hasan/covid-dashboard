@@ -1,4 +1,6 @@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" />
     <style type="text/css">
+
     .my-custom-scrollbar {
 position: relative;
 
@@ -15,6 +17,53 @@ display: block;
 
 .my-custom-scrollbar td { white-space:pre-wrap; word-wrap:break-word }
 
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+#slider12a .slider-track-high, #slider12c .slider-track-high {
+    background: green;
+}
+
+#slider12b .slider-track-low, #slider12c .slider-track-low {
+    background: red;
+}
+
+#slider12c .slider-selection {
+    background: white;
+}
     </style>
     <!-- Start :: ঝুঁকি পর্যালোচনা -->
     <?php
@@ -78,7 +127,7 @@ using(district) ORDER BY r.test_positivity DESC");
     r.test_positivity as 'recent_test_positivity'  from
     (select district, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
     inner join
-    (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 
+    (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<5
     and total_tests>100) as r
     using(district) ORDER BY r.test_positivity DESC");
 
@@ -140,7 +189,7 @@ foreach ($low_to_low_table_contentData as $result) {
                         <div style="transform: rotate(-90deg);width: 219px;margin-left: -70px;margin-top: 100px;" class="fs-20 b1">
                             <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )</div>
                     </div>
-                    <div class="col-xl-11 col-md-11">
+                    <div class="col-xl-9 col-md-9">
                         <div class="table-responsive">
                             <table class="table table-bordered table-vcenter text-nowrap b1">
                                 <thead >
@@ -177,51 +226,70 @@ foreach ($low_to_low_table_contentData as $result) {
                             </table>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-1 col-md-1 b1">
+                    <div class="col-xl-2 col-md-2 b1">
                         <div class="row">
-                            <div class="col-xl-4 text-right">
-                                <div class="pt-4">অবস্থার অবনতি</div>
-                                <div class="pt-9 mt-9">অবস্থার উন্নতি</div>
+
+                            <div class="col-xl-12">
+                                <div class="slidecontainer">
+                                     <p>জেলা ভিত্তিক  ন্যূনতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('100') !!}</span></p>
+                                     <input type="range" min="50" max="300" value="100" class="slider" id="myRange">
+                                </div>
                             </div>
-                            <div class="col-xl-8">
-                                <div>গ্রাডিয়েন্ট</div>
-                                <div style="width: 50px; height: 250px;background: rgb(244,55,53);
-    background: linear-gradient(#f43735 0%, #fff51e 50%, #00ff2e 100%);"></div>
+                            <div class="col-xl-12"><br/><br/>
+
+                                সর্বোচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">{!! convertEnglishDigitToBangla('5,12') !!}</span>
+                                <input id="ex12c" type="text"/><br/>
+
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <!-- <div class="card-body"> -->
                             <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" >
-                                <table class="table table-bordered table-vcenter text-nowrap b1" >
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center fs-18" style="background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
-                                            <th class=" text-center fs-18" style="color: #FFF;background: #ffa500;">অবস্থার অবনতি</th>
-                                            <th class="text-center fs-18" style="background: #cbc5c5;">অপরিবর্তিত মধ্যম ঝুঁকি</th>
-                                            <th class="text-center fs-18" style="background: #a2f92c;">অবস্থার উন্নতি</th>
-                                            <th class="text-center fs-18" style="background: #1ad433;">অবস্থার লক্ষণীয় উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
+                                <table class="table table-bordered table-vcenter text-nowrap  b1"  >
+                                    <thead style="border:2px solid black;">
+                                        <tr >
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
+                                            <th class=" text-center fs-18" style="border:2px solid black; color: #FFF;background: #ffa500;">অবস্থার অবনতি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #cbc5c5;">অপরিবর্তিত মধ্যম ঝুঁকি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #a2f92c;">অবস্থার উন্নতি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #1ad433;">অবস্থার লক্ষণীয় উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
                                         </tr>
                                     </thead>
                                     <tbody class="fs-16">
                                         <tr>
-                                            <td class="text-center">{{ implode(", ",$low_to_high) }}</td>
-                                            <td class="text-center">{{ implode(", ",$medium_to_high) }}</td>
-                                            <td class="text-center" rowspan="2">{{ implode(", ",$medium_to_medium) }}</td>
-                                            <td class="text-center">{{ implode(", ",$medium_to_low) }}</td>
-                                            <td class="text-center">{{ implode(", ",$high_to_low) }}</td>
+                                            <td class="text-center" style="border:2px solid black;background: #d42b1a;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black;background: #d4851a;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
+                                            <td class="text-center medium_to_medium_district"  style="border:2px solid black;" rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
+                                            <td class="text-center" style="border:2px solid black;background: #add41a;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</td>
+                                            <td class="text-center" style="border:2px solid black;background: #34ab0e;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center low_to_high_district" style="border:2px solid black;">{{ implode(", ",$low_to_high) }}</td>
+                                            <td class="text-center medium_to_high_district" style="border:2px solid black;">{{ implode(", ",$medium_to_high) }}</td>
+
+                                            <td class="text-center medium_to_low_district" style="border:2px solid black;">{{ implode(", ",$medium_to_low) }}</td>
+                                            <td class="text-center high_to_low_district" style="border:2px solid black;">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-center">{{ implode(", ",$high_to_high) }}</td>
-                                            <td class="text-center">{{ implode(", ",$low_to_medium) }}</td>
-                                           
-                                            <td class="text-center">{{ implode(", ",$high_to_medium) }}</td>
-                                            <td class="text-center">{{ implode(", ",$low_to_low) }}</td>
+                                            <td class="text-center" style="border:2px solid black; background: #d42b1a;" >অপরিবর্তিত উচ্চ ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black; background: #d4851a;" >কম ঝুঁকি থেকে মধ্যম ঝুঁকি </td>
+                                            <td class="text-center" style="border:2px solid black; background: #add41a;" >উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</td>
+                                            <td class="text-center" style="border:2px solid black; background: #34ab0e;" >অপরিবর্তিত কম ঝুঁকি </td>
                                         </tr>
-                                       
+
+                                        <tr>
+                                            <td class="text-center high_to_high_district" style="border:2px solid black;">{{ implode(", ",$high_to_high) }}</td>
+                                            <td class="text-center low_to_medium_district" style="border:2px solid black;">{{ implode(", ",$low_to_medium) }}</td>
+
+                                            <td class="text-center high_to_medium_district" style="border:2px solid black;">{{ implode(", ",$high_to_medium) }}</td>
+                                            <td class="text-center low_to_low_district" style="border:2px solid black;">{{ implode(", ",$low_to_low) }}</td>
+                                        </tr>
+
 
                                     </tbody>
                                 </table>
@@ -470,9 +538,27 @@ foreach ($low_to_low_table_contentData as $result) {
 
     @push('custom_script')
         <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
+
+
+
         <script type="text/javascript">
             $(document).ready(function($) {
+                var slider = document.getElementById("myRange");
+                var output = document.getElementById("demo");
+              //  output.innerHTML = englishToBangla(slider.value);
 
+                slider.oninput = function() {
+                    output.innerHTML = englishToBangla(this.value);
+                }
+
+//$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
+$("#ex12c").slider({ id: "slider12c", min: 0, max: 12, range: true, value: [5, 12] });
+
+$("#ex12c").on("slide", function(slideEvt) {
+    $("#ex6SliderVal").text(englishToBangla(slideEvt.value[0])+','+englishToBangla(slideEvt.value[1]));
+    myrange_ajax_call();
+});
 
               //  $('#high_to_low_table_content .dataTable').DataTable();
                  /*$('#high_to_low_table_content .dataTable').DataTable( {
@@ -503,7 +589,80 @@ foreach ($low_to_low_table_contentData as $result) {
                      }
                  });*/
 
+                $('#myRange').on('click', function (){
+                   myrange_ajax_call();
+                });
+                /*$('#ex12c').on('click', function (){
+                    alert('ss');
+                    myrange_ajax_call();
+                });*/
 
+                function myrange_ajax_call(){
+
+                    let result;
+                    let url = new URL('{!! route('hpm.getRiskMatricData') !!}');
+                    $.ajax({
+
+                        type:"GET",
+                        url:url.toString(),
+                        data: {
+                            'test_count': $('#myRange').val(),
+                            'test_positive_data_rate' : $('#ex12c').val(),
+                        },
+                        timeout: 30000,
+                        success: function(data) {
+                            if(data.status == 'success'){
+
+                                rangeChange(data.result_data,data.risk_matrix_data);
+                            } else {
+                                alert("Something Went Wrong");
+                            }
+                        },
+                        error: function (request, status, error) {
+                            console.log("Request Param");
+                            console.log(request.responseText);
+                            console.log("Status Param");
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
+                    return false;
+                }
+
+                function rangeChange(data,risk_matrix_data) {
+
+                    $('.high_to_high_modal_click').html(englishToBangla(data.high_to_high)+' টি জেলা');
+                    $('.high_to_low_modal_click').html(englishToBangla(data.high_to_low)+' টি জেলা');
+                    $('.high_to_medium_modal_click').html(englishToBangla(data.high_to_medium)+' টি জেলা');
+                    $('.low_to_high_modal_click').html(englishToBangla(data.low_to_high)+' টি জেলা');
+                    $('.low_to_low_modal_click').html(englishToBangla(data.low_to_low)+' টি জেলা');
+                    $('.medium_to_high_modal_click').html(englishToBangla(data.medium_to_high)+' টি জেলা');
+                    $('.medium_to_low_modal_click').html(englishToBangla(data.medium_to_low)+' টি জেলা');
+                    $('.medium_to_medium_modal_click').html(englishToBangla(data.medium_to_medium)+' টি জেলা');
+                    /*modal data*/
+                    $('#high_to_high_table_content tbody').html(risk_matrix_data.high_to_high_table_contentData);
+                    $('#medium_to_high_table_content tbody').html(risk_matrix_data.medium_to_high_table_contentData);
+                    $('#low_to_high_table_content tbody').html(risk_matrix_data.low_to_high_table_contentData);
+                    $('#high_to_medium_table_content tbody').html(risk_matrix_data.high_to_medium_table_contentData);
+                    $('#medium_to_medium_table_content tbody').html(risk_matrix_data.medium_to_medium_table_contentData);
+                    $('#low_to_medium_table_content tbody').html(risk_matrix_data.low_to_medium_table_contentData);
+                    $('#high_to_low_table_content tbody').html(risk_matrix_data.high_to_low_table_contentData);
+                    $('#medium_to_low_table_content tbody').html(risk_matrix_data.medium_to_low_table_contentData);
+                    $('#low_to_low_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+                    /*district data*/
+                    $('.high_to_high_district').html(risk_matrix_data.high_to_high_district_name);
+                    $('.high_to_low_district').html(risk_matrix_data.high_to_low_district_name);
+                    $('.high_to_medium_district').html(risk_matrix_data.high_to_medium_district_name);
+                    $('.low_to_high_district').html(risk_matrix_data.low_to_high_district_name);
+                    $('.low_to_medium_district').html(risk_matrix_data.low_to_medium_district_name);
+                    $('.low_to_low_district').html(risk_matrix_data.low_to_low_district_name);
+                    $('.medium_to_high_district').html(risk_matrix_data.medium_to_high_district_name);
+                    $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
+                    $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
+
+
+
+                }
                 $('.high_to_high_modal_click').click(function(){
                     $('.modal-title').html('ঝুঁকি পর্যালোচনা');
                     $('#modalContent').html($('#high_to_high_table_content').html());
