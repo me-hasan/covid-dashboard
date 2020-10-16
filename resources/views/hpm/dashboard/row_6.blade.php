@@ -54,11 +54,11 @@ display: block;
 }
 
 #slider12a .slider-track-high, #slider12c .slider-track-high {
-    background: green;
+    background: red;
 }
 
 #slider12b .slider-track-low, #slider12c .slider-track-low {
-    background: red;
+    background: green;
 }
 
 #slider12c .slider-selection {
@@ -78,50 +78,50 @@ display: block;
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
 
     $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 AND total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 AND total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l
 inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>100) as r
+(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>200) as r
 using(district) ORDER BY r.test_positivity DESC");
     $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" select l.district as 'district',l.test_positivity as 'last_test_positivity',
     r.test_positivity as 'recent_test_positivity'  from
@@ -189,7 +189,7 @@ foreach ($low_to_low_table_contentData as $result) {
                         <div style="transform: rotate(-90deg);width: 219px;margin-left: -70px;margin-top: 100px;" class="fs-20 b1">
                             <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )</div>
                     </div>
-                    <div class="col-xl-9 col-md-9">
+                    <div class="col-xl-8 col-md-8">
                         <div class="table-responsive">
                             <table class="table table-bordered table-vcenter text-nowrap b1">
                                 <thead >
@@ -226,19 +226,19 @@ foreach ($low_to_low_table_contentData as $result) {
                             </table>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-md-2 b1">
+                    <div class="col-xl-3 col-md-3 b1">
                         <div class="row">
 
                             <div class="col-xl-12">
                                 <div class="slidecontainer">
-                                     <p>জেলা ভিত্তিক  ন্যূনতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('100') !!}</span></p>
-                                     <input type="range" min="50" max="300" value="100" class="slider" id="myRange">
+                                     <p>জেলা ভিত্তিক  ন্যূনতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('200') !!}</span></p>
+                                     <input type="range" min="50" max="300" value="200" class="slider" id="myRange">
                                 </div>
                             </div>
                             <div class="col-xl-12"><br/><br/>
 
-                                সর্বোচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">{!! convertEnglishDigitToBangla('5,12') !!}</span>
-                                <input id="ex12c" type="text"/><br/>
+                                সর্বোচ্চ ও সর্বনিম্ন টেস্ট পসিটিভিটি রেটের পরিসীমা: <span id="ex6SliderVal">{!! convertEnglishDigitToBangla('5:12') !!}</span>
+                                <input id="ex12c" type="text" style="width: 321px; height: 25px; !important"/><br/>
 
                             </div>
                         </div>
@@ -249,37 +249,39 @@ foreach ($low_to_low_table_contentData as $result) {
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <!-- <div class="card-body"> -->
                             <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" >
-                                <table class="table table-bordered table-vcenter text-nowrap  b1"  >
+                                <table class="table table-bordered table-vcenter text-nowrap  b1" style="table-layout: fixed; width: 100%; min-width: 400px;"  >
                                     <thead style="border:2px solid black;">
                                         <tr >
-                                            <th class="text-center fs-18" style="border:2px solid black; background: #ff0000;color: #FFF;">অবস্থার লক্ষণীয় অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
-                                            <th class=" text-center fs-18" style="border:2px solid black; color: #FFF;background: #ffa500;">অবস্থার অবনতি</th>
-                                            <th class="text-center fs-18" style="border:2px solid black; background: #cbc5c5;">অপরিবর্তিত মধ্যম ঝুঁকি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #ff0000;color: #FFF;">অবস্থার  অবনতি ও অপরিবর্তিত উচ্চ ঝুঁকি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; color: #FFF;background: #ffa500;">অবস্থার অবনতি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #cbc5c5;" rowspan="2">অপরিবর্তিত মধ্যম ঝুঁকি</th>
                                             <th class="text-center fs-18" style="border:2px solid black; background: #a2f92c;">অবস্থার উন্নতি</th>
-                                            <th class="text-center fs-18" style="border:2px solid black; background: #1ad433;">অবস্থার লক্ষণীয় উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
+                                            <th class="text-center fs-18" style="border:2px solid black; background: #1ad433;">অবস্থার উন্নতি ও অপরিবর্তিত কম ঝুঁকি</th>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="text-center" style="border:2px solid black;background: #d42b1a;color: #FFF;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </th>
+                                            <th class="text-center" style="border:2px solid black;background: #d4851a;color: #FFF;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </th>
+
+                                            <th class="text-center" style="border:2px solid black;background: #add41a;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</th>
+                                            <th class="text-center" style="border:2px solid black;background: #34ab0e;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</th>
                                         </tr>
                                     </thead>
                                     <tbody class="fs-16">
-                                        <tr>
-                                            <td class="text-center" style="border:2px solid black;background: #d42b1a;" >কম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
-                                            <td class="text-center" style="border:2px solid black;background: #d4851a;" >মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি </td>
-                                            <td class="text-center medium_to_medium_district"  style="border:2px solid black;" rowspan="4">{{ implode(", ",$medium_to_medium) }}</td>
-                                            <td class="text-center" style="border:2px solid black;background: #add41a;" >মধ্যম ঝুঁকি থেকে কম ঝুঁকি</td>
-                                            <td class="text-center" style="border:2px solid black;background: #34ab0e;" >উচ্চ ঝুঁকি থেকে কম ঝুঁকি</td>
-                                        </tr>
+                                        
 
                                         <tr>
                                             <td class="text-center low_to_high_district" style="border:2px solid black;">{{ implode(", ",$low_to_high) }}</td>
                                             <td class="text-center medium_to_high_district" style="border:2px solid black;">{{ implode(", ",$medium_to_high) }}</td>
-
+                                            <td class="text-center medium_to_medium_district"  style="border:2px solid black;" rowspan="3">{{ implode(", ",$medium_to_medium) }}</td>
                                             <td class="text-center medium_to_low_district" style="border:2px solid black;">{{ implode(", ",$medium_to_low) }}</td>
                                             <td class="text-center high_to_low_district" style="border:2px solid black;">{{ implode(", ",$high_to_low) }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-center" style="border:2px solid black; background: #d42b1a;" >অপরিবর্তিত উচ্চ ঝুঁকি </td>
-                                            <td class="text-center" style="border:2px solid black; background: #d4851a;" >কম ঝুঁকি থেকে মধ্যম ঝুঁকি </td>
-                                            <td class="text-center" style="border:2px solid black; background: #add41a;" >উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</td>
-                                            <td class="text-center" style="border:2px solid black; background: #34ab0e;" >অপরিবর্তিত কম ঝুঁকি </td>
+                                            <th class="text-center" style="border:2px solid black; background: #d42b1a;color: #FFF;" >অপরিবর্তিত উচ্চ ঝুঁকি </th>
+                                            <th class="text-center" style="border:2px solid black; background: #d4851a;color: #FFF;" >কম ঝুঁকি থেকে মধ্যম ঝুঁকি </th>
+                                            <th class="text-center" style="border:2px solid black; background: #add41a;" >উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</th>
+                                            <th class="text-center" style="border:2px solid black; background: #34ab0e;" >অপরিবর্তিত কম ঝুঁকি </th>
                                         </tr>
 
                                         <tr>
@@ -553,7 +555,7 @@ foreach ($low_to_low_table_contentData as $result) {
                 }
 
 //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
-$("#ex12c").slider({ id: "slider12c", min: 0, max: 12, range: true, value: [5, 12] });
+$("#ex12c").slider({ id: "slider12c", min: 0, max: 30, range: true, value: [5, 12] });
 
 $("#ex12c").on("slide", function(slideEvt) {
     $("#ex6SliderVal").text(englishToBangla(slideEvt.value[0])+','+englishToBangla(slideEvt.value[1]));

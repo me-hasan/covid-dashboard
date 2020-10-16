@@ -218,7 +218,7 @@ where date=((select max(date) from test_positivity_rate_district))";
                           FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE()
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
-                        WHERE  t.date <= CURDATE() and t.date >= '2020-03-04' $dateQuery
+                        WHERE  t.date <= CURDATE() and t.date >= '2020-05-20' $dateQuery
                         ORDER BY t.date");
         }else{
             // $cumulativeData = DB::select("SELECT t.date,
@@ -233,7 +233,7 @@ where date=((select max(date) from test_positivity_rate_district))";
             //             WHERE  t.date <= CURDATE()
             //             ORDER BY t.date");
 
-            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person   FROM infected_cumulative $dateQuery");
+            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person   FROM infected_cumulative $dateQuery and date >= '2020-05-20' ");
         }
 
         foreach ($cumulativeData as $key => $inf) {
@@ -971,7 +971,7 @@ where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as 
         return $city_wise_hospital_details;
       }
 
-      private function risk_matrix_1($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12){
 
         $risk_matrix = DB::select("select count(l.district) as 'low_to_high' from
 (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
@@ -983,7 +983,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_2($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_2($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
 (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
 inner join
@@ -994,7 +994,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_3($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select(" select count(l.district) as 'low_to_low'   from
         (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
         inner join
@@ -1006,7 +1006,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_4($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_4($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
 inner join
@@ -1017,7 +1017,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_5($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_medium' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
 inner join
@@ -1028,7 +1028,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_6($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_low' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
 inner join
@@ -1039,7 +1039,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-       private function risk_matrix_7($testCount=100,$test_positive_min=5,$test_positive_max=12){
+       private function risk_matrix_7($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_high' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
 inner join
@@ -1050,7 +1050,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_8($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_medium' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
 inner join
@@ -1062,7 +1062,7 @@ using(district)");
       }
 
 
-      private function risk_matrix_9($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_low' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
 inner join
@@ -1597,7 +1597,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
     }
 
 
-    public function getRiskMatrixModalData($testCount=100,$test_positive_min=5,$test_positive_max=12) {
+    public function getRiskMatrixModalData($testCount=200,$test_positive_min=5,$test_positive_max=12) {
         $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
