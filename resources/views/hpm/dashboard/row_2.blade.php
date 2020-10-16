@@ -3,7 +3,30 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title b1">পরীক্ষা পরিস্থিতি</h5>
+                <div class="col-sm-6">
+                    <h5 class="card-title b1">পরীক্ষা পরিস্থিতি</h5>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn-group">
+                        <div class="col-md-6 pl-0">
+                            <input class="form-control" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                        </div>
+                        <div class="col-md-6 pl-0">
+                            <input class="form-control" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary-color pl-0" type="submit">
+                                <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
+                                     height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
+                                     focusable="false">
+                                    <path d="M0 0h24v24H0V0z" fill="none"/>
+                                    <path
+                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
 
@@ -119,6 +142,24 @@
                                     <div id="test_positivity_per_million"></div>
                                 </div>
                                 <div class="card-header">
+                                    <div class="col-sm-12">
+                                        <div class="btn-group">
+                                            <div class="col-md-12 pl-0 offset-md-6">
+                                                <input class="form-control" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary-color pl-0" type="submit">
+                                                    <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
+                                                         height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
+                                                         focusable="false">
+                                                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                        <path
+                                                            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 	<h5 class="card-title b1">
 {{--                                        {!! $des_7->component_name_beng ?? '' !!}--}}
                                     </h5>
@@ -243,7 +284,7 @@
                     fontWeight: "normal"
                 }
             },
-            
+
             xAxis: {
                     categories: [<?php echo $testsVsCases['dateRange'];?>],
                     endOnTick: true,
@@ -354,7 +395,7 @@
                     fontWeight: "normal"
                 }
             },
-           
+
             xAxis: {
                     categories: [<?php echo $forteen_day_infected['dateRange'];?>],
                     endOnTick: true,

@@ -3486,11 +3486,11 @@
         <?php
         use Illuminate\Support\Facades\DB;
 
-       $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100) 
+       $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
 as 'GeneralBedVacancyRate',
-(((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate' 
+(((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
 from hospitaltemporarydata
-where city = 'Country' 
+where city = 'Country'
 group by date ORDER BY date ");
 
         $dates = $general_beds = $icu_beds =[];
