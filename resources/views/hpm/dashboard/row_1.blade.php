@@ -160,7 +160,7 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
                     <div class="col-xl-4 col-md-4 col-sm-4">
-                        
+
                     </div>
                     <div class="col-xl-8 col-md-8 col-sm-8" style="float:right">
                         <div class="btn-group" style="float:right">
@@ -220,16 +220,16 @@
                 <div class="col-sm-12">
                     <h3 class="card-title b1">{!! $des_2->component_name_beng ?? '' !!}</h3>
                 </div>
-                
+
             </div>
             <div class="card-body">
                 <form action="">
                     <div class="d-flex flex-row justify-content-end">
                     <div class="col-md-2 pl-0">
-                            <input class="form-control" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                            <input class="form-control from_date_division_chng" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
                         </div>
                         <div class="col-md-2 pl-0">
-                            <input class="form-control" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
+                            <input class="form-control to_date_division_chng" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
                         </div>
                         <div class="form-label pt-2 mr-1 b1">বিভাগ</div>
                         <div>
@@ -588,6 +588,14 @@
             if($('.select_upazilla').val() && $('.select_upazilla').val()!='') {
                 $('.select_district').val(null).trigger("change");
             }
+            var form_date = '{!! request()->get('from_date') !!}';
+            var to_date = '{!! request()->get('to_date') !!}'
+            if($('.from_date_division_chng').val() && $('.from_date_division_chng').val() !=''){
+                form_date =   $('.from_date_division_chng').val();
+            }
+            if($('.to_date_division_chng').val() && $('.to_date_division_chng').val() !=''){
+                to_date =   $('.to_date_division_chng').val();
+            }
             $.ajax({
 
                 type:"GET",
@@ -596,8 +604,8 @@
                     'division': $('.division_select').val(),
                     'district' : $('.select_district').val(),
                     'upazilla' : $('.select_upazilla').val(),
-                    'from_date':'{!! request()->get('from_date') !!}',
-                    'to_date':'{!! request()->get('to_date') !!}'
+                    'from_date': form_date,
+                    'to_date': to_date
                 },
                 timeout: 30000,
                 success: function(data) {
