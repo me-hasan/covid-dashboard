@@ -42,8 +42,8 @@
                 <table class="table table-responsive-sm table-bordered">
                     <thead>
                         <tr>
+                            <th>Code</th>
                             <th style="width: 200px">Component Name</th>
-                            <th>Title</th>
                             <th>Description</th>
                             <th style="width: 200px">Action</th>
 
@@ -53,15 +53,13 @@
                         @if(sizeof($components) > 0)
                         @foreach($components as $component)
                         <tr>
+                            <td>
+                                {{$component->component_id ?? ''}}
+                            </td>
+
                             <td>{{$component->component_name_beng ?? ''}}</td>
                             
-                            <td>
-                                @php
-                                 $get_title = htmlentities($component->component_title);
-                                 if($get_title == null) echo '--';
-                                 else echo html_entity_decode($get_title);
-                                @endphp
-                            </td>
+                            
                             <td>
                                 @php
                                  $get_desc = htmlentities($component->description_beng);

@@ -48,6 +48,7 @@ class ComponentController extends Controller
             DB::begintransaction();
 
             $componentNames = getComponentName();
+          
             $getComponenName =  $componentNames[$request->component_name];
             // $component_id = sprintf('%03d',$request->component_name);
             $component_id = $request->component_name;
