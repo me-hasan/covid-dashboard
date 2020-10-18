@@ -244,7 +244,7 @@ where date=((select max(date) from test_positivity_rate_district))";
                 array_push($dateBangla, $get_date_bangla);
             }
 
-            array_push($infected_person_date, $inf->cumulative_infected_person);
+            array_push($infected_person_date, doubleval($inf->cumulative_infected_person));
         }
 
         $data['dateEnglish'] = $dateEnglish;
@@ -1697,6 +1697,44 @@ using(district) ORDER BY r.test_positivity DESC");
         }
         $districtName = implode(", ",$arrayData);
         return $districtName;
+    }
+
+    public function getNationalDailyInfectedData(Request  $request) {
+        $data['status'] = 'failed';
+        try{
+            $nation_wide_MovingAvgInfected =$this->nation_wide_five_dayMovingAvgInfected($request);
+            $date_arr = $infected_arr = $avg_arr  = array();
+
+            foreach($nation_wide_MovingAvgInfected as $row){
+                $date_arr[] = convertEnglishDateToBangla($row->report_date);
+                $infected_arr[] = doubleval($row->infected_24_hrs);
+                $avg_arr[] = doubleval($row->five_dayMovingAvgInfected);
+            }
+            $infected = implode(",", $infected_arr);
+            $avg = implode(",", $avg_arr);
+            $data['infected'] = json_encode($infected_arr);
+            $data['avg'] = json_encode($avg_arr);
+            $data['categories'] = json_encode($date_arr);
+            /*$data['infected'] = $districtData;
+            $data['upazillaData'] = $upzillaData;*/
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
+    }
+
+    public function getNationalInfectedData(Request  $request) {
+        $data['status'] = 'failed';
+        try {
+            $cumulativeInfection = $this->getCumulativeInfectionData($request);
+            $data['categories'] = json_encode($cumulativeInfection['dateBangla']);
+            $data['row1_left_trend_infected_data'] = json_encode($cumulativeInfection['infected_person_date']);
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
     }
 
 }
