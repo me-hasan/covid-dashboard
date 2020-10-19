@@ -6,7 +6,7 @@
                 <div class="col-sm-6">
                     <h5 class="card-title b1">পরীক্ষা পরিস্থিতি</h5>
                 </div>
-                
+
             </div>
             <div class="card-body">
 
@@ -19,18 +19,18 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="col-xl-4 col-md-4 col-sm-4">
-                                    
+
                                 </div>
                                 <div class="col-xl-8 col-md-8 col-sm-8" style="float:right">
                                     <div class="btn-group" style="float:right">
                                         <div class="col-md-5 pl-0">
-                                            <input class="form-control" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                                            <input class="form-control national_test_vs_infected_trend_from_date" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
                                         </div>
                                         <div class="col-md-5 pl-0">
-                                            <input class="form-control" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
+                                            <input class="form-control national_test_vs_infected_trend_to_date" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
                                         </div>
                                         <div class="btn-group">
-                                            <button class="btn btn-primary-color pl-0" type="submit">
+                                            <button class="btn btn-primary-color pl-0 national_test_vs_infected_trend_click" type="submit">
                                                 <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
                                                      height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
                                                      focusable="false">
@@ -79,16 +79,16 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
                                 <div class="col-xl-4 col-md-4 col-sm-4">
-                                    
+
                                 </div>
                                 <div class="col-xl-4 col-md-4 col-sm-8" style="float:right">
                                     <div class="btn-group" style="float:right">
                                         <div class="col-md-12 pl-0">
-                                            <input class="form-control" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                                            <input class="form-control weekly_comparision_infected_from_date" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
                                         </div>
-                                        
+
                                         <div class="btn-group">
-                                            <button class="btn btn-primary-color pl-0" type="submit">
+                                            <button class="btn btn-primary-color pl-0 weekly_comparision_infected_death_click" type="submit">
                                                 <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
                                                      height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
                                                      focusable="false">
@@ -180,13 +180,13 @@
                                     <div class="col-sm-12">
                                         <div class="btn-group">
                                             <div class="col-md-6 pl-0 offset-md-6">
-                                                <input class="form-control" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                                                <input class="form-control test_positivity_rate_trend_from_date" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
                                             </div>
                                             <div class="col-md-6 pl-0">
-                                                <input class="form-control" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
+                                                <input class="form-control test_positivity_rate_trend_to_date" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
                                             </div>
                                             <div class="btn-group">
-                                                <button class="btn btn-primary-color pl-0" type="submit">
+                                                <button class="btn btn-primary-color pl-0 test_positivity_rate_trend_click" type="submit">
                                                     <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
                                                          height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
                                                          focusable="false">
@@ -303,6 +303,90 @@
                 series:  {!! $series_data_dhk !!}
             });
 
+            $('.test_positivity_rate_trend_click').on('click', function (e){
+                e.preventDefault();
+                var url = new URL('{!! route('hpm.get_hpm_get_test_positivity_rate_trend') !!}');
+                var to_date = $('.test_positivity_rate_trend_to_date').val();
+                var from_date = $('.test_positivity_rate_trend_from_date').val();
+                var test_positivity_rate_trendData = ajaxCallWithUrl(url, from_date,to_date);
+
+                if(test_positivity_rate_trendData) {
+                    test_positivity_rate_trend(test_positivity_rate_trendData);
+                }
+            });
+
+            function test_positivity_rate_trend(data) {
+                Highcharts.chart('test_positivity_rate_trend', {
+                    chart: {
+                        style: {
+                            fontFamily: 'SolaimanLipi'
+                        }
+                    },
+
+                    title: {
+                        text: ''
+                    },
+
+                    subtitle: {
+                        text: ''
+                    },
+
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom',
+                        itemStyle: {
+                            fontSize: "16px",
+                            fontWeight: "normal"
+                        }
+                    },
+
+                    credits:{
+                        enabled:false
+                    },
+
+                    xAxis: {
+                        categories: JSON.parse(data.categories_dhk),
+                        endOnTick: true,
+                        showLastLabel: true,
+                        labels: {
+                            formatter: function() {
+                                return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                            }
+                        }
+                    },
+
+                    tooltip: {
+                        formatter: function() {
+                            return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
+                        }
+                    },
+
+                    yAxis: {
+                        title: {
+                            text: 'দৈনিক টেস্ট পসিটিভিটি রেট',
+                            style: {
+                                fontSize: 18,
+                                fontFamily: 'SolaimanLipi'
+                            }
+                        },
+                        labels: {
+                            formatter: function() {
+                                return englishToBangla(this.value);
+                            }
+                        }
+                    },
+
+                    plotOptions: {
+                        series: {
+                            fillOpacity:0
+                        }
+                    },
+
+                    colors: ['#c94b7d', '#7d5f9d', '#ef4b4b','#b25b3f','#5c687b','#60b5d1','#3acc76','#817376'],
+                    series:  JSON.parse(data.series_data_dhk)
+                });
+            }
 
         // National Test Vs Infected Trend
         Highcharts.chart('national_test_vs_infected_trend', {
@@ -393,8 +477,110 @@
             }]
         });
 
-        <?php
+            $('.national_test_vs_infected_trend_click').on('click', function (e){
+                e.preventDefault();
+                var url = new URL('{!! route('hpm.get_national_test_vs_infected_trend') !!}');
+                var to_date = $('.national_test_vs_infected_trend_to_date').val();
+                var from_date = $('.national_test_vs_infected_trend_from_date').val();
+                var national_test_vs_infected_trendData= ajaxCallWithUrl(url, from_date,to_date);
 
+                if(national_test_vs_infected_trendData) {
+                    national_test_vs_infected_trend(national_test_vs_infected_trendData);
+                }
+            });
+
+            function national_test_vs_infected_trend(data) {
+                Highcharts.chart('national_test_vs_infected_trend', {
+                    chart: {
+                        marginRight: 80, // like left
+                        height: 420,
+                        style: {
+                            fontFamily: 'SolaimanLipi'
+                        }
+                    },
+                    title: {
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    credits:{
+                        enabled:false
+                    },
+                    legend: {
+                        itemStyle: {
+                            fontSize: "16px",
+                            fontWeight: "normal"
+                        }
+                    },
+
+                    xAxis: {
+                        categories: JSON.parse(data.categories),
+                        endOnTick: true,
+                        showLastLabel: true,
+                        labels: {
+                            formatter: function() {
+                                return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                            }
+                        }
+                    },
+                    tooltip: {
+
+                        formatter: function() {
+                            return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                        }
+
+                    },
+                    yAxis: [{
+                        lineWidth: 1,
+                        title: {
+                            text: 'দৈনিক আক্রান্তের সংখ্যা',
+                            style: {
+                                fontSize: 18,
+                                fontFamily: 'SolaimanLipi'
+                            }
+                        },
+                        labels: {
+                            formatter: function() {
+                                return englishToBangla(this.value);
+                            }
+                        },
+                        min:0,
+                    }, {
+                        lineWidth: 1,
+                        opposite: true,
+                        title: {
+                            text: 'দৈনিক পরীক্ষার সংখ্যা',
+                            style: {
+                                fontSize: 18,
+                                fontFamily: 'SolaimanLipi'
+                            }
+                        },
+                        labels: {
+                            formatter: function() {
+                                return englishToBangla(this.value);
+                            }
+                        },
+                        min:0,
+                    }],
+                    colors: ['#9d4a2a', '#dfc825'],
+                    series: [{
+                        name: 'দৈনিক আক্রান্ত (৫-দিনের চলমান গড়)',
+                        data: JSON.parse(data.total_case),
+                        type: 'spline',
+                        marker:{"enabled": false, "symbol":"circle"}
+                    }, {
+                        name: 'দৈনিক পরীক্ষা (৫-দিনের চলমান গড়)',
+                        data:   JSON.parse(data.total_test),
+                        yAxis: 1,
+                        type: 'spline',
+                        marker:{"enabled": false, "symbol":"circle"}
+                    }]
+                });
+            }
+
+        <?php
+/*
         $date_arr = $infected_arr = $death_arr = $test_positivity_arr = array();
 
         foreach($days_infected as $row){
@@ -414,7 +600,7 @@
         }
         $test_positivity = implode(",", $test_positivity_arr);
 
-        ?>
+        */?>
         // Weekly Comparision Infected Death  weekly_comparision_infected_death
         Highcharts.chart('weekly_comparision_infected_death', {
             chart: {
@@ -502,6 +688,106 @@
                 marker:{"enabled": false, "symbol":"circle"}
             } ]
         });
+
+        $(".weekly_comparision_infected_death_click").on('click', function (e){
+            e.preventDefault();
+            var url = new URL('{!! route('hpm.get_weekly_comparision_infected_death') !!}');
+            var from_date = $('.weekly_comparision_infected_from_date').val();
+            var to_date = $('.weekly_comparision_infected_from_date').val();
+            var weekly_comparision_infected_data= ajaxCallWithUrl(url, '', to_date);
+            console.log(weekly_comparision_infected_data);
+            if(weekly_comparision_infected_data) {
+                weekly_comparision_infected(weekly_comparision_infected_data);
+            }
+        });
+        function weekly_comparision_infected(data) {
+            Highcharts.chart('weekly_comparision_infected_death', {
+                chart: {
+                    marginRight: 80, // like left
+                    style: {
+                        fontFamily: 'SolaimanLipi'
+                    }
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits:{
+                    enabled:false
+                },
+                legend: {
+                    enabled:true,
+                    itemStyle: {
+                        fontSize: "16px",
+                        fontWeight: "normal"
+                    }
+                },
+
+                xAxis: {
+                    categories: JSON.parse(data.categories),
+                    endOnTick: true,
+                    showLastLabel: true,
+                    labels: {
+                        formatter: function() {
+                            return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                        }
+                    }
+                },
+                tooltip: {
+
+                    formatter: function() {
+                        return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+                    }
+
+                },
+                yAxis: [{
+                    lineWidth: 1,
+                    title: {
+                        text: 'শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)',
+                        style: {
+                            fontSize: 18,
+                            fontFamily: 'SolaimanLipi'
+                        }
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
+                    },
+                    min:0,
+                }, {
+                    lineWidth: 1,
+                    opposite: true,
+                    title: {
+                        text: 'সংক্রমণ',
+                        style: {
+                            fontSize: 18,
+                            fontFamily: 'SolaimanLipi'
+                        }
+                    },
+                    labels: {
+                        formatter: function() {
+                            return englishToBangla(this.value);
+                        }
+                    }
+                }],
+                colors: ['#dfc825','#9d4a2a'],
+                series: [{
+                    name: 'সংক্রমণ',
+                    data: JSON.parse(data.total_infectedData),
+                    yAxis: 1,
+                    type: 'column',
+                    marker:{"enabled": false, "symbol":"circle"}
+                },{
+                    name: 'শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)',
+                    data: JSON.parse(data.total_test_positivityData),
+                    type: 'spline',
+                    marker:{"enabled": false, "symbol":"circle"}
+                } ]
+            });
+        }
 
         $(document).ready(function(){
 
