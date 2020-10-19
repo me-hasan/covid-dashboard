@@ -59,30 +59,32 @@
 @section('scripts')
 
   
-
     <script type="text/javascript">
         $(window).on('load',function(){
             var window_size = window.innerWidth;
             if(window_size > 768){
                 $(".app-sidebar__toggle").trigger('click') //trigger its click
                 setTimeout(()=>{
-                  $('#national_dialy_infected_trend').highcharts().reflow(); 
-                  $('#district_comparision').highcharts().reflow(); 
-
-                  $('#national_infected_trend').highcharts().reflow(); 
-
-                  $('#weekly_comparision_infected_death').highcharts().reflow(); 
-
-                  $('#test_positivity_rate_trend').highcharts().reflow(); 
-
-                  $('#age_wise_death_distribution').highcharts().reflow(); 
-
-                  $('#hospital_beds_trend').highcharts().reflow();
-                },1000);
-                
+                  reflowHighChart();
+                },500);
             }
-
         });
+
+        $(".app-sidebar__toggle").on('click', function(){
+            setTimeout(()=>{
+                  reflowHighChart();
+                },500);
+        });
+
+        function reflowHighChart(){
+            $('#national_dialy_infected_trend').highcharts().reflow(); 
+            $('#district_comparision').highcharts().reflow();
+            $('#national_infected_trend').highcharts().reflow(); 
+            $('#weekly_comparision_infected_death').highcharts().reflow(); 
+            $('#test_positivity_rate_trend').highcharts().reflow(); 
+            $('#age_wise_death_distribution').highcharts().reflow(); 
+            $('#hospital_beds_trend').highcharts().reflow();
+        }
     </script>
 
 @endsection
