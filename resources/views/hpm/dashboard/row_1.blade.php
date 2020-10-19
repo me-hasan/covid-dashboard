@@ -92,7 +92,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
 
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                        
+
                             {!! $des_1->description_beng ?? '' !!}
                         </p>
                     </div>
@@ -394,7 +394,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
             e.preventDefault();
             var url = new URL('{!! route('hpm.get_national_daily_infected_trend') !!}');
             var to_date = $('.national_in_trend_to_date').val();
-            var from_date = $('.national_in_trend_from_date').val();
+            var from_date = $('.national_in_trend_form_date').val();
             var national_infected_trendData= ajaxCallWithUrl(url, from_date,to_date);
             if(national_infected_trendData) {
                 national_daily_infected_chart(national_infected_trendData);
@@ -479,33 +479,39 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
 
         function ajaxCallWithUrl(url, from_date,to_date) {
             let responseData = false;
-            $.ajax({
+            if(from_date != ' ' && from_date < '2020-05-20'){
+                alert("Please select date after 20 may 2020");
+            } else {
+                $.ajax({
 
-                type:"GET",
-                url:url.toString(),
-                async: false,
-                data: {
-                    'from_date': from_date,
-                    'to_date': to_date
-                },
-                timeout: 30000,
-                success: function(data) {
+                    type:"GET",
+                    url:url.toString(),
+                    async: false,
+                    data: {
+                        'from_date': from_date,
+                        'to_date': to_date
+                    },
+                    timeout: 30000,
+                    success: function(data) {
 
-                    if(data.status == 'success'){
+                        if(data.status == 'success'){
 
-                        responseData =  data;
-                    } else {
-                        alert("Something Went Wrong");
+                            responseData =  data;
+                        } else {
+                            alert("Something Went Wrong");
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log("Request Param");
+                        console.log(request.responseText);
+                        console.log("Status Param");
+                        console.log(status);
+                        console.log(error);
                     }
-                },
-                error: function (request, status, error) {
-                    console.log("Request Param");
-                    console.log(request.responseText);
-                    console.log("Status Param");
-                    console.log(status);
-                    console.log(error);
-                }
-            });
+                });
+            }
+
+
             return responseData;
         }
 
