@@ -92,7 +92,8 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
 
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_1->description_beng ?? '' }}
+                        
+                            {!! $des_1->description_beng ?? '' !!}
                         </p>
                     </div>
                 </div>

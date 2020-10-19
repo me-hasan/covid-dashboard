@@ -55,7 +55,8 @@
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_4->description_beng ?? ''}}
+                                      
+                                        {!! $des_4->description_beng ?? '' !!}
                                     </p>
                                 </div>
                             </div>
@@ -169,15 +170,20 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
+                        <div class="card-header">
+                            <div class="col-sm-12">
+                                <h3 class="card-title b1"> {!! $des_11->component_name_beng ?? '' !!}</h3>
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12">
 
-                                <h5 class="card-title b1 d-none"></h5>
-                                <div class="card-body d-none">
-                                    <div id="test_positivity_per_million"></div>
+                                <div class="col-xl-2 col-md-2 col-sm-2">
+
                                 </div>
-                                <div class="card-header">
-                                    <div class="col-sm-12">
+                                <div class="col-xl-10 col-md-10 col-sm-10" style="float:right">
+                                   
                                         <div class="btn-group">
                                             <div class="col-md-6 pl-0 offset-md-6">
                                                 <input class="form-control test_positivity_rate_trend_from_date" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
@@ -197,23 +203,23 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-                                	<h5 class="card-title b1">
-{{--                                        {!! $des_7->component_name_beng ?? '' !!}--}}
-                                    </h5>
+                                    
+                                	
                                 </div>
-                                <div class="card-body">
-{{--                                    <div id="country_wise_infected"></div>--}}
-                                    <div id="test_positivity_rate_trend"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12">
-                                        <div class="card-body text-justify">
-                                            <h5 class="card-title b1">বর্ণনা</h5>
-                                            <p class="card-text b1">
-                                            </p>
-                                        </div>
-                                    </div>
+                                
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div id="test_positivity_rate_trend"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="card-body text-justify">
+                                    <h5 class="card-title b1">বর্ণনা</h5>
+                                    <p class="card-text b1">
+                                    {{ $des_11->description_beng ?? ''}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +234,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="600" src="https://public.tableau.com/shared/KCWJ6J7MR?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="550" src="https://public.tableau.com/shared/KCWJ6J7MR?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 			});
 
             // Test Positivity Trend

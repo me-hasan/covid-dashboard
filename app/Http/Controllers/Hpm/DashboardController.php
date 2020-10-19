@@ -76,6 +76,7 @@ class DashboardController extends Controller
             $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
             $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
             $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
+            $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
         // shamvil end
 
         //Test vs Cases (Robi)
@@ -1523,7 +1524,7 @@ SELECT
         // return $des[0];
 
         //$des= DB::select("select * from hpm_description_insight where component_name_eng='".$component_name_eng."' and date=(select max(date) from hpm_description_insight) ");
-        $des= DB::select("select * from hpm_description_insight where component_id='".$component_code."' and date=(select max(date) from hpm_description_insight);");
+        $des= DB::select("select * from hpm_description_insight where component_id='".$component_code."' ");
 
         if (isset($des[0])){ return $des[0];}else{return null; }
     }
