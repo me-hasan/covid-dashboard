@@ -11,25 +11,25 @@
                 {{ method_field('PUT') }}
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Component Name : <span style="color:red">*</span></label>
-                        <select class="form-control" name="component_name">
+                        <label for="recipient-name" class="control-label mb-10">উপাদানের নাম : <span style="color:red">*</span></label>
+                        <select class="form-control" name="component_id">
                             @foreach(getComponentName() as $key => $value)
                             <option value="{{$key}}" {{ $key == $component->component_id ? 'selected' : '' }}>{{$key.'-'.$value}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Component Title : <span style="color:red">*</span></label>
-                        <textarea class="form-control custom_textarea" rows="5" name="component_id">{{$component->component_name_beng}}</textarea>
+                        <label for="recipient-name" class="control-label mb-10">শিরোনাম : <span style="color:red">*</span></label>
+                        <textarea class="form-control custom_textarea" rows="5" name="component_name_beng">{{$component->component_name_beng}}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label mb-10">Description : <span style="color:red">*</span></label>
+                        <label for="recipient-name" class="control-label mb-10">বর্ননা : <span style="color:red">*</span></label>
                         <textarea class="form-control custom_textarea" rows="5" name="description">{{$component->description_beng}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">বাতিল</button>
+                    <button type="submit" class="btn btn-primary">পরিবর্তন</button>
                 </div>
             </form>
         </div>
