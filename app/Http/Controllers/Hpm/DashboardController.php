@@ -106,7 +106,7 @@ class DashboardController extends Controller
         $data['testPositivityMap'] = $testPositivityMap;
 
         // 5 oct
-        $cumulativeInfectedPerson_onlyDhaka = $this->cumulativeInfectedPerson_dhaka();
+        $cumulativeInfectedPerson_onlyDhaka = $this->cumulativeInfectedPerson_dhaka($request);
         $k = 0;
         $dhk_divisionlist=[];
         $dhk_seriesData = [];
@@ -218,7 +218,7 @@ where date=((select max(date) from test_positivity_rate_district))";
                           FROM div_dist_upz_infected_trend where Date is not null AND Date <= CURDATE()
                           GROUP BY Date, Division ) as t
                         JOIN (SELECT @running_total:=0) r
-                        WHERE  t.date <= CURDATE() and t.date >= '2020-03-04' $dateQuery
+                        WHERE  t.date <= CURDATE() and t.date >= '2020-05-20' $dateQuery
                         ORDER BY t.date");
         }else{
             // $cumulativeData = DB::select("SELECT t.date,
@@ -233,7 +233,7 @@ where date=((select max(date) from test_positivity_rate_district))";
             //             WHERE  t.date <= CURDATE()
             //             ORDER BY t.date");
 
-            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person   FROM infected_cumulative $dateQuery");
+            $cumulativeData = DB::select(" SELECT date, cumulative_confirmed_cases AS cumulative_infected_person   FROM infected_cumulative $dateQuery and date >= '2020-05-20' ");
         }
 
         foreach ($cumulativeData as $key => $inf) {
@@ -244,7 +244,7 @@ where date=((select max(date) from test_positivity_rate_district))";
                 array_push($dateBangla, $get_date_bangla);
             }
 
-            array_push($infected_person_date, $inf->cumulative_infected_person);
+            array_push($infected_person_date, doubleval($inf->cumulative_infected_person));
         }
 
         $data['dateEnglish'] = $dateEnglish;
@@ -569,20 +569,28 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as Q) as a $
 
     }
 
-     public function cumulativeInfectedPerson_dhaka(){
+     public function cumulativeInfectedPerson_dhaka($request=null){
         $j=0;
         $data = [];
         $dateData = [];
         $divisionData = [];
+
+         $dateQuery = ' AND TRUE';
+         if($request->has('from_date') && $request->from_date != '') {
+             $dateQuery .= ' AND  date_of_test >='. "'".$request->from_date."'";
+         }
+         if($request->has('to_date') && $request->to_date != '') {
+             $dateQuery .= ' AND date_of_test <='. "'".$request->to_date."'";
+         }
 
 
         $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100
         as 'test_positivity' from
         (select date(date_of_test) as 'date_of_test', district, count(*) as total_tests,
         sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data
-        WHERE date_of_test is not null and date_of_test >= '2020-05-20'
+        WHERE  date_of_test is not null and date_of_test >= '2020-05-20'
         and date_of_test <=date_sub(curdate(), interval 7 day)
-        and district = 'Dhaka'
+        and district = 'Dhaka' $dateQuery
         group by district, date(date_of_test)) as a order by a.date_of_test";
 
         $cumulativeData = \Illuminate\Support\Facades\DB::select($cumulativeSql_dhk_sql);
@@ -971,7 +979,7 @@ where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as 
         return $city_wise_hospital_details;
       }
 
-      private function risk_matrix_1($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12){
 
         $risk_matrix = DB::select("select count(l.district) as 'low_to_high' from
 (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
@@ -983,7 +991,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_2($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_2($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
 (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
 inner join
@@ -994,7 +1002,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_3($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select(" select count(l.district) as 'low_to_low'   from
         (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
         inner join
@@ -1006,7 +1014,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_4($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_4($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
 inner join
@@ -1017,7 +1025,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_5($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_medium' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
 inner join
@@ -1028,7 +1036,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_6($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_low' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
 inner join
@@ -1039,7 +1047,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-       private function risk_matrix_7($testCount=100,$test_positive_min=5,$test_positive_max=12){
+       private function risk_matrix_7($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_high' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
 inner join
@@ -1050,7 +1058,7 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_8($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_medium' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
 inner join
@@ -1062,7 +1070,7 @@ using(district)");
       }
 
 
-      private function risk_matrix_9($testCount=100,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_low' from
 (select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
 inner join
@@ -1316,6 +1324,7 @@ SELECT
 
         $dailyTests = $dailyCases = [];
         $dateRange = $totalTest = $totalCase = [];
+        $categories = $totalTestData = $totalCaseData = [];
         if($request->division && $request->district && $request->upazila){
             $dailyTests = DB::select("select * from (
             SELECT a.date as report_date, a.division, a.district, a.upazila, a.NumberOfTest,
@@ -1407,22 +1416,25 @@ SELECT
 
         foreach ($dailyTests as $dailyTest) {
 //            $dateRange[] =  "'" .Carbon::parse($dailyTest->report_date)->format('d-M-Y'). "'" ;
-              $dateRange[] =  "'" .convertEnglishDateToBangla($dailyTest->report_date). "'";
-              $totalTest[] = $dailyTest->fiveDayMovingAvgTest;
+            $categories[] =  "'" .convertEnglishDateToBangla($dailyTest->report_date). "'";
+              $totalTestData[] = doubleval($dailyTest->fiveDayMovingAvgTest);
         }
 
         foreach ($dailyCases as $dailyCase) {
-            $totalCase[] = $dailyCase->fiveDayMovingAvgInfected;
+            $totalCaseData[] = doubleval($dailyCase->fiveDayMovingAvgInfected);
         }
 
-        $dateRange  = implode(",", $dateRange);
-        $totalTest  = implode(",", $totalTest);
-        $totalCase  = implode(",", $totalCase);
+        $dateRange  = implode(",", $categories);
+        $totalTest  = implode(",", $totalTestData);
+        $totalCase  = implode(",", $totalCaseData);
 
         return [
             'totalTest' => $totalTest,
             'totalCase' => $totalCase,
-            'dateRange' => $dateRange
+            'dateRange' => $dateRange,
+            'categories' => $categories,
+            'totalTestData' => $totalTestData,
+            'totalCaseData' => $totalCaseData,
         ];
     }
 
@@ -1431,6 +1443,7 @@ SELECT
 
         $infected = $test_positivity = [];
         $dateRange = $total_infected = $total_test_positivity = [];
+        $categories = $total_infectedData = $total_test_positivityData = [];
         if($request->division && $request->district) {
             $infected = DB::select(" select date as report_date, division_eng, district_city_eng, daily_cases as infected_24_hrs
             from district_wise_cases_covid where district_city_eng = '".$request->district."'
@@ -1463,31 +1476,42 @@ SELECT
             order by a.date_of_test desc limit 14 ");
 
         } else { // national level
-            $infected = DB::select(" SELECT * FROM (SELECT report_date, infected_24_hrs FROM daily_data ORDER BY report_date DESC LIMIT 14) a ORDER BY a.report_date ASC ");
+            $dateQuery = ' Where TRUE';
+            if($request->has('from_date') && $request->from_date != '') {
+                $dateQuery .= ' AND  report_date >='. "'".$request->from_date."'";
+            }
+            if($request->has('to_date') && $request->to_date != '') {
+                $dateQuery .= ' AND report_date <='. "'".$request->to_date."'";
+            }
+
+            $infected = DB::select(" SELECT * FROM (SELECT report_date, infected_24_hrs FROM daily_data $dateQuery ORDER BY report_date DESC LIMIT 14) a ORDER BY a.report_date ASC ");
 
 
             $test_positivity = DB::select(" SELECT * FROM (SELECT report_date, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 AS 'test_positivity'
-            FROM daily_data ORDER BY report_date DESC LIMIT 14)a ORDER BY a.report_date ASC  ");
+            FROM daily_data $dateQuery ORDER BY report_date DESC LIMIT 14)a ORDER BY a.report_date ASC  ");
 
         }
 
         foreach ($infected as $row){
-              $dateRange[] =  "'" .convertEnglishDateToBangla($row->report_date). "'";
-              $total_infected[] = $row->infected_24_hrs;
+            $categories[] =  "'" .convertEnglishDateToBangla($row->report_date). "'";
+              $total_infectedData[] = doubleval($row->infected_24_hrs);
         }
 
         foreach ($test_positivity as $row) {
-            $total_test_positivity[] = $row->test_positivity;
+            $total_test_positivityData[] = doubleval($row->test_positivity);
         }
 
-        $dateRange  = implode(",", $dateRange);
-        $total_infected  = implode(",", $total_infected);
-        $total_test_positivity  = implode(",", $total_test_positivity);
+        $dateRange  = implode(",", $categories);
+        $total_infected  = implode(",", $total_infectedData);
+        $total_test_positivity  = implode(",", $total_test_positivityData);
 
         return [
             'total_infected' => $total_infected,
             'total_test_positivity' => $total_test_positivity,
-            'dateRange' => $dateRange
+            'dateRange' => $dateRange,
+            'categories' => $categories,
+            'total_infectedData' => $total_infectedData,
+            'total_test_positivityData' => $total_test_positivityData,
         ];
     }
 
@@ -1597,7 +1621,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
     }
 
 
-    public function getRiskMatrixModalData($testCount=100,$test_positive_min=5,$test_positive_max=12) {
+    public function getRiskMatrixModalData($testCount=200,$test_positive_min=5,$test_positive_max=12) {
         $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
 r.test_positivity as 'recent_test_positivity' from
 (select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
@@ -1697,6 +1721,100 @@ using(district) ORDER BY r.test_positivity DESC");
         }
         $districtName = implode(", ",$arrayData);
         return $districtName;
+    }
+
+    public function getNationalDailyInfectedData(Request  $request) {
+        $data['status'] = 'failed';
+        try{
+            $nation_wide_MovingAvgInfected =$this->nation_wide_five_dayMovingAvgInfected($request);
+            $date_arr = $infected_arr = $avg_arr  = array();
+
+            foreach($nation_wide_MovingAvgInfected as $row){
+                $date_arr[] = convertEnglishDateToBangla($row->report_date);
+                $infected_arr[] = doubleval($row->infected_24_hrs);
+                $avg_arr[] = doubleval($row->five_dayMovingAvgInfected);
+            }
+            $infected = implode(",", $infected_arr);
+            $avg = implode(",", $avg_arr);
+            $data['infected'] = json_encode($infected_arr);
+            $data['avg'] = json_encode($avg_arr);
+            $data['categories'] = json_encode($date_arr);
+            /*$data['infected'] = $districtData;
+            $data['upazillaData'] = $upzillaData;*/
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
+    }
+
+    public function getNationalInfectedData(Request  $request) {
+        $data['status'] = 'failed';
+        try {
+            $cumulativeInfection = $this->getCumulativeInfectionData($request);
+            $data['categories'] = json_encode($cumulativeInfection['dateBangla']);
+            $data['row1_left_trend_infected_data'] = json_encode($cumulativeInfection['infected_person_date']);
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
+    }
+
+    public function getNationalTestVsInfectedTrend(Request $request) {
+        $data['status'] = 'failed';
+        try {
+            $testsVsCases = $this->getNationWiseTestsAndCases($request);
+            $data['categories'] = json_encode($testsVsCases['categories']);
+            $data['total_test'] = json_encode($testsVsCases['totalTestData']);
+            $data['total_case'] = json_encode($testsVsCases['totalCaseData']);
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
+    }
+
+    public function getTestPositivityRateTrend(Request  $request) {
+        $data['status'] = 'failed';
+        try {
+            $cumulativeInfectedPerson_onlyDhaka = $this->cumulativeInfectedPerson_dhaka($request);
+            $k = 0;
+            $dhk_divisionlist=[];
+            $dhk_seriesData = [];
+            if(count($cumulativeInfectedPerson_onlyDhaka['division_data'])) {
+                foreach ($cumulativeInfectedPerson_onlyDhaka['division_data'] as $key => $dist) {
+                    $dhk_seriesData[$k]['type'] = 'spline';
+                    $dhk_seriesData[$k]['name'] = en2bnTranslation($key);
+                    $dhk_seriesData[$k]['data'] = $dist ?? [];
+                    $dhk_seriesData[$k]['marker']['enabled'] = false;
+                    $dhk_seriesData[$k]['marker']['symbol'] = 'circle';
+                    $dhk_divisionlist[] = $key;
+                    $k++;
+                }
+            }
+            $data['series_data_dhk'] = json_encode($dhk_seriesData);
+            $data['categories_dhk'] = json_encode($cumulativeInfectedPerson_onlyDhaka['categories']) ?? [];
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
+    }
+
+    public function getWeeklyDifferenceData(Request $request) {
+        $data['status'] = 'failed';
+        try{
+
+            $forteen_day_infected = $this->get_14days_infected($request);
+            $data['categories'] = json_encode($forteen_day_infected['categories']);
+            $data['total_infectedData'] = json_encode($forteen_day_infected['total_infectedData']);
+            $data['total_test_positivityData'] = json_encode($forteen_day_infected['total_test_positivityData']);
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
     }
 
 }

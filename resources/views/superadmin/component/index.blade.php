@@ -6,8 +6,8 @@
 <div class="page-header">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#"><i class="fe fe-home mr-2 fs-14"></i>Component Management</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="#">Component List</a></li>
+<!--           <li class="breadcrumb-item"><a href="#"><i class="fe fe-home mr-2 fs-14"></i>Component Management</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="#">Component List</a></li> -->
         </ol>
     </div>
 	<!-- <div class="page-rightheader">
@@ -31,7 +31,7 @@
 	                    </h3>
 	                </div>
 	                <div class="btn btn-list" style="float: right;">
-	                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">Create Component</button>
+	                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">নতুন উপাদান</button>
 	                </div>
             	</div>
                 
@@ -42,10 +42,10 @@
                 <table class="table table-responsive-sm table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 200px">Component Name</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th style="width: 200px">Action</th>
+                            <th>কোড</th>
+                            <th style="width: 200px">শিরোনাম</th>
+                            <th>বর্ননা</th>
+                            <th style="width: 200px">কর্মপ্রক্রিয়া</th>
 
                         </tr>
                     </thead>
@@ -53,15 +53,13 @@
                         @if(sizeof($components) > 0)
                         @foreach($components as $component)
                         <tr>
+                            <td>
+                                {{$component->component_id ?? ''}}
+                            </td>
+
                             <td>{{$component->component_name_beng ?? ''}}</td>
                             
-                            <td>
-                                @php
-                                 $get_title = htmlentities($component->component_title);
-                                 if($get_title == null) echo '--';
-                                 else echo html_entity_decode($get_title);
-                                @endphp
-                            </td>
+                            
                             <td>
                                 @php
                                  $get_desc = htmlentities($component->description_beng);
@@ -70,7 +68,7 @@
                                 @endphp
                             </td>
                             <td>
-                               <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#edit_{{$component->component_id}}" style="float: left;margin-right: 5px;">Edit</button>
+                               <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#edit_{{$component->component_id}}" style="float: left;margin-right: 5px;">পরিবর্তন</button>
                                 @include('superadmin.component.edit')
                             </td>
                         </tr>

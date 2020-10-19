@@ -39,27 +39,30 @@ class ComponentController extends Controller
 
     public function store(Request $request) {
         $this->validate($request, [
-            'component_name'=>'required',
-            'component_title'=>'required',
+            'component_id'=>'required',
+            'component_name_beng'=>'required',
             'description'=>'required'
         ]);
+        //dd($request->component_id);
         
         try{
             DB::begintransaction();
 
             $componentNames = getComponentName();
-            $getComponenName =  $componentNames[$request->component_name];
+          
+            $getComponenName =  $componentNames[$request->component_id];
             // $component_id = sprintf('%03d',$request->component_name);
-            $component_id = $request->component_name;
+            $component_id = $request->component_id;
 
             $isExist = DB::table('hpm_description_insight')->where('component_id', $component_id)->first();
+       
             if($isExist){
                 DB::table('hpm_description_insight')->where('component_id', $component_id)->update(
-                    ['date' => Carbon::now(),'component_title' => $request->component_title, 'description_beng' => $request->description ]
+                    ['date' => Carbon::now(),'component_name_beng' => $request->component_name_beng, 'description_beng' => $request->description ]
                 );
             }else{
                 DB::table('hpm_description_insight')->insert(
-                    ['date' => Carbon::now(),'component_id' => $component_id,'component_name_beng' => $getComponenName, 'component_title' => $request->component_title, 'description_beng' => $request->description ]
+                    ['date' => Carbon::now(),'component_id' => $component_id,'component_name_beng' => $getComponenName,  'description_beng' => $request->description ]
                 );
             }
             
@@ -76,17 +79,18 @@ class ComponentController extends Controller
     {
         
         $this->validate($request, [
-            'component_name'=>'required',
-            'component_title'=>'required',
+            'component_id'=>'required',
+            'component_name_beng'=>'required',
             'description'=>'required'
         ]);
         
         try{
             DB::begintransaction();
             $isExist = DB::table('hpm_description_insight')->where('component_id', $component_id)->first();
+            // dd($isExist);
             if($isExist){
                 DB::table('hpm_description_insight')->where('component_id', $component_id)->update(
-                    ['date' => Carbon::now(),'component_title' => $request->component_title, 'description_beng' => $request->description ]
+                    ['date' => Carbon::now(),'component_name_beng' => $request->component_name_beng, 'description_beng' => $request->description ]
                 );
                 DB::commit();
                 return redirect()->back()->with('success','Component Successfully Updated');

@@ -113,10 +113,66 @@ if (! function_exists('mapDivisionColor')) {
         function getComponentName()
         {
             return [
-                '101'=> 'দৈনিক দেশব্যাপী সংক্রামতি',
-                '102'=> 'অঞ্চল অনুসারে দৈনিক নতুন সংক্রমণ',
-                '103'=> 'মোট দেশব্যাপী সংক্রামতি',
+                '101'=> 'সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন',
+                '201'=> 'অঞ্চল তুলনা',
+                '202'=> 'সংক্রমণের ক্রমবর্ধমান পরিবর্তন',
+                '301'=> 'পরীক্ষা বনাম আক্রান্ত',
+                '302'=> 'বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার',
+                '303'=> 'পরীক্ষা ভিত্তিক ঝুঁকি',
+                '304'=> 'দক্ষিণ এশিয়ার দেশগুলোতে পরীক্ষার তুলনা',
+                '401'=> 'গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান',
+                '501'=> 'বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা',
+                '601'=> 'কোভিড হাসপাতালসমূহের ধারণ ক্ষমতা ও ব্যবহার',
             ];
         }
     }
+
+    function makecomma($input)
+        {
+            // This function is written by some anonymous person - I got it from Google
+            if(strlen($input)<=2)
+            { return $input; }
+            $length=substr($input,0,strlen($input)-2);
+            $formatted_input = makecomma($length).",".substr($input,-2);
+            return $formatted_input;
+        }
+
+    if(!function_exists('formatInBanglaStyle'))
+    {
+
+
+        function formatInBanglaStyle($num){
+            // This is my function
+            $pos = strpos((string)$num, ".");
+            if ($pos === false) { $decimalpart="00";}
+            else { $decimalpart= substr($num, $pos+1, 2); $num = substr($num,0,$pos); }
+
+            if(strlen($num)>3 & strlen($num) <= 12){
+                        $last3digits = substr($num, -3 );
+                        $numexceptlastdigits = substr($num, 0, -3 );
+                        $formatted = makecomma($numexceptlastdigits);
+                        $stringtoreturn = $formatted.",".$last3digits ;
+            }elseif(strlen($num)<=3){
+                        $stringtoreturn = $num;
+            }elseif(strlen($num)>12){
+                        $stringtoreturn = number_format($num, 2);
+            }
+
+            if(substr($stringtoreturn,0,2)=="-,"){$stringtoreturn = "-".substr($stringtoreturn,2 );}
+
+        $bn = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০"];
+        $en = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
+   
+        $bn_number = str_replace($en, $bn, $stringtoreturn);
+
+        return $bn_number;
+
+            //return $stringtoreturn;
+        }
+
+
+    }
+
+
 }
