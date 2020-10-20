@@ -1,3 +1,4 @@
+<?php $abc='das'; ?>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
@@ -439,6 +440,7 @@
             colors: ['#ef4b4b', '#feea1f'],
             series: [{
                 name: 'মৃত্যু',
+            
                 data: [<?php echo $previous_month__death;?>]
                 {{--data: [<?php echo $deathAge;?>]--}}
 
