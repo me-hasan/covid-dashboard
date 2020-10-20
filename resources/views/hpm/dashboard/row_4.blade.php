@@ -89,13 +89,13 @@
                                 <div class="col-xl-8 col-md-8 col-sm-8" style="float:right">
                                     <div class="btn-group" style="float:right">
                                         <div class="col-md-5 pl-0">
-                                            <input class="form-control national_test_vs_infected_trend_from_date" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
+                                            <input class="form-control hospital_beds_trend_from_date" placeholder="From Date" type="date" name="from_date" value="{{ request()->get('from_date') }}">
                                         </div>
                                         <div class="col-md-5 pl-0">
-                                            <input class="form-control national_test_vs_infected_trend_to_date" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
+                                            <input class="form-control hospital_beds_trend_to_date" placeholder="To Date" type="date" name="to_date" value="{{ request()->get('to_date') }}">
                                         </div>
                                         <div class="btn-group">
-                                            <button class="btn btn-primary-color pl-0 national_test_vs_infected_trend_click" type="submit">
+                                            <button class="btn btn-primary-color pl-0 hospital_beds_trend_click" type="submit">
                                                 <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24"
                                                      height="100%" width="100%" preserveAspectRatio="xMidYMid meet"
                                                      focusable="false">
@@ -3784,5 +3784,96 @@ group by date ORDER BY date ");
 
             }],
         });
+
+		$('.hospital_beds_trend_click').on('click', function (e){
+                e.preventDefault();
+                var url = new URL('{!! route('hpm.get_hospital_beds_trend') !!}');
+                var to_date = $('.hospital_beds_trend_to_date').val();
+                var from_date = $('.hospital_beds_trend_from_date').val();
+                var hospital_beds_trendData= ajaxCallWithUrl(url, from_date,to_date);
+
+                if(hospital_beds_trendData) {
+                    hospital_beds_trend(hospital_beds_trendData);
+                }
+        });
+
+        function hospital_beds_trend(data) {// Hospital Beds Trend
+        	//alert(JSON.parse(data.hospital_vacancy_dates));
+		        Highcharts.chart('hospital_beds_trend', {
+		            chart: {
+		                height: 460,
+						style: {
+							fontFamily: 'SolaimanLipi'
+						}
+		            },
+		            title: {
+		                text: ''
+		            },
+
+		            subtitle: {
+		                text: ''
+		            },
+
+		            legend: {
+		                layout: 'horizontal',
+		                align: 'center',
+		                verticalAlign: 'bottom',
+						itemStyle: {
+							fontSize: "16px",
+							fontWeight: "normal"
+						}
+		            },
+
+		            credits:{
+		                enabled:false
+		            },
+
+		            xAxis: {
+		                categories: JSON.parse(data.hospital_vacancy_dates)
+					},
+		            tooltip: {
+						formatter: function() {
+							return `${this.series.name}: <b>${englishToBangla(this.y)}%</b>`;
+						}
+		        	},
+		            yAxis: {
+		                title: {
+		                    text: 'খালি শয্যা সংখ্যার শতকরা হার',
+							style: {
+								fontSize: 18,
+								fontFamily: 'SolaimanLipi'
+							}
+		                },
+		                labels: {
+		                    formatter: function() {
+		                        return englishToBangla(this.value)+'%';
+		                    }
+		                }
+		            },
+
+		            plotOptions: {
+		                series: {
+		                    fillOpacity:0
+		                }
+		            },
+
+
+		            colors: ['#dfc825', '#9d4a2a'],
+		            series: [{
+		                name: 'সাধারণ শয্যা',
+		                data: JSON.parse(data.hospital_vacancy_generals),
+		                type : 'area',
+		                marker:{symbol:'circle'}
+
+		            },
+					{
+		                name: 'আইসিইউ শয্যা',
+		                data: JSON.parse(data.hospital_vacancy_icus),
+		                type : 'area',
+		                marker:{symbol:'circle'}
+
+		            }],
+		        });
+            }
     </script>
 @endpush
