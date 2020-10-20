@@ -482,6 +482,8 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
 
             if(from_date  && from_date < '2020-05-20'){
                 alert("Please select date after 20 may 2020");
+            }else if(to_date && to_date < '2020-05-20') {
+                alert("Please select date after 20 may 2020");
             } else {
                 $.ajax({
 
