@@ -1817,5 +1817,58 @@ using(district) ORDER BY r.test_positivity DESC");
         }
         return $data;
     }
+// shamvil
+    protected function getNationWideHospitalBedsTrend($request) {
+        
+        $testDateQuery = ' ';
+        if($request->has('from_date') && $request->from_date != '') {
+            $testDateQuery .= ' AND date >='. "'".$request->from_date."'";
+        }
+        if($request->has('to_date') && $request->to_date != '') {
+            if($testDateQuery == '') {
+                $testDateQuery .= ' AND date <= '. "'".$request->to_date."'";
+            } else {
+                $testDateQuery .= ' AND date <='. "'".$request->to_date."'";
+            }
+        }
+ 
+        $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
+        as 'GeneralBedVacancyRate',
+        (((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
+        from hospitaltemporarydata
+        where city = 'Country' $testDateQuery
+        group by date ORDER BY date ");
+
+        $dates = $general_beds = $icu_beds =[];
+        foreach ($vacancy_beds as $key => $vacancy_bed) {
+            $dates[]        = "'" .convertEnglishDateToBangla($vacancy_bed->date). "'";;
+            $general_beds[] = $vacancy_bed->GeneralBedVacancyRate;
+            $icu_beds[]     = $vacancy_bed->ICUVacancyRate;
+        }
+
+        $hospital_vacancy_dates     = implode(",", $dates);
+        $hospital_vacancy_generals  = implode(",", $general_beds);
+        $hospital_vacancy_icus      = implode(",", $icu_beds);
+
+        return [
+            'hospital_vacancy_dates' => $hospital_vacancy_dates,
+            'hospital_vacancy_generals' => $hospital_vacancy_generals,
+            'hospital_vacancy_icus' => $hospital_vacancy_icus
+        ];
+    }
+
+    public function getHospitalBedsTrend(Request $request) {
+        $data['status'] = 'failed';
+        try {
+            $hospitalBedsTrend = $this->getNationWideHospitalBedsTrend($request);
+            $data['hospital_vacancy_dates'] = json_encode($hospitalBedsTrend['hospital_vacancy_dates']);
+            $data['hospital_vacancy_generals'] = json_encode($hospitalBedsTrend['hospital_vacancy_generals']);
+            $data['hospital_vacancy_icus'] = json_encode($hospitalBedsTrend['hospital_vacancy_icus']);
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+
+        }
+        return $data;
+    }
 
 }
