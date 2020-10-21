@@ -1819,8 +1819,8 @@ using(district) ORDER BY r.test_positivity DESC");
     }
 // shamvil
     protected function getNationWideHospitalBedsTrend($request) {
-        
-        $testDateQuery = ' ';
+
+        /*$testDateQuery = ' ';
         if($request->has('from_date') && $request->from_date != '') {
             $testDateQuery .= ' AND date >='. "'".$request->from_date."'";
         }
@@ -1830,20 +1830,26 @@ using(district) ORDER BY r.test_positivity DESC");
             } else {
                 $testDateQuery .= ' AND date <='. "'".$request->to_date."'";
             }
+        }*/
+        $dateQuery = ' AND TRUE';
+        if($request->has('from_date') && $request->from_date != '') {
+            $dateQuery .= ' AND  date >='. "'".$request->from_date."'";
         }
- 
+        if($request->has('to_date') && $request->to_date != '') {
+            $dateQuery .= ' AND date <='. "'".$request->to_date."'";
+        }
         $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
         as 'GeneralBedVacancyRate',
         (((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
         from hospitaltemporarydata
-        where city = 'Country' $testDateQuery
+        where city = 'Country' $dateQuery
         group by date ORDER BY date ");
 
         $dates = $general_beds = $icu_beds =[];
         foreach ($vacancy_beds as $key => $vacancy_bed) {
-            $dates[]        = "'" .convertEnglishDateToBangla($vacancy_bed->date). "'";;
-            $general_beds[] = $vacancy_bed->GeneralBedVacancyRate;
-            $icu_beds[]     = $vacancy_bed->ICUVacancyRate;
+            $dates[]        = convertEnglishDateToBangla($vacancy_bed->date);
+            $general_beds[] = doubleval($vacancy_bed->GeneralBedVacancyRate);
+            $icu_beds[]     = doubleval($vacancy_bed->ICUVacancyRate);
         }
 
         $hospital_vacancy_dates     = implode(",", $dates);
@@ -1851,9 +1857,9 @@ using(district) ORDER BY r.test_positivity DESC");
         $hospital_vacancy_icus      = implode(",", $icu_beds);
 
         return [
-            'hospital_vacancy_dates' => $hospital_vacancy_dates,
-            'hospital_vacancy_generals' => $hospital_vacancy_generals,
-            'hospital_vacancy_icus' => $hospital_vacancy_icus
+            'hospital_vacancy_dates' => $dates,
+            'hospital_vacancy_generals' => $general_beds,
+            'hospital_vacancy_icus' => $icu_beds
         ];
     }
 
