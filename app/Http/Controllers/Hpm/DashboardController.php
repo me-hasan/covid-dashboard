@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
         //dd($cumulativeInfectedPerson);
 
-        // shamvil start
+        
             // row 1
             $data['nation_wide_MovingAvgInfected'] =$this->nation_wide_five_dayMovingAvgInfected($request);
             // row 2
@@ -77,9 +77,9 @@ class DashboardController extends Controller
             $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
             $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
             $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
-        // shamvil end
+        
 
-        //Test vs Cases (Robi)
+        //Test vs Cases 
         $data['testsVsCases'] = $this->getNationWiseTestsAndCases($request);
 //dd($data['testsVsCases']);
 
@@ -585,7 +585,8 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as Q) as a $
          }
 
 
-        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100
+        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, 
+        round((a.positive_tests/a.total_tests)*100, 2)
         as 'test_positivity' from
         (select date(date_of_test) as 'date_of_test', district, count(*) as total_tests,
         sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data
@@ -1817,7 +1818,7 @@ using(district) ORDER BY r.test_positivity DESC");
         }
         return $data;
     }
-// shamvil
+
     protected function getNationWideHospitalBedsTrend($request) {
 
         /*$testDateQuery = ' ';
