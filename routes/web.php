@@ -135,6 +135,7 @@ Route::get('hpm-get-national-test-vs-infected-trend','Hpm\DashboardController@ge
 Route::get('hpm-get-test-positivity-rate-trend','Hpm\DashboardController@getTestPositivityRateTrend')->name('hpm.get_hpm_get_test_positivity_rate_trend');
 Route::get('hpm-get-weekly-comparision-infected-death','Hpm\DashboardController@getWeeklyDifferenceData')->name('hpm.get_weekly_comparision_infected_death');
 Route::get('hpm-risk-matrix-data','Hpm\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData');
+Route::get('hpm-get-hospital-beds-trend','Hpm\DashboardController@getHospitalBedsTrend')->name('hpm.get_hospital_beds_trend');
 Route::get('/admin/f5', function () {
 
     // auth()->user()->roles()->attach(1);
