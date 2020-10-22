@@ -452,7 +452,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                         }
                     }
                 },
-                tooltip: {
+                tooltip: { 
                     formatter: function() {
                         return `${this.series.name} ( ${this.x} ): <b>${englishToBangla(this.y)}</b>`;
                     }
