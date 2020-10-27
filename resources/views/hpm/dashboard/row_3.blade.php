@@ -22,7 +22,7 @@
                     </div>
                     
                     <div class="col-xl-4 col-md-12">
-                    	<h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!} - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}</h5>
+                        <h5 class="card-title b1">১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!} - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->lastOfMonth()->day) !!}শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}</h5>
                         <div id="age_wise_death_distribution_1"></div>
                     </div>
                     <div class="col-xl-4 col-md-12">
@@ -36,7 +36,7 @@
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
-                                {{ $des_9->description_beng ?? '' }}
+                                {!! $des_9->description_beng ?? '' !!}
                             </p>
                         </div>
                      </div>
@@ -310,9 +310,9 @@
         Highcharts.chart('age_wise_death_distribution', {
             chart: {
                 type: 'bar',
-				style: {
-					fontFamily: 'SolaimanLipi'
-				}
+                style: {
+                    fontFamily: 'SolaimanLipi'
+                }
             },
             title: {
                 text: ''
@@ -325,10 +325,10 @@
             },
             legend:{
                 enabled:true,
-				itemStyle: {
-					fontSize: "16px",
-					fontWeight: "normal"
-				}
+                itemStyle: {
+                    fontSize: "16px",
+                    fontWeight: "normal"
+                }
             },
             yAxis: {
                 title: {
@@ -342,12 +342,12 @@
             },
             xAxis: {
                 categories: ["০-১০","১১-২০","২১-৩০","৩১-৪০","৪১-৫০","৫১-৬০","৬১+"],
-				title: {
+                title: {
                     text: 'বয়স',
-					style: {
-						fontSize: 18,
-						fontFamily: 'SolaimanLipi'
-					}
+                    style: {
+                        fontSize: 18,
+                        fontFamily: 'SolaimanLipi'
+                    }
                 }
             },
             /*tooltip: {
@@ -382,9 +382,9 @@
         Highcharts.chart('age_wise_death_distribution_1', {
             chart: {
                 type: 'bar',
-				style: {
-					fontFamily: 'SolaimanLipi'
-				}
+                style: {
+                    fontFamily: 'SolaimanLipi'
+                }
             },
             title: {
                 text: ''
@@ -397,10 +397,10 @@
             },
             legend:{
                 enabled:true,
-				itemStyle: {
-					fontSize: "16px",
-					fontWeight: "normal"
-				}
+                itemStyle: {
+                    fontSize: "16px",
+                    fontWeight: "normal"
+                }
             },
             yAxis: {
                 title: {
@@ -414,12 +414,12 @@
             },
             xAxis: {
                 categories: ["০-১০","১১-২০","২১-৩০","৩১-৪০","৪১-৫০","৫১-৬০","৬১+"],
-				title: {
+                title: {
                     text: 'বয়স',
-					style: {
-						fontSize: 18,
-						fontFamily: 'SolaimanLipi'
-					}
+                    style: {
+                        fontSize: 18,
+                        fontFamily: 'SolaimanLipi'
+                    }
                 }
             },
             /*tooltip: {
@@ -455,9 +455,9 @@
         Highcharts.chart('age_wise_death_distribution_2', {
             chart: {
                 type: 'bar',
-				style: {
-					fontFamily: 'SolaimanLipi'
-				}
+                style: {
+                    fontFamily: 'SolaimanLipi'
+                }
             },
             title: {
                 text: ''
@@ -470,10 +470,10 @@
             },
             legend:{
                 enabled:true,
-				itemStyle: {
-					fontSize: "16px",
-					fontWeight: "normal"
-				}
+                itemStyle: {
+                    fontSize: "16px",
+                    fontWeight: "normal"
+                }
             },
             yAxis: {
                 title: {
@@ -487,12 +487,12 @@
             },
             xAxis: {
                 categories: ["০-১০","১১-২০","২১-৩০","৩১-৪০","৪১-৫০","৫১-৬০","৬১+"],
-				title: {
+                title: {
                     text: 'বয়স',
-					style: {
-						fontSize: 18,
-						fontFamily: 'SolaimanLipi'
-					}
+                    style: {
+                        fontSize: 18,
+                        fontFamily: 'SolaimanLipi'
+                    }
                 }
             },
             /*tooltip: {

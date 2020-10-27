@@ -132,8 +132,8 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{-- $des_2->description_beng ?? '' --}}
-                            {{ $des_7->description_beng ?? ''}}
+                      
+                            {!! $des_7->description_beng ?? '' !!}
                         </p>
                     </div>
                 </div>
@@ -196,7 +196,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_3->description_beng ?? '' }}
+                            {!! $des_3->description_beng ?? '' !!}
                         </p>
                     </div>
                 </div>
@@ -278,7 +278,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_2->description_beng ?? '' }}
+                            {!! $des_2->description_beng ?? '' !!}
                         </p>
                     </div>
                 </div>

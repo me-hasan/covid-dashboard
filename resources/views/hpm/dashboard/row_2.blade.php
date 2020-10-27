@@ -114,7 +114,7 @@
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_5->description_beng ?? ''}}
+                                        {!! $des_5->description_beng ?? '' !!}
                                     </p>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                                         <div class="card-body text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                                {{ $des_6->description_beng ?? '' }}
+                                                {!! $des_6->description_beng ?? '' !!}
                                             </p>
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@
                                 <div class="card-body text-justify">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                    {{ $des_11->description_beng ?? ''}}
+                                    {!! $des_11->description_beng ?? '' !!}
                                     </p>
                                 </div>
                             </div>
