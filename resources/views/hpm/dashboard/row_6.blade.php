@@ -305,7 +305,7 @@ foreach ($low_to_low_table_contentData as $result) {
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
-                                {{ $des_8->description_beng ?? ''}}
+                                {!! $des_8->description_beng ?? '' !!}
                             </p>
                         </div>
                     </div>
