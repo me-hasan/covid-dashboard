@@ -58,7 +58,7 @@ class LoginController extends Controller
                     return RouteServiceProvider::IEDCR_DASHBOARD;
                     break;
                 case 'hpm':
-                    return RouteServiceProvider::HPM_DASHBOARD;
+                    return RouteServiceProvider::XPM_DASHBOARD;
                     break;
                 default:
                     return RouteServiceProvider::IEDCR_DASHBOARD;

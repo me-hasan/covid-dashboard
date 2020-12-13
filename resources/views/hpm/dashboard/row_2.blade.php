@@ -234,7 +234,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="550" src="https://public.tableau.com/shared/KCWJ6J7MR?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="550" src="https://public.tableau.com/views/COVIDtestpositivityratedistrict_16043796001030/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 			});
 
             // Test Positivity Trend

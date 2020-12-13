@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+@include('xpm.header')
+
+<body class="app sidebar-mini">
+
+<!---Global-loader-->
+<div id="global-loader" >
+    <img src="{{ asset('assets/images/svgs/loader.svg') }}" alt="loader">
+</div>
+<!--- End Global-loader-->
+
+<!-- Page -->
+<div class="page">
+  <div class="page-main">
+
+    <!-- @include('xpm.aside') -->
+
+    <!-- App-Content -->
+    <div class="app-content main-content">
+      <div class="side-app pt-0">
+
+        @include('xpm.sub-header')
+
+        <!--Page header-->
+        <div class="page-header mt-0 mb-1">
+          <div class="page-leftheader">
+            <!--<h4 class="page-title mb-0">Hi! Welcome Back</h4>-->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item b1"><a href="{!! route('xpm.dashboard') !!}"><i class="fe fe-home mr-2 fs-14"></i>হোম</a></li>
+              <li class="breadcrumb-item active b1" aria-current="page"><a href="#">@yield('bread_crumb_active','ড্যাশবোর্ড')</a></li>
+            </ol>
+          </div>
+          <!--<div class="page-rightheader">
+								<div class="btn btn-list">
+									<a href="#" class="btn btn-info"><i class="fe fe-settings mr-1"></i> General Settings </a>
+									<a href="#" class="btn btn-danger"><i class="fe fe-printer mr-1"></i> Print </a>
+									<a href="#" class="btn btn-warning"><i class="fe fe-shopping-cart mr-1"></i> Buy Now </a>
+								</div>
+							</div>-->
+        </div>
+        <!--End Page header-->
+
+        @yield('content')
+
+      </div>
+    </div>
+    <!-- End app-content-->
+  </div>
+
+  <!--Footer-->
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center flex-row-reverse">
+        <div class="col-md-12 col-sm-12 text-center b1">কপিরাইট © ২০২০ <a href="#">কাভিড-১৯, জাতীয় ড্যাশবোর্ড</a>। সকল অধিকার সংরক্ষিত। </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer-->
+
+</div>
+<!-- End Page -->
+
+<!-- Back to top -->
+<a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
+
+@include('xpm.footer')
+</body>
+</html>

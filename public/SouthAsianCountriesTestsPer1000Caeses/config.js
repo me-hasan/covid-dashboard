@@ -63,7 +63,7 @@ var CONFIG = {
     "scaleType": "linear",
     "syncModels": [],
     "use": "indicator",
-    "which": "total_tests_per_thousand",
+    "which": "Total Tests Per Thousand",
     "zoomedMax": null,
     "zoomedMin": null
    },

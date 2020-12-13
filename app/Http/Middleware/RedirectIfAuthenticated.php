@@ -34,7 +34,7 @@ class RedirectIfAuthenticated
                     $redirectTo = RouteServiceProvider::IEDCR_DASHBOARD;
                     break;
                 case 'hpm':
-                    $redirectTo = RouteServiceProvider::HPM_DASHBOARD;
+                    $redirectTo = RouteServiceProvider::XPM_DASHBOARD;
                     break;
                 default:
                     $redirectTo = RouteServiceProvider::IEDCR_DASHBOARD;
