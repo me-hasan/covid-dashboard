@@ -454,7 +454,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট পরীক্ষা</h4>
-                                <div style="font-size: 33px; color: #ff793c; margin-top: -15px">
+                                <div style="font-size: 35px; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_tested) ? formatInBanglaStyle($total_tested) : ' ' !!}
                                 </div>
                             </div>
@@ -477,7 +477,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট আক্রান্ত</h4>
-                                <div style="font-size: 33px; color: #ff793c; margin-top: -15px">
+                                <div style="font-size: 35px; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
                             </div>
@@ -499,7 +499,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট মৃত্যু</h4>
-                                <div style="font-size: 33px; color: #ff793c; margin-top: -15px">
+                                <div style="font-size: 35px; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_death) ? formatInBanglaStyle($total_death) : ' ' !!}
                                 </div>
                             </div>
@@ -659,23 +659,24 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 <div class="col-lg-12 mt-4" id="scroll_test_status">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <div class="invoice-head title-bg-style">
-                                <div class="row">
-                                    <div class="iv-left col-6 ">
-                                        <h2>পরীক্ষা পরিস্থিতি</h2>
-                                    </div>
-
-                                </div>
-                            </div>
+                            
 
                             <div class="row">
-                                <div class="col-lg-12 mt-2">
-                                    <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
-                                        {!! $des_4->component_name_beng ?? '' !!}
-                                    </h4>
-                                </div>
                                 <div class="col-lg-6 mt-2">
                                     <div class="card">
+                                        <div class="invoice-head title-bg-style">
+                                            <div class="row">
+                                                <div class="iv-left col-6">
+                                                    <h2>পরীক্ষা পরিস্থিতি</h2>
+                                                </div>
+            
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mt-2">
+                                            <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
+                                                {!! $des_4->component_name_beng ?? '' !!}
+                                            </h4>
+                                        </div>
                                         <div class="card-body purple-style info-style">
 
                                             {{--<h4 style="height: 150px;" id="special_word_5" class="header-title ">--}}
@@ -697,6 +698,19 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <hr>
                                 <div class="col-lg-6 mt-2">
                                     <div class="card">
+                                        <div class="invoice-head title-bg-style">
+                                            <div class="row">
+                                                <div class="iv-left col-6">
+                                                    <h2>পরীক্ষা পরিস্থিতি</h2>
+                                                </div>
+            
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mt-2">
+                                            <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
+                                                {!! $des_5->component_name_beng ?? '' !!}
+                                            </h4>
+                                        </div>
                                         <div class="card-body purple-style info-style">
 
                                             {{--<h4 style="height: 150px;" id="special_word_6" class="header-title ">--}}
@@ -749,7 +763,24 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="row">
                                 <div class="col-lg-8"></div>
                                 <div class="col-lg-4">
-                                    <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 316px; height: 95px; top: 78px; left: 383px;"><div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;"><div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true"><div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3><div class="tabLegendContentHolder" style="overflow: hidden auto; width: 306px; height: 85px;"><div class="tabLegendColumnHolder" style="white-space:nowrap"><span class="tabLegendItemColumn" style="width: 306px;"><div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (টেস্ট পজিটিভিটি রেট &gt; ১০%)</span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 255, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">হলুদ (টেস্ট পজিটিভিটি রেট &lt; ৫%)</span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span></div></span></div></div><div class="tabCatLegendScroll" style="display: none;"><div class="tabCatLegendScrollButtonHolder"><span class="tabCatLegendScrollPrev tabCatLegendScrollLeft tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span><span class="tabCatLegendScrollNext tabCatLegendScrollRight tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span></div></div></div><div class="tabLegendTitleControls" style="background-color: white; top: 0px; right: 0px;"><div class="tabLegendHighlighterButton tabLegendTitleControlsButtons tab-widget tabHighlightEnabled" title="Highlight Selected Items" style="user-select: none; -webkit-tap-highlight-color: transparent; display: none;"><div class="tabLegendHighlighterButtonIcon"></div></div><div class="tabLegendContextMenuButton tabLegendTitleControlsButtons" style="display: none;"><div class="tabLegendContextMenuButtonIcon"></div></div></div></div></div></div></div>
+                                    <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 125px; top: 78px; left: 383px;"><div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;"><div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true"><div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3><div class="tabLegendContentHolder" style="overflow: hidden auto; width: 306px; height: 145px;"><div class="tabLegendColumnHolder" style="white-space:nowrap"><span class="tabLegendItemColumn" style="width: 306px;"><div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                        <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;">
+                                            <span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (টেস্ট পজিটিভিটি রেট &gt; ১০%)</span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span></div>
+                                                <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
+                                                    <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (টেস্ট পজিটিভিটি রেট &lt; ৫%) </span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                        <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
+                                                        <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                    </div>
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                        
+                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span>
+                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span>
+                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"></span>
+                                    </span>
+                                    <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">(ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত)</span>
+                                </span>
+                                </div></span></div></div><div class="tabCatLegendScroll" style="display: none;"><div class="tabCatLegendScrollButtonHolder"><span class="tabCatLegendScrollPrev tabCatLegendScrollLeft tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span><span class="tabCatLegendScrollNext tabCatLegendScrollRight tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span></div></div></div><div class="tabLegendTitleControls" style="background-color: white; top: 0px; right: 0px;"><div class="tabLegendHighlighterButton tabLegendTitleControlsButtons tab-widget tabHighlightEnabled" title="Highlight Selected Items" style="user-select: none; -webkit-tap-highlight-color: transparent; display: none;"><div class="tabLegendHighlighterButtonIcon"></div></div><div class="tabLegendContextMenuButton tabLegendTitleControlsButtons" style="display: none;"><div class="tabLegendContextMenuButtonIcon"></div></div></div></div></div></div></div>
                                 </div>
                             </div>
                             <div class="row" >
@@ -1068,10 +1099,11 @@ using(district) ORDER BY r.test_positivity DESC");
                                                                     data-target="#modaldemo1"
                                                                     data-toggle="modal">অপরিবর্তিত উচ্চ ঝুঁকি <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
                                                                 </td>
-                                                                <td style="cursor: pointer;background: #FFAF74; color: white; width: 30%;"
-                                                                    class="high_to_medium_modal_click"
+                                                                <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white"
+                                                                    class="low_to_medium_modal_click"
                                                                     data-target="#modaldemo1"
-                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} টি জেলা
+                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }} টি জেলা
+
                                                                 </td>
                                                                 <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
                                                                     class="high_to_low_modal_click"
@@ -1104,11 +1136,10 @@ using(district) ORDER BY r.test_positivity DESC");
                                                                     data-target="#modaldemo1"
                                                                     data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
                                                                 </td>
-                                                                <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white"
-                                                                    class="low_to_medium_modal_click"
+                                                                <td style="cursor: pointer;background: #FFAF74; color: white; width: 30%;"
+                                                                    class="high_to_medium_modal_click"
                                                                     data-target="#modaldemo1"
-                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }} টি জেলা
-
+                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} টি জেলা
                                                                 </td>
                                                                 <td style="background: #37761D; cursor: pointer; color: white"
                                                                     class="low_to_low_modal_click"
@@ -2892,6 +2923,17 @@ $ydata = [];
                         "dataProvider": xdata,
 
                         "startDuration": 1,
+                        "legend": {
+                            "horizontalGap": 10,
+                            "maxColumns": 1,
+                            "position": "bottom",
+                            "useGraphSettings": true,
+                            "markerSize": 10,
+                            "valueFunction": function (a, value) {
+                                return '';
+                            },
+                            "align": "center"
+                        },
                         "graphs": [{
                             "valueAxis": "v2",
                             "id": "g1",
@@ -2899,7 +2941,7 @@ $ydata = [];
                             "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
                             "fillAlphas": 1,
                             "fillColorsField": "color",
-                            "title": "সংক্রমণ",
+                            "title": "সাপ্তাহিক আক্রান্তের গড়",
                             "type": "column",
                             "lineColor": "rgb(223, 200, 37)",
                             "valueField": "infected",
@@ -2927,7 +2969,7 @@ $ydata = [];
                             "bulletBorderThickness": 3,
                             "fillAlphas": 0,
                             "lineAlpha": 1,
-                            "title": "শতকরা সংক্রমণের হার-টেস্ট পজিটিভিটি রেট",
+                            "title": "সাপ্তাহিক আক্রান্তের টেস্ট পজিটিভিটি গড়",
                             "valueField": "test_positive",
                             "dashLengthField": "dashLengthLine",
                             "type": "smoothedLine",
