@@ -417,7 +417,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_test_dhaka_district">
                                 <li><span class="bullet-point"></span>
-                                    <span>ঢাকা জেলার দৈনিক টেস্ট পজিটিভিটি রেট </span>
+                                    <span>জেলা ভিত্তিক দৈনিক বিবেচনায় আক্রান্তের হার </span>
                                 </li>
                             </a>
 
@@ -893,7 +893,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="row">
                                             <div class="iv-left col-12 ">
                                                 <h2 class="positive-dhaka-rate-heading">
-                                                    ঢাকা জেলার দৈনিক টেস্ট পজিটিভিটি রেট
+                                                    জেলা-ভিত্তির দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার
                                                 </h2>
                                             </div>
 
@@ -2965,7 +2965,7 @@ $ydata = [];
                         "valueAxes": [
                             {
                                 "position": "left",
-                                "title": "সনাক্ত বিবেচনায় আক্রান্তের হার",
+                                "title": "সনাক্ত বিবেচনায় আক্রান্তের হার (টেস্ট পজিটিভিটি রেট)",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -3008,7 +3008,7 @@ $ydata = [];
                             "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
                             "fillAlphas": 1,
                             "fillColorsField": "color",
-                            "title": "সাপ্তাহিক আক্রান্তের গড়",
+                            "title": "সনাক্ত বিবেচনায় আক্রান্তের সাপ্তাহিক গড়",
                             "type": "column",
                             "lineColor": "rgb(223, 200, 37)",
                             "valueField": "infected",
@@ -3036,7 +3036,7 @@ $ydata = [];
                             "bulletBorderThickness": 3,
                             "fillAlphas": 0,
                             "lineAlpha": 1,
-                            "title": "সাপ্তাহিক শতকরা সনাক্ত বিবেচনায় আক্রান্তের গড়",
+                            "title": "সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড় ",
                             "valueField": "test_positive",
                             "dashLengthField": "dashLengthLine",
                             "type": "smoothedLine",
@@ -3101,11 +3101,11 @@ $ydata = [];
      * */ 
 
     function showDhakaPisitiveRateChart(chartData, axis) {
-        console.log(axis);
+        // console.log(axis);
        
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
-        $('#last_date_4').html(" " + div_date);
+        $('#positive-dhaka-rate-heading').html(" " + div_date);
 
         if ($('#dhaka_rate').length) {
 

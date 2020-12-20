@@ -2073,7 +2073,7 @@ using(district) ORDER BY r.test_positivity DESC");
         $districts = $request->districts;
 
 
-        $sql = "SELECT
+        /* $sql = "SELECT
             a.date_of_test date";
          if ($districts && count($districts) > 0) {
             $data['axis'] = $districts;
@@ -2103,12 +2103,33 @@ using(district) ORDER BY r.test_positivity DESC");
             a.date_of_test <= date_sub(curdate(), interval 7 day)
         GROUP BY a.date_of_test
         ORDER BY a.date_of_test ASC";
+        } */
+        if ($districts && count($districts) > 0) {
+            $data['axis'] = $districts;
+            foreach ($districts as $div) {
+                $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
+                $sql = "SELECT date_of_test, district, test_positivity from districts_test_positivity_view where district = '$div'";
+                $dataResult[] =DB::select(DB::raw($sql));
+            }
         }
 
-
         try {
+            
+            
+            foreach ($dataResult as $k => $row) {
+                foreach($row as $r){
+                    $formatData [] = [
+                        "date" => $r->date_of_test,
+                        'Dhaka' => $r->test_positivity
+                    ];
+                }
+                
+            }
+
+             
+
             $data['axis'] = $axis;
-            $data['data'] = DB::select(DB::raw($sql));
+            $data['data'] = $formatData;
 
         } catch (\Exception $exception) {
             $data['data'] = [];
