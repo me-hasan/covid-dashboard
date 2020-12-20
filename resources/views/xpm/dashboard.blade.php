@@ -537,6 +537,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="row">
                                 <div class="col-lg-3 mt-2">
                                     <div class="card">
@@ -559,9 +560,50 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                                 <div class="col-lg-9 mt-2">
+
+                                    {{--  Filter   --}}
+                                    <div class="row">
+                                        {{--  <div class="col-md-3">
+                                            <label>বিভাগ</label>
+                                            <select name="division[]" id="division" multiple
+                                                    class="select2 form-control btn-outline-primary division_select">
+
+                                                @foreach($division_list as $division)
+                                                    <option value="{!! $division !!}"
+                                                            class="b1">{!! en2bnTranslation($division) !!} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>  --}}
+                                        <div class="col-md-3">
+                                            <label>জেলা</label>
+                                            <select name="district[]" id="daily-infected-district" multiple
+                                                    class="select2 form-control btn-outline-primary select_district">
+                                                @foreach($district_list as $district)
+                                                    <option value="{!! $district->district !!}"
+                                                            class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm mt-4">
+                                            <button id="filter-daily-infected-search"
+                                                    class="btn btn-sm district_cms_search b1">
+                                                <svg class="header-icon search-icon" x="1008" y="1248"
+                                                     viewBox="0 0 24 24" height="100%" width="100%"
+                                                     preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                    <path
+                                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {{--  end  --}}
+
+
                                     <div class="card">
                                         <div id="national_dialy_infected_trend"></div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -666,8 +708,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="invoice-head title-bg-style">
                                             <div class="row">
-                                                <div class="iv-left col-6">
-                                                    <h2>পরীক্ষা পরিস্থিতি</h2>
+                                                <div class="iv-left col-12">
+                                                    <h2>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</h2>
                                                 </div>
             
                                             </div>
@@ -700,8 +742,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="invoice-head title-bg-style">
                                             <div class="row">
-                                                <div class="iv-left col-6">
-                                                    <h2>পরীক্ষা পরিস্থিতি</h2>
+                                                <div class="iv-left col-12">
+                                                    <h2>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</h2>
                                                 </div>
             
                                             </div>
@@ -762,27 +804,56 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                             <div class="row">
                                 <div class="col-lg-8"></div>
-                                <div class="col-lg-4">
-                                    <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 125px; top: 78px; left: 383px;"><div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;"><div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true"><div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3><div class="tabLegendContentHolder" style="overflow: hidden auto; width: 306px; height: 145px;"><div class="tabLegendColumnHolder" style="white-space:nowrap"><span class="tabLegendItemColumn" style="width: 306px;"><div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                        <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;">
-                                            <span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (টেস্ট পজিটিভিটি রেট &gt; ১০%)</span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span></div>
-                                                <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
-                                                    <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (টেস্ট পজিটিভিটি রেট &lt; ৫%) </span></span></div><div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                        <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
-                                                        <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
-                                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 115px; top: 78px; left: 383px;">
+                                            <div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;">
+                                            <div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true">
+                                            <div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3>
+                                            <div class="tabLegendContentHolder" style="overflow: hidden auto; width: 306px; height: 145px;">
+                                                <div class="tabLegendColumnHolder" style="white-space:nowrap">
+                                                    <span class="tabLegendItemColumn" style="width: 306px;">
+                                                        <div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 306px; height: 20px;">
+                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                                <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span>
+                                                            </span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;">
+                                                                <span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (টেস্ট পজিটিভিটি রেট &gt; ১০%)</span>
+                                                            </span>
+                                                        </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                        
-                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span>
-                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span>
-                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"></span>
-                                    </span>
-                                    <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">(ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত)</span>
-                                </span>
-                                </div></span></div></div><div class="tabCatLegendScroll" style="display: none;"><div class="tabCatLegendScrollButtonHolder"><span class="tabCatLegendScrollPrev tabCatLegendScrollLeft tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span><span class="tabCatLegendScrollNext tabCatLegendScrollRight tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span></div></div></div><div class="tabLegendTitleControls" style="background-color: white; top: 0px; right: 0px;"><div class="tabLegendHighlighterButton tabLegendTitleControlsButtons tab-widget tabHighlightEnabled" title="Highlight Selected Items" style="user-select: none; -webkit-tap-highlight-color: transparent; display: none;"><div class="tabLegendHighlighterButtonIcon"></div></div><div class="tabLegendContextMenuButton tabLegendTitleControlsButtons" style="display: none;"><div class="tabLegendContextMenuButtonIcon"></div></div></div></div></div></div></div>
+                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span>
+                                                        </div>
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (টেস্ট পজিটিভিটি রেট &lt; ৫%) </span></span>
+                                                        </div>
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                        </div>
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 306px; height: 20px;">
+                                                            {{--  <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                
+                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span>
+                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span>
+                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"></span>
+                                                            </span>  --}}
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span> &nbsp;&nbsp;
+                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span> &nbsp;&nbsp;
+                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span> 
+                                                    </span>
+                                                </div>
+                                            </span>
+                                    </div>
                                 </div>
+                                <div class="tabCatLegendScroll" style="display: none;"><div class="tabCatLegendScrollButtonHolder"><span class="tabCatLegendScrollPrev tabCatLegendScrollLeft tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span><span class="tabCatLegendScrollNext tabCatLegendScrollRight tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span></div>
                             </div>
+                        </div>
+                        <div class="tabLegendTitleControls" style="background-color: white; top: 0px; right: 0px;"><div class="tabLegendHighlighterButton tabLegendTitleControlsButtons tab-widget tabHighlightEnabled" title="Highlight Selected Items" style="user-select: none; -webkit-tap-highlight-color: transparent; display: none;"><div class="tabLegendHighlighterButtonIcon"></div></div><div class="tabLegendContextMenuButton tabLegendTitleControlsButtons" style="display: none;"><div class="tabLegendContextMenuButtonIcon"></div></div>
+                    </div></div></div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
                             <div class="row" >
                                 <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100%;">
                                     <div id="iframeData_1">
@@ -840,7 +911,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                                 </h4>
 
-                                                    <div class="col-md-3">
+                                                    {{-- <div class="col-md-3">
                                                         <label>বিভাগ </label>
                                                         <select name="division[]" id="division_dhaka_rate" multiple
                                                                 class="select2 form-control btn-outline-primary">
@@ -850,8 +921,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         class="b1">{!! en2bnTranslation($division) !!} </option>
                                                             @endforeach
                                                         </select>
-                                                    </div >
-                                                    <div class="col-md-3" >
+                                                    </div > --}}
+                                                    <div class="col-md-3 ml-4 mb-3" >
                                                         <label>জেলা</label>
                                                         <select name="district[]" id="district_dhaka_rate" multiple
                                                                 class="select2 form-control btn-outline-primary">
@@ -1392,7 +1463,6 @@ using(district) ORDER BY r.test_positivity DESC");
                                                         <td>{!! en2bnTranslation($item->district) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity ?? '') !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->last_test_positivity ?? '') !!}</td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -2018,6 +2088,7 @@ $mdata = array();
 $sum = 0;
 $mdate = '';
 $xdate = '';
+
 foreach ($nation_wide_MovingAvgInfected as $k => $row) {
     $date_arr[] = convertEnglishDateToBangla($row->report_date);
     $infected_arr[] = $row->infected_24_hrs;
@@ -2068,6 +2139,7 @@ $ydata = [];
     var options = {year: 'numeric', month: 'long', day: 'numeric'};
 
     var mdata = <?php echo json_encode($mdata)?>;
+    // console.log(mdata);
     {{--var xdata = <?php echo json_encode($xdata)?>;--}}
     var msize = Object.keys(mdata).length;
     // var xsize = Object.keys(xdata).length;
@@ -2112,11 +2184,7 @@ $ydata = [];
 
 
         if ($('#national_dialy_infected_trend').length) {
-
-
             $('#last_date_1').html(" " + m_last_date);
-
-
             var chart = AmCharts.makeChart("national_dialy_infected_trend", {
                 "type": "serial",
                 "theme": "none",
@@ -2479,7 +2547,6 @@ $ydata = [];
     }
 
     function showDivisionChart(chartData) {
-
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         $('#last_date_4').html(" " + div_date);
@@ -2898,7 +2965,7 @@ $ydata = [];
                         "valueAxes": [
                             {
                                 "position": "left",
-                                "title": "শতকরা সংক্রমণের হার (টেস্ট পজিটিভিটি রেট)",
+                                "title": "সনাক্ত বিবেচনায় আক্রান্তের হার",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -2909,7 +2976,7 @@ $ydata = [];
                             },
                             {
                                 "position": "right",
-                                "title": "সংক্রমণ",
+                                "title": "আক্রান্তের সংখ্যা",
                                 "id": "v2",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -2969,7 +3036,7 @@ $ydata = [];
                             "bulletBorderThickness": 3,
                             "fillAlphas": 0,
                             "lineAlpha": 1,
-                            "title": "সাপ্তাহিক আক্রান্তের টেস্ট পজিটিভিটি গড়",
+                            "title": "সাপ্তাহিক শতকরা সনাক্ত বিবেচনায় আক্রান্তের গড়",
                             "valueField": "test_positive",
                             "dashLengthField": "dashLengthLine",
                             "type": "smoothedLine",
@@ -3028,33 +3095,109 @@ $ydata = [];
         });
     }
 
-    function showDhakaChart(data) {
 
-        var size = Object.keys(data).length;
-        var div_date = new Date(data[size - 1].date_of_test).toLocaleDateString('bn', options);
-        $('#last_date_8').html(" " + div_date);
+    /**
+     * =======================Start Dhaka rate Chart=========================================
+     * */ 
+
+    function showDhakaPisitiveRateChart(chartData, axis) {
+        console.log(axis);
+       
+        var size = Object.keys(chartData).length;
+        var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        $('#last_date_4').html(" " + div_date);
 
         if ($('#dhaka_rate').length) {
 
             var chart = AmCharts.makeChart("dhaka_rate", {
                 "type": "serial",
+                "theme": "light",
+                "legend": {
+                    "useGraphSettings": true,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+                "dataProvider": chartData,
+                "synchronizeGrid": true,
+                "valueAxes": [
+                    {
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            return value.toLocaleString("bn-BD");
+                        },
+                    }
+                ],
+
+                "graphs": axis,
+                "chartCursor": {
+                    "cursorPosition": "mouse",
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return '';
+                    },
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "axisColor": "#DADADA",
+                    "minPeriod": "DD",
+                    "labelFunction": function (value, date, categoryAxis) {
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                    },
+
+                },
+                "chartScrollbar": {
+                    "graph": "g0",
+                    "gridAlpha": 0,
+                    "color": "#888888",
+                    "scrollbarHeight": 55,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "autoGridCount": true,
+                    "selectedGraphFillAlpha": 0,
+                    "graphLineAlpha": 0.2,
+                    "graphLineColor": "#c2c2c2",
+                    "selectedGraphLineColor": "#888888",
+                    "selectedGraphLineAlpha": 1
+
+                },
+
+            });
+
+            chart.addListener("dataUpdated", zoomChart);
+
+            function zoomChart() {
+                // chart.zoomToDates(new Date(2020, 5, 20), new Date(2020, 10, 17));
+            }
+        }
+    }
+
+    function showNationalLevelTestPosivityChart(chartData) {
+        var size = Object.keys(chartData).length;
+        var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        $('#last_date_4').html(" " + div_date);
+
+        if ($('#dhaka_rate').length) {
+            var chart = AmCharts.makeChart("dhaka_rate", {
+                "type": "serial",
                 "theme": "none",
                 "marginTop": 0,
                 "marginRight": 80,
-                "dataProvider": data,
+                "dataProvider": chartData,
                 "valueAxes": [{
                     "axisAlpha": 0,
                     "position": "left",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
-                         if(value % 5 ==0)
-                            return Math.round(value).toLocaleString("bn-BD");//
-                         else
-                             return '<span style=""></span>';
-                        //great
-                       // return value.toLocaleString("bn-BD");
-
-                       // return '';
+                        return value.toLocaleString("bn-BD");
                     },
                 }],
                 "graphs": [{
@@ -3067,7 +3210,7 @@ $ydata = [];
                     "negativeLineColor": "#637bb6",
                     "type": "smoothedLine",
                     "valueField": "test_positivity",
-                    "title": "দৈনিক সংক্রমনের হার বা টেস্ট পজিটিভিটি রেট",
+                    "title": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
                     "balloonFunction": function (graphDataItem, graph) {
                         var v = 0;
                         if (graphDataItem.values) {
@@ -3108,7 +3251,7 @@ $ydata = [];
                         return date.toLocaleDateString('bn-BD', options);
                     },
                 },
-                "categoryField": "date_of_test",
+                "categoryField": "date",
                 "categoryAxis": {
                     "minPeriod": "DD",
                     "parseDates": true,
@@ -3135,49 +3278,78 @@ $ydata = [];
         }
     }
 
-    /*
-    * Dhaka Chart Filter
-    * */
-    $('#filter-dhaka-rate').click(function () {
-        const divisionDhakaRate = $('#division_dhaka_rate').val();
-        const districtDhakaRate = $('#district_dhaka_rate').val();
-
-        //let  currentHeading = $('h1#special_word_8').text();
-        let  positiveDivisionHeading = $('#division_dhaka_rate').find("option:selected").text();
-        let  positiveDistrictHeading = $('#district_dhaka_rate').find("option:selected").text();
-
-        //console.log(positiveDistrictHeading+ ' জেলার দৈনিক টেস্ট পজিটিভিটি রেট');
-        $('.positive-dhaka-rate-heading').html(positiveDistrictHeading+ ' জেলার দৈনিক টেস্ট পজিটিভিটি রেট');
-
-        showLoader();
-        $.ajax({
-            url: '{{url("/")}}/get-dhaka-positive-rate-data',
-            type: 'GET',
-            data: {
-                division: divisionDhakaRate,
-                district: districtDhakaRate
-            },
-            success: function (data) {
-                showDhakaChart(data);
-               hideLoader();
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    });
-
     $.ajax({
-        url: '{{url("/")}}/get-dhaka-positive-rate-data',
+        url: '{{url("/")}}/get-national-level-test-positivity-data',
         type: 'GET',
         data: {},
         success: function (data) {
-            showDhakaChart(data);
+            showNationalLevelTestPosivityChart(data);
+            hideLoader();
         },
         error: function (error) {
             console.log(error);
         }
     });
+
+    
+    $('#filter-dhaka-rate').click(function () {
+        var districts = $('#district_dhaka_rate').val();
+        // alert(districts)s
+        if (districts) {
+            showLoader();
+            $.ajax({
+                url: '{{url("/")}}/get-dhaka-positive-rate-data',
+                type: 'GET',
+                data: {districts: districts},
+                success: function (data) {
+                    console.log(data);
+                    var axis = new Array();
+                    $.each(data.axis, function (a, b) {
+                        var obj = {
+                            "id": "g" + a,
+                            "valueAxis": "v" + a,
+                            "lineColor": getRandomColor(a),
+                            "lineThickness": 2,
+                            "bullet": "",
+                            "bulletBorderThickness": 2,
+                            "hideBulletsCount": 30,
+                            "title": b.bn,
+                            "valueField": b.en,
+                            "fillAlphas": 0,
+                            "type": "smoothedLine",
+                            "balloonFunction": function (graphDataItem, graph) {
+                                var v = 0;
+                                if (graphDataItem.values) {
+                                    v = graphDataItem.values.value;
+                                }
+                                var options = {month: 'long', day: 'numeric'};
+                                return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                            },
+
+                        };
+                        axis.push(obj);
+                    })
+                    showDhakaPisitiveRateChart(data.data, axis);
+                    
+                    hideLoader();
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        } 
+        
+        
+    });
+
+    
+
+    /*==============================End============================================
+    * Dhaka Chart Filter
+    * */
+
+
 
     $.ajax({
         url: '{{url("/")}}/get-division-data',
@@ -3191,11 +3363,17 @@ $ydata = [];
         }
     });
 
+    
 
-    $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" height="800" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%" height="800" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" height="800" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" height="800" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+
+
+     /*==============================Start============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
+    * */
+    $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange");
@@ -3207,7 +3385,7 @@ $ydata = [];
             output.innerHTML = englishToBangla(this.value);
         }
 
-//$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
+        //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
         $("#ex12c").slider({id: "slider12c", min: 0, max: 30, range: true, value: [5, 10]});
 
         $("#ex12c").on("slide", function (slideEvt) {
@@ -3346,6 +3524,12 @@ $ydata = [];
         });
 
     });
+
+     /*==============================End============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
+    * */
+
+
     <?php
     $getNationalInfectedAge = DB::select("select A.zero_to_ten/5 as '_0_10',
         A.elv_to_twenty/5 AS '_11_20',
@@ -4040,6 +4224,7 @@ group by date ORDER BY date ");
                 type: 'GET',
                 data: {divisions: divisions, districts: districts},
                 success: function (data) {
+                    console.log(data);
                     var axis = new Array();
                     $.each(data.axis, function (a, b) {
                         var obj = {
@@ -4064,10 +4249,10 @@ group by date ORDER BY date ");
                             },
 
                         };
-                        console.log();
                         axis.push(obj);
                     })
                     showDivisionChartFilter(data.data, axis);
+                    
                     hideLoader();
 
                 },
@@ -4374,6 +4559,42 @@ group by date ORDER BY date ");
         }
     });
     dailyInfectedChart(mdata);
+    console.log(mdata);
+
+
+    // Filter daily infected by district
+
+    $('#filter-daily-infected-search').click(function () {
+    var districts = $('#daily-infected-district').val();
+    
+    
+    if (districts) {
+            showLoader();
+            $.ajax({
+                url: '{{url("/")}}/filter-daily-infected-chart',
+                type: 'GET',
+                data: {districts: districts},
+                success: function (response) {
+                    console.log(response);
+                    if (response) {
+                    response = JSON.parse(response);
+                    dailyInfectedChart(response);
+                    } else {
+                    dailyInfectedChart([]);
+                    }
+                    hideLoader();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+            } 
+
+    });
+
+
+    //End Here =========================================
+
 
     function showLoader() {
         $('#loading-sniper').show();

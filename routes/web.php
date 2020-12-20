@@ -175,6 +175,7 @@ Route::get('login_old', function () {
 });
 Route::get('get-asia-tested-data', 'xpm\DashboardController@getAsiaTestedData')->name('get-asia-tested-data');
 Route::get('get-dhaka-positive-rate-data', 'xpm\DashboardController@getDhakaPositiveRateData')->name('get-dhaka-positive-rate-data');
+Route::get('get-national-level-test-positivity-data', 'xpm\DashboardController@getNationLevelTestPositivityData')->name('get-national-level-test-positivity-data');
 Route::get('get-division-data', 'xpm\DashboardController@divisionCompare')->name('get-division-data');
 Route::get('get-division-data-filter', 'xpm\DashboardController@divisionCompareFilter')->name('get-division-data-filter');
 Route::get('upload-south-asia-data', 'xpm\DashboardController@upoladSouthAsiaData')->name('upload-south-asia-data');
@@ -258,3 +259,4 @@ Route::get('update-daily-data', function () {
 
 Route::get('/daily-infected-chart', 'xpm\DashboardController@dailyInfectedChart')->name('daily.infected.chart');
 Route::get('/infected-percentage', 'xpm\DashboardController@infectedPercentage')->name('infected.percentage');
+Route::get('/filter-daily-infected-chart', 'xpm\DashboardController@filterdailyInfectedChart')->name('filter.daily.infected.chart');

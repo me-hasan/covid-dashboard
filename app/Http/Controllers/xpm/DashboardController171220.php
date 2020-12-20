@@ -2067,68 +2067,115 @@ using(district) ORDER BY r.test_positivity DESC");
      */
     public function getDhakaPositiveRateData(Request $request)
     {
-        $data = [];
-        $axis = [];
-        
-        $districts = $request->districts;
-
-
+        $data = $request->all();
+        $groupBy = '';
         $sql = "SELECT
-            a.date_of_test date";
-         if ($districts && count($districts) > 0) {
-            $data['axis'] = $districts;
-            foreach ($districts as $div) {
-                $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
-                $sql .= ",(
-                SELECT
-                CASE WHEN
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))>0
-                THEN
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                ELSE
-                 0
-                 END
-                FROM
-                    national_dashboard.division_district_infected
-                WHERE
-                    district = '$div'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as '$div'";
-            }
+                a.date_of_test,
+                a.district,
+                a.total_tests,
+                a.positive_tests,
+                round(
+                    (
+                        a.positive_tests / a.total_tests
+                    ),
+                    2
+                ) * 100 AS 'test_positivity'
+            FROM
+                (
+                    SELECT
+                        date(date_of_test) AS 'date_of_test',
+                        district,
+                        count(*) AS total_tests,
+                        sum(test_result LIKE 'positive') AS positive_tests
+                    FROM
+                        lab_clean_data
+                    WHERE
+                        date_of_test IS NOT NULL
+                    AND date_of_test >= '2020-05-20'
+                    AND date_of_test <= date_sub(curdate(), INTERVAL 7 DAY)";
+
+        if(!empty($data['division']) && !empty($data['district'])){
+
+            $divisionImplode = "'".implode("', '", $data['division'])."'";
+            $districtImplode = "'".implode("', '", $data['district'])."'";
+            $groupBy = 'division, district';
+
+            /*$sql  .= " AND division in ($divisionImplode)
+                    AND district in ($districtImplode)";
+            */
+            $sql  .= " AND district in ($districtImplode)";
 
 
-            $sql .= "FROM
-            national_dashboard.division_infected a
-        WHERE
-            a.date_of_test <= date_sub(curdate(), interval 7 day)
-        GROUP BY a.date_of_test
-        ORDER BY a.date_of_test ASC";
+        }else if (!empty($data['division']))
+        {
+           // $divisionImplode = "'".implode("', '", $data['division'])."'";
+            $divisionImplode = "'".implode("', '", $data['division'])."'";
+            $groupBy = 'division';
+            $sql  .= " AND division in ($divisionImplode)";
+
+        }else if(!empty($data['district']))
+        {
+            $districtImplode = "'".implode("', '", $data['district'])."'";
+            $groupBy = 'district';
+            $sql  .= " AND district in ($districtImplode)";
+
+        }else{
+            $sql .= " AND district = 'Dhaka'";
+            $groupBy = 'district';
         }
 
+        /*$sql .= " GROUP BY
+                        division,
+                        date(date_of_test)
+                ) AS a
+            ORDER BY
+                a.date_of_test";*/
+        $sql .= " GROUP BY
+                       ".$groupBy.",
+                       date(date_of_test)
+               ) AS a
+           ORDER BY
+               a.date_of_test";
 
         try {
-            $data['axis'] = $axis;
-            $data['data'] = DB::select(DB::raw($sql));
-
-        } catch (\Exception $exception) {
-            $data['data'] = [];
-        }
-        return $data;
-    }
-
-    public function getNationLevelTestPositivityData(Request $request){
-        try {
-           $sql = "SELECT
-                report_date as date, 
-                infected_24_hrs, 
-                test_24_hrs, 
-                (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
-                from daily_data order by report_date";
+           /* $sql = "SELECT
+                a.date_of_test,
+                a.district,
+                a.total_tests,
+                a.positive_tests,
+                round(
+                    (
+                        a.positive_tests / a.total_tests
+                    ),
+                    2
+                ) * 100 AS 'test_positivity'
+            FROM
+                (
+                    SELECT
+                        date(date_of_test) AS 'date_of_test',
+                        district,
+                        count(*) AS total_tests,
+                        sum(test_result LIKE 'positive') AS positive_tests
+                    FROM
+                        lab_clean_data
+                    WHERE
+                        date_of_test IS NOT NULL
+                    AND date_of_test >= '2020-05-20'
+                    AND date_of_test <= date_sub(curdate(), INTERVAL 7 DAY)
+                    AND district = 'Dhaka' or district ='Tangail'
+                    GROUP BY
+                        district,
+                        date(date_of_test)
+                ) AS a
+            ORDER BY
+                a.date_of_test";*/
             $data = DB::select(DB::raw($sql));
+
             return response()->json($data);
         } catch (\Exception $exception) {
             return response()->json([]);
         }
+
     }
 
     public function upoladSouthAsiaData()
@@ -2339,54 +2386,6 @@ using(district) ORDER BY r.test_positivity DESC");
         return view('xpm.age-graph');
     }
 
-    public function filterdailyInfectedChart(Request $request)
-    {
-        $districtArr = $request->all();
-        // return $districtArr['districts'];
-        $districts = implode(', ', array_map(function($val){return sprintf("'%s'", $val);}, $districtArr['districts']));;
-
-        //return $districts;
-       
-        
-        $nation_wide_MovingAvgInfected = DB::select("SELECT a.thedate, a.division, a.district, a.daily_cases,
-        Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
-        FROM 
-        (select thedate, division, district, 
-        COALESCE(daily_cases, 0) AS daily_cases FROM 
-        (select thedate, division, district, daily_cases from
-        (select thedate from calendardate where thedate >= '2020-05-20' 
-        and thedate <= (date_sub(curdate(), interval 7 day))) as T1
-        left join
-        (select date_of_test, division, district, daily_cases from  division_district_infected 
-        where district IN ({$districts})) as T2 on T1.thedate=T2.date_of_test) as R) AS b
-                        where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
-                      ), 2 ) AS 'dayMovingAvg'
-        FROM 
-        (select thedate, division, district, 
-        COALESCE(daily_cases, 0) AS daily_cases FROM 
-        (select thedate, division, district, daily_cases from
-        (select thedate from calendardate where thedate >= '2020-05-20' 
-        and thedate <= (date_sub(curdate(), interval 7 day))) as T1
-        left join
-        (select date_of_test, division, district, daily_cases from  division_district_infected 
-        where district IN ({$districts})) as T2 on T1.thedate=T2.date_of_test) as Q) as a");
-
-        
-                     
-        
-        $mdata = array();
-        foreach ($nation_wide_MovingAvgInfected as $k => $row) {
-            $mdata [] = [
-                "date" => $row->thedate,
-                "infected" => $row->daily_cases,
-                "avg" => $row->dayMovingAvg,
-            ];
-        }
-
-        return json_encode($mdata);
-
-    }
-
     public function dailyInfectedChart(Request $request)
     {
 
@@ -2440,7 +2439,6 @@ GROUP BY
             }
         }
 
-        // return [];
         return json_encode($mdata);
     }
 
@@ -2481,9 +2479,10 @@ GROUP BY
             ];
             $xdate = $d;
         }
+
         return json_encode($xdata);
+
     }
-    
 
     public function testData()
     {
