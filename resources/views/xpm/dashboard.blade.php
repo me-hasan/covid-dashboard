@@ -43,7 +43,7 @@
         .info-style .the-number {
             font-size: 40px;
             line-height: 1.2;
-            margin: 10px 0;
+            margin: 14px 0;
             letter-spacing: 0;
         }
 
@@ -189,7 +189,7 @@
         .info-style .the-number {
             font-size: 30px;
             line-height: 1.2;
-            margin: 10px 0;
+            margin: 14px 0;
             letter-spacing: 0;
         }
 
@@ -242,7 +242,7 @@
             min-width: 180px;
             clear: both;
             margin-left: 10%;
-            padding: 10px;
+            padding: 14px;
             cursor: pointer;
         }
 
@@ -822,33 +822,33 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="row">
                                 <div class="col-lg-8"></div>
                                     <div class="col-lg-4">
-                                        <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 115px; top: 78px; left: 383px;">
+                                        <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 130px; top: 78px; left: 383px;">
                                             <div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;">
                                             <div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true">
                                             <div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3>
-                                            <div class="tabLegendContentHolder" style="overflow: hidden auto; width: 450px; height: 145px;">
+                                            <div class="tabLegendContentHolder" style="overflow: hidden auto; width: 450px; height: 200px;">
                                                 <div class="tabLegendColumnHolder" style="white-space:nowrap">
                                                     <span class="tabLegendItemColumn" style="width: 450px;">
-                                                        <div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 450px; height: 20px;">
+                                                        <div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 450px; height: 25px;">
                                                             <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
                                                                 <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span>
                                                             </span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;">
-                                                               <span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (টেস্ট পজিটিভিটি রেট &gt; ১০%)</span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;">
+                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (টেস্ট পজিটিভিটি রেট &gt; ১০%)</span>
                                                             </span>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span>
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 14px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 20px;">
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;">
                                                             <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (টেস্ট পজিটিভিটি রেট &lt; ৫%) </span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (টেস্ট পজিটিভিটি রেট &lt; ৫%) </span></span>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 20px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
                                                             <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 283px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 10pt; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 14px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 20px; padding-top:2px; padding-left:2px">
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px; padding-top:2px; padding-left:2px">
                                                             {{--  <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
                                                 
                                                                     <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span>
@@ -857,7 +857,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </span>  --}}
                                                             <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span> &nbsp;&nbsp;
                                                             <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span> &nbsp;&nbsp;
-                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; <span style="position: relative; top: -3px">ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span></span> 
+                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; <span style="position: relative; top: -3px; font-size:15px">ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span></span> 
                                                     </span>
                                                 </div>
                                             </span>
@@ -873,17 +873,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                         </div>
                             <div class="row" >
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100%;">
+                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
                                     <div id="iframeData_1">
                                     </div>
                                 </div>
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100%;">
+                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
                                     <div id="iframeData_2"></div>
                                 </div>
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100%;">
+                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
                                     <div id="iframeData_3"></div>
                                 </div>
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100%;">
+                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
                                     <div id="iframeData_4"></div>
                                 </div>
                             </div>
@@ -1801,7 +1801,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
         </div>
 </div>
-<div class="p-8" style="margin-right: 410px"><img src="pm/images/icon/footer-logo.png" class="footer-logo" alt="logo"
+<div class="p-8" style="margin-right: 414px"><img src="pm/images/icon/footer-logo.png" class="footer-logo" alt="logo"
                                                   style="margin-right: -22%">
 </div>
 </div>
@@ -2985,9 +2985,8 @@ $ydata = [];
                                     v = graphDataItem.values.value;
                                 }
                                 var options = {month: 'long', day: 'numeric'};
-                                //pending
-                                console.log(graphDataItem.dataContext.date.setDate(-5))
-                                return "<span style='font-size:12px;'>" + graph.title + "(" + graphDataItem + "-" + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
+                                let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
+                                return "<span style='font-size:12px;'>" + graph.title + "(" + previusSevenDate.toLocaleString('bn', options) + "-" + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
                             },
                         }, {
                             "valueAxis": "v1",
@@ -3014,7 +3013,8 @@ $ydata = [];
                                     v = graphDataItem.values.value;
                                 }
                                 var options = {month: 'long', day: 'numeric'};
-                                return "<span style='font-size:12px;'>" + graph.title + "(" + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
+                                let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
+                                return "<span style='font-size:12px;'>" + graph.title + "(" + previusSevenDate.toLocaleString('bn', options) + "-" + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
                             },
                         }],
                         "categoryField": "date",
@@ -4464,10 +4464,10 @@ group by date ORDER BY date ");
         background-color: #48984b;
         color: white;
         cursor: pointer;
-        padding: 10px;
+        padding: 14px;
         border-radius: 3px;
         display: none;
-        margin-right: 10px;
+        margin-right: 14px;
     }
 
     #scrolltopBtn:hover {
