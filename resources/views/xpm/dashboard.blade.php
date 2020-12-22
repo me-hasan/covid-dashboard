@@ -1024,57 +1024,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     $last_week_start = convertEnglishDateToBangla($last_week->last_2_weeks_start);
                                     $last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends);
                                     $today = convertEnglishDateToBangla(date('Y-m-d'));
+                                    
+                                    
                                     $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                    $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity>=5 and test_positivity<12) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity>=12 and total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-
-                                    $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity<5) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity>=12 and total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-                                    $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity>=12) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity>=5 and test_positivity<12 and total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-                                    $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity>=5 and test_positivity<12) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity>=5 and test_positivity<12 and total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-                                    $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity<5) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity>=5 and test_positivity<12 and total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-                                    $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity>=12) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity<5 AND total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-                                    $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity>=5 and test_positivity<12) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity<5 and total_tests>200) as r
-using(district) ORDER BY r.test_positivity DESC");
-                                    $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" select l.district as 'district',l.test_positivity as 'last_test_positivity',
-    r.test_positivity as 'recent_test_positivity'  from
-    (select district, test_positivity from last_14_days_test_positivity_district_iedcr where test_positivity<5) as l
-    inner join
-    (select district, test_positivity from recent_14_days_test_positivity_district_iedcr where test_positivity<5
-    and total_tests>100) as r
-    using(district) ORDER BY r.test_positivity DESC");
+                                    $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 AND total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
+                                    $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
 
                                     $high_to_high = array();
                                     foreach ($high_to_high_table_contentData as $result) {
@@ -1269,10 +1229,9 @@ using(district) ORDER BY r.test_positivity DESC");
                                                class="table table-striped table-bordered text-nowrap dataTable">
                                             <thead>
                                             <tr>
-                                                <th class="border-bottom-0 b1">জেলা</th>
-                                                <th class="border-bottom-0 b1">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0 b1">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি
-                                                </th>
+                                                <th class="border-bottom-0">জেলা</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1353,7 +1312,6 @@ using(district) ORDER BY r.test_positivity DESC");
                                                         <td>{!! en2bnTranslation($item->district) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -1368,6 +1326,7 @@ using(district) ORDER BY r.test_positivity DESC");
                                                 <th class="border-bottom-0">জেলা</th>
                                                 <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
                                                 <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1377,7 +1336,6 @@ using(district) ORDER BY r.test_positivity DESC");
                                                         <td>{!! en2bnTranslation($item->district) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -1425,7 +1383,6 @@ using(district) ORDER BY r.test_positivity DESC");
                                                         <td>{!! en2bnTranslation($item->district) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -1449,7 +1406,6 @@ using(district) ORDER BY r.test_positivity DESC");
                                                         <td>{!! en2bnTranslation($item->district) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
                                                         <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -1471,8 +1427,8 @@ using(district) ORDER BY r.test_positivity DESC");
                                                 @foreach($low_to_low_table_contentData as $item)
                                                     <tr>
                                                         <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                        <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity ?? '') !!}</td>
-                                                        <td>{!! convertEnglishDigitToBangla($item->last_test_positivity ?? '') !!}</td>
+                                                        <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                        <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -3445,7 +3401,7 @@ $ydata = [];
         }
 
         function rangeChange(data, risk_matrix_data) {
-            console.log(data);
+            console.log(risk_matrix_data);
 
             $('.high_to_high_modal_click').html('<strong>অপরিবর্তিত উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
