@@ -2111,31 +2111,88 @@ using(district) ORDER BY r.test_positivity DESC");
                 $sql = "SELECT date_of_test, district, test_positivity from districts_test_positivity_view where district = '$div'";
                 $dataResult[] =DB::select(DB::raw($sql));
             }
+
+            // $dataResult[] = DB::select("SELECT report_date as date_of_test as district, infected_24_hrs, test_24_hrs, (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
+            // from daily_data order by report_date");
         }
 
         try {
             
-            
+            $formatData = [];
             foreach ($dataResult as $k => $row) {
-                foreach($row as $r){
-                    $formatData [] = [
+                foreach($row as $key=> $r){
+                    $formatData[] = [
                         "date" => $r->date_of_test,
-                        'Dhaka' => $r->test_positivity
+                        'district' => $r->district,
+                        'test_positivity' => $r->test_positivity
                     ];
-                }
-                
+                } 
             }
 
-             
+            
 
+            /* $resultArr = [];
+            $subArr = [];
+            foreach($formatData as $pkey=> $value) { 
+                
+                $key = array_keys($formatData[$pkey]);
+                $index = $this->searchForDate($value['date'], $formatData);
+
+                $subArr = $value;    
+                foreach($formatData[$index] as $chkey=> $newDis){
+                    if(in_array($value['date'], $formatData[$index]))
+                    {
+                        $resultArr[] = array_merge($subArr);
+                    }
+                    
+                }
+                
+
+                unset($subArr);
+                
+            }  */
+              
+             $d = $this->dateArrayList($formatData);
+
+            
+            
             $data['axis'] = $axis;
-            $data['data'] = $formatData;
+            $data['data'] = $d;
 
         } catch (\Exception $exception) {
             $data['data'] = [];
         }
         return $data;
     }
+
+    function searchForDate($date, $array) {
+        foreach ($array as $key => $val) {
+            if ($val['date'] === $date) {
+                return $key;
+            }
+        }
+        return null;
+     }
+
+
+     function dateArrayList($formatData){
+        $name = array_column($formatData, 'date');
+        // return $formatData;
+        $filteredKeys = array_unique($name);
+        $newDistrict = array();
+        foreach($filteredKeys as $key=>$date){
+            foreach($formatData as $k=>$arrays){
+                $newDistrict['date'] = $date;
+                if(in_array($date, $arrays)){
+                    $newDistrict[$arrays['district']] = $arrays['test_positivity'];
+                }
+            }
+            $filtered [] = $newDistrict;
+        }
+        
+        return  $filtered;
+    }
+     
 
     public function getNationLevelTestPositivityData(Request $request){
         try {
