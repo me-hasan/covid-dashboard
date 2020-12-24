@@ -292,6 +292,9 @@
         .tabLegendItemSwatchHolder {
             margin-left: 15px;
         }
+        .modal-content {
+            width: 105% !important;
+        }
     </style>
 </head>
 
@@ -421,9 +424,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <span>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</span>
                                 </li>
                             </a>
-                            <a href="#scroll_test_status">
+                            {{-- <a href="#scroll_test_status">
                                 <li><span class="bullet-point"></span> <span>পরীক্ষা পরিস্থিতি</span></li>
-                            </a>
+                            </a> --}}
                             <a href="#scroll_daily_risk_dist_wise_test_positive">
                                 <li><span class="bullet-point"></span> <span>টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
                                 </li>
@@ -838,7 +841,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 14px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span>
+                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (টেস্ট পজিটিভিটি রেট ৫% - ১০%)</span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;">
                                                             <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
@@ -846,7 +849,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
                                                             <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 14px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px; padding-top:2px; padding-left:2px">
                                                             {{--  <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
@@ -872,18 +875,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                             </div>
                         </div>
-                            <div class="row" >
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
+                            <div class="row" >  
+                                <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_1">
                                     </div>
                                 </div>
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
+                                <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_2"></div>
                                 </div>
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
+                                <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_3"></div>
                                 </div>
-                                <div class="col-lg-3" style="margin:0px; padding: 0px; width: 100% !important;">
+                                <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_4"></div>
                                 </div>
                             </div>
@@ -1230,8 +1233,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1254,8 +1257,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1277,8 +1280,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1301,8 +1304,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1324,8 +1327,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                 
                                             </tr>
                                             </thead>
@@ -1348,8 +1351,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1372,8 +1375,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1395,8 +1398,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1418,8 +1421,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <thead>
                                             <tr>
                                                 <th class="border-bottom-0">জেলা</th>
-                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি</th>
-                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি</th>
+                                                <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                             </tr>
                                             </thead>
                                             <tbody>

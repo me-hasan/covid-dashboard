@@ -1865,11 +1865,11 @@ using(district) ORDER BY r.test_positivity DESC");
                 $html .= '<tr class="b1">';
                 $html .= "<td >" . en2bnTranslation($item->district) . "</td>";
                 $html .= "<td>" . convertEnglishDigitToBangla($item->recent_test_positivity) . "</td>";
-                $html .= "<td>" . convertEnglishDigitToBangla($item->l_positive) . "</td>";
-                $html .= "<td>" . convertEnglishDigitToBangla($item->l_total_test) . "</td>";
-                $html .= "<td>" . convertEnglishDigitToBangla($item->last_test_positivity) . "</td>";
                 $html .= "<td>" . convertEnglishDigitToBangla($item->r_positive) . "</td>";
                 $html .= "<td>" . convertEnglishDigitToBangla($item->r_total_test) . "</td>";
+                $html .= "<td>" . convertEnglishDigitToBangla($item->last_test_positivity) . "</td>";
+                $html .= "<td>" . convertEnglishDigitToBangla($item->l_positive) . "</td>";
+                $html .= "<td>" . convertEnglishDigitToBangla($item->l_total_test) . "</td>";
                 $html .= "</tr>";
             }
         }
