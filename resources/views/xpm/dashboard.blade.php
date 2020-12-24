@@ -428,13 +428,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <li><span class="bullet-point"></span> <span>পরীক্ষা পরিস্থিতি</span></li>
                             </a> --}}
                             <a href="#scroll_daily_risk_dist_wise_test_positive">
-                                <li><span class="bullet-point"></span> <span>টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
+                                <li><span class="bullet-point"></span> <span>সনাক্ত বিবেচনায় হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
                                 </li>
                             </a>
 
                             <a href="#scroll_daily_test_dhaka_district">
                                 <li><span class="bullet-point"></span>
-                                    <span>জেলা ভিত্তিক দৈনিক বিবেচনায় আক্রান্তের হার </span>
+                                    <span>জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার</span>
                                 </li>
                             </a>
 
@@ -608,6 +608,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <select name="district[]" id="daily-infected-district"
                                                     class="select2 form-control btn-outline-primary select_district">
                                                     <option value="">নির্বাচন করুন</option>
+                                                    {{-- <option value="all">সারাদেশ</option> --}}
+
                                                 @foreach($district_list as $district)
                                                     <option value="{!! $district->district !!}"
                                                             class="b1">{!! en2bnTranslation($district->district) !!} </option>
@@ -797,7 +799,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-6 ">
                                         <h2>
-                                            টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
+                                            সনাক্ত বিবেচনায় হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
                                         </h2>
                                     </div>
                                     {{--<div class="iv-right offset-md-4 col-2 ">
@@ -875,7 +877,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                             </div>
                         </div>
-                            <div class="row" >  
+                            <div class="row"  style="height: 300px !important">  
                                 <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_1">
                                     </div>
@@ -914,7 +916,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="row">
                                             <div class="iv-left col-12 ">
                                                 <h2 class="positive-dhaka-rate-heading">
-                                                    জেলা-ভিত্তির দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার
+                                                    জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার
                                                 </h2>
                                             </div>
 
@@ -1820,7 +1822,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 <div class="modal" id="modaldemo1">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content modal-content-demo">
+        <div class="modal-content modal-content">
             <div class="modal-header">
                 <h6 class="modal-title b1"></h6>
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
@@ -2149,9 +2151,9 @@ $ydata = [];
     });
 
 
-    function dailyInfectedChart(data) {
+    function dailyInfectedChart(data, dist='') {
 
-
+        let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
             var chart = AmCharts.makeChart("national_dialy_infected_trend", {
@@ -2173,7 +2175,7 @@ $ydata = [];
                 },
                 "valueAxes": [{
                     "position": "left",
-                    "title": "দৈনিক আক্রান্তের সংখ্যা",
+                    "title": zoneName+" - দৈনিক আক্রান্তের সংখ্যা",
                     "id": "v1",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
@@ -2190,12 +2192,12 @@ $ydata = [];
                     "columnWidth": 10,
                     "fillAlphas": 1,
                     "lineColor": "rgb(103, 183, 220)",
-                    "title": "দৈনিক আক্রান্ত",
+                    "title": zoneName+" - দৈনিক আক্রান্ত",
                     "type": "column",
                     "valueField": "infected",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = "দৈনিক আক্রান্ত";
+                        var title = zoneName+"- দৈনিক আক্রান্ত";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }, {
@@ -2204,7 +2206,7 @@ $ydata = [];
                     "lineThickness": 2,
                     "lineColor": "orange",
                     "type": "smoothedLine",
-                    "title": "দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
+                    "title": zoneName+"- দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
                     "valueField": "avg",
                     "bullet": "round",
                     "bulletSize": 7,
@@ -2214,7 +2216,7 @@ $ydata = [];
                     "bulletBorderThickness": 3,
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = "দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)";
+                        var title = zoneName+"- দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }],
@@ -2988,8 +2990,11 @@ $ydata = [];
                                     v = graphDataItem.values.value;
                                 }
                                 var options = {month: 'long', day: 'numeric'};
-                                let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
-                                return "<span style='font-size:12px;'>" + graph.title + "(" + previusSevenDate.toLocaleString('bn', options) + "-" + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
+                                //let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
+                                let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                                let previusSevenDay= previusSeven.getDate();
+                                let getMonth= month_name(previusSeven.getMonth());
+                                return "<span style='font-size:12px;'>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
                             },
                         }, {
                             "valueAxis": "v1",
@@ -3016,8 +3021,10 @@ $ydata = [];
                                     v = graphDataItem.values.value;
                                 }
                                 var options = {month: 'long', day: 'numeric'};
-                                let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
-                                return "<span style='font-size:12px;'>" + graph.title + "(" + previusSevenDate.toLocaleString('bn', options) + "-" + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                                let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                                let previusSevenDay= previusSeven.getDate();
+                                let getMonth= month_name(previusSeven.getMonth());
+                                return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
                             },
                         }],
                         "categoryField": "date",
@@ -3064,6 +3071,11 @@ $ydata = [];
             }
         });
     }
+
+    var month_name = function(dt){
+        mlist = ["জানুয়ারী", "ফেব্রুয়ারী", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "অগাস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+        return mlist[dt];
+    };
 
 
     /**
@@ -3114,6 +3126,7 @@ $ydata = [];
                     "axisColor": "#DADADA",
                     "minPeriod": "DD",
                     "labelFunction": function (value, date, categoryAxis) {
+                        // console.log(categoryAxis.currentDateFormat)
                         var options = new Array();
                         options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
                         options["MMM"] = {year: 'numeric', month: 'long'};
@@ -3170,6 +3183,27 @@ $ydata = [];
                         return value.toLocaleString("bn-BD");
                     },
                 }],
+                // "valueAxes": [{
+                //     "id": "v1",
+                //     "axisAlpha": 0,
+                //     "position": "left",
+                //     "title": "দৈনিক আক্রান্তের সংখ্যা",
+                //     "minimum": 0,
+                //     "labelFunction": function (value, valueText, valueAxis) {
+                //         //return '';
+                //         return value.toLocaleString("bn-BD");
+                //     },
+                // },
+                // {
+                //     "id": "v2",
+                //     "axisAlpha": 0,
+                //     "position": "bottom",
+                //     "title": "দৈনিক পরীক্ষার সংখ্যা",
+                //     "minimum": 0,
+                //     "labelFunction": function (value, valueText, valueAxis) {
+                //         return value.toLocaleString("bn-BD");
+                //     },
+                // }],
                 "graphs": [{
                     "id": "g1",
                     "balloonText": "",
@@ -3272,7 +3306,7 @@ $ydata = [];
                 type: 'GET',
                 data: {districts: districts},
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var axis = new Array();
                     $.each(data.axis, function (a, b) {
                         var obj = {
@@ -3288,13 +3322,18 @@ $ydata = [];
                             "fillAlphas": 0,
                             "type": "smoothedLine",
                             "balloonFunction": function (graphDataItem, graph) {
-                                var v = 0;
-                                if (graphDataItem.values) {
-                                    v = graphDataItem.values.value;
-                                }
                                 var options = {month: 'long', day: 'numeric'};
-                                // if(graphDataItem.category.toLocaleDateString('bn', options) != undefined)
-                                return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                                var v = 0;
+                                var d = '';
+                               
+                                if (graphDataItem.values.hasOwnProperty('value')) {
+                                    v = graphDataItem.values.value.toLocaleString('bn');
+                                }
+                                if (graphDataItem.hasOwnProperty('category')) {
+                                    d = graphDataItem.category.toLocaleDateString('bn', options);
+                                }
+                                
+                                return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
                             },
 
                         };
@@ -3341,10 +3380,10 @@ $ydata = [];
      /*==============================Start============================================
     * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
     * */
-    $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1_16088038408650/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2_16088070260020/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3_16088073716630/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange");
@@ -3394,7 +3433,7 @@ $ydata = [];
                 },
                 error: function (request, status, error) {
                     console.log("Request Param");
-                    console.log(request.responseText);
+                    // console.log(request.responseText);
                     console.log("Status Param");
                     console.log(status);
                     console.log(error);
@@ -3404,7 +3443,7 @@ $ydata = [];
         }
 
         function rangeChange(data, risk_matrix_data) {
-            console.log(risk_matrix_data);
+            // console.log(risk_matrix_data);
 
             $('.high_to_high_modal_click').html('<strong>অপরিবর্তিত উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
@@ -4195,7 +4234,7 @@ group by date ORDER BY date ");
                 type: 'GET',
                 data: {divisions: divisions, districts: districts},
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var axis = new Array();
                     $.each(data.axis, function (a, b) {
                         var obj = {
@@ -4415,8 +4454,9 @@ group by date ORDER BY date ");
                 var options = {month: 'long', day: 'numeric'};
                 $.each(data, function (a, b) {
 
-                    /*     gen_data.push(parseFloat(b.GeneralBedVacancyRate));
-                         icu_data.push(parseFloat(b.ICUVacancyRate));
+                       /*
+                        gen_data.push(parseFloat(b.GeneralBedVacancyRate));
+                        icu_data.push(parseFloat(b.ICUVacancyRate));
 
                         vecancy_dates.push(new Date(b.date).toLocaleDateString('bn', options));
                        */
@@ -4530,13 +4570,15 @@ group by date ORDER BY date ");
         }
     });
     dailyInfectedChart(mdata);
-    console.log(mdata);
+    // console.log(mdata);
 
 
     // Filter daily infected by district
 
     $('#filter-daily-infected-search').click(function () {
-    var districts = $('#daily-infected-district').val();
+    var districts = $('#daily-infected-district').val().replace(/'/g, "''");
+    var dis =  $('#daily-infected-district').find(":selected").text();
+    // alert(dis);
     
     
     if (districts) {
@@ -4546,10 +4588,10 @@ group by date ORDER BY date ");
                 type: 'GET',
                 data: {districts: [districts]},
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response) {
                     response = JSON.parse(response);
-                    dailyInfectedChart(response);
+                    dailyInfectedChart(response,dis);
                     } else {
                     dailyInfectedChart([]);
                     }

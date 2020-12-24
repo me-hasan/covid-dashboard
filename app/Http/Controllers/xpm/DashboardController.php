@@ -2193,8 +2193,6 @@ using(district) ORDER BY r.test_positivity DESC");
         try {
            $sql = "SELECT
                 report_date as date, 
-                infected_24_hrs, 
-                test_24_hrs, 
                 (infected_24_hrs/test_24_hrs)*100 as 'test_positivity' 
                 from daily_data order by report_date";
             $data = DB::select(DB::raw($sql));
@@ -2417,7 +2415,11 @@ using(district) ORDER BY r.test_positivity DESC");
         $districtArr = $request->all();
         // return $districtArr['districts'];
         $districts = implode(', ', array_map(function($val){return sprintf("'%s'", $val);}, $districtArr['districts']));;
-
+        
+        $queryClause = "";
+        if($districts !== "all"){
+            $queryClause .= " where district IN ({$districts})";
+        }
         //return $districts;
        
         
@@ -2431,7 +2433,7 @@ using(district) ORDER BY r.test_positivity DESC");
         and thedate <= (date_sub(curdate(), interval 7 day))) as T1
         left join
         (select date_of_test, division, district, daily_cases from  division_district_infected 
-        where district IN ({$districts})) as T2 on T1.thedate=T2.date_of_test) as R) AS b
+        {$queryClause}) as T2 on T1.thedate=T2.date_of_test) as R) AS b
                         where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
                       ), 2 ) AS 'dayMovingAvg'
         FROM 
@@ -2442,7 +2444,7 @@ using(district) ORDER BY r.test_positivity DESC");
         and thedate <= (date_sub(curdate(), interval 7 day))) as T1
         left join
         (select date_of_test, division, district, daily_cases from  division_district_infected 
-        where district IN ({$districts})) as T2 on T1.thedate=T2.date_of_test) as Q) as a");
+        {$queryClause}) as T2 on T1.thedate=T2.date_of_test) as Q) as a");
 
         
                      
