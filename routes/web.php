@@ -159,7 +159,7 @@ Route::get('xpm-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboar
 
 Route::get('national-dashboard/testdata', 'xpm\DashboardController@testData');
 
-Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
+// Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
 Route::get('age-graph', 'xpm\DashboardController@edgeGraph')->name('xpm.edge-graph');
 Route::get('xpm-get-district-comparision-data', 'xpm\DashboardController@getCumulativeInfectedData')->name('xpm.get_district_comparision');
 Route::get('xpm-get-national-daily-infected-trend', 'xpm\DashboardController@getNationalDailyInfectedData')->name('xpm.get_national_daily_infected_trend');
