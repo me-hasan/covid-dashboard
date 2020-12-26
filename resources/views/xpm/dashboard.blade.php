@@ -2175,7 +2175,7 @@ $ydata = [];
                 },
                 "valueAxes": [{
                     "position": "left",
-                    "title": zoneName+" - দৈনিক আক্রান্তের সংখ্যা",
+                    "title": zoneName+" এর দৈনিক আক্রান্তের সংখ্যা",
                     "id": "v1",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
@@ -2192,12 +2192,12 @@ $ydata = [];
                     "columnWidth": 10,
                     "fillAlphas": 1,
                     "lineColor": "rgb(103, 183, 220)",
-                    "title": zoneName+" - দৈনিক আক্রান্ত",
+                    "title": zoneName+" এর দৈনিক আক্রান্ত",
                     "type": "column",
                     "valueField": "infected",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = zoneName+"- দৈনিক আক্রান্ত";
+                        var title = zoneName+" এর দৈনিক আক্রান্ত";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }, {
@@ -2206,7 +2206,7 @@ $ydata = [];
                     "lineThickness": 2,
                     "lineColor": "orange",
                     "type": "smoothedLine",
-                    "title": zoneName+"- দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
+                    "title": zoneName+" এর দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
                     "valueField": "avg",
                     "bullet": "round",
                     "bulletSize": 7,
