@@ -2070,6 +2070,7 @@ using(district) ORDER BY r.test_positivity DESC");
         
         if ($districts && count($districts) > 0) {
             $data['axis'] = $districts;
+            $axis[] = ['en' => 'National', 'bn' => 'ন্যাশনাল লেভেল টেস্ট পসিটিভিটি'];
             foreach ($districts as $div) {
                 $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
 
@@ -2077,8 +2078,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 $sql = "SELECT dv.date_of_test, dv.district, dv.test_positivity from districts_test_positivity_view AS dv where dv.district = '$div'";
                 $dataResult[] =DB::select(DB::raw($sql));
             }
-            $axis[] = ['en' => 'National', 'bn' => 'ন্যাশনাল লেভেল টেস্ট পসিটিভিটি'];
-
+            
             /* get national level data */
             $dataResult[] = DB::select(DB::raw("SELECT
                 dd.report_date as date_of_test, 
@@ -2114,15 +2114,45 @@ using(district) ORDER BY r.test_positivity DESC");
         return $data;
     }
 
+
+    // Function to get all the dates in given range 
+    function getDatesFromRange() { 
+        $Date1 = '20-05-2020'; 
+        $Date2 = date("Y-m-d"); 
+        
+        // Declare an empty array 
+        $array = array(); 
+        
+        // Use strtotime function 
+        $Variable1 = strtotime($Date1); 
+        $Variable2 = strtotime($Date2); 
+        
+        // Use for loop to store dates into array 
+        // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+        for ($currentDate = $Variable1; $currentDate <= $Variable2;  
+                                        $currentDate += (86400)) { 
+                                            
+        $Store = date('Y-m-d', $currentDate); 
+        $array[] = $Store; 
+        } 
+
+        return $array;
+    } 
+    
+
     
     
      /* Data format */
      public function dateArrayList($formatData){
-        $name = array_column($formatData, 'date');
         
-        $filteredKeys = array_unique($name);
+        $datesList = $this->getDatesFromRange();
         $newDistrict = array();
-        foreach($filteredKeys as $key=>$date){
+        
+     /* $name = array_column($formatData, 'date');
+        $filteredKeys = array_unique($name);
+        foreach($filteredKeys as $key=>$date){ */
+
+            foreach($datesList as $key=>$date){
             foreach($formatData as $k=>$arrays){
                 $newDistrict['date'] = $date;
                 if(in_array($date, $arrays)){

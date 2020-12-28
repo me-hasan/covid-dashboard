@@ -3083,7 +3083,15 @@ $ydata = [];
      * */ 
 
     function showDhakaPisitiveRateChart(chartData, axis) {
-        console.log(chartData);
+        var colorList = ['#04B907', '#FB0F04', '#045FEA', '#05D5D5', '#8305D5', '#D50560', '#130101', '#AD9B03'];
+        var i = 0;
+        $.each( axis, function( key, value ) {
+            $.each( value, function( ky, val ) {
+                axis[key].lineColor = (colorList[i++] !== 'undefined')?colorList[i++]:'#003210';
+            });    
+        });
+
+        
        
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
@@ -3101,16 +3109,19 @@ $ydata = [];
                     },
                     "align": "center"
                 },
+                "valueAxes": [
+                {
+                    "id": "g1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                            return value.toLocaleString("bn-BD");
+                    },
+                }],
                 "dataProvider": chartData,
                 "synchronizeGrid": true,
-                "valueAxes": [
-                    {
-                        "minimum": 0,
-                        "labelFunction": function (value, valueText, valueAxis) {
-                            return value.toLocaleString("bn-BD");
-                        },
-                    }
-                ],
 
                 "graphs": axis,
                 "chartCursor": {
@@ -3189,8 +3200,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    // "title": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
-                    "title": "",
+                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -3212,7 +3222,7 @@ $ydata = [];
                 
                 "graphs": [{
                     "valueAxis": "v1",
-                    "lineColor": "rgb(223, 200, 37)",
+                    "lineColor": "#04C3FB",
                     "lineThickness": 2,
                     "bullet": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
                     "id": "g1",
@@ -3247,7 +3257,7 @@ $ydata = [];
                     "autoGridCount": true,
                     "selectedGraphFillAlpha": 0,
                     "graphLineAlpha": 0.2,
-                    "graphLineColor": "#c2c2c2",
+                    "graphLineColor": "#FB0F04",
                     "selectedGraphLineColor": "#888888",
                     "selectedGraphLineAlpha": 1
 
