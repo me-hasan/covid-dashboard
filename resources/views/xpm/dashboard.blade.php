@@ -293,7 +293,7 @@
             margin-left: 15px;
         }
         .modal-content {
-            width: 105% !important;
+            width: 108% !important;
         }
     </style>
 </head>
@@ -607,8 +607,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <label>জেলা</label>
                                             <select name="district[]" id="daily-infected-district"
                                                     class="select2 form-control btn-outline-primary select_district">
-                                                    <option value="">নির্বাচন করুন</option>
-                                                    {{-- <option value="all">সারাদেশ</option> --}}
+                                                    <option value="all">সারাদেশ</option>
+                                                    {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
 
                                                 @foreach($district_list as $district)
                                                     <option value="{!! $district->district !!}"
@@ -1149,9 +1149,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     data-toggle="modal">অপরিবর্তিত উচ্চ ঝুঁকি <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
                                                                 </td>
                                                                 <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white"
-                                                                    class="low_to_medium_modal_click"
+                                                                    class="high_to_medium_modal_click"
                                                                     data-target="#modaldemo1"
-                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium) }} টি জেলা
+                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
                                                                 </td>
                                                                 <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
                                                                     class="high_to_low_modal_click"
@@ -1185,9 +1185,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
                                                                 </td>
                                                                 <td style="cursor: pointer;background: #FFAF74; color: white; width: 30%;"
-                                                                    class="high_to_medium_modal_click"
+                                                                    class="low_to_medium_modal_click"
                                                                     data-target="#modaldemo1"
-                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium)}} টি জেলা
+                                                                    data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
                                                                 </td>
                                                                 <td style="background: #37761D; cursor: pointer; color: white"
                                                                     class="low_to_low_modal_click"
@@ -2359,8 +2359,8 @@ $ydata = [];
 
     }
 
-
-    $.ajax({
+    /* comment for not found data */
+    /* $.ajax({
         url: '{{url("/")}}/pm/south-asia-data.json',
         type: 'GET',
         data: {},
@@ -2381,7 +2381,7 @@ $ydata = [];
         error: function (error) {
             console.log(error);
         }
-    });
+    }); */
 
 
     AmCharts.addInitHandler(function (chart) {
@@ -3083,7 +3083,7 @@ $ydata = [];
      * */ 
 
     function showDhakaPisitiveRateChart(chartData, axis) {
-        // console.log(axis);
+        console.log(chartData);
        
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
@@ -3150,20 +3150,20 @@ $ydata = [];
                     "graphLineColor": "#c2c2c2",
                     "selectedGraphLineColor": "#888888",
                     "selectedGraphLineAlpha": 1
-
                 },
 
             });
 
-            chart.addListener("dataUpdated", zoomChart);
+           // chart.addListener("dataUpdated", zoomChart);
 
-            function zoomChart() {
+           // function zoomChart() {
                 // chart.zoomToDates(new Date(2020, 5, 20), new Date(2020, 10, 17));
-            }
+           // }
         }
     }
 
     function showNationalLevelTestPosivityChart(chartData) {
+        // console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         $('#last_date_4').html(" " + div_date);
@@ -3183,38 +3183,47 @@ $ydata = [];
                         return value.toLocaleString("bn-BD");
                     },
                 }],
-                // "valueAxes": [{
-                //     "id": "v1",
-                //     "axisAlpha": 0,
-                //     "position": "left",
-                //     "title": "দৈনিক আক্রান্তের সংখ্যা",
-                //     "minimum": 0,
-                //     "labelFunction": function (value, valueText, valueAxis) {
-                //         //return '';
-                //         return value.toLocaleString("bn-BD");
-                //     },
-                // },
-                // {
-                //     "id": "v2",
-                //     "axisAlpha": 0,
-                //     "position": "bottom",
-                //     "title": "দৈনিক পরীক্ষার সংখ্যা",
-                //     "minimum": 0,
-                //     "labelFunction": function (value, valueText, valueAxis) {
-                //         return value.toLocaleString("bn-BD");
-                //     },
-                // }],
-                "graphs": [{
+
+                "valueAxes": [
+                {
                     "id": "g1",
-                    "balloonText": "",
-                    "bullet": "",
-                    "bulletSize": 8,
-                    "lineColor": "#d1655d",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    // "title": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
+                    "title": "",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                        //return '';
+                        return value.toLocaleString("bn-BD");
+                    },
+                }],
+                "legend": {
+                    "horizontalGap": 10,
+                    "maxColumns": 1,
+                    "position": "bottom",
+                    "useGraphSettings": true,
+                    "markerSize": 10,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+                
+                
+                "graphs": [{
+                    "valueAxis": "v1",
+                    "lineColor": "rgb(223, 200, 37)",
                     "lineThickness": 2,
-                    "negativeLineColor": "#637bb6",
-                    "type": "smoothedLine",
-                    "valueField": "test_positivity",
+                    "bullet": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
+                    "id": "g1",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#637bb6",
+                    "bulletSize": 7,
+                    "lineThickness": 2,
                     "title": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
+                    "type": "smoothedLine",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "test_positivity",
                     "balloonFunction": function (graphDataItem, graph) {
                         var v = 0;
                         if (graphDataItem.values) {
@@ -3225,7 +3234,6 @@ $ydata = [];
                         var options = {year: 'numeric', month: 'long', day: 'numeric'};
                         return "<span style='font-size:12px;'>" + graph.title + "<b style='color:red'><br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
                     },
-
                 }],
                 "chartScrollbar": {
                     "graph": "g1",
@@ -4581,7 +4589,7 @@ group by date ORDER BY date ");
     // alert(dis);
     
     
-    if (districts) {
+    if (districts != 'all') {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/filter-daily-infected-chart',
@@ -4601,7 +4609,9 @@ group by date ORDER BY date ");
                     console.log(error);
                 }
             });
-            } 
+            }else{
+                dailyInfectedChart(mdata);
+            }
 
     });
 
