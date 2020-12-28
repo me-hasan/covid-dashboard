@@ -2931,7 +2931,7 @@ $ydata = [];
                         "theme": "light",
                         "balloon": {
                             "adjustBorderColor": false,
-                            "color": "#ffffff"
+                            "color": "#050606"
                         },
                         "valueAxes": [
                             {
@@ -3084,10 +3084,11 @@ $ydata = [];
 
     function showDhakaPisitiveRateChart(chartData, axis) {
         var colorList = ['#04B907', '#FB0F04', '#045FEA', '#05D5D5', '#8305D5', '#D50560', '#130101', '#AD9B03'];
-        var i = 0;
+        var colorSelect = 0;
         $.each( axis, function( key, value ) {
+            colorSelect = colorSelect + 1;
             $.each( value, function( ky, val ) {
-                axis[key].lineColor = (colorList[i++] !== 'undefined')?colorList[i++]:'#003210';
+                axis[key].lineColor = (colorList[colorSelect] !== 'undefined')?colorList[colorSelect]:'#003210';
             });    
         });
 
@@ -3222,7 +3223,7 @@ $ydata = [];
                 
                 "graphs": [{
                     "valueAxis": "v1",
-                    "lineColor": "#04C3FB",
+                    "lineColor": "#FB0F04",
                     "lineThickness": 2,
                     "bullet": "ন্যাশনাল লেভেল টেস্ট পসিটিভিটি",
                     "id": "g1",
@@ -3315,8 +3316,14 @@ $ydata = [];
 
     
     $('#filter-dhaka-rate').click(function () {
-        var districts = $('#district_dhaka_rate').val();
-        // alert(districts)s
+        var distArray = $('#district_dhaka_rate').val();
+        var districts = [];
+        $.each(distArray, function( index, value ) {
+            let ele = value.replace(/'/g, "\''");
+            // let ele = value.replace(/'/g, "\\'");
+            districts.push(ele);
+        });
+        console.log(districts);
         if (districts) {
             showLoader();
             $.ajax({
@@ -4596,7 +4603,7 @@ group by date ORDER BY date ");
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
     var dis =  $('#daily-infected-district').find(":selected").text();
-    // alert(dis);
+    // console.log(districts);
     
     
     if (districts != 'all') {
