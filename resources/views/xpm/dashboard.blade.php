@@ -1724,7 +1724,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 </div>
 
                                                 <div class="card-body">
-                                                    <div id="hospital_beds_trend"></div>
+                                                    <div id="hospital_general_bed_stacked_chart" style="width: 100%; min-height: 300px !important; background-color: #FFFFFF;"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -4350,92 +4350,164 @@ group by date ORDER BY date ");
     $('#last_date_11').html(" " + zdate);
 
 
-    function hospitalFilter(gen_data, icu_data, vacancy_dates) {
-        // Hospital Beds Trend
-        Highcharts.chart('hospital_beds_trend', {
-            chart: {
+    /*Haspatal generel beds ===================== Start ===========================  */
 
-                style: {
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
-            title: {
-                text: ''
-            },
+    <?php
+    $hospitalGeneralBedStacked = DB::select("select date as khanpur, alocatedGeneralBed as 'total_bed', AdmittedGeneralBed as 'occupied_bed', 
+        round(generalBedOccupencyRate, 2) as 'occupency_rate' 
+        from hospitaltemporarydata 
+        where city = 'Country' LIMIT 10");
 
-            subtitle: {
-                text: ''
-            },
+        $hospitalGeneralBedStackedData = json_encode($hospitalGeneralBedStacked);
+    ?>
+ 
+    function hospitalFilter(hospitalData) {
+        
 
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom',
-                itemStyle: {
-                    fontSize: "16px",
-                    fontWeight: "normal"
-                }
-            },
 
-            credits: {
-                enabled: false
-            },
-
-            xAxis: {
-                categories: vacancy_dates,
-                endOnTick: true,
-                showLastLabel: true,
-                labels: {
-                    formatter: function () {
-                        return this.axis.categories[Math.min(this.pos, this.axis.categories.length - 1)];
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return `${this.series.name}: <b>${englishToBangla(this.y)}%</b>`;
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'খালি শয্যা সংখ্যার শতকরা হার',
-                    style: {
-                        fontSize: 18,
-                        fontFamily: 'SolaimanLipi'
-                    }
+       var chart = AmCharts.makeChart("hospital_general_bed_stacked_chart",{
+            "type": "serial",
+            "autoMarginOffset": 5,
+            "columnWidth": 1,
+            "categoryField": "date",
+            "categoryAxis": {
+                "parseDates": true,
+                "minPeriod": "hh",
+                "labelFunction": function (value, date, categoryAxis) {
+                    var options = new Array();
+                    options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                    options["MMM"] = {year: 'numeric', month: 'long'};
+                    options["YY"] = {year: 'numeric', month: 'long'};
+                    return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                 },
-                labels: {
-                    formatter: function () {
-                        return englishToBangla(this.value) + '%';
-                    }
-                },
-                max: 100,
-            },
-
-            plotOptions: {
-                series: {
-                    fillOpacity: 0
-                }
-            },
-
-
-            colors: ['black', '#f44336'],
-            series: [{
-                name: 'সাধারণ শয্যা',
-                data: gen_data,
-                type: 'area',
-                marker: {symbol: 'circle'}
 
             },
+            
+            "colors": [
+                "#32BA32",
+                "#FF0000",
+                "#32BA80"
+            ],
+            
+            
+            "graphs": [
                 {
-                    name: 'আইসিইউ শয্যা',
-                    data: icu_data,
-                    type: 'area',
-                    marker: {symbol: 'circle'}
+                    "balloonText": "[[title]] of [[category]]:[[value]]",
+                    "markerType": "circle",
+                    "fillAlphas": 1,
+                    "valueAxis": "v1",
+                    "id": "g1",
+                    "title": "মোট আসন সংখ্যা",
+                    "type": "column",
+                    "valueField": "total_bed",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var value = graphDataItem.values.value;
+                        var title = "দৈনিক মোট আসন সংখ্যা";
+                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                    }
+                },
+                {
+                    "balloonText": "[[title]] of [[category]]:[[value]]",
+                    "markerType": "circle",
+                    "fillAlphas": 1,
+                    "valueAxis": "v2",
+                    "id": "g2",
+                    "title": "অধিকৃত আসন সংখ্যা ",
+                    "type": "column",
+                    "valueField": "occupied_bed",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var value = graphDataItem.values.value;
+                        var title = "দৈনিক অধিকৃত আসন সংখ্যা ";
+                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                    }
+                },
+                {
+                    "bulletBorderColor": "#FF0000",
+                    "bulletBorderThickness": 3,
+                    "bulletColor": "#9400D3",
+                    "valueAxis": "v3",
+                    "id": "g3",
+                    
+                    "lineColor": "#9400D3",
+                    "markerType": "circle",
+                    "showBulletsAt": "open",
+                    "showHandOnHover": true,
+                    "title": "অধিকৃত আসন সংখ্যার হার",
+                    "type": "smoothedLine",
+                    "valueField": "occupency_rate",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var value = graphDataItem.values.value;
+                        var title = "দৈনিক অধিকৃত আসন সংখ্যার হার";
+                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                    }
+                }
+            ],
+            "chartCursor": {
+                "cursorPosition": "mouse",
+                "showNextAvailable": false,
+                "categoryBalloonFunction": function (date) {
+                    var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                    return date.toLocaleDateString('bn-BD', options);
+                },
+            },
+            "legend": {
+               //"horizontalGap": 50,
+                "maxColumns": 5,
+                "position": "bottom",
+                "useGraphSettings": true,
+                "markerSize": 10,
+                "valueFunction": function (a, value) {
+                    return '';
+                },
+                "align": "left"
 
-                }],
+            },
+            "valueAxes": [{
+                "position": "left",
+                "title": " আসন সংখ্যা",
+                "id": "v2",
+                "minimum": 0,
+                "labelFunction": function (value, valueText, valueAxis) {
+                    return value.toLocaleString("bn-BD");
+                },
+
+            }],
+            
+            
+            
+            
+            "dataProvider": [{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"}],
+           
+            "chartScrollbar": {
+                    "graph": "g3",
+                    "gridAlpha": 0,
+                    "color": "#888888",
+                    "scrollbarHeight": 30,
+                    "backgroundAlpha": 1,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "autoGridCount": false,
+                    "selectedGraphFillAlpha": 0,
+                    // "graphLineAlpha": 0.2,
+                    "graphLineColor": "#c2c2c2",
+                    "selectedGraphLineColor": "#888888",
+                    "selectedGraphLineAlpha": 1
+
+                }
         });
+
+        chart.addListener("dataUpdated", zoomChart);
+zoomChart();
+
+
+function zoomChart() {
+    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+    //chart.zoomToIndexes(data.length - 40, chartData.length - 1);
+}
     }
+
+    
 
     $.ajax({
         url: '{{url("/")}}/get-hospital-name',
@@ -4462,6 +4534,8 @@ group by date ORDER BY date ");
             console.log(err);
         }
     });
+
+
 
     $("#hospital_filter").on('change', function () {
 
@@ -4509,6 +4583,11 @@ group by date ORDER BY date ");
             }
         });
     });
+
+  console.log((<?= $hospitalGeneralBedStackedData; ?>));
+    hospitalFilter(<?= $hospitalGeneralBedStackedData; ?>);
+
+    /* ========================= end hospital general data=========================== */
 
 
 </script>

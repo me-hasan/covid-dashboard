@@ -2148,7 +2148,7 @@ using(district) ORDER BY r.test_positivity DESC");
         $datesList = $this->getDatesFromRange();
         $newDistrict = array();
         
-     /* $name = array_column($formatData, 'date');
+      /* $name = array_column($formatData, 'date');
         $filteredKeys = array_unique($name);
         foreach($filteredKeys as $key=>$date){ */
 
@@ -2232,7 +2232,7 @@ using(district) ORDER BY r.test_positivity DESC");
 
         $sql = "SELECT
             a.date_of_test date";
-        if ($divisions && count($divisions) > 0) {
+        if($divisions && count($divisions) > 0) {
 
             foreach ($divisions as $div) {
                 $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
