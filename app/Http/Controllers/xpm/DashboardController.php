@@ -141,119 +141,62 @@ class DashboardController extends Controller
 
     public function divisionCompare()
     {
-        $sql = "SELECT
-            a.date_of_test date,
-            (
-                SELECT
+        $params = ['dhk'=>'DHAKA', 'ctg'=>'CHITTAGONG', 'khu'=>'KHULNA', 'mym'=>'MYMENSINGH', 'raj'=>'RAJSHAHI', 'ran'=>'RANGPUR', 'bar'=>'BARISAL', 'syl'=>'SYLHET'];
+        $last_key = array_key_last($params);
+        $comma = "";
+        
+        
+        /* select fileds */
+        $sql = "SELECT DHAKA.thedate AS date, ";
+        foreach($params as $select=> $selectValue){
+            if($select == $last_key){
+                $comma = "";
+            }else{
+                $comma = ",";
+            }
+            $sql .= " $selectValue.$select AS $select $comma";
+        }
+        
+        // return $sql;
+        $sql .=" FROM ";
+        foreach($params as $select=> $selectValue){
+            if($select == $last_key){
+                $comma = "";
+            }else{
+                $comma = ",";
+            }
 
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'DHAKA'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'dhk',
-        (
-                SELECT
-                       round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'CHITTAGONG'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'ctg',
-        (
-                SELECT
-                     round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'KHULNA'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'khu',
-
-        (
-                SELECT
-                      round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'MYMENSINGH'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'mym',
-        (
-                SELECT
-                      round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'RAJSHAHI'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'raj',
-        (
-                SELECT
-                     round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'RANGPUR'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'ran',
-        (
-                SELECT
-                      round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'BARISAL'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'bar',
-        (
-                SELECT
-                      round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = 'SYLHET'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as 'syl'
-
-        FROM
-            national_dashboard.division_infected a
-        WHERE
-            a.date_of_test <= date_sub(curdate(), interval 7 day)
-        GROUP BY a.date_of_test
-        ORDER BY a.date_of_test ASC";
-
+            $sql .=" ( SELECT 
+            a.thedate,
+            Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
+                     FROM 
+                     (SELECT thedate, division, 
+            COALESCE(daily_cases, 0) AS daily_cases FROM 
+            (SELECT thedate, division, daily_cases from
+            (SELECT thedate from calendardate where thedate >= '2020-05-20' 
+            and thedate <= (date_sub((SELECT max(date_of_test) from 
+            division_infected where division = '$selectValue'), interval 7 day))) as T1
+            left join
+            (SELECT date_of_test, division, daily_cases from  division_infected 
+            where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as R) AS b
+                            where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
+                        ), 2 ) AS '$select'
+            FROM 
+            (SELECT thedate, division, 
+            COALESCE(daily_cases, 0) AS daily_cases FROM 
+            (SELECT thedate, division, daily_cases from
+            (SELECT thedate from calendardate where thedate >= '2020-05-20' 
+            and thedate <= (date_sub((SELECT max(date_of_test) from 
+            division_infected where division = '$selectValue'), interval 7 day))) as T1
+            left join
+            (select date_of_test, division, daily_cases from  division_infected 
+            where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS $selectValue $comma";
+        }
+        $sql .= " WHERE DHAKA.thedate = CHITTAGONG.thedate AND DHAKA.thedate = KHULNA.thedate AND DHAKA.thedate = MYMENSINGH.thedate AND  DHAKA.thedate = RAJSHAHI.thedate AND DHAKA.thedate = RANGPUR.thedate AND DHAKA.thedate = BARISAL.thedate AND DHAKA.thedate = SYLHET.thedate";
+        
+       
         try {
             $data = DB::select(DB::raw($sql));
-            foreach ($data as $d) {
-                if ($d->dhk == null) {
-                    $d->dhk = 0;
-                }
-                if ($d->ctg == null) {
-                    $d->ctg = 0;
-                }
-                if ($d->khu == null) {
-                    $d->khu = 0;
-                }
-                if ($d->mym == null) {
-                    $d->mym = 0;
-                }
-                if ($d->raj == null) {
-                    $d->raj = 0;
-                }
-
-                if ($d->ran == null) {
-                    $d->ran = 0;
-                }
-                if ($d->bar == null) {
-                    $d->bar = 0;
-                }
-                if ($d->syl == null) {
-                    $d->syl = 0;
-                }
-            }
             return $data;
         } catch (\Exception $exception) {
             return [];
@@ -2070,7 +2013,7 @@ using(district) ORDER BY r.test_positivity DESC");
         
         if ($districts && count($districts) > 0) {
             $data['axis'] = $districts;
-            $axis[] = ['en' => 'National', 'bn' => 'ন্যাশনাল লেভেল টেস্ট পসিটিভিটি'];
+            $axis[] = ['en' => 'National', 'bn' => 'জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার'];
             foreach ($districts as $div) {
                 $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
 
@@ -2118,7 +2061,7 @@ using(district) ORDER BY r.test_positivity DESC");
     // Function to get all the dates in given range 
     function getDatesFromRange() { 
         $Date1 = '20-05-2020'; 
-        $Date2 = date("Y-m-d"); 
+        $Date2 = date("Y-m-d", strtotime('-7 day')); 
         
         // Declare an empty array 
         $array = array(); 
