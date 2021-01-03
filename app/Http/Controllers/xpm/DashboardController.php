@@ -16,7 +16,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth']);
     }
 
     public function checkValidUser()
@@ -24,6 +24,27 @@ class DashboardController extends Controller
         if (auth()->user()->user_type != 'hpm') {
             abort(401);
         }
+    }
+
+    public function forceFirstTimeResetPassword(){
+        return view('auth.force_password_reset');
+    }
+
+    public function submitforceFirstTimePassword(Request $request){
+        $request->validate([
+            'password'=> 'required|min:6',
+            'repassword'=> 'required_with:password|same:password|min:6'
+        ],[
+            'password.required'=> 'পাসওয়ার্ড টি কখনো ফাঁকা হতে পারবে না',
+            'password.min'=> 'পাসওয়ার্ড ৬ হরফ এর কম হতে পারবে না',
+            'repassword.same'=> 'পুনরাবৃত্তি পাসওয়ার্ড এবং পাসওয়ার্ড অবশ্যই একই হতে হবে'
+        ]);
+
+        auth()->user()->password = bcrypt($request->input('password'));
+        auth()->user()->first_time_login_status = true;
+        auth()->user()->save();
+        // toastr()->success('sdfsdf');
+        return redirect('/');
     }
 
     public function index(Request $request)
