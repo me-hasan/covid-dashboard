@@ -1984,7 +1984,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="col-md-4">
                                 <h3>কারিগরী সহযোগীতায়</h3>
                                 <img src="pm/images/collaborator/e-generation.png" class="" alt="">
-                                <p>ই-জেনারেশন প্রাইভেট লিমিটেড</p>
+                                <p style="font-size: 16px; float:right">ই-জেনারেশন পাবলিক কোম্পানি লিমিটেড</p>
                             </div>
 
                         </div>
@@ -2544,6 +2544,7 @@ $ydata = [];
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
+                        "title": "আক্রান্তের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -4197,6 +4198,7 @@ group by date ORDER BY date ");
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
+                        "title": "আক্রান্তের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");

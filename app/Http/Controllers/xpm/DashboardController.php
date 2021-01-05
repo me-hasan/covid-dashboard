@@ -2192,66 +2192,156 @@ using(district) ORDER BY r.test_positivity DESC");
         $axis = [];
         $divisions = $request->divisions;
         $districts = $request->districts;
+        
+        $sql = "";
 
-
-        $sql = "SELECT
-            a.date_of_test date";
         if($divisions && count($divisions) > 0) {
-
-            foreach ($divisions as $div) {
-                $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
-                $sql .= ",(
-                SELECT
-               CASE WHEN
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))>0
-                THEN
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                ELSE
-                 0
-                 END
-                 FROM
-                    national_dashboard.division_infected
-                WHERE
-                    division = '$div'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as '$div'";
+            $allDivision = ['dhk'=>'DHAKA', 'ctg'=>'CHITTAGONG', 'khu'=>'KHULNA', 'mym'=>'MYMENSINGH', 'raj'=>'RAJSHAHI', 'ran'=>'RANGPUR', 'bar'=>'BARISAL', 'syl'=>'SYLHET'];
+            $params = array_intersect($allDivision,$divisions);
+            $first_key = array_key_first($params);
+            $firstField = $params[$first_key];
+            $last_key = array_key_last($params);
+            $comma = "";
+            $logicalOpetator = "";
+            
+            
+            /* select fileds */
+            $sql = "SELECT $firstField.thedate AS date, ";
+            foreach($params as $select=> $selectValue){
+            $axis[] = ['en' => $selectValue, 'bn' => en2bnTranslation($selectValue)];
+                if($select == $last_key){
+                    $comma = "";
+                }else{
+                    $comma = ",";
+                }
+                $sql .= " $selectValue.$select AS $selectValue $comma";
+            }
+            
+            
+            $sql .=" FROM ";
+            foreach($params as $select=> $selectValue){
+                if($select == $last_key){
+                    $comma = "";
+                }else{
+                    $comma = ",";
+                }
+    
+                $sql .=" ( SELECT 
+                a.thedate,
+                Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
+                         FROM 
+                         (SELECT thedate, division, 
+                COALESCE(daily_cases, 0) AS daily_cases FROM 
+                (SELECT thedate, division, daily_cases from
+                (SELECT thedate from calendardate where thedate >= '2020-05-20' 
+                and thedate <= (date_sub((SELECT max(date_of_test) from 
+                division_infected where division = '$selectValue'), interval 7 day))) as T1
+                left join
+                (SELECT date_of_test, division, daily_cases from  division_infected 
+                where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as R) AS b
+                                where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
+                            ), 2 ) AS '$select'
+                FROM 
+                (SELECT thedate, division, 
+                COALESCE(daily_cases, 0) AS daily_cases FROM 
+                (SELECT thedate, division, daily_cases from
+                (SELECT thedate from calendardate where thedate >= '2020-05-20' 
+                and thedate <= (date_sub((SELECT max(date_of_test) from 
+                division_infected where division = '$selectValue'), interval 7 day))) as T1
+                left join
+                (select date_of_test, division, daily_cases from  division_infected 
+                where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS $selectValue $comma";
             }
 
-
-            $sql .= "FROM
-            national_dashboard.division_infected a
-        WHERE
-            a.date_of_test <= date_sub(curdate(), interval 7 day)
-        GROUP BY a.date_of_test
-        ORDER BY a.date_of_test ASC";
-        } else if ($districts && count($districts) > 0) {
-            $data['axis'] = $districts;
-            foreach ($districts as $div) {
-                $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
-                $sql .= ",(
-                SELECT
-                CASE WHEN
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))>0
-                THEN
-                round(sum(daily_cases)/count(date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test))
-                ELSE
-                 0
-                 END
-                FROM
-                    national_dashboard.division_district_infected
-                WHERE
-                    district = '$div'
-                AND date_of_test BETWEEN  (a.date_of_test - INTERVAL 6 DAY) AND a.date_of_test LIMIT 1
-            ) as '$div'";
+            $sql .=" WHERE";
+            
+            /* where clause */
+            foreach($params as $select=> $selectValue){
+                if($select == $last_key){
+                    $logicalOpetator = "";
+                }else{
+                    $logicalOpetator = " and ";
+                }
+                $sql .= " $firstField.thedate = $selectValue.thedate $logicalOpetator";
             }
 
+        }
+        
+        if ($districts && count($districts) > 0) {
+            $allDistrict = DB::table('div_dist')->get()->pluck('district')->toArray();
+            
+            $params = array_intersect($allDistrict,$districts);
+            $first_key = array_key_first($params);
+            $firstField = $params[$first_key];
+            $last_key = array_key_last($params);
+            $comma = "";
+            $logicalOpetator = "";
+            
+            
+            /* select fileds */
+            $sql = "SELECT $firstField.thedate AS date, ";
+            foreach($params as $select=> $selectValue){
+            $axis[] = ['en' => $selectValue, 'bn' => en2bnTranslation($selectValue)];
+                if($select == $last_key){
+                    $comma = "";
+                }else{
+                    $comma = ",";
+                }
+                $sql .= " $selectValue.$select AS $selectValue $comma";
+            }
+            
+            
+            $sql .=" FROM ";
+            foreach($params as $select=> $selectValue){
+                if($select == $last_key){
+                    $comma = "";
+                }else{
+                    $comma = ",";
+                }
+    
+                $sql .=" ( select 
+                a.thedate,
+                a.division,
+                a.district,
+                a.daily_cases,
+                Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
+                         FROM 
+                         (select thedate, division, district, 
+                COALESCE(daily_cases, 0) AS daily_cases FROM 
+                (select thedate, division, district, daily_cases from
+                (select thedate from calendardate where thedate >= '2020-05-20' 
+                and thedate <= (date_sub((select max(date_of_test) from 
+                division_district_infected where district = '$selectValue'), interval 7 day))) as T1
+                left join
+                (select date_of_test, division, district, daily_cases from  division_district_infected 
+                where district = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as R) AS b
+                                where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
+                            ), 2 ) AS '$select'
+                FROM 
+                (select thedate, division, district, 
+                COALESCE(daily_cases, 0) AS daily_cases FROM 
+                (select thedate, division, district, daily_cases from
+                (select thedate from calendardate where thedate >= '2020-05-20' 
+                and thedate <= (date_sub((select max(date_of_test) from 
+                division_district_infected where district = '$selectValue'), interval 7 day))) as T1
+                left join
+                (select date_of_test, division, district, daily_cases from  division_district_infected 
+                where district = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS $selectValue $comma";
+            }
 
-            $sql .= "FROM
-            national_dashboard.division_infected a
-        WHERE
-            a.date_of_test <= date_sub(curdate(), interval 7 day)
-        GROUP BY a.date_of_test
-        ORDER BY a.date_of_test ASC";
+            $sql .=" WHERE";
+            
+            /* where clause */
+            foreach($params as $select=> $selectValue){
+                if($select == $last_key){
+                    $logicalOpetator = "";
+                }else{
+                    $logicalOpetator = " and ";
+                }
+                $sql .= " $firstField.thedate = $selectValue.thedate $logicalOpetator";
+            }
+
+           
         }
 
 
