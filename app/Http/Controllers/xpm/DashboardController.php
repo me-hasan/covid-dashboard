@@ -2039,9 +2039,12 @@ using(district) ORDER BY r.test_positivity DESC");
                 $axis[] = ['en' => $div, 'bn' => en2bnTranslation($div)];
 
                 /* get select district data */
-                $sql = "SELECT dv.date_of_test, dv.district, dv.test_positivity from districts_test_positivity_view AS dv where dv.district = '$div'";
+                $sql = "SELECT dv.date_of_test, dv.district, dv.test_positivity from districts_test_positivity_view AS dv where dv.district = \"$div\"";
+                
                 $dataResult[] =DB::select(DB::raw($sql));
             }
+
+         
             
             /* get national level data */
             $dataResult[] = DB::select(DB::raw("SELECT
@@ -2279,7 +2282,7 @@ using(district) ORDER BY r.test_positivity DESC");
             
             
             /* select fileds */
-            $sql = "SELECT $firstField.thedate AS date, ";
+            $sql = "SELECT `$firstField`.thedate AS date, ";
             foreach($params as $select=> $selectValue){
             $axis[] = ['en' => $selectValue, 'bn' => en2bnTranslation($selectValue)];
                 if($select == $last_key){
@@ -2287,7 +2290,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 }else{
                     $comma = ",";
                 }
-                $sql .= " $selectValue.$select AS $selectValue $comma";
+                $sql .= " `$selectValue`.column$select AS `$selectValue` $comma";
             }
             
             
@@ -2311,22 +2314,22 @@ using(district) ORDER BY r.test_positivity DESC");
                 (select thedate, division, district, daily_cases from
                 (select thedate from calendardate where thedate >= '2020-05-20' 
                 and thedate <= (date_sub((select max(date_of_test) from 
-                division_district_infected where district = '$selectValue'), interval 7 day))) as T1
+                division_district_infected where district = \"$selectValue\"), interval 7 day))) as T1
                 left join
                 (select date_of_test, division, district, daily_cases from  division_district_infected 
-                where district = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as R) AS b
+                where district = \"$selectValue\") as T2 on T1.thedate=T2.date_of_test) as R) AS b
                                 where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
-                            ), 2 ) AS '$select'
+                            ), 2 ) AS 'column$select'
                 FROM 
                 (select thedate, division, district, 
                 COALESCE(daily_cases, 0) AS daily_cases FROM 
                 (select thedate, division, district, daily_cases from
                 (select thedate from calendardate where thedate >= '2020-05-20' 
                 and thedate <= (date_sub((select max(date_of_test) from 
-                division_district_infected where district = '$selectValue'), interval 7 day))) as T1
+                division_district_infected where district = \"$selectValue\"), interval 7 day))) as T1
                 left join
                 (select date_of_test, division, district, daily_cases from  division_district_infected 
-                where district = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS $selectValue $comma";
+                where district = \"$selectValue\") as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS `$selectValue` $comma";
             }
 
             $sql .=" WHERE";
@@ -2338,9 +2341,9 @@ using(district) ORDER BY r.test_positivity DESC");
                 }else{
                     $logicalOpetator = " and ";
                 }
-                $sql .= " $firstField.thedate = $selectValue.thedate $logicalOpetator";
+                $sql .= " `$firstField`.thedate = `$selectValue`.thedate $logicalOpetator";
             }
-
+            // return $sql;
            
         }
 

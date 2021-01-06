@@ -3324,13 +3324,8 @@ $ydata = [];
     $('#filter-dhaka-rate').click(function () {
         var distArray = $('#district_dhaka_rate').val();
         var districts = [];
-        $.each(distArray, function( index, value ) {
-            let ele = value.replace(/'/g, "\''");
-            // let ele = value.replace(/'/g, "\\'");
-            districts.push(ele);
-        });
-        console.log(districts);
-        if (districts) {
+        
+        if (distArray) {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/get-dhaka-positive-rate-data',
@@ -4259,6 +4254,7 @@ group by date ORDER BY date ");
     function filterDivision() {
         var divisions = $('#division').val();
         var districts = $('#district').val();
+        
         if (divisions || districts) {
             showLoader();
             $.ajax({
