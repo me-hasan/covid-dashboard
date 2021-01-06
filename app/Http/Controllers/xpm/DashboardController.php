@@ -2041,10 +2041,10 @@ using(district) ORDER BY r.test_positivity DESC");
                 /* get select district data */
                 $sql = "SELECT dv.date_of_test, dv.district, dv.test_positivity from districts_test_positivity_view AS dv where dv.district = \"$div\"";
                 
-                $dataResult[] =DB::select(DB::raw($sql));
+               $dataResult[] =DB::select(DB::raw($sql));
             }
 
-         
+        
             
             /* get national level data */
             $dataResult[] = DB::select(DB::raw("SELECT

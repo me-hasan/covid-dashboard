@@ -3323,14 +3323,14 @@ $ydata = [];
     
     $('#filter-dhaka-rate').click(function () {
         var distArray = $('#district_dhaka_rate').val();
-        var districts = [];
+        // var districts = [];
         
         if (distArray) {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/get-dhaka-positive-rate-data',
                 type: 'GET',
-                data: {districts: districts},
+                data: {districts: distArray},
                 success: function (data) {
                     // console.log(data);
                     var axis = new Array();
