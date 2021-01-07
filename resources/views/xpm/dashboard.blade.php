@@ -1567,32 +1567,22 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </h4>
 
                                     <div class="col-xl-12 col-md-12">
-                                        <div class="row">
-                                            <div class="col-xl-3 col-md-3">
-                                                <div class="card-body1">
-                                                    <div id="hospital_general_beds"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-md-3">
-                                                <div class="card-body1">
-                                                    <div id="hospital_icu_beds"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-md-6">
-                                                <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                    <strong>বর্ণনা:</strong>
-                                                    {!!  $des_10->description_beng ?? '' !!}
-
-                                                </div>
-                                                <p class="footer-note">
-                                                    <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_11"></span>
-                                                </p>
-                                            </div>
-
-                                        </div>
+                                        
                                         <div class="row pt-2 pr-3">
                                             <div class="col-xl-6 col-md-6">
+                                                <div class="row">
+                                                    <div class="col-xl-6 col-md-6">
+                                                        <div class="card-body1">
+                                                            <div id="hospital_general_beds"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6 col-md-6">
+                                                        <div class="card-body1">
+                                                            <div id="hospital_icu_beds"></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
                                                 <div class="table-responsive">
                                                     @php
                                                         $others_admitted = 0;
@@ -1709,6 +1699,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         </tbody>
                                                     </table>
                                                 </div>
+
+                                                
                                             </div>
                                             <div class="col-xl-6 col-md-6">
                                                 <div class="card-header">
@@ -1730,8 +1722,31 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 </div>
 
                                                 <div class="card-body">
-                                                    <div id="hospital_general_bed_stacked_chart" style="width: 100%; min-height: 300px !important; max-height: 300px !important; background-color: #FFFFFF;"></div>
+                                                    <h5 class="card-title b1">
+                                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i> সাধারণ শয্যা সংখ্যা
+                                                    </h5>
+                                                    <div id="hospital_general_bed_stacked_chart" style="width: 100%; min-height: 280px !important; max-height: 280px !important; background-color: #FFFFFF;"></div>
                                                 </div>
+
+                                                <div class="card-body">
+                                                    <h5 class="card-title b1">
+                                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i> আইসিইউ শয্যা সংখ্যা
+                                                    </h5>
+                                                    <div id="hospital_icu_bed_stacked_chart" style="width: 100%; min-height: 280px !important; max-height: 280px !important; background-color: #FFFFFF;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12">
+                                                <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                    <strong>বর্ণনা:</strong>
+                                                    {!!  $des_10->description_beng ?? '' !!}
+
+                                                </div>
+                                                <p class="footer-note">
+                                                    <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_11"></span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -4353,255 +4368,59 @@ group by date ORDER BY date ");
     $('#last_date_11').html(" " + zdate);
 
 
-    /*Haspatal generel beds ===================== Start ===========================  */
-
-    <?php
-    $hospitalGeneralBedStacked = DB::select("select date as khanpur, alocatedGeneralBed as 'total_bed', AdmittedGeneralBed as 'occupied_bed', 
-        round(generalBedOccupencyRate, 2) as 'occupency_rate' 
-        from hospitaltemporarydata 
-        where city = 'Country' LIMIT 10");
-
-        $hospitalGeneralBedStackedData = json_encode($hospitalGeneralBedStacked);
-    ?>
- 
-    // function hospitalFilter(hospitalData) { // will be open
-    /* it will be remove ================ start */
-        function hospitalFilter(gen_data, icu_data, vacancy_dates) {
-        // Hospital Beds Trend
-        Highcharts.chart('hospital_general_bed_stacked_chart', {
-            chart: {
-
-                style: {
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
-            title: {
-                text: ''
-            },
-
-            subtitle: {
-                text: ''
-            },
-
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom',
-                itemStyle: {
-                    fontSize: "16px",
-                    fontWeight: "normal"
-                }
-            },
-
-            credits: {
-                enabled: false
-            },
-
-            xAxis: {
-                categories: vacancy_dates,
-                endOnTick: true,
-                showLastLabel: true,
-                labels: {
-                    formatter: function () {
-                        return this.axis.categories[Math.min(this.pos, this.axis.categories.length - 1)];
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return `${this.series.name}: <b>${englishToBangla(this.y)}%</b>`;
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'খালি শয্যা সংখ্যার শতকরা হার',
-                    style: {
-                        fontSize: 18,
-                        fontFamily: 'SolaimanLipi'
-                    }
-                },
-                labels: {
-                    formatter: function () {
-                        return englishToBangla(this.value) + '%';
-                    }
-                },
-                max: 100,
-            },
-
-            plotOptions: {
-                series: {
-                    fillOpacity: 0
-                }
-            },
-
-
-            colors: ['black', '#f44336'],
-            series: [{
-                name: 'সাধারণ শয্যা',
-                data: gen_data,
-                type: 'area',
-                marker: {symbol: 'circle'}
-
-            },
-                {
-                    name: 'আইসিইউ শয্যা',
-                    data: icu_data,
-                    type: 'area',
-                    marker: {symbol: 'circle'}
-
-                }],
+    /*Haspatal beds ===================== Start ===========================  */
+    /* general beds==== */
+    function hospitalGeneralFilter(design, hospitalData) { 
+       var generalData = hospitalData.general;
+      
+       var hospitalGeneralBedchart = AmCharts.makeChart("hospital_general_bed_stacked_chart",{
+           "dataProvider": generalData,
+           "type": "serial",
+           "theme": "none",
+           "categoryField": "date",
+            
+            "graphs": design.graphs,
+            "valueAxes": design.valueAxes,
+            "chartCursor": design.chartCursor,
+            "categoryAxis": design.categoryAxis,
+            "legend": design.legend,
+            "chartScrollbar": design.chartScrollbar,  
         });
-    // }
-/* it will be remove ================ end */
 
+        hospitalGeneralBedchart.addListener("dataUpdated", zoomChart);
+        zoomChart();
 
-        
-        /* it will be open ================ start */
-
-       /* var chart = AmCharts.makeChart("hospital_general_bed_stacked_chart",{
-            "type": "serial",
-            "autoMarginOffset": 5,
-            "columnWidth": 1,
-            "categoryField": "date",
-            "categoryAxis": {
-                "parseDates": true,
-                "minPeriod": "hh",
-                "labelFunction": function (value, date, categoryAxis) {
-                    var options = new Array();
-                    options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
-                    options["MMM"] = {year: 'numeric', month: 'long'};
-                    options["YY"] = {year: 'numeric', month: 'long'};
-                    return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                },
-
-            },
-            
-            "colors": [
-                "#32BA32",
-                "#FF0000",
-                "#32BA80"
-            ],
-            
-            
-            "graphs": [
-                {
-                    "balloonText": "[[title]] of [[category]]:[[value]]",
-                    "markerType": "circle",
-                    "fillAlphas": 1,
-                    "valueAxis": "v1",
-                    "id": "g1",
-                    "title": "মোট আসন সংখ্যা",
-                    "type": "column",
-                    "valueField": "total_bed",
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = "দৈনিক মোট আসন সংখ্যা";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                },
-                {
-                    "balloonText": "[[title]] of [[category]]:[[value]]",
-                    "markerType": "circle",
-                    "fillAlphas": 1,
-                    "valueAxis": "v2",
-                    "id": "g2",
-                    "title": "অধিকৃত আসন সংখ্যা ",
-                    "type": "column",
-                    "valueField": "occupied_bed",
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = "দৈনিক অধিকৃত আসন সংখ্যা ";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                },
-                {
-                    "bulletBorderColor": "#FF0000",
-                    "bulletBorderThickness": 3,
-                    "bulletColor": "#9400D3",
-                    "valueAxis": "v3",
-                    "id": "g3",
-                    
-                    "lineColor": "#9400D3",
-                    "markerType": "circle",
-                    "showBulletsAt": "open",
-                    "showHandOnHover": true,
-                    "title": "অধিকৃত আসন সংখ্যার হার",
-                    "type": "smoothedLine",
-                    "valueField": "occupency_rate",
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = "দৈনিক অধিকৃত আসন সংখ্যার হার";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                }
-            ],
-            "chartCursor": {
-                "cursorPosition": "mouse",
-                "showNextAvailable": false,
-                "categoryBalloonFunction": function (date) {
-                    var options = {year: 'numeric', month: 'long', day: 'numeric'};
-                    return date.toLocaleDateString('bn-BD', options);
-                },
-            },
-            "legend": {
-               //"horizontalGap": 50,
-                "maxColumns": 5,
-                "position": "bottom",
-                "useGraphSettings": true,
-                "markerSize": 10,
-                "valueFunction": function (a, value) {
-                    return '';
-                },
-                "align": "left"
-
-            },
-            "valueAxes": [{
-                "position": "left",
-                "title": " আসন সংখ্যা",
-                "id": "v2",
-                "minimum": 0,
-                "labelFunction": function (value, valueText, valueAxis) {
-                    return value.toLocaleString("bn-BD");
-                },
-
-            }],
-            
-            
-            
-            
-            "dataProvider": [{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-06 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-08 12:00:00","total_bed":"7373","occupied_bed":"2193","occupency_rate":"29.74"},{"date":"2020-08-09 12:00:00","total_bed":"7260","occupied_bed":"1740","occupency_rate":"23.97"},{"date":"2020-08-10 12:00:00","total_bed":"7398","occupied_bed":"2223","occupency_rate":"30.05"},{"date":"2020-08-11 12:00:00","total_bed":"7398","occupied_bed":"2253","occupency_rate":"30.45"},{"date":"2020-08-12 12:00:00","total_bed":"7398","occupied_bed":"2247","occupency_rate":"30.37"},{"date":"2020-08-13 12:00:00","total_bed":"7398","occupied_bed":"2308","occupency_rate":"31.2"},{"date":"2020-08-14 12:00:00","total_bed":"7398","occupied_bed":"2211","occupency_rate":"29.89"},{"date":"2020-08-15 12:00:00","total_bed":"7398","occupied_bed":"2299","occupency_rate":"31.08"},{"date":"2020-08-16 12:00:00","total_bed":"7398","occupied_bed":"2357","occupency_rate":"31.86"},{"date":"2020-08-17 12:00:00","total_bed":"7398","occupied_bed":"2344","occupency_rate":"31.68"},{"date":"2020-08-18 12:00:00","total_bed":"7398","occupied_bed":"2386","occupency_rate":"32.25"},{"date":"2020-08-19 12:00:00","total_bed":"7398","occupied_bed":"2394","occupency_rate":"32.36"},{"date":"2020-08-20 12:00:00","total_bed":"7398","occupied_bed":"2413","occupency_rate":"32.62"},{"date":"2020-08-21 12:00:00","total_bed":"7398","occupied_bed":"2388","occupency_rate":"32.28"},{"date":"2020-08-22 12:00:00","total_bed":"7398","occupied_bed":"2371","occupency_rate":"32.05"},{"date":"2020-08-23 12:00:00","total_bed":"7372","occupied_bed":"2421","occupency_rate":"32.84"},{"date":"2020-08-24 12:00:00","total_bed":"7372","occupied_bed":"2308","occupency_rate":"31.31"},{"date":"2020-08-25 12:00:00","total_bed":"7372","occupied_bed":"2375","occupency_rate":"32.22"},{"date":"2020-08-26 12:00:00","total_bed":"7398","occupied_bed":"2375","occupency_rate":"32.1"},{"date":"2020-08-27 12:00:00","total_bed":"7048","occupied_bed":"2247","occupency_rate":"31.88"}],
-           
-            "chartScrollbar": {
-                    "graph": "g3",
-                    "gridAlpha": 0,
-                    "color": "#888888",
-                    "scrollbarHeight": 30,
-                    "backgroundAlpha": 1,
-                    "selectedBackgroundAlpha": 0.1,
-                    "selectedBackgroundColor": "#888888",
-                    "graphFillAlpha": 0,
-                    "autoGridCount": false,
-                    "selectedGraphFillAlpha": 0,
-                    // "graphLineAlpha": 0.2,
-                    "graphLineColor": "#c2c2c2",
-                    "selectedGraphLineColor": "#888888",
-                    "selectedGraphLineAlpha": 1
-
-                }
-        }); */
-        /* it will be open ================ end */
-
-        chart.addListener("dataUpdated", zoomChart);
-zoomChart();
-
-
-function zoomChart() {
-    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-    //chart.zoomToIndexes(data.length - 40, chartData.length - 1);
-}
     }
 
-    
+    /* icu beds==== */
+    function hospitalIcuFilter(design, hospitalData) { 
+       var icuData = hospitalData.icu;
+
+       var hospitalGeneralBedchart = AmCharts.makeChart("hospital_icu_bed_stacked_chart",{
+           "dataProvider": icuData,
+           "type": "serial",
+           "theme": "none",
+           "categoryField": "date",
+            
+            // "colors": [
+            //     "#32BA32",
+            //     "#FF0000",
+            //     "#32BA80"
+            // ],
+            
+            "graphs": design.graphs,
+            "valueAxes": design.valueAxes,
+            "chartCursor": design.chartCursor,
+            "categoryAxis": design.categoryAxis,
+            "legend": design.legend,
+            "chartScrollbar": design.chartScrollbar,  
+        });
+
+        hospitalGeneralBedchart.addListener("dataUpdated", zoomChart);
+        zoomChart();
+
+    }
+
 
     $.ajax({
         url: '{{url("/")}}/get-hospital-name',
@@ -4640,37 +4459,11 @@ function zoomChart() {
             type: 'GET',
             data: {hospital: this.value, text: text},
             success: function (data) {
-
-                var gen_data = new Array();
-                var icu_data = new Array();
-                var vecancy_dates = new Array();
-                var options = {month: 'long', day: 'numeric'};
-                $.each(data, function (a, b) {
-
-                       /*
-                        gen_data.push(parseFloat(b.GeneralBedVacancyRate));
-                        icu_data.push(parseFloat(b.ICUVacancyRate));
-
-                        vecancy_dates.push(new Date(b.date).toLocaleDateString('bn', options));
-                       */
-
-                    let x = parseInt(b.GeneralBedVacancyRate); //convert String to Int
-                    let y = parseInt(b.ICUVacancyRate); //convert String to Int
-
-                    if (x != '0.0000') {
-                        gen_data.push(parseFloat(b.GeneralBedVacancyRate));
-                    }
-                    if (y != '0.0000') {
-                        icu_data.push(parseFloat(b.ICUVacancyRate));
-                    }
-
-                    if (x != '0.0000' && y != '0.0000') {
-
-                        vecancy_dates.push(new Date(b.date).toLocaleDateString('bn', options));
-                    }
-
-                });
-                hospitalFilter(gen_data, icu_data, vecancy_dates);
+                
+                
+                    hospitalGeneralFilter(stackedChartedDesign(), data);
+                    hospitalIcuFilter(stackedChartedDesign(), data);
+               
             },
             error: function (err) {
                 console.log(err);
@@ -4678,15 +4471,148 @@ function zoomChart() {
         });
     });
 
-  console.log((<?= $hospitalGeneralBedStackedData; ?>));
-    hospitalFilter(<?= $hospitalGeneralBedStackedData; ?>);
-
+  
+    
+   
+    
     /* ========================= end hospital general data=========================== */
+
+
+    /* ======================Stack Chart Common Desin start================================= */
+    function stackedChartedDesign(){
+        return {
+            "graphs": [
+                {
+                    "balloonText": "[[title]] of [[category]]:[[value]]",
+                    "markerType": "circle",
+                    "fillAlphas": 1,
+                    
+                    "valueAxis": "v1",
+                    "lineColor": "#32BA32",
+                    "id": "g1",
+                    "title": "মোট শয্যা সংখ্যা",
+                    "type": "column",
+                    "valueField": "total_bed",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        let total =   graphDataItem.values.total;
+                        let blank =   graphDataItem.values.value;
+                        var title = "দৈনিক";
+                        return "<b>" + title + "</b> <span style='font-size:14px' class='g-v'> মোট শয্যা সংখ্যা : <b>" + blank.toLocaleString('bn-BD') + "</b></span>";
+                    }
+                },
+                {
+                    "balloonText": "[[title]] of [[category]]:[[value]]",
+                    "markerType": "circle",
+                    "fillAlphas": 1,
+                    "lineColor": "#FF0000",
+                    "valueAxis": "v2",
+                    "id": "g2",
+                    "title": "ভর্তি শয্যা সংখ্যা / খালি শয্যা সংখ্যা",
+                    "type": "column",
+                    "valueField": "occupied_bed",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        console.log(graphDataItem.values);
+                        var total = graphDataItem.values.total - graphDataItem.values.value;
+                        var blank = total - graphDataItem.values.value;
+                        var admited = graphDataItem.values.value;
+                        var title = "দৈনিক শয্যা সংখ্যা";
+                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> ভর্তি : <b>" + admited.toLocaleString('bn-BD') + "</b></span><span style='font-size:14px' class='g-v'> || খালি : <b>" + blank.toLocaleString('bn-BD') + "</b></span>";
+                    }
+                },
+                {
+                    "bulletBorderColor": "#FF0000",
+                    "bulletBorderThickness": 3,
+                    "bulletColor": "#9400D3",
+                    "valueAxis": "v3",
+                    "id": "g3",
+                    
+                    "lineColor": "#9400D3",
+                    "markerType": "circle",
+                    "showBulletsAt": "open",
+                    "showHandOnHover": true,
+                    "title": "ভর্তি শয্যা সংখ্যার হার",
+                    "type": "smoothedLine",
+                    "valueField": "occupency_rate",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var value = graphDataItem.values.value;
+                        var title = "দৈনিক ভর্তি শয্যা সংখ্যার হার";
+                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                    }
+                }
+            ],
+                "valueAxes": [{
+                    "position": "left",
+                    "title": " শয্যা সংখ্যা",
+                    "id": "v2",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                        return value.toLocaleString("bn-BD");
+                    },
+
+                }],
+                "chartCursor": {
+                    "cursorPosition": "mouse",
+                    "showNextAvailable": false,
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return date.toLocaleDateString('bn-BD', options);
+                    },
+                },
+                "categoryAxis": {
+                    "parseDates": true,
+                    "seriesStacked" : true,
+                    "minPeriod": "DD",
+                    "labelFunction": function (value, date, categoryAxis) {
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                    },
+
+                },
+
+                "legend": {
+                //"horizontalGap": 50,
+                    "maxColumns": 5,
+                    "position": "bottom",
+                    "useGraphSettings": true,
+                    "markerSize": 10,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "left"
+
+                },
+
+                "chartScrollbar": {
+                        "graph": "g3",
+                        "gridAlpha": 0,
+                        "color": "#888888",
+                        "scrollbarHeight": 30,
+                        "backgroundAlpha": 1,
+                        "selectedBackgroundAlpha": 0.1,
+                        "selectedBackgroundColor": "#888888",
+                        "graphFillAlpha": 0,
+                        "autoGridCount": false,
+                        "selectedGraphFillAlpha": 0,
+                        "graphLineAlpha": 0.2,
+                        "graphLineColor": "#c2c2c2",
+                        "selectedGraphLineColor": "#888888",
+                        "selectedGraphLineAlpha": 1
+
+                }   
+            
+        }
+    }
+    /* ======================Stack Chart Common Desin start================================= */
 
 
 </script>
 
-<!-- smooth scroll to several section of the page-->
+
+
+// smooth scroll to several section of the page
 <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
 <script>
     var scroll = new SmoothScroll('a[href*="#"]', {
@@ -4833,5 +4759,8 @@ function zoomChart() {
     });*/
 
 </script>
+
+
+
 </body>
 </html>

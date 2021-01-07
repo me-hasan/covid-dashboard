@@ -157,6 +157,16 @@ class DashboardController extends Controller
         $data['total_death'] = DB::table('daily_data')->selectRaw('death_total')->orderBy('report_date', 'DESC')->first()->death_total;
         //dd($data['total_death']);
 
+       /*  $hospitalGeneralBedStacked = DB::select("SELECT date, alocatedGeneralBed as 'total_bed', AdmittedGeneralBed as 'occupied_bed', 
+        round(generalBedOccupencyRate, 2) as 'occupency_rate' 
+        from hospitaltemporarydata 
+        where city = 'Country' LIMIT 10");
+        
+        
+        $data['hospitalGeneralBedStackedData'] =  json_encode($hospitalGeneralBedStacked); */
+       
+       
+
         return view('xpm.dashboard', $data);
     }
 
@@ -2392,32 +2402,30 @@ using(district) ORDER BY r.test_positivity DESC");
 
     public function getHospitalData(Request $request)
     {
-        $condition = '1';
+        $condition = '';
         if ($request->hospital == 'All' || $request->text == 'ঢাকা শহর' || $request->text == 'চট্টগ্রাম শহর' || $request->text == 'অন্যান্য') {
             $status = ["All" => "Country", "Dhaka" => "Dhaka", "Chittagong" => "Chittagong", "Others" => "Others"];
             $text = $status[$request->hospital];
             $condition = "city = '$text'";
-        } elseif ($request->hospital) {
+        } 
+        elseif ($request->hospital) {
             $condition = "hospitalName LIKE '%$request->hospital%'";
         }
-        $sql = "SELECT
-                    date,
-                    (
-                        (
-                            (
-                                sum(alocatedGeneralBed) - sum(AdmittedGeneralBed)
-                            ) / sum(alocatedGeneralBed)
-                        ) * 100
-                    ) AS 'GeneralBedVacancyRate',
-                    (
-                        (
-                            (
-                                sum(alocatedICUBed) - sum(AdmittedICUBed)
-                            ) / sum(alocatedICUBed)
-                        ) * 100
-                    ) AS 'ICUVacancyRate'
-                FROM
-                    hospitaltemporarydata
+        $sqlGeneral = "SELECT date, `alocatedGeneralBed` /* - `AdmittedGeneralBed` */ as 'total_bed', AdmittedGeneralBed as 'occupied_bed', 
+        round(generalBedOccupencyRate, 2) as 'occupency_rate' 
+        from hospitaltemporarydata 
+    
+                WHERE
+                    $condition
+                GROUP BY
+                    date
+                ORDER BY
+                    date";
+
+        $sqlICU = "SELECT date, `alocatedICUBed` /* - `AdmittedICUBed` */  as 'total_bed', AdmittedICUBed as 'occupied_bed', 
+        round(ICUOccupencyRate, 2) as 'occupency_rate' 
+        from hospitaltemporarydata  
+    
                 WHERE
                     $condition
                 GROUP BY
@@ -2427,7 +2435,10 @@ using(district) ORDER BY r.test_positivity DESC");
 
         try {
 
-            return DB::select(DB::raw($sql));
+            $data['general']=DB::select(DB::raw($sqlGeneral));
+            $data['icu']=DB::select(DB::raw($sqlICU));
+
+            return $data;
 
         } catch (\Exception $exception) {
             return [];
