@@ -1400,6 +1400,22 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             @endforeach
                                                         </select>
                                                     </div > --}}
+                                                    
+                                                    <div class="col-md-2 ml-4 mb-2" >
+                                                        <label>নির্বাচন করুন </label>
+                                                        <div class="row">
+                                                            <label class="radio-inline" for="radios-0" style="cursor:pointer">
+                                                                <input type="radio" name="weeklyOrDaily" id="radios-0" value="1" checked="checked">
+                                                                 দৈনিক
+                                                                </label> 
+                                                                &nbsp;&nbsp;&nbsp;
+                                                                <label class="radio-inline" for="radios-1" style="cursor:pointer">
+                                                                <input type="radio" name="weeklyOrDaily" id="radios-1" value="2">
+                                                                সাপ্তাহিক
+                                                                </label> 
+                                                            <label class="radio-inline" for="radios-2">
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-3 ml-4 mb-3" >
                                                         <label>জেলা</label>
                                                         <select name="district[]" id="district_dhaka_rate" multiple
@@ -1486,8 +1502,33 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row">
-
-                                                        <div class="col-xl-4 col-md-12">
+                                                        <div class="col-md-3 ml-4 mb-3" >
+                                                            <label>বয়সসীমা</label>
+                                                            <select name="district[]" id="district_dhaka_rate" multiple
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                
+                                                                    <option value="" class="b1"> ০ থেকে ১০</option>
+                                                                    <option value="" class="b1"> ১০ থেকে ২০</option>
+                                                                    <option value="" class="b1"> ২০ থেকে ৩০</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm mt-4 mx-auto">
+                                                            <button id="filter-dhaka-rate"
+                                                                    class="btn btn-sm district_cms_search b1">
+                                                                <svg class="header-icon search-icon" x="1008" y="1248"
+                                                                     viewBox="0 0 24 24" height="100%" width="100%"
+                                                                     preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                                    <path
+                                                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div id="comparison_of_age_based_infections_and_deaths" style="width: 105%; height: 470px"></div>
+                                                    {{--<div class="row">
+                                                         <div class="col-xl-4 col-md-12">
                                                             <h5 class="card-title b1">৬ই মার্চ
                                                                 - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->lastOfMonth()->day) !!}
                                                                 শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->format('F')) !!}</h5>
@@ -1507,9 +1548,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 -{!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}
                                                                 ই {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</h5>
                                                             <div id="age_wise_death_distribution"></div>
-                                                        </div>
+                                                        </div> 
 
-                                                    </div>
+                                                    </div>--}}
                                                     <div class="row">
                                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                                             <div class="card-body">
@@ -1698,6 +1739,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         </tr>
                                                         </tbody>
                                                     </table>
+                                                    <div class="col-xl-12 col-md-12">
+                                                        <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                            <strong>বর্ণনা:</strong>
+                                                            {!!  $des_10->description_beng ?? '' !!}
+        
+                                                        </div>
+                                                        <p class="footer-note">
+                                                            <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_11"></span>
+                                                        </p>
+                                                    </div>
                                                 </div>
 
                                                 
@@ -1725,30 +1777,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <h5 class="card-title b1">
                                                         <i class="fa fa-hand-o-right" aria-hidden="true"></i> সাধারণ শয্যা সংখ্যা
                                                     </h5>
-                                                    <div id="hospital_general_bed_stacked_chart" style="width: 100%; min-height: 280px !important; max-height: 280px !important; background-color: #FFFFFF;"></div>
+                                                    <div id="hospital_general_bed_stacked_chart" style="width: 100%; min-height: 330px !important; max-height: 330px !important; background-color: #FFFFFF;"></div>
                                                 </div>
 
                                                 <div class="card-body">
                                                     <h5 class="card-title b1">
                                                         <i class="fa fa-hand-o-right" aria-hidden="true"></i> আইসিইউ শয্যা সংখ্যা
                                                     </h5>
-                                                    <div id="hospital_icu_bed_stacked_chart" style="width: 100%; min-height: 280px !important; max-height: 280px !important; background-color: #FFFFFF;"></div>
+                                                    <div id="hospital_icu_bed_stacked_chart" style="width: 100%; min-height: 330px !important; max-height: 330px !important; background-color: #FFFFFF;"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xl-12 col-md-12">
-                                                <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                    <strong>বর্ণনা:</strong>
-                                                    {!!  $des_10->description_beng ?? '' !!}
-
-                                                </div>
-                                                <p class="footer-note">
-                                                    <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_11"></span>
-                                                </p>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
 
                                 </div>
@@ -2196,6 +2236,7 @@ $ydata = [];
                 },
                 "valueAxes": [{
                     "position": "left",
+                    "stackType": "100%",
                     "title": zoneName+" এর দৈনিক আক্রান্তের সংখ্যা",
                     "id": "v1",
                     "minimum": 0,
@@ -3103,7 +3144,7 @@ $ydata = [];
      * =======================Start Dhaka rate Chart=========================================
      * */ 
 
-    function showDhakaPisitiveRateChart(chartData, axis) {
+    function showDhakaPisitiveRateChart(chartData, axis, title) {
         var colorList = ['#04B907', '#FB0F04', '#045FEA', '#05D5D5', '#8305D5', '#D50560', '#130101', '#AD9B03'];
         var colorSelect = 0;
         $.each( axis, function( key, value ) {
@@ -3136,7 +3177,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": title+" সনাক্ত বিবেচনায় আক্রান্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -3337,7 +3378,334 @@ $ydata = [];
 
     
     $('#filter-dhaka-rate').click(function () {
+        var weeklyOrDaily = $('input[name="weeklyOrDaily"]:checked').val();
+        var weeklyOrDailyTitle = (weeklyOrDaily == 1) ? 'দৈনিক' : 'সাপ্তাহিক';
+        
         var distArray = $('#district_dhaka_rate').val();
+        // var districts = [];
+        
+        if (distArray) {
+            showLoader();
+            $.ajax({
+                url: '{{url("/")}}/get-dhaka-positive-rate-data',
+                type: 'GET',
+                data: {districts: distArray, weeklyOrDaily: weeklyOrDaily},
+                success: function (data) {
+                    // console.log(data);
+                    var axis = new Array();
+                    $.each(data.axis, function (a, b) {
+                        var obj = {
+                            "id": "g" + a,
+                            "valueAxis": "v" + a,
+                            "lineColor": getRandomColor(a),
+                            "lineThickness": 2,
+                            "bullet": "",
+                            "bulletBorderThickness": 2,
+                            "hideBulletsCount": 30,
+                            "title": b.bn,
+                            "valueField": b.en,
+                            "fillAlphas": 0,
+                            "type": "smoothedLine",
+                            "balloonFunction": function (graphDataItem, graph) {
+                                var options = {month: 'long', day: 'numeric'};
+                                var v = 0;
+                                var d = '';
+                               
+                                let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                                let previusSevenDay= previusSeven.getDate();
+                                let getMonth= month_name(previusSeven.getMonth());
+
+                                if (graphDataItem.values.hasOwnProperty('value')) {
+                                    v = graphDataItem.values.value.toLocaleString('bn');
+                                }
+                                if (graphDataItem.hasOwnProperty('category')) {
+                                    d = graphDataItem.category.toLocaleDateString('bn', options);
+                                    
+                                }
+                                if(weeklyOrDaily == 1){
+                                    return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                }else{
+                                    return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                }
+                            },
+
+                        };
+                        axis.push(obj);
+                    })
+                    showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
+                    
+                    hideLoader();
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        } 
+        
+        
+    });
+
+    
+
+    /*==============================End============================================
+    * Dhaka Chart Filter
+    * */
+
+
+
+    $.ajax({
+        url: '{{url("/")}}/get-division-data',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            showDivisionChart(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+
+    /*==============================Start============================================
+    * বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা 
+    * */
+
+    function showComparisonOfAgeBasedInfectionsAndDeathsChart(chartData, axis) {
+        var colorList = ['#04B907', '#FB0F04', '#045FEA', '#05D5D5', '#8305D5', '#D50560', '#130101', '#AD9B03'];
+        var colorSelect = 0;
+        $.each( axis, function( key, value ) {
+            colorSelect = colorSelect + 1;
+            $.each( value, function( ky, val ) {
+                axis[key].lineColor = (colorList[colorSelect] !== 'undefined')?colorList[colorSelect]:'#003210';
+            });    
+        });
+
+        
+       
+        var size = Object.keys(chartData).length;
+        var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        $('#positive-dhaka-rate-heading').html(" " + div_date);
+
+        if ($('#comparison_of_age_based_infections_and_deaths').length) {
+
+            var chart = AmCharts.makeChart("comparison_of_age_based_infections_and_deaths", {
+                "type": "serial",
+                "theme": "light",
+                "legend": {
+                    "useGraphSettings": true,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+                "valueAxes": [
+                {
+                    "id": "g1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                            return value.toLocaleString("bn-BD");
+                    },
+                }],
+                "dataProvider": chartData,
+                "synchronizeGrid": true,
+
+                "graphs": axis,
+                "chartCursor": {
+                    "cursorPosition": "mouse",
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return '';
+                    },
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "axisColor": "#DADADA",
+                    "minPeriod": "DD",
+                    "labelFunction": function (value, date, categoryAxis) {
+                        // console.log(categoryAxis.currentDateFormat)
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                    },
+
+                },
+                "chartScrollbar": {
+                    "graph": "g0",
+                    "gridAlpha": 0,
+                    "color": "#888888",
+                    "scrollbarHeight": 55,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "autoGridCount": true,
+                    "selectedGraphFillAlpha": 0,
+                    "graphLineAlpha": 0.2,
+                    "graphLineColor": "#c2c2c2",
+                    "selectedGraphLineColor": "#888888",
+                    "selectedGraphLineAlpha": 1
+                },
+
+            });
+
+           // chart.addListener("dataUpdated", zoomChart);
+
+           // function zoomChart() {
+                // chart.zoomToDates(new Date(2020, 5, 20), new Date(2020, 10, 17));
+           // }
+        }
+    }
+
+    function showNationalLevelComparisonOfAgeBasedInfectionsAndDeathsChart(chartData) {
+        // console.log(chartData);
+        var size = Object.keys(chartData).length;
+        var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        // $('#last_date_4').html(" " + div_date);
+
+        if ($('#comparison_of_age_based_infections_and_deaths').length) {
+            var chart = AmCharts.makeChart("comparison_of_age_based_infections_and_deaths", {
+                "type": "serial",
+                "theme": "none",
+                "marginTop": 0,
+                "marginRight": 80,
+                "dataProvider": chartData,
+                "valueAxes": [{
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                        return value.toLocaleString("bn-BD");
+                    },
+                }],
+
+                "valueAxes": [
+                {
+                    "id": "g1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                        //return '';
+                        return value.toLocaleString("bn-BD");
+                    },
+                }],
+                "legend": {
+                    "horizontalGap": 10,
+                    "maxColumns": 1,
+                    "position": "bottom",
+                    "useGraphSettings": true,
+                    "markerSize": 10,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+                
+                
+                "graphs": [{
+                    "valueAxis": "v1",
+                    "lineColor": "#FB0F04",
+                    "lineThickness": 2,
+                    "bullet": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "id": "g1",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#637bb6",
+                    "bulletSize": 7,
+                    "lineThickness": 2,
+                    "title": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "type": "smoothedLine",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "test_positivity",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var v = 0;
+                        if (graphDataItem.values) {
+                            v = graphDataItem.values.value;
+                        }
+                        //var d = graphDataItem.dataContext.date_of_test;
+
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return "<span style='font-size:12px;'>" + graph.title + "<b style='color:red'><br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                    },
+                }],
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "gridAlpha": 0,
+                    "color": "#888888",
+                    "scrollbarHeight": 55,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "autoGridCount": true,
+                    "selectedGraphFillAlpha": 0,
+                    "graphLineAlpha": 0.2,
+                    "graphLineColor": "#FB0F04",
+                    "selectedGraphLineColor": "#888888",
+                    "selectedGraphLineAlpha": 1
+
+                },
+                "chartCursor": {
+                    "cursorAlpha": 0,
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true,
+                    "valueLineAlpha": 0.5,
+                    "fullWidth": true,
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return date.toLocaleDateString('bn-BD', options);
+                    },
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "minPeriod": "DD",
+                    "parseDates": true,
+                    "minorGridAlpha": 0.1,
+                    "minorGridEnabled": true,
+                    "labelFunction": function (value, date, categoryAxis) {
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                    },
+                },
+            });
+
+            chart.addListener("rendered", zoomChart);
+            if (chart.zoomChart) {
+                chart.zoomChart();
+            }
+
+            function zoomChart() {
+                //chart.zoomToIndexes(Math.round(chart.dataProvider.length * 0.4), Math.round(chart.dataProvider.length * 0.55));
+            }
+        }
+    }
+
+    $.ajax({
+        url: '{{url("/")}}/get-national-level-test-positivity-data',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            showNationalLevelComparisonOfAgeBasedInfectionsAndDeathsChart(data);
+            hideLoader();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+    
+    $('#filter-dhaka-rate').click(function () {
+        var distArray = $('#comparison_of_age_based_infections_and_deaths').val();
         // var districts = [];
         
         if (distArray) {
@@ -3380,7 +3748,7 @@ $ydata = [];
                         };
                         axis.push(obj);
                     })
-                    showDhakaPisitiveRateChart(data.data, axis);
+                    showNationalLevelComparisonOfAgeBasedInfectionsAndDeathsChart(data.data, axis);
                     
                     hideLoader();
 
@@ -3393,28 +3761,9 @@ $ydata = [];
         
         
     });
-
-    
-
     /*==============================End============================================
-    * Dhaka Chart Filter
+    * বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা 
     * */
-
-
-
-    $.ajax({
-        url: '{{url("/")}}/get-division-data',
-        type: 'GET',
-        data: {},
-        success: function (data) {
-            showDivisionChart(data);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-
-    
 
 
 
@@ -3767,228 +4116,228 @@ $ydata = [];
 
 
     // Age Wise Death Distribution
-    Highcharts.chart('age_wise_death_distribution', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            }
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
+    // Highcharts.chart('age_wise_death_distribution', {
+    //     chart: {
+    //         type: 'bar',
+    //         style: {
+    //             fontFamily: 'SolaimanLipi'
+    //         }
+    //     },
+    //     title: {
+    //         text: ''
+    //     },
+    //     subtitle: {
+    //         text: ''
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     legend: {
+    //         enabled: true,
+    //         itemStyle: {
+    //             fontSize: "16px",
+    //             fontWeight: "normal"
+    //         }
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: ''
+    //         },
+    //         labels: {
+    //             formatter: function () {
+    //                 return englishToBangla(this.value);
+    //             }
+    //         },
+    //         max: 12000,
+    //     },
+    //     xAxis: {
+    //         categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
+    //         title: {
+    //             text: 'বয়স',
+    //             style: {
+    //                 fontSize: 18,
+    //                 fontFamily: 'SolaimanLipi'
+    //             }
+    //         }
+    //     },
+    //     /*tooltip: {
+    //         pointFormat: '{series.name}: <b>{point.y}</b>'
 
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-            data: [<?php echo $cur_death;?>]
+    //     },*/
+    //     tooltip: {
+    //         formatter: function () {
+    //             return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+    //         }
+    //     },
+    //     plotOptions: {
+    //         column: {
+    //             pointPadding: 0.2,
+    //             borderWidth: 0
+    //         }
+    //     },
+    //     colors: ['#ef4b4b', '#ff9800'],
+    //     series: [{
+    //         name: 'মৃত্যু',
+    //         data: [<?php echo $cur_death;?>]
 
-        }, {
-            name: 'আক্রান্ত',
-            data: [<?php echo $cur_infected;?>]
+    //     }, {
+    //         name: 'আক্রান্ত',
+    //         data: [<?php echo $cur_infected;?>]
 
 
-        }]
-    });
+    //     }]
+    // });
 
     // Age Wise Death Distribution 1
-    Highcharts.chart('age_wise_death_distribution_1', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
+    // Highcharts.chart('age_wise_death_distribution_1', {
+    //     chart: {
+    //         type: 'bar',
+    //         style: {
+    //             fontFamily: 'SolaimanLipi'
+    //         }
+    //     },
+    //     title: {
+    //         text: ''
+    //     },
+    //     subtitle: {
+    //         text: ''
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     legend: {
+    //         enabled: true,
+    //         itemStyle: {
+    //             fontSize: "16px",
+    //             fontWeight: "normal"
+    //         }
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: ''
+    //         },
+    //         labels: {
+    //             formatter: function () {
+    //                 return englishToBangla(this.value);
+    //             }
+    //         },
+    //         max: 12000,
+    //     },
+    //     xAxis: {
+    //         categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
+    //         title: {
+    //             text: 'বয়স',
+    //             style: {
+    //                 fontSize: 18,
+    //                 fontFamily: 'SolaimanLipi'
+    //             }
+    //         },
 
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
+    //     },
+    //     /*tooltip: {
+    //         pointFormat: '{series.name}: <b>{point.y}</b>'
 
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
+    //     },*/
+    //     tooltip: {
+    //         formatter: function () {
+    //             return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+    //         }
+    //     },
+    //     plotOptions: {
+    //         column: {
+    //             pointPadding: 0.2,
+    //             borderWidth: 0
+    //         }
+    //     },
+    //     colors: ['#ef4b4b', '#ff9800'],
+    //     series: [{
+    //         name: 'মৃত্যু',
 
-            data: [<?php echo $previous_month__death;?>]
-            {{--data: [<?php echo $deathAge;?>]--}}
+    //         data: [<?php echo $previous_month__death;?>]
+    //         {{--data: [<?php echo $deathAge;?>]--}}
 
-        }, {
-            name: 'আক্রান্ত',
+    //     }, {
+    //         name: 'আক্রান্ত',
 
-            {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-            data: [<?php echo $previous_month__infected;?>]
+    //         {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
+    //         data: [<?php echo $previous_month__infected;?>]
 
-        }]
-    });
+    //     }]
+    // });
     // Age Wise Death Distribution 2
-    Highcharts.chart('age_wise_death_distribution_2', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            }
+    // Highcharts.chart('age_wise_death_distribution_2', {
+    //     chart: {
+    //         type: 'bar',
+    //         style: {
+    //             fontFamily: 'SolaimanLipi'
+    //         }
+    //     },
+    //     title: {
+    //         text: ''
+    //     },
+    //     subtitle: {
+    //         text: ''
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     legend: {
+    //         enabled: true,
+    //         itemStyle: {
+    //             fontSize: "16px",
+    //             fontWeight: "normal"
+    //         }
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: ''
+    //         },
+    //         labels: {
+    //             formatter: function () {
+    //                 return englishToBangla(this.value);
+    //             }
+    //         },
+    //         max: 12000,
+    //     },
+    //     xAxis: {
+    //         categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
+    //         title: {
+    //             text: 'বয়স',
+    //             style: {
+    //                 fontSize: 18,
+    //                 fontFamily: 'SolaimanLipi'
+    //             }
+    //         }
 
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
+    //     },
+    //     /*tooltip: {
+    //         pointFormat: '{series.name}: <b>{point.y}</b>'
 
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-            data: [<?php echo $previous_previous_month__death;?>]
-            {{--data: [<?php echo $deathAge;?>]--}}
+    //     },*/
+    //     tooltip: {
+    //         formatter: function () {
+    //             return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
+    //         }
+    //     },
+    //     plotOptions: {
+    //         column: {
+    //             pointPadding: 0.2,
+    //             borderWidth: 0
+    //         }
+    //     },
+    //     colors: ['#ef4b4b', '#ff9800'],
+    //     series: [{
+    //         name: 'মৃত্যু',
+    //         data: [<?php echo $previous_previous_month__death;?>]
+    //         {{--data: [<?php echo $deathAge;?>]--}}
 
-        }, {
-            name: 'আক্রান্ত',
-            {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-            data: [<?php echo $previous_previous_month__infected;?>]
+    //     }, {
+    //         name: 'আক্রান্ত',
+    //         {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
+    //         data: [<?php echo $previous_previous_month__infected;?>]
 
-        }]
-    });
+    //     }]
+    // });
 
     <?php
 
@@ -4453,6 +4802,7 @@ group by date ORDER BY date ");
     $("#hospital_filter").on('change', function () {
 
         var text = $("#hospital_filter option:selected").text();
+        
 
         $.ajax({
             url: '{{url("/")}}/get-hospital-data',
@@ -4461,8 +4811,8 @@ group by date ORDER BY date ");
             success: function (data) {
                 
                 
-                    hospitalGeneralFilter(stackedChartedDesign(), data);
-                    hospitalIcuFilter(stackedChartedDesign(), data);
+                    hospitalGeneralFilter(stackedChartedDesign(text), data);
+                    hospitalIcuFilter(stackedChartedDesign(text), data);
                
             },
             error: function (err) {
@@ -4479,18 +4829,17 @@ group by date ORDER BY date ");
 
 
     /* ======================Stack Chart Common Desin start================================= */
-    function stackedChartedDesign(){
+    function stackedChartedDesign(text){
         return {
             "graphs": [
                 {
                     "balloonText": "[[title]] of [[category]]:[[value]]",
                     "markerType": "circle",
                     "fillAlphas": 1,
-                    
                     "valueAxis": "v1",
                     "lineColor": "#32BA32",
                     "id": "g1",
-                    "title": "মোট শয্যা সংখ্যা",
+                    "title": text+" এর মোট শয্যা সংখ্যা",
                     "type": "column",
                     "valueField": "total_bed",
                     "balloonFunction": function (graphDataItem, graph) {
@@ -4507,11 +4856,10 @@ group by date ORDER BY date ");
                     "lineColor": "#FF0000",
                     "valueAxis": "v2",
                     "id": "g2",
-                    "title": "ভর্তি শয্যা সংখ্যা / খালি শয্যা সংখ্যা",
+                    "title": text+" এর ভর্তি শয্যা সংখ্যা / খালি শয্যা সংখ্যা",
                     "type": "column",
                     "valueField": "occupied_bed",
                     "balloonFunction": function (graphDataItem, graph) {
-                        console.log(graphDataItem.values);
                         var total = graphDataItem.values.total - graphDataItem.values.value;
                         var blank = total - graphDataItem.values.value;
                         var admited = graphDataItem.values.value;
@@ -4525,12 +4873,11 @@ group by date ORDER BY date ");
                     "bulletColor": "#9400D3",
                     "valueAxis": "v3",
                     "id": "g3",
-                    
                     "lineColor": "#9400D3",
                     "markerType": "circle",
                     "showBulletsAt": "open",
                     "showHandOnHover": true,
-                    "title": "ভর্তি শয্যা সংখ্যার হার",
+                    "title": text+" এর ভর্তি শয্যা সংখ্যার হার",
                     "type": "smoothedLine",
                     "valueField": "occupency_rate",
                     "balloonFunction": function (graphDataItem, graph) {
@@ -4544,6 +4891,15 @@ group by date ORDER BY date ");
                     "position": "left",
                     "title": " শয্যা সংখ্যা",
                     "id": "v2",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                        return value.toLocaleString("bn-BD");
+                    },
+
+                },{
+                    "position": "right",
+                    "title": " ভর্তি শয্যা সংখ্যার হার",
+                    "id": "v3",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         return value.toLocaleString("bn-BD");
