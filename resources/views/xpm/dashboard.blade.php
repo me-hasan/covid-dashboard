@@ -1415,7 +1415,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <label class="radio-inline" for="radios-2">
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-3 ml-4 mb-3" >
                                                         <label>জেলা</label>
                                                         <select name="district[]" id="district_dhaka_rate" multiple
@@ -3386,7 +3385,6 @@ $ydata = [];
                                 var options = {month: 'long', day: 'numeric'};
                                 var v = 0;
                                 var d = '';
-
                                 let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                                 let previusSevenDay= previusSeven.getDate();
                                 let getMonth= month_name(previusSeven.getMonth());
@@ -3404,7 +3402,6 @@ $ydata = [];
                                 }else{
                                     return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
                                 }
-
                             },
 
                         };
