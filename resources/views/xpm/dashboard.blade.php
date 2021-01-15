@@ -3118,7 +3118,7 @@ $ydata = [];
      * =======================Start Dhaka rate Chart=========================================
      * */ 
 
-    function showDhakaPisitiveRateChart(chartData, axis) {
+    function showDhakaPisitiveRateChart(chartData, axis, title) {
         var colorList = ['#04B907', '#FB0F04', '#045FEA', '#05D5D5', '#8305D5', '#D50560', '#130101', '#AD9B03'];
         var colorSelect = 0;
         $.each( axis, function( key, value ) {
@@ -3151,7 +3151,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": title+" সনাক্ত বিবেচনায় আক্রান্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -3353,6 +3353,10 @@ $ydata = [];
     
     $('#filter-dhaka-rate').click(function () {
         var weeklyOrDaily = $('input[name="weeklyOrDaily"]:checked').val();
+
+        var weeklyOrDailyTitle = (weeklyOrDaily == 1) ? 'দৈনিক' : 'সাপ্তাহিক';
+
+
         var distArray = $('#district_dhaka_rate').val();
         // var districts = [];
         
@@ -3382,6 +3386,11 @@ $ydata = [];
                                 var options = {month: 'long', day: 'numeric'};
                                 var v = 0;
                                 var d = '';
+
+                                let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                                let previusSevenDay= previusSeven.getDate();
+                                let getMonth= month_name(previusSeven.getMonth());
+
                                
                                 if (graphDataItem.values.hasOwnProperty('value')) {
                                     v = graphDataItem.values.value.toLocaleString('bn');
@@ -3390,13 +3399,18 @@ $ydata = [];
                                     d = graphDataItem.category.toLocaleDateString('bn', options);
                                 }
                                 
-                                return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                if(weeklyOrDaily == 1){
+                                    return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                }else{
+                                    return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                }
+
                             },
 
                         };
                         axis.push(obj);
                     })
-                    showDhakaPisitiveRateChart(data.data, axis);
+                    showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
                     
                     hideLoader();
 
