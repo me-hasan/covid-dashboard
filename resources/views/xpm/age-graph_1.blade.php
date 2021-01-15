@@ -255,39 +255,6 @@
             height: 500px;
         }
 
-        #map-1 {
-            height: 500px;
-            min-width: 310px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        #map-2 {
-            height: 500px;
-            min-width: 310px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        #map-3 {
-            height: 500px;
-            min-width: 310px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        #map-4 {
-            height: 500px;
-            min-width: 310px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .loading {
-            margin-top: 10em;
-            text-align: center;
-            color: gray;
-        }
 
     </style>
 </head>
@@ -428,12 +395,22 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                             <div class="card-body info-style">
                                 <div class="row">
-                                    <div class="col-lg-6" id="map-1"></div>
-                                    <div class="col-lg-6" id="map-2"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6" id="map-3"></div>
-                                    <div class="col-lg-6" id="map-4"></div>
+
+                                    <h4 id="special_word_10" class="header-title ">
+
+                                    </h4>
+
+                                    <div class="row" style="width: 100%;">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div id="ageChart"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -653,193 +630,96 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
         integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
         crossorigin="anonymous"></script>
 <!-- INTERNAL Highhcart -->
-{{--<script src="https://code.highcharts.com/highcharts.js"></script>--}}
-{{--<script src="https://code.highcharts.com/highcharts-3d.js"></script>--}}
-{{--<script src="https://code.highcharts.com/modules/accessibility.js"></script>--}}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script src="{{asset('pm/js/bn.js')}}"></script>
 <!-- INTERNAL Select2 js -->
 
 <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/js/select2.js') }}"></script>
-
-<script src="https://code.highcharts.com/maps/highmaps.js"></script>
-<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/mapdata/countries/bd/bd-all.js"></script>
 <script>
+    var chartData = generateChartData();
+    var chart = AmCharts.makeChart("ageChart", {
+        "type": "serial",
+        "theme": "none",
+        "marginRight": 80,
+        "autoMarginOffset": 20,
+        "marginTop": 7,
+        "dataProvider": chartData,
+        "valueAxes": [{
+            "axisAlpha": 0.2,
+            "dashLength": 1,
+            "position": "left"
+        }],
+        "mouseWheelZoomEnabled": true,
+        "graphs": [{
+            "id": "g1",
+            "balloonText": "[[value]]",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "hideBulletsCount": 50,
+            "title": "red line",
+            "valueField": "visits",
+            "useLineColorForBulletBorder": true,
+            "balloon":{
+                "drop":true
+            }
+        }],
+
+        "chartCursor": {
+            "limitToGraph":"g1"
+        },
+        "categoryField": "date",
+        "categoryAxis": {
+            "parseDates": true,
+            "axisColor": "#DADADA",
+            "dashLength": 1,
+            "minorGridEnabled": true
+        },
+
+    });
+
+    chart.addListener("rendered", zoomChart);
+    zoomChart();
+
+    // this method is called when chart is first inited as we listen for "rendered" event
+    function zoomChart() {
+        // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+        chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
+    }
+
+
+    // generate some random data, quite different range
+
+    // generate some random data, quite different range
+    function generateChartData() {
+        var chartData = [];
+        var firstDate = new Date();
+        firstDate.setDate(firstDate.getDate() - 5);
+        var visits = 1200;
+        for (var i = 0; i < 7; i++) {
+            // we create date objects here. In your data, you can have date strings
+            // and then set format of your dates using chart.dataDateFormat property,
+            // however when possible, use date objects, as this will speed up chart rendering.
+            var newDate = new Date(firstDate);
+            newDate.setDate(newDate.getDate() + i);
+
+            visits += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+
+            chartData.push({
+                date: newDate,
+                visits: visits
+            });
+        }
+        return chartData;
+    }
 
     function englishToBangla(num) {
         var num = new Number(num).toLocaleString("bn-BD");
         return num;
     }
-
-    $(function () {
-        var data = [
-            ['bd-da', 0],
-            ['bd-kh', 1],
-            ['bd-ba', 2],
-            ['bd-cg', 3],
-            ['bd-sy', 4],
-            ['bd-rj', 5],
-            ['bd-rp', 6]
-        ];
-
-        // Map-01
-        Highcharts.mapChart('map-1', {
-            chart: {
-                map: 'countries/bd/bd-all'
-            },
-
-            title: {
-                text: '17th Nov to 3rd Nov'
-            },
-
-            subtitle: {
-                text: ''
-            },
-
-            mapNavigation: {
-                enabled: true,
-                buttonOptions: {
-                    verticalAlign: 'bottom'
-                }
-            },
-
-            colorAxis: {
-                min: 0
-            },
-
-            series: [{
-                data: data,
-                name: 'Random data',
-                states: {
-                    hover: {
-                        color: '#BADA55'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}'
-                }
-            }]
-        });
-        // Map-02
-        Highcharts.mapChart('map-2', {
-            chart: {
-                map: 'countries/bd/bd-all'
-            },
-
-            title: {
-                text: '2nd Nov to 19th Oct'
-            },
-
-            subtitle: {
-                text: ''
-            },
-
-            mapNavigation: {
-                enabled: true,
-                buttonOptions: {
-                    verticalAlign: 'bottom'
-                }
-            },
-
-            colorAxis: {
-                min: 0
-            },
-
-            series: [{
-                data: data,
-                name: 'Random data',
-                states: {
-                    hover: {
-                        color: '#BADA55'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}'
-                }
-            }]
-        });
-        // Map-03
-        Highcharts.mapChart('map-3', {
-            chart: {
-                map: 'countries/bd/bd-all'
-            },
-
-            title: {
-                text: '18 Oct to 4th Oct'
-            },
-
-            subtitle: {
-                text: ''
-            },
-
-            mapNavigation: {
-                enabled: true,
-                buttonOptions: {
-                    verticalAlign: 'bottom'
-                }
-            },
-
-            colorAxis: {
-                min: 0
-            },
-
-            series: [{
-                data: data,
-                name: 'Random data',
-                states: {
-                    hover: {
-                        color: '#BADA55'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}'
-                }
-            }]
-        });
-        // Map-04
-        Highcharts.mapChart('map-4', {
-            chart: {
-                map: 'countries/bd/bd-all'
-            },
-
-            title: {
-                text: '3rd Oct to 10th Sept'
-            },
-
-            subtitle: {
-                text: ''
-            },
-
-            mapNavigation: {
-                enabled: true,
-                buttonOptions: {
-                    verticalAlign: 'bottom'
-                }
-            },
-
-            colorAxis: {
-                min: 0
-            },
-
-            series: [{
-                data: data,
-                name: 'Random data',
-                states: {
-                    hover: {
-                        color: '#BADA55'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}'
-                }
-            }]
-        });
-    });
 </script>
 
 

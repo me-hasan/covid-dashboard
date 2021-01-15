@@ -59,7 +59,7 @@ Route::prefix('admin')->group(function () {
     Route::get('division/districts', 'UserController@getDistrictFromDivision')->name('get-district-from-division');
     Route::get('division/district/upazilla', 'UserController@getUpazillaFromDistrict')->name('get-upazilla-from-district');
 
-    Route::get('5EGSRBXAY9', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::get('5EGSRBXAY9ZP', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', 'HomeController@index')->name('admin-dashboard');
@@ -117,6 +117,19 @@ Route::prefix('admin')->group(function () {
         Route::put('component/edit/{component_id}', 'ComponentController@update')->name('edit-component');
         // component management routes ending
     });
+
+
+        /* Mail Management */
+        Route::get('mail/pdf', 'MailController@mailPdf')->name('mail-pdf');
+        Route::post('mail/pdf/upoload', 'MailController@mailPdfUpload')->name('mail-pdf-upload');
+        Route::get('mail', 'MailController@index')->name('all-mail');
+        Route::get('mail/create', 'MailController@createForm');
+        Route::post('mail/create', 'MailController@store')->name('create-mail');
+        Route::get('mail/edit/{user}', 'MailController@editForm');
+        Route::post('mail/edit/{user}', 'MailController@update')->name('edit-mail');
+        Route::delete('mail/{id}', 'MailController@destroy');
+        Route::get('sending/email', 'MailController@sendingEmail')->name('sending-mail');   
+        Route::post('sending/email/trigger', 'MailController@sendingEmailTriggered')->name('sending-mail-trigger');   
 
 
 });
