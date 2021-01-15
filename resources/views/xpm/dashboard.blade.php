@@ -1400,6 +1400,22 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             @endforeach
                                                         </select>
                                                     </div > --}}
+                                                    <div class="col-md-2 ml-4 mb-2" >
+                                                        <label>নির্বাচন করুন </label>
+                                                        <div class="row">
+                                                            <label class="radio-inline" for="radios-0" style="cursor:pointer">
+                                                                <input type="radio" name="weeklyOrDaily" id="radios-0" value="1" checked="checked">
+                                                                 দৈনিক
+                                                                </label> 
+                                                                &nbsp;&nbsp;&nbsp;
+                                                                <label class="radio-inline" for="radios-1" style="cursor:pointer">
+                                                                <input type="radio" name="weeklyOrDaily" id="radios-1" value="2">
+                                                                সাপ্তাহিক
+                                                                </label> 
+                                                            <label class="radio-inline" for="radios-2">
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-md-3 ml-4 mb-3" >
                                                         <label>জেলা</label>
                                                         <select name="district[]" id="district_dhaka_rate" multiple
@@ -1998,7 +2014,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="col-md-4">
                                 <h3>কারিগরী সহযোগীতায়</h3>
                                 <img src="pm/images/collaborator/e-generation.png" class="" alt="">
-                                <p style="font-size: 16px; float:right">ই-জেনারেশন পাবলিক কোম্পানি লিমিটেড</p>
+                                <p style="font-size: 16px; float:right">ই-জেনারেশন পাবলিক লিমিটেড কোম্পানি</p>
                             </div>
 
                         </div>
@@ -3336,6 +3352,7 @@ $ydata = [];
 
     
     $('#filter-dhaka-rate').click(function () {
+        var weeklyOrDaily = $('input[name="weeklyOrDaily"]:checked').val();
         var distArray = $('#district_dhaka_rate').val();
         // var districts = [];
         
@@ -3344,7 +3361,7 @@ $ydata = [];
             $.ajax({
                 url: '{{url("/")}}/get-dhaka-positive-rate-data',
                 type: 'GET',
-                data: {districts: distArray},
+                data: {districts: distArray, weeklyOrDaily: weeklyOrDaily},
                 success: function (data) {
                     // console.log(data);
                     var axis = new Array();
