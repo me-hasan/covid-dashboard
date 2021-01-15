@@ -61,6 +61,7 @@
                         <select name="user_type" class="form-control" data-placeholder="Select Role" required>
                             <option value="cabinet">Cabinet</option>
                             <option value="epidemiologist">Epidemiologist</option>
+                            <option value="hpm">XPM</option>
                         </select>
                     </div>
                     <div class="form-group">
