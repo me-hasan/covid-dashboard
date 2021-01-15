@@ -690,11 +690,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             },
 
             title: {
-                text: '17th Nov to 3rd Nov'
+                text: 'Highmaps basic demo'
             },
 
             subtitle: {
-                text: ''
+                text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/bd/bd-all.js">Bangladesh</a>'
             },
 
             mapNavigation: {
@@ -729,11 +729,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             },
 
             title: {
-                text: '2nd Nov to 19th Oct'
+                text: 'Highmaps basic demo'
             },
 
             subtitle: {
-                text: ''
+                text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/bd/bd-all.js">Bangladesh</a>'
             },
 
             mapNavigation: {
@@ -768,11 +768,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             },
 
             title: {
-                text: '18 Oct to 4th Oct'
+                text: 'Highmaps basic demo'
             },
 
             subtitle: {
-                text: ''
+                text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/bd/bd-all.js">Bangladesh</a>'
             },
 
             mapNavigation: {
@@ -807,11 +807,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             },
 
             title: {
-                text: '3rd Oct to 10th Sept'
+                text: 'Highmaps basic demo'
             },
 
             subtitle: {
-                text: ''
+                text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/bd/bd-all.js">Bangladesh</a>'
             },
 
             mapNavigation: {

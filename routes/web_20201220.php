@@ -59,7 +59,7 @@ Route::prefix('admin')->group(function () {
     Route::get('division/districts', 'UserController@getDistrictFromDivision')->name('get-district-from-division');
     Route::get('division/district/upazilla', 'UserController@getUpazillaFromDistrict')->name('get-upazilla-from-district');
 
-    Route::get('5EGSRBXAY9ZP', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::get('5EGSRBXAY9', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', 'HomeController@index')->name('admin-dashboard');
@@ -119,19 +119,6 @@ Route::prefix('admin')->group(function () {
     });
 
 
-        /* Mail Management */
-        Route::get('mail/pdf', 'MailController@mailPdf')->name('mail-pdf');
-        Route::post('mail/pdf/upoload', 'MailController@mailPdfUpload')->name('mail-pdf-upload');
-        Route::get('mail', 'MailController@index')->name('all-mail');
-        Route::get('mail/create', 'MailController@createForm');
-        Route::post('mail/create', 'MailController@store')->name('create-mail');
-        Route::get('mail/edit/{user}', 'MailController@editForm');
-        Route::post('mail/edit/{user}', 'MailController@update')->name('edit-mail');
-        Route::delete('mail/{id}', 'MailController@destroy');
-        Route::get('sending/email', 'MailController@sendingEmail')->name('sending-mail');   
-        Route::post('sending/email/trigger', 'MailController@sendingEmailTriggered')->name('sending-mail-trigger');   
-
-
 });
 
 
@@ -167,13 +154,10 @@ Route::get('/admin/f5', function () {
 
 });
 //================New Route For Dashboard Developed By SoftBD Ltd.====//
-Route::redirect('xpm-dashboard', 'national-dashboard');
-Route::redirect('hpm-dashboard', 'national-dashboard');
-Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard')->middleware('first_time_login');
 
-Route::get('national-dashboard/testdata', 'xpm\DashboardController@testData')->middleware('first_time_login');
-Route::get('force-first-time-password-reset', 'xpm\DashboardController@forceFirstTimeResetPassword')->name('force.reset.password');
-Route::post('force-first-time-password-submit', 'xpm\DashboardController@submitforceFirstTimePassword')->name('submit.force.password');
+Route::get('xpm-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
+
+Route::get('national-dashboard/testdata', 'xpm\DashboardController@testData');
 
 Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
 Route::get('age-graph', 'xpm\DashboardController@edgeGraph')->name('xpm.edge-graph');
@@ -191,7 +175,6 @@ Route::get('login_old', function () {
 });
 Route::get('get-asia-tested-data', 'xpm\DashboardController@getAsiaTestedData')->name('get-asia-tested-data');
 Route::get('get-dhaka-positive-rate-data', 'xpm\DashboardController@getDhakaPositiveRateData')->name('get-dhaka-positive-rate-data');
-Route::get('get-national-level-test-positivity-data', 'xpm\DashboardController@getNationLevelTestPositivityData')->name('get-national-level-test-positivity-data');
 Route::get('get-division-data', 'xpm\DashboardController@divisionCompare')->name('get-division-data');
 Route::get('get-division-data-filter', 'xpm\DashboardController@divisionCompareFilter')->name('get-division-data-filter');
 Route::get('upload-south-asia-data', 'xpm\DashboardController@upoladSouthAsiaData')->name('upload-south-asia-data');
@@ -275,4 +258,3 @@ Route::get('update-daily-data', function () {
 
 Route::get('/daily-infected-chart', 'xpm\DashboardController@dailyInfectedChart')->name('daily.infected.chart');
 Route::get('/infected-percentage', 'xpm\DashboardController@infectedPercentage')->name('infected.percentage');
-Route::get('/filter-daily-infected-chart', 'xpm\DashboardController@filterdailyInfectedChart')->name('filter.daily.infected.chart');
