@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail as MailModel;
-use App\Mail\HpmDashboardMail;
 use DB;
+use PDF;
+use App\Jobs\SendEmailJob;
+use App\Mail as MailModel;
 use Illuminate\Http\Request;
+use App\Mail\HpmDashboardMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use PDF;
+use Illuminate\Support\Facades\Storage;
 
 class MailController extends Controller
 {
@@ -19,7 +21,7 @@ class MailController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth:admin');
+        $this->middleware('auth:admin');
     }
 
     /**
@@ -144,10 +146,11 @@ class MailController extends Controller
     {
         
         $mailList = MailModel::whereIn('id', $request->userId)->get()->pluck('mail');
-        $pdf_file_path = storage_path('app/public/dashboard/pdf/' . $this->fileNameGenerate() . '.pdf');
+        //$pdf_file_path = storage_path('app/public/dashboard/pdf/' . $this->fileNameGenerate() . '.pdf');
+        $pdf_file_path = storage_path('app/public/dashboard/source/dashboard.corona.gov.bd.pdf');
         $data = ['name' => 'khayrk hasan pdf'];
         $data2 = ['id' => '1195'];
-        PDF::loadView('emails.dashboard.hpm-pdf', $data)->save($pdf_file_path);
+        //PDF::loadView('emails.dashboard.hpm-pdf', $data)->save($pdf_file_path);
         if (count($mailList) > 0) {
             $users = $mailList;
             $this->sendMail($users, $data2, $pdf_file_path);
@@ -182,5 +185,28 @@ class MailController extends Controller
     {
         $count = time();
         return date("ymd") . str_pad($count, 6, "0", STR_PAD_LEFT) . rand(100, 1000);
+    }
+
+
+    function mailPdf()
+    {
+        return view("superadmin.mail.pdf-upload");
+    }
+
+    public function mailPdfUpload(Request $request)
+    {
+        request()->validate([
+            'hpm_pdf'  => 'required|mimes:pdf|max:1048',
+        ]);
+    
+          if ($files = $request->file('hpm_pdf')) {
+              $existFile = storage_path('app/public/dashboard/source/dashboard.corona.gov.bd.pdf');
+              Storage::delete($existFile);
+              $destinationPath = storage_path('app/public/dashboard/source/'); // upload path
+              $fileName = "dashboard.corona.gov.bd.pdf";
+              $files->move($destinationPath, $fileName);
+              return redirect()->back()
+              ->withSuccess('Great! file has been successfully uploaded.');
+           }
     }
 }

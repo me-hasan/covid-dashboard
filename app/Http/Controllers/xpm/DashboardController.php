@@ -2101,7 +2101,7 @@ using(district) ORDER BY r.test_positivity DESC");
             if($flag != 1){
                 /* Check specific day in week */ 
                 $carbon = Carbon::createFromTimestamp($currentDate);
-                if ($carbon->dayOfWeek == Carbon::THURSDAY) {
+                if ($carbon->dayOfWeek == Carbon::SATURDAY) {
                     $array[] = date('Y-m-d', $currentDate);
                 }
             }else{

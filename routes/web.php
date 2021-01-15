@@ -120,6 +120,8 @@ Route::prefix('admin')->group(function () {
 
 
         /* Mail Management */
+        Route::get('mail/pdf', 'MailController@mailPdf')->name('mail-pdf');
+        Route::post('mail/pdf/upoload', 'MailController@mailPdfUpload')->name('mail-pdf-upload');
         Route::get('mail', 'MailController@index')->name('all-mail');
         Route::get('mail/create', 'MailController@createForm');
         Route::post('mail/create', 'MailController@store')->name('create-mail');
