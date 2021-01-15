@@ -168,7 +168,7 @@ class DashboardController extends Controller
 
     public function divisionCompare()
     {
-        $params = ['dhk' => 'DHAKA', 'ctg' => 'CHITTAGONG', 'khu' => 'KHULNA', 'mym' => 'MYMENSINGH', 'raj' => 'RAJSHAHI', 'ran' => 'RANGPUR', 'bar' => 'BARISAL', 'syl' => 'SYLHET'];
+        $params = ['dhk' => 'DHAKA DIVISION', 'ctg' => 'CHITTAGONG DIVISION', 'khu' => 'KHULNA DIVISION', 'mym' => 'MYMENSINGH DIVISION', 'raj' => 'RAJSHAHI DIVISION', 'ran' => 'RANGPUR DIVISION', 'bar' => 'BARISAL DIVISION', 'syl' => 'SYLHET DIVISION'];
         $last_key = array_key_last($params);
         $comma = "";
 
@@ -2203,7 +2203,7 @@ using(district) ORDER BY r.test_positivity DESC");
         $sql = "";
 
         if ($divisions && count($divisions) > 0) {
-            $allDivision = ['dhk' => 'DHAKA', 'ctg' => 'CHITTAGONG', 'khu' => 'KHULNA', 'mym' => 'MYMENSINGH', 'raj' => 'RAJSHAHI', 'ran' => 'RANGPUR', 'bar' => 'BARISAL', 'syl' => 'SYLHET'];
+            $allDivision = ['dhk' => 'DHAKA DIVISION', 'ctg' => 'CHITTAGONG DIVISION', 'khu' => 'KHULNA DIVISION', 'mym' => 'MYMENSINGH DIVISION', 'raj' => 'RAJSHAHI DIVISION', 'ran' => 'RANGPUR DIVISION', 'bar' => 'BARISAL DIVISION', 'syl' => 'SYLHET DIVISION'];
             $params = array_intersect($allDivision, $divisions);
             $first_key = array_key_first($params);
             $firstField = $params[$first_key];
