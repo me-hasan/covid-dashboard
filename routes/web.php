@@ -59,7 +59,7 @@ Route::prefix('admin')->group(function () {
     Route::get('division/districts', 'UserController@getDistrictFromDivision')->name('get-district-from-division');
     Route::get('division/district/upazilla', 'UserController@getUpazillaFromDistrict')->name('get-upazilla-from-district');
 
-    Route::get('5EGSRBXAY9', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::get('5EGSRBXAY9ZP', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', 'HomeController@index')->name('admin-dashboard');
