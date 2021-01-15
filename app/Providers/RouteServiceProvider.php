@@ -31,7 +31,9 @@ class RouteServiceProvider extends ServiceProvider
     public const CABINET_DASHBOARD = '/dashboard';
     public const IEDCR_DASHBOARD = '/iedcr/dashboard';
     public const SUPERADMIN_DASHBOARD = '/admin/dashboard';
-    public const HPM_DASHBOARD = '/hpm-dashboard';
+    #public const HPM_DASHBOARD = '/hpm-dashboard';
+    public const HPM_DASHBOARD = '/national-dashboard';
+    public const XPM_DASHBOARD = '/xpm-dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.

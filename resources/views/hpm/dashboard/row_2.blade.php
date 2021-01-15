@@ -114,7 +114,7 @@
 
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                        {{ $des_5->description_beng ?? ''}}
+                                        {!! $des_5->description_beng ?? '' !!}
                                     </p>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                                         <div class="card-body text-justify">
                                             <h5 class="card-title b1">বর্ণনা</h5>
                                             <p class="card-text b1">
-                                                {{ $des_6->description_beng ?? '' }}
+                                                {!! $des_6->description_beng ?? '' !!}
                                             </p>
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@
                                 <div class="card-body text-justify">
                                     <h5 class="card-title b1">বর্ণনা</h5>
                                     <p class="card-text b1">
-                                    {{ $des_11->description_beng ?? ''}}
+                                    {!! $des_11->description_beng ?? '' !!}
                                     </p>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@
 @push('custom_script')
     <script>
 			$(document).ready(function(){
-				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="550" src="https://public.tableau.com/shared/KCWJ6J7MR?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+				$('#iframeData').html('<iframe id="rtIframeData" width="100%" height="550" src="https://public.tableau.com/views/COVIDtestpositivityratedistrict_16043796001030/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
 			});
 
             // Test Positivity Trend

@@ -103,7 +103,9 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste code help'
             ],
-            toolbar: 'insert | undo redo |  formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+            fontsize_formats:
+                "8pt 9pt 10pt 11pt 12pt 13pt 14pt 15pt 16pt 17pt 18pt 24pt 28pt 30pt 36pt 48pt 60pt 72pt 96pt",
+            toolbar: 'insert | undo redo |  formatselect | fontsizeselect bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
         });
 
     </script>

@@ -3500,7 +3500,7 @@
 
             <div class="card-body">
                 <h5 class="card-title b1">বর্ণনা</h5>
-                <p class="card-text b1"> {{ $des_10->description_beng ?? '' }}</p>
+                <p class="card-text b1"> {!!  $des_10->description_beng ?? '' !!}</p>
             </div>
         </div>
 
@@ -3739,7 +3739,14 @@ group by date ORDER BY date ");
             },
 
             xAxis: {
-                categories: [<?php echo $hospital_vacancy_dates;?>]
+                categories: [<?php echo $hospital_vacancy_dates;?>],
+                endOnTick: true,
+                showLastLabel: true,
+                labels: {
+                    formatter: function() {
+                        return this.axis.categories[Math.min(this.pos,this.axis.categories.length-1)];
+                    }
+                }
 			},
             tooltip: {
 				formatter: function() {

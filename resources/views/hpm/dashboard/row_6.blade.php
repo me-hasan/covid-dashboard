@@ -231,7 +231,9 @@ foreach ($low_to_low_table_contentData as $result) {
 
                             <div class="col-xl-12">
                                 <div class="slidecontainer">
-                                     <p>জেলা ভিত্তিক  ন্যূনতম পরীক্ষা সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('200') !!}</span></p>
+                                     <p>গত ১৪ দিনে পরীক্ষার সংখ্যা: <span id="demo">{!! convertEnglishDigitToBangla('200') !!}</span>
+                                         এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।
+                                     </p>
                                      <input type="range" min="50" max="300" value="200" class="slider" id="myRange">
                                 </div>
                             </div>
@@ -305,7 +307,8 @@ foreach ($low_to_low_table_contentData as $result) {
                         <div class="card-body">
                             <h5 class="card-title b1">বর্ণনা</h5>
                             <p class="card-text b1">
-                                {{ $des_8->description_beng ?? ''}}
+
+                                {!!  $des_8->description_beng ?? '' !!}
                             </p>
                         </div>
                     </div>

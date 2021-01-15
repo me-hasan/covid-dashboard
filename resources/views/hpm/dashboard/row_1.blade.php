@@ -46,7 +46,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
             <div class="card-body pt-0">
                 <h1 class="font-weight-bold mb-1 b1 fs-40">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}</h1>
 
-                <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(floor($last_14_days['getLast14DaysDeathData'][0]->Difference)) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
+                <span class="text-muted b1 fs-16"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে মৃত্যুর চেয়ে {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!} জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1) কম  @else বেশি @endif</span>
             </div>
         </div>
 
@@ -124,7 +124,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
             <div class="card-body">
                 {{--                <div id="test_positivity_rate_trend"></div>--}}
 
-                <div id="iframe_country_wise_infected"></div>
+                <div style="height: 500px;width: 100%;" id="iframe_country_wise_infected"></div>
             </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -133,7 +133,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
                             {{-- $des_2->description_beng ?? '' --}}
-                            {{ $des_7->description_beng ?? ''}}
+                            {!!   $des_7->description_beng ?? ''!!}
                         </p>
                     </div>
                 </div>
@@ -143,7 +143,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
 
                         <h5 class="card-title b1">বিশ্লেষণ</h5>
                         <p class="card-text b1">
-                            {{ $des_2->insight_beng ?? '' }}
+                            {!!  $des_2->insight_beng ?? '' !!}}
                 </p>
             </div>
          </div> -->
@@ -196,7 +196,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_3->description_beng ?? '' }}
+                            {!! $des_3->description_beng ?? '' !!}
                         </p>
                     </div>
                 </div>
@@ -278,7 +278,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
                     <div class="card-body text-justify">
                         <h5 class="card-title b1">বর্ণনা</h5>
                         <p class="card-text b1">
-                            {{ $des_2->description_beng ?? '' }}
+                            {!!  $des_2->description_beng ?? '' !!}
                         </p>
                     </div>
                 </div>
@@ -303,7 +303,7 @@ if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_day
 @push('custom_script')
     <script>
         $(document).ready(function(){
-            $('#iframe_country_wise_infected').html('<iframe id="rtIframeData_1" width="100%" height="600" src="http://dashboard.corona.gov.bd/SouthAsianCountriesTestsPer1000Caeses" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+            //$('#iframe_country_wise_infected').html('<iframe id="rtcard-title b1_1" width="100%" height="600" src="http://dashboard.corona.gov.bd/SouthAsianCountriesTestsPer1000Caeses" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
         });
 
         <?php
