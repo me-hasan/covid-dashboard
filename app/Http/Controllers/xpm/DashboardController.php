@@ -168,7 +168,7 @@ class DashboardController extends Controller
 
     public function divisionCompare()
     {
-        $params = ['dhk' => 'DHAKA DIVISION', 'ctg' => 'CHITTAGONG DIVISION', 'khu' => 'KHULNA DIVISION', 'mym' => 'MYMENSINGH DIVISION', 'raj' => 'RAJSHAHI DIVISION', 'ran' => 'RANGPUR DIVISION', 'bar' => 'BARISAL DIVISION', 'syl' => 'SYLHET DIVISION'];
+        $params = ['dhk' => 'DHAKA', 'ctg' => 'CHITTAGONG', 'khu' => 'KHULNA', 'mym' => 'MYMENSINGH', 'raj' => 'RAJSHAHI', 'ran' => 'RANGPUR', 'bar' => 'BARISAL', 'syl' => 'SYLHET'];
         $last_key = array_key_last($params);
         $comma = "";
 
@@ -218,7 +218,7 @@ class DashboardController extends Controller
             (select date_of_test, division, daily_cases from  division_infected
             where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS $selectValue $comma";
         }
-        $sql .= " WHERE \"DHAKA DIVISION\".thedate = \"CHITTAGONG DIVISION\".thedate AND \"DHAKA DIVISION\".thedate = \"KHULNA DIVISION\".thedate AND \"DHAKA DIVISION\".thedate = \"MYMENSINGH DIVISION\".thedate AND  \"DHAKA DIVISION\".thedate = \"RAJSHAHI DIVISION\".thedate AND \"DHAKA DIVISION\".thedate = \"RANGPUR DIVISION\".thedate AND \"DHAKA DIVISION\".thedate = \"BARISAL DIVISION\".thedate AND \"DHAKA DIVISION\".thedate = \"SYLHET DIVISION\".thedate";
+        $sql .= " WHERE DHAKA.thedate = CHITTAGONG.thedate AND DHAKA.thedate = KHULNA.thedate AND DHAKA.thedate = MYMENSINGH.thedate AND  DHAKA.thedate = RAJSHAHI.thedate AND DHAKA.thedate = RANGPUR.thedate AND DHAKA.thedate = BARISAL.thedate AND DHAKA.thedate = SYLHET.thedate";
 
         try {
             $data = DB::select(DB::raw($sql));
@@ -2203,7 +2203,7 @@ using(district) ORDER BY r.test_positivity DESC");
         $sql = "";
 
         if ($divisions && count($divisions) > 0) {
-            $allDivision = ['dhk' => 'DHAKA DIVISION', 'ctg' => 'CHITTAGONG DIVISION', 'khu' => 'KHULNA DIVISION', 'mym' => 'MYMENSINGH DIVISION', 'raj' => 'RAJSHAHI DIVISION', 'ran' => 'RANGPUR DIVISION', 'bar' => 'BARISAL DIVISION', 'syl' => 'SYLHET DIVISION'];
+            $allDivision = ['dhk' => 'DHAKA', 'ctg' => 'CHITTAGONG', 'khu' => 'KHULNA', 'mym' => 'MYMENSINGH', 'raj' => 'RAJSHAHI', 'ran' => 'RANGPUR', 'bar' => 'BARISAL', 'syl' => 'SYLHET'];
             $params = array_intersect($allDivision, $divisions);
             
             $first_key = array_key_first($params);
