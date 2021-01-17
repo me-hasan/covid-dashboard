@@ -1239,7 +1239,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         class="select2 form-control btn-outline-primary division_select">
 
                                                     @foreach($division_list as $division)
-                                                        <option value="{!! $division . " DIVISION" !!}"
+                                                        <option value="{!! $division !!}"
                                                                 class="b1">{!! en2bnTranslation($division) !!} </option>
                                                     @endforeach
                                                 </select>
@@ -4331,6 +4331,7 @@ group by date ORDER BY date ");
                         };
                         axis.push(obj);
                     })
+                    // console.log(data)
                     showDivisionChartFilter(data.data, axis);
                     
                     hideLoader();

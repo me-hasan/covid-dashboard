@@ -173,7 +173,7 @@ class DashboardController extends Controller
         $comma = "";
 
         /* select fileds */
-        $sql = "SELECT \"DHAKA DIVISION\".thedate AS date, ";
+        $sql = "SELECT DHAKA.thedate AS date, ";
         foreach ($params as $select => $selectValue) {
             if ($select == $last_key) {
                 $comma = "";
@@ -2345,7 +2345,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 }
                 $sql .= " `$firstField`.thedate = `$selectValue`.thedate $logicalOpetator";
             }
-            return $sql;
+            
 
         }
 
