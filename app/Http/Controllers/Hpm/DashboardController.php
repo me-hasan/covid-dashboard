@@ -1574,16 +1574,16 @@ SELECT
     }
 
     private function first_week(){
-        $first_week = DB::select("select distinct DATE_SUB(curdate(), interval 7 day) as 'first_2_weeks_start',
-DATE_SUB(DATE_SUB(curdate(), interval 7 day), INTERVAL 13 DAY)
+        $first_week = DB::select("select distinct DATE_SUB(curdate(), interval 8 day) as 'first_2_weeks_start',
+DATE_SUB(DATE_SUB(curdate(), interval 8 day), INTERVAL 13 DAY)
 as 'first_2_weeks_end' from lab_clean_data ");
                 return $first_week[0];
     }
 
     private function last_week(){
-        $last_week = DB::select("select distinct DATE_SUB(DATE_SUB(curdate(), interval 7 day), INTERVAL 14 DAY)
+        $last_week = DB::select("select distinct DATE_SUB(DATE_SUB(curdate(), interval 8 day), INTERVAL 14 DAY)
 as 'last_2_weeks_start',
-DATE_SUB(DATE_SUB(DATE_SUB(curdate(), interval 7 day), INTERVAL 14 DAY), INTERVAL 13 DAY)
+DATE_SUB(DATE_SUB(DATE_SUB(curdate(), interval 8 day), INTERVAL 14 DAY), INTERVAL 13 DAY)
 as 'last_2_weeks_ends' from test_positivity_rate_district ");
         return $last_week[0];
     }
