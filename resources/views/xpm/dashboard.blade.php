@@ -444,7 +444,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
-                                    <span>বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা </span></li>
+                                    <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
                             </a>
                             <a href="#scroll_daily_covid_hospital_storage_and_usage">
                                 <li><span class="bullet-point"></span>
@@ -1480,7 +1480,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-12 ">
                                         <h2>
-                                            বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা
+                                            বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা
                                         </h2>
                                     </div>
 
@@ -1506,9 +1506,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <label for="">লিঙ্গ </label>
                                                             <select name="gender" id="age_wise_gender_filter"
                                                                     class="select2 form-control btn-outline-primary">
-                                                                <option>পুরুষ</option>
-                                                                <option>মহিলা</option>
-                                                                <option>অন্যান্য</option>
+                                                                <option value="1">সকল</option>
+                                                                <option value="2">পুরুষ</option>
+                                                                <option value="3">মহিলা</option>
+                                                                <option value="4">অন্যান্য</option>
                                                         
                                                             </select>
                                                         </div>
@@ -1519,6 +1520,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <option>সারাদেশ</option>
                                                         
                                                             </select>
+                                                        </div>
+                                                        <div class="col-sm mt-4 mx-auto">
+                                                            <button id="filter-dhaka-rate"
+                                                                    class="btn btn-sm district_cms_search b1">
+                                                                <svg class="header-icon search-icon" x="1008" y="1248"
+                                                                     viewBox="0 0 24 24" height="100%" width="100%"
+                                                                     preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                                    <path
+                                                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                                                </svg>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     
@@ -3456,7 +3469,7 @@ $ydata = [];
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "মৃত্যুর সংখ্যা",
+                        "title": "সাপ্তাহিক মৃত্যুর সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
