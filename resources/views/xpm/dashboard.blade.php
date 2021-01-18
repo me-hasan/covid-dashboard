@@ -3450,9 +3450,10 @@ $ydata = [];
     
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
+        console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
-        $('#last_date_4').html(" " + div_date);
+        // $('#last_date_4').html(" " + div_date);
 
         if ($('#age_wise_death_distribution').length) {
             var chart = AmCharts.makeChart("age_wise_death_distribution", {
@@ -3486,7 +3487,7 @@ $ydata = [];
                     "bulletBorderThickness": 2,
                     "hideBulletsCount": 30,
                     "title": "৬০+",
-                    "valueField": "dhk",
+                    "valueField": "sixtyone_plus",
                     "fillAlphas": 0,
                     "type": "smoothedLine",
                     "balloonFunction": function (graphDataItem, graph) {
@@ -3506,7 +3507,7 @@ $ydata = [];
                     "bulletBorderThickness": 2,
                     "hideBulletsCount": 30,
                     "title": "৫১ থেকে ৬০",
-                    "valueField": "ctg",
+                    "valueField": "fiftyone_to_sixty",
                     "fillAlphas": 0,
                     "type": "smoothedLine",
                     "balloonFunction": function (graphDataItem, graph) {
@@ -3527,7 +3528,7 @@ $ydata = [];
                         "bulletBorderThickness": 2,
                         "hideBulletsCount": 30,
                         "title": "৪১ থেকে ৫০",
-                        "valueField": "khu",
+                        "valueField": "fortyone_to_fifty",
                         "fillAlphas": 0,
                         "type": "smoothedLine",
                         "balloonFunction": function (graphDataItem, graph) {
@@ -3547,7 +3548,7 @@ $ydata = [];
                         "bulletBorderThickness": 3,
                         "hideBulletsCount": 30,
                         "title": "৩১ থেকে ৪০",
-                        "valueField": "mym",
+                        "valueField": "thirtyone_to_forty",
                         "fillAlphas": 0,
                         "type": "smoothedLine",
                         "balloonFunction": function (graphDataItem, graph) {
@@ -3568,7 +3569,7 @@ $ydata = [];
                         "bulletBorderThickness": 3,
                         "hideBulletsCount": 30,
                         "title": "২১ থেকে ৩০",
-                        "valueField": "raj",
+                        "valueField": "twentyone_to_thirty",
                         "fillAlphas": 0,
                         "type": "smoothedLine",
                         "balloonFunction": function (graphDataItem, graph) {
@@ -3589,7 +3590,7 @@ $ydata = [];
                         "bulletBorderThickness": 3,
                         "hideBulletsCount": 30,
                         "title": "১১ থেকে ২০",
-                        "valueField": "ran",
+                        "valueField": "elv_to_twenty",
                         "fillAlphas": 0,
                         "type": "smoothedLine",
                         "balloonFunction": function (graphDataItem, graph) {
@@ -3610,7 +3611,7 @@ $ydata = [];
                         "bulletBorderThickness": 3,
                         "hideBulletsCount": 30,
                         "title": "০ থেকে ১০",
-                        "valueField": "bar",
+                        "valueField": "zero_to_ten",
                         "fillAlphas": 0,
                         "type": "smoothedLine",
                         "balloonFunction": function (graphDataItem, graph) {
@@ -3679,7 +3680,7 @@ $ydata = [];
 
 
     $.ajax({
-    url: '{{url("/")}}/get-division-data',
+    url: '{{url("/")}}/get-age-wise-death-data',
     type: 'GET',
     data: {},
         success: function (data) {
