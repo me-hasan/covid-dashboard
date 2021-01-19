@@ -3237,7 +3237,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": "সাপ্তাহিক সনাক্ত বিবেচনায় আক্রান্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
