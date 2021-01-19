@@ -1403,15 +1403,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <div class="col-md-2 ml-4 mb-2" >
                                                         <label>নির্বাচন করুন </label>
                                                         <div class="row">
+                                                            <label class="radio-inline" for="radios-1" style="cursor:pointer">
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-1" value="2" checked="checked">
+                                                            সাপ্তাহিক
+                                                            </label> 
+                                                            &nbsp;&nbsp;&nbsp;
                                                             <label class="radio-inline" for="radios-0" style="cursor:pointer">
-                                                                <input type="radio" name="weeklyOrDaily" id="radios-0" value="1" checked="checked">
-                                                                 দৈনিক
-                                                                </label> 
-                                                                &nbsp;&nbsp;&nbsp;
-                                                                <label class="radio-inline" for="radios-1" style="cursor:pointer">
-                                                                <input type="radio" name="weeklyOrDaily" id="radios-1" value="2">
-                                                                সাপ্তাহিক
-                                                                </label> 
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-0" value="1">
+                                                                দৈনিক
+                                                            </label> 
+                                                        
                                                             <label class="radio-inline" for="radios-2">
                                                         </div>
                                                     </div>
@@ -3269,7 +3270,7 @@ $ydata = [];
                     "title": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
-                    "valueField": "test_positivity",
+                    "valueField": "National",
                     "balloonFunction": function (graphDataItem, graph) {
                         var v = 0;
                         if (graphDataItem.values) {
