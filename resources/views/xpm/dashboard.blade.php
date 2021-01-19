@@ -1232,6 +1232,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             {!! $des_2->component_name_beng ?? '' !!}
                                         </h4>
 
+                                        
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label>বিভাগ</label>
@@ -3237,7 +3238,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": "সাপ্তাহিক সনাক্ত বিবেচনায় আক্রান্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
