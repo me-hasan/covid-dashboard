@@ -1232,6 +1232,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             {!! $des_2->component_name_beng ?? '' !!}
                                         </h4>
 
+                                        
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label>বিভাগ</label>

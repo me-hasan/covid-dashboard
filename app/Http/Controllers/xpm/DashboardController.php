@@ -168,6 +168,7 @@ class DashboardController extends Controller
 
     public function divisionCompare()
     {
+        
         $params = ['dhk' => 'DHAKA', 'ctg' => 'CHITTAGONG', 'khu' => 'KHULNA', 'mym' => 'MYMENSINGH', 'raj' => 'RAJSHAHI', 'ran' => 'RANGPUR', 'bar' => 'BARISAL', 'syl' => 'SYLHET'];
         $last_key = array_key_last($params);
         $comma = "";
