@@ -3276,10 +3276,13 @@ $ydata = [];
                         if (graphDataItem.values) {
                             v = graphDataItem.values.value;
                         }
-                        //var d = graphDataItem.dataContext.date_of_test;
+                        
+                        var options = {month: 'long', day: 'numeric'};
+                        let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                        let previusSevenDay= previusSeven.getDate();
+                        let getMonth= month_name(previusSeven.getMonth());
 
-                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
-                        return "<span style='font-size:12px;'>" + graph.title + "<b style='color:red'><br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                        return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
                     },
                 }],
                 "chartScrollbar": {
