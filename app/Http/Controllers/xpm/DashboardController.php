@@ -2467,7 +2467,7 @@ using(district) ORDER BY r.test_positivity DESC");
         }
         //return $districts;
 
-        $nation_wide_MovingAvgInfected = DB::select("SELECT a.thedate, a.division, a.district, a.daily_cases,
+        $nation_wide_MovingAvgInfected = DB::select("SELECT date(a.thedate), a.division, a.district, a.daily_cases,
         Round((SELECT SUM(b.daily_cases) / COUNT(b.daily_cases)
         FROM
         (select thedate, division, district,
