@@ -1232,6 +1232,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             {!! $des_2->component_name_beng ?? '' !!}
                                         </h4>
 
+                                        
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label>বিভাগ</label>
@@ -1403,15 +1404,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <div class="col-md-2 ml-4 mb-2" >
                                                         <label>নির্বাচন করুন </label>
                                                         <div class="row">
+                                                            <label class="radio-inline" for="radios-1" style="cursor:pointer">
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-1" value="2" checked="checked">
+                                                            সাপ্তাহিক
+                                                            </label> 
+                                                            &nbsp;&nbsp;&nbsp;
                                                             <label class="radio-inline" for="radios-0" style="cursor:pointer">
-                                                                <input type="radio" name="weeklyOrDaily" id="radios-0" value="1" checked="checked">
-                                                                 দৈনিক
-                                                                </label> 
-                                                                &nbsp;&nbsp;&nbsp;
-                                                                <label class="radio-inline" for="radios-1" style="cursor:pointer">
-                                                                <input type="radio" name="weeklyOrDaily" id="radios-1" value="2">
-                                                                সাপ্তাহিক
-                                                                </label> 
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-0" value="1">
+                                                                দৈনিক
+                                                            </label> 
+                                                        
                                                             <label class="radio-inline" for="radios-2">
                                                         </div>
                                                     </div>
@@ -3250,7 +3252,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": "সাপ্তাহিক সনাক্ত বিবেচনায় আক্রান্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -3283,16 +3285,19 @@ $ydata = [];
                     "title": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
-                    "valueField": "test_positivity",
+                    "valueField": "National",
                     "balloonFunction": function (graphDataItem, graph) {
                         var v = 0;
                         if (graphDataItem.values) {
                             v = graphDataItem.values.value;
                         }
-                        //var d = graphDataItem.dataContext.date_of_test;
+                        
+                        var options = {month: 'long', day: 'numeric'};
+                        let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                        let previusSevenDay= previusSeven.getDate();
+                        let getMonth= month_name(previusSeven.getMonth());
 
-                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
-                        return "<span style='font-size:12px;'>" + graph.title + "<b style='color:red'><br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                        return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
                     },
                 }],
                 "chartScrollbar": {
