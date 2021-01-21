@@ -2709,7 +2709,7 @@ GROUP BY
         
         try {
             $data = DB::select(DB::raw($sql));
-            dd($data);
+            // dd($data);
             return $data;
         } catch (\Exception $exception) {
             return [];
