@@ -2508,7 +2508,7 @@ using(district) ORDER BY r.test_positivity DESC");
 
         $five_dayMovingAvgInfected = DB::connection('mysql2')->select("
                     SELECT
-    a.date_of_test,
+                    DATE(a.date_of_test),
     SUM(a.total_positive) AS total_positive,
     ROUND(
         (
