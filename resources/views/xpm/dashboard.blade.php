@@ -1514,13 +1514,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <option value="O">অন্যান্য</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        {{-- <div class="col-md-3">
                                                             <label for="">জেলা</label>
-                                                            <select name="age_wise_death_by_district_filter" id="age_wise_death_by_district_filter"
-                                                                    class="select2 form-control btn-outline-primary">
-                                                                <option>সারাদেশ</option>
+                                                            <select name="ageWiseDeathDistrict[]" id="ageWiseDeathDistrict" multiple
+                                                                    class="select2 form-control btn-outline-primary select_district">
+                                                                @foreach($district_list as $district)
+                                                                    <option value="{!! $district->district !!}"
+                                                                            class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                                                @endforeach
                                                             </select>
-                                                        </div>
+                                                        </div> --}}
                                                         {{--  <div class="col-md-3">
                                                             <label for="">হাসপাতাল</label>
                                                             <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
@@ -3461,7 +3464,7 @@ $ydata = [];
     
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
-        // console.log(chartData);
+        console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         // $('#last_date_4').html(" " + div_date);
@@ -3707,6 +3710,7 @@ $ydata = [];
         var genderTitle = '';
         var gender = $('#age_wise_death_by_gender').val();
         
+        
         switch(gender) {
             case 'M':
                 genderTitle = 'পুরুষ';
@@ -3723,14 +3727,14 @@ $ydata = [];
         } 
         console.log(genderTitle);
        
-        var distArray = $('#district_dhaka_rate').val();
+        var distArray = $('#ageWiseDeathDistrict').val();
         // var districts = [];
         
         if (gender) {
             $.ajax({
             url: '{{url("/")}}/get-age-wise-death-data-filter',
             type: 'GET',
-            data: { gender: gender },
+            data: { gender: gender, district: distArray },
                 success: function (data) {
                     showNationalLevelAgeWiseDeathChart(data);
                     hideLoader();
