@@ -2633,7 +2633,7 @@ GROUP BY
             SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
             FROM death_person
             group by notification_date)
-        as A";
+        as A order by notification_date ASC";
         
         try {
             $data = DB::select(DB::raw($sql));
