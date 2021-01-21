@@ -2637,9 +2637,15 @@ GROUP BY
         
         try {
             $data = DB::select(DB::raw($sql));
-            $result = $this->ageWiseDateArrayList($data, 2);
+            $formattedData = [];
+            foreach($data as $k=>$value){
+                $formattedData[] = (array) $value;
+            }
+            $result = $this->ageWiseDateArrayList($formattedData, 2);
+            // dd($result);
             return $result;
         } catch (\Exception $exception) {
+            dd($exception);
             return [];
         }
     }
@@ -2737,13 +2743,13 @@ GROUP BY
             foreach ($formatData as $k => $arrays) {
                 $newDistrict['date'] = $date;
                 if (in_array($date, $arrays)) {
-                    $newDistrict[$arrays['zero_to_ten']] = $arrays['zero_to_ten'];
-                    $newDistrict[$arrays['elv_to_twenty']] = $arrays['elv_to_twenty'];
-                    $newDistrict[$arrays['twentyone_to_thirty']] = $arrays['twentyone_to_thirty'];
-                    $newDistrict[$arrays['thirtyone_to_forty']] = $arrays['thirtyone_to_forty'];
-                    $newDistrict[$arrays['fortyone_to_fifty']] = $arrays['fortyone_to_fifty'];
-                    $newDistrict[$arrays['fiftyone_to_sixty']] = $arrays['fiftyone_to_sixty'];
-                    $newDistrict[$arrays['sixty_plus']] = $arrays['sixty_plus'];
+                    $newDistrict['zero_to_ten'] = $arrays['zero_to_ten'];
+                    $newDistrict['elv_to_twenty'] = $arrays['elv_to_twenty'];
+                    $newDistrict['twentyone_to_thirty'] = $arrays['twentyone_to_thirty'];
+                    $newDistrict['thirtyone_to_forty'] = $arrays['thirtyone_to_forty'];
+                    $newDistrict['fortyone_to_fifty'] = $arrays['fortyone_to_fifty'];
+                    $newDistrict['fiftyone_to_sixty'] = $arrays['fiftyone_to_sixty'];
+                    $newDistrict['sixtyone_plus'] = $arrays['sixtyone_plus'];
                 }
             }
             $filtered[] = $newDistrict;
