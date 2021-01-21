@@ -2640,8 +2640,15 @@ GROUP BY
         
         try {
             $data = DB::select(DB::raw($sql));
-            return $data;
+            $formattedData = [];
+            foreach($data as $k=>$value){
+                $formattedData[] = (array) $value;
+            }
+            $result = $this->ageWiseDateArrayList($formattedData, 2);
+            // dd($result);
+            return $result;
         } catch (\Exception $exception) {
+            dd($exception);
             return [];
         }
     }
@@ -2706,17 +2713,51 @@ GROUP BY
                     Round( ( SELECT SUM(b.sixty_plus) / COUNT(b.sixty_plus)
                            FROM vw_death_age_trend AS b
                 WHERE sex='M' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'sixtyone_to_hundred'
+                          ), 2 ) AS 'sixtyone_plus'
                 FROM vw_death_age_trend AS a
                 ORDER BY a.date) T where T.{$whereClause} order by date";
         
         try {
             $data = DB::select(DB::raw($sql));
-            dd($data);
-            return $data;
+            
+   
+            $result = $this->ageWiseDateArrayList($data, 2);
+
+            return $result;
         } catch (\Exception $exception) {
             return [];
         }
+    }
+
+
+    /**
+     * customize age wise date format generate
+     *
+     * @param [type] $formatData
+     * @param [type] $weeklyOrDaily
+     * @return void
+     */
+    public function ageWiseDateArrayList($formatData, $weeklyOrDaily)
+    {
+        $datesList = $this->getDatesFromRange($weeklyOrDaily);
+        
+        $newDistrict = [];
+        foreach ($datesList as $key => $date) {
+            foreach ($formatData as $k => $arrays) {
+                $newDistrict['date'] = $date;
+                if (in_array($date, $arrays)) {
+                    $newDistrict['zero_to_ten'] = $arrays['zero_to_ten'];
+                    $newDistrict['elv_to_twenty'] = $arrays['elv_to_twenty'];
+                    $newDistrict['twentyone_to_thirty'] = $arrays['twentyone_to_thirty'];
+                    $newDistrict['thirtyone_to_forty'] = $arrays['thirtyone_to_forty'];
+                    $newDistrict['fortyone_to_fifty'] = $arrays['fortyone_to_fifty'];
+                    $newDistrict['fiftyone_to_sixty'] = $arrays['fiftyone_to_sixty'];
+                    $newDistrict['sixtyone_plus'] = $arrays['sixtyone_plus'];
+                }
+            }
+            $filtered[] = $newDistrict;
+        }
+        return $filtered;
     }
 
 }
