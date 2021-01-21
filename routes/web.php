@@ -202,6 +202,7 @@ Route::get('get-hospital-data','xpm\DashboardController@getHospitalData')->name(
 
 /* Age wise death  */
 Route::get('get-age-wise-death-data','xpm\DashboardController@getAgeWiseDeathlData');
+Route::get('get-age-wise-death-data-filter','xpm\DashboardController@getAgeWiseDeathlDataFilter');
 
 
 Route::get('storage-link', function () {
