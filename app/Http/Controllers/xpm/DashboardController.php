@@ -2715,16 +2715,20 @@ GROUP BY
                 WHERE sex='M' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'sixtyone_plus'
                 FROM vw_death_age_trend AS a
-                ORDER BY a.date) T where T.{$whereClause} order by date";
+                ORDER BY a.date) T order by date";
         
         try {
             $data = DB::select(DB::raw($sql));
             
-   
-            $result = $this->ageWiseDateArrayList($data, 2);
-
+  	    $formatData = [];
+	    foreach($data as $k=> $value){
+		$formatData[] = (array)$value;
+	    }	    
+            $result = $this->ageWiseDateArrayList($formatData, 2);
+	
             return $result;
-        } catch (\Exception $exception) {
+	} catch (\Exception $exception) {
+		
             return [];
         }
     }
