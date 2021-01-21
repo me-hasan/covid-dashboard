@@ -2189,7 +2189,7 @@ $ydata = [];
 
 
     function dailyInfectedChart(data, dist='') {
-
+	console.log(data);
         let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
