@@ -444,7 +444,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
-                                    <span>বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা </span></li>
+                                    <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
                             </a>
                             <a href="#scroll_daily_covid_hospital_storage_and_usage">
                                 <li><span class="bullet-point"></span>
@@ -1482,7 +1482,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-12 ">
                                         <h2>
-                                            বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা
+                                            বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা
                                         </h2>
                                     </div>
 
@@ -1502,31 +1502,45 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-body">
+                                                    
                                                     <div class="row">
-
-                                                        <div class="col-xl-4 col-md-12">
-                                                            <h5 class="card-title b1">৬ই মার্চ
-                                                                - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->lastOfMonth()->day) !!}
-                                                                শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->format('F')) !!}</h5>
-                                                            <div id="age_wise_death_distribution_2"></div>
+                                                        <div class="col-md-3">
+                                                            <label for="">লিঙ্গ </label>
+                                                            <select name="gender" id="age_wise_gender_filter"
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                <option value="1">সকল</option>
+                                                                <option value="2">পুরুষ</option>
+                                                                <option value="3">মহিলা</option>
+                                                                <option value="4">অন্যান্য</option>
+                                                        
+                                                            </select>
                                                         </div>
-
-                                                        <div class="col-xl-4 col-md-12">
-                                                            <h5 class="card-title b1">
-                                                                ১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}
-                                                                - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->lastOfMonth()->day) !!}
-                                                                শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}</h5>
-                                                            <div id="age_wise_death_distribution_1"></div>
+                                                        <div class="col-md-3">
+                                                            <label for="">হাসপাতাল</label>
+                                                            <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                <option>সারাদেশ</option>
+                                                        
+                                                            </select>
                                                         </div>
-                                                        <div class="col-xl-4 col-md-12">
-                                                            <h5 class="card-title b1">
-                                                                ১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}
-                                                                -{!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}
-                                                                ই {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</h5>
-                                                            <div id="age_wise_death_distribution"></div>
+                                                        <div class="col-sm mt-4 mx-auto">
+                                                            <button id="filter-dhaka-rate"
+                                                                    class="btn btn-sm district_cms_search b1">
+                                                                <svg class="header-icon search-icon" x="1008" y="1248"
+                                                                     viewBox="0 0 24 24" height="100%" width="100%"
+                                                                     preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                                    <path
+                                                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                                                </svg>
+                                                            </button>
                                                         </div>
-
                                                     </div>
+                                                    
+                                                    <div id="age_wise_death_distribution" style="width: 105%; height: 470px"></div>
+                                                   
+
+
                                                     <div class="row">
                                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                                             <div class="card-body">
@@ -3428,8 +3442,265 @@ $ydata = [];
 
     
 
-    /*==============================End============================================
+    /*==============================End=============================================
     * Dhaka Chart Filter
+    * */
+    
+    
+
+    /*==============================Start============================================
+    * age wise death deault
+    * */
+
+    
+
+    function showNationalLevelAgeWiseDeathChart(chartData) {
+        console.log(chartData);
+        var size = Object.keys(chartData).length;
+        var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        // $('#last_date_4').html(" " + div_date);
+
+        if ($('#age_wise_death_distribution').length) {
+            var chart = AmCharts.makeChart("age_wise_death_distribution", {
+                "type": "serial",
+                "theme": "light",
+                "legend": {
+                    "useGraphSettings": true,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+                "dataProvider": chartData,
+                "synchronizeGrid": true,
+                "valueAxes": [
+                    {
+                        "title": "সাপ্তাহিক মৃত্যুর সংখ্যা",
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            return value.toLocaleString("bn-BD");
+                        },
+                    }
+                ],
+
+                "graphs": [{
+                    "valueAxis": "v1",
+                    "id": "g1",
+                    "lineColor": "#FF6600",
+                    "lineThickness": 2,
+                    "bullet": "",
+                    "bulletBorderThickness": 2,
+                    "hideBulletsCount": 30,
+                    "title": "৬০+",
+                    "valueField": "sixtyone_plus",
+                    "fillAlphas": 0,
+                    "type": "smoothedLine",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var v = 0;
+                        if (graphDataItem.values) {
+                            v = graphDataItem.values.value;
+                        }
+                        var options = {month: 'long', day: 'numeric'};
+                        return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                    },
+
+                }, {
+                    "valueAxis": "v2",
+                    "lineColor": "#FCD202",
+                    "lineThickness": 2,
+                    "bullet": "",
+                    "bulletBorderThickness": 2,
+                    "hideBulletsCount": 30,
+                    "title": "৫১ থেকে ৬০",
+                    "valueField": "fiftyone_to_sixty",
+                    "fillAlphas": 0,
+                    "type": "smoothedLine",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var v = 0;
+                        if (graphDataItem.values) {
+                            v = graphDataItem.values.value;
+                        }
+                        var options = {month: 'long', day: 'numeric'};
+                        return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                    },
+
+                },
+                    {
+                        "valueAxis": "v3",
+                        "lineColor": "orange",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 2,
+                        "hideBulletsCount": 30,
+                        "title": "৪১ থেকে ৫০",
+                        "valueField": "fortyone_to_fifty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            var options = {month: 'long', day: 'numeric'};
+                            return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                        },
+                    },
+                    {
+                        "valueAxis": "v4",
+                        "lineColor": "maroon",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "৩১ থেকে ৪০",
+                        "valueField": "thirtyone_to_forty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            var options = {month: 'long', day: 'numeric'};
+                            return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                        },
+
+                    },
+                    {
+                        "valueAxis": "v5",
+                        "lineColor": "pink",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "২১ থেকে ৩০",
+                        "valueField": "twentyone_to_thirty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            var options = {month: 'long', day: 'numeric'};
+                            return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                        },
+
+                    },
+                    {
+                        "valueAxis": "v6",
+                        "lineColor": "black",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "১১ থেকে ২০",
+                        "valueField": "elv_to_twenty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            var options = {month: 'long', day: 'numeric'};
+                            return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                        },
+
+                    },
+                    {
+                        "valueAxis": "v7",
+                        "lineColor": "blue",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "০ থেকে ১০",
+                        "valueField": "zero_to_ten",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            var options = {month: 'long', day: 'numeric'};
+                            return "<b>" + graph.title + "(" + graphDataItem.category.toLocaleDateString('bn', options) + ")</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn') + "</b></span>";
+                        },
+                    }
+                    
+                ],
+                "chartScrollbar": {},
+                "chartCursor": {
+                    "cursorPosition": "mouse",
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return '';
+                    },
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "axisColor": "#DADADA",
+                    "minPeriod": "DD",
+                    "labelFunction": function (value, date, categoryAxis) {
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                    },
+
+                },
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "gridAlpha": 0,
+                    "color": "#888888",
+                    "scrollbarHeight": 55,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "autoGridCount": true,
+                    "selectedGraphFillAlpha": 0,
+                    "graphLineAlpha": 0.2,
+                    "graphLineColor": "#c2c2c2",
+                    "selectedGraphLineColor": "#888888",
+                    "selectedGraphLineAlpha": 1
+
+                },
+
+            });
+
+            
+            
+
+            chart.addListener("dataUpdated", zoomChart);
+
+            function zoomChart() {
+                // chart.zoomToDates(new Date(2020, 5, 20), new Date(2020, 10, 17));
+            }
+        }
+    }
+
+
+    $.ajax({
+    url: '{{url("/")}}/get-age-wise-death-data',
+    type: 'GET',
+    data: {},
+        success: function (data) {
+            showNationalLevelAgeWiseDeathChart(data);
+            hideLoader();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    
+    
+    
+    /*==============================End==============================================
+    * age wise death default
     * */
 
 
@@ -3799,228 +4070,8 @@ $ydata = [];
 
 
     // Age Wise Death Distribution
-    Highcharts.chart('age_wise_death_distribution', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            }
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-            data: [<?php echo $cur_death;?>]
-
-        }, {
-            name: 'আক্রান্ত',
-            data: [<?php echo $cur_infected;?>]
-
-
-        }]
-    });
-
-    // Age Wise Death Distribution 1
-    Highcharts.chart('age_wise_death_distribution_1', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
-
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-
-            data: [<?php echo $previous_month__death;?>]
-            {{--data: [<?php echo $deathAge;?>]--}}
-
-        }, {
-            name: 'আক্রান্ত',
-
-            {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-            data: [<?php echo $previous_month__infected;?>]
-
-        }]
-    });
-    // Age Wise Death Distribution 2
-    Highcharts.chart('age_wise_death_distribution_2', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            }
-
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-            data: [<?php echo $previous_previous_month__death;?>]
-            {{--data: [<?php echo $deathAge;?>]--}}
-
-        }, {
-            name: 'আক্রান্ত',
-            {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-            data: [<?php echo $previous_previous_month__infected;?>]
-
-        }]
-    });
+    
+    
 
     <?php
 
@@ -4336,6 +4387,7 @@ group by date ORDER BY date ");
                         };
                         axis.push(obj);
                     })
+                    // console.log(data)
                     showDivisionChartFilter(data.data, axis);
                     
                     hideLoader();
@@ -4467,6 +4519,11 @@ group by date ORDER BY date ");
             $.each(data, function (a, b) {
                 option = option + '<option value="' + b.name + '">' + b.name_bn + '</option>';
             });
+
+            /* age wise death */
+            $('#age_wise_hospital_hospital_filter').empty();
+            $('#age_wise_hospital_hospital_filter').append(option);
+            /* age wise death */
 
             $('#hospital_filter').empty();
             $('#hospital_filter').append(option);

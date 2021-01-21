@@ -199,6 +199,11 @@ Route::post('upload-data', 'xpm\DashboardController@uploadData')->name('upload-d
 Route::get('get-south-asia-data', 'xpm\DashboardController@getSouthAsiaData')->name('get-south-asia-data');
 Route::get('get-hospital-name','xpm\DashboardController@getHospitalNames')->name('get=hospital-name');
 Route::get('get-hospital-data','xpm\DashboardController@getHospitalData')->name('get=hospital-data');
+
+/* Age wise death  */
+Route::get('get-age-wise-death-data','xpm\DashboardController@getAgeWiseDeathlData');
+
+
 Route::get('storage-link', function () {
     Artisan::call('storage:link');
     return 'linked';
