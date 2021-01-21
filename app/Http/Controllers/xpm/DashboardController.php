@@ -2636,7 +2636,71 @@ GROUP BY
             SUM(IF(age BETWEEN 0 and 100,1,0)) as 'Total'
             FROM death_person
             group by notification_date)
-        as A";
+        as A order by date ASC";
+        
+        try {
+            $data = DB::select(DB::raw($sql));
+            return $data;
+        } catch (\Exception $exception) {
+            return [];
+        }
+    }
+
+    public function getAgeWiseDeathlDataFilter(Request $request)
+    {
+        $gender = $request->gender;
+
+        $whereClause = "1";
+        if($gender){
+             switch($gender) {
+                case 'M':
+                    $whereClause = "sex= 'M'";;
+                    break;
+                case 'F':
+                    $whereClause = "sex= 'F'";;
+                    break;
+                case 'O':
+                    $whereClause = "sex= 'O'";;
+                    break;
+                default:
+                    $whereClause = "1";;
+                    break;
+            } 
+        }
+
+        /* select fileds */
+        $sql = "SELECT * from (
+            SELECT a.date, a.sex,
+                   Round( ( SELECT SUM(b.zero_ten) / COUNT(b.zero_ten)
+                           FROM vw_death_age_trend AS b
+                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_0_10',
+                    Round( ( SELECT SUM(b.eleven_twenty) / COUNT(b.eleven_twenty)
+                           FROM vw_death_age_trend AS b
+                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_11_20',
+                    Round( ( SELECT SUM(b.twentyone_thirty) / COUNT(b.twentyone_thirty)
+                           FROM vw_death_age_trend AS b
+                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_21_30',
+                    Round( ( SELECT SUM(b.thirtyone_fourty) / COUNT(b.thirtyone_fourty)
+                           FROM vw_death_age_trend AS b
+                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_31_40',
+                    Round( ( SELECT SUM(b.fourtyone_fifty) / COUNT(b.fourtyone_fifty)
+                           FROM vw_death_age_trend AS b
+                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_41_50',
+                    Round( ( SELECT SUM(b.fiftyone_sixty) / COUNT(b.fiftyone_sixty)
+                           FROM vw_death_age_trend AS b
+                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_51_60',
+                    Round( ( SELECT SUM(b.sixty_plus) / COUNT(b.sixty_plus)
+                           FROM vw_death_age_trend AS b
+                WHERE sex='M' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvg_60+'
+                FROM vw_death_age_trend AS a
+                ORDER BY a.date) T where T.{$whereClause} order by date";
         
         try {
             $data = DB::select(DB::raw($sql));

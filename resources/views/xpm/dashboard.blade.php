@@ -1506,25 +1506,31 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <label for="">লিঙ্গ </label>
-                                                            <select name="gender" id="age_wise_gender_filter"
+                                                            <select name="age_wise_death_by_gender" id="age_wise_death_by_gender"
                                                                     class="select2 form-control btn-outline-primary">
-                                                                <option value="1">সকল</option>
-                                                                <option value="2">পুরুষ</option>
-                                                                <option value="3">মহিলা</option>
-                                                                <option value="4">অন্যান্য</option>
-                                                        
+                                                                <option value="A">সকল</option>
+                                                                <option value="M">পুরুষ</option>
+                                                                <option value="F">মহিলা</option>
+                                                                <option value="O">অন্যান্য</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-3">
+                                                            <label for="">জেলা</label>
+                                                            <select name="age_wise_death_by_district_filter" id="age_wise_death_by_district_filter"
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                <option>সারাদেশ</option>
+                                                            </select>
+                                                        </div>
+                                                        {{--  <div class="col-md-3">
                                                             <label for="">হাসপাতাল</label>
                                                             <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
                                                                     class="select2 form-control btn-outline-primary">
                                                                 <option>সারাদেশ</option>
                                                         
                                                             </select>
-                                                        </div>
+                                                        </div>  --}}
                                                         <div class="col-sm mt-4 mx-auto">
-                                                            <button id="filter-dhaka-rate"
+                                                            <button id="filter-age-wise-death"
                                                                     class="btn btn-sm district_cms_search b1">
                                                                 <svg class="header-icon search-icon" x="1008" y="1248"
                                                                      viewBox="0 0 24 24" height="100%" width="100%"
@@ -3455,7 +3461,7 @@ $ydata = [];
     
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
-        console.log(chartData);
+        // console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         // $('#last_date_4').html(" " + div_date);
@@ -3694,6 +3700,45 @@ $ydata = [];
         },
         error: function (error) {
             console.log(error);
+        }
+    });
+
+    $('#filter-age-wise-death').click(function () {
+        var genderTitle = '';
+        var gender = $('#age_wise_death_by_gender').val();
+        
+        switch(gender) {
+            case 'M':
+                genderTitle = 'পুরুষ';
+                break;
+            case 'F':
+                genderTitle = 'মহিলা';
+                break;
+            case 'O':
+                genderTitle = 'অন্যান্য';
+                break;
+            default:
+                genderTitle = 'সকল';
+                break;
+        } 
+        console.log(genderTitle);
+       
+        var distArray = $('#district_dhaka_rate').val();
+        // var districts = [];
+        
+        if (gender) {
+            $.ajax({
+            url: '{{url("/")}}/get-age-wise-death-data-filter',
+            type: 'GET',
+            data: { gender: gender },
+                success: function (data) {
+                    showNationalLevelAgeWiseDeathChart(data);
+                    hideLoader();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         }
     });
     
