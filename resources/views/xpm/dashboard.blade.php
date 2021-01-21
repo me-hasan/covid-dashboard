@@ -1514,7 +1514,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <option value="O">অন্যান্য</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        {{-- <div class="col-md-3">
                                                             <label for="">জেলা</label>
                                                             <select name="ageWiseDeathDistrict[]" id="ageWiseDeathDistrict" multiple
                                                                     class="select2 form-control btn-outline-primary select_district">
@@ -1523,7 +1523,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             class="b1">{!! en2bnTranslation($district->district) !!} </option>
                                                                 @endforeach
                                                             </select>
-                                                        </div>
+                                                        </div> --}}
                                                         {{--  <div class="col-md-3">
                                                             <label for="">হাসপাতাল</label>
                                                             <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
