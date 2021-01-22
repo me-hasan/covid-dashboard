@@ -1511,7 +1511,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <option value="A">সকল</option>
                                                                 <option value="M">পুরুষ</option>
                                                                 <option value="F">মহিলা</option>
-                                                                <option value="O">অন্যান্য</option>
+                                                            
                                                             </select>
                                                         </div>
                                                         {{-- <div class="col-md-3">
@@ -1546,8 +1546,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         </div>
                                                     </div>
                                                     
-                                                    <div id="age_wise_death_distribution" style="width: 105%; height: 470px"></div>
-                                                   
+						    <div class="row">
+							<div id="age_wise_death_distribution" style="width: 100%; height: 470px"></div>
+						    </div>
 
 
                                                     <div class="row">
@@ -2291,16 +2292,22 @@ $ydata = [];
                 "autoMarginOffset": 5,
                 "columnWidth": 1,
                 "categoryField": "date",
-                "categoryAxis": {
+		"categoryAxis": {
+		    
+		    "equalSpacing": false,
                     "parseDates": true,
-                    "minPeriod": "hh",
+	            "minPeriod": "hh",
+		  //  "showLastLabel": true,	
                     "labelFunction": function (value, date, categoryAxis) {
                         var options = new Array();
                         options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
                         options["MMM"] = {year: 'numeric', month: 'long'};
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
+		    },
+		    //"equalSpacing": true,
+		    "showFirstLabel": true,
+                    "showLastLabel": true,
 
                 },
 
@@ -2929,8 +2936,10 @@ $ydata = [];
                 },
             },
             "dataDateFormat": "YYYY-MM-DD",
-            "categoryField": "date",
-            "categoryAxis": {
+	    "categoryField": "date",
+	   
+	    "categoryAxis": {
+	        "minPeriod": "DD",
                 "parseDates": true,
                 "labelFunction": function (value, date, categoryAxis) {
                     var options = new Array();
@@ -2938,7 +2947,10 @@ $ydata = [];
                     options["MMM"] = {year: 'numeric', month: 'long'};
                     options["YY"] = {year: 'numeric', month: 'long'};
                     return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                },
+		},
+		"showFirstLabel": true,
+                "showLastLabel": true,
+		"equalSpacing": true,
             },
             "chartScrollbar": {
                 "graph": "g1",
@@ -3204,7 +3216,8 @@ $ydata = [];
                         options["MMM"] = {year: 'numeric', month: 'long'};
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
+		    },
+		    "equalSpacing": true,
 
                 },
                 "chartScrollbar": {
@@ -3349,7 +3362,8 @@ $ydata = [];
                         options["MMM"] = {year: 'numeric', month: 'long'};
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
+		    },
+		    "equalSpacing": true,
                 },
             });
 
@@ -3693,7 +3707,8 @@ $ydata = [];
                         options["MMM"] = {year: 'numeric', month: 'long'};
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
+		    },
+		    "equalSpacing": true,
 
                 },
                 "chartScrollbar": {
@@ -3763,14 +3778,14 @@ $ydata = [];
                 genderTitle = 'সকল';
                 break;
         } 
-        console.log(genderTitle);
+        //console.log(genderTitle);
        
         var distArray = $('#ageWiseDeathDistrict').val();
         // var districts = [];
         
-        if (gender) {
+        if (gender != 'A') {
             $.ajax({
-            url: '{{url("/")}}/get-age-wise-death-data-filter',
+	    url:  '{{url("/")}}/get-age-wise-death-data-filter',
             type: 'GET',
             data: { gender: gender, district: distArray },
                 success: function (data) {
@@ -3781,7 +3796,22 @@ $ydata = [];
                     console.log(error);
                 }
             });
+	}else{
+	     $.ajax({
+    url: '{{url("/")}}/get-age-wise-death-data',
+    type: 'GET',
+    data: {},
+        success: function (data) {
+            showNationalLevelAgeWiseDeathChart(data);
+            hideLoader();
+        },
+        error: function (error) {
+            console.log(error);
         }
+    });
+
+
+	}
     });
     
     
