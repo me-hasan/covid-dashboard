@@ -2403,7 +2403,7 @@ $ydata = [];
                     "axisAlpha": 0,
                     "title": "প্রতি হাজারে পরীক্ষা(" + date + ")",
                     "minimum": 0,
-                    "maximum": 100,
+                    "maximum": 150,
                     "labelFunction": function (value, valueText, valueAxis) {
                         return value.toLocaleString("bn-BD");
                     },
