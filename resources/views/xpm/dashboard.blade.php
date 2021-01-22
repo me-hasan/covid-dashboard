@@ -2388,7 +2388,7 @@ $ydata = [];
                     "valueField": "count",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = "প্রতি হাজারে পরীক্ষা(" + date + "):";
+                        var title = "প্রতি হাজারে পরীক্ষা(" + graphDataItem.dataContext.date + "):";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     },
                     "labelText": '[[balloonValue]]',
@@ -2403,7 +2403,7 @@ $ydata = [];
                     "axisAlpha": 0,
                     "title": "প্রতি হাজারে পরীক্ষা(" + date + ")",
                     "minimum": 0,
-                    "maximum": 100,
+                    "maximum": 150,
                     "labelFunction": function (value, valueText, valueAxis) {
                         return value.toLocaleString("bn-BD");
                     },

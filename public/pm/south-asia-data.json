@@ -1,51 +1,58 @@
 {
-  "date": "2020-12-26",
+  "date": "2021-01-22",
   "data":{
   "0": {
+    "date" : "২০২১-০১-২০",
     "country": "ভারত",
-    "count": 121.13,
-    "balloonValue": "১২১.১৩",
+    "count": 136.642,
+    "balloonValue": "১৩৬.৬৪২",
     "color": "rgb(103, 183, 220)"
   },
   "1": {
+    "date" : "২০২১-০১-১৯",
     "country": "নেপাল",
-    "count": 65.41,
-    "balloonValue": "৬৫.৪১",
+    "count": 69.387,
+    "balloonValue": "৬৯.৩৮৭",
     "color": "rgb(138, 12, 207)"
 
   },
   "2": {
+    "date" : "২০২১-০১-১৯",
     "country": "শ্রীলংকা",
-    "count": 55.67,
-    "balloonValue": "৫৫.৬৭",
+    "count": 71.089,
+    "balloonValue": "৭১.০৮৯",
     "color": "rgb(88, 24, 69)"
 
   },
   "3": {
+    "date" : "২০২১-০১-২০",
     "country": "পাকিস্তান",
-    "count": 29.534,
-    "balloonValue": "২৯.৫৩৪",
+    "count": 33.87,
+    "balloonValue": "৩৩.৮৭",
     "color": "rgb(120, 20, 106)"
 
   },
   "4": {
+    "date" : "২০২১-০১-১৯",
     "country": "বাংলাদেশ",
-    "count": 19.174,
-    "balloonValue": "১৯.১৬৪",
+    "count": 21.146,
+    "balloonValue": "২১.১৪৬",
     "color": "rgb( 97, 188, 94)"
 
   },
   "5": {
+    "date" : "২০২০-১২-১৯",
     "country": "ভিয়েতনাম",
-    "count": 0,
-    "balloonValue": "০",
+    "count": 15.101,
+    "balloonValue": "১৫.১০১",
     "color": "rgb(113, 94, 188)"
 
   },
   "6": {
+    "date" : "২০২১-০১-১৯",
     "country": "মায়ানমার",
-    "count": 31.98,
-    "balloonValue": "৩১.৯৮",
+    "count": 39.929,
+    "balloonValue": "৩৯.৯২৯",
     "color": "rgb(59, 56, 69)"
 
   }
