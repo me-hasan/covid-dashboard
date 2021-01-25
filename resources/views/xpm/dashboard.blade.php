@@ -3096,7 +3096,7 @@ $ydata = [];
                                 let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                                 let previusSevenDay= previusSeven.getDate();
                                 let getMonth= month_name(previusSeven.getMonth());
-                                return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                                return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
                             },
                         }],
                         "categoryField": "date",
@@ -3319,7 +3319,7 @@ $ydata = [];
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
 
-                        return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                        return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
                     },
                 }],
                 "chartScrollbar": {
@@ -3529,7 +3529,7 @@ $ydata = [];
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
 
-                        return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                        return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                     },
 
                 }, {
@@ -3554,7 +3554,7 @@ $ydata = [];
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
 
-                        return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                        return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                     },
 
                 },
@@ -3580,7 +3580,7 @@ $ydata = [];
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
 
-                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
                     },
                     {
@@ -3605,7 +3605,7 @@ $ydata = [];
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
 
-                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
 
                     },
@@ -3631,7 +3631,7 @@ $ydata = [];
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
 
-                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
 
                     },
@@ -3657,7 +3657,7 @@ $ydata = [];
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
 
-                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
 
                     },
@@ -3683,7 +3683,7 @@ $ydata = [];
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
 
-                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
                     }
                     
