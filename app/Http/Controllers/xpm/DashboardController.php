@@ -89,9 +89,11 @@ class DashboardController extends Controller
         $data['rm_7'] = $this->risk_matrix_7();
         $data['rm_8'] = $this->risk_matrix_8();
         $data['rm_9'] = $this->risk_matrix_9();
-        $data['first_week'] = $this->first_week();
-        $data['last_week'] = $this->last_week();
-
+        // $data['first_week'] = $this->first_week();
+        $data['first_week'] = (object) $this->getLast14NDays();
+        // $data['last_week'] = $this->last_week();
+        $data['last_week'] = (object) $this->getLast28NDays();
+        // dd($data['last_week']);
         // description and insight
         $data['des_1'] = $this->description_insight_qry('101'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
         $data['des_2'] = $this->description_insight_qry('201'); //Daily New Cases by Region / অঞ্চল তুলনা
@@ -164,6 +166,36 @@ class DashboardController extends Controller
         $data['hospitalGeneralBedStackedData'] =  json_encode($hospitalGeneralBedStacked); */
 
         return view('xpm.dashboard', $data);
+    }
+
+    function getLast14NDays(){
+        $today = new Carbon();
+        if($today->dayOfWeek == Carbon::SATURDAY){
+            $first = $today;
+            $last = $today;
+        }
+        else{
+            $first = new Carbon('last saturday');
+            $last = new Carbon('last saturday');
+        }
+        $dateArray['first_2_weeks_start'] = $first->subDays(7); 
+        $dateArray['first_2_weeks_end'] = $last->subDays(20);  
+        return array_reverse($dateArray);
+    }
+
+    function getLast28NDays(){
+        $today = new Carbon();
+        if($today->dayOfWeek == Carbon::SATURDAY){
+            $first = $today;
+            $last = $today;
+        }
+        else{
+            $first = new Carbon('last saturday');
+            $last = new Carbon('last saturday');
+        }
+        $dateArray['last_2_weeks_start'] = $first->subDays(21); 
+        $dateArray['last_2_weeks_ends'] = $last->subDays(34);  
+        return array_reverse($dateArray);
     }
 
     public function divisionCompare()

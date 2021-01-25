@@ -3478,7 +3478,7 @@ $ydata = [];
     
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
-        console.log(chartData);
+        // console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         // $('#last_date_4').html(" " + div_date);
