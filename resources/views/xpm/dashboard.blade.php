@@ -3534,7 +3534,7 @@ $ydata = [];
 
                 }, {
                     "valueAxis": "v2",
-                    "lineColor": "#FCD202",
+                    "lineColor": "#54E780",
                     "lineThickness": 2,
                     "bullet": "",
                     "bulletBorderThickness": 2,
@@ -3611,7 +3611,7 @@ $ydata = [];
                     },
                     {
                         "valueAxis": "v5",
-                        "lineColor": "pink",
+                        "lineColor": "#E75480",
                         "lineThickness": 2,
                         "bullet": "",
                         "bulletBorderThickness": 3,
