@@ -3872,7 +3872,7 @@ $ydata = [];
 
 
         function myrange_ajax_call() {
-
+            // console.log(hpm.getRiskMatricData);
             let result;
             let url = new URL('{!! route('hpm.getRiskMatricData') !!}');
             $.ajax({
