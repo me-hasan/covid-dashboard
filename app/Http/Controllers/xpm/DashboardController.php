@@ -2701,7 +2701,7 @@ GROUP BY
 
     public function getAgeWiseDeathlDataFilter(Request $request)
     {
-        dd($request->all());
+       
         $gender = $request->gender;
         $hospital = $request->hospital;
         
@@ -2710,26 +2710,21 @@ GROUP BY
         $whereClause = "1";
 
 
-        if($gender && ($hospital != '')){
-             switch($gender) {
-                case 'M':
-                    $whereClause = " sex= 'M'";
-                    break;
-                case 'F':
-                    $whereClause = " sex= 'F'";
-                    break;       
-            } 
-        }
-        if($gender && $hospital){
-            $whereClause .= " AND name_of_hospital = $hospital";
+        if(!empty($gender) && ($hospital == '' || $hospital == null)){
+             
+            $whereClause = " sex= '$gender'";
         }
 
-        if($hospital ($gender != '')){
-            $whereClause = " name_of_hospital = $hospital";
+        if(!empty($gender) && !empty($hospital)){
+            $whereClause = " sex = '$gender' AND hospital = \"$hospital\"";
+        }
+
+        if(!empty($hospital) && ($gender == '' || $gender == null)){
+            $whereClause = " hospital = \"$hospital\"";
         }
 
        
-        
+       
              /* select fileds */
             $sql = "SELECT * from (
             SELECT a.date date, 
@@ -2764,7 +2759,7 @@ GROUP BY
                 FROM vw_death_age_trend AS a
                 ORDER BY a.date) T order by date";
        
-
+        //  dd($sql);                 
         /* if($hospital){
 
             $sql = "SELECT * from (
