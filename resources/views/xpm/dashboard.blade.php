@@ -840,7 +840,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="row">
                             
                                                             <div class="col-xl-1 col-md-1">
-                                                                <div
+                                                                <div id="last_weekly_date"
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
                                                                     class="fs-20 b1">
                                                                     <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )
@@ -889,7 +889,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         style="width: 100%; min-width: 400px;">
                                                                         <thead>
                                                                         <tr>
-                                                                            <td colspan="4" class="text-center fs-18" style="font-size: 26px"><span
+                                                                            <td colspan="4" class="text-center fs-18" style="font-size: 26px" id="recent_weekly_date"><span
                                                                                     class="text-danger">আজ {{ $today }}</span>, বিগত ২ সপ্তাহ ( {{$first_week_end}} - {{$first_week_start}} )
                                                                             </td>
                                                                         </tr>
@@ -3887,7 +3887,37 @@ $ydata = [];
 
         $('#weekly_date_submit').on('click', function () {
             myrange_ajax_call();
+            weekly_date_change();
         });
+
+        function weekly_date_change(){
+            let url = new URL('{!! route('weekly.date.change.for.matrix') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'weekly_date': $('#weekly_date').val(),
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('#recent_weekly_date').html(data.recent_weekly_date)
+                        $('#last_weekly_date').html(data.last_weekly_date)
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
 
 
         function myrange_ajax_call() {

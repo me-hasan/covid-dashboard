@@ -18,6 +18,9 @@ class CreateWeeklyDatesTable extends Migration
             $table->bigInteger('date_id');
             $table->string('date_ban');
             $table->string('date_eng');
+            $table->string('recent_weekly_date');
+            $table->string('last_weekly_date');
+            $table->tinyInteger('status')->default(1)->comment('1=True, 0=False');
             $table->timestamps();
         });
     }
