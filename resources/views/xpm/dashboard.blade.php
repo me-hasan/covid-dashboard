@@ -848,7 +848,21 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </div>
                                                             <div class="col-xl-11 col-md-11">
                                                                 <div class="row">
-                            
+                                                                    <div class="col-xl-3">
+                                                                        <p>তারিখ নির্বাচন করুন: </p>
+                                                                        <select name="weekly_date" id="weekly_date" style="width: 100%" class="form-control">
+                                                                            @foreach ($weekly_date as $value)
+                                                                                <option value="{{ $value->date_id }}">{{ $value->date_ban }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xl-3">
+                                                                        <br>
+                                                                        <button type="button" class="btn btn-sm btn-primary" id="weekly_date_submit">পরিবর্তন করুন</button>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
                                                                     <div class="col-xl-6">
                                                                         <div class="slidecontainer">
                                                                             <p>গত ১৪ দিনে পরীক্ষার সংখ্যা: <span
@@ -3871,6 +3885,11 @@ $ydata = [];
         });
 
 
+        $('#weekly_date_submit').on('click', function () {
+            myrange_ajax_call();
+        });
+
+
         function myrange_ajax_call() {
             // console.log(hpm.getRiskMatricData);
             let result;
@@ -3882,6 +3901,7 @@ $ydata = [];
                 data: {
                     'test_count': $('#myRange').val(),
                     'test_positive_data_rate': $('#ex12c').val(),
+                    'weekly_date': $('#weekly_date').val(),
                 },
                 timeout: 30000,
                 success: function (data) {

@@ -9,6 +9,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\WeeklyDate;
 
 class DashboardController extends Controller
 {
@@ -53,6 +54,8 @@ class DashboardController extends Controller
         //$testPositivityMap = $this->testPositivityMap($request);
 
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
+
+        $data['weekly_date'] = WeeklyDate::all();
 
         // shamvil start
         // row 1
