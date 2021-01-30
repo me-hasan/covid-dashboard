@@ -174,8 +174,8 @@ class DashboardController extends Controller
     function getLast14NDays(){
         $today = new Carbon();
         if($today->dayOfWeek == Carbon::SATURDAY){
-            $first = $today;
-            $last = $today;
+            $first = new Carbon();
+            $last = new Carbon();
         }
         else{
             $first = new Carbon('last saturday');
@@ -189,8 +189,8 @@ class DashboardController extends Controller
     function getLast28NDays(){
         $today = new Carbon();
         if($today->dayOfWeek == Carbon::SATURDAY){
-            $first = $today;
-            $last = $today;
+            $first = new Carbon();
+            $last = new Carbon();
         }
         else{
             $first = new Carbon('last saturday');
