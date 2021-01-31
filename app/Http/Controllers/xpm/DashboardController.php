@@ -2855,4 +2855,134 @@ GROUP BY
         return $filtered;
     }
 
+
+    /**
+     * ===========================================================
+     * start vaccination==========================================
+     * ===========================================================
+     */
+
+    public function vaccinationIndex(Request $request)
+    {
+        $this->checkValidUser();
+        //$testPositivityMap = $this->testPositivityMap($request);
+
+        $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
+
+        $data['weekly_date'] = WeeklyDate::all();
+
+        // shamvil start
+        // row 1
+        $data['nation_wide_MovingAvgInfected'] = $this->nation_wide_five_dayMovingAvgInfected($request);
+        // row 2
+        $data['forteen_day_infected'] = $this->get_14days_infected($request); // 14 days songcromon & songcromoner har
+        $data['days_infected'] = $this->nation_wise_14_days_infected();
+        $data['days_death'] = $this->nation_wise_14_days_death();
+        $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
+
+        /*$data['tests_per_case_Mayanmar'] = $this->tests_per_case_country('Myanmar');
+        $data['tests_per_case_Sri'] = $this->tests_per_case_country('Sri Lanka');
+        $data['tests_per_case_Nepal'] = $this->tests_per_case_country('Nepal');
+        $data['tests_per_case_Maldives'] = $this->tests_per_case_country('Maldives');
+        $data['tests_per_case_India'] = $this->tests_per_case_country('India');
+        $data['tests_per_case_Pakistan'] = $this->tests_per_case_country('Pakistan');
+        $data['tests_per_case_Bangladesh'] = $this->tests_per_case_country('Bangladesh');
+         */
+
+        // row 4
+        $data['nation_hospital'] = $dhaka_hospital = $this->nation_wide_hospital();
+        $data['dhaka_hospital'] = $dhaka_hospital = $this->city_wise_hospital('Dhaka');
+        $data['ctg_hospital'] = $ctg_hospital = $this->city_wise_hospital('Chittagong');
+
+        $data['dhaka_hospital_details'] = $dhaka_hospital_details = $this->city_wise_hospital_details('Dhaka');
+        $data['ctg_hospital_details'] = $ctg_hospital_details = $this->city_wise_hospital_details('Chittagong');
+        // row 6
+        $data['rm_1'] = $this->risk_matrix_1();
+        $data['rm_2'] = $this->risk_matrix_2();
+        $data['rm_3'] = $this->risk_matrix_3();
+        $data['rm_4'] = $this->risk_matrix_4();
+        $data['rm_5'] = $this->risk_matrix_5();
+        $data['rm_6'] = $this->risk_matrix_6();
+        $data['rm_7'] = $this->risk_matrix_7();
+        $data['rm_8'] = $this->risk_matrix_8();
+        $data['rm_9'] = $this->risk_matrix_9();
+        // $data['first_week'] = $this->first_week();
+        $data['first_week'] = (object) $this->getLast14NDays();
+        // $data['last_week'] = $this->last_week();
+        $data['last_week'] = (object) $this->getLast28NDays();
+        // dd($data['last_week']);
+        // description and insight
+        $data['des_1'] = $this->description_insight_qry('101'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+        $data['des_2'] = $this->description_insight_qry('201'); //Daily New Cases by Region / অঞ্চল তুলনা
+        $data['des_3'] = $this->description_insight_qry('202'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+        $data['des_4'] = $this->description_insight_qry('301'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+        $data['des_5'] = $this->description_insight_qry('302'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+        $data['des_6'] = $this->description_insight_qry('303'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+        $data['des_7'] = $this->description_insight_qry('304'); // Test Per Cases For South Asian Countries
+        $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
+        $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
+        $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
+        $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
+        // shamvil end
+
+        //Test vs Cases (Robi)
+        $data['testsVsCases'] = $this->getNationWiseTestsAndCases($request);
+        $i = 0;
+        $divisionlist = [];
+        $seriesData = [];
+        /*
+        $data['series_data'] = json_encode($seriesData);
+        $data['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
+        $data['testPositivityMap'] = $testPositivityMap;
+
+        // 5 oct
+        $cumulativeInfectedPerson_onlyDhaka = $this->cumulativeInfectedPerson_dhaka($request);
+        $k = 0;
+        $dhk_divisionlist = [];
+        $dhk_seriesData = [];
+        if (count($cumulativeInfectedPerson_onlyDhaka['division_data'])) {
+        foreach ($cumulativeInfectedPerson_onlyDhaka['division_data'] as $key => $dist) {
+        $dhk_seriesData[$k]['type'] = 'spline';
+        $dhk_seriesData[$k]['name'] = en2bnTranslation($key);
+        $dhk_seriesData[$k]['data'] = $dist ?? [];
+        $dhk_seriesData[$k]['marker']['enabled'] = false;
+        $dhk_seriesData[$k]['marker']['symbol'] = 'circle';
+        $dhk_divisionlist[] = $key;
+        $k++;
+        }
+        }
+
+        $data['series_data_dhk'] = json_encode($dhk_seriesData);
+        $data['categories_dhk'] = json_encode($cumulativeInfectedPerson_onlyDhaka['categories']) ?? [];
+         */
+
+        // row 1 left side
+        $cumulativeInfection = $this->getCumulativeInfectionData($request);
+        $data['row1_left_trend_date'] = $cumulativeInfection['dateBangla'];
+        $data['row1_left_trend_infected_data'] = $cumulativeInfection['infected_person_date'];
+
+        $data['division_list'] = DB::table('div_dist')->groupBY('division')->pluck('division');
+
+        $data['district_list'] = DB::table('div_dist')->get();
+
+        $data['last_14_days'] = $this->getLast14DaysData($request);
+
+        //$data['division_compare'] = $this->divisionCompare($request);
+        $data['division_compare'] = [];
+
+        $data['total_tested'] = DB::table('daily_data')->selectRaw('test_total')->orderBy('report_date', 'DESC')->first()->test_total;
+        $data['total_infected'] = DB::table('daily_data')->selectRaw('infected_total')->orderBy('report_date', 'DESC')->first()->infected_total;
+        $data['total_death'] = DB::table('daily_data')->selectRaw('death_total')->orderBy('report_date', 'DESC')->first()->death_total;
+        //dd($data['total_death']);
+
+        /*  $hospitalGeneralBedStacked = DB::select("SELECT date, alocatedGeneralBed as 'total_bed', AdmittedGeneralBed as 'occupied_bed',
+        round(generalBedOccupencyRate, 2) as 'occupency_rate'
+        from hospitaltemporarydata
+        where city = 'Country' LIMIT 10");
+
+        $data['hospitalGeneralBedStackedData'] =  json_encode($hospitalGeneralBedStacked); */
+
+        return view('vaccination.dashboard', $data);
+    }
+
 }

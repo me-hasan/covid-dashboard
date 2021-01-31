@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="shortcut icon" href="pm/images/icon/favicon.ico" type="image/x-icon"/>
-    <title>বাংলাদেশ (Bangladesh) জাতীয় ড্যাশবোর্ড | গণপ্রজাতন্ত্রী বাংলাদেশ সরকার | People's Republic of
+    <title>বাংলাদেশ (Bangladesh) টিকাদান কর্মসূচি | গণপ্রজাতন্ত্রী বাংলাদেশ সরকার | People's Republic of
         Bangladesh</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="pm/images/icon/favicon.ico">
@@ -396,7 +396,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                         <div class="col-md-12">
                             <h1 class="head-title"><img style="height: 48px;" src="pm/images/icon/bd-logo.png"
-                                                        alt="logo"> কোভিড-১৯ জাতীয় ড্যাশবোর্ড</h1>
+                                                        alt="logo"> কোভিড-১৯ জাতীয় টিকাদান কর্মসূচি</h1>
                         </div>
                     </div>
 
@@ -411,44 +411,44 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div class="breadcrumbs-area">
                         <ul class="breadcrumbs">
                             <a href="#scroll_daily_affected">
-                                <li><span class="bullet-point"></span> <span>দৈনিক আক্রান্তের সংখ্যা </span></li>
+                                <li><span class="bullet-point"></span> <span>দৈনিক নিবন্ধনের সংখ্যা </span></li>
                             </a>
                             <a href="#scroll_daily_affected_area_wise">
                                 <li><span class="bullet-point"></span>
-                                    <span>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</span>
+                                    <span>অঞ্চল-ভিত্তিক দৈনিক ১ম ডোজ বিতরণের সংখ্যা</span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_comparison">
                                 <li><span class="bullet-point"></span>
-                                    <span>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</span>
+                                    <span>দৈনিক  নিবন্ধকরণ ও বিতরণের সংখ্যার তুলনা</span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_comparison_rate">
                                 <li><span class="bullet-point"></span>
-                                    <span>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</span>
+                                    <span>নিবন্ধকরণ এর বিবেচনায় বিতরণের হারের সাপ্তাহিক গড়</span>
                                 </li>
                             </a>
                             {{-- <a href="#scroll_test_status">
                                 <li><span class="bullet-point"></span> <span>পরীক্ষা পরিস্থিতি</span></li>
                             </a> --}}
                             <a href="#scroll_daily_risk_dist_wise_test_positive">
-                                <li><span class="bullet-point"></span> <span>সনাক্ত বিবেচনায় আক্রান্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
+                                <li><span class="bullet-point"></span> <span>বিতরণের ভিত্তিতে জেলা পর্যায়ে টিকাদান বিশ্লেষণ </span>
                                 </li>
                             </a>
 
                             <a href="#scroll_daily_test_dhaka_district">
                                 <li><span class="bullet-point"></span>
-                                    <span>জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার</span>
+                                    <span>জেলা ভিত্তিক দৈনিক নিবন্ধনের বিবেচনায় বিতরণের সংখ্যা</span>
                                 </li>
                             </a>
 
                             <a href="#scroll_daily_last_4weeks_risk">
-                                <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
+                                <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের বিতরণের বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
-                                    <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
+                                    <span>বিভিন্ন শ্রেনী ভিত্তিক টিকা বিতরণের সংখ্যার তুলনা (নেঙ্গ, বয়স, পেশা, হাসপাতাল)</span></li>
                             </a>
                             <a href="#scroll_daily_covid_hospital_storage_and_usage">
                                 <li><span class="bullet-point"></span>
@@ -456,7 +456,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_south_asian_countries_differentiation">
                                 <li><span class="bullet-point"></span>
-                                    <span>দক্ষিণ এশিয়ার দেশগুলোতে পরীক্ষার তুলনা </span>
+                                    <span>দক্ষিণ এশিয়ার দেশগুলোতে টিকা বিতরণের তুলনা </span>
                                 </li>
                             </a>
                         </ul>
@@ -474,17 +474,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div style="height: 220px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
-                                <h4 class="header-title pb-1">সর্বমোট পরীক্ষা</h4>
+                                <h4 class="header-title pb-1">সর্বমোট নিবন্ধকরণ </h4>
                                 <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_tested) ? formatInBanglaStyle($total_tested) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে পরীক্ষা</h4>
+                            <h4 class="header-title pb-1">গত ১৪ দিনে নিবন্ধকরণ </h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে
-                                পরীক্ষার
+                                নিবন্ধকরণ এর
                                 চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))) : ' ' !!}
                                 টি
                                 @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1)
@@ -497,17 +497,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div style="height: 220px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
-                                <h4 class="header-title pb-1">সর্বমোট আক্রান্ত</h4>
+                                <h4 class="header-title pb-1">সর্বমোট ১ম ডোজ</h4>
                                 <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে আক্রান্ত</h4>
+                            <h4 class="header-title pb-1">গত ১৪ দিনে ১ম ডোজ</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_2}}"></i>
-                                পূর্ববর্তী ১৪ দিনে আক্রান্তের
+                                পূর্ববর্তী ১৪ দিনে ১ম ডোজ এর
                                 চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}
                                 জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
@@ -519,17 +519,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div style="height: 220px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
-                                <h4 class="header-title pb-1">সর্বমোট মৃত্যু</h4>
+                                <h4 class="header-title pb-1">সর্বমোট ২য় ডোজ</h4>
                                 <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_death) ? formatInBanglaStyle($total_death) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে মৃত্যু</h4>
+                            <h4 class="header-title pb-1">গত ১৪ দিনে ২য় ডোজ</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে
-                                মৃত্যুর
+                                ২য় ডোজ এর
                                 চেয়ে
                                 {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}
 
@@ -547,7 +547,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="invoice-head title-bg-style">
                                 <div class="row">
                                     <div class="iv-left col-6 ">
-                                        <h2>দৈনিক আক্রান্তের সংখ্যা</h2>
+                                        <h2>দৈনিক নিবন্ধনের সংখ্যা</h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
                                         <select name="" id="daily-infected-total-select" class="form-control">
@@ -564,14 +564,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="card-body info-style">
                                             <h4 id="special_word_1" class="header-title">
-                                                {!! $des_1->component_name_beng ?? '' !!}
+                                                শিরোনাম
+                                                {{-- {!! $des_1->component_name_beng ?? '' !!} --}}
                                             </h4>
                                             <div class="the-number">
                                             </div>
                                             <h4 class="header-title"></h4>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                {!! $des_1->description_beng ?? '' !!}
+                                                নীতি বিবৃতি
+                                                {{-- {!! $des_1->description_beng ?? '' !!} --}}
                                             </div>
                                             <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -638,7 +640,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-8 ">
                                         <h2>
-                                            সনাক্ত বিবেচনায় আক্রান্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
+                                            বিতরণের ভিত্তিতে জেলা পর্যায়ে টিকাদান বিশ্লেষণ
                                         </h2>
                                     </div>
                                     {{--<div class="iv-right offset-md-4 col-2 ">
@@ -656,7 +658,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="card-body info-style">
                                             <h4 style="margin-top: 27px;" id="special_word_7" class="header-title ">
-                                                {!! $des_6->component_name_beng ?? '' !!}
+                                                শিরোনাম
+                                                {{-- {!! $des_6->component_name_beng ?? '' !!} --}}
                                             </h4>
                                         </div>
                                     </div>
@@ -678,19 +681,23 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span>
                                                             </span>
                                                             <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;">
-                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (সনাক্ত বিবেচনায় আক্রান্তের হার &gt; ১০%)</span>
+                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (বিতরণের সংখ্যা ০ - ১০০০)</span>
                                                             </span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (সনাক্ত বিবেচনায় আক্রান্তের হার ৫% - ১০%)</span></span>
+                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (বিতরণের সংখ্যা ১০০১ - ২০০০)</span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;">
-                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (সনাক্ত বিবেচনায় আক্রান্তের হার &lt; ৫%) </span></span>
+                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(224, 221, 10); border-color: rgb(104, 104, 104);"></span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">হলুদ (বিতরণের সংখ্যা ২০০১ - ৩০০০) </span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(6, 27, 216); border-color: rgb(9, 12, 226);"></span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">নীল (বিতরণের সংখ্যা ৩০০০ - ৫০০০)</span></span>
+                                                        </div>
+                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
+                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(122, 214, 16); border-color: rgb(4, 133, 32);"></span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (বিতরণের সংখ্যা ৫০০০+)</span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px; padding-top:2px; padding-left:2px">
                                                             {{--  <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
@@ -699,9 +706,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span>
                                                                     <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"></span>
                                                             </span>  --}}
-                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span> &nbsp;&nbsp;
+                                                            {{-- <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span> &nbsp;&nbsp;
                                                             <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span> &nbsp;&nbsp;
-                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; <span style="position: relative; top: -3px; font-size:17px">&nbsp;ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span></span> 
+                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; <span style="position: relative; top: -3px; font-size:17px">&nbsp;ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span></span>  --}}
                                                     </span>
                                                 </div>
                                             </span>
@@ -738,8 +745,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="card-body info-style">
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                            
-                                                {!!  $des_6->description_beng ?? '' !!}
+                                                নীতি বিবৃতি 
+                                                {{-- {!!  $des_6->description_beng ?? '' !!} --}}
                                             </div>
                                             <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -759,7 +766,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
                                                     <h2>
-                                                        গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
+                                                        গত ৪ সপ্তাহের বিতরণের বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
                                                     </h2>
                                                 </div>
                             
@@ -770,7 +777,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
                             
                                                 <h4 id="special_word_9" class="header-title ">
-                                                    {!! $des_8->component_name_beng ?? '' !!}
+                                                    শিরোনাম
+                                                    {{-- {!! $des_8->component_name_beng ?? '' !!} --}}
                             
                                                 </h4>
                                                 <hr>
@@ -879,7 +887,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     </div>
                                                                     <div class="col-xl-6">
                             
-                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্ত বিবেচনায় আক্রান্তের হারের পরিসীমা:
+                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্ত বিবেচনায় বিতরণের হারের পরিসীমা:
                                                                             <span
                                                                                 id="ex6SliderVal">{!! convertEnglishDigitToBangla('5:10') !!}</span>
                                                                         </p>
@@ -901,16 +909,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <tbody class="fs-20 text-center risk_matrix">
                                                                         <tr>
                                                                             <td></td>
-                                                                            <td class="bold">উচ্চ ঝুঁকিপূর্ণ</td>
-                                                                            <td class="bold">মধ্যম ঝুঁকিপূর্ণ</td>
-                                                                            <td class="bold">কম ঝুঁকিপূর্ণ</td>
+                                                                            <td class="bold">কম হার বিতরণ</td>
+                                                                            <td class="bold">মধ্যম হার বিতরণ</td>
+                                                                            <td class="bold">সর্বোচ্চ হার বিতরণ</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold" width="10%">উচ্চ ঝুঁকিপূর্ণ</td>
+                                                                            
+                                                                            <td class="bold">কম হার বিতরণ</td>
                                                                             <td style="cursor: pointer;background: #cc0033; color: white; width: 30%"
                                                                                 class="high_to_high_modal_click"
                                                                                 data-target="#modaldemo1"
-                                                                                data-toggle="modal">অপরিবর্তিত উচ্চ ঝুঁকি <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
+                                                                                data-toggle="modal">অপরিবর্তিত কম হার বিতরণ <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
                                                                             </td>
                                                                             <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white"
                                                                                 class="high_to_medium_modal_click"
@@ -924,7 +933,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold">মধ্যম ঝুঁকিপূর্ণ</td>
+                                                                            <td class="bold">মধ্যম হার বিতরণ</td>
                                                                             <td style="background: #E13531; cursor: pointer; color: white"
                                                                                 class="medium_to_high_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -942,7 +951,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold">কম ঝুঁকিপূর্ণ</td>
+                                                                            <td class="bold" width="10%">সর্বোচ্চ হার বিতরণ</td>
                                                                             <td style="background: #FD694D; cursor: pointer; color: white"
                                                                                 class="low_to_high_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -973,7 +982,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div class="card-body">
                             
                                                                     <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                                        {!!$des_8->description_beng ?? '' !!}
+                                                                        {{-- {!!$des_8->description_beng ?? '' !!} --}}
+                                                                        নীতি বিবৃতি 
                                                                     </div>
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -1227,7 +1237,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-6 ">
                                         <h2>
-                                            অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা
+                                            অঞ্চল-ভিত্তিক দৈনিক ১ম ডোজ বিতরণের সংখ্যা
                                         </h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
@@ -1247,7 +1257,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card-body info-style">
 
                                         <h4 id="special_word_4" class="header-title">
-                                            {!! $des_2->component_name_beng ?? '' !!}
+                                            শিরোনাম
+                                            {{-- {!! $des_2->component_name_beng ?? '' !!} --}}
                                         </h4>
 
                                         
@@ -1291,7 +1302,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                         <div class="alert mt-3 p-0 text-justify" role="alert">
                                             <strong>বর্ণনা:</strong>
-                                            {!! $des_2->description_beng ?? '' !!}
+                                            নীতি বিবৃতি 
+                                            {{-- {!! $des_2->description_beng ?? '' !!} --}}
                                         </div>
                                         <p class="footer-note">
                                             <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -1318,14 +1330,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</h2>
+                                                    <h2>দৈনিক  নিবন্ধকরণ ও বিতরণের সংখ্যার তুলনা</h2>
                                                 </div>
             
                                             </div>
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
-                                                {!! $des_4->component_name_beng ?? '' !!}
+                                                শিরোনাম 
+                                                {{-- {!! $des_4->component_name_beng ?? '' !!} --}}
                                             </h4>
                                         </div>
                                         <div class="card-body purple-style info-style">
@@ -1337,7 +1350,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div id="ambarchart4"></div>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                {!! $des_4->description_beng ?? '' !!}
+                                                নীতি বিবৃতি 
+                                                {{-- {!! $des_4->description_beng ?? '' !!} --}}
                                             </div>
                                             <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -1352,14 +1366,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison_rate">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</h2>
+                                                    <h2>নিবন্ধকরণ এর বিবেচনায় বিতরণের হারের সাপ্তাহিক গড়</h2>
                                                 </div>
             
                                             </div>
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
-                                                {!! $des_5->component_name_beng ?? '' !!}
+                                                শিরোনাম
+                                                {{-- {!! $des_5->component_name_beng ?? '' !!} --}}
                                             </h4>
                                         </div>
                                         <div class="card-body purple-style info-style">
@@ -1371,7 +1386,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div id="ambarchart1"></div>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                {!! $des_5->description_beng ?? '' !!}
+                                                নীতি বিবৃতি 
+                                                {{-- {!! $des_5->description_beng ?? '' !!} --}}
                                             </div>
                                             <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -1390,7 +1406,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="row">
                                             <div class="iv-left col-12 ">
                                                 <h2 class="positive-dhaka-rate-heading">
-                                                    জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার
+                                                    জেলা ভিত্তিক দৈনিক নিবন্ধনের বিবেচনায় বিতরণের সংখ্যা
                                                 </h2>
                                             </div>
 
@@ -1402,8 +1418,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
 
                                                 <h4 id="special_word_8" class="header-title ">
-
-                                                    {!! $des_11->component_name_beng ?? '' !!}
+                                                    শিরোনাম
+                                                    {{-- {!! $des_11->component_name_beng ?? '' !!} --}}
 
 
                                                 </h4>
@@ -1469,7 +1485,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                                 <div class="alert mt-3 p-0 text-justify" role="alert">
                                                     <strong>বর্ণনা:</strong>
-                                                    {!!  $des_11->description_beng ?? '' !!}
+                                                    নীতি বিবৃতি 
+                                                    {{-- {!!  $des_11->description_beng ?? '' !!} --}}
 
                                                 </div>
                                                 <p class="footer-note">
@@ -1500,7 +1517,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-12 ">
                                         <h2>
-                                            বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা
+                                            বিভিন্ন শ্রেনী ভিত্তিক টিকা বিতরণের সংখ্যার তুলনা (নেঙ্গ, বয়স, পেশা, হাসপাতাল)
                                         </h2>
                                     </div>
 
@@ -1825,7 +1842,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-6 ">
                                         <h2>
-                                            দক্ষিণ এশিয়ার দেশগুলোতে পরীক্ষার তুলনা
+                                            দক্ষিণ এশিয়ার দেশগুলোতে টিকা বিতরণের তুলনা
                                         </h2>
                                     </div>
 
@@ -2254,7 +2271,7 @@ $ydata = [];
                 },
                 "valueAxes": [{
                     "position": "left",
-                    "title": zoneName+" এর দৈনিক আক্রান্তের সংখ্যা",
+                    "title": zoneName+" এর দৈনিক নিবন্ধনের সংখ্যা",
                     "id": "v1",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
@@ -2271,12 +2288,12 @@ $ydata = [];
                     "columnWidth": 10,
                     "fillAlphas": 1,
                     "lineColor": "rgb(103, 183, 220)",
-                    "title": zoneName+" এর দৈনিক আক্রান্ত",
+                    "title": zoneName+" এর দৈনিক নিবন্ধকরণ",
                     "type": "column",
                     "valueField": "infected",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = zoneName+" এর দৈনিক আক্রান্ত";
+                        var title = zoneName+" এর দৈনিক নিবন্ধকরণ";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }, {
@@ -2285,7 +2302,7 @@ $ydata = [];
                     "lineThickness": 2,
                     "lineColor": "orange",
                     "type": "smoothedLine",
-                    "title": zoneName+" এর দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
+                    "title": zoneName+" এর দৈনিক নিবন্ধকরণ (৭ দিনের  চলমান গড়)", //5 days running average
                     "valueField": "avg",
                     "bullet": "round",
                     "bulletSize": 7,
@@ -2295,7 +2312,7 @@ $ydata = [];
                     "bulletBorderThickness": 3,
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = zoneName+"- দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)";
+                        var title = zoneName+"- দৈনিক নিবন্ধকরণ (৭ দিনের  চলমান গড়)";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }],
@@ -2623,7 +2640,7 @@ $ydata = [];
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "আক্রান্তের সংখ্যা",
+                        "title": "বিতরণের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -2864,7 +2881,7 @@ $ydata = [];
                     "id": "v1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "দৈনিক আক্রান্তের সংখ্যা",
+                    "title": "দৈনিক বিতরণের সংখ্যা",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -2875,7 +2892,7 @@ $ydata = [];
                     "id": "v2",
                     "axisAlpha": 0,
                     "position": "right",
-                    "title": "দৈনিক পরীক্ষার সংখ্যা",
+                    "title": "দৈনিক নিবন্ধকরণ এর সংখ্যা",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         return value.toLocaleString("bn-BD");
@@ -2899,13 +2916,13 @@ $ydata = [];
                     "valueAxis": "v1",
                     "lineColor": "rgb(157, 74, 42)",
                     "lineThickness": 2,
-                    "bullet": "দৈনিক আক্রান্ত (৭-দিনের চলমান গড়)",
+                    "bullet": "দৈনিক বিতরণের (৭-দিনের চলমান গড়)",
                     "id": "g1",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#FFFFFF",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "দৈনিক আক্রান্ত (৭-দিনের চলমান গড়)",
+                    "title": "দৈনিক বিতরণের (৭-দিনের চলমান গড়)",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "avg",
@@ -2922,13 +2939,13 @@ $ydata = [];
                     "valueAxis": "v2",
                     "lineColor": "rgb(223, 200, 37)",
                     "lineThickness": 2,
-                    "bullet": "দৈনিক পরীক্ষা (৭-দিনের চলমান গড়)",
+                    "bullet": "দৈনিক নিবন্ধকরণ(৭-দিনের চলমান গড়)",
                     "id": "g2",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#FFFFFF",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "দৈনিক পরীক্ষা (৭-দিনের চলমান গড়)",
+                    "title": "দৈনিক নিবন্ধকরণ(৭-দিনের চলমান গড়)",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "tested_data",
@@ -3026,7 +3043,7 @@ $ydata = [];
                         "valueAxes": [
                             {
                                 "position": "left",
-                                "title": "সনাক্ত বিবেচনায় আক্রান্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                "title": "নিবন্ধনের বিবেচনায় বিতরণের হার",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -3037,7 +3054,7 @@ $ydata = [];
                             },
                             {
                                 "position": "right",
-                                "title": "আক্রান্তের সংখ্যা",
+                                "title": "বিতরণের সংখ্যা",
                                 "id": "v2",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -3069,7 +3086,7 @@ $ydata = [];
                             "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
                             "fillAlphas": 1,
                             "fillColorsField": "color",
-                            "title": "আক্রান্তের সাপ্তাহিক গড়",
+                            "title": "বিতরণের সাপ্তাহিক গড়",
                             "type": "column",
                             "lineColor": "rgb(223, 200, 37)",
                             "valueField": "infected",
@@ -3100,7 +3117,7 @@ $ydata = [];
                             "bulletBorderThickness": 3,
                             "fillAlphas": 0,
                             "lineAlpha": 1,
-                            "title": "সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়",
+                            "title": "বিতরণের বিবেচনায় নিবন্ধনের সাপ্তাহিক গড়",
                             "valueField": "test_positive",
                             "dashLengthField": "dashLengthLine",
                             "type": "smoothedLine",
@@ -3205,7 +3222,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": title+" সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": title+" নিবন্ধনের বিবেচনায় বিতরণের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -3292,7 +3309,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সাপ্তাহিক সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": "সাপ্তাহিক নিবন্ধনের বিবেচনায় বিতরণের সংখ্যা ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -3316,13 +3333,13 @@ $ydata = [];
                     "valueAxis": "v1",
                     "lineColor": "#FB0F04",
                     "lineThickness": 2,
-                    "bullet": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "bullet": "জাতীয় পর্যায়ে নিবন্ধনের বিবেচনায় বিতরণের সংখ্যা",
                     "id": "g1",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#637bb6",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "title": "জাতীয় পর্যায়ে নিবন্ধনের বিবেচনায় বিতরণের সংখ্যা",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "National",
@@ -3516,7 +3533,7 @@ $ydata = [];
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "সাপ্তাহিক মৃত্যুর সংখ্যা",
+                        "title": "সাপ্তাহিক বিতরণের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");

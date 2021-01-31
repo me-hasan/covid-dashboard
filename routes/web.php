@@ -283,3 +283,14 @@ Route::get('update-daily-data', function () {
 Route::get('/daily-infected-chart', 'xpm\DashboardController@dailyInfectedChart')->name('daily.infected.chart');
 Route::get('/infected-percentage', 'xpm\DashboardController@infectedPercentage')->name('infected.percentage');
 Route::get('/filter-daily-infected-chart', 'xpm\DashboardController@filterdailyInfectedChart')->name('filter.daily.infected.chart');
+
+
+
+/**
+ * ====================================================
+ * start vaccinatio====================================
+ * ====================================================
+ */
+
+
+Route::get('vaccination-dashboard', 'xpm\DashboardController@vaccinationIndex')->name('xpm.vaccination');
