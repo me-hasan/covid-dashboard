@@ -442,18 +442,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </li>
                             </a>
 
-                            <a href="#scroll_daily_last_4weeks_risk">
+                            {{-- <a href="#scroll_daily_last_4weeks_risk">
                                 <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের বিতরণের বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
                                 </li>
-                            </a>
+                            </a> --}}
                             <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
-                                    <span>বিভিন্ন শ্রেনী ভিত্তিক টিকা বিতরণের সংখ্যার তুলনা (নেঙ্গ, বয়স, পেশা, হাসপাতাল)</span></li>
+                                    <span>বিভিন্ন শ্রেনী ভিত্তিক টিকা বিতরণের সংখ্যার তুলনা (লিঙ্গ, বয়স, পেশা, হাসপাতাল)</span></li>
                             </a>
-                            <a href="#scroll_daily_covid_hospital_storage_and_usage">
+                            {{-- <a href="#scroll_daily_covid_hospital_storage_and_usage">
                                 <li><span class="bullet-point"></span>
                                     <span>কোভিড হাসপাতালসমূহের ধারণ ক্ষমতা ও ব্যবহার </span></li>
-                            </a>
+                            </a> --}}
                             <a href="#scroll_daily_south_asian_countries_differentiation">
                                 <li><span class="bullet-point"></span>
                                     <span>দক্ষিণ এশিয়ার দেশগুলোতে টিকা বিতরণের তুলনা </span>
@@ -572,13 +572,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <h4 class="header-title"></h4>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                নীতি বিবৃতি
+                                                {{-- নীতি বিবৃতি --}}
                                                 {{-- {!! $des_1->description_beng ?? '' !!} --}}
                                             </div>
-                                            <p class="footer-note">
+                                            {{-- <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                 <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_1"></span>
-                                            </p>
+                                            </p> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -745,12 +745,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="card-body info-style">
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                নীতি বিবৃতি 
+                                                {{-- নীতি বিবৃতি  --}}
                                                 {{-- {!!  $des_6->description_beng ?? '' !!} --}}
                                             </div>
-                                            <p class="footer-note">
+                                            {{-- <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                            </p>
+                                            </p> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -759,468 +759,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
                             {{-- matix start here --}}
-                            <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk">
-                                
-                                   
-                                        <div class="invoice-head title-bg-style">
-                                            <div class="row">
-                                                <div class="iv-left col-12 ">
-                                                    <h2>
-                                                        গত ৪ সপ্তাহের বিতরণের বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
-                                                    </h2>
-                                                </div>
-                            
-                                            </div>
-                                        </div>
-                                        
-                            
-                                            <div class="row">
-                            
-                                                <h4 id="special_word_9" class="header-title ">
-                                                    শিরোনাম
-                                                    {{-- {!! $des_8->component_name_beng ?? '' !!} --}}
-                            
-                                                </h4>
-                                                <hr>
-                                                <!-- Start :: ঝুঁকি পর্যালোচনা -->
-                                                <?php
-                                                $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
-                                                $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end);
                             
                             
-                                                $last_week_start = convertEnglishDateToBangla($last_week->last_2_weeks_start);
-                                                $last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends);
-                                                $today = convertEnglishDateToBangla(date('Y-m-d'));
-                                                
-                                                
-                                                $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 AND total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
-                            
-                                                $high_to_high = array();
-                                                foreach ($high_to_high_table_contentData as $result) {
-                                                    $high_to_high[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                                                $medium_to_high = array();
-                                                foreach ($medium_to_high_table_contentData as $result) {
-                                                    $medium_to_high[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                                                $low_to_high = array();
-                                                foreach ($low_to_high_table_contentData as $result) {
-                                                    $low_to_high[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                            
-                                                $high_to_medium = array();
-                                                foreach ($high_to_medium_table_contentData as $result) {
-                                                    $high_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                                                $medium_to_medium = array();
-                                                foreach ($medium_to_medium_table_contentData as $result) {
-                                                    $medium_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                                                $low_to_medium = array();
-                                                foreach ($low_to_medium_table_contentData as $result) {
-                                                    $low_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                            
-                                                $high_to_low = array();
-                                                foreach ($high_to_low_table_contentData as $result) {
-                                                    $high_to_low[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                                                $medium_to_low = array();
-                                                foreach ($medium_to_low_table_contentData as $result) {
-                                                    $medium_to_low[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                                                $low_to_low = array();
-                                                foreach ($low_to_low_table_contentData as $result) {
-                                                    $low_to_low[] = rtrim(en2bnTranslation($result->district), " ");
-                                                }
-                            
-                            
-                                                //echo implode(",",$resultstr);
-                            
-                                                ?>
-                            
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                            
-                                                            <div class="col-xl-1 col-md-1">
-                                                                <div id="last_weekly_date"
-                                                                    style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
-                                                                    class="fs-20 b1">
-                                                                    <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-11 col-md-11">
-                                                                <div class="row">
-                                                                    <div class="col-xl-3">
-                                                                        <p>তারিখ নির্বাচন করুন: </p>
-                                                                        <select name="weekly_date" id="weekly_date" style="width: 100%" class="form-control">
-                                                                            @foreach ($weekly_date as $value)
-                                                                                <option value="{{ $value->date_id }}">{{ $value->date_ban }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-xl-3">
-                                                                        <br>
-                                                                        <button type="button" class="btn btn-sm btn-primary" id="weekly_date_submit">পরিবর্তন করুন</button>
-                                                                    </div>
-                                                                </div>
-                                                                <br>
-                                                                <div class="row">
-                                                                    <div class="col-xl-6">
-                                                                        <div class="slidecontainer">
-                                                                            <p>গত ১৪ দিনে পরীক্ষার সংখ্যা: <span
-                                                                                    id="demo">{!! convertEnglishDigitToBangla('200') !!}</span>
-                                                                                এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।
-                                                                            </p>
-                                                                            <input type="range" min="50" max="300" value="200"
-                                                                                   class="slider" id="myRange">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xl-6">
-                            
-                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্ত বিবেচনায় বিতরণের হারের পরিসীমা:
-                                                                            <span
-                                                                                id="ex6SliderVal">{!! convertEnglishDigitToBangla('5:10') !!}</span>
-                                                                        </p>
-                                                                        <input style="width: 100%;" id="ex12c" type="text"><br/>
-                            
-                                                                    </div>
-                                                                </div>
-                                                                <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar mt-4">
-                                                                    <table
-                                                                        class="table table-bordered table-vcenter text-nowrap  b1"
-                                                                        style="width: 100%; min-width: 400px;">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <td colspan="4" class="text-center fs-18" style="font-size: 26px" id="recent_weekly_date"><span
-                                                                                    class="text-danger">আজ {{ $today }}</span>, বিগত ২ সপ্তাহ ( {{$first_week_end}} - {{$first_week_start}} )
-                                                                            </td>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody class="fs-20 text-center risk_matrix">
-                                                                        <tr>
-                                                                            <td></td>
-                                                                            <td class="bold">কম হার বিতরণ</td>
-                                                                            <td class="bold">মধ্যম হার বিতরণ</td>
-                                                                            <td class="bold">সর্বোচ্চ হার বিতরণ</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            
-                                                                            <td class="bold">কম হার বিতরণ</td>
-                                                                            <td style="cursor: pointer;background: #cc0033; color: white; width: 30%"
-                                                                                class="high_to_high_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">অপরিবর্তিত কম হার বিতরণ <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
-                                                                            </td>
-                                                                            <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white"
-                                                                                class="high_to_medium_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
-                                                                                class="high_to_low_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">   {{ convertEnglishDigitToBangla($rm_9->high_to_low)}} টি জেলা
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="bold">মধ্যম হার বিতরণ</td>
-                                                                            <td style="background: #E13531; cursor: pointer; color: white"
-                                                                                class="medium_to_high_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="background: #FC842D; cursor: pointer; color: white"
-                                                                                class="medium_to_medium_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="cursor: pointer;background: #499227; color: white"
-                                                                                class="medium_to_low_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="bold" width="10%">সর্বোচ্চ হার বিতরণ</td>
-                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
-                                                                                class="low_to_high_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="cursor: pointer;background: #FFAF74; color: white; width: 30%;"
-                                                                                class="low_to_medium_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
-                                                                            </td>
-                                                                            <td style="background: #37761D; cursor: pointer; color: white"
-                                                                                class="low_to_low_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
-                                                                            </td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                            
-                                                        </div>
-                            
-                            
-                            
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-lg-12 col-md-12">
-                                                                <div class="card-body">
-                            
-                                                                    <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                                        {{-- {!!$des_8->description_beng ?? '' !!} --}}
-                                                                        নীতি বিবৃতি 
-                                                                    </div>
-                                                                    <p class="footer-note">
-                                                                        <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                                        <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{$first_week_start}}</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End :: Risk Matrix -->
-                            
-                                            <!-- Strat :: Modal Content -->
-                            
-                                            <div class="d-none">
-                                                <div id="high_to_high_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($high_to_high_table_contentData))
-                                                            @foreach($high_to_high_table_contentData as $item)
-                                                                <tr class="b1">
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                            
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="medium_to_high_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($medium_to_high_table_contentData))
-                                                            @foreach($medium_to_high_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="low_to_high_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($low_to_high_table_contentData))
-                                                            @foreach($low_to_high_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                            
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="high_to_medium_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($high_to_medium_table_contentData))
-                                                            @foreach($high_to_medium_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="medium_to_medium_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($medium_to_medium_table_contentData))
-                                                            @foreach($medium_to_medium_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="low_to_medium_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($low_to_medium_table_contentData))
-                                                            @foreach($low_to_medium_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                            
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="high_to_low_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($high_to_low_table_contentData))
-                                                            @foreach($high_to_low_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="medium_to_low_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($medium_to_low_table_contentData))
-                                                            @foreach($medium_to_low_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div id="low_to_low_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(count($low_to_low_table_contentData))
-                                                            @foreach($low_to_low_table_contentData as $item)
-                                                                <tr>
-                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                            
-                                                    </table>
-                                                </div>
-                                            </div>
-                            
-                                        
-                                    
-                            
-                               
-                            </div>
                             {{-- matix end here --}}
 
 
@@ -1302,13 +842,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                         <div class="alert mt-3 p-0 text-justify" role="alert">
                                             <strong>বর্ণনা:</strong>
-                                            নীতি বিবৃতি 
+                                            {{-- নীতি বিবৃতি  --}}
                                             {{-- {!! $des_2->description_beng ?? '' !!} --}}
                                         </div>
-                                        <p class="footer-note">
+                                        {{-- <p class="footer-note">
                                             <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                             <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_4"></span>
-                                        </p>
+                                        </p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -1350,13 +890,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div id="ambarchart4"></div>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                নীতি বিবৃতি 
+                                                {{-- নীতি বিবৃতি  --}}
                                                 {{-- {!! $des_4->description_beng ?? '' !!} --}}
                                             </div>
-                                            <p class="footer-note">
+                                            {{-- <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                 <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_5"></span>
-                                            </p>
+                                            </p> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -1386,13 +926,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div id="ambarchart1"></div>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                নীতি বিবৃতি 
+                                                {{-- নীতি বিবৃতি  --}}
                                                 {{-- {!! $des_5->description_beng ?? '' !!} --}}
                                             </div>
-                                            <p class="footer-note">
+                                            {{-- <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                 <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_6"></span>
-                                            </p>
+                                            </p> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -1485,14 +1025,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                                 <div class="alert mt-3 p-0 text-justify" role="alert">
                                                     <strong>বর্ণনা:</strong>
-                                                    নীতি বিবৃতি 
+                                                    {{-- নীতি বিবৃতি  --}}
                                                     {{-- {!!  $des_11->description_beng ?? '' !!} --}}
 
                                                 </div>
-                                                <p class="footer-note">
+                                                {{-- <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                     <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_8"></span>
-                                                </p>
+                                                </p> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -1517,7 +1057,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-12 ">
                                         <h2>
-                                            বিভিন্ন শ্রেনী ভিত্তিক টিকা বিতরণের সংখ্যার তুলনা (নেঙ্গ, বয়স, পেশা, হাসপাতাল)
+                                            বিভিন্ন শ্রেনী ভিত্তিক টিকা বিতরণের সংখ্যার তুলনা (লিঙ্গ, বয়স, পেশা, হাসপাতাল)
                                         </h2>
                                     </div>
 
@@ -1528,7 +1068,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
 
                                     <h4 id="special_word_10" class="header-title ">
-                                        {!! $des_9->component_name_beng ?? '' !!}
+                                        শিরোনাম
+                                        {{-- {!! $des_9->component_name_beng ?? '' !!} --}}
 
                                     </h4>
 
@@ -1591,15 +1132,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <div class="card-body">
                                                                 <div class="alert mt-3 p-0 text-justify" role="alert">
                                                                     <strong>বর্ণনা:</strong>
-                                                                    {!! $des_9->description_beng ?? '' !!}
+                                                                    {{-- {!! $des_9->description_beng ?? '' !!} --}}
 
                                                                 </div>
-                                                                <p class="footer-note">
+                                                                {{-- <p class="footer-note">
                                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                     <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
                                                                         id="last_date_10"> {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}
                                                                         {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</span>
-                                                                </p>
+                                                                </p> --}}
                                                             </div>
 
 
@@ -1618,7 +1159,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     </div>
                 </div>
                 <!--Section 3(Last) strat here-->
-                <div class="col-lg-12 mt-2" id="scroll_daily_covid_hospital_storage_and_usage">
+                {{-- <div class="col-lg-12 mt-2" id="scroll_daily_covid_hospital_storage_and_usage">
 
 
                     <div class="card shadow-sm">
@@ -1831,7 +1372,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!--Section 3(Last) end here-->
                 <!-- Statistics area start -->
                 <div class="col-lg-12 mt-4" id="scroll_daily_south_asian_countries_differentiation">
@@ -1861,16 +1402,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="card-body info-style">
 
                                             <h4 style="margin-top:48px;" id="special_word_2" class="header-title">
-                                                {!! $des_7->component_name_beng ?? '' !!}
+                                                শিরোনাম
+                                                {{-- {!! $des_7->component_name_beng ?? '' !!} --}}
                                             </h4>
                                             <div class="alert mt-3 p-0 text-justify" role="alert">
                                                 <strong>বর্ণনা:</strong>
-                                                {!! $des_7->description_beng ?? '' !!}
+                                                {{-- {!! $des_7->description_beng ?? '' !!} --}}
                                             </div>
-                                            <p class="footer-note">
+                                            {{-- <p class="footer-note">
                                                 <br>তথ্য সূত্র: Worldometer
                                                 <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_2"></span>
-                                            </p>
+                                            </p> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -2248,7 +1790,7 @@ $ydata = [];
 
 
     function dailyInfectedChart(data, dist='') {
-	console.log(data);
+	// console.log(data);
         let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
@@ -2256,7 +1798,1799 @@ $ydata = [];
                 "type": "serial",
                 "theme": "none",
                 "marginRight": 80,
-                "dataProvider": data,
+                "dataProvider": [
+  {
+    "date": "2021-05-20",
+    "infected": "1617",
+    "avg": "1617.00",
+    "total_infected": 26738,
+    "tested": "10207",
+    "tested_data": 10207,
+    "case": "1617"
+  },
+  {
+    "date": "2021-05-21",
+    "infected": "1773",
+    "avg": "1695.00",
+    "total_infected": 28511,
+    "tested": "10234.5",
+    "tested_data": 10234.5,
+    "case": "1695"
+  },
+  {
+    "date": "2021-05-22",
+    "infected": "1694",
+    "avg": "1694.67",
+    "total_infected": 30205,
+    "tested": "10065.33",
+    "tested_data": 10065.33,
+    "case": "1694.67"
+  },
+  {
+    "date": "2021-05-23",
+    "infected": "1873",
+    "avg": "1739.25",
+    "total_infected": 32078,
+    "tested": "10257.5",
+    "tested_data": 10257.5,
+    "case": "1739.25"
+  },
+  {
+    "date": "2021-05-24",
+    "infected": "1532",
+    "avg": "1697.80",
+    "total_infected": 33610,
+    "tested": "9987.6",
+    "tested_data": 9987.6,
+    "case": "1697.8"
+  },
+  {
+    "date": "2021-05-25",
+    "infected": "1975",
+    "avg": "1744.00",
+    "total_infected": 35585,
+    "tested": "9898.17",
+    "tested_data": 9898.17,
+    "case": "1744"
+  },
+  {
+    "date": "2021-05-26",
+    "infected": "1166",
+    "avg": "1661.43",
+    "total_infected": 36751,
+    "tested": "9256.57",
+    "tested_data": 9256.57,
+    "case": "1661.43"
+  },
+  {
+    "date": "2021-05-27",
+    "infected": "1541",
+    "avg": "1650.57",
+    "total_infected": 38292,
+    "tested": "8943.43",
+    "tested_data": 8943.43,
+    "case": "1650.57"
+  },
+  {
+    "date": "2021-05-28",
+    "infected": "2029",
+    "avg": "1687.14",
+    "total_infected": 40321,
+    "tested": "8807.43",
+    "tested_data": 8807.43,
+    "case": "1687.14"
+  },
+  {
+    "date": "2021-05-29",
+    "infected": "2523",
+    "avg": "1805.57",
+    "total_infected": 42844,
+    "tested": "9032.29",
+    "tested_data": 9032.29,
+    "case": "1805.57"
+  },
+  {
+    "date": "2021-05-30",
+    "infected": "1764",
+    "avg": "1790.00",
+    "total_infected": 44608,
+    "tested": "8911.29",
+    "tested_data": 8911.29,
+    "case": "1790"
+  },
+  {
+    "date": "2021-05-31",
+    "infected": "2545",
+    "avg": "1934.71",
+    "total_infected": 47153,
+    "tested": "9335.29",
+    "tested_data": 9335.29,
+    "case": "1934.71"
+  },
+  {
+    "date": "2021-06-01",
+    "infected": "2381",
+    "avg": "1992.71",
+    "total_infected": 49534,
+    "tested": "9619.29",
+    "tested_data": 9619.29,
+    "case": "1992.71"
+  },
+  {
+    "date": "2021-06-02",
+    "infected": "2911",
+    "avg": "2242.00",
+    "total_infected": 52445,
+    "tested": "10661.71",
+    "tested_data": 10661.71,
+    "case": "2242"
+  },
+  {
+    "date": "2021-06-03",
+    "infected": "2695",
+    "avg": "2406.86",
+    "total_infected": 55140,
+    "tested": "11303.86",
+    "tested_data": 11303.86,
+    "case": "2406.86"
+  },
+  {
+    "date": "2021-06-04",
+    "infected": "2423",
+    "avg": "2463.14",
+    "total_infected": 57563,
+    "tested": "11787.86",
+    "tested_data": 11787.86,
+    "case": "2463.14"
+  },
+  {
+    "date": "2021-06-05",
+    "infected": "2828",
+    "avg": "2506.71",
+    "total_infected": 60391,
+    "tested": "12186",
+    "tested_data": 12186,
+    "case": "2506.71"
+  },
+  {
+    "date": "2021-06-06",
+    "infected": "2635",
+    "avg": "2631.14",
+    "total_infected": 63026,
+    "tested": "12543",
+    "tested_data": 12543,
+    "case": "2631.14"
+  },
+  {
+    "date": "2021-06-07",
+    "infected": "2743",
+    "avg": "2659.43",
+    "total_infected": 65769,
+    "tested": "12723",
+    "tested_data": 12723,
+    "case": "2659.43"
+  },
+  {
+    "date": "2021-06-08",
+    "infected": "2735",
+    "avg": "2710.00",
+    "total_infected": 68504,
+    "tested": "12944.29",
+    "tested_data": 12944.29,
+    "case": "2710"
+  },
+  {
+    "date": "2021-06-09",
+    "infected": "3171",
+    "avg": "2747.14",
+    "total_infected": 71675,
+    "tested": "13224.29",
+    "tested_data": 13224.29,
+    "case": "2747.14"
+  },
+  {
+    "date": "2021-06-10",
+    "infected": "3190",
+    "avg": "2817.86",
+    "total_infected": 74865,
+    "tested": "13717.86",
+    "tested_data": 13717.86,
+    "case": "2817.86"
+  },
+  {
+    "date": "2021-06-11",
+    "infected": "3187",
+    "avg": "2927.00",
+    "total_infected": 78052,
+    "tested": "14157",
+    "tested_data": 14157,
+    "case": "2927"
+  },
+  {
+    "date": "2021-06-12",
+    "infected": "3471",
+    "avg": "3018.86",
+    "total_infected": 81523,
+    "tested": "14428.71",
+    "tested_data": 14428.71,
+    "case": "3018.86"
+  },
+  {
+    "date": "2021-06-13",
+    "infected": "2856",
+    "avg": "3050.43",
+    "total_infected": 84379,
+    "tested": "15021.86",
+    "tested_data": 15021.86,
+    "case": "3050.43"
+  },
+  {
+    "date": "2021-06-14",
+    "infected": "3141",
+    "avg": "3107.29",
+    "total_infected": 87520,
+    "tested": "15217.43",
+    "tested_data": 15217.43,
+    "case": "3107.29"
+  },
+  {
+    "date": "2021-06-15",
+    "infected": "3099",
+    "avg": "3159.29",
+    "total_infected": 90619,
+    "tested": "15510.29",
+    "tested_data": 15510.29,
+    "case": "3159.29"
+  },
+  {
+    "date": "2021-06-16",
+    "infected": "3862",
+    "avg": "3258.00",
+    "total_infected": 94481,
+    "tested": "15874.57",
+    "tested_data": 15874.57,
+    "case": "3258"
+  },
+  {
+    "date": "2021-06-17",
+    "infected": "4008",
+    "avg": "3374.86",
+    "total_infected": 98489,
+    "tested": "16097.71",
+    "tested_data": 16097.71,
+    "case": "3374.86"
+  },
+  {
+    "date": "2021-06-18",
+    "infected": "3803",
+    "avg": "3462.86",
+    "total_infected": 102292,
+    "tested": "16167.29",
+    "tested_data": 16167.29,
+    "case": "3462.86"
+  },
+  {
+    "date": "2021-06-19",
+    "infected": "3243",
+    "avg": "3430.29",
+    "total_infected": 105535,
+    "tested": "16032.29",
+    "tested_data": 16032.29,
+    "case": "3430.29"
+  },
+  {
+    "date": "2021-06-20",
+    "infected": "3240",
+    "avg": "3485.14",
+    "total_infected": 108775,
+    "tested": "15659.86",
+    "tested_data": 15659.86,
+    "case": "3485.14"
+  },
+  {
+    "date": "2021-06-21",
+    "infected": "3532",
+    "avg": "3541.00",
+    "total_infected": 112306,
+    "tested": "15814.14",
+    "tested_data": 15814.14,
+    "case": "3541"
+  },
+  {
+    "date": "2021-06-22",
+    "infected": "3480",
+    "avg": "3595.43",
+    "total_infected": 115786,
+    "tested": "15888",
+    "tested_data": 15888,
+    "case": "3595.43"
+  },
+  {
+    "date": "2021-06-23",
+    "infected": "3412",
+    "avg": "3531.14",
+    "total_infected": 119198,
+    "tested": "15756.29",
+    "tested_data": 15756.29,
+    "case": "3531.14"
+  },
+  {
+    "date": "2021-06-24",
+    "infected": "3462",
+    "avg": "3453.14",
+    "total_infected": 122660,
+    "tested": "15600",
+    "tested_data": 15600,
+    "case": "3453.14"
+  },
+  {
+    "date": "2021-06-25",
+    "infected": "3946",
+    "avg": "3473.57",
+    "total_infected": 126606,
+    "tested": "15848.57",
+    "tested_data": 15848.57,
+    "case": "3473.57"
+  },
+  {
+    "date": "2021-06-26",
+    "infected": "3868",
+    "avg": "3562.86",
+    "total_infected": 130474,
+    "tested": "16341.86",
+    "tested_data": 16341.86,
+    "case": "3562.86"
+  },
+  {
+    "date": "2021-06-27",
+    "infected": "3504",
+    "avg": "3600.57",
+    "total_infected": 133978,
+    "tested": "16502.71",
+    "tested_data": 16502.71,
+    "case": "3600.57"
+  },
+  {
+    "date": "2021-06-28",
+    "infected": "3809",
+    "avg": "3640.14",
+    "total_infected": 137787,
+    "tested": "16861.86",
+    "tested_data": 16861.86,
+    "case": "3640.14"
+  },
+  {
+    "date": "2021-06-29",
+    "infected": "4014",
+    "avg": "3716.43",
+    "total_infected": 141801,
+    "tested": "17187.86",
+    "tested_data": 17187.86,
+    "case": "3716.43"
+  },
+  {
+    "date": "2021-06-30",
+    "infected": "3682",
+    "avg": "3755.00",
+    "total_infected": 145483,
+    "tested": "17492.71",
+    "tested_data": 17492.71,
+    "case": "3755"
+  },
+  {
+    "date": "2021-07-01",
+    "infected": "3775",
+    "avg": "3799.71",
+    "total_infected": 149258,
+    "tested": "17698.71",
+    "tested_data": 17698.71,
+    "case": "3799.71"
+  },
+  {
+    "date": "2021-07-02",
+    "infected": "4019",
+    "avg": "3810.14",
+    "total_infected": 153277,
+    "tested": "17750.57",
+    "tested_data": 17750.57,
+    "case": "3810.14"
+  },
+  {
+    "date": "2021-07-03",
+    "infected": "3114",
+    "avg": "3702.43",
+    "total_infected": 156391,
+    "tested": "17200.86",
+    "tested_data": 17200.86,
+    "case": "3702.43"
+  },
+  {
+    "date": "2021-07-04",
+    "infected": "3288",
+    "avg": "3671.57",
+    "total_infected": 159679,
+    "tested": "17139.43",
+    "tested_data": 17139.43,
+    "case": "3671.57"
+  },
+  {
+    "date": "2021-07-05",
+    "infected": "2738",
+    "avg": "3518.57",
+    "total_infected": 162417,
+    "tested": "16552.14",
+    "tested_data": 16552.14,
+    "case": "3518.57"
+  },
+  {
+    "date": "2021-07-06",
+    "infected": "3201",
+    "avg": "3402.43",
+    "total_infected": 165618,
+    "tested": "16039",
+    "tested_data": 16039,
+    "case": "3402.43"
+  },
+  {
+    "date": "2021-07-07",
+    "infected": "3027",
+    "avg": "3308.86",
+    "total_infected": 168645,
+    "tested": "15288.57",
+    "tested_data": 15288.57,
+    "case": "3308.86"
+  },
+  {
+    "date": "2021-07-08",
+    "infected": "3489",
+    "avg": "3268.00",
+    "total_infected": 172134,
+    "tested": "14973.86",
+    "tested_data": 14973.86,
+    "case": "3268"
+  },
+  {
+    "date": "2021-07-09",
+    "infected": "3360",
+    "avg": "3173.86",
+    "total_infected": 175494,
+    "tested": "14583.86",
+    "tested_data": 14583.86,
+    "case": "3173.86"
+  },
+  {
+    "date": "2021-07-10",
+    "infected": "2949",
+    "avg": "3150.29",
+    "total_infected": 178443,
+    "tested": "14417.86",
+    "tested_data": 14417.86,
+    "case": "3150.29"
+  },
+  {
+    "date": "2021-07-11",
+    "infected": "2686",
+    "avg": "3064.29",
+    "total_infected": 181129,
+    "tested": "13913",
+    "tested_data": 13913,
+    "case": "3064.29"
+  },
+  {
+    "date": "2021-07-12",
+    "infected": "2666",
+    "avg": "3054.00",
+    "total_infected": 183795,
+    "tested": "13494.57",
+    "tested_data": 13494.57,
+    "case": "3054"
+  },
+  {
+    "date": "2021-07-13",
+    "infected": "3099",
+    "avg": "3039.43",
+    "total_infected": 186894,
+    "tested": "13234.29",
+    "tested_data": 13234.29,
+    "case": "3039.43"
+  },
+  {
+    "date": "2021-07-14",
+    "infected": "3163",
+    "avg": "3058.86",
+    "total_infected": 190057,
+    "tested": "13274.29",
+    "tested_data": 13274.29,
+    "case": "3058.86"
+  },
+  {
+    "date": "2021-07-15",
+    "infected": "3533",
+    "avg": "3065.14",
+    "total_infected": 193590,
+    "tested": "13035.71",
+    "tested_data": 13035.71,
+    "case": "3065.14"
+  },
+  {
+    "date": "2021-07-16",
+    "infected": "2733",
+    "avg": "2975.57",
+    "total_infected": 196323,
+    "tested": "12643.86",
+    "tested_data": 12643.86,
+    "case": "2975.57"
+  },
+  {
+    "date": "2021-07-17",
+    "infected": "3034",
+    "avg": "2987.71",
+    "total_infected": 199357,
+    "tested": "12639.86",
+    "tested_data": 12639.86,
+    "case": "2987.71"
+  },
+  {
+    "date": "2021-07-18",
+    "infected": "2709",
+    "avg": "2991.00",
+    "total_infected": 202166,
+    "tested": "12601.29",
+    "tested_data": 12601.29,
+    "case": "2991"
+  },
+  {
+    "date": "2021-07-19",
+    "infected": "2459",
+    "avg": "2961.43",
+    "total_infected": 204525,
+    "tested": "12539.29",
+    "tested_data": 12539.29,
+    "case": "2961.43"
+  },
+  {
+    "date": "2021-07-20",
+    "infected": "2928",
+    "avg": "2937.00",
+    "total_infected": 207453,
+    "tested": "12673.43",
+    "tested_data": 12673.43,
+    "case": "2937"
+  },
+  {
+    "date": "2021-07-21",
+    "infected": "3057",
+    "avg": "2921.86",
+    "total_infected": 210510,
+    "tested": "12594.14",
+    "tested_data": 12594.14,
+    "case": "2921.86"
+  },
+  {
+    "date": "2021-07-22",
+    "infected": "2744",
+    "avg": "2809.14",
+    "total_infected": 213254,
+    "tested": "12315.29",
+    "tested_data": 12315.29,
+    "case": "2809.14"
+  },
+  {
+    "date": "2021-07-23",
+    "infected": "2856",
+    "avg": "2826.71",
+    "total_infected": 216110,
+    "tested": "12245.14",
+    "tested_data": 12245.14,
+    "case": "2826.71"
+  },
+  {
+    "date": "2021-07-24",
+    "infected": "2548",
+    "avg": "2757.29",
+    "total_infected": 218658,
+    "tested": "12040.43",
+    "tested_data": 12040.43,
+    "case": "2757.29"
+  },
+  {
+    "date": "2021-07-25",
+    "infected": "2520",
+    "avg": "2730.29",
+    "total_infected": 221178,
+    "tested": "11972.29",
+    "tested_data": 11972.29,
+    "case": "2730.29"
+  },
+  {
+    "date": "2021-07-26",
+    "infected": "2275",
+    "avg": "2704.00",
+    "total_infected": 223453,
+    "tested": "11894.14",
+    "tested_data": 11894.14,
+    "case": "2704"
+  },
+  {
+    "date": "2021-07-27",
+    "infected": "2772",
+    "avg": "2681.71",
+    "total_infected": 226225,
+    "tested": "11822.29",
+    "tested_data": 11822.29,
+    "case": "2681.71"
+  },
+  {
+    "date": "2021-07-28",
+    "infected": "2960",
+    "avg": "2667.86",
+    "total_infected": 229185,
+    "tested": "11796",
+    "tested_data": 11796,
+    "case": "2667.86"
+  },
+  {
+    "date": "2021-07-29",
+    "infected": "3009",
+    "avg": "2705.71",
+    "total_infected": 232194,
+    "tested": "12092.71",
+    "tested_data": 12092.71,
+    "case": "2705.71"
+  },
+  {
+    "date": "2021-07-30",
+    "infected": "2695",
+    "avg": "2682.71",
+    "total_infected": 234889,
+    "tested": "12169.71",
+    "tested_data": 12169.71,
+    "case": "2682.71"
+  },
+  {
+    "date": "2021-07-31",
+    "infected": "2772",
+    "avg": "2714.71",
+    "total_infected": 237661,
+    "tested": "12253.57",
+    "tested_data": 12253.57,
+    "case": "2714.71"
+  },
+  {
+    "date": "2021-08-01",
+    "infected": "2199",
+    "avg": "2668.86",
+    "total_infected": 239860,
+    "tested": "12018.71",
+    "tested_data": 12018.71,
+    "case": "2668.86"
+  },
+  {
+    "date": "2021-08-02",
+    "infected": "886",
+    "avg": "2470.43",
+    "total_infected": 240746,
+    "tested": "11105.29",
+    "tested_data": 11105.29,
+    "case": "2470.43"
+  },
+  {
+    "date": "2021-08-03",
+    "infected": "1066",
+    "avg": "2226.71",
+    "total_infected": 242102,
+    "tested": "9875.29",
+    "tested_data": 9875.29,
+    "case": "2226.71"
+  },
+  {
+    "date": "2021-08-04",
+    "infected": "1918",
+    "avg": "2077.86",
+    "total_infected": 244020,
+    "tested": "9160.71",
+    "tested_data": 9160.71,
+    "case": "2077.86"
+  },
+  {
+    "date": "2021-08-05",
+    "infected": "2654",
+    "avg": "2027.14",
+    "total_infected": 246674,
+    "tested": "8736.86",
+    "tested_data": 8736.86,
+    "case": "2027.14"
+  },
+  {
+    "date": "2021-08-06",
+    "infected": "2977",
+    "avg": "2067.43",
+    "total_infected": 249651,
+    "tested": "8704.14",
+    "tested_data": 8704.14,
+    "case": "2067.43"
+  },
+  {
+    "date": "2021-08-07",
+    "infected": "2851",
+    "avg": "2078.71",
+    "total_infected": 252502,
+    "tested": "8716.29",
+    "tested_data": 8716.29,
+    "case": "2078.71"
+  },
+  {
+    "date": "2021-08-08",
+    "infected": "2611",
+    "avg": "2137.57",
+    "total_infected": 255113,
+    "tested": "9135.57",
+    "tested_data": 9135.57,
+    "case": "2137.57"
+  },
+  {
+    "date": "2021-08-09",
+    "infected": "2487",
+    "avg": "2366.29",
+    "total_infected": 257600,
+    "tested": "10146.29",
+    "tested_data": 10146.29,
+    "case": "2366.29"
+  },
+  {
+    "date": "2021-08-10",
+    "infected": "2907",
+    "avg": "2629.29",
+    "total_infected": 260507,
+    "tested": "11374.86",
+    "tested_data": 11374.86,
+    "case": "2629.29"
+  },
+  {
+    "date": "2021-08-11",
+    "infected": "2996",
+    "avg": "2783.29",
+    "total_infected": 263503,
+    "tested": "12390.29",
+    "tested_data": 12390.29,
+    "case": "2783.29"
+  },
+  {
+    "date": "2021-08-12",
+    "infected": "2995",
+    "avg": "2832.00",
+    "total_infected": 266498,
+    "tested": "12903.29",
+    "tested_data": 12903.29,
+    "case": "2832"
+  },
+  {
+    "date": "2021-08-13",
+    "infected": "2617",
+    "avg": "2780.57",
+    "total_infected": 269115,
+    "tested": "12968.14",
+    "tested_data": 12968.14,
+    "case": "2780.57"
+  },
+  {
+    "date": "2021-08-14",
+    "infected": "2766",
+    "avg": "2768.43",
+    "total_infected": 271881,
+    "tested": "12990.57",
+    "tested_data": 12990.57,
+    "case": "2768.43"
+  },
+  {
+    "date": "2021-08-15",
+    "infected": "2644",
+    "avg": "2773.14",
+    "total_infected": 274525,
+    "tested": "13155.43",
+    "tested_data": 13155.43,
+    "case": "2773.14"
+  },
+  {
+    "date": "2021-08-16",
+    "infected": "2024",
+    "avg": "2707.00",
+    "total_infected": 276549,
+    "tested": "13049.57",
+    "tested_data": 13049.57,
+    "case": "2707"
+  },
+  {
+    "date": "2021-08-17",
+    "infected": "2595",
+    "avg": "2662.43",
+    "total_infected": 279144,
+    "tested": "13003",
+    "tested_data": 13003,
+    "case": "2662.43"
+  },
+  {
+    "date": "2021-08-18",
+    "infected": "3200",
+    "avg": "2691.57",
+    "total_infected": 282344,
+    "tested": "12975.86",
+    "tested_data": 12975.86,
+    "case": "2691.57"
+  },
+  {
+    "date": "2021-08-19",
+    "infected": "2747",
+    "avg": "2656.14",
+    "total_infected": 285091,
+    "tested": "12965.43",
+    "tested_data": 12965.43,
+    "case": "2656.14"
+  },
+  {
+    "date": "2021-08-20",
+    "infected": "2868",
+    "avg": "2692.00",
+    "total_infected": 287959,
+    "tested": "13093.57",
+    "tested_data": 13093.57,
+    "case": "2692"
+  },
+  {
+    "date": "2021-08-21",
+    "infected": "2401",
+    "avg": "2639.86",
+    "total_infected": 290360,
+    "tested": "13106",
+    "tested_data": 13106,
+    "case": "2639.86"
+  },
+  {
+    "date": "2021-08-22",
+    "infected": "2265",
+    "avg": "2585.71",
+    "total_infected": 292625,
+    "tested": "12886.71",
+    "tested_data": 12886.71,
+    "case": "2585.71"
+  },
+  {
+    "date": "2021-08-23",
+    "infected": "1973",
+    "avg": "2578.43",
+    "total_infected": 294598,
+    "tested": "12998.57",
+    "tested_data": 12998.57,
+    "case": "2578.43"
+  },
+  {
+    "date": "2021-08-24",
+    "infected": "2485",
+    "avg": "2562.71",
+    "total_infected": 297083,
+    "tested": "13121.29",
+    "tested_data": 13121.29,
+    "case": "2562.71"
+  },
+  {
+    "date": "2021-08-25",
+    "infected": "2545",
+    "avg": "2469.14",
+    "total_infected": 299628,
+    "tested": "13053.14",
+    "tested_data": 13053.14,
+    "case": "2469.14"
+  },
+  {
+    "date": "2021-08-26",
+    "infected": "2519",
+    "avg": "2436.57",
+    "total_infected": 302147,
+    "tested": "13109.14",
+    "tested_data": 13109.14,
+    "case": "2436.57"
+  },
+  {
+    "date": "2021-08-27",
+    "infected": "2436",
+    "avg": "2374.86",
+    "total_infected": 304583,
+    "tested": "13261.29",
+    "tested_data": 13261.29,
+    "case": "2374.86"
+  },
+  {
+    "date": "2021-08-28",
+    "infected": "2211",
+    "avg": "2347.71",
+    "total_infected": 306798,
+    "tested": "13375.29",
+    "tested_data": 13375.29,
+    "case": "2347.71"
+  },
+  {
+    "date": "2021-08-29",
+    "infected": "2131",
+    "avg": "2328.57",
+    "total_infected": 308925,
+    "tested": "13422.86",
+    "tested_data": 13422.86,
+    "case": "2328.57"
+  },
+  {
+    "date": "2021-08-30",
+    "infected": "1897",
+    "avg": "2317.71",
+    "total_infected": 310822,
+    "tested": "13584.71",
+    "tested_data": 13584.71,
+    "case": "2317.71"
+  },
+  {
+    "date": "2021-08-31",
+    "infected": "2174",
+    "avg": "2273.29",
+    "total_infected": 312996,
+    "tested": "13452.14",
+    "tested_data": 13452.14,
+    "case": "2273.29"
+  },
+  {
+    "date": "2021-09-01",
+    "infected": "1950",
+    "avg": "2188.29",
+    "total_infected": 314946,
+    "tested": "13174.43",
+    "tested_data": 13174.43,
+    "case": "2188.29"
+  },
+  {
+    "date": "2021-09-02",
+    "infected": "2582",
+    "avg": "2197.29",
+    "total_infected": 317528,
+    "tested": "13193.57",
+    "tested_data": 13193.57,
+    "case": "2197.29"
+  },
+  {
+    "date": "2021-09-03",
+    "infected": "2158",
+    "avg": "2157.57",
+    "total_infected": 319686,
+    "tested": "13093.29",
+    "tested_data": 13093.29,
+    "case": "2157.57"
+  },
+  {
+    "date": "2021-09-04",
+    "infected": "1929",
+    "avg": "2117.29",
+    "total_infected": 321651,
+    "tested": "12997.86",
+    "tested_data": 12997.86,
+    "case": "2117.29"
+  },
+  {
+    "date": "2021-09-05",
+    "infected": "1950",
+    "avg": "2091.43",
+    "total_infected": 323565,
+    "tested": "13163.29",
+    "tested_data": 13163.29,
+    "case": "2091.43"
+  },
+  {
+    "date": "2021-09-06",
+    "infected": "1592",
+    "avg": "2047.86",
+    "total_infected": 325157,
+    "tested": "13080.43",
+    "tested_data": 13080.43,
+    "case": "2047.86"
+  },
+  {
+    "date": "2021-09-07",
+    "infected": "2202",
+    "avg": "2051.86",
+    "total_infected": 327359,
+    "tested": "13503",
+    "tested_data": 13503,
+    "case": "2051.86"
+  },
+  {
+    "date": "2021-09-08",
+    "infected": "1892",
+    "avg": "2043.57",
+    "total_infected": 329251,
+    "tested": "13897.86",
+    "tested_data": 13897.86,
+    "case": "2043.57"
+  },
+  {
+    "date": "2021-09-09",
+    "infected": "1827",
+    "avg": "1935.71",
+    "total_infected": 331078,
+    "tested": "13833.71",
+    "tested_data": 13833.71,
+    "case": "1935.71"
+  },
+  {
+    "date": "2021-09-10",
+    "infected": "1892",
+    "avg": "1897.71",
+    "total_infected": 332970,
+    "tested": "13996.14",
+    "tested_data": 13996.14,
+    "case": "1897.71"
+  },
+  {
+    "date": "2021-09-11",
+    "infected": "1792",
+    "avg": "1878.14",
+    "total_infected": 334762,
+    "tested": "14235.29",
+    "tested_data": 14235.29,
+    "case": "1878.14"
+  },
+  {
+    "date": "2021-09-12",
+    "infected": "1282",
+    "avg": "1782.71",
+    "total_infected": 336044,
+    "tested": "13931.86",
+    "tested_data": 13931.86,
+    "case": "1782.71"
+  },
+  {
+    "date": "2021-09-13",
+    "infected": "1476",
+    "avg": "1766.14",
+    "total_infected": 337520,
+    "tested": "14166.86",
+    "tested_data": 14166.86,
+    "case": "1766.14"
+  },
+  {
+    "date": "2021-09-14",
+    "infected": "1812",
+    "avg": "1710.43",
+    "total_infected": 339332,
+    "tested": "13996",
+    "tested_data": 13996,
+    "case": "1710.43"
+  },
+  {
+    "date": "2021-09-15",
+    "infected": "1724",
+    "avg": "1686.43",
+    "total_infected": 341056,
+    "tested": "13864.14",
+    "tested_data": 13864.14,
+    "case": "1686.43"
+  },
+  {
+    "date": "2021-09-16",
+    "infected": "1615",
+    "avg": "1656.14",
+    "total_infected": 342671,
+    "tested": "13664.86",
+    "tested_data": 13664.86,
+    "case": "1656.14"
+  },
+  {
+    "date": "2021-09-17",
+    "infected": "1593",
+    "avg": "1613.43",
+    "total_infected": 344264,
+    "tested": "13395.43",
+    "tested_data": 13395.43,
+    "case": "1613.43"
+  },
+  {
+    "date": "2021-09-18",
+    "infected": "1541",
+    "avg": "1577.57",
+    "total_infected": 345805,
+    "tested": "13107.29",
+    "tested_data": 13107.29,
+    "case": "1577.57"
+  },
+  {
+    "date": "2021-09-19",
+    "infected": "1567",
+    "avg": "1618.29",
+    "total_infected": 347372,
+    "tested": "13456.86",
+    "tested_data": 13456.86,
+    "case": "1618.29"
+  },
+  {
+    "date": "2021-09-20",
+    "infected": "1544",
+    "avg": "1628.00",
+    "total_infected": 348916,
+    "tested": "13255.71",
+    "tested_data": 13255.71,
+    "case": "1628"
+  },
+  {
+    "date": "2021-09-21",
+    "infected": "1705",
+    "avg": "1612.71",
+    "total_infected": 350621,
+    "tested": "13089.57",
+    "tested_data": 13089.57,
+    "case": "1612.71"
+  },
+  {
+    "date": "2021-09-22",
+    "infected": "1557",
+    "avg": "1588.86",
+    "total_infected": 352178,
+    "tested": "13105.86",
+    "tested_data": 13105.86,
+    "case": "1588.86"
+  },
+  {
+    "date": "2021-09-23",
+    "infected": "1666",
+    "avg": "1596.14",
+    "total_infected": 353844,
+    "tested": "13218.71",
+    "tested_data": 13218.71,
+    "case": "1596.14"
+  },
+  {
+    "date": "2021-09-24",
+    "infected": "1540",
+    "avg": "1588.57",
+    "total_infected": 355384,
+    "tested": "13108.29",
+    "tested_data": 13108.29,
+    "case": "1588.57"
+  },
+  {
+    "date": "2021-09-25",
+    "infected": "1383",
+    "avg": "1566.00",
+    "total_infected": 356767,
+    "tested": "13071.57",
+    "tested_data": 13071.57,
+    "case": "1566"
+  },
+  {
+    "date": "2021-09-26",
+    "infected": "1106",
+    "avg": "1500.14",
+    "total_infected": 357873,
+    "tested": "12728",
+    "tested_data": 12728,
+    "case": "1500.14"
+  },
+  {
+    "date": "2021-09-27",
+    "infected": "1275",
+    "avg": "1461.71",
+    "total_infected": 359148,
+    "tested": "12598.57",
+    "tested_data": 12598.57,
+    "case": "1461.71"
+  },
+  {
+    "date": "2021-09-28",
+    "infected": "1407",
+    "avg": "1419.14",
+    "total_infected": 360555,
+    "tested": "12437",
+    "tested_data": 12437,
+    "case": "1419.14"
+  },
+  {
+    "date": "2021-09-29",
+    "infected": "1488",
+    "avg": "1409.29",
+    "total_infected": 362043,
+    "tested": "12252",
+    "tested_data": 12252,
+    "case": "1409.29"
+  },
+  {
+    "date": "2021-09-30",
+    "infected": "1436",
+    "avg": "1376.43",
+    "total_infected": 363479,
+    "tested": "12145.43",
+    "tested_data": 12145.43,
+    "case": "1376.43"
+  },
+  {
+    "date": "2021-10-01",
+    "infected": "1508",
+    "avg": "1371.86",
+    "total_infected": 364987,
+    "tested": "11934",
+    "tested_data": 11934,
+    "case": "1371.86"
+  },
+  {
+    "date": "2021-10-02",
+    "infected": "1396",
+    "avg": "1373.71",
+    "total_infected": 366383,
+    "tested": "11748.71",
+    "tested_data": 11748.71,
+    "case": "1373.71"
+  },
+  {
+    "date": "2021-10-03",
+    "infected": "1182",
+    "avg": "1384.57",
+    "total_infected": 367565,
+    "tested": "11575.71",
+    "tested_data": 11575.71,
+    "case": "1384.57"
+  },
+  {
+    "date": "2021-10-04",
+    "infected": "1125",
+    "avg": "1363.14",
+    "total_infected": 368690,
+    "tested": "11457.71",
+    "tested_data": 11457.71,
+    "case": "1363.14"
+  },
+  {
+    "date": "2021-10-05",
+    "infected": "1442",
+    "avg": "1368.14",
+    "total_infected": 370132,
+    "tested": "11435.57",
+    "tested_data": 11435.57,
+    "case": "1368.14"
+  },
+  {
+    "date": "2021-10-06",
+    "infected": "1499",
+    "avg": "1369.71",
+    "total_infected": 371631,
+    "tested": "11360.71",
+    "tested_data": 11360.71,
+    "case": "1369.71"
+  },
+  {
+    "date": "2021-10-07",
+    "infected": "1520",
+    "avg": "1381.71",
+    "total_infected": 373151,
+    "tested": "11307.57",
+    "tested_data": 11307.57,
+    "case": "1381.71"
+  },
+  {
+    "date": "2021-10-08",
+    "infected": "1441",
+    "avg": "1372.14",
+    "total_infected": 374592,
+    "tested": "11476.86",
+    "tested_data": 11476.86,
+    "case": "1372.14"
+  },
+  {
+    "date": "2021-10-09",
+    "infected": "1278",
+    "avg": "1355.29",
+    "total_infected": 375870,
+    "tested": "11488.29",
+    "tested_data": 11488.29,
+    "case": "1355.29"
+  },
+  {
+    "date": "2021-10-10",
+    "infected": "1203",
+    "avg": "1358.29",
+    "total_infected": 377073,
+    "tested": "11674.71",
+    "tested_data": 11674.71,
+    "case": "1358.29"
+  },
+  {
+    "date": "2021-10-11",
+    "infected": "1193",
+    "avg": "1368.00",
+    "total_infected": 378266,
+    "tested": "11618.71",
+    "tested_data": 11618.71,
+    "case": "1368"
+  },
+  {
+    "date": "2021-10-12",
+    "infected": "1472",
+    "avg": "1372.29",
+    "total_infected": 379738,
+    "tested": "11827.29",
+    "tested_data": 11827.29,
+    "case": "1372.29"
+  },
+  {
+    "date": "2021-10-13",
+    "infected": "1537",
+    "avg": "1377.71",
+    "total_infected": 381275,
+    "tested": "12037.29",
+    "tested_data": 12037.29,
+    "case": "1377.71"
+  },
+  {
+    "date": "2021-10-14",
+    "infected": "1684",
+    "avg": "1401.14",
+    "total_infected": 382959,
+    "tested": "12234.29",
+    "tested_data": 12234.29,
+    "case": "1401.14"
+  },
+  {
+    "date": "2021-10-15",
+    "infected": "1600",
+    "avg": "1423.86",
+    "total_infected": 384559,
+    "tested": "12448.43",
+    "tested_data": 12448.43,
+    "case": "1423.86"
+  },
+  {
+    "date": "2021-10-16",
+    "infected": "1527",
+    "avg": "1459.43",
+    "total_infected": 386086,
+    "tested": "12780",
+    "tested_data": 12780,
+    "case": "1459.43"
+  },
+  {
+    "date": "2021-10-17",
+    "infected": "1209",
+    "avg": "1460.29",
+    "total_infected": 387295,
+    "tested": "12882",
+    "tested_data": 12882,
+    "case": "1460.29"
+  },
+  {
+    "date": "2021-10-18",
+    "infected": "1274",
+    "avg": "1471.86",
+    "total_infected": 388569,
+    "tested": "13224.71",
+    "tested_data": 13224.71,
+    "case": "1471.86"
+  },
+  {
+    "date": "2021-10-19",
+    "infected": "1637",
+    "avg": "1495.43",
+    "total_infected": 390206,
+    "tested": "13498.86",
+    "tested_data": 13498.86,
+    "case": "1495.43"
+  },
+  {
+    "date": "2021-10-20",
+    "infected": "1380",
+    "avg": "1473.00",
+    "total_infected": 391586,
+    "tested": "13469.71",
+    "tested_data": 13469.71,
+    "case": "1473"
+  },
+  {
+    "date": "2021-10-21",
+    "infected": "1545",
+    "avg": "1453.14",
+    "total_infected": 393131,
+    "tested": "13423.29",
+    "tested_data": 13423.29,
+    "case": "1453.14"
+  },
+  {
+    "date": "2021-10-22",
+    "infected": "1696",
+    "avg": "1466.86",
+    "total_infected": 394827,
+    "tested": "13545.29",
+    "tested_data": 13545.29,
+    "case": "1466.86"
+  },
+  {
+    "date": "2021-10-23",
+    "infected": "1586",
+    "avg": "1475.29",
+    "total_infected": 396413,
+    "tested": "13622.71",
+    "tested_data": 13622.71,
+    "case": "1475.29"
+  },
+  {
+    "date": "2021-10-24",
+    "infected": "1094",
+    "avg": "1458.86",
+    "total_infected": 397507,
+    "tested": "13540.57",
+    "tested_data": 13540.57,
+    "case": "1458.86"
+  },
+  {
+    "date": "2021-10-25",
+    "infected": "1308",
+    "avg": "1463.71",
+    "total_infected": 398815,
+    "tested": "13431.57",
+    "tested_data": 13431.57,
+    "case": "1463.71"
+  },
+  {
+    "date": "2021-10-26",
+    "infected": "1436",
+    "avg": "1435.00",
+    "total_infected": 400251,
+    "tested": "13233.29",
+    "tested_data": 13233.29,
+    "case": "1435"
+  },
+  {
+    "date": "2021-10-27",
+    "infected": "1335",
+    "avg": "1428.57",
+    "total_infected": 400251,
+    "tested": "13091.29",
+    "tested_data": 13091.29,
+    "case": "1428.57"
+  },
+  {
+    "date": "2021-10-28",
+    "infected": "1493",
+    "avg": "1421.14",
+    "total_infected": 401586,
+    "tested": "12844.29",
+    "tested_data": 12844.29,
+    "case": "1421.14"
+  },
+  {
+    "date": "2021-10-29",
+    "infected": "1681",
+    "avg": "1419.00",
+    "total_infected": 403079,
+    "tested": "12745.71",
+    "tested_data": 12745.71,
+    "case": "1419"
+  },
+  {
+    "date": "2021-10-30",
+    "infected": "1604",
+    "avg": "1421.57",
+    "total_infected": 404760,
+    "tested": "12748.86",
+    "tested_data": 12748.86,
+    "case": "1421.57"
+  },
+  {
+    "date": "2021-10-31",
+    "infected": "1320",
+    "avg": "1453.86",
+    "total_infected": 406364,
+    "tested": "12825.14",
+    "tested_data": 12825.14,
+    "case": "1453.86"
+  },
+  {
+    "date": "2021-11-01",
+    "infected": "1568",
+    "avg": "1491.00",
+    "total_infected": 407684,
+    "tested": "13031.71",
+    "tested_data": 13031.71,
+    "case": "1491"
+  },
+  {
+    "date": "2021-11-02",
+    "infected": "1736",
+    "avg": "1533.86",
+    "total_infected": 409252,
+    "tested": "12907.86",
+    "tested_data": 12907.86,
+    "case": "1533.86"
+  },
+  {
+    "date": "2021-11-03",
+    "infected": "1659",
+    "avg": "1580.14",
+    "total_infected": 410988,
+    "tested": "13114.14",
+    "tested_data": 13114.14,
+    "case": "1580.14"
+  },
+  {
+    "date": "2021-11-04",
+    "infected": "1517",
+    "avg": "1583.57",
+    "total_infected": 412647,
+    "tested": "13336.57",
+    "tested_data": 13336.57,
+    "case": "1583.57"
+  },
+  {
+    "date": "2021-11-05",
+    "infected": "1842",
+    "avg": "1606.57",
+    "total_infected": 414164,
+    "tested": "13473.29",
+    "tested_data": 13473.29,
+    "case": "1606.57"
+  },
+  {
+    "date": "2021-11-06",
+    "infected": "1469",
+    "avg": "1587.29",
+    "total_infected": 416006,
+    "tested": "13384.71",
+    "tested_data": 13384.71,
+    "case": "1587.29"
+  },
+  {
+    "date": "2021-11-07",
+    "infected": "1289",
+    "avg": "1582.86",
+    "total_infected": 417475,
+    "tested": "13368.57",
+    "tested_data": 13368.57,
+    "case": "1582.86"
+  },
+  {
+    "date": "2021-11-08",
+    "infected": "1474",
+    "avg": "1569.43",
+    "total_infected": 418764,
+    "tested": "13398.71",
+    "tested_data": 13398.71,
+    "case": "1569.43"
+  },
+  {
+    "date": "2021-11-09",
+    "infected": "1683",
+    "avg": "1561.86",
+    "total_infected": 420238,
+    "tested": "13563.14",
+    "tested_data": 13563.14,
+    "case": "1561.86"
+  },
+  {
+    "date": "2021-11-10",
+    "infected": "1699",
+    "avg": "1567.57",
+    "total_infected": 421921,
+    "tested": "13485.86",
+    "tested_data": 13485.86,
+    "case": "1567.57"
+  },
+  {
+    "date": "2021-11-11",
+    "infected": "1733",
+    "avg": "1598.43",
+    "total_infected": 423620,
+    "tested": "13573",
+    "tested_data": 13573,
+    "case": "1598.43"
+  },
+  {
+    "date": "2021-11-12",
+    "infected": "1845",
+    "avg": "1598.86",
+    "total_infected": 427198,
+    "tested": "13842.57",
+    "tested_data": 13842.57,
+    "case": "1598.86"
+  },
+  {
+    "date": "2021-11-13",
+    "infected": "1767",
+    "avg": "1641.43",
+    "total_infected": 428965,
+    "tested": "13845.14",
+    "tested_data": 13845.14,
+    "case": "1641.43"
+  },
+  {
+    "date": "2021-11-14",
+    "infected": "1531",
+    "avg": "1676.00",
+    "total_infected": 430496,
+    "tested": "13898.86",
+    "tested_data": 13898.86,
+    "case": "1676"
+  },
+  {
+    "date": "2021-11-15",
+    "infected": "1837",
+    "avg": "1727.86",
+    "total_infected": 430496,
+    "tested": "14084.57",
+    "tested_data": 14084.57,
+    "case": "1727.86"
+  },
+  {
+    "date": "2021-11-16",
+    "infected": "2139",
+    "avg": "1793.00",
+    "total_infected": 432333,
+    "tested": "14331.14",
+    "tested_data": 14331.14,
+    "case": "1793"
+  },
+  {
+    "date": "2021-11-17",
+    "infected": "2212",
+    "avg": "1866.29",
+    "total_infected": 434472,
+    "tested": "14684",
+    "tested_data": 14684,
+    "case": "1866.29"
+  },
+  {
+    "date": "2021-11-18",
+    "infected": "2111",
+    "avg": "1920.29",
+    "total_infected": 436684,
+    "tested": "14961.86",
+    "tested_data": 14961.86,
+    "case": "1920.29"
+  },
+  {
+    "date": "2021-11-19",
+    "infected": "2364",
+    "avg": "1994.43",
+    "total_infected": 438795,
+    "tested": "15021.71",
+    "tested_data": 15021.71,
+    "case": "1994.43"
+  },
+  {
+    "date": "2021-11-20",
+    "infected": "2275",
+    "avg": "2067.00",
+    "total_infected": 441159,
+    "tested": "15317.14",
+    "tested_data": 15317.14,
+    "case": "2067"
+  },
+  {
+    "date": "2021-11-21",
+    "infected": "1847",
+    "avg": "2112.14",
+    "total_infected": 443434,
+    "tested": "15438.29",
+    "tested_data": 15438.29,
+    "case": "2112.14"
+  },
+  {
+    "date": "2021-11-22",
+    "infected": "2060",
+    "avg": "2144.00",
+    "total_infected": 445281,
+    "tested": "15411.14",
+    "tested_data": 15411.14,
+    "case": "2144"
+  },
+  {
+    "date": "2021-11-23",
+    "infected": "2419",
+    "avg": "2184.00",
+    "total_infected": 447341,
+    "tested": "15452.71",
+    "tested_data": 15452.71,
+    "case": "2184"
+  },
+  {
+    "date": "2021-11-24",
+    "infected": "2230",
+    "avg": "2186.57",
+    "total_infected": 449760,
+    "tested": "15313.86",
+    "tested_data": 15313.86,
+    "case": "2186.57"
+  },
+  {
+    "date": "2021-11-25",
+    "infected": "2156",
+    "avg": "2193.00",
+    "total_infected": 451990,
+    "tested": "15247",
+    "tested_data": 15247,
+    "case": "2193"
+  },
+  {
+    "date": "2021-11-26",
+    "infected": "2292",
+    "avg": "2182.71",
+    "total_infected": 454146,
+    "tested": "15178.57",
+    "tested_data": 15178.57,
+    "case": "2182.71"
+  },
+  {
+    "date": "2021-11-27",
+    "infected": "2273",
+    "avg": "2182.43",
+    "total_infected": 456438,
+    "tested": "15288.71",
+    "tested_data": 15288.71,
+    "case": "2182.43"
+  },
+  {
+    "date": "2021-11-28",
+    "infected": "1908",
+    "avg": "2191.14",
+    "total_infected": 458711,
+    "tested": "15484.29",
+    "tested_data": 15484.29,
+    "case": "2191.14"
+  },
+  {
+    "date": "2021-11-29",
+    "infected": "1788",
+    "avg": "2152.29",
+    "total_infected": 460619,
+    "tested": "15465.29",
+    "tested_data": 15465.29,
+    "case": "2152.29"
+  },
+  {
+    "date": "2021-11-30",
+    "infected": "2525",
+    "avg": "2167.43",
+    "total_infected": 462407,
+    "tested": "15367.14",
+    "tested_data": 15367.14,
+    "case": "2167.43"
+  },
+  {
+    "date": "2021-12-01",
+    "infected": "2293",
+    "avg": "2176.43",
+    "total_infected": 464932,
+    "tested": "15436.14",
+    "tested_data": 15436.14,
+    "case": "2176.43"
+  },
+  {
+    "date": "2021-12-02",
+    "infected": "2198",
+    "avg": "2182.43",
+    "total_infected": 467225,
+    "tested": "15432",
+    "tested_data": 15432,
+    "case": "2182.43"
+  },
+  {
+    "date": "2021-12-03",
+    "infected": "2316",
+    "avg": "2185.86",
+    "total_infected": 469423,
+    "tested": "15397",
+    "tested_data": 15397,
+    "case": "2185.86"
+  },
+  {
+    "date": "2021-12-04",
+    "infected": "2252",
+    "avg": "2182.86",
+    "total_infected": 471739,
+    "tested": "15261.57",
+    "tested_data": 15261.57,
+    "case": "2182.86"
+  }
+],
                 "legend": {
                     "horizontalGap": 10,
                     "maxColumns": 2,
@@ -2430,7 +3764,7 @@ $ydata = [];
                     "valueField": "count",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = "প্রতি হাজারে পরীক্ষা(" + graphDataItem.dataContext.date + "):";
+                        var title = "প্রতি হাজারে টিকাদান(" + graphDataItem.dataContext.date + "):";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     },
                     "labelText": '[[balloonValue]]',
@@ -2443,7 +3777,7 @@ $ydata = [];
                     "id": "ValueAxis-1",
                     "position": "top",
                     "axisAlpha": 0,
-                    "title": "প্রতি হাজারে পরীক্ষা(" + date + ")",
+                    "title": "প্রতি হাজারে টিকাদান(" + date + ")",
                     "minimum": 0,
                     "maximum": 150,
                     "labelFunction": function (value, valueText, valueAxis) {
@@ -2620,6 +3954,7 @@ $ydata = [];
     }
 
     function showDivisionChart(chartData) {
+        // console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         $('#last_date_4').html(" " + div_date);
@@ -2636,7 +3971,2582 @@ $ydata = [];
                     },
                     "align": "center"
                 },
-                "dataProvider": chartData,
+                "dataProvider": [
+  {
+    "date": "2021-05-20",
+    "dhk": "262.00",
+    "ctg": "96.00",
+    "khu": "7.00",
+    "mym": "64.00",
+    "raj": "45.00",
+    "ran": "21.00",
+    "bar": "3.00",
+    "syl": "32.00"
+  },
+  {
+    "date": "2021-05-21",
+    "dhk": "370.50",
+    "ctg": "87.00",
+    "khu": "8.00",
+    "mym": "50.50",
+    "raj": "23.00",
+    "ran": "11.00",
+    "bar": "13.50",
+    "syl": "22.00"
+  },
+  {
+    "date": "2021-05-22",
+    "dhk": "334.33",
+    "ctg": "84.33",
+    "khu": "9.00",
+    "mym": "44.33",
+    "raj": "29.33",
+    "ran": "7.33",
+    "bar": "13.67",
+    "syl": "28.33"
+  },
+  {
+    "date": "2021-05-23",
+    "dhk": "342.25",
+    "ctg": "91.50",
+    "khu": "10.00",
+    "mym": "39.00",
+    "raj": "30.50",
+    "ran": "9.75",
+    "bar": "12.75",
+    "syl": "25.50"
+  },
+  {
+    "date": "2021-05-24",
+    "dhk": "395.40",
+    "ctg": "94.80",
+    "khu": "9.40",
+    "mym": "38.00",
+    "raj": "26.80",
+    "ran": "13.00",
+    "bar": "17.00",
+    "syl": "27.40"
+  },
+  {
+    "date": "2021-05-25",
+    "dhk": "368.00",
+    "ctg": "87.83",
+    "khu": "8.00",
+    "mym": "32.17",
+    "raj": "23.83",
+    "ran": "13.50",
+    "bar": "17.67",
+    "syl": "26.33"
+  },
+  {
+    "date": "2021-05-26",
+    "dhk": "355.71",
+    "ctg": "90.14",
+    "khu": "8.14",
+    "mym": "30.00",
+    "raj": "23.00",
+    "ran": "16.29",
+    "bar": "17.57",
+    "syl": "25.14"
+  },
+  {
+    "date": "2021-05-27",
+    "dhk": "363.86",
+    "ctg": "99.14",
+    "khu": "9.43",
+    "mym": "23.29",
+    "raj": "23.43",
+    "ran": "19.00",
+    "bar": "20.14",
+    "syl": "27.00"
+  },
+  {
+    "date": "2021-05-28",
+    "dhk": "390.29",
+    "ctg": "106.14",
+    "khu": "12.29",
+    "mym": "23.86",
+    "raj": "28.43",
+    "ran": "22.71",
+    "bar": "18.29",
+    "syl": "32.14"
+  },
+  {
+    "date": "2021-05-29",
+    "dhk": "424.00",
+    "ctg": "122.71",
+    "khu": "14.14",
+    "mym": "23.00",
+    "raj": "29.00",
+    "ran": "30.14",
+    "bar": "24.00",
+    "syl": "30.00"
+  },
+  {
+    "date": "2021-05-30",
+    "dhk": "444.14",
+    "ctg": "117.14",
+    "khu": "15.29",
+    "mym": "26.86",
+    "raj": "33.71",
+    "ran": "39.00",
+    "bar": "30.43",
+    "syl": "41.86"
+  },
+  {
+    "date": "2021-05-31",
+    "dhk": "432.14",
+    "ctg": "118.00",
+    "khu": "19.43",
+    "mym": "29.29",
+    "raj": "36.29",
+    "ran": "39.43",
+    "bar": "35.29",
+    "syl": "39.71"
+  },
+  {
+    "date": "2021-06-01",
+    "dhk": "464.57",
+    "ctg": "136.14",
+    "khu": "22.43",
+    "mym": "42.14",
+    "raj": "41.00",
+    "ran": "44.00",
+    "bar": "41.29",
+    "syl": "43.57"
+  },
+  {
+    "date": "2021-06-02",
+    "dhk": "522.86",
+    "ctg": "176.14",
+    "khu": "27.14",
+    "mym": "45.86",
+    "raj": "50.43",
+    "ran": "45.14",
+    "bar": "47.29",
+    "syl": "46.71"
+  },
+  {
+    "date": "2021-06-03",
+    "dhk": "557.71",
+    "ctg": "185.86",
+    "khu": "30.29",
+    "mym": "43.43",
+    "raj": "49.57",
+    "ran": "45.43",
+    "bar": "53.43",
+    "syl": "50.14"
+  },
+  {
+    "date": "2021-06-04",
+    "dhk": "568.29",
+    "ctg": "215.71",
+    "khu": "32.00",
+    "mym": "44.43",
+    "raj": "51.71",
+    "ran": "45.86",
+    "bar": "65.29",
+    "syl": "55.00"
+  },
+  {
+    "date": "2021-06-05",
+    "dhk": "595.57",
+    "ctg": "240.14",
+    "khu": "33.14",
+    "mym": "50.86",
+    "raj": "57.43",
+    "ran": "42.43",
+    "bar": "66.14",
+    "syl": "57.71"
+  },
+  {
+    "date": "2021-06-06",
+    "dhk": "596.86",
+    "ctg": "273.86",
+    "khu": "37.14",
+    "mym": "53.86",
+    "raj": "61.29",
+    "ran": "37.71",
+    "bar": "70.00",
+    "syl": "52.86"
+  },
+  {
+    "date": "2021-06-07",
+    "dhk": "606.86",
+    "ctg": "284.29",
+    "khu": "42.43",
+    "mym": "56.00",
+    "raj": "66.86",
+    "ran": "38.71",
+    "bar": "60.43",
+    "syl": "55.14"
+  },
+  {
+    "date": "2021-06-08",
+    "dhk": "639.71",
+    "ctg": "319.00",
+    "khu": "53.43",
+    "mym": "46.71",
+    "raj": "75.14",
+    "ran": "38.86",
+    "bar": "65.00",
+    "syl": "57.00"
+  },
+  {
+    "date": "2021-06-09",
+    "dhk": "608.86",
+    "ctg": "319.00",
+    "khu": "56.00",
+    "mym": "54.71",
+    "raj": "74.86",
+    "ran": "46.57",
+    "bar": "63.29",
+    "syl": "58.43"
+  },
+  {
+    "date": "2021-06-10",
+    "dhk": "558.25",
+    "ctg": "337.57",
+    "khu": "66.00",
+    "mym": "61.14",
+    "raj": "87.00",
+    "ran": "47.29",
+    "bar": "65.86",
+    "syl": "54.71"
+  },
+  {
+    "date": "2021-06-10",
+    "dhk": "558.25",
+    "ctg": "337.57",
+    "khu": "66.00",
+    "mym": "61.14",
+    "raj": "87.00",
+    "ran": "47.29",
+    "bar": "65.86",
+    "syl": "54.71"
+  },
+  {
+    "date": "2021-06-11",
+    "dhk": "565.38",
+    "ctg": "349.57",
+    "khu": "73.14",
+    "mym": "63.00",
+    "raj": "95.14",
+    "ran": "52.43",
+    "bar": "63.00",
+    "syl": "59.29"
+  },
+  {
+    "date": "2021-06-12",
+    "dhk": "602.38",
+    "ctg": "333.86",
+    "khu": "84.86",
+    "mym": "65.00",
+    "raj": "99.14",
+    "ran": "57.00",
+    "bar": "72.00",
+    "syl": "66.43"
+  },
+  {
+    "date": "2021-06-13",
+    "dhk": "658.63",
+    "ctg": "349.57",
+    "khu": "96.00",
+    "mym": "59.71",
+    "raj": "91.25",
+    "ran": "59.29",
+    "bar": "73.43",
+    "syl": "57.14"
+  },
+  {
+    "date": "2021-06-13",
+    "dhk": "658.63",
+    "ctg": "349.57",
+    "khu": "96.00",
+    "mym": "59.71",
+    "raj": "91.25",
+    "ran": "59.29",
+    "bar": "73.43",
+    "syl": "57.14"
+  },
+  {
+    "date": "2021-06-14",
+    "dhk": "668.50",
+    "ctg": "374.71",
+    "khu": "96.71",
+    "mym": "58.00",
+    "raj": "112.75",
+    "ran": "61.86",
+    "bar": "86.57",
+    "syl": "53.14"
+  },
+  {
+    "date": "2021-06-15",
+    "dhk": "680.00",
+    "ctg": "375.57",
+    "khu": "101.71",
+    "mym": "56.86",
+    "raj": "116.88",
+    "ran": "63.57",
+    "bar": "93.29",
+    "syl": "56.71"
+  },
+  {
+    "date": "2021-06-16",
+    "dhk": "778.75",
+    "ctg": "399.71",
+    "khu": "110.00",
+    "mym": "44.14",
+    "raj": "120.00",
+    "ran": "56.86",
+    "bar": "100.14",
+    "syl": "56.43"
+  },
+  {
+    "date": "2021-06-17",
+    "dhk": "946.14",
+    "ctg": "445.57",
+    "khu": "121.29",
+    "mym": "38.29",
+    "raj": "127.75",
+    "ran": "59.14",
+    "bar": "102.29",
+    "syl": "61.86"
+  },
+  {
+    "date": "2021-06-18",
+    "dhk": "990.14",
+    "ctg": "437.57",
+    "khu": "133.00",
+    "mym": "30.43",
+    "raj": "119.00",
+    "ran": "57.14",
+    "bar": "102.29",
+    "syl": "52.57"
+  },
+  {
+    "date": "2021-06-18",
+    "dhk": "990.14",
+    "ctg": "437.57",
+    "khu": "133.00",
+    "mym": "30.43",
+    "raj": "119.00",
+    "ran": "57.14",
+    "bar": "102.29",
+    "syl": "52.57"
+  },
+  {
+    "date": "2021-06-19",
+    "dhk": "1004.43",
+    "ctg": "471.29",
+    "khu": "149.29",
+    "mym": "18.71",
+    "raj": "117.11",
+    "ran": "56.86",
+    "bar": "95.71",
+    "syl": "54.14"
+  },
+  {
+    "date": "2021-06-20",
+    "dhk": "1048.43",
+    "ctg": "482.29",
+    "khu": "170.00",
+    "mym": "35.00",
+    "raj": "143.13",
+    "ran": "54.14",
+    "bar": "84.63",
+    "syl": "57.86"
+  },
+  {
+    "date": "2021-06-20",
+    "dhk": "1048.43",
+    "ctg": "482.29",
+    "khu": "170.00",
+    "mym": "35.00",
+    "raj": "143.13",
+    "ran": "54.14",
+    "bar": "84.63",
+    "syl": "57.86"
+  },
+  {
+    "date": "2021-06-21",
+    "dhk": "1136.00",
+    "ctg": "507.43",
+    "khu": "189.00",
+    "mym": "39.63",
+    "raj": "136.75",
+    "ran": "55.00",
+    "bar": "83.25",
+    "syl": "78.29"
+  },
+  {
+    "date": "2021-06-21",
+    "dhk": "1136.00",
+    "ctg": "507.43",
+    "khu": "189.00",
+    "mym": "39.63",
+    "raj": "136.75",
+    "ran": "55.00",
+    "bar": "83.25",
+    "syl": "78.29"
+  },
+  {
+    "date": "2021-06-22",
+    "dhk": "1214.86",
+    "ctg": "544.00",
+    "khu": "194.86",
+    "mym": "55.88",
+    "raj": "147.13",
+    "ran": "52.57",
+    "bar": "78.50",
+    "syl": "85.14"
+  },
+  {
+    "date": "2021-06-23",
+    "dhk": "1062.00",
+    "ctg": "564.57",
+    "khu": "204.57",
+    "mym": "70.38",
+    "raj": "157.88",
+    "ran": "50.00",
+    "bar": "74.38",
+    "syl": "92.29"
+  },
+  {
+    "date": "2021-06-23",
+    "dhk": "1062.00",
+    "ctg": "564.57",
+    "khu": "204.57",
+    "mym": "70.38",
+    "raj": "157.88",
+    "ran": "50.00",
+    "bar": "74.38",
+    "syl": "92.29"
+  },
+  {
+    "date": "2021-06-24",
+    "dhk": "1068.38",
+    "ctg": "554.00",
+    "khu": "228.14",
+    "mym": "87.63",
+    "raj": "156.75",
+    "ran": "47.43",
+    "bar": "74.63",
+    "syl": "92.71"
+  },
+  {
+    "date": "2021-06-25",
+    "dhk": "1130.75",
+    "ctg": "600.57",
+    "khu": "231.86",
+    "mym": "91.88",
+    "raj": "216.14",
+    "ran": "49.57",
+    "bar": "75.00",
+    "syl": "98.29"
+  },
+  {
+    "date": "2021-06-26",
+    "dhk": "1123.13",
+    "ctg": "608.57",
+    "khu": "235.57",
+    "mym": "96.38",
+    "raj": "230.86",
+    "ran": "48.29",
+    "bar": "81.25",
+    "syl": "100.86"
+  },
+  {
+    "date": "2021-06-27",
+    "dhk": "1165.50",
+    "ctg": "587.71",
+    "khu": "235.14",
+    "mym": "86.75",
+    "raj": "223.57",
+    "ran": "51.00",
+    "bar": "97.00",
+    "syl": "128.57"
+  },
+  {
+    "date": "2021-06-28",
+    "dhk": "1180.63",
+    "ctg": "584.00",
+    "khu": "229.43",
+    "mym": "111.29",
+    "raj": "233.00",
+    "ran": "53.43",
+    "bar": "102.29",
+    "syl": "122.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-29",
+    "dhk": "1076.00",
+    "ctg": "482.50",
+    "khu": "201.50",
+    "mym": "102.43",
+    "raj": "232.71",
+    "ran": "57.00",
+    "bar": "102.29",
+    "syl": "129.43"
+  },
+  {
+    "date": "2021-06-30",
+    "dhk": "1225.88",
+    "ctg": "458.25",
+    "khu": "214.25",
+    "mym": "90.71",
+    "raj": "266.29",
+    "ran": "61.86",
+    "bar": "107.86",
+    "syl": "151.00"
+  },
+  {
+    "date": "2021-07-01",
+    "dhk": "1241.88",
+    "ctg": "464.38",
+    "khu": "206.50",
+    "mym": "87.43",
+    "raj": "287.29",
+    "ran": "97.29",
+    "bar": "104.29",
+    "syl": "163.14"
+  },
+  {
+    "date": "2021-07-02",
+    "dhk": "1178.75",
+    "ctg": "433.25",
+    "khu": "248.25",
+    "mym": "88.43",
+    "raj": "262.43",
+    "ran": "107.14",
+    "bar": "105.71",
+    "syl": "165.43"
+  },
+  {
+    "date": "2021-07-03",
+    "dhk": "1177.75",
+    "ctg": "416.25",
+    "khu": "248.63",
+    "mym": "99.43",
+    "raj": "259.43",
+    "ran": "120.86",
+    "bar": "104.57",
+    "syl": "176.71"
+  },
+  {
+    "date": "2021-07-04",
+    "dhk": "1093.25",
+    "ctg": "414.75",
+    "khu": "237.13",
+    "mym": "96.00",
+    "raj": "265.86",
+    "ran": "124.29",
+    "bar": "105.00",
+    "syl": "149.71"
+  },
+  {
+    "date": "2021-07-05",
+    "dhk": "1047.88",
+    "ctg": "414.63",
+    "khu": "238.50",
+    "mym": "72.57",
+    "raj": "264.29",
+    "ran": "127.86",
+    "bar": "103.29",
+    "syl": "152.71"
+  },
+  {
+    "date": "2021-07-06",
+    "dhk": "983.00",
+    "ctg": "476.00",
+    "khu": "279.14",
+    "mym": "60.13",
+    "raj": "259.14",
+    "ran": "129.14",
+    "bar": "107.29",
+    "syl": "140.00"
+  },
+  {
+    "date": "2021-07-06",
+    "dhk": "983.00",
+    "ctg": "476.00",
+    "khu": "279.14",
+    "mym": "60.13",
+    "raj": "259.14",
+    "ran": "129.14",
+    "bar": "107.29",
+    "syl": "140.00"
+  },
+  {
+    "date": "2021-07-06",
+    "dhk": "983.00",
+    "ctg": "476.00",
+    "khu": "279.14",
+    "mym": "60.13",
+    "raj": "259.14",
+    "ran": "129.14",
+    "bar": "107.29",
+    "syl": "140.00"
+  },
+  {
+    "date": "2021-07-06",
+    "dhk": "983.00",
+    "ctg": "476.00",
+    "khu": "279.14",
+    "mym": "60.13",
+    "raj": "259.14",
+    "ran": "129.14",
+    "bar": "107.29",
+    "syl": "140.00"
+  },
+  {
+    "date": "2021-07-07",
+    "dhk": "954.50",
+    "ctg": "476.14",
+    "khu": "304.71",
+    "mym": "61.88",
+    "raj": "218.14",
+    "ran": "131.57",
+    "bar": "104.29",
+    "syl": "123.43"
+  },
+  {
+    "date": "2021-07-08",
+    "dhk": "693.27",
+    "ctg": "443.86",
+    "khu": "313.00",
+    "mym": "52.38",
+    "raj": "197.86",
+    "ran": "109.00",
+    "bar": "112.71",
+    "syl": "109.29"
+  },
+  {
+    "date": "2021-07-08",
+    "dhk": "693.27",
+    "ctg": "443.86",
+    "khu": "313.00",
+    "mym": "52.38",
+    "raj": "197.86",
+    "ran": "109.00",
+    "bar": "112.71",
+    "syl": "109.29"
+  },
+  {
+    "date": "2021-07-08",
+    "dhk": "693.27",
+    "ctg": "443.86",
+    "khu": "313.00",
+    "mym": "52.38",
+    "raj": "197.86",
+    "ran": "109.00",
+    "bar": "112.71",
+    "syl": "109.29"
+  },
+  {
+    "date": "2021-07-08",
+    "dhk": "693.27",
+    "ctg": "443.86",
+    "khu": "313.00",
+    "mym": "52.38",
+    "raj": "197.86",
+    "ran": "109.00",
+    "bar": "112.71",
+    "syl": "109.29"
+  },
+  {
+    "date": "2021-07-09",
+    "dhk": "675.45",
+    "ctg": "440.29",
+    "khu": "274.86",
+    "mym": "55.00",
+    "raj": "201.43",
+    "ran": "106.14",
+    "bar": "114.29",
+    "syl": "114.57"
+  },
+  {
+    "date": "2021-07-10",
+    "dhk": "570.69",
+    "ctg": "432.00",
+    "khu": "271.71",
+    "mym": "47.88",
+    "raj": "199.00",
+    "ran": "98.57",
+    "bar": "108.71",
+    "syl": "93.86"
+  },
+  {
+    "date": "2021-07-10",
+    "dhk": "570.69",
+    "ctg": "432.00",
+    "khu": "271.71",
+    "mym": "47.88",
+    "raj": "199.00",
+    "ran": "98.57",
+    "bar": "108.71",
+    "syl": "93.86"
+  },
+  {
+    "date": "2021-07-10",
+    "dhk": "570.69",
+    "ctg": "432.00",
+    "khu": "271.71",
+    "mym": "47.88",
+    "raj": "199.00",
+    "ran": "98.57",
+    "bar": "108.71",
+    "syl": "93.86"
+  },
+  {
+    "date": "2021-07-11",
+    "dhk": "568.15",
+    "ctg": "422.86",
+    "khu": "281.57",
+    "mym": "46.63",
+    "raj": "199.43",
+    "ran": "102.43",
+    "bar": "106.57",
+    "syl": "100.57"
+  },
+  {
+    "date": "2021-07-12",
+    "dhk": "592.85",
+    "ctg": "413.43",
+    "khu": "297.86",
+    "mym": "45.25",
+    "raj": "197.71",
+    "ran": "101.43",
+    "bar": "103.57",
+    "syl": "91.00"
+  },
+  {
+    "date": "2021-07-13",
+    "dhk": "664.58",
+    "ctg": "404.86",
+    "khu": "313.43",
+    "mym": "53.43",
+    "raj": "215.57",
+    "ran": "102.86",
+    "bar": "94.86",
+    "syl": "92.29"
+  },
+  {
+    "date": "2021-07-14",
+    "dhk": "678.67",
+    "ctg": "412.43",
+    "khu": "291.43",
+    "mym": "54.71",
+    "raj": "234.14",
+    "ran": "110.14",
+    "bar": "101.57",
+    "syl": "98.29"
+  },
+  {
+    "date": "2021-07-15",
+    "dhk": "887.33",
+    "ctg": "400.71",
+    "khu": "278.57",
+    "mym": "56.71",
+    "raj": "236.43",
+    "ran": "109.14",
+    "bar": "94.71",
+    "syl": "109.14"
+  },
+  {
+    "date": "2021-07-16",
+    "dhk": "814.40",
+    "ctg": "403.57",
+    "khu": "274.00",
+    "mym": "55.29",
+    "raj": "250.29",
+    "ran": "112.86",
+    "bar": "100.29",
+    "syl": "105.14"
+  },
+  {
+    "date": "2021-07-16",
+    "dhk": "814.40",
+    "ctg": "403.57",
+    "khu": "274.00",
+    "mym": "55.29",
+    "raj": "250.29",
+    "ran": "112.86",
+    "bar": "100.29",
+    "syl": "105.14"
+  },
+  {
+    "date": "2021-07-17",
+    "dhk": "983.13",
+    "ctg": "401.71",
+    "khu": "282.57",
+    "mym": "58.57",
+    "raj": "258.14",
+    "ran": "115.57",
+    "bar": "102.71",
+    "syl": "102.29"
+  },
+  {
+    "date": "2021-07-18",
+    "dhk": "1016.00",
+    "ctg": "406.14",
+    "khu": "274.57",
+    "mym": "57.29",
+    "raj": "256.14",
+    "ran": "117.86",
+    "bar": "107.57",
+    "syl": "93.29"
+  },
+  {
+    "date": "2021-07-19",
+    "dhk": "895.89",
+    "ctg": "396.00",
+    "khu": "269.86",
+    "mym": "62.71",
+    "raj": "270.29",
+    "ran": "121.00",
+    "bar": "108.14",
+    "syl": "94.57"
+  },
+  {
+    "date": "2021-07-19",
+    "dhk": "895.89",
+    "ctg": "396.00",
+    "khu": "269.86",
+    "mym": "62.71",
+    "raj": "270.29",
+    "ran": "121.00",
+    "bar": "108.14",
+    "syl": "94.57"
+  },
+  {
+    "date": "2021-07-20",
+    "dhk": "903.78",
+    "ctg": "397.00",
+    "khu": "260.57",
+    "mym": "61.86",
+    "raj": "271.86",
+    "ran": "121.29",
+    "bar": "113.00",
+    "syl": "97.43"
+  },
+  {
+    "date": "2021-07-21",
+    "dhk": "890.67",
+    "ctg": "359.43",
+    "khu": "255.86",
+    "mym": "61.14",
+    "raj": "272.29",
+    "ran": "120.29",
+    "bar": "108.14",
+    "syl": "72.00"
+  },
+  {
+    "date": "2021-07-21",
+    "dhk": "890.67",
+    "ctg": "359.43",
+    "khu": "255.86",
+    "mym": "61.14",
+    "raj": "272.29",
+    "ran": "120.29",
+    "bar": "108.14",
+    "syl": "72.00"
+  },
+  {
+    "date": "2021-07-22",
+    "dhk": "913.00",
+    "ctg": "363.57",
+    "khu": "257.86",
+    "mym": "57.29",
+    "raj": "282.00",
+    "ran": "119.43",
+    "bar": "114.57",
+    "syl": "61.63"
+  },
+  {
+    "date": "2021-07-23",
+    "dhk": "1012.63",
+    "ctg": "356.00",
+    "khu": "254.29",
+    "mym": "57.43",
+    "raj": "282.29",
+    "ran": "116.57",
+    "bar": "107.14",
+    "syl": "61.38"
+  },
+  {
+    "date": "2021-07-24",
+    "dhk": "1043.50",
+    "ctg": "362.86",
+    "khu": "243.43",
+    "mym": "52.57",
+    "raj": "292.00",
+    "ran": "116.86",
+    "bar": "106.00",
+    "syl": "66.63"
+  },
+  {
+    "date": "2021-07-25",
+    "dhk": "1063.50",
+    "ctg": "379.57",
+    "khu": "259.86",
+    "mym": "52.86",
+    "raj": "297.57",
+    "ran": "115.29",
+    "bar": "91.71",
+    "syl": "73.50"
+  },
+  {
+    "date": "2021-07-26",
+    "dhk": "1187.29",
+    "ctg": "362.00",
+    "khu": "244.86",
+    "mym": "45.86",
+    "raj": "286.29",
+    "ran": "121.14",
+    "bar": "90.14",
+    "syl": "83.00"
+  },
+  {
+    "date": "2021-07-27",
+    "dhk": "1144.29",
+    "ctg": "348.86",
+    "khu": "237.00",
+    "mym": "41.57",
+    "raj": "287.43",
+    "ran": "126.29",
+    "bar": "90.86",
+    "syl": "73.25"
+  },
+  {
+    "date": "2021-07-28",
+    "dhk": "1162.57",
+    "ctg": "365.00",
+    "khu": "212.63",
+    "mym": "39.43",
+    "raj": "297.86",
+    "ran": "127.43",
+    "bar": "89.43",
+    "syl": "84.71"
+  },
+  {
+    "date": "2021-07-28",
+    "dhk": "1162.57",
+    "ctg": "365.00",
+    "khu": "212.63",
+    "mym": "39.43",
+    "raj": "297.86",
+    "ran": "127.43",
+    "bar": "89.43",
+    "syl": "84.71"
+  },
+  {
+    "date": "2021-07-29",
+    "dhk": "1165.43",
+    "ctg": "368.57",
+    "khu": "206.75",
+    "mym": "38.29",
+    "raj": "285.14",
+    "ran": "123.71",
+    "bar": "86.57",
+    "syl": "85.29"
+  },
+  {
+    "date": "2021-07-30",
+    "dhk": "1215.00",
+    "ctg": "365.86",
+    "khu": "210.13",
+    "mym": "39.14",
+    "raj": "271.57",
+    "ran": "121.14",
+    "bar": "86.00",
+    "syl": "81.00"
+  },
+  {
+    "date": "2021-07-31",
+    "dhk": "1196.57",
+    "ctg": "351.86",
+    "khu": "223.88",
+    "mym": "37.14",
+    "raj": "269.43",
+    "ran": "103.38",
+    "bar": "84.86",
+    "syl": "82.43"
+  },
+  {
+    "date": "2021-07-31",
+    "dhk": "1196.57",
+    "ctg": "351.86",
+    "khu": "223.88",
+    "mym": "37.14",
+    "raj": "269.43",
+    "ran": "103.38",
+    "bar": "84.86",
+    "syl": "82.43"
+  },
+  {
+    "date": "2021-08-01",
+    "dhk": "1041.00",
+    "ctg": "300.86",
+    "khu": "197.50",
+    "mym": "36.57",
+    "raj": "250.71",
+    "ran": "95.00",
+    "bar": "81.00",
+    "syl": "83.14"
+  },
+  {
+    "date": "2021-08-02",
+    "dhk": "862.13",
+    "ctg": "277.57",
+    "khu": "196.13",
+    "mym": "36.14",
+    "raj": "236.86",
+    "ran": "88.25",
+    "bar": "71.29",
+    "syl": "72.14"
+  },
+  {
+    "date": "2021-08-02",
+    "dhk": "862.13",
+    "ctg": "277.57",
+    "khu": "196.13",
+    "mym": "36.14",
+    "raj": "236.86",
+    "ran": "88.25",
+    "bar": "71.29",
+    "syl": "72.14"
+  },
+  {
+    "date": "2021-08-03",
+    "dhk": "831.88",
+    "ctg": "264.57",
+    "khu": "179.25",
+    "mym": "34.57",
+    "raj": "206.57",
+    "ran": "83.13",
+    "bar": "63.00",
+    "syl": "74.29"
+  },
+  {
+    "date": "2021-08-04",
+    "dhk": "817.88",
+    "ctg": "255.43",
+    "khu": "198.14",
+    "mym": "36.57",
+    "raj": "180.43",
+    "ran": "85.13",
+    "bar": "63.29",
+    "syl": "74.57"
+  },
+  {
+    "date": "2021-08-05",
+    "dhk": "805.38",
+    "ctg": "264.43",
+    "khu": "218.00",
+    "mym": "39.14",
+    "raj": "181.29",
+    "ran": "89.88",
+    "bar": "54.00",
+    "syl": "76.43"
+  },
+  {
+    "date": "2021-08-06",
+    "dhk": "803.50",
+    "ctg": "260.14",
+    "khu": "230.00",
+    "mym": "41.43",
+    "raj": "191.57",
+    "ran": "91.88",
+    "bar": "55.29",
+    "syl": "80.71"
+  },
+  {
+    "date": "2021-08-07",
+    "dhk": "822.50",
+    "ctg": "264.29",
+    "khu": "227.14",
+    "mym": "47.00",
+    "raj": "184.00",
+    "ran": "114.43",
+    "bar": "55.00",
+    "syl": "81.29"
+  },
+  {
+    "date": "2021-08-08",
+    "dhk": "947.38",
+    "ctg": "301.14",
+    "khu": "246.00",
+    "mym": "49.00",
+    "raj": "190.86",
+    "ran": "129.71",
+    "bar": "58.00",
+    "syl": "82.71"
+  },
+  {
+    "date": "2021-08-09",
+    "dhk": "1186.86",
+    "ctg": "361.14",
+    "khu": "267.71",
+    "mym": "55.86",
+    "raj": "196.43",
+    "ran": "135.14",
+    "bar": "70.71",
+    "syl": "76.43"
+  },
+  {
+    "date": "2021-08-10",
+    "dhk": "1273.14",
+    "ctg": "380.57",
+    "khu": "299.43",
+    "mym": "67.14",
+    "raj": "215.00",
+    "ran": "144.14",
+    "bar": "76.29",
+    "syl": "92.14"
+  },
+  {
+    "date": "2021-08-11",
+    "dhk": "1286.00",
+    "ctg": "391.29",
+    "khu": "302.43",
+    "mym": "68.57",
+    "raj": "232.43",
+    "ran": "136.86",
+    "bar": "75.14",
+    "syl": "102.29"
+  },
+  {
+    "date": "2021-08-12",
+    "dhk": "1273.00",
+    "ctg": "367.86",
+    "khu": "275.57",
+    "mym": "72.71",
+    "raj": "233.43",
+    "ran": "140.14",
+    "bar": "79.86",
+    "syl": "110.86"
+  },
+  {
+    "date": "2021-08-13",
+    "dhk": "1272.00",
+    "ctg": "379.71",
+    "khu": "256.14",
+    "mym": "72.71",
+    "raj": "219.29",
+    "ran": "144.57",
+    "bar": "77.71",
+    "syl": "112.14"
+  },
+  {
+    "date": "2021-08-14",
+    "dhk": "1272.14",
+    "ctg": "373.14",
+    "khu": "248.00",
+    "mym": "71.71",
+    "raj": "223.86",
+    "ran": "143.86",
+    "bar": "78.57",
+    "syl": "106.71"
+  },
+  {
+    "date": "2021-08-15",
+    "dhk": "1228.43",
+    "ctg": "359.86",
+    "khu": "242.86",
+    "mym": "69.29",
+    "raj": "230.14",
+    "ran": "166.29",
+    "bar": "78.71",
+    "syl": "104.86"
+  },
+  {
+    "date": "2021-08-16",
+    "dhk": "1183.43",
+    "ctg": "330.29",
+    "khu": "229.86",
+    "mym": "68.14",
+    "raj": "246.43",
+    "ran": "162.00",
+    "bar": "71.57",
+    "syl": "111.86"
+  },
+  {
+    "date": "2021-08-17",
+    "dhk": "1160.43",
+    "ctg": "333.00",
+    "khu": "222.43",
+    "mym": "61.57",
+    "raj": "243.29",
+    "ran": "162.29",
+    "bar": "69.00",
+    "syl": "100.71"
+  },
+  {
+    "date": "2021-08-18",
+    "dhk": "1170.29",
+    "ctg": "320.14",
+    "khu": "216.71",
+    "mym": "56.71",
+    "raj": "232.57",
+    "ran": "168.71",
+    "bar": "67.57",
+    "syl": "102.29"
+  },
+  {
+    "date": "2021-08-19",
+    "dhk": "1194.43",
+    "ctg": "324.29",
+    "khu": "230.29",
+    "mym": "54.86",
+    "raj": "236.86",
+    "ran": "167.43",
+    "bar": "69.14",
+    "syl": "96.71"
+  },
+  {
+    "date": "2021-08-20",
+    "dhk": "1182.86",
+    "ctg": "307.71",
+    "khu": "227.14",
+    "mym": "51.57",
+    "raj": "232.29",
+    "ran": "164.00",
+    "bar": "66.71",
+    "syl": "98.29"
+  },
+  {
+    "date": "2021-08-21",
+    "dhk": "1166.86",
+    "ctg": "302.86",
+    "khu": "244.43",
+    "mym": "49.86",
+    "raj": "223.43",
+    "ran": "160.29",
+    "bar": "65.00",
+    "syl": "108.00"
+  },
+  {
+    "date": "2021-08-22",
+    "dhk": "1188.29",
+    "ctg": "300.71",
+    "khu": "248.86",
+    "mym": "53.14",
+    "raj": "219.71",
+    "ran": "135.86",
+    "bar": "63.14",
+    "syl": "105.71"
+  },
+  {
+    "date": "2021-08-23",
+    "dhk": "1193.57",
+    "ctg": "309.14",
+    "khu": "261.86",
+    "mym": "49.43",
+    "raj": "202.57",
+    "ran": "136.86",
+    "bar": "61.57",
+    "syl": "111.00"
+  },
+  {
+    "date": "2021-08-24",
+    "dhk": "1182.29",
+    "ctg": "292.43",
+    "khu": "250.86",
+    "mym": "47.29",
+    "raj": "199.14",
+    "ran": "133.43",
+    "bar": "64.57",
+    "syl": "111.71"
+  },
+  {
+    "date": "2021-08-25",
+    "dhk": "1155.71",
+    "ctg": "281.29",
+    "khu": "242.29",
+    "mym": "46.43",
+    "raj": "200.57",
+    "ran": "133.14",
+    "bar": "63.43",
+    "syl": "108.29"
+  },
+  {
+    "date": "2021-08-26",
+    "dhk": "1123.57",
+    "ctg": "274.71",
+    "khu": "235.43",
+    "mym": "41.86",
+    "raj": "191.86",
+    "ran": "131.86",
+    "bar": "62.71",
+    "syl": "109.43"
+  },
+  {
+    "date": "2021-08-27",
+    "dhk": "1117.00",
+    "ctg": "269.29",
+    "khu": "244.43",
+    "mym": "39.43",
+    "raj": "187.00",
+    "ran": "128.00",
+    "bar": "63.29",
+    "syl": "105.14"
+  },
+  {
+    "date": "2021-08-28",
+    "dhk": "1099.71",
+    "ctg": "262.29",
+    "khu": "223.86",
+    "mym": "39.86",
+    "raj": "187.29",
+    "ran": "128.86",
+    "bar": "63.00",
+    "syl": "101.29"
+  },
+  {
+    "date": "2021-08-29",
+    "dhk": "1115.00",
+    "ctg": "259.29",
+    "khu": "216.57",
+    "mym": "39.86",
+    "raj": "179.29",
+    "ran": "122.14",
+    "bar": "60.71",
+    "syl": "100.86"
+  },
+  {
+    "date": "2021-08-30",
+    "dhk": "1091.00",
+    "ctg": "237.86",
+    "khu": "196.14",
+    "mym": "40.43",
+    "raj": "169.43",
+    "ran": "132.14",
+    "bar": "65.71",
+    "syl": "102.14"
+  },
+  {
+    "date": "2021-08-31",
+    "dhk": "1052.71",
+    "ctg": "228.00",
+    "khu": "194.29",
+    "mym": "41.29",
+    "raj": "161.86",
+    "ran": "150.29",
+    "bar": "58.43",
+    "syl": "100.14"
+  },
+  {
+    "date": "2021-09-01",
+    "dhk": "1058.43",
+    "ctg": "231.57",
+    "khu": "194.43",
+    "mym": "42.86",
+    "raj": "149.57",
+    "ran": "142.86",
+    "bar": "59.43",
+    "syl": "91.14"
+  },
+  {
+    "date": "2021-09-02",
+    "dhk": "1059.86",
+    "ctg": "236.00",
+    "khu": "187.14",
+    "mym": "43.57",
+    "raj": "141.29",
+    "ran": "140.14",
+    "bar": "53.86",
+    "syl": "89.86"
+  },
+  {
+    "date": "2021-09-03",
+    "dhk": "1067.43",
+    "ctg": "223.43",
+    "khu": "176.29",
+    "mym": "43.43",
+    "raj": "143.57",
+    "ran": "132.29",
+    "bar": "52.57",
+    "syl": "89.43"
+  },
+  {
+    "date": "2021-09-04",
+    "dhk": "1079.00",
+    "ctg": "220.57",
+    "khu": "163.86",
+    "mym": "40.14",
+    "raj": "131.14",
+    "ran": "122.00",
+    "bar": "48.86",
+    "syl": "89.00"
+  },
+  {
+    "date": "2021-09-05",
+    "dhk": "1044.00",
+    "ctg": "213.29",
+    "khu": "160.00",
+    "mym": "37.29",
+    "raj": "126.71",
+    "ran": "115.43",
+    "bar": "50.86",
+    "syl": "93.57"
+  },
+  {
+    "date": "2021-09-06",
+    "dhk": "1060.43",
+    "ctg": "212.43",
+    "khu": "159.00",
+    "mym": "38.57",
+    "raj": "124.00",
+    "ran": "95.14",
+    "bar": "48.29",
+    "syl": "91.14"
+  },
+  {
+    "date": "2021-09-07",
+    "dhk": "1068.14",
+    "ctg": "214.00",
+    "khu": "155.00",
+    "mym": "35.14",
+    "raj": "123.86",
+    "ran": "72.57",
+    "bar": "46.00",
+    "syl": "91.00"
+  },
+  {
+    "date": "2021-09-08",
+    "dhk": "1026.00",
+    "ctg": "205.57",
+    "khu": "142.00",
+    "mym": "33.29",
+    "raj": "119.29",
+    "ran": "66.00",
+    "bar": "41.71",
+    "syl": "89.00"
+  },
+  {
+    "date": "2021-09-09",
+    "dhk": "1017.43",
+    "ctg": "189.14",
+    "khu": "136.43",
+    "mym": "36.86",
+    "raj": "116.86",
+    "ran": "58.14",
+    "bar": "39.57",
+    "syl": "91.86"
+  },
+  {
+    "date": "2021-09-10",
+    "dhk": "993.00",
+    "ctg": "184.14",
+    "khu": "134.14",
+    "mym": "37.57",
+    "raj": "109.71",
+    "ran": "55.57",
+    "bar": "36.57",
+    "syl": "91.43"
+  },
+  {
+    "date": "2021-09-11",
+    "dhk": "961.71",
+    "ctg": "180.29",
+    "khu": "126.43",
+    "mym": "36.00",
+    "raj": "108.00",
+    "ran": "52.14",
+    "bar": "35.29",
+    "syl": "94.43"
+  },
+  {
+    "date": "2021-09-12",
+    "dhk": "943.43",
+    "ctg": "186.29",
+    "khu": "115.00",
+    "mym": "35.29",
+    "raj": "113.14",
+    "ran": "56.14",
+    "bar": "33.57",
+    "syl": "88.00"
+  },
+  {
+    "date": "2021-09-13",
+    "dhk": "922.71",
+    "ctg": "186.14",
+    "khu": "109.43",
+    "mym": "32.71",
+    "raj": "115.29",
+    "ran": "54.14",
+    "bar": "28.14",
+    "syl": "86.86"
+  },
+  {
+    "date": "2021-09-14",
+    "dhk": "915.86",
+    "ctg": "185.86",
+    "khu": "104.00",
+    "mym": "33.00",
+    "raj": "109.86",
+    "ran": "45.57",
+    "bar": "30.43",
+    "syl": "81.86"
+  },
+  {
+    "date": "2021-09-15",
+    "dhk": "924.71",
+    "ctg": "179.71",
+    "khu": "86.75",
+    "mym": "32.71",
+    "raj": "111.14",
+    "ran": "43.57",
+    "bar": "29.86",
+    "syl": "83.00"
+  },
+  {
+    "date": "2021-09-15",
+    "dhk": "924.71",
+    "ctg": "179.71",
+    "khu": "86.75",
+    "mym": "32.71",
+    "raj": "111.14",
+    "ran": "43.57",
+    "bar": "29.86",
+    "syl": "83.00"
+  },
+  {
+    "date": "2021-09-16",
+    "dhk": "902.43",
+    "ctg": "170.57",
+    "khu": "83.25",
+    "mym": "29.29",
+    "raj": "112.71",
+    "ran": "39.86",
+    "bar": "29.29",
+    "syl": "78.29"
+  },
+  {
+    "date": "2021-09-17",
+    "dhk": "887.86",
+    "ctg": "168.14",
+    "khu": "76.25",
+    "mym": "26.86",
+    "raj": "110.14",
+    "ran": "53.71",
+    "bar": "29.14",
+    "syl": "71.86"
+  },
+  {
+    "date": "2021-09-18",
+    "dhk": "897.43",
+    "ctg": "168.71",
+    "khu": "75.88",
+    "mym": "26.14",
+    "raj": "112.14",
+    "ran": "56.00",
+    "bar": "27.29",
+    "syl": "63.00"
+  },
+  {
+    "date": "2021-09-19",
+    "dhk": "914.43",
+    "ctg": "158.43",
+    "khu": "74.25",
+    "mym": "27.14",
+    "raj": "116.86",
+    "ran": "53.29",
+    "bar": "27.57",
+    "syl": "59.00"
+  },
+  {
+    "date": "2021-09-20",
+    "dhk": "911.43",
+    "ctg": "150.43",
+    "khu": "70.13",
+    "mym": "25.86",
+    "raj": "111.86",
+    "ran": "61.00",
+    "bar": "29.29",
+    "syl": "53.29"
+  },
+  {
+    "date": "2021-09-21",
+    "dhk": "889.14",
+    "ctg": "140.00",
+    "khu": "68.25",
+    "mym": "25.86",
+    "raj": "111.29",
+    "ran": "63.29",
+    "bar": "27.71",
+    "syl": "53.57"
+  },
+  {
+    "date": "2021-09-22",
+    "dhk": "871.14",
+    "ctg": "142.29",
+    "khu": "78.57",
+    "mym": "26.71",
+    "raj": "115.57",
+    "ran": "66.29",
+    "bar": "26.14",
+    "syl": "50.29"
+  },
+  {
+    "date": "2021-09-23",
+    "dhk": "761.63",
+    "ctg": "148.29",
+    "khu": "70.57",
+    "mym": "24.86",
+    "raj": "120.00",
+    "ran": "66.43",
+    "bar": "27.00",
+    "syl": "42.00"
+  },
+  {
+    "date": "2021-09-23",
+    "dhk": "761.63",
+    "ctg": "148.29",
+    "khu": "70.57",
+    "mym": "24.86",
+    "raj": "120.00",
+    "ran": "66.43",
+    "bar": "27.00",
+    "syl": "42.00"
+  },
+  {
+    "date": "2021-09-24",
+    "dhk": "772.13",
+    "ctg": "147.57",
+    "khu": "67.43",
+    "mym": "23.71",
+    "raj": "109.43",
+    "ran": "53.86",
+    "bar": "25.29",
+    "syl": "40.43"
+  },
+  {
+    "date": "2021-09-25",
+    "dhk": "759.88",
+    "ctg": "141.29",
+    "khu": "64.14",
+    "mym": "24.43",
+    "raj": "109.71",
+    "ran": "50.57",
+    "bar": "25.57",
+    "syl": "35.86"
+  },
+  {
+    "date": "2021-09-26",
+    "dhk": "739.50",
+    "ctg": "136.29",
+    "khu": "60.71",
+    "mym": "22.57",
+    "raj": "101.43",
+    "ran": "50.14",
+    "bar": "23.71",
+    "syl": "39.00"
+  },
+  {
+    "date": "2021-09-27",
+    "dhk": "724.63",
+    "ctg": "133.29",
+    "khu": "58.57",
+    "mym": "23.14",
+    "raj": "96.57",
+    "ran": "43.00",
+    "bar": "23.00",
+    "syl": "35.00"
+  },
+  {
+    "date": "2021-09-28",
+    "dhk": "735.00",
+    "ctg": "126.29",
+    "khu": "56.57",
+    "mym": "23.57",
+    "raj": "92.57",
+    "ran": "41.43",
+    "bar": "22.86",
+    "syl": "37.57"
+  },
+  {
+    "date": "2021-09-29",
+    "dhk": "718.75",
+    "ctg": "114.14",
+    "khu": "52.14",
+    "mym": "22.57",
+    "raj": "79.86",
+    "ran": "40.29",
+    "bar": "24.14",
+    "syl": "36.57"
+  },
+  {
+    "date": "2021-09-30",
+    "dhk": "816.71",
+    "ctg": "111.29",
+    "khu": "52.00",
+    "mym": "24.14",
+    "raj": "71.86",
+    "ran": "40.57",
+    "bar": "22.14",
+    "syl": "36.43"
+  },
+  {
+    "date": "2021-10-01",
+    "dhk": "812.57",
+    "ctg": "112.00",
+    "khu": "49.43",
+    "mym": "23.57",
+    "raj": "71.71",
+    "ran": "40.14",
+    "bar": "22.86",
+    "syl": "34.29"
+  },
+  {
+    "date": "2021-10-02",
+    "dhk": "812.29",
+    "ctg": "113.43",
+    "khu": "47.00",
+    "mym": "21.86",
+    "raj": "64.29",
+    "ran": "40.57",
+    "bar": "22.57",
+    "syl": "35.43"
+  },
+  {
+    "date": "2021-10-03",
+    "dhk": "824.71",
+    "ctg": "115.43",
+    "khu": "46.00",
+    "mym": "22.43",
+    "raj": "57.14",
+    "ran": "38.14",
+    "bar": "23.00",
+    "syl": "33.43"
+  },
+  {
+    "date": "2021-10-04",
+    "dhk": "842.29",
+    "ctg": "117.71",
+    "khu": "46.29",
+    "mym": "20.57",
+    "raj": "59.00",
+    "ran": "35.71",
+    "bar": "24.29",
+    "syl": "35.43"
+  },
+  {
+    "date": "2021-10-05",
+    "dhk": "852.86",
+    "ctg": "125.43",
+    "khu": "45.14",
+    "mym": "18.86",
+    "raj": "59.43",
+    "ran": "38.29",
+    "bar": "24.00",
+    "syl": "31.29"
+  },
+  {
+    "date": "2021-10-06",
+    "dhk": "874.71",
+    "ctg": "129.86",
+    "khu": "48.86",
+    "mym": "17.86",
+    "raj": "70.43",
+    "ran": "36.86",
+    "bar": "22.00",
+    "syl": "30.71"
+  },
+  {
+    "date": "2021-10-07",
+    "dhk": "871.57",
+    "ctg": "131.57",
+    "khu": "48.71",
+    "mym": "16.43",
+    "raj": "66.43",
+    "ran": "34.86",
+    "bar": "23.14",
+    "syl": "32.43"
+  },
+  {
+    "date": "2021-10-08",
+    "dhk": "855.86",
+    "ctg": "134.86",
+    "khu": "52.14",
+    "mym": "15.14",
+    "raj": "63.86",
+    "ran": "35.57",
+    "bar": "24.57",
+    "syl": "36.29"
+  },
+  {
+    "date": "2021-10-09",
+    "dhk": "867.57",
+    "ctg": "136.00",
+    "khu": "51.29",
+    "mym": "15.57",
+    "raj": "61.71",
+    "ran": "32.71",
+    "bar": "24.57",
+    "syl": "36.43"
+  },
+  {
+    "date": "2021-10-10",
+    "dhk": "854.71",
+    "ctg": "137.00",
+    "khu": "51.71",
+    "mym": "16.14",
+    "raj": "61.57",
+    "ran": "30.71",
+    "bar": "24.29",
+    "syl": "37.29"
+  },
+  {
+    "date": "2021-10-11",
+    "dhk": "842.43",
+    "ctg": "140.14",
+    "khu": "48.71",
+    "mym": "15.86",
+    "raj": "57.71",
+    "ran": "31.14",
+    "bar": "23.29",
+    "syl": "35.14"
+  },
+  {
+    "date": "2021-10-12",
+    "dhk": "845.71",
+    "ctg": "136.00",
+    "khu": "47.00",
+    "mym": "15.57",
+    "raj": "52.29",
+    "ran": "28.00",
+    "bar": "23.86",
+    "syl": "33.43"
+  },
+  {
+    "date": "2021-10-13",
+    "dhk": "860.86",
+    "ctg": "141.29",
+    "khu": "44.71",
+    "mym": "15.57",
+    "raj": "42.14",
+    "ran": "27.14",
+    "bar": "24.57",
+    "syl": "34.43"
+  },
+  {
+    "date": "2021-10-14",
+    "dhk": "876.14",
+    "ctg": "136.00",
+    "khu": "43.00",
+    "mym": "14.57",
+    "raj": "45.00",
+    "ran": "30.14",
+    "bar": "24.57",
+    "syl": "36.43"
+  },
+  {
+    "date": "2021-10-15",
+    "dhk": "920.43",
+    "ctg": "136.71",
+    "khu": "40.57",
+    "mym": "16.43",
+    "raj": "45.43",
+    "ran": "29.57",
+    "bar": "23.29",
+    "syl": "35.29"
+  },
+  {
+    "date": "2021-10-16",
+    "dhk": "916.71",
+    "ctg": "138.43",
+    "khu": "43.14",
+    "mym": "15.71",
+    "raj": "45.57",
+    "ran": "32.29",
+    "bar": "23.86",
+    "syl": "35.14"
+  },
+  {
+    "date": "2021-10-17",
+    "dhk": "824.50",
+    "ctg": "136.43",
+    "khu": "41.86",
+    "mym": "14.00",
+    "raj": "45.43",
+    "ran": "31.57",
+    "bar": "24.14",
+    "syl": "33.00"
+  },
+  {
+    "date": "2021-10-17",
+    "dhk": "824.50",
+    "ctg": "136.43",
+    "khu": "41.86",
+    "mym": "14.00",
+    "raj": "45.43",
+    "ran": "31.57",
+    "bar": "24.14",
+    "syl": "33.00"
+  },
+  {
+    "date": "2021-10-18",
+    "dhk": "845.75",
+    "ctg": "140.29",
+    "khu": "43.00",
+    "mym": "13.14",
+    "raj": "48.86",
+    "ran": "33.43",
+    "bar": "25.71",
+    "syl": "33.29"
+  },
+  {
+    "date": "2021-10-19",
+    "dhk": "835.50",
+    "ctg": "146.29",
+    "khu": "42.29",
+    "mym": "13.14",
+    "raj": "49.71",
+    "ran": "31.43",
+    "bar": "22.71",
+    "syl": "37.29"
+  },
+  {
+    "date": "2021-10-20",
+    "dhk": "835.63",
+    "ctg": "142.43",
+    "khu": "38.14",
+    "mym": "12.86",
+    "raj": "50.71",
+    "ran": "32.86",
+    "bar": "24.29",
+    "syl": "34.71"
+  },
+  {
+    "date": "2021-10-21",
+    "dhk": "846.00",
+    "ctg": "147.43",
+    "khu": "41.00",
+    "mym": "12.86",
+    "raj": "50.14",
+    "ran": "32.00",
+    "bar": "27.00",
+    "syl": "29.86"
+  },
+  {
+    "date": "2021-10-22",
+    "dhk": "798.50",
+    "ctg": "152.57",
+    "khu": "41.29",
+    "mym": "12.43",
+    "raj": "52.57",
+    "ran": "31.71",
+    "bar": "26.86",
+    "syl": "30.14"
+  },
+  {
+    "date": "2021-10-23",
+    "dhk": "785.13",
+    "ctg": "150.86",
+    "khu": "37.14",
+    "mym": "13.43",
+    "raj": "58.57",
+    "ran": "32.43",
+    "bar": "24.71",
+    "syl": "30.57"
+  },
+  {
+    "date": "2021-10-24",
+    "dhk": "881.29",
+    "ctg": "153.14",
+    "khu": "38.43",
+    "mym": "13.57",
+    "raj": "56.00",
+    "ran": "33.14",
+    "bar": "24.43",
+    "syl": "32.57"
+  },
+  {
+    "date": "2021-10-25",
+    "dhk": "858.86",
+    "ctg": "146.86",
+    "khu": "36.71",
+    "mym": "14.71",
+    "raj": "56.00",
+    "ran": "31.71",
+    "bar": "24.57",
+    "syl": "33.43"
+  },
+  {
+    "date": "2021-10-26",
+    "dhk": "848.00",
+    "ctg": "145.71",
+    "khu": "34.86",
+    "mym": "13.57",
+    "raj": "58.29",
+    "ran": "36.29",
+    "bar": "26.00",
+    "syl": "32.57"
+  },
+  {
+    "date": "2021-10-27",
+    "dhk": "725.50",
+    "ctg": "143.71",
+    "khu": "33.71",
+    "mym": "13.14",
+    "raj": "56.29",
+    "ran": "33.71",
+    "bar": "23.43",
+    "syl": "33.86"
+  },
+  {
+    "date": "2021-10-27",
+    "dhk": "725.50",
+    "ctg": "143.71",
+    "khu": "33.71",
+    "mym": "13.14",
+    "raj": "56.29",
+    "ran": "33.71",
+    "bar": "23.43",
+    "syl": "33.86"
+  },
+  {
+    "date": "2021-10-28",
+    "dhk": "735.25",
+    "ctg": "144.57",
+    "khu": "29.29",
+    "mym": "15.29",
+    "raj": "60.57",
+    "ran": "32.29",
+    "bar": "24.00",
+    "syl": "36.29"
+  },
+  {
+    "date": "2021-10-29",
+    "dhk": "775.13",
+    "ctg": "143.29",
+    "khu": "26.57",
+    "mym": "18.14",
+    "raj": "60.57",
+    "ran": "34.29",
+    "bar": "24.86",
+    "syl": "37.71"
+  },
+  {
+    "date": "2021-10-30",
+    "dhk": "793.38",
+    "ctg": "145.71",
+    "khu": "27.86",
+    "mym": "18.00",
+    "raj": "56.14",
+    "ran": "33.14",
+    "bar": "28.14",
+    "syl": "38.00"
+  },
+  {
+    "date": "2021-10-31",
+    "dhk": "812.88",
+    "ctg": "147.14",
+    "khu": "31.57",
+    "mym": "17.43",
+    "raj": "59.71",
+    "ran": "33.43",
+    "bar": "29.29",
+    "syl": "39.00"
+  },
+  {
+    "date": "2021-11-01",
+    "dhk": "836.25",
+    "ctg": "148.86",
+    "khu": "31.00",
+    "mym": "17.86",
+    "raj": "58.14",
+    "ran": "34.29",
+    "bar": "30.43",
+    "syl": "42.29"
+  },
+  {
+    "date": "2021-11-02",
+    "dhk": "864.75",
+    "ctg": "151.29",
+    "khu": "31.57",
+    "mym": "18.57",
+    "raj": "58.29",
+    "ran": "32.71",
+    "bar": "32.43",
+    "syl": "39.71"
+  },
+  {
+    "date": "2021-11-03",
+    "dhk": "992.43",
+    "ctg": "157.14",
+    "khu": "34.86",
+    "mym": "19.43",
+    "raj": "62.57",
+    "ran": "35.29",
+    "bar": "35.57",
+    "syl": "38.43"
+  },
+  {
+    "date": "2021-11-04",
+    "dhk": "1001.71",
+    "ctg": "156.57",
+    "khu": "38.43",
+    "mym": "19.29",
+    "raj": "64.29",
+    "ran": "36.00",
+    "bar": "37.86",
+    "syl": "37.29"
+  },
+  {
+    "date": "2021-11-05",
+    "dhk": "977.14",
+    "ctg": "154.43",
+    "khu": "41.00",
+    "mym": "16.71",
+    "raj": "65.00",
+    "ran": "38.14",
+    "bar": "38.14",
+    "syl": "34.14"
+  },
+  {
+    "date": "2021-11-06",
+    "dhk": "994.86",
+    "ctg": "157.43",
+    "khu": "41.00",
+    "mym": "17.43",
+    "raj": "67.00",
+    "ran": "38.00",
+    "bar": "40.57",
+    "syl": "33.14"
+  },
+  {
+    "date": "2021-11-07",
+    "dhk": "992.71",
+    "ctg": "158.71",
+    "khu": "37.29",
+    "mym": "19.29",
+    "raj": "64.71",
+    "ran": "36.86",
+    "bar": "40.86",
+    "syl": "33.43"
+  },
+  {
+    "date": "2021-11-08",
+    "dhk": "996.86",
+    "ctg": "156.86",
+    "khu": "39.29",
+    "mym": "19.14",
+    "raj": "73.71",
+    "ran": "35.14",
+    "bar": "42.14",
+    "syl": "29.00"
+  },
+  {
+    "date": "2021-11-09",
+    "dhk": "1008.14",
+    "ctg": "168.00",
+    "khu": "39.00",
+    "mym": "20.29",
+    "raj": "73.71",
+    "ran": "35.14",
+    "bar": "42.29",
+    "syl": "34.71"
+  },
+  {
+    "date": "2021-11-10",
+    "dhk": "1043.29",
+    "ctg": "168.57",
+    "khu": "37.86",
+    "mym": "21.57",
+    "raj": "74.86",
+    "ran": "37.71",
+    "bar": "43.71",
+    "syl": "35.57"
+  },
+  {
+    "date": "2021-11-11",
+    "dhk": "1029.43",
+    "ctg": "175.57",
+    "khu": "35.43",
+    "mym": "19.71",
+    "raj": "69.57",
+    "ran": "38.57",
+    "bar": "40.86",
+    "syl": "39.14"
+  },
+  {
+    "date": "2021-11-12",
+    "dhk": "1064.14",
+    "ctg": "180.43",
+    "khu": "37.14",
+    "mym": "18.29",
+    "raj": "67.57",
+    "ran": "37.71",
+    "bar": "42.71",
+    "syl": "40.29"
+  },
+  {
+    "date": "2021-11-13",
+    "dhk": "1066.71",
+    "ctg": "178.14",
+    "khu": "36.00",
+    "mym": "18.00",
+    "raj": "67.00",
+    "ran": "38.71",
+    "bar": "42.57",
+    "syl": "41.86"
+  },
+  {
+    "date": "2021-11-14",
+    "dhk": "971.38",
+    "ctg": "180.57",
+    "khu": "35.71",
+    "mym": "16.57",
+    "raj": "72.14",
+    "ran": "39.71",
+    "bar": "42.00",
+    "syl": "40.14"
+  },
+  {
+    "date": "2021-11-14",
+    "dhk": "971.38",
+    "ctg": "180.57",
+    "khu": "35.71",
+    "mym": "16.57",
+    "raj": "72.14",
+    "ran": "39.71",
+    "bar": "42.00",
+    "syl": "40.14"
+  },
+  {
+    "date": "2021-11-15",
+    "dhk": "974.88",
+    "ctg": "195.29",
+    "khu": "36.57",
+    "mym": "15.57",
+    "raj": "66.43",
+    "ran": "43.43",
+    "bar": "41.57",
+    "syl": "40.43"
+  },
+  {
+    "date": "2021-11-16",
+    "dhk": "1001.38",
+    "ctg": "183.86",
+    "khu": "36.86",
+    "mym": "14.43",
+    "raj": "66.29",
+    "ran": "41.43",
+    "bar": "42.00",
+    "syl": "37.00"
+  },
+  {
+    "date": "2021-11-17",
+    "dhk": "892.00",
+    "ctg": "195.43",
+    "khu": "39.29",
+    "mym": "16.00",
+    "raj": "65.14",
+    "ran": "41.43",
+    "bar": "40.57",
+    "syl": "37.00"
+  },
+  {
+    "date": "2021-11-17",
+    "dhk": "892.00",
+    "ctg": "195.43",
+    "khu": "39.29",
+    "mym": "16.00",
+    "raj": "65.14",
+    "ran": "41.43",
+    "bar": "40.57",
+    "syl": "37.00"
+  },
+  {
+    "date": "2021-11-18",
+    "dhk": "929.00",
+    "ctg": "201.71",
+    "khu": "41.71",
+    "mym": "17.86",
+    "raj": "66.00",
+    "ran": "43.29",
+    "bar": "38.57",
+    "syl": "33.00"
+  },
+  {
+    "date": "2021-11-19",
+    "dhk": "964.00",
+    "ctg": "211.29",
+    "khu": "41.00",
+    "mym": "19.14",
+    "raj": "69.71",
+    "ran": "43.86",
+    "bar": "37.71",
+    "syl": "31.14"
+  },
+  {
+    "date": "2021-11-20",
+    "dhk": "998.33",
+    "ctg": "216.00",
+    "khu": "42.43",
+    "mym": "18.57",
+    "raj": "71.86",
+    "ran": "46.57",
+    "bar": "35.71",
+    "syl": "29.14"
+  },
+  {
+    "date": "2021-11-21",
+    "dhk": "1147.38",
+    "ctg": "228.00",
+    "khu": "37.63",
+    "mym": "20.00",
+    "raj": "76.29",
+    "ran": "48.14",
+    "bar": "35.86",
+    "syl": "29.14"
+  },
+  {
+    "date": "2021-11-21",
+    "dhk": "1147.38",
+    "ctg": "228.00",
+    "khu": "37.63",
+    "mym": "20.00",
+    "raj": "76.29",
+    "ran": "48.14",
+    "bar": "35.86",
+    "syl": "29.14"
+  },
+  {
+    "date": "2021-11-22",
+    "dhk": "1184.88",
+    "ctg": "239.43",
+    "khu": "37.25",
+    "mym": "20.71",
+    "raj": "77.29",
+    "ran": "49.14",
+    "bar": "35.43",
+    "syl": "31.00"
+  },
+  {
+    "date": "2021-11-23",
+    "dhk": "1186.88",
+    "ctg": "260.57",
+    "khu": "40.75",
+    "mym": "23.43",
+    "raj": "79.00",
+    "ran": "53.71",
+    "bar": "35.57",
+    "syl": "30.71"
+  },
+  {
+    "date": "2021-11-24",
+    "dhk": "1211.50",
+    "ctg": "249.14",
+    "khu": "40.75",
+    "mym": "24.86",
+    "raj": "81.29",
+    "ran": "53.86",
+    "bar": "35.57",
+    "syl": "32.29"
+  },
+  {
+    "date": "2021-11-24",
+    "dhk": "1211.50",
+    "ctg": "249.14",
+    "khu": "40.75",
+    "mym": "24.86",
+    "raj": "81.29",
+    "ran": "53.86",
+    "bar": "35.57",
+    "syl": "32.29"
+  },
+  {
+    "date": "2021-11-25",
+    "dhk": "1186.50",
+    "ctg": "257.57",
+    "khu": "43.13",
+    "mym": "24.43",
+    "raj": "86.14",
+    "ran": "55.71",
+    "bar": "37.43",
+    "syl": "34.43"
+  },
+  {
+    "date": "2021-11-26",
+    "dhk": "1178.50",
+    "ctg": "265.29",
+    "khu": "42.75",
+    "mym": "24.57",
+    "raj": "84.43",
+    "ran": "57.00",
+    "bar": "39.29",
+    "syl": "36.43"
+  },
+  {
+    "date": "2021-11-27",
+    "dhk": "1151.88",
+    "ctg": "283.29",
+    "khu": "42.88",
+    "mym": "27.71",
+    "raj": "88.00",
+    "ran": "55.86",
+    "bar": "39.71",
+    "syl": "38.29"
+  },
+  {
+    "date": "2021-11-28",
+    "dhk": "1121.38",
+    "ctg": "273.14",
+    "khu": "47.86",
+    "mym": "28.00",
+    "raj": "87.00",
+    "ran": "55.86",
+    "bar": "41.14",
+    "syl": "38.71"
+  },
+  {
+    "date": "2021-11-29",
+    "dhk": "1124.75",
+    "ctg": "285.14",
+    "khu": "48.71",
+    "mym": "30.00",
+    "raj": "83.86",
+    "ran": "60.43",
+    "bar": "39.71",
+    "syl": "37.14"
+  },
+  {
+    "date": "2021-11-30",
+    "dhk": "999.11",
+    "ctg": "277.86",
+    "khu": "46.29",
+    "mym": "28.57",
+    "raj": "87.57",
+    "ran": "63.86",
+    "bar": "41.14",
+    "syl": "36.71"
+  },
+  {
+    "date": "2021-11-30",
+    "dhk": "999.11",
+    "ctg": "277.86",
+    "khu": "46.29",
+    "mym": "28.57",
+    "raj": "87.57",
+    "ran": "63.86",
+    "bar": "41.14",
+    "syl": "36.71"
+  },
+  {
+    "date": "2021-12-01",
+    "dhk": "1122.13",
+    "ctg": "298.57",
+    "khu": "44.71",
+    "mym": "24.57",
+    "raj": "86.00",
+    "ran": "64.86",
+    "bar": "42.29",
+    "syl": "36.71"
+  },
+  {
+    "date": "2021-12-02",
+    "dhk": "1005.56",
+    "ctg": "288.71",
+    "khu": "41.29",
+    "mym": "27.00",
+    "raj": "90.43",
+    "ran": "65.29",
+    "bar": "41.86",
+    "syl": "35.71"
+  },
+  {
+    "date": "2021-12-02",
+    "dhk": "1005.56",
+    "ctg": "288.71",
+    "khu": "41.29",
+    "mym": "27.00",
+    "raj": "90.43",
+    "ran": "65.29",
+    "bar": "41.86",
+    "syl": "35.71"
+  }
+],
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
@@ -2875,7 +6785,1799 @@ $ydata = [];
             "marginRight": 20,
             "marginTop": 17,
             "autoMarginOffset": 20,
-            "dataProvider": <?php echo json_encode($mdata)?>,
+            "dataProvider": [
+  {
+    "date": "2021-05-20",
+    "infected": "1617",
+    "avg": "1617.00",
+    "total_infected": 26738,
+    "tested": "10207",
+    "tested_data": 10207,
+    "case": "1617"
+  },
+  {
+    "date": "2021-05-21",
+    "infected": "1773",
+    "avg": "1695.00",
+    "total_infected": 28511,
+    "tested": "10234.5",
+    "tested_data": 10234.5,
+    "case": "1695"
+  },
+  {
+    "date": "2021-05-22",
+    "infected": "1694",
+    "avg": "1694.67",
+    "total_infected": 30205,
+    "tested": "10065.33",
+    "tested_data": 10065.33,
+    "case": "1694.67"
+  },
+  {
+    "date": "2021-05-23",
+    "infected": "1873",
+    "avg": "1739.25",
+    "total_infected": 32078,
+    "tested": "10257.5",
+    "tested_data": 10257.5,
+    "case": "1739.25"
+  },
+  {
+    "date": "2021-05-24",
+    "infected": "1532",
+    "avg": "1697.80",
+    "total_infected": 33610,
+    "tested": "9987.6",
+    "tested_data": 9987.6,
+    "case": "1697.8"
+  },
+  {
+    "date": "2021-05-25",
+    "infected": "1975",
+    "avg": "1744.00",
+    "total_infected": 35585,
+    "tested": "9898.17",
+    "tested_data": 9898.17,
+    "case": "1744"
+  },
+  {
+    "date": "2021-05-26",
+    "infected": "1166",
+    "avg": "1661.43",
+    "total_infected": 36751,
+    "tested": "9256.57",
+    "tested_data": 9256.57,
+    "case": "1661.43"
+  },
+  {
+    "date": "2021-05-27",
+    "infected": "1541",
+    "avg": "1650.57",
+    "total_infected": 38292,
+    "tested": "8943.43",
+    "tested_data": 8943.43,
+    "case": "1650.57"
+  },
+  {
+    "date": "2021-05-28",
+    "infected": "2029",
+    "avg": "1687.14",
+    "total_infected": 40321,
+    "tested": "8807.43",
+    "tested_data": 8807.43,
+    "case": "1687.14"
+  },
+  {
+    "date": "2021-05-29",
+    "infected": "2523",
+    "avg": "1805.57",
+    "total_infected": 42844,
+    "tested": "9032.29",
+    "tested_data": 9032.29,
+    "case": "1805.57"
+  },
+  {
+    "date": "2021-05-30",
+    "infected": "1764",
+    "avg": "1790.00",
+    "total_infected": 44608,
+    "tested": "8911.29",
+    "tested_data": 8911.29,
+    "case": "1790"
+  },
+  {
+    "date": "2021-05-31",
+    "infected": "2545",
+    "avg": "1934.71",
+    "total_infected": 47153,
+    "tested": "9335.29",
+    "tested_data": 9335.29,
+    "case": "1934.71"
+  },
+  {
+    "date": "2021-06-01",
+    "infected": "2381",
+    "avg": "1992.71",
+    "total_infected": 49534,
+    "tested": "9619.29",
+    "tested_data": 9619.29,
+    "case": "1992.71"
+  },
+  {
+    "date": "2021-06-02",
+    "infected": "2911",
+    "avg": "2242.00",
+    "total_infected": 52445,
+    "tested": "10661.71",
+    "tested_data": 10661.71,
+    "case": "2242"
+  },
+  {
+    "date": "2021-06-03",
+    "infected": "2695",
+    "avg": "2406.86",
+    "total_infected": 55140,
+    "tested": "11303.86",
+    "tested_data": 11303.86,
+    "case": "2406.86"
+  },
+  {
+    "date": "2021-06-04",
+    "infected": "2423",
+    "avg": "2463.14",
+    "total_infected": 57563,
+    "tested": "11787.86",
+    "tested_data": 11787.86,
+    "case": "2463.14"
+  },
+  {
+    "date": "2021-06-05",
+    "infected": "2828",
+    "avg": "2506.71",
+    "total_infected": 60391,
+    "tested": "12186",
+    "tested_data": 12186,
+    "case": "2506.71"
+  },
+  {
+    "date": "2021-06-06",
+    "infected": "2635",
+    "avg": "2631.14",
+    "total_infected": 63026,
+    "tested": "12543",
+    "tested_data": 12543,
+    "case": "2631.14"
+  },
+  {
+    "date": "2021-06-07",
+    "infected": "2743",
+    "avg": "2659.43",
+    "total_infected": 65769,
+    "tested": "12723",
+    "tested_data": 12723,
+    "case": "2659.43"
+  },
+  {
+    "date": "2021-06-08",
+    "infected": "2735",
+    "avg": "2710.00",
+    "total_infected": 68504,
+    "tested": "12944.29",
+    "tested_data": 12944.29,
+    "case": "2710"
+  },
+  {
+    "date": "2021-06-09",
+    "infected": "3171",
+    "avg": "2747.14",
+    "total_infected": 71675,
+    "tested": "13224.29",
+    "tested_data": 13224.29,
+    "case": "2747.14"
+  },
+  {
+    "date": "2021-06-10",
+    "infected": "3190",
+    "avg": "2817.86",
+    "total_infected": 74865,
+    "tested": "13717.86",
+    "tested_data": 13717.86,
+    "case": "2817.86"
+  },
+  {
+    "date": "2021-06-11",
+    "infected": "3187",
+    "avg": "2927.00",
+    "total_infected": 78052,
+    "tested": "14157",
+    "tested_data": 14157,
+    "case": "2927"
+  },
+  {
+    "date": "2021-06-12",
+    "infected": "3471",
+    "avg": "3018.86",
+    "total_infected": 81523,
+    "tested": "14428.71",
+    "tested_data": 14428.71,
+    "case": "3018.86"
+  },
+  {
+    "date": "2021-06-13",
+    "infected": "2856",
+    "avg": "3050.43",
+    "total_infected": 84379,
+    "tested": "15021.86",
+    "tested_data": 15021.86,
+    "case": "3050.43"
+  },
+  {
+    "date": "2021-06-14",
+    "infected": "3141",
+    "avg": "3107.29",
+    "total_infected": 87520,
+    "tested": "15217.43",
+    "tested_data": 15217.43,
+    "case": "3107.29"
+  },
+  {
+    "date": "2021-06-15",
+    "infected": "3099",
+    "avg": "3159.29",
+    "total_infected": 90619,
+    "tested": "15510.29",
+    "tested_data": 15510.29,
+    "case": "3159.29"
+  },
+  {
+    "date": "2021-06-16",
+    "infected": "3862",
+    "avg": "3258.00",
+    "total_infected": 94481,
+    "tested": "15874.57",
+    "tested_data": 15874.57,
+    "case": "3258"
+  },
+  {
+    "date": "2021-06-17",
+    "infected": "4008",
+    "avg": "3374.86",
+    "total_infected": 98489,
+    "tested": "16097.71",
+    "tested_data": 16097.71,
+    "case": "3374.86"
+  },
+  {
+    "date": "2021-06-18",
+    "infected": "3803",
+    "avg": "3462.86",
+    "total_infected": 102292,
+    "tested": "16167.29",
+    "tested_data": 16167.29,
+    "case": "3462.86"
+  },
+  {
+    "date": "2021-06-19",
+    "infected": "3243",
+    "avg": "3430.29",
+    "total_infected": 105535,
+    "tested": "16032.29",
+    "tested_data": 16032.29,
+    "case": "3430.29"
+  },
+  {
+    "date": "2021-06-20",
+    "infected": "3240",
+    "avg": "3485.14",
+    "total_infected": 108775,
+    "tested": "15659.86",
+    "tested_data": 15659.86,
+    "case": "3485.14"
+  },
+  {
+    "date": "2021-06-21",
+    "infected": "3532",
+    "avg": "3541.00",
+    "total_infected": 112306,
+    "tested": "15814.14",
+    "tested_data": 15814.14,
+    "case": "3541"
+  },
+  {
+    "date": "2021-06-22",
+    "infected": "3480",
+    "avg": "3595.43",
+    "total_infected": 115786,
+    "tested": "15888",
+    "tested_data": 15888,
+    "case": "3595.43"
+  },
+  {
+    "date": "2021-06-23",
+    "infected": "3412",
+    "avg": "3531.14",
+    "total_infected": 119198,
+    "tested": "15756.29",
+    "tested_data": 15756.29,
+    "case": "3531.14"
+  },
+  {
+    "date": "2021-06-24",
+    "infected": "3462",
+    "avg": "3453.14",
+    "total_infected": 122660,
+    "tested": "15600",
+    "tested_data": 15600,
+    "case": "3453.14"
+  },
+  {
+    "date": "2021-06-25",
+    "infected": "3946",
+    "avg": "3473.57",
+    "total_infected": 126606,
+    "tested": "15848.57",
+    "tested_data": 15848.57,
+    "case": "3473.57"
+  },
+  {
+    "date": "2021-06-26",
+    "infected": "3868",
+    "avg": "3562.86",
+    "total_infected": 130474,
+    "tested": "16341.86",
+    "tested_data": 16341.86,
+    "case": "3562.86"
+  },
+  {
+    "date": "2021-06-27",
+    "infected": "3504",
+    "avg": "3600.57",
+    "total_infected": 133978,
+    "tested": "16502.71",
+    "tested_data": 16502.71,
+    "case": "3600.57"
+  },
+  {
+    "date": "2021-06-28",
+    "infected": "3809",
+    "avg": "3640.14",
+    "total_infected": 137787,
+    "tested": "16861.86",
+    "tested_data": 16861.86,
+    "case": "3640.14"
+  },
+  {
+    "date": "2021-06-29",
+    "infected": "4014",
+    "avg": "3716.43",
+    "total_infected": 141801,
+    "tested": "17187.86",
+    "tested_data": 17187.86,
+    "case": "3716.43"
+  },
+  {
+    "date": "2021-06-30",
+    "infected": "3682",
+    "avg": "3755.00",
+    "total_infected": 145483,
+    "tested": "17492.71",
+    "tested_data": 17492.71,
+    "case": "3755"
+  },
+  {
+    "date": "2021-07-01",
+    "infected": "3775",
+    "avg": "3799.71",
+    "total_infected": 149258,
+    "tested": "17698.71",
+    "tested_data": 17698.71,
+    "case": "3799.71"
+  },
+  {
+    "date": "2021-07-02",
+    "infected": "4019",
+    "avg": "3810.14",
+    "total_infected": 153277,
+    "tested": "17750.57",
+    "tested_data": 17750.57,
+    "case": "3810.14"
+  },
+  {
+    "date": "2021-07-03",
+    "infected": "3114",
+    "avg": "3702.43",
+    "total_infected": 156391,
+    "tested": "17200.86",
+    "tested_data": 17200.86,
+    "case": "3702.43"
+  },
+  {
+    "date": "2021-07-04",
+    "infected": "3288",
+    "avg": "3671.57",
+    "total_infected": 159679,
+    "tested": "17139.43",
+    "tested_data": 17139.43,
+    "case": "3671.57"
+  },
+  {
+    "date": "2021-07-05",
+    "infected": "2738",
+    "avg": "3518.57",
+    "total_infected": 162417,
+    "tested": "16552.14",
+    "tested_data": 16552.14,
+    "case": "3518.57"
+  },
+  {
+    "date": "2021-07-06",
+    "infected": "3201",
+    "avg": "3402.43",
+    "total_infected": 165618,
+    "tested": "16039",
+    "tested_data": 16039,
+    "case": "3402.43"
+  },
+  {
+    "date": "2021-07-07",
+    "infected": "3027",
+    "avg": "3308.86",
+    "total_infected": 168645,
+    "tested": "15288.57",
+    "tested_data": 15288.57,
+    "case": "3308.86"
+  },
+  {
+    "date": "2021-07-08",
+    "infected": "3489",
+    "avg": "3268.00",
+    "total_infected": 172134,
+    "tested": "14973.86",
+    "tested_data": 14973.86,
+    "case": "3268"
+  },
+  {
+    "date": "2021-07-09",
+    "infected": "3360",
+    "avg": "3173.86",
+    "total_infected": 175494,
+    "tested": "14583.86",
+    "tested_data": 14583.86,
+    "case": "3173.86"
+  },
+  {
+    "date": "2021-07-10",
+    "infected": "2949",
+    "avg": "3150.29",
+    "total_infected": 178443,
+    "tested": "14417.86",
+    "tested_data": 14417.86,
+    "case": "3150.29"
+  },
+  {
+    "date": "2021-07-11",
+    "infected": "2686",
+    "avg": "3064.29",
+    "total_infected": 181129,
+    "tested": "13913",
+    "tested_data": 13913,
+    "case": "3064.29"
+  },
+  {
+    "date": "2021-07-12",
+    "infected": "2666",
+    "avg": "3054.00",
+    "total_infected": 183795,
+    "tested": "13494.57",
+    "tested_data": 13494.57,
+    "case": "3054"
+  },
+  {
+    "date": "2021-07-13",
+    "infected": "3099",
+    "avg": "3039.43",
+    "total_infected": 186894,
+    "tested": "13234.29",
+    "tested_data": 13234.29,
+    "case": "3039.43"
+  },
+  {
+    "date": "2021-07-14",
+    "infected": "3163",
+    "avg": "3058.86",
+    "total_infected": 190057,
+    "tested": "13274.29",
+    "tested_data": 13274.29,
+    "case": "3058.86"
+  },
+  {
+    "date": "2021-07-15",
+    "infected": "3533",
+    "avg": "3065.14",
+    "total_infected": 193590,
+    "tested": "13035.71",
+    "tested_data": 13035.71,
+    "case": "3065.14"
+  },
+  {
+    "date": "2021-07-16",
+    "infected": "2733",
+    "avg": "2975.57",
+    "total_infected": 196323,
+    "tested": "12643.86",
+    "tested_data": 12643.86,
+    "case": "2975.57"
+  },
+  {
+    "date": "2021-07-17",
+    "infected": "3034",
+    "avg": "2987.71",
+    "total_infected": 199357,
+    "tested": "12639.86",
+    "tested_data": 12639.86,
+    "case": "2987.71"
+  },
+  {
+    "date": "2021-07-18",
+    "infected": "2709",
+    "avg": "2991.00",
+    "total_infected": 202166,
+    "tested": "12601.29",
+    "tested_data": 12601.29,
+    "case": "2991"
+  },
+  {
+    "date": "2021-07-19",
+    "infected": "2459",
+    "avg": "2961.43",
+    "total_infected": 204525,
+    "tested": "12539.29",
+    "tested_data": 12539.29,
+    "case": "2961.43"
+  },
+  {
+    "date": "2021-07-20",
+    "infected": "2928",
+    "avg": "2937.00",
+    "total_infected": 207453,
+    "tested": "12673.43",
+    "tested_data": 12673.43,
+    "case": "2937"
+  },
+  {
+    "date": "2021-07-21",
+    "infected": "3057",
+    "avg": "2921.86",
+    "total_infected": 210510,
+    "tested": "12594.14",
+    "tested_data": 12594.14,
+    "case": "2921.86"
+  },
+  {
+    "date": "2021-07-22",
+    "infected": "2744",
+    "avg": "2809.14",
+    "total_infected": 213254,
+    "tested": "12315.29",
+    "tested_data": 12315.29,
+    "case": "2809.14"
+  },
+  {
+    "date": "2021-07-23",
+    "infected": "2856",
+    "avg": "2826.71",
+    "total_infected": 216110,
+    "tested": "12245.14",
+    "tested_data": 12245.14,
+    "case": "2826.71"
+  },
+  {
+    "date": "2021-07-24",
+    "infected": "2548",
+    "avg": "2757.29",
+    "total_infected": 218658,
+    "tested": "12040.43",
+    "tested_data": 12040.43,
+    "case": "2757.29"
+  },
+  {
+    "date": "2021-07-25",
+    "infected": "2520",
+    "avg": "2730.29",
+    "total_infected": 221178,
+    "tested": "11972.29",
+    "tested_data": 11972.29,
+    "case": "2730.29"
+  },
+  {
+    "date": "2021-07-26",
+    "infected": "2275",
+    "avg": "2704.00",
+    "total_infected": 223453,
+    "tested": "11894.14",
+    "tested_data": 11894.14,
+    "case": "2704"
+  },
+  {
+    "date": "2021-07-27",
+    "infected": "2772",
+    "avg": "2681.71",
+    "total_infected": 226225,
+    "tested": "11822.29",
+    "tested_data": 11822.29,
+    "case": "2681.71"
+  },
+  {
+    "date": "2021-07-28",
+    "infected": "2960",
+    "avg": "2667.86",
+    "total_infected": 229185,
+    "tested": "11796",
+    "tested_data": 11796,
+    "case": "2667.86"
+  },
+  {
+    "date": "2021-07-29",
+    "infected": "3009",
+    "avg": "2705.71",
+    "total_infected": 232194,
+    "tested": "12092.71",
+    "tested_data": 12092.71,
+    "case": "2705.71"
+  },
+  {
+    "date": "2021-07-30",
+    "infected": "2695",
+    "avg": "2682.71",
+    "total_infected": 234889,
+    "tested": "12169.71",
+    "tested_data": 12169.71,
+    "case": "2682.71"
+  },
+  {
+    "date": "2021-07-31",
+    "infected": "2772",
+    "avg": "2714.71",
+    "total_infected": 237661,
+    "tested": "12253.57",
+    "tested_data": 12253.57,
+    "case": "2714.71"
+  },
+  {
+    "date": "2021-08-01",
+    "infected": "2199",
+    "avg": "2668.86",
+    "total_infected": 239860,
+    "tested": "12018.71",
+    "tested_data": 12018.71,
+    "case": "2668.86"
+  },
+  {
+    "date": "2021-08-02",
+    "infected": "886",
+    "avg": "2470.43",
+    "total_infected": 240746,
+    "tested": "11105.29",
+    "tested_data": 11105.29,
+    "case": "2470.43"
+  },
+  {
+    "date": "2021-08-03",
+    "infected": "1066",
+    "avg": "2226.71",
+    "total_infected": 242102,
+    "tested": "9875.29",
+    "tested_data": 9875.29,
+    "case": "2226.71"
+  },
+  {
+    "date": "2021-08-04",
+    "infected": "1918",
+    "avg": "2077.86",
+    "total_infected": 244020,
+    "tested": "9160.71",
+    "tested_data": 9160.71,
+    "case": "2077.86"
+  },
+  {
+    "date": "2021-08-05",
+    "infected": "2654",
+    "avg": "2027.14",
+    "total_infected": 246674,
+    "tested": "8736.86",
+    "tested_data": 8736.86,
+    "case": "2027.14"
+  },
+  {
+    "date": "2021-08-06",
+    "infected": "2977",
+    "avg": "2067.43",
+    "total_infected": 249651,
+    "tested": "8704.14",
+    "tested_data": 8704.14,
+    "case": "2067.43"
+  },
+  {
+    "date": "2021-08-07",
+    "infected": "2851",
+    "avg": "2078.71",
+    "total_infected": 252502,
+    "tested": "8716.29",
+    "tested_data": 8716.29,
+    "case": "2078.71"
+  },
+  {
+    "date": "2021-08-08",
+    "infected": "2611",
+    "avg": "2137.57",
+    "total_infected": 255113,
+    "tested": "9135.57",
+    "tested_data": 9135.57,
+    "case": "2137.57"
+  },
+  {
+    "date": "2021-08-09",
+    "infected": "2487",
+    "avg": "2366.29",
+    "total_infected": 257600,
+    "tested": "10146.29",
+    "tested_data": 10146.29,
+    "case": "2366.29"
+  },
+  {
+    "date": "2021-08-10",
+    "infected": "2907",
+    "avg": "2629.29",
+    "total_infected": 260507,
+    "tested": "11374.86",
+    "tested_data": 11374.86,
+    "case": "2629.29"
+  },
+  {
+    "date": "2021-08-11",
+    "infected": "2996",
+    "avg": "2783.29",
+    "total_infected": 263503,
+    "tested": "12390.29",
+    "tested_data": 12390.29,
+    "case": "2783.29"
+  },
+  {
+    "date": "2021-08-12",
+    "infected": "2995",
+    "avg": "2832.00",
+    "total_infected": 266498,
+    "tested": "12903.29",
+    "tested_data": 12903.29,
+    "case": "2832"
+  },
+  {
+    "date": "2021-08-13",
+    "infected": "2617",
+    "avg": "2780.57",
+    "total_infected": 269115,
+    "tested": "12968.14",
+    "tested_data": 12968.14,
+    "case": "2780.57"
+  },
+  {
+    "date": "2021-08-14",
+    "infected": "2766",
+    "avg": "2768.43",
+    "total_infected": 271881,
+    "tested": "12990.57",
+    "tested_data": 12990.57,
+    "case": "2768.43"
+  },
+  {
+    "date": "2021-08-15",
+    "infected": "2644",
+    "avg": "2773.14",
+    "total_infected": 274525,
+    "tested": "13155.43",
+    "tested_data": 13155.43,
+    "case": "2773.14"
+  },
+  {
+    "date": "2021-08-16",
+    "infected": "2024",
+    "avg": "2707.00",
+    "total_infected": 276549,
+    "tested": "13049.57",
+    "tested_data": 13049.57,
+    "case": "2707"
+  },
+  {
+    "date": "2021-08-17",
+    "infected": "2595",
+    "avg": "2662.43",
+    "total_infected": 279144,
+    "tested": "13003",
+    "tested_data": 13003,
+    "case": "2662.43"
+  },
+  {
+    "date": "2021-08-18",
+    "infected": "3200",
+    "avg": "2691.57",
+    "total_infected": 282344,
+    "tested": "12975.86",
+    "tested_data": 12975.86,
+    "case": "2691.57"
+  },
+  {
+    "date": "2021-08-19",
+    "infected": "2747",
+    "avg": "2656.14",
+    "total_infected": 285091,
+    "tested": "12965.43",
+    "tested_data": 12965.43,
+    "case": "2656.14"
+  },
+  {
+    "date": "2021-08-20",
+    "infected": "2868",
+    "avg": "2692.00",
+    "total_infected": 287959,
+    "tested": "13093.57",
+    "tested_data": 13093.57,
+    "case": "2692"
+  },
+  {
+    "date": "2021-08-21",
+    "infected": "2401",
+    "avg": "2639.86",
+    "total_infected": 290360,
+    "tested": "13106",
+    "tested_data": 13106,
+    "case": "2639.86"
+  },
+  {
+    "date": "2021-08-22",
+    "infected": "2265",
+    "avg": "2585.71",
+    "total_infected": 292625,
+    "tested": "12886.71",
+    "tested_data": 12886.71,
+    "case": "2585.71"
+  },
+  {
+    "date": "2021-08-23",
+    "infected": "1973",
+    "avg": "2578.43",
+    "total_infected": 294598,
+    "tested": "12998.57",
+    "tested_data": 12998.57,
+    "case": "2578.43"
+  },
+  {
+    "date": "2021-08-24",
+    "infected": "2485",
+    "avg": "2562.71",
+    "total_infected": 297083,
+    "tested": "13121.29",
+    "tested_data": 13121.29,
+    "case": "2562.71"
+  },
+  {
+    "date": "2021-08-25",
+    "infected": "2545",
+    "avg": "2469.14",
+    "total_infected": 299628,
+    "tested": "13053.14",
+    "tested_data": 13053.14,
+    "case": "2469.14"
+  },
+  {
+    "date": "2021-08-26",
+    "infected": "2519",
+    "avg": "2436.57",
+    "total_infected": 302147,
+    "tested": "13109.14",
+    "tested_data": 13109.14,
+    "case": "2436.57"
+  },
+  {
+    "date": "2021-08-27",
+    "infected": "2436",
+    "avg": "2374.86",
+    "total_infected": 304583,
+    "tested": "13261.29",
+    "tested_data": 13261.29,
+    "case": "2374.86"
+  },
+  {
+    "date": "2021-08-28",
+    "infected": "2211",
+    "avg": "2347.71",
+    "total_infected": 306798,
+    "tested": "13375.29",
+    "tested_data": 13375.29,
+    "case": "2347.71"
+  },
+  {
+    "date": "2021-08-29",
+    "infected": "2131",
+    "avg": "2328.57",
+    "total_infected": 308925,
+    "tested": "13422.86",
+    "tested_data": 13422.86,
+    "case": "2328.57"
+  },
+  {
+    "date": "2021-08-30",
+    "infected": "1897",
+    "avg": "2317.71",
+    "total_infected": 310822,
+    "tested": "13584.71",
+    "tested_data": 13584.71,
+    "case": "2317.71"
+  },
+  {
+    "date": "2021-08-31",
+    "infected": "2174",
+    "avg": "2273.29",
+    "total_infected": 312996,
+    "tested": "13452.14",
+    "tested_data": 13452.14,
+    "case": "2273.29"
+  },
+  {
+    "date": "2021-09-01",
+    "infected": "1950",
+    "avg": "2188.29",
+    "total_infected": 314946,
+    "tested": "13174.43",
+    "tested_data": 13174.43,
+    "case": "2188.29"
+  },
+  {
+    "date": "2021-09-02",
+    "infected": "2582",
+    "avg": "2197.29",
+    "total_infected": 317528,
+    "tested": "13193.57",
+    "tested_data": 13193.57,
+    "case": "2197.29"
+  },
+  {
+    "date": "2021-09-03",
+    "infected": "2158",
+    "avg": "2157.57",
+    "total_infected": 319686,
+    "tested": "13093.29",
+    "tested_data": 13093.29,
+    "case": "2157.57"
+  },
+  {
+    "date": "2021-09-04",
+    "infected": "1929",
+    "avg": "2117.29",
+    "total_infected": 321651,
+    "tested": "12997.86",
+    "tested_data": 12997.86,
+    "case": "2117.29"
+  },
+  {
+    "date": "2021-09-05",
+    "infected": "1950",
+    "avg": "2091.43",
+    "total_infected": 323565,
+    "tested": "13163.29",
+    "tested_data": 13163.29,
+    "case": "2091.43"
+  },
+  {
+    "date": "2021-09-06",
+    "infected": "1592",
+    "avg": "2047.86",
+    "total_infected": 325157,
+    "tested": "13080.43",
+    "tested_data": 13080.43,
+    "case": "2047.86"
+  },
+  {
+    "date": "2021-09-07",
+    "infected": "2202",
+    "avg": "2051.86",
+    "total_infected": 327359,
+    "tested": "13503",
+    "tested_data": 13503,
+    "case": "2051.86"
+  },
+  {
+    "date": "2021-09-08",
+    "infected": "1892",
+    "avg": "2043.57",
+    "total_infected": 329251,
+    "tested": "13897.86",
+    "tested_data": 13897.86,
+    "case": "2043.57"
+  },
+  {
+    "date": "2021-09-09",
+    "infected": "1827",
+    "avg": "1935.71",
+    "total_infected": 331078,
+    "tested": "13833.71",
+    "tested_data": 13833.71,
+    "case": "1935.71"
+  },
+  {
+    "date": "2021-09-10",
+    "infected": "1892",
+    "avg": "1897.71",
+    "total_infected": 332970,
+    "tested": "13996.14",
+    "tested_data": 13996.14,
+    "case": "1897.71"
+  },
+  {
+    "date": "2021-09-11",
+    "infected": "1792",
+    "avg": "1878.14",
+    "total_infected": 334762,
+    "tested": "14235.29",
+    "tested_data": 14235.29,
+    "case": "1878.14"
+  },
+  {
+    "date": "2021-09-12",
+    "infected": "1282",
+    "avg": "1782.71",
+    "total_infected": 336044,
+    "tested": "13931.86",
+    "tested_data": 13931.86,
+    "case": "1782.71"
+  },
+  {
+    "date": "2021-09-13",
+    "infected": "1476",
+    "avg": "1766.14",
+    "total_infected": 337520,
+    "tested": "14166.86",
+    "tested_data": 14166.86,
+    "case": "1766.14"
+  },
+  {
+    "date": "2021-09-14",
+    "infected": "1812",
+    "avg": "1710.43",
+    "total_infected": 339332,
+    "tested": "13996",
+    "tested_data": 13996,
+    "case": "1710.43"
+  },
+  {
+    "date": "2021-09-15",
+    "infected": "1724",
+    "avg": "1686.43",
+    "total_infected": 341056,
+    "tested": "13864.14",
+    "tested_data": 13864.14,
+    "case": "1686.43"
+  },
+  {
+    "date": "2021-09-16",
+    "infected": "1615",
+    "avg": "1656.14",
+    "total_infected": 342671,
+    "tested": "13664.86",
+    "tested_data": 13664.86,
+    "case": "1656.14"
+  },
+  {
+    "date": "2021-09-17",
+    "infected": "1593",
+    "avg": "1613.43",
+    "total_infected": 344264,
+    "tested": "13395.43",
+    "tested_data": 13395.43,
+    "case": "1613.43"
+  },
+  {
+    "date": "2021-09-18",
+    "infected": "1541",
+    "avg": "1577.57",
+    "total_infected": 345805,
+    "tested": "13107.29",
+    "tested_data": 13107.29,
+    "case": "1577.57"
+  },
+  {
+    "date": "2021-09-19",
+    "infected": "1567",
+    "avg": "1618.29",
+    "total_infected": 347372,
+    "tested": "13456.86",
+    "tested_data": 13456.86,
+    "case": "1618.29"
+  },
+  {
+    "date": "2021-09-20",
+    "infected": "1544",
+    "avg": "1628.00",
+    "total_infected": 348916,
+    "tested": "13255.71",
+    "tested_data": 13255.71,
+    "case": "1628"
+  },
+  {
+    "date": "2021-09-21",
+    "infected": "1705",
+    "avg": "1612.71",
+    "total_infected": 350621,
+    "tested": "13089.57",
+    "tested_data": 13089.57,
+    "case": "1612.71"
+  },
+  {
+    "date": "2021-09-22",
+    "infected": "1557",
+    "avg": "1588.86",
+    "total_infected": 352178,
+    "tested": "13105.86",
+    "tested_data": 13105.86,
+    "case": "1588.86"
+  },
+  {
+    "date": "2021-09-23",
+    "infected": "1666",
+    "avg": "1596.14",
+    "total_infected": 353844,
+    "tested": "13218.71",
+    "tested_data": 13218.71,
+    "case": "1596.14"
+  },
+  {
+    "date": "2021-09-24",
+    "infected": "1540",
+    "avg": "1588.57",
+    "total_infected": 355384,
+    "tested": "13108.29",
+    "tested_data": 13108.29,
+    "case": "1588.57"
+  },
+  {
+    "date": "2021-09-25",
+    "infected": "1383",
+    "avg": "1566.00",
+    "total_infected": 356767,
+    "tested": "13071.57",
+    "tested_data": 13071.57,
+    "case": "1566"
+  },
+  {
+    "date": "2021-09-26",
+    "infected": "1106",
+    "avg": "1500.14",
+    "total_infected": 357873,
+    "tested": "12728",
+    "tested_data": 12728,
+    "case": "1500.14"
+  },
+  {
+    "date": "2021-09-27",
+    "infected": "1275",
+    "avg": "1461.71",
+    "total_infected": 359148,
+    "tested": "12598.57",
+    "tested_data": 12598.57,
+    "case": "1461.71"
+  },
+  {
+    "date": "2021-09-28",
+    "infected": "1407",
+    "avg": "1419.14",
+    "total_infected": 360555,
+    "tested": "12437",
+    "tested_data": 12437,
+    "case": "1419.14"
+  },
+  {
+    "date": "2021-09-29",
+    "infected": "1488",
+    "avg": "1409.29",
+    "total_infected": 362043,
+    "tested": "12252",
+    "tested_data": 12252,
+    "case": "1409.29"
+  },
+  {
+    "date": "2021-09-30",
+    "infected": "1436",
+    "avg": "1376.43",
+    "total_infected": 363479,
+    "tested": "12145.43",
+    "tested_data": 12145.43,
+    "case": "1376.43"
+  },
+  {
+    "date": "2021-10-01",
+    "infected": "1508",
+    "avg": "1371.86",
+    "total_infected": 364987,
+    "tested": "11934",
+    "tested_data": 11934,
+    "case": "1371.86"
+  },
+  {
+    "date": "2021-10-02",
+    "infected": "1396",
+    "avg": "1373.71",
+    "total_infected": 366383,
+    "tested": "11748.71",
+    "tested_data": 11748.71,
+    "case": "1373.71"
+  },
+  {
+    "date": "2021-10-03",
+    "infected": "1182",
+    "avg": "1384.57",
+    "total_infected": 367565,
+    "tested": "11575.71",
+    "tested_data": 11575.71,
+    "case": "1384.57"
+  },
+  {
+    "date": "2021-10-04",
+    "infected": "1125",
+    "avg": "1363.14",
+    "total_infected": 368690,
+    "tested": "11457.71",
+    "tested_data": 11457.71,
+    "case": "1363.14"
+  },
+  {
+    "date": "2021-10-05",
+    "infected": "1442",
+    "avg": "1368.14",
+    "total_infected": 370132,
+    "tested": "11435.57",
+    "tested_data": 11435.57,
+    "case": "1368.14"
+  },
+  {
+    "date": "2021-10-06",
+    "infected": "1499",
+    "avg": "1369.71",
+    "total_infected": 371631,
+    "tested": "11360.71",
+    "tested_data": 11360.71,
+    "case": "1369.71"
+  },
+  {
+    "date": "2021-10-07",
+    "infected": "1520",
+    "avg": "1381.71",
+    "total_infected": 373151,
+    "tested": "11307.57",
+    "tested_data": 11307.57,
+    "case": "1381.71"
+  },
+  {
+    "date": "2021-10-08",
+    "infected": "1441",
+    "avg": "1372.14",
+    "total_infected": 374592,
+    "tested": "11476.86",
+    "tested_data": 11476.86,
+    "case": "1372.14"
+  },
+  {
+    "date": "2021-10-09",
+    "infected": "1278",
+    "avg": "1355.29",
+    "total_infected": 375870,
+    "tested": "11488.29",
+    "tested_data": 11488.29,
+    "case": "1355.29"
+  },
+  {
+    "date": "2021-10-10",
+    "infected": "1203",
+    "avg": "1358.29",
+    "total_infected": 377073,
+    "tested": "11674.71",
+    "tested_data": 11674.71,
+    "case": "1358.29"
+  },
+  {
+    "date": "2021-10-11",
+    "infected": "1193",
+    "avg": "1368.00",
+    "total_infected": 378266,
+    "tested": "11618.71",
+    "tested_data": 11618.71,
+    "case": "1368"
+  },
+  {
+    "date": "2021-10-12",
+    "infected": "1472",
+    "avg": "1372.29",
+    "total_infected": 379738,
+    "tested": "11827.29",
+    "tested_data": 11827.29,
+    "case": "1372.29"
+  },
+  {
+    "date": "2021-10-13",
+    "infected": "1537",
+    "avg": "1377.71",
+    "total_infected": 381275,
+    "tested": "12037.29",
+    "tested_data": 12037.29,
+    "case": "1377.71"
+  },
+  {
+    "date": "2021-10-14",
+    "infected": "1684",
+    "avg": "1401.14",
+    "total_infected": 382959,
+    "tested": "12234.29",
+    "tested_data": 12234.29,
+    "case": "1401.14"
+  },
+  {
+    "date": "2021-10-15",
+    "infected": "1600",
+    "avg": "1423.86",
+    "total_infected": 384559,
+    "tested": "12448.43",
+    "tested_data": 12448.43,
+    "case": "1423.86"
+  },
+  {
+    "date": "2021-10-16",
+    "infected": "1527",
+    "avg": "1459.43",
+    "total_infected": 386086,
+    "tested": "12780",
+    "tested_data": 12780,
+    "case": "1459.43"
+  },
+  {
+    "date": "2021-10-17",
+    "infected": "1209",
+    "avg": "1460.29",
+    "total_infected": 387295,
+    "tested": "12882",
+    "tested_data": 12882,
+    "case": "1460.29"
+  },
+  {
+    "date": "2021-10-18",
+    "infected": "1274",
+    "avg": "1471.86",
+    "total_infected": 388569,
+    "tested": "13224.71",
+    "tested_data": 13224.71,
+    "case": "1471.86"
+  },
+  {
+    "date": "2021-10-19",
+    "infected": "1637",
+    "avg": "1495.43",
+    "total_infected": 390206,
+    "tested": "13498.86",
+    "tested_data": 13498.86,
+    "case": "1495.43"
+  },
+  {
+    "date": "2021-10-20",
+    "infected": "1380",
+    "avg": "1473.00",
+    "total_infected": 391586,
+    "tested": "13469.71",
+    "tested_data": 13469.71,
+    "case": "1473"
+  },
+  {
+    "date": "2021-10-21",
+    "infected": "1545",
+    "avg": "1453.14",
+    "total_infected": 393131,
+    "tested": "13423.29",
+    "tested_data": 13423.29,
+    "case": "1453.14"
+  },
+  {
+    "date": "2021-10-22",
+    "infected": "1696",
+    "avg": "1466.86",
+    "total_infected": 394827,
+    "tested": "13545.29",
+    "tested_data": 13545.29,
+    "case": "1466.86"
+  },
+  {
+    "date": "2021-10-23",
+    "infected": "1586",
+    "avg": "1475.29",
+    "total_infected": 396413,
+    "tested": "13622.71",
+    "tested_data": 13622.71,
+    "case": "1475.29"
+  },
+  {
+    "date": "2021-10-24",
+    "infected": "1094",
+    "avg": "1458.86",
+    "total_infected": 397507,
+    "tested": "13540.57",
+    "tested_data": 13540.57,
+    "case": "1458.86"
+  },
+  {
+    "date": "2021-10-25",
+    "infected": "1308",
+    "avg": "1463.71",
+    "total_infected": 398815,
+    "tested": "13431.57",
+    "tested_data": 13431.57,
+    "case": "1463.71"
+  },
+  {
+    "date": "2021-10-26",
+    "infected": "1436",
+    "avg": "1435.00",
+    "total_infected": 400251,
+    "tested": "13233.29",
+    "tested_data": 13233.29,
+    "case": "1435"
+  },
+  {
+    "date": "2021-10-27",
+    "infected": "1335",
+    "avg": "1428.57",
+    "total_infected": 400251,
+    "tested": "13091.29",
+    "tested_data": 13091.29,
+    "case": "1428.57"
+  },
+  {
+    "date": "2021-10-28",
+    "infected": "1493",
+    "avg": "1421.14",
+    "total_infected": 401586,
+    "tested": "12844.29",
+    "tested_data": 12844.29,
+    "case": "1421.14"
+  },
+  {
+    "date": "2021-10-29",
+    "infected": "1681",
+    "avg": "1419.00",
+    "total_infected": 403079,
+    "tested": "12745.71",
+    "tested_data": 12745.71,
+    "case": "1419"
+  },
+  {
+    "date": "2021-10-30",
+    "infected": "1604",
+    "avg": "1421.57",
+    "total_infected": 404760,
+    "tested": "12748.86",
+    "tested_data": 12748.86,
+    "case": "1421.57"
+  },
+  {
+    "date": "2021-10-31",
+    "infected": "1320",
+    "avg": "1453.86",
+    "total_infected": 406364,
+    "tested": "12825.14",
+    "tested_data": 12825.14,
+    "case": "1453.86"
+  },
+  {
+    "date": "2021-11-01",
+    "infected": "1568",
+    "avg": "1491.00",
+    "total_infected": 407684,
+    "tested": "13031.71",
+    "tested_data": 13031.71,
+    "case": "1491"
+  },
+  {
+    "date": "2021-11-02",
+    "infected": "1736",
+    "avg": "1533.86",
+    "total_infected": 409252,
+    "tested": "12907.86",
+    "tested_data": 12907.86,
+    "case": "1533.86"
+  },
+  {
+    "date": "2021-11-03",
+    "infected": "1659",
+    "avg": "1580.14",
+    "total_infected": 410988,
+    "tested": "13114.14",
+    "tested_data": 13114.14,
+    "case": "1580.14"
+  },
+  {
+    "date": "2021-11-04",
+    "infected": "1517",
+    "avg": "1583.57",
+    "total_infected": 412647,
+    "tested": "13336.57",
+    "tested_data": 13336.57,
+    "case": "1583.57"
+  },
+  {
+    "date": "2021-11-05",
+    "infected": "1842",
+    "avg": "1606.57",
+    "total_infected": 414164,
+    "tested": "13473.29",
+    "tested_data": 13473.29,
+    "case": "1606.57"
+  },
+  {
+    "date": "2021-11-06",
+    "infected": "1469",
+    "avg": "1587.29",
+    "total_infected": 416006,
+    "tested": "13384.71",
+    "tested_data": 13384.71,
+    "case": "1587.29"
+  },
+  {
+    "date": "2021-11-07",
+    "infected": "1289",
+    "avg": "1582.86",
+    "total_infected": 417475,
+    "tested": "13368.57",
+    "tested_data": 13368.57,
+    "case": "1582.86"
+  },
+  {
+    "date": "2021-11-08",
+    "infected": "1474",
+    "avg": "1569.43",
+    "total_infected": 418764,
+    "tested": "13398.71",
+    "tested_data": 13398.71,
+    "case": "1569.43"
+  },
+  {
+    "date": "2021-11-09",
+    "infected": "1683",
+    "avg": "1561.86",
+    "total_infected": 420238,
+    "tested": "13563.14",
+    "tested_data": 13563.14,
+    "case": "1561.86"
+  },
+  {
+    "date": "2021-11-10",
+    "infected": "1699",
+    "avg": "1567.57",
+    "total_infected": 421921,
+    "tested": "13485.86",
+    "tested_data": 13485.86,
+    "case": "1567.57"
+  },
+  {
+    "date": "2021-11-11",
+    "infected": "1733",
+    "avg": "1598.43",
+    "total_infected": 423620,
+    "tested": "13573",
+    "tested_data": 13573,
+    "case": "1598.43"
+  },
+  {
+    "date": "2021-11-12",
+    "infected": "1845",
+    "avg": "1598.86",
+    "total_infected": 427198,
+    "tested": "13842.57",
+    "tested_data": 13842.57,
+    "case": "1598.86"
+  },
+  {
+    "date": "2021-11-13",
+    "infected": "1767",
+    "avg": "1641.43",
+    "total_infected": 428965,
+    "tested": "13845.14",
+    "tested_data": 13845.14,
+    "case": "1641.43"
+  },
+  {
+    "date": "2021-11-14",
+    "infected": "1531",
+    "avg": "1676.00",
+    "total_infected": 430496,
+    "tested": "13898.86",
+    "tested_data": 13898.86,
+    "case": "1676"
+  },
+  {
+    "date": "2021-11-15",
+    "infected": "1837",
+    "avg": "1727.86",
+    "total_infected": 430496,
+    "tested": "14084.57",
+    "tested_data": 14084.57,
+    "case": "1727.86"
+  },
+  {
+    "date": "2021-11-16",
+    "infected": "2139",
+    "avg": "1793.00",
+    "total_infected": 432333,
+    "tested": "14331.14",
+    "tested_data": 14331.14,
+    "case": "1793"
+  },
+  {
+    "date": "2021-11-17",
+    "infected": "2212",
+    "avg": "1866.29",
+    "total_infected": 434472,
+    "tested": "14684",
+    "tested_data": 14684,
+    "case": "1866.29"
+  },
+  {
+    "date": "2021-11-18",
+    "infected": "2111",
+    "avg": "1920.29",
+    "total_infected": 436684,
+    "tested": "14961.86",
+    "tested_data": 14961.86,
+    "case": "1920.29"
+  },
+  {
+    "date": "2021-11-19",
+    "infected": "2364",
+    "avg": "1994.43",
+    "total_infected": 438795,
+    "tested": "15021.71",
+    "tested_data": 15021.71,
+    "case": "1994.43"
+  },
+  {
+    "date": "2021-11-20",
+    "infected": "2275",
+    "avg": "2067.00",
+    "total_infected": 441159,
+    "tested": "15317.14",
+    "tested_data": 15317.14,
+    "case": "2067"
+  },
+  {
+    "date": "2021-11-21",
+    "infected": "1847",
+    "avg": "2112.14",
+    "total_infected": 443434,
+    "tested": "15438.29",
+    "tested_data": 15438.29,
+    "case": "2112.14"
+  },
+  {
+    "date": "2021-11-22",
+    "infected": "2060",
+    "avg": "2144.00",
+    "total_infected": 445281,
+    "tested": "15411.14",
+    "tested_data": 15411.14,
+    "case": "2144"
+  },
+  {
+    "date": "2021-11-23",
+    "infected": "2419",
+    "avg": "2184.00",
+    "total_infected": 447341,
+    "tested": "15452.71",
+    "tested_data": 15452.71,
+    "case": "2184"
+  },
+  {
+    "date": "2021-11-24",
+    "infected": "2230",
+    "avg": "2186.57",
+    "total_infected": 449760,
+    "tested": "15313.86",
+    "tested_data": 15313.86,
+    "case": "2186.57"
+  },
+  {
+    "date": "2021-11-25",
+    "infected": "2156",
+    "avg": "2193.00",
+    "total_infected": 451990,
+    "tested": "15247",
+    "tested_data": 15247,
+    "case": "2193"
+  },
+  {
+    "date": "2021-11-26",
+    "infected": "2292",
+    "avg": "2182.71",
+    "total_infected": 454146,
+    "tested": "15178.57",
+    "tested_data": 15178.57,
+    "case": "2182.71"
+  },
+  {
+    "date": "2021-11-27",
+    "infected": "2273",
+    "avg": "2182.43",
+    "total_infected": 456438,
+    "tested": "15288.71",
+    "tested_data": 15288.71,
+    "case": "2182.43"
+  },
+  {
+    "date": "2021-11-28",
+    "infected": "1908",
+    "avg": "2191.14",
+    "total_infected": 458711,
+    "tested": "15484.29",
+    "tested_data": 15484.29,
+    "case": "2191.14"
+  },
+  {
+    "date": "2021-11-29",
+    "infected": "1788",
+    "avg": "2152.29",
+    "total_infected": 460619,
+    "tested": "15465.29",
+    "tested_data": 15465.29,
+    "case": "2152.29"
+  },
+  {
+    "date": "2021-11-30",
+    "infected": "2525",
+    "avg": "2167.43",
+    "total_infected": 462407,
+    "tested": "15367.14",
+    "tested_data": 15367.14,
+    "case": "2167.43"
+  },
+  {
+    "date": "2021-12-01",
+    "infected": "2293",
+    "avg": "2176.43",
+    "total_infected": 464932,
+    "tested": "15436.14",
+    "tested_data": 15436.14,
+    "case": "2176.43"
+  },
+  {
+    "date": "2021-12-02",
+    "infected": "2198",
+    "avg": "2182.43",
+    "total_infected": 467225,
+    "tested": "15432",
+    "tested_data": 15432,
+    "case": "2182.43"
+  },
+  {
+    "date": "2021-12-03",
+    "infected": "2316",
+    "avg": "2185.86",
+    "total_infected": 469423,
+    "tested": "15397",
+    "tested_data": 15397,
+    "case": "2185.86"
+  },
+  {
+    "date": "2021-12-04",
+    "infected": "2252",
+    "avg": "2182.86",
+    "total_infected": 471739,
+    "tested": "15261.57",
+    "tested_data": 15261.57,
+    "case": "2182.86"
+  }
+],
             "valueAxes": [
                 {
                     "id": "v1",
