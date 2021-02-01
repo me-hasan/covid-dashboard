@@ -1548,7 +1548,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     class="select2 form-control btn-outline-primary">
                                                                 <option value="">সারাদেশ</option>
                                                                 @foreach ($hospital_name as $value)
-                                                                    <option value="{{ $value->name_of_hospital }}">{{ $value->name_of_hospital }}</option>
+                                                                    <option value="{{ $value->hospital_id ?? '' }}">{{ $value->hospital_name_bng ?? '' }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
