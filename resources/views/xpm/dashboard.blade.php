@@ -1526,7 +1526,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <label for="">লিঙ্গ </label>
                                                             <select name="age_wise_death_by_gender" id="age_wise_death_by_gender"
                                                                     class="select2 form-control btn-outline-primary">
-                                                                <option value="A">সকল</option>
+                                                                <option value="">সকল</option>
                                                                 <option value="M">পুরুষ</option>
                                                                 <option value="F">মহিলা</option>
                                                             
@@ -1542,14 +1542,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 @endforeach
                                                             </select>
                                                         </div> --}}
-                                                        {{--  <div class="col-md-3">
+                                                        <div class="col-md-3">
                                                             <label for="">হাসপাতাল</label>
                                                             <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
                                                                     class="select2 form-control btn-outline-primary">
-                                                                <option>সারাদেশ</option>
-                                                        
+                                                                <option value="">সারাদেশ</option>
+                                                                @foreach ($hospital_name as $value)
+                                                                    <option value="{{ $value->name_of_hospital }}">{{ $value->name_of_hospital }}</option>
+                                                                @endforeach
                                                             </select>
-                                                        </div>  --}}
+                                                        </div>
                                                         <div class="col-sm mt-4 mx-auto">
                                                             <button id="filter-age-wise-death"
                                                                     class="btn btn-sm district_cms_search b1">
@@ -3770,7 +3772,7 @@ $ydata = [];
     data: {},
         success: function (data) {
             showNationalLevelAgeWiseDeathChart(data);
-            hideLoader();
+            // hideLoader();
         },
         error: function (error) {
             console.log(error);
@@ -3780,6 +3782,7 @@ $ydata = [];
     $('#filter-age-wise-death').click(function () {
         var genderTitle = '';
         var gender = $('#age_wise_death_by_gender').val();
+        var hospital = $('#age_wise_hospital_hospital_filter').val();
         
         
         switch(gender) {
@@ -3798,14 +3801,14 @@ $ydata = [];
         } 
         //console.log(genderTitle);
        
-        var distArray = $('#ageWiseDeathDistrict').val();
-        // var districts = [];
+        
         
         if (gender != 'A') {
+            showLoader();
             $.ajax({
-	    url:  '{{url("/")}}/get-age-wise-death-data-filter',
+	        url:  '{{url("/")}}/get-age-wise-death-data-filter',
             type: 'GET',
-            data: { gender: gender, district: distArray },
+            data: { gender: gender, hospital: hospital },
                 success: function (data) {
                     showNationalLevelAgeWiseDeathChart(data);
                     hideLoader();
@@ -3814,22 +3817,22 @@ $ydata = [];
                     console.log(error);
                 }
             });
-	}else{
-	     $.ajax({
-    url: '{{url("/")}}/get-age-wise-death-data',
-    type: 'GET',
-    data: {},
-        success: function (data) {
-            showNationalLevelAgeWiseDeathChart(data);
-            hideLoader();
-        },
-        error: function (error) {
-            console.log(error);
+	    }else{
+            showLoader();
+	        $.ajax({
+            url: '{{url("/")}}/get-age-wise-death-data',
+            type: 'GET',
+            data: {},
+                success: function (data) {
+                    showNationalLevelAgeWiseDeathChart(data);
+                    hideLoader();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
         }
-    });
-
-
-	}
     });
     
     
@@ -4692,8 +4695,8 @@ group by date ORDER BY date ");
             });
 
             /* age wise death */
-            $('#age_wise_hospital_hospital_filter').empty();
-            $('#age_wise_hospital_hospital_filter').append(option);
+            // $('#age_wise_hospital_hospital_filter').empty();
+            // $('#age_wise_hospital_hospital_filter').append(option);
             /* age wise death */
 
             $('#hospital_filter').empty();
