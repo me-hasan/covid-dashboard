@@ -55,7 +55,7 @@ class DashboardController extends Controller
 
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
 
-        $data['weekly_date'] = WeeklyDate::all();
+        $data['weekly_date'] = WeeklyDate::all()->sortByDesc("date_id");
 
         // shamvil start
         // row 1
