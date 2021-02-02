@@ -55,7 +55,7 @@ class DashboardController extends Controller
 
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
 
-        $data['weekly_date'] = WeeklyDate::all()->sortByDesc("date_id");
+        $data['weekly_date'] = WeeklyDate::where('status', 1)->get()->sortByDesc("date_id");
 
         // shamvil start
         // row 1
@@ -67,7 +67,7 @@ class DashboardController extends Controller
         $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
 
 
-        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`) FROM `death_person` WHERE 1 '));
+        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), hospital_name_bng FROM `death_person` WHERE 1 '));
         // dd($data);
 
         /*$data['tests_per_case_Mayanmar'] = $this->tests_per_case_country('Myanmar');
@@ -2672,31 +2672,31 @@ GROUP BY
         /* select fileds */
         $sql = "SELECT
         a.date,
-        Round( ( SELECT SUM(b.zero_ten) / COUNT(b.zero_ten)
+        Round( ( SELECT SUM(b.zero_ten)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'zero_to_ten',
-         Round( ( SELECT SUM(b.eleven_twenty) / COUNT(b.eleven_twenty)
+         Round( ( SELECT SUM(b.eleven_twenty)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'elv_to_twenty',
-         Round( ( SELECT SUM(b.twentyone_thirty) / COUNT(b.twentyone_thirty)
+         Round( ( SELECT SUM(b.twentyone_thirty)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'twentyone_to_thirty',
-         Round( ( SELECT SUM(b.thirtyone_fourty) / COUNT(b.thirtyone_fourty)
+         Round( ( SELECT SUM(b.thirtyone_fourty)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'thirtyone_to_forty',
-         Round( ( SELECT SUM(b.fourtyone_fifty) / COUNT(b.fourtyone_fifty)
+         Round( ( SELECT SUM(b.fourtyone_fifty)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'fortyone_to_fifty',
-         Round( ( SELECT SUM(b.fiftyone_sixty) / COUNT(b.fiftyone_sixty)
+         Round( ( SELECT SUM(b.fiftyone_sixty)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'fiftyone_to_sixty',
-         Round( ( SELECT SUM(b.sixty_plus) / COUNT(b.sixty_plus)
+         Round( ( SELECT SUM(b.sixty_plus)
                 FROM vw_death_age_trend AS b
      WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                ), 2 ) AS 'sixtyone_plus'
@@ -2747,31 +2747,31 @@ GROUP BY
              /* select fileds */
             $sql = "SELECT * from (
             SELECT a.date date, 
-                   Round( ( SELECT SUM(b.zero_ten) / COUNT(b.zero_ten)
+                   Round( ( SELECT SUM(b.zero_ten)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'zero_to_ten',
-                    Round( ( SELECT SUM(b.eleven_twenty) / COUNT(b.eleven_twenty)
+                    Round( ( SELECT SUM(b.eleven_twenty)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'elv_to_twenty',
-                    Round( ( SELECT SUM(b.twentyone_thirty) / COUNT(b.twentyone_thirty)
+                    Round( ( SELECT SUM(b.twentyone_thirty)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'twentyone_to_thirty',
-                    Round( ( SELECT SUM(b.thirtyone_fourty) / COUNT(b.thirtyone_fourty)
+                    Round( ( SELECT SUM(b.thirtyone_fourty)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'thirtyone_to_forty',
-                    Round( ( SELECT SUM(b.fourtyone_fifty) / COUNT(b.fourtyone_fifty)
+                    Round( ( SELECT SUM(b.fourtyone_fifty)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'fortyone_to_fifty',
-                    Round( ( SELECT SUM(b.fiftyone_sixty) / COUNT(b.fiftyone_sixty)
+                    Round( ( SELECT SUM(b.fiftyone_sixty)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'fiftyone_to_sixty',
-                    Round( ( SELECT SUM(b.sixty_plus) / COUNT(b.sixty_plus)
+                    Round( ( SELECT SUM(b.sixty_plus)
                            FROM vw_death_age_trend AS b
                 WHERE sex='M' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
                           ), 2 ) AS 'sixtyone_plus'
