@@ -2139,7 +2139,7 @@ using(district) ORDER BY r.test_positivity DESC");
     public function getDatesFromRange($flag)
     {
         $Date1 = '20-05-2020';
-        $Date2 = date("Y-m-d", strtotime('-7 day'));
+        $Date2 = '02-01-2021';
 
         // Declare an empty array
         $array = array();
