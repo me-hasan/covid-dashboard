@@ -3499,9 +3499,10 @@ $ydata = [];
     
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
-        // console.log(chartData);
-        var size = Object.keys(chartData).length;
-        var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        console.log('hello');
+        console.log(chartData);
+        //var size = Object.keys(chartData).length;
+        //var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         // $('#last_date_4').html(" " + div_date);
 
         if ($('#age_wise_death_distribution').length) {
@@ -3549,12 +3550,13 @@ $ydata = [];
                         let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
-
+                        if(typeof(v) != 'undefined')
                         return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                     },
 
                 }, {
                     "valueAxis": "v2",
+                    "id": "g2",
                     "lineColor": "#54E780",
                     "lineThickness": 2,
                     "bullet": "",
@@ -3574,13 +3576,14 @@ $ydata = [];
                         let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
-
+                        if(typeof(v) != 'undefined')
                         return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                     },
 
                 },
                     {
                         "valueAxis": "v3",
+                        "id": "g3",
                         "lineColor": "orange",
                         "lineThickness": 2,
                         "bullet": "",
@@ -3600,12 +3603,13 @@ $ydata = [];
                             let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
-
+                            if(typeof(v) != 'undefined')
                             return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
                     },
                     {
                         "valueAxis": "v4",
+                        "id": "g4",
                         "lineColor": "maroon",
                         "lineThickness": 2,
                         "bullet": "",
@@ -3625,13 +3629,14 @@ $ydata = [];
                             let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
-
+                            if(typeof(v) != 'undefined')
                             return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
 
                     },
                     {
                         "valueAxis": "v5",
+                        "id": "g5",
                         "lineColor": "#E75480",
                         "lineThickness": 2,
                         "bullet": "",
@@ -3651,13 +3656,14 @@ $ydata = [];
                             let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
-
+                            if(typeof(v) != 'undefined')
                             return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
 
                     },
                     {
                         "valueAxis": "v6",
+                        "id": "g6",
                         "lineColor": "black",
                         "lineThickness": 2,
                         "bullet": "",
@@ -3677,13 +3683,14 @@ $ydata = [];
                             let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
-
+                            if(typeof(v) != 'undefined')
                             return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
 
                     },
                     {
                         "valueAxis": "v7",
+                        "id": "g7",
                         "lineColor": "blue",
                         "lineThickness": 2,
                         "bullet": "",
@@ -3703,7 +3710,7 @@ $ydata = [];
                             let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                             let previusSevenDay= previusSeven.getDate();
                             let getMonth= month_name(previusSeven.getMonth());
-
+                            if(typeof(v) != 'undefined')
                             return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
                         },
                     }
