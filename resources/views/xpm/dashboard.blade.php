@@ -1526,27 +1526,28 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <label for="">লিঙ্গ </label>
                                                             <select name="age_wise_death_by_gender" id="age_wise_death_by_gender"
                                                                     class="select2 form-control btn-outline-primary">
-                                                                <option value="">সকল</option>
+                                                                <option value="-1">সকল</option>
                                                                 <option value="M">পুরুষ</option>
                                                                 <option value="F">মহিলা</option>
                                                             
                                                             </select>
                                                         </div>
-                                                        {{-- <div class="col-md-3">
+                                                        <div class="col-md-3">
                                                             <label for="">জেলা</label>
-                                                            <select name="ageWiseDeathDistrict[]" id="ageWiseDeathDistrict" multiple
+                                                            <select name="ageWiseDeathDistrict" id="age_wise_death_district_filter"
                                                                     class="select2 form-control btn-outline-primary select_district">
+                                                                    <option value="-1">সারাদেশ</option>
                                                                 @foreach($district_list as $district)
                                                                     <option value="{!! $district->district !!}"
                                                                             class="b1">{!! en2bnTranslation($district->district) !!} </option>
                                                                 @endforeach
                                                             </select>
-                                                        </div> --}}
+                                                        </div>
                                                         <div class="col-md-3">
                                                             <label for="">হাসপাতাল</label>
                                                             <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
                                                                     class="select2 form-control btn-outline-primary">
-                                                                <option value="">সারাদেশ</option>
+                                                                <option value="-1">সারাদেশ</option>
                                                                 @foreach ($hospital_name as $value)
                                                                     <option value="{{ $value->hospital_id ?? '' }}">{{ $value->hospital_name_bng ?? '' }}</option>
                                                                 @endforeach
@@ -3783,32 +3784,33 @@ $ydata = [];
         var genderTitle = '';
         var gender = $('#age_wise_death_by_gender').val();
         var hospital = $('#age_wise_hospital_hospital_filter').val();
+        var district = $('#age_wise_death_district_filter').val();
         
         
-        switch(gender) {
-            case 'M':
-                genderTitle = 'পুরুষ';
-                break;
-            case 'F':
-                genderTitle = 'মহিলা';
-                break;
-            case 'O':
-                genderTitle = 'অন্যান্য';
-                break;
-            default:
-                genderTitle = 'সকল';
-                break;
-        } 
+        // switch(gender) {
+        //     case 'M':
+        //         genderTitle = 'পুরুষ';
+        //         break;
+        //     case 'F':
+        //         genderTitle = 'মহিলা';
+        //         break;
+        //     case 'O':
+        //         genderTitle = 'অন্যান্য';
+        //         break;
+        //     default:
+        //         genderTitle = 'সকল';
+        //         break;
+        // } 
         //console.log(genderTitle);
        
         
         
-        if (gender != 'A') {
+        if (gender != '-1' || hospital || '-1' && district || '-1') {
             showLoader();
             $.ajax({
 	        url:  '{{url("/")}}/get-age-wise-death-data-filter',
             type: 'GET',
-            data: { gender: gender, hospital: hospital },
+            data: { gender: gender, district: district, hospital: hospital },
                 success: function (data) {
                     showNationalLevelAgeWiseDeathChart(data);
                     hideLoader();

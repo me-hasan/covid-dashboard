@@ -2630,7 +2630,7 @@ GROUP BY
                         daily_data a
                     GROUP BY
                         WEEK (
-                        a.report_date)");
+                        a.report_date) ORDER BY a.report_date");
 
         foreach ($infected as $row) {
             $categories[] = "'" . convertEnglishDateToBangla($row->report_date) . "'";
@@ -2720,33 +2720,52 @@ GROUP BY
 
     public function getAgeWiseDeathlDataFilter(Request $request)
     {
-       
         $gender = $request->gender;
+        $district = $request->district;
         $hospital = $request->hospital;
         
+        // dd($request->all());
         $sql = "";
 
         $whereClause = "1";
 
 
-        if(!empty($gender) && ($hospital == '' || $hospital == null)){
+        if(("-1" !== $gender) && ("-1" === $hospital) && ("-1" === $district)){
              
             $whereClause = " sex= '$gender'";
         }
 
-        if(!empty($gender) && !empty($hospital)){
-            $whereClause = " sex = '$gender' AND hospital = \"$hospital\"";
+        if(("-1" !== $district) && ("-1" === $hospital) && ("-1" === $gender)){
+             
+            $whereClause = " district= \"$district\"";
         }
 
-        if(!empty($hospital) && ($gender == '' || $gender == null)){
+        if(("-1" !== $hospital) && ("-1" === $gender) && ("-1" === $district)){
             $whereClause = " hospital = \"$hospital\"";
         }
 
-       
+        if(("-1" !== $gender) && ("-1" !== $district) && ("-1" === $hospital)){
+            $whereClause = " sex = '$gender' AND district = \"$district\"";
+        }
+
+        if(("-1" === $gender) && ("-1" !== $district) && ("-1" !== $hospital)){
+            $whereClause = " district = '$district' AND hospital = \"$hospital\"";
+        }
+
+        if(("-1" !== $gender) && ("-1" !== $hospital) && ("-1" === $district)){
+            $whereClause = " sex = '$gender' AND hospital = \"$hospital\"";
+        }
+
+        if(("-1" !== $gender) && ("-1" !== $hospital) && ("-1" !== $district)){
+            $whereClause = " sex = '$gender' AND hospital = \"$hospital\" AND district = \"$district\"";
+        }
+
+
+      
        
              /* select fileds */
             $sql = "SELECT * from (
-            SELECT a.date date, 
+                SELECT a.date date, 
                    Round( ( SELECT SUM(b.zero_ten)
                            FROM vw_death_age_trend AS b
                 WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
