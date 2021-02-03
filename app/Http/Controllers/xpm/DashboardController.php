@@ -2623,7 +2623,7 @@ GROUP BY
     public function infectedPercentage()
     {
         $infected = DB::select("SELECT
-                        a.report_date,
+                        date(a.report_date) as report_date,
                         infected_24_hrs AS 'infected_24_hrs',
                         ( infected_24_hrs / test_24_hrs )* 100 AS 'test_positivity'
                     FROM
@@ -2650,6 +2650,7 @@ GROUP BY
         $y = explode(",", $total_test_positivity);
 
         foreach ($last_dates as $k => $d) {
+            if($d != '2021-01-01')
             $xdata[] = [
                 "date" => $d,
                 "infected" => $x[$k],

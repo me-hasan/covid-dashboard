@@ -2234,7 +2234,7 @@ $ydata = [];
 
 
     function dailyInfectedChart(data, dist='') {
-	console.log(data);
+	// console.log(data);
         let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
@@ -3012,6 +3012,7 @@ $ydata = [];
             url: "{{ route('infected.percentage') }}",
             type: 'GET',
             success: function (response) {
+                console.log(response);
                 if (response) {
                     response = JSON.parse(response);
                     xdata = response;
@@ -3078,11 +3079,13 @@ $ydata = [];
                             "valueField": "infected",
                             "dashLengthField": "dashLengthColumn",
                             "balloonFunction": function (graphDataItem, graph) {
+                                options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                                options["MMM"] = {year: 'numeric', month: 'long'};
+                                options["YY"] = {year: 'numeric', month: 'long'};
                                 var v = 0;
                                 if (graphDataItem.values) {
                                     v = graphDataItem.values.value;
                                 }
-                                var options = {month: 'long', day: 'numeric'};
                                 //let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
                                 let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                                 let previusSevenDay= previusSeven.getDate();
@@ -3499,8 +3502,8 @@ $ydata = [];
     
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
-        console.log('hello');
-        console.log(chartData);
+        //console.log('hello');
+        //console.log(chartData);
         //var size = Object.keys(chartData).length;
         //var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
         // $('#last_date_4').html(" " + div_date);
