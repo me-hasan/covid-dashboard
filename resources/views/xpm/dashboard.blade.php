@@ -3012,7 +3012,7 @@ $ydata = [];
             url: "{{ route('infected.percentage') }}",
             type: 'GET',
             success: function (response) {
-                console.log(response);
+                
                 if (response) {
                     response = JSON.parse(response);
                     xdata = response;

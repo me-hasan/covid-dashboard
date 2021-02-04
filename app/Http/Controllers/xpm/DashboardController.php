@@ -67,7 +67,7 @@ class DashboardController extends Controller
         $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
 
 
-        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), hospital_name_bng FROM `death_person` WHERE 1 '));
+        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), hospital_name_bng FROM `death_person` WHERE 1 ORDER BY name_of_hospital'));
         // dd($data);
 
         /*$data['tests_per_case_Mayanmar'] = $this->tests_per_case_country('Myanmar');
@@ -2671,38 +2671,43 @@ GROUP BY
     public function getAgeWiseDeathlData()
     {
         /* select fileds */
-        $sql = "SELECT
-        a.date,
-        Round( ( SELECT SUM(b.zero_ten)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'zero_to_ten',
-         Round( ( SELECT SUM(b.eleven_twenty)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'elv_to_twenty',
-         Round( ( SELECT SUM(b.twentyone_thirty)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'twentyone_to_thirty',
-         Round( ( SELECT SUM(b.thirtyone_fourty)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'thirtyone_to_forty',
-         Round( ( SELECT SUM(b.fourtyone_fifty)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'fortyone_to_fifty',
-         Round( ( SELECT SUM(b.fiftyone_sixty)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'fiftyone_to_sixty',
-         Round( ( SELECT SUM(b.sixty_plus)
-                FROM vw_death_age_trend AS b
-     WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-               ), 2 ) AS 'sixtyone_plus'
-      FROM vw_death_age_trend AS a
-      ORDER BY a.date";
+        $sql = "SELECT * from (
+            SELECT
+                   a.date,
+                   Round( ( SELECT SUM(b.zero_ten)
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'zero_to_ten',
+                    Round( ( SELECT SUM(b.eleven_twenty) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'elv_to_twenty',
+                    Round( ( SELECT SUM(b.twentyone_thirty) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'twentyone_to_thirty',
+                    Round( ( SELECT SUM(b.thirtyone_fourty) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'thirtyone_to_forty',
+                    Round( ( SELECT SUM(b.fourtyone_fifty) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'fortyone_to_fifty',
+                    Round( ( SELECT SUM(b.fiftyone_sixty) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'fiftyone_to_sixty',
+                    Round( ( SELECT SUM(b.sixty_plus) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS 'sixtyone_plus',
+                    Round( ( SELECT SUM(b.Total) 
+                           FROM vw_death_age_trend AS b
+                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                          ), 2 ) AS '7dayMovingAvgTotal'
+                 FROM vw_death_age_trend AS a
+                 ORDER BY a.date) T group by date order by date";
         
         try {
             $data = DB::select(DB::raw($sql));
@@ -2733,107 +2738,82 @@ GROUP BY
 
         if(("-1" !== $gender) && ("-1" === $hospital) && ("-1" === $district)){
              
-            $whereClause = " sex= '$gender'";
+            $whereClause = "sex= '$gender'";
         }
 
         if(("-1" !== $district) && ("-1" === $hospital) && ("-1" === $gender)){
              
-            $whereClause = " district= \"$district\"";
+            $whereClause = "district= \"$district\"";
         }
 
         if(("-1" !== $hospital) && ("-1" === $gender) && ("-1" === $district)){
-            $whereClause = " hospital = \"$hospital\"";
+            $whereClause = "hospital_id = \"$hospital\"";
         }
 
         if(("-1" !== $gender) && ("-1" !== $district) && ("-1" === $hospital)){
-            $whereClause = " sex = '$gender' AND district = \"$district\"";
+            $whereClause = "sex = '$gender' AND district = \"$district\"";
         }
 
         if(("-1" === $gender) && ("-1" !== $district) && ("-1" !== $hospital)){
-            $whereClause = " district = '$district' AND hospital = \"$hospital\"";
+            $whereClause = "district = '$district' AND hospital_id = \"$hospital\"";
         }
 
         if(("-1" !== $gender) && ("-1" !== $hospital) && ("-1" === $district)){
-            $whereClause = " sex = '$gender' AND hospital = \"$hospital\"";
+            $whereClause = "sex = '$gender' AND hospital_id = \"$hospital\"";
         }
 
         if(("-1" !== $gender) && ("-1" !== $hospital) && ("-1" !== $district)){
-            $whereClause = " sex = '$gender' AND hospital = \"$hospital\" AND district = \"$district\"";
+            $whereClause = "sex = '$gender' AND hospital_id = \"$hospital\" AND district = \"$district\"";
         }
 
 
       
-       
+        $oldGroup = ['sex', 'hospital_id', 'district'];
+        $newGroup = ['T.sex', 'T.hospital_id', 'T.district'];
+        $whereClauseGroup = str_replace($oldGroup, $newGroup, $whereClause);
+
              /* select fileds */
             $sql = "SELECT * from (
-                SELECT a.date date, 
-                   Round( ( SELECT SUM(b.zero_ten)
-                           FROM vw_death_age_trend AS b
-                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'zero_to_ten',
-                    Round( ( SELECT SUM(b.eleven_twenty)
-                           FROM vw_death_age_trend AS b
-                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'elv_to_twenty',
-                    Round( ( SELECT SUM(b.twentyone_thirty)
-                           FROM vw_death_age_trend AS b
-                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'twentyone_to_thirty',
-                    Round( ( SELECT SUM(b.thirtyone_fourty)
-                           FROM vw_death_age_trend AS b
-                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'thirtyone_to_forty',
-                    Round( ( SELECT SUM(b.fourtyone_fifty)
-                           FROM vw_death_age_trend AS b
-                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'fortyone_to_fifty',
-                    Round( ( SELECT SUM(b.fiftyone_sixty)
-                           FROM vw_death_age_trend AS b
-                WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'fiftyone_to_sixty',
-                    Round( ( SELECT SUM(b.sixty_plus)
-                           FROM vw_death_age_trend AS b
-                WHERE sex='M' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'sixtyone_plus'
-                FROM vw_death_age_trend AS a
-                ORDER BY a.date) T order by date";
+                    SELECT
+                       a.date, a.hospital_id, a.sex, a.district,
+                       Round( ( SELECT SUM(b.zero_ten)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'zero_to_ten',
+                        Round( ( SELECT SUM(b.eleven_twenty)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'elv_to_twenty',
+                        Round( ( SELECT SUM(b.twentyone_thirty)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'twentyone_to_thirty',
+                        Round( ( SELECT SUM(b.thirtyone_fourty)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'thirtyone_to_forty',
+                        Round( ( SELECT SUM(b.fourtyone_fifty)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fortyone_to_fifty',
+                        Round( ( SELECT SUM(b.fiftyone_sixty)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fiftyone_to_sixty',
+                        Round( ( SELECT SUM(b.sixty_plus)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'sixtyone_plus',
+                        Round( ( SELECT SUM(b.Total)
+                               FROM vw_death_age_trend AS b
+                    WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS '7dayMovingAvgTotal'
+                    FROM vw_death_age_trend AS a
+                    ORDER BY a.date) T where $whereClauseGroup group by date order by date";
        
         //  dd($sql);                 
-        /* if($hospital){
-
-            $sql = "SELECT * from (
-            SELECT a.date date, 
-                       Round( ( SELECT SUM(b.zero_ten) / COUNT(b.zero_ten)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'zero_to_ten',
-                        Round( ( SELECT SUM(b.eleven_twenty) / COUNT(b.eleven_twenty)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'elv_to_twenty',
-                        Round( ( SELECT SUM(b.twentyone_thirty) / COUNT(b.twentyone_thirty)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'twentyone_to_thirty',
-                        Round( ( SELECT SUM(b.thirtyone_fourty) / COUNT(b.thirtyone_fourty)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'thirtyone_to_forty',
-                        Round( ( SELECT SUM(b.fourtyone_fifty) / COUNT(b.fourtyone_fifty)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'fortyone_to_fifty',
-                        Round( ( SELECT SUM(b.fiftyone_sixty) / COUNT(b.fiftyone_sixty)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'fiftyone_to_sixty',
-                        Round( ( SELECT SUM(b.sixty_plus) / COUNT(b.sixty_plus)
-                               FROM vw_death_age_trend AS b
-                    WHERE name_of_hospital in ($hospital) and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'sixtyone_plus'
-                    FROM vw_death_age_trend AS a
-                    ORDER BY a.date) T order by date";
-        } */
+        
+        
 
         try {
             $data = DB::select(DB::raw($sql));
