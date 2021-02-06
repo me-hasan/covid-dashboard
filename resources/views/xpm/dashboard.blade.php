@@ -717,7 +717,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             </div>
                             <div class="row"  style="height: 350px !important; overflow:hidden;">  
-                                <div class="col-lg-3" style="margin:0px !important; padding: 8px 0px 0px !important; min-width: 25% !important;">
+                                <div class="col-lg-3" style="margin:0px !important; padding: 8px 5px 0px 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_1">
                                     </div>
                                 </div>
