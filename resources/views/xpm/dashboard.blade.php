@@ -425,20 +425,20 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_affected_comparison_rate">
                                 <li><span class="bullet-point"></span>
-                                    <span>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</span>
+                                    <span>আক্রান্ত ও পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</span>
                                 </li>
                             </a>
                             {{-- <a href="#scroll_test_status">
                                 <li><span class="bullet-point"></span> <span>পরীক্ষা পরিস্থিতি</span></li>
                             </a> --}}
                             <a href="#scroll_daily_risk_dist_wise_test_positive">
-                                <li><span class="bullet-point"></span> <span>সনাক্ত বিবেচনায় আক্রান্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
+                                <li><span class="bullet-point"></span> <span>পরীক্ষা বিবেচনায় সনাক্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
                                 </li>
                             </a>
 
                             <a href="#scroll_daily_test_dhaka_district">
                                 <li><span class="bullet-point"></span>
-                                    <span>জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার</span>
+                                    <span>জেলা ভিত্তিক দৈনিক পরীক্ষা বিবেচনায় সনাক্তের হার</span>
                                 </li>
                             </a>
 
@@ -638,7 +638,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-8 ">
                                         <h2>
-                                            সনাক্ত বিবেচনায় আক্রান্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
+                                            পরীক্ষা বিবেচনায় সনাক্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
                                         </h2>
                                     </div>
                                     {{--<div class="iv-right offset-md-4 col-2 ">
@@ -678,15 +678,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span>
                                                             </span>
                                                             <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;">
-                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (সনাক্ত বিবেচনায় আক্রান্তের হার &gt; ১০%)</span>
+                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (পরীক্ষা বিবেচনায় সনাক্তের হার &gt; ১০%)</span>
                                                             </span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (সনাক্ত বিবেচনায় আক্রান্তের হার ৫% - ১০%)</span></span>
+                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;">
                                                             <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (সনাক্ত বিবেচনায় আক্রান্তের হার &lt; ৫%) </span></span>
+                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার &lt; ৫%) </span></span>
                                                         </div>
                                                         <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
                                                             <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
@@ -879,7 +879,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     </div>
                                                                     <div class="col-xl-6">
                             
-                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্ত বিবেচনায় আক্রান্তের হারের পরিসীমা:
+                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন পরীক্ষা বিবেচনায় সনাক্তের হারের পরিসীমা:
                                                                             <span
                                                                                 id="ex6SliderVal">{!! convertEnglishDigitToBangla('5:10') !!}</span>
                                                                         </p>
@@ -1352,7 +1352,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison_rate">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</h2>
+                                                    <h2>আক্রান্ত ও পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</h2>
                                                 </div>
             
                                             </div>
@@ -1390,7 +1390,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="row">
                                             <div class="iv-left col-12 ">
                                                 <h2 class="positive-dhaka-rate-heading">
-                                                    জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার
+                                                    জেলা ভিত্তিক দৈনিক পরীক্ষা বিবেচনায় সনাক্তের হার
                                                 </h2>
                                             </div>
 
@@ -3030,7 +3030,7 @@ $ydata = [];
                         "valueAxes": [
                             {
                                 "position": "left",
-                                "title": "সনাক্ত বিবেচনায় আক্রান্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                "title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -3106,7 +3106,7 @@ $ydata = [];
                             "bulletBorderThickness": 3,
                             "fillAlphas": 0,
                             "lineAlpha": 1,
-                            "title": "সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়",
+                            "title": "পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়",
                             "valueField": "test_positive",
                             "dashLengthField": "dashLengthLine",
                             "type": "smoothedLine",
@@ -3211,7 +3211,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": title+" সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": title+" পরীক্ষা বিবেচনায় সনাক্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -3298,7 +3298,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সাপ্তাহিক সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": "সাপ্তাহিক পরীক্ষা বিবেচনায় সনাক্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -3322,13 +3322,13 @@ $ydata = [];
                     "valueAxis": "v1",
                     "lineColor": "#FB0F04",
                     "lineThickness": 2,
-                    "bullet": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "bullet": "জাতীয় পর্যায়ে পরীক্ষা বিবেচনায় সনাক্তের হার",
                     "id": "g1",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#637bb6",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "title": "জাতীয় পর্যায়ে পরীক্ষা বিবেচনায় সনাক্তের হার",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "National",

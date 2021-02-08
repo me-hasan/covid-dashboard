@@ -2671,43 +2671,7 @@ GROUP BY
     public function getAgeWiseDeathlData()
     {
         /* select fileds */
-        $sql = "SELECT * from (
-            SELECT
-                   a.date,
-                   Round( ( SELECT SUM(b.zero_ten)
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'zero_to_ten',
-                    Round( ( SELECT SUM(b.eleven_twenty) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'elv_to_twenty',
-                    Round( ( SELECT SUM(b.twentyone_thirty) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'twentyone_to_thirty',
-                    Round( ( SELECT SUM(b.thirtyone_fourty) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'thirtyone_to_forty',
-                    Round( ( SELECT SUM(b.fourtyone_fifty) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'fortyone_to_fifty',
-                    Round( ( SELECT SUM(b.fiftyone_sixty) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'fiftyone_to_sixty',
-                    Round( ( SELECT SUM(b.sixty_plus) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS 'sixtyone_plus',
-                    Round( ( SELECT SUM(b.Total) 
-                           FROM vw_death_age_trend AS b
-                WHERE DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                          ), 2 ) AS '7dayMovingAvgTotal'
-                 FROM vw_death_age_trend AS a
-                 ORDER BY a.date) T group by date order by date";
+        $sql = "SELECT * FROM vw_death_age_trend_default";
         
         try {
             $data = DB::select(DB::raw($sql));
