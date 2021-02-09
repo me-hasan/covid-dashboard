@@ -411,21 +411,21 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div class="breadcrumbs-area">
                         <ul class="breadcrumbs">
                             <a href="#scroll_daily_affected">
-                                <li><span class="bullet-point"></span> <span>দৈনিক আক্রান্তের সংখ্যা </span></li>
+                                <li><span class="bullet-point"></span> <span>দৈনিক সনাক্তের সংখ্যা </span></li>
                             </a>
                             <a href="#scroll_daily_affected_area_wise">
                                 <li><span class="bullet-point"></span>
-                                    <span>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</span>
+                                    <span>অঞ্চল-ভিত্তিক দৈনিক সনাক্তের সংখ্যা</span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_comparison">
                                 <li><span class="bullet-point"></span>
-                                    <span>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</span>
+                                    <span>দৈনিক পরীক্ষা ও সনাক্তের সংখ্যার তুলনা</span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_comparison_rate">
                                 <li><span class="bullet-point"></span>
-                                    <span>আক্রান্ত ও পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</span>
+                                    <span> পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</span>
                                 </li>
                             </a>
                             {{-- <a href="#scroll_test_status">
@@ -497,17 +497,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div style="height: 220px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
-                                <h4 class="header-title pb-1">সর্বমোট আক্রান্ত</h4>
+                                <h4 class="header-title pb-1">সর্বমোট সনাক্তের</h4>
                                 <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে আক্রান্ত</h4>
+                            <h4 class="header-title pb-1">গত ১৪ দিনে সনাক্তের</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_2}}"></i>
-                                পূর্ববর্তী ১৪ দিনে আক্রান্তের
+                                পূর্ববর্তী ১৪ দিনে সনাক্তের
                                 চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}
                                 জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
@@ -547,7 +547,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="invoice-head title-bg-style">
                                 <div class="row">
                                     <div class="iv-left col-6 ">
-                                        <h2>দৈনিক আক্রান্তের সংখ্যা</h2>
+                                        <h2>দৈনিক সনাক্তের সংখ্যা</h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
                                         <select name="" id="daily-infected-total-select" class="form-control">
@@ -1227,7 +1227,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-6 ">
                                         <h2>
-                                            অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা
+                                            অঞ্চল-ভিত্তিক দৈনিক সনাক্তের সংখ্যা
                                         </h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
@@ -1318,7 +1318,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</h2>
+                                                    <h2>দৈনিক পরীক্ষা ও সনাক্তের সংখ্যার তুলনা</h2>
                                                 </div>
             
                                             </div>
@@ -1352,7 +1352,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison_rate">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>আক্রান্ত ও পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</h2>
+                                                    <h2> পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</h2>
                                                 </div>
             
                                             </div>
@@ -2202,14 +2202,14 @@ $ydata = [];
 
 
     var tags = {
-        "special_word_1": ["অক্টোবর মাসের শুরু থেকে আক্রান্তের সংখ্যা দৈনিক ১৫০০", "মহামারীর অপরিবর্তিত অবস্থাকে"],
+        "special_word_1": ["অক্টোবর মাসের শুরু থেকে সনাক্তের সংখ্যা দৈনিক ১৫০০", "মহামারীর অপরিবর্তিত অবস্থাকে"],
         "special_word_2": ["প্রতি হাজারে প্রায় ১৪ জনের", "প্রতিবেশী দেশগুলোর তুলনায় কম"],
-        "special_word_3": ["করোনায় দৈনিক প্রায় একই সংখ্যক মানুষ আক্রান্ত হচ্ছে"],
+        "special_word_3": ["করোনায় দৈনিক প্রায় একই সংখ্যক মানুষ সনাক্তের হচ্ছে"],
         "special_word_4": ["পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন"],
         "special_word_5": ["মহামারীটি এর বর্তমান গতিতেই আগাচ্ছে - এর গতি এই মূহুর্তে কমছে না বা বাড়ছে না"],
         "special_word_6": ["মহামারীটির উন্নতি হচ্ছে না বরং স্থির অবস্থায় বিরাজমান আছে"],
         "special_word_7": ["লাল এলাকায় আরও বেশি করে পরীক্ষা করা দরকার"],
-        "special_word_8": ["পরীক্ষাকৃত ব্যক্তিদের মধ্যে আক্রান্ত্রের সংখ্যা কিছুটা কমে আসলেও এখনো বেশ উঁচু"],
+        "special_word_8": ["পরীক্ষাকৃত ব্যক্তিদের মধ্যে সনাক্তের্রের সংখ্যা কিছুটা কমে আসলেও এখনো বেশ উঁচু"],
         "special_word_9": ["লাল ঘরে কোন জেলাগুলো রয়েছে এবং তাদের অবস্থা উন্নতির দিকে কেন যাচ্ছে না"],
         "special_word_10": ["বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে", "সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি"],
         "special_word_11": ["আইসিইউ শয্যার ব্যবহার এখনও অধিক"],
@@ -2257,7 +2257,7 @@ $ydata = [];
                 },
                 "valueAxes": [{
                     "position": "left",
-                    "title": zoneName+" এর দৈনিক আক্রান্তের সংখ্যা",
+                    "title": zoneName+" এর দৈনিক সনাক্তের সংখ্যা",
                     "id": "v1",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
@@ -2274,12 +2274,12 @@ $ydata = [];
                     "columnWidth": 10,
                     "fillAlphas": 1,
                     "lineColor": "rgb(103, 183, 220)",
-                    "title": zoneName+" এর দৈনিক আক্রান্ত",
+                    "title": zoneName+" এর দৈনিক সনাক্তের",
                     "type": "column",
                     "valueField": "infected",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = zoneName+" এর দৈনিক আক্রান্ত";
+                        var title = zoneName+" এর দৈনিক সনাক্তের";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }, {
@@ -2288,7 +2288,7 @@ $ydata = [];
                     "lineThickness": 2,
                     "lineColor": "orange",
                     "type": "smoothedLine",
-                    "title": zoneName+" এর দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
+                    "title": zoneName+" এর দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)", //5 days running average
                     "valueField": "avg",
                     "bullet": "round",
                     "bulletSize": 7,
@@ -2298,7 +2298,7 @@ $ydata = [];
                     "bulletBorderThickness": 3,
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = zoneName+"- দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)";
+                        var title = zoneName+"- দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     }
                 }],
@@ -2505,7 +2505,7 @@ $ydata = [];
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",
-                "title": "দৈনিক আক্রান্তের সংখ্যা",
+                "title": "দৈনিক সনাক্তের সংখ্যা",
                 "minimum": 0,
                 "labelFunction": function (value, valueText, valueAxis) {
                     return value.toLocaleString("bn-BD");
@@ -2626,7 +2626,7 @@ $ydata = [];
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "আক্রান্তের সংখ্যা",
+                        "title": "সনাক্তের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -2814,6 +2814,7 @@ $ydata = [];
                     "parseDates": true,
                     "axisColor": "#DADADA",
                     "minPeriod": "DD",
+                    "showLastLabel": true,
                     "labelFunction": function (value, date, categoryAxis) {
                         var options = new Array();
                         options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -2821,6 +2822,10 @@ $ydata = [];
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                     },
+                    "autoGridCount": false,
+                    "equalSpacing": true,
+                    "showFirstLabel": true,
+                    "showLastLabel": true,
 
                 },
                 "chartScrollbar": {
@@ -2867,7 +2872,7 @@ $ydata = [];
                     "id": "v1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "দৈনিক আক্রান্তের সংখ্যা",
+                    "title": "দৈনিক সনাক্তের সংখ্যা",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -2902,13 +2907,13 @@ $ydata = [];
                     "valueAxis": "v1",
                     "lineColor": "rgb(157, 74, 42)",
                     "lineThickness": 2,
-                    "bullet": "দৈনিক আক্রান্ত (৭-দিনের চলমান গড়)",
+                    "bullet": "দৈনিক সনাক্তের (৭-দিনের চলমান গড়)",
                     "id": "g1",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#FFFFFF",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "দৈনিক আক্রান্ত (৭-দিনের চলমান গড়)",
+                    "title": "দৈনিক সনাক্তের (৭-দিনের চলমান গড়)",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "avg",
@@ -3041,7 +3046,7 @@ $ydata = [];
                             },
                             {
                                 "position": "right",
-                                "title": "আক্রান্তের সংখ্যা",
+                                "title": "সনাক্তের সংখ্যা",
                                 "id": "v2",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -3073,7 +3078,7 @@ $ydata = [];
                             "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
                             "fillAlphas": 1,
                             "fillColorsField": "color",
-                            "title": "আক্রান্তের সাপ্তাহিক গড়",
+                            "title": "সনাক্তের সাপ্তাহিক গড়",
                             "type": "column",
                             "lineColor": "rgb(223, 200, 37)",
                             "valueField": "infected",
@@ -3905,6 +3910,7 @@ $ydata = [];
 
 
         $('#weekly_date_submit').on('click', function () {
+
             myrange_ajax_call();
             weekly_date_change();
         });
@@ -4477,7 +4483,7 @@ group by date ORDER BY date ");
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "আক্রান্তের সংখ্যা",
+                        "title": "সনাক্তের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
