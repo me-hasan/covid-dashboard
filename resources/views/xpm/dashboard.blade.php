@@ -413,11 +413,20 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <a href="#scroll_daily_affected">
                                 <li><span class="bullet-point"></span> <span>দৈনিক সনাক্তের সংখ্যা </span></li>
                             </a>
+                             <a href="#scroll_daily_risk_dist_wise_test_positive">
+                                <li><span class="bullet-point"></span> <span>পরীক্ষা বিবেচনায় সনাক্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
+                                </li>
+                            </a>
+                            <a href="#scroll_daily_last_4weeks_risk">
+                                <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
+                                </li>
+                            </a>
                             <a href="#scroll_daily_affected_area_wise">
                                 <li><span class="bullet-point"></span>
                                     <span>অঞ্চল-ভিত্তিক দৈনিক সনাক্তের সংখ্যা</span>
                                 </li>
                             </a>
+                           
                             <a href="#scroll_daily_affected_comparison">
                                 <li><span class="bullet-point"></span>
                                     <span>দৈনিক পরীক্ষা ও সনাক্তের সংখ্যার তুলনা</span>
@@ -431,10 +440,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             {{-- <a href="#scroll_test_status">
                                 <li><span class="bullet-point"></span> <span>পরীক্ষা পরিস্থিতি</span></li>
                             </a> --}}
-                            <a href="#scroll_daily_risk_dist_wise_test_positive">
-                                <li><span class="bullet-point"></span> <span>পরীক্ষা বিবেচনায় সনাক্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
-                                </li>
-                            </a>
+                            
 
                             <a href="#scroll_daily_test_dhaka_district">
                                 <li><span class="bullet-point"></span>
@@ -442,10 +448,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </li>
                             </a>
 
-                            <a href="#scroll_daily_last_4weeks_risk">
-                                <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
-                                </li>
-                            </a>
+                            
                             <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
                                     <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
