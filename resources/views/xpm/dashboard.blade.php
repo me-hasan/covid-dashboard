@@ -1925,7 +1925,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             <div class="modal-header text-white text-center"
                  style="background: #04984A; color: #fff; display: block; width: 100%;">
                 <h3 class="text-center">কোভিড – ১৯ ন্যাশনাল ড্যাশবোর্ড</h3>
-                <h5 class="modal-title text-center mt-2 mb-2 text-white">সহযোগিতায়</h5>
+                <h5 class="modal-title text-center mt-2 mb-2 text-white">নীতি নির্ধারণী পর্ষদ</h5>
                 <button type="button" class="close associator-modal-close-btn" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1937,7 +1937,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         <h3>উপদেষ্টা</h3>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
 
                             <img src="pm/images/collaborator/sebrina-final.png" class="" style="max-width: 100%;
     height: 130px;" alt="">
@@ -1946,14 +1946,21 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <p>অতিরিক্ত মহাপরিচালক (পরিকল্পনা ও উন্নয়ন),</p>
                             <p> স্বাস্থ্য অধিদপ্তর</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
+
+                            <img src="pm/images/collaborator/mahmudur.png" class="associator-img" alt="">
+                            <p> অধ্যাপক ডাঃ মাহমুদুর রহমান </p>
+                            <p> সাবেক পরিচালক,</p>
+                            <p> আইইডিসিআর</p>
+                        </div>
+                        <div class="col-md-3 text-center">
 
                             <img src="pm/images/collaborator/dr_shams.l_arefin.jpg" class="associator-img" alt="">
                             <p> ড. শামস্ এল আরেফিন</p>
                             <p> ঊর্ধ্বতন পরিচালক,</p>
                             <p> মাতৃ ও শিশু স্বাস্থ্য বিভাগ, আইসিডিডিআরবি</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
 
                             <img src="pm/images/collaborator/anir-chowdhury.jpeg" class="associator-img" alt="">
                             <p>আনীর চৌধুরী
