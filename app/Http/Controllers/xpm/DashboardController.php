@@ -2139,6 +2139,42 @@ using(district) ORDER BY r.test_positivity DESC");
     public function getDatesFromRange($flag)
     {
         $Date1 = '20-05-2020';
+        //$Date2 = '02-01-2021';
+        $Date2 = date('d-m-Y', strtotime("-5 days"));
+
+        // Declare an empty array
+        $array = array();
+
+        // Use strtotime function
+        $Variable1 = strtotime($Date1);
+        $Variable2 = strtotime($Date2);
+
+        // Use for loop to store dates into array
+        // 86400 sec = 24 hrs = 60*60*24 = 1 day
+        for ($currentDate = $Variable1; $currentDate <= $Variable2;
+            $currentDate += (86400)) {
+
+            /* weekly or daily */    
+            if($flag != 1){
+                /* Check specific day in week */ 
+                $carbon = Carbon::createFromTimestamp($currentDate);
+                if ($carbon->dayOfWeek == Carbon::SATURDAY) {
+                    $array[] = date('Y-m-d', $currentDate);
+                }
+            }else{
+                $array[] = date('Y-m-d', $currentDate);
+            }   
+        
+        }
+
+        return $array;
+    }
+
+
+    // Function to get all the dates in given range
+    public function getDatesFromRangeForAgeWiseDeath($flag)
+    {
+        $Date1 = '20-05-2020';
         $Date2 = '02-01-2021';
 
         // Declare an empty array
@@ -2805,7 +2841,7 @@ GROUP BY
      */
     public function ageWiseDateArrayList($formatData, $weeklyOrDaily)
     {
-        $datesList = $this->getDatesFromRange($weeklyOrDaily);
+        $datesList = $this->getDatesFromRangeForAgeWiseDeath($weeklyOrDaily);
         
         $newDistrict = [];
         foreach ($datesList as $key => $date) {
