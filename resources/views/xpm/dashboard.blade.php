@@ -2250,115 +2250,136 @@ $ydata = [];
             $('#last_date_1').html(" " + m_last_date);
             var chart = AmCharts.makeChart("national_dialy_infected_trend", {
                 "type": "serial",
-                "theme": "none",
-                "marginRight": 80,
-                "dataProvider": data,
-                "legend": {
-                    "horizontalGap": 10,
-                    "maxColumns": 2,
-                    "position": "bottom",
-                    "useGraphSettings": true,
-                    "markerSize": 20,
-                    "valueFunction": function (a, value) {
-                        return '';
-                    },
-                    "align": "center"
+                        "addClassNames": true,
+                        "theme": "light",
+                        "balloon": {
+                            "adjustBorderColor": false,
+                            "color": "#050606"
+                        },
+                        "valueAxes": [
+                            {
+                                "position": "left",
+                                "title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                "id": "v1",
+                                "minimum": 0,
+                                "labelFunction": function (value, valueText, valueAxis) {
+                                    //get from
+                                    return value.toLocaleString("bn-BD");
+                                },
 
-                },
-                "valueAxes": [{
-                    "position": "left",
-                    "title": zoneName+" এর দৈনিক সনাক্তের সংখ্যা",
-                    "id": "v1",
-                    "minimum": 0,
-                    "labelFunction": function (value, valueText, valueAxis) {
-                        return value.toLocaleString("bn-BD");
-                    },
+                            },
+                            {
+                                "position": "right",
+                                "title": "সনাক্তের সংখ্যা",
+                                "id": "v2",
+                                "minimum": 0,
+                                "labelFunction": function (value, valueText, valueAxis) {
+                                    return value.toLocaleString("bn-BD");
+                                },
+                            },
 
-                },
-                ],
+                        ],
 
-                "graphs": [{
-                    "valueAxis": "v1",
-                    "id": "g1",
-                    "balloonText": "[[title]]: [[value]]",
-                    "columnWidth": 10,
-                    "fillAlphas": 1,
-                    "lineColor": "rgb(103, 183, 220)",
-                    "title": zoneName+" এর দৈনিক সনাক্তের",
-                    "type": "column",
-                    "valueField": "infected",
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = zoneName+" এর দৈনিক সনাক্তের";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                }, {
-                    "id": "g2",
-                    "balloonText": "[[title]]: [[value]]",
-                    "lineThickness": 2,
-                    "lineColor": "orange",
-                    "type": "smoothedLine",
-                    "title": zoneName+" এর দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)", //5 days running average
-                    "valueField": "avg",
-                    "bullet": "round",
-                    "bulletSize": 7,
-                    "bulletBorderAlpha": 10,
-                    "bullegit addtColor": "#FFFFFF",
-                    "useLineColorForBulletBorder": true,
-                    "bulletBorderThickness": 3,
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = zoneName+"- দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                }],
-                "chartCursor": {
-                    "cursorPosition": "mouse",
-                    "showNextAvailable": true,
-                    "categoryBalloonFunction": function (date) {
-                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
-                        return date.toLocaleDateString('bn-BD', options);
-                    },
-                },
-                "autoMarginOffset": 5,
-                "columnWidth": 1,
-                "categoryField": "date",
-		"categoryAxis": {
-		    
-		    "equalSpacing": false,
-                    "parseDates": true,
-	            "minPeriod": "hh",
-		  //  "showLastLabel": true,	
-                    "labelFunction": function (value, date, categoryAxis) {
-                        var options = new Array();
-                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
-                        options["MMM"] = {year: 'numeric', month: 'long'};
-                        options["YY"] = {year: 'numeric', month: 'long'};
-                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-		    },
-		    //"equalSpacing": true,
-		    "showFirstLabel": true,
-                    "showLastLabel": true,
 
-                },
+                        "dataProvider": data,
 
-                "chartScrollbar": {
-                    "graph": "g2",
-                    "gridAlpha": 0,
-                    "color": "#888888",
-                    "scrollbarHeight": 55,
-                    "backgroundAlpha": 0,
-                    "selectedBackgroundAlpha": 0.1,
-                    "selectedBackgroundColor": "#888888",
-                    "graphFillAlpha": 0,
-                    "autoGridCount": true,
-                    "selectedGraphFillAlpha": 0,
-                    "graphLineAlpha": 0.2,
-                    "graphLineColor": "#c2c2c2",
-                    "selectedGraphLineColor": "#888888",
-                    "selectedGraphLineAlpha": 1
+                        "startDuration": 1,
+                        "legend": {
+                            "horizontalGap": 10,
+                            "maxColumns": 1,
+                            "position": "bottom",
+                            "useGraphSettings": true,
+                            "markerSize": 10,
+                            "valueFunction": function (a, value) {
+                                return '';
+                            },
+                            "align": "center"
+                        },
+                        "graphs": [{
+                            "valueAxis": "v2",
+                            "id": "g1",
+                            "alphaField": "alpha",
+                            "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+                            "fillAlphas": 1,
+                            "fillColorsField": "color",
+                            "title": zoneName+" এর দৈনিক সনাক্ত",
+                            "type": "column",
+                            "fillAlphas": 1,
+                            "lineColor": "rgb(103, 183, 220)",
+                            "valueField": "infected",
+                            "dashLengthField": "dashLengthColumn",
+                            "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = zoneName+" এর দৈনিক সনাক্ত";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                            }
+                        }, {
+                            "valueAxis": "v1",
+                            "id": "graph2",
+                            "lineThickness": 2,
+                            "lineColor": "orange",
+                            "type": "smoothedLine",
+                            "title": zoneName+" এর দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)", //5 days running average
+                            "valueField": "avg",
+                            "bullet": "round",
+                            "bulletSize": 7,
+                            "fillAlphas": 0,
+                            "lineAlpha": 1,
+                            "bulletBorderAlpha": 10,
+                            "bullegit addtColor": "#FFFFFF",
+                            "useLineColorForBulletBorder": true,
+                            "bulletBorderThickness": 3,
+                             "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = zoneName+"- দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                            }
+                        }],
+                        "chartCursor": {
+                            "cursorPosition": "mouse",
+                            "showNextAvailable": false,
+                            "categoryBalloonFunction": function (date) {
+                                var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                                return date.toLocaleDateString('bn-BD', options);
+                            },
+                        },
+                        "categoryField": "date",
+                        "categoryAxis": {
+                            "parseDates": true,
+                            "minPeriod": "DD",
+                            "showLastLabel": true,
+                            "labelFunction": function (value, date, categoryAxis) {
+                                var options = new Array();
+                                options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                                options["MMM"] = {year: 'numeric', month: 'long'};
+                                options["YY"] = {year: 'numeric', month: 'long'};
+                                return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                            },
+                            
+                            "autoGridCount": false,
+                            "equalSpacing": true,
+                            "gridCount": 14,
+                            "showFirstLabel": true,
+                            "showLastLabel": true,
 
-                },
+                        },
+                        "chartScrollbar": {
+                            "graph": "g1",
+                            "gridAlpha": 0,
+                            "color": "#888888",
+                            "scrollbarHeight": 55,
+                            "backgroundAlpha": 0,
+                            "selectedBackgroundAlpha": 0.1,
+                            "selectedBackgroundColor": "#888888",
+                            "graphFillAlpha": 0,
+                            "autoGridCount": true,
+                            "selectedGraphFillAlpha": 0,
+                            "graphLineAlpha": 0.2,
+                            "graphLineColor": "#c2c2c2",
+                            "selectedGraphLineColor": "#888888",
+                            "selectedGraphLineAlpha": 1
+
+                        }
 
             });
 
@@ -4858,8 +4879,8 @@ group by date ORDER BY date ");
                 },
                 "categoryAxis": {
                     "parseDates": true,
-                    "seriesStacked" : true,
                     "minPeriod": "DD",
+                    "showLastLabel": true,
                     "labelFunction": function (value, date, categoryAxis) {
                         var options = new Array();
                         options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -4867,32 +4888,36 @@ group by date ORDER BY date ");
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                     },
+                    "autoGridCount": false,
+                    "equalSpacing": true,
+                    "gridCount": 14,
+                    "showFirstLabel": true,
+                    "showLastLabel": true,
 
                 },
 
                 "legend": {
-                //"horizontalGap": 50,
-                    "maxColumns": 5,
+                    "horizontalGap": 10,
+                    "maxColumns": 1,
                     "position": "bottom",
                     "useGraphSettings": true,
                     "markerSize": 10,
                     "valueFunction": function (a, value) {
                         return '';
                     },
-                    "align": "left"
-
+                    "align": "center"
                 },
 
                 "chartScrollbar": {
-                        "graph": "g3",
+                        "graph": "g1",
                         "gridAlpha": 0,
                         "color": "#888888",
-                        "scrollbarHeight": 30,
-                        "backgroundAlpha": 1,
+                        "scrollbarHeight": 55,
+                        "backgroundAlpha": 0,
                         "selectedBackgroundAlpha": 0.1,
                         "selectedBackgroundColor": "#888888",
                         "graphFillAlpha": 0,
-                        "autoGridCount": false,
+                        "autoGridCount": true,
                         "selectedGraphFillAlpha": 0,
                         "graphLineAlpha": 0.2,
                         "graphLineColor": "#c2c2c2",
