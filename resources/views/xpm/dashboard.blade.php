@@ -2355,7 +2355,7 @@ $ydata = [];
                                 options["YY"] = {year: 'numeric', month: 'long'};
                                 return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                             },
-                            
+                            "labelRotation": 45,
                             "autoGridCount": false,
                             "equalSpacing": true,
                             "gridCount": 14,
@@ -4888,6 +4888,7 @@ group by date ORDER BY date ");
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                     },
+                    "labelRotation": 45,
                     "autoGridCount": false,
                     "equalSpacing": true,
                     "gridCount": 14,

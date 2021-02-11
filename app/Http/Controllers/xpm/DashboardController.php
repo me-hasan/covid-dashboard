@@ -2738,16 +2738,163 @@ GROUP BY
 
         if(("-1" !== $gender) && ("-1" === $hospital) && ("-1" === $district)){
              
-            $whereClause = "sex= '$gender'";
+            // $whereClause = "sex= '$gender'";
+
+            $sql =  "SELECT * from (
+                SELECT
+                       a.date,a.sex,
+                       Round( ( SELECT SUM(b.zero_ten)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'zero_ten',
+                        Round( ( SELECT SUM(b.eleven_twenty)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'eleven_twenty',
+                        Round( ( SELECT SUM(b.twentyone_thirty)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'twentyone_thirty',
+                        Round( ( SELECT SUM(b.thirtyone_fourty)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'thirtyone_fourty',
+                        Round( ( SELECT SUM(b.fourtyone_fifty)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fourtyone_fifty',
+                        Round( ( SELECT SUM(b.fiftyone_sixty)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fiftyone_sixty',
+                        Round( ( SELECT SUM(b.sixty_plus)
+                               FROM vw_death_age_sex_trend AS b
+                    WHERE sex='$gender' and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'sixty_plus'
+                     FROM vw_death_age_trend AS a
+                     ORDER BY a.date) T where T.sex='$gender' group by date order by date";
+
+            try {
+                $data = DB::select(DB::raw($sql));
+                // return $data;    
+                $formatData = [];
+                foreach($data as $k=> $value){
+                $formatData[] = (array)$value;
+                }	    
+                $result = $this->ageWiseDateArrayList($formatData, 2);
+        
+                return $result;
+            } catch (\Exception $exception) {
+                dd($exception);
+                return [];
+            }
         }
 
         if(("-1" !== $district) && ("-1" === $hospital) && ("-1" === $gender)){
              
-            $whereClause = "district= \"$district\"";
+            // $whereClause = "district= \"$district\"";
+            $sql =  "SELECT * from (
+                SELECT
+                       a.date,a.district,
+                       Round( ( SELECT SUM(b.zero_ten)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'zero_ten',
+                        Round( ( SELECT SUM(b.eleven_twenty)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'eleven_twenty',
+                        Round( ( SELECT SUM(b.twentyone_thirty)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'twentyone_thirty',
+                        Round( ( SELECT SUM(b.thirtyone_fourty)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'thirtyone_fourty',
+                        Round( ( SELECT SUM(b.fourtyone_fifty)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fourtyone_fifty',
+                        Round( ( SELECT SUM(b.fiftyone_sixty)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fiftyone_sixty',
+                        Round( ( SELECT SUM(b.sixty_plus)
+                               FROM vw_death_age_district_trend AS b
+                    WHERE district=\"$district\" and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'sixty_plus'
+                               FROM vw_death_age_district_trend AS a
+                     ORDER BY a.date) T where district=\"$district\" group by date order by date";
+
+            try {
+                
+
+                $data = DB::select(DB::raw($sql));
+                // return $data;    
+                $formatData = [];
+                foreach($data as $k=> $value){
+                $formatData[] = (array)$value;
+                }	    
+                $result = $this->ageWiseDateArrayList($formatData, 2);
+        
+                return $result;
+            } catch (\Exception $exception) {
+                dd($exception);
+                return [];
+            }
         }
 
         if(("-1" !== $hospital) && ("-1" === $gender) && ("-1" === $district)){
-            $whereClause = "hospital_id = \"$hospital\"";
+            // $whereClause = "hospital_id = \"$hospital\"";
+
+            $sql =  "SELECT * from (
+                SELECT
+                       a.date,a.hospital,a.hospital_id,
+                       Round( ( SELECT SUM(b.zero_ten)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'zero_ten',
+                        Round( ( SELECT SUM(b.eleven_twenty)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'eleven_twenty',
+                        Round( ( SELECT SUM(b.twentyone_thirty)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'twentyone_thirty',
+                        Round( ( SELECT SUM(b.thirtyone_fourty)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'thirtyone_fourty',
+                        Round( ( SELECT SUM(b.fourtyone_fifty)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fourtyone_fifty',
+                        Round( ( SELECT SUM(b.fiftyone_sixty)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'fiftyone_sixty',
+                        Round( ( SELECT SUM(b.sixty_plus)
+                               FROM vw_death_age_hospital_trend AS b
+                    WHERE hospital_id=$hospital and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
+                              ), 2 ) AS 'sixty_plus'
+                     FROM vw_death_age_trend AS a
+                     ORDER BY a.date) T where T.hospital_id=$hospital group by date order by date";
+            try {
+                $data = DB::select(DB::raw($sql));
+                // return $data;    
+                $formatData = [];
+                foreach($data as $k=> $value){
+                $formatData[] = (array)$value;
+                }	    
+                $result = $this->ageWiseDateArrayList($formatData, 2);
+        
+                return $result;
+            } catch (\Exception $exception) {
+                dd($exception);
+                return [];
+            }
         }
 
         if(("-1" !== $gender) && ("-1" !== $district) && ("-1" === $hospital)){
@@ -2779,31 +2926,31 @@ GROUP BY
                        Round( ( SELECT SUM(b.zero_ten)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'zero_to_ten',
+                              ), 2 ) AS 'zero_ten',
                         Round( ( SELECT SUM(b.eleven_twenty)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'elv_to_twenty',
+                              ), 2 ) AS 'eleven_twenty',
                         Round( ( SELECT SUM(b.twentyone_thirty)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'twentyone_to_thirty',
+                              ), 2 ) AS 'twentyone_thirty',
                         Round( ( SELECT SUM(b.thirtyone_fourty)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'thirtyone_to_forty',
+                              ), 2 ) AS 'thirtyone_fourty',
                         Round( ( SELECT SUM(b.fourtyone_fifty)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'fortyone_to_fifty',
+                              ), 2 ) AS 'fourtyone_fifty',
                         Round( ( SELECT SUM(b.fiftyone_sixty)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'fiftyone_to_sixty',
+                              ), 2 ) AS 'fiftyone_sixty',
                         Round( ( SELECT SUM(b.sixty_plus)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
-                              ), 2 ) AS 'sixtyone_plus',
+                              ), 2 ) AS 'sixty_plus',
                         Round( ( SELECT SUM(b.Total)
                                FROM vw_death_age_trend AS b
                     WHERE $whereClause and DATEDIFF(a.date, b.date) BETWEEN 0 AND 6
@@ -2817,16 +2964,16 @@ GROUP BY
 
         try {
             $data = DB::select(DB::raw($sql));
-            
-  	    $formatData = [];
-	    foreach($data as $k=> $value){
-		$formatData[] = (array)$value;
-	    }	    
+                
+            $formatData = [];
+            foreach($data as $k=> $value){
+            $formatData[] = (array)$value;
+            }	    
             $result = $this->ageWiseDateArrayList($formatData, 2);
 	
             return $result;
-	} catch (\Exception $exception) {
-		
+	    } catch (\Exception $exception) {
+            dd($exception);
             return [];
         }
     }
@@ -2848,13 +2995,13 @@ GROUP BY
             foreach ($formatData as $k => $arrays) {
                 $newDistrict['date'] = $date;
                 if (in_array($date, $arrays)) {
-                    $newDistrict['zero_to_ten'] = $arrays['zero_to_ten'];
-                    $newDistrict['elv_to_twenty'] = $arrays['elv_to_twenty'];
-                    $newDistrict['twentyone_to_thirty'] = $arrays['twentyone_to_thirty'];
-                    $newDistrict['thirtyone_to_forty'] = $arrays['thirtyone_to_forty'];
-                    $newDistrict['fortyone_to_fifty'] = $arrays['fortyone_to_fifty'];
-                    $newDistrict['fiftyone_to_sixty'] = $arrays['fiftyone_to_sixty'];
-                    $newDistrict['sixtyone_plus'] = $arrays['sixtyone_plus'];
+                    $newDistrict['zero_to_ten'] = $arrays['zero_ten'];
+                    $newDistrict['elv_to_twenty'] = $arrays['eleven_twenty'];
+                    $newDistrict['twentyone_to_thirty'] = $arrays['twentyone_thirty'];
+                    $newDistrict['thirtyone_to_forty'] = $arrays['thirtyone_fourty'];
+                    $newDistrict['fortyone_to_fifty'] = $arrays['fourtyone_fifty'];
+                    $newDistrict['fiftyone_to_sixty'] = $arrays['fiftyone_sixty'];
+                    $newDistrict['sixtyone_plus'] = $arrays['sixty_plus'];
                 }
             }
             $filtered[] = $newDistrict;
