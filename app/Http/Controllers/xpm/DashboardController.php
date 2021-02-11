@@ -2735,6 +2735,24 @@ GROUP BY
 
         $whereClause = "1";
 
+        if(("-1" === $gender) && ("-1" === $hospital) && ("-1" === $district)){
+            $sql = "SELECT * FROM vw_death_age_trend_default";
+        
+            try {
+                $data = DB::select(DB::raw($sql));
+                $formattedData = [];
+                foreach($data as $k=>$value){
+                    $formattedData[] = (array) $value;
+                }
+                $result = $this->ageWiseDateArrayList($formattedData, 2);
+                // dd($result);
+                return $result;
+            } catch (\Exception $exception) {
+                dd($exception);
+                return [];
+            }
+        }
+
 
         if(("-1" !== $gender) && ("-1" === $hospital) && ("-1" === $district)){
              
