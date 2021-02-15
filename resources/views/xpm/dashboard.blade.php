@@ -669,55 +669,77 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="row">
                                 <div class="col-lg-8"></div>
                                     <div class="col-lg-4">
-                                        <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 130px; top: 78px; left: 383px;">
-                                            <div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;">
-                                            <div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true">
-                                            <div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3>
-                                            <div class="tabLegendContentHolder" style="overflow: hidden auto; width: 450px; height: 200px;">
-                                                <div class="tabLegendColumnHolder" style="white-space:nowrap">
-                                                    <span class="tabLegendItemColumn" style="width: 450px;">
-                                                        <div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 450px; height: 25px;">
-                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                                <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span>
-                                                            </span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;">
-                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (পরীক্ষা বিবেচনায় সনাক্তের হার &gt; ১০%)</span>
-                                                            </span>
+                                        
+                                        <div style="background-color: #F5EDDC;
+                                            width: 420px;
+                                            height: 150px;
+                                            border: 1px dotted black;" class="row background">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FF3333;border: 1px solid #686868;">
+                                                            </div>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</span></span>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার > ১০%)</p>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;">
-                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার &lt; ৫%) </span></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
+                                                            </div>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</p>
+
+
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px; padding-top:2px; padding-left:2px">
-                                                            {{--  <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                
-                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span>
-                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span>
-                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"></span>
-                                                            </span>  --}}
-                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span> &nbsp;&nbsp;
-                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span> &nbsp;&nbsp;
-                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; <span style="position: relative; top: -3px; font-size:17px">&nbsp;ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span></span> 
-                                                    </span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #1FAA0D;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার < ৫%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: rgb(255, 255, 255);border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সাদা (পরীক্ষা বিবেচনায় সনাক্তের হার o%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #C8C0BD;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> ধূসর (টেস্টের সংখ্যা < ২০০) </p>
+
+                                                        </div>
+                                                        <br>
+                                                        <div class="d-flex justify-content-start pt-2">
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(226, 5, 5);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(196, 151, 6);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(19, 167, 0);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255);"></span>
+                                                            <p style="font-size:16px;margin-bottom: 0px; margin-left: 3px;"> ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </span>
+                                            </div>
+                                        
                                     </div>
-                                </div>
-                                <div class="tabCatLegendScroll" style="display: none;"><div class="tabCatLegendScrollButtonHolder"><span class="tabCatLegendScrollPrev tabCatLegendScrollLeft tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span><span class="tabCatLegendScrollNext tabCatLegendScrollRight tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span></div>
-                            </div>
-                            </div>
-                            <div class="tabLegendTitleControls" style="background-color: white; top: 0px; right: 0px;"><div class="tabLegendHighlighterButton tabLegendTitleControlsButtons tab-widget tabHighlightEnabled" title="Highlight Selected Items" style="user-select: none; -webkit-tap-highlight-color: transparent; display: none;"><div class="tabLegendHighlighterButtonIcon"></div></div><div class="tabLegendContextMenuButton tabLegendTitleControlsButtons" style="display: none;"><div class="tabLegendContextMenuButtonIcon"></div></div>
-                            </div></div></div>
-                                        </div>
-                                    </div>
-                            </div>
+
+
+
                             </div>
                             <div class="row"  style="height: 350px !important; overflow:hidden;">  
                                 <div class="col-lg-3" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
@@ -746,6 +768,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             </div>
                                             <p class="footer-note">
                                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_map_update"></span>
                                             </p>
                                         </div>
                                     </div>
@@ -2285,8 +2308,8 @@ $ydata = [];
 
                         "startDuration": 1,
                         "legend": {
-                            "horizontalGap": 10,
-                            "maxColumns": 1,
+                            "horizontalGap": 20,
+                            "maxColumns": 10,
                             "position": "bottom",
                             "useGraphSettings": true,
                             "markerSize": 10,
@@ -2300,11 +2323,11 @@ $ydata = [];
                             "id": "g1",
                             "alphaField": "alpha",
                             "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
-                            "fillAlphas": 1,
                             "fillColorsField": "color",
                             "title": zoneName+" এর দৈনিক সনাক্ত",
                             "type": "column",
                             "fillAlphas": 1,
+                            "lineAlpha": 0,
                             "lineColor": "rgb(103, 183, 220)",
                             "valueField": "infected",
                             "dashLengthField": "dashLengthColumn",
@@ -2346,7 +2369,7 @@ $ydata = [];
                         "categoryField": "date",
                         "categoryAxis": {
                             "parseDates": true,
-                            "minPeriod": "DD",
+                            "minPeriod": "hh",
                             "showLastLabel": true,
                             "labelFunction": function (value, date, categoryAxis) {
                                 var options = new Array();
@@ -2355,10 +2378,10 @@ $ydata = [];
                                 options["YY"] = {year: 'numeric', month: 'long'};
                                 return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                             },
-                            "labelRotation": 45,
+                            "labelRotation": 30,
                             "autoGridCount": false,
                             "equalSpacing": true,
-                            "gridCount": 14,
+                            "gridCount": 10,
                             "showFirstLabel": true,
                             "showLastLabel": true,
 
@@ -4932,6 +4955,14 @@ group by date ORDER BY date ");
     /* ======================Stack Chart Common Desin start================================= */
 
 
+    /**...last update show...*/
+    $(document).ready(function()
+    {
+        var date = $('#last_date_9').html();
+        $('#last_date_map_update').html(date);
+        $('#last_date_8').html(date);
+        $('#last_date_10').html(date);
+    });
 </script>
 
 
