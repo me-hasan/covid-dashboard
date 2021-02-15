@@ -4961,7 +4961,7 @@ group by date ORDER BY date ");
         var date = $('#last_date_9').html();
         $('#last_date_map_update').html(date);
         $('#last_date_8').html(date);
-        $('#last_date_10').html(date);
+        $('#last_date_10').html(' ২ জানুয়ারী');
     });
 </script>
 
