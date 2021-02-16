@@ -1561,7 +1561,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="col-md-3">
                                                             <label for="">জেলা</label>
                                                             <select name="ageWiseDeathDistrict" id="age_wise_death_district_filter"
-                                                                    class="select2 form-control btn-outline-primary select_district">
+                                                                    class="select2 form-control btn-outline-primary">
                                                                     <option value="-1">সারাদেশ</option>
                                                                 @foreach($district_list as $district)
                                                                     <option value="{!! $district->district !!}"
@@ -2001,39 +2001,59 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div class="col-md-12 text-center mt-5">
                         <h3>বিশেষজ্ঞ মতামত</h3>
                         <div class="row">
-                            <div class="col-md-4">
-                                <img src="pm/images/collaborator/dr_md_habibur_rahman.jpg" class="associator-img"
+                            <div class="col-md-3">
+                                <img src="" styles="border:2 px solid green" class="associator-img"
                                      alt="">
-                                <p> ড. মো: হাবিবুর রহমান</p>
+                                <p> অধ্যাপক ডা. মিজানুর রাহমান</p>
                                 <p> পরিচালক</p>
-                                <p>এমআইএস, ডিজিএইচএস</p>
+                                <p>এমআইএস, স্বাস্থ্য অধিদপ্তর</p>
                             </div>
-
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <img src="pm/images/collaborator/asrafi.jpg" class="associator-img"
+                                     alt="">
+                                <p> ডা. শাহ আলি আকবর আশরাফি</p>
+                                <p> চিফ, হেলথ ইনফরমেশন ইউনিট (এইচ আই ইউ)</p>
+                                <p>এমআইএস, স্বাস্থ্য অধিদপ্তর</p>
+                            </div>
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/engr_sukhendra_shekhor_roy.jpg" class="associator-img"
                                      alt="">
                                 <p> ইঞ্জি. সুখেন্দ্র শেখর রায়</p>
                                 <p> সিনিয়র সিস্টেম অ্যনালিস্ট</p>
-                                <p>এমআইএস, ডিজিএইচএস</p>
+                                <p>এমআইএস, স্বাস্থ্য অধিদপ্তর</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/dr_aysha_sania.jpg" class="associator-img" alt="">
                                 <p>ড. আয়েশা সানিয়া</p>
                                 <p> রিসার্চ সায়েন্টিস্ট</p>
                                 <p>কলাম্বিয়া বিশ্ববিদ্যালয়,যুক্তরাষ্ট্র</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/dr_mahbubur_rahman.jpg" class="associator-img" alt="">
                                 <p>ড. মাহবুবুর রহমান</p>
                                 <p> সহকারী অধ্যাপক</p>
                                 <p>আইইডিসিআর</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/dr_mallik_masum_billah.jpg" class="associator-img"
                                      alt="">
                                 <p>ড. মল্লিক মাসুম বিল্লাহ</p>
                                 <p>ঊর্ধ্বতন এফইটিপি উপদেষ্টা</p>
                                 <p>আইইডিসিআর</p>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="pm/images/collaborator/taufiq.jpg" class="associator-img"
+                                     alt="">
+                                <p>ডাঃ মোঃ তৌফিক হাসান শাওন</p>
+                                <p>মেডিকেল অফিসার, এমআইএস</p>
+                                <p>স্বাস্থ্য অধিদপ্তর</p>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="pm/images/collaborator/maruf.jpg" class="associator-img"
+                                     alt="">
+                                <p>ডাঃ মোঃ মারুফুর রহমান</p>
+                                <p>ডিপিএম, মেডিকেল বায়োটেকনোলজি, সিএমবিটি, এমআইএস</p>
+                                <p>স্বাস্থ্য অধিদপ্তর</p>
                             </div>
 
                         </div>
@@ -2068,13 +2088,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </p>
                             </div>
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <h3>তথ্যচিত্র বিশেষজ্ঞ</h3>
                                 <img src="pm/images/collaborator/mir_sakib.jpg" class="associator-img"
                                      alt="">
                                 <p>মীর সাকিব </p>
                                 <p> সিইও, ক্র্যামস্টেক</p>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>
@@ -4963,6 +4983,29 @@ group by date ORDER BY date ");
         $('#last_date_8').html(date);
         $('#last_date_10').html(' ২ জানুয়ারী');
     });
+
+    var data = {
+        id: "-1",
+        text: 'সারাদেশ'
+    };
+
+    $('#age_wise_death_district_filter').on('change', function(e){
+        var age_wise_death_district = $('#age_wise_death_district_filter').val();
+        if('-1' !== age_wise_death_district){
+            //var newOption = new Option(data.text, data.id, true, true);
+            $('#age_wise_hospital_hospital_filter').val(data.id);
+            $('#age_wise_hospital_hospital_filter').trigger('change');
+        }
+     });
+
+     $('#age_wise_hospital_hospital_filter').on('change', function(e){
+        var age_wise_death_hospital = $('#age_wise_hospital_hospital_filter').val();
+        if('-1' !== age_wise_death_hospital){
+            //var newOption = new Option(data.text, data.id, true, true);
+            $('#age_wise_death_district_filter').val(data.id);
+            $('#age_wise_death_district_filter').trigger('change');
+        }
+     });
 </script>
 
 
