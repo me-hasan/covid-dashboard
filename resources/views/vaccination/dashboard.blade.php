@@ -415,7 +415,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_affected_area_wise">
                                 <li><span class="bullet-point"></span>
-                                    <span>অঞ্চল-ভিত্তিক দৈনিক ১ম ডোজ বিতরণের সংখ্যা</span>
+                                    <span>দৈনিক নিবন্ধন </span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_comparison">
@@ -609,7 +609,46 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 </svg>
                                             </button>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
+                                            <label>বয়স</label>
+                                            <select name="district[]" id="daily-infected-district"
+                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    <option value="all">সব</option>
+                                                    <option value="" class="b1">০ থেকে ১০ </option>
+                                                    <option value="" class="b1">১ থেকে ২0 </option>
+                                                    <option value="" class="b1">২১ থেকে ৩0 </option>
+                                                    <option value="" class="b1">৩১ থেকে ৪0 </option>
+                                                    <option value="" class="b1">৪১ থেকে ৫0 </option>
+                                                    <option value="" class="b1">৫১ থেকে ৬0 </option>
+                                                    <option value="" class="b1">৬0+ </option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>লিঙ্গ</label>
+                                            <select name="district[]" id="daily-infected-district"
+                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    <option value="all">সব</option>
+                                                    <option value="" class="b1">পুরুষ </option>
+                                                    <option value="" class="b1">মহিলা </option>
+                                                    
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>উপজেলা</label>
+                                            <select name="district[]" id="daily-infected-district"
+                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    <option value="all">সারাদেশ</option>
+                                                    {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
+
+                                                @foreach($district_list as $district)
+                                                    <option value="{!! $district->district !!}"
+                                                            class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
                                             <label>জেলা</label>
                                             <select name="district[]" id="daily-infected-district"
                                                     class="select2 form-control btn-outline-primary select_district">
@@ -622,6 +661,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 @endforeach
                                             </select>
                                         </div>
+                                        
+                                        
+                                        
                                         
                                         
                                     </div>
@@ -777,7 +819,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-6 ">
                                         <h2>
-                                            অঞ্চল-ভিত্তিক দৈনিক ১ম ডোজ বিতরণের সংখ্যা
+                                            দৈনিক নিবন্ধন 
                                         </h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
@@ -804,17 +846,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label>বিভাগ</label>
-                                                <select name="division[]" id="division" multiple
-                                                        class="select2 form-control btn-outline-primary division_select">
-
-                                                    @foreach($division_list as $division)
-                                                        <option value="{!! $division !!}"
-                                                                class="b1">{!! en2bnTranslation($division) !!} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
                                                 <label>জেলা</label>
                                                 <select name="district[]" id="district" multiple
                                                         class="select2 form-control btn-outline-primary select_district">
@@ -822,6 +853,45 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <option value="{!! $district->district !!}"
                                                                 class="b1">{!! en2bnTranslation($district->district) !!} </option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>উপজেলা</label>
+                                                <select name="district[]" id="daily-infected-district"
+                                                        class="select2 form-control btn-outline-primary select_district">
+                                                        <option value="all">সারাদেশ</option>
+                                                        {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
+
+                                                    @foreach($district_list as $district)
+                                                        <option value="{!! $district->district !!}"
+                                                                class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>বয়স</label>
+                                                <select name="district[]" id="daily-infected-district"
+                                                        class="select2 form-control btn-outline-primary select_district">
+                                                        <option value="all">সব</option>
+                                                        <option value="" class="b1">০ থেকে ১০ </option>
+                                                        <option value="" class="b1">১ থেকে ২0 </option>
+                                                        <option value="" class="b1">২১ থেকে ৩0 </option>
+                                                        <option value="" class="b1">৩১ থেকে ৪0 </option>
+                                                        <option value="" class="b1">৪১ থেকে ৫0 </option>
+                                                        <option value="" class="b1">৫১ থেকে ৬0 </option>
+                                                        <option value="" class="b1">৬0+ </option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>লিঙ্গ</label>
+                                                <select name="district[]" id="daily-infected-district"
+                                                        class="select2 form-control btn-outline-primary select_district">
+                                                        <option value="all">সব</option>
+                                                        <option value="" class="b1">পুরুষ </option>
+                                                        <option value="" class="b1">মহিলা </option>
+                                                        
+                                                    
                                                 </select>
                                             </div>
                                             <div class="col-sm mt-4">
@@ -839,6 +909,65 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         </div>
 
                                         <div id="amlinechart1"></div>
+
+                                        <div class="alert mt-3 p-0 text-justify" role="alert">
+                                            <strong>বর্ণনা:</strong>
+                                            {{-- নীতি বিবৃতি  --}}
+                                            {{-- {!! $des_2->description_beng ?? '' !!} --}}
+                                        </div>
+                                        {{-- <p class="footer-note">
+                                            <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_4"></span>
+                                        </p> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-12 mt-4" id="scroll_daily_affected_area_wise">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="invoice-head title-bg-style">
+                                <div class="row">
+                                    <div class="iv-left col-6 ">
+                                        <h2>
+                                            জেলা দ্বারা ভ্যাকসিন গ্রহণযোগ্যতা জরিপ  
+                                        </h2>
+                                    </div>
+                                    <div class="iv-right offset-md-4 col-2 " style="display: none">
+                                        <select name="" id="area-wise-infected-total" class="form-control">
+                                            <option value="">তথ্যসূত্র বাছাই করুন</option>
+                                            <option value="MIS-DGHS">MIS-DGHS</option>
+                                            <option value="IEDCR">IEDCR</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 mt-2">
+                                <div class="card">
+                                    <div class="card-body info-style">
+
+                                        <h4 id="special_word_4" class="header-title">
+                                            শিরোনাম
+                                            {{-- {!! $des_2->component_name_beng ?? '' !!} --}}
+                                        </h4>
+
+                                        
+                                        <div class="row">
+                                            
+                                            
+                                        </div>
+
+                                        <div id="worldmap">
+                                        <img src="pm/images/wordmap.png"/>
+                                        </div>
 
                                         <div class="alert mt-3 p-0 text-justify" role="alert">
                                             <strong>বর্ণনা:</strong>
@@ -10743,6 +10872,120 @@ group by date ORDER BY date ");
             }
         });
     });*/
+
+
+
+     // word map
+
+    /**
+    * ---------------------------------------
+    * This demo was created using amCharts 4.
+    * 
+    * For more information visit:
+    * https://www.amcharts.com/
+    * 
+    * Documentation is available at:
+    * https://www.amcharts.com/docs/v4/
+    * ---------------------------------------
+    */
+
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
+
+    var continents = {
+      "AF": 0,
+      "AN": 1,
+      "AS": 2,
+      "EU": 3,
+      "NA": 4,
+      "OC": 5,
+      "SA": 6
+    }
+
+    // Create map instance
+    var chart = am4core.create("worldmap", am4maps.MapChart);
+    chart.projection = new am4maps.projections.Miller();
+
+    // Create map polygon series for world map
+    var worldSeries = chart.series.push(new am4maps.MapPolygonSeries());
+    worldSeries.useGeodata = true;
+    worldSeries.geodata = am4geodata_worldLow;
+    worldSeries.exclude = ["AQ"];
+
+    var worldPolygon = worldSeries.mapPolygons.template;
+    worldPolygon.tooltipText = "{name}";
+    worldPolygon.nonScalingStroke = true;
+    worldPolygon.strokeOpacity = 0.5;
+    worldPolygon.fill = am4core.color("#eee");
+    worldPolygon.propertyFields.fill = "color";
+
+    var hs = worldPolygon.states.create("hover");
+    hs.properties.fill = chart.colors.getIndex(9);
+
+
+    // Create country specific series (but hide it for now)
+    var countrySeries = chart.series.push(new am4maps.MapPolygonSeries());
+    countrySeries.useGeodata = true;
+    countrySeries.hide();
+    countrySeries.geodataSource.events.on("done", function(ev) {
+      worldSeries.hide();
+      countrySeries.show();
+    });
+
+    var countryPolygon = countrySeries.mapPolygons.template;
+    countryPolygon.tooltipText = "{name}";
+    countryPolygon.nonScalingStroke = true;
+    countryPolygon.strokeOpacity = 0.5;
+    countryPolygon.fill = am4core.color("#eee");
+
+    var hs = countryPolygon.states.create("hover");
+    hs.properties.fill = chart.colors.getIndex(9);
+
+    // Set up click events
+    worldPolygon.events.on("hit", function(ev) {
+      ev.target.series.chart.zoomToMapObject(ev.target);
+      var map = ev.target.dataItem.dataContext.map;
+      if (map) {
+        ev.target.isHover = false;
+        countrySeries.geodataSource.url = "https://www.amcharts.com/lib/4/geodata/json/" + map + ".json";
+        countrySeries.geodataSource.load();
+      }
+    });
+
+    // Set up data for countries
+    var data = [];
+    for(var id in am4geodata_data_countries2) {
+      if (am4geodata_data_countries2.hasOwnProperty(id)) {
+        var country = am4geodata_data_countries2[id];
+        if (country.maps.length) {
+          data.push({
+            id: id,
+            color: chart.colors.getIndex(continents[country.continent_code]),
+            map: country.maps[0]
+          });
+        }
+      }
+    }
+    worldSeries.data = data;
+
+    // Zoom control
+    chart.zoomControl = new am4maps.ZoomControl();
+
+    var homeButton = new am4core.Button();
+    homeButton.events.on("hit", function() {
+      worldSeries.show();
+      countrySeries.hide();
+      chart.goHome();
+    });
+
+    homeButton.icon = new am4core.Sprite();
+    homeButton.padding(7, 5, 7, 5);
+    homeButton.width = 30;
+    homeButton.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+    homeButton.marginBottom = 10;
+    homeButton.parent = chart.zoomControl;
+    homeButton.insertBefore(chart.zoomControl.plusButton);
 
 </script>
 
