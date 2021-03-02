@@ -294,3 +294,4 @@ Route::get('/filter-daily-infected-chart', 'xpm\DashboardController@filterdailyI
 
 
 Route::get('vaccination-dashboard', 'vaccination\DashboardController@index')->name('xpm.vaccination');
+
