@@ -886,6 +886,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
+                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                        <p>নির্বাচন করুন: </p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="travelers" name="travelers" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="travelers" name="travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                                                    </div>
                                                                     <div class="col-xl-3">
                                                                         <br>
                                                                         <button type="button" class="btn btn-sm btn-primary" id="weekly_date_submit">পরিবর্তন করুন</button>
@@ -1471,6 +1476,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             @endforeach
                                                         </select>
                                                     </div>
+                                                    
                                                     <div class="col-sm mt-4 mx-auto">
                                                         <button id="filter-dhaka-rate"
                                                                 class="btn btn-sm district_cms_search b1">
@@ -4031,6 +4037,7 @@ $ydata = [];
                     'test_count': $('#myRange').val(),
                     'test_positive_data_rate': $('#ex12c').val(),
                     'weekly_date': $('#weekly_date').val(),
+                    'travelers' : $('input[name="travelers"]:checked').val()
                 },
                 timeout: 30000,
                 success: function (data) {
