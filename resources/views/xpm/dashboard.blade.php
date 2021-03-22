@@ -590,7 +590,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         {{--  <div class="col-md-3">
                                             <label>বিভাগ</label>
                                             <select name="division[]" id="division" multiple
-                                                    class="select2 form-control btn-outline-primary division_select">
+                                                    class="select2 form-control btn-outline-primary division_select daily_effected_division_select">
 
                                                 @foreach($division_list as $division)
                                                     <option value="{!! $division !!}"
@@ -609,6 +609,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
                                                 </svg>
                                             </button>
+                                        </div>
+                                        <div class="col-md-3 ml-4 mb-3" id="daily_effected_travelers">
+                                            <p>নির্বাচন করুন: </p>
+                                            <label class="radio-inline"><input type="radio" value="0" class="daily_effected_travelers" name="daily_effected_travelers" checked="checked">&nbsp;সকল &nbsp;</label>
+                                            <label class="radio-inline"><input type="radio" value="1" class="daily_effected_travelers" name="daily_effected_travelers">&nbsp;নন ট্রাভেলার্স</label>
                                         </div>
                                         <div class="col-md-3">
                                             <label>জেলা</label>
@@ -5104,9 +5109,21 @@ group by date ORDER BY date ");
 
     // Filter daily infected by district
 
+    $('#daily_effected_travelers').hide();
+    $('#daily-infected-district').on('select2:select', function (e) {
+        var val = this.value;
+        if(val != 'all'){
+            $('#daily_effected_travelers').show();
+        }else{
+            $('#daily_effected_travelers').hide();
+        }
+        
+    });
+
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
     var dis =  $('#daily-infected-district').find(":selected").text();
+    var non_travelers = $('input[name="daily_effected_travelers"]:checked').val();
     // console.log(districts);
     
     
@@ -5115,7 +5132,7 @@ group by date ORDER BY date ");
             $.ajax({
                 url: '{{url("/")}}/filter-daily-infected-chart',
                 type: 'GET',
-                data: {districts: [districts]},
+                data: {districts: [districts], non_travelers: non_travelers},
                 success: function (response) {
                     // console.log(response);
                     if (response) {

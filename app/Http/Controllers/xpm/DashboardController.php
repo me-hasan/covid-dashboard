@@ -2553,6 +2553,12 @@ using(district) ORDER BY r.test_positivity DESC");
         $districtArr = $request->all();
         // return $districtArr['districts'];
         $districts = implode(', ', array_map(function ($val) {return sprintf("'%s'", $val);}, $districtArr['districts']));
+        $non_travelers = $request->non_travelers;
+
+        $tableName = 'division_district_infected';
+        if ($non_travelers == 1){
+            $tableName = 'division_district_infected_non_travelers';
+        }
 
         $queryClause = "";
         if ($districts !== "'all'") {
@@ -2569,7 +2575,7 @@ using(district) ORDER BY r.test_positivity DESC");
         (select thedate from calendardate where thedate >= '2020-05-20'
         and thedate <= (date_sub(curdate(), interval 7 day))) as T1
         left join
-        (select date_of_test, division, district, daily_cases from  division_district_infected
+        (select date_of_test, division, district, daily_cases from  {$tableName}
         {$queryClause}) as T2 on T1.thedate=T2.date_of_test) as R) AS b
                         where DATEDIFF(a.thedate, b.thedate) BETWEEN 0 AND 6
                       ), 2 ) AS 'dayMovingAvg'
@@ -2580,7 +2586,7 @@ using(district) ORDER BY r.test_positivity DESC");
         (select thedate from calendardate where thedate >= '2020-05-20'
         and thedate <= (date_sub(curdate(), interval 7 day))) as T1
         left join
-        (select date_of_test, division, district, daily_cases from  division_district_infected
+        (select date_of_test, division, district, daily_cases from  {$tableName}
         {$queryClause}) as T2 on T1.thedate=T2.date_of_test) as Q) as a");
 
         $mdata = array();
