@@ -2073,8 +2073,17 @@ using(district) ORDER BY r.test_positivity DESC");
 
         $districts = $request->districts;
         $weeklyOrDaily = $request->weeklyOrDaily;
+        $non_traveler = $request->non_traveler;
+        $districts_test_positivity = 'districts_test_positivity_view';
+        $national_test_positivity = 'daily_data';
 
         if ($districts && count($districts) > 0) {
+            if($non_traveler != 0){
+                $districts_test_positivity = 'districts_test_positivity_view_non_travelers';
+                $national_test_positivity = 'daily_data_non_travelers';
+            }
+
+
             $data['axis'] = $districts;
             $axis[] = ['en' => 'National', 'bn' => 'জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার'];
             foreach ($districts as $div) {
@@ -2083,14 +2092,14 @@ using(district) ORDER BY r.test_positivity DESC");
                 /* get select district data */
                 $sql = "";
                 if ($weeklyOrDaily == 1) {
-                    $sql = "SELECT dv.date_of_test, dv.district, dv.test_positivity from districts_test_positivity_view AS dv where dv.district = \"$div\"";
+                    $sql = "SELECT dv.date_of_test, dv.district, dv.test_positivity from {$districts_test_positivity} AS dv where dv.district = \"$div\"";
                 } else {
                     $sql = "SELECT a.date_of_test, a.district,
                     Round( ( SELECT SUM(b.test_positivity) / COUNT(b.test_positivity)
-                    FROM districts_test_positivity_view AS b
+                    FROM {$districts_test_positivity} AS b
                     WHERE DATEDIFF(a.date_of_test, b.date_of_test) BETWEEN 0 AND 6 and b.district = \"$div\"
                     ), 2 ) AS 'test_positivity'
-                    from districts_test_positivity_view AS a where a.district = \"$div\"";
+                    from {$districts_test_positivity} AS a where a.district = \"$div\"";
                 }
 
                 $dataResult[] = DB::select(DB::raw($sql));
@@ -2103,10 +2112,10 @@ using(district) ORDER BY r.test_positivity DESC");
                 dd.report_date as date_of_test,
                 (SELECT 'National') AS district,
                 (dd.infected_24_hrs/dd.test_24_hrs)*100 as 'test_positivity'
-                from daily_data AS dd order by dd.report_date"));
+                from {$national_test_positivity} AS dd order by dd.report_date"));
             }
             else{
-                $dataResult[] = DB::select(DB::raw("SELECT a.report_date as date_of_test, (SELECT 'National') AS district, Round( ( SELECT SUM((b.infected_24_hrs/b.test_24_hrs)*100) / COUNT((b.infected_24_hrs/b.test_24_hrs)*100) FROM daily_data AS b WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 6 ), 2 ) AS 'test_positivity' from daily_data as a order by a.report_date"));
+                $dataResult[] = DB::select(DB::raw("SELECT a.report_date as date_of_test, (SELECT 'National') AS district, Round( ( SELECT SUM((b.infected_24_hrs/b.test_24_hrs)*100) / COUNT((b.infected_24_hrs/b.test_24_hrs)*100) FROM {$national_test_positivity} AS b WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 6 ), 2 ) AS 'test_positivity' from {$national_test_positivity} as a order by a.report_date"));
             }
         }
 

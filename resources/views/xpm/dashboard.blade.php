@@ -1484,7 +1484,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    
+                                                    <div class="col-md-3 ml-4 mb-3" id="district_wise_non_travelers">
+                                                        <label>নির্বাচন করুন: </label>
+                                                        <select name="daily_effected_travelers" id="district_wise_non_travelers_id"
+                                                                class="select2 form-control btn-outline-primary select_district">
+                                                                <option value="0">সকল</option>
+                                                                <option value="1">নন ট্রাভেলার্স</option>
+                                                        </select>
+                                                    </div>
                                                     <div class="col-sm mt-4 mx-auto">
                                                         <button id="filter-dhaka-rate"
                                                                 class="btn btn-sm district_cms_search b1">
@@ -3513,7 +3520,8 @@ $ydata = [];
         var weeklyOrDaily = $('input[name="weeklyOrDaily"]:checked').val();
 
         var weeklyOrDailyTitle = (weeklyOrDaily == 1) ? 'দৈনিক' : 'সাপ্তাহিক';
-
+        
+        var non_traveler = $('#district_wise_non_travelers_id').val();
 
         var distArray = $('#district_dhaka_rate').val();
         // var districts = [];
@@ -3523,7 +3531,7 @@ $ydata = [];
             $.ajax({
                 url: '{{url("/")}}/get-dhaka-positive-rate-data',
                 type: 'GET',
-                data: {districts: distArray, weeklyOrDaily: weeklyOrDaily},
+                data: {districts: distArray, weeklyOrDaily: weeklyOrDaily, non_traveler: non_traveler},
                 success: function (data) {
                     // console.log(data);
                     var axis = new Array();
