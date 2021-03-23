@@ -611,9 +611,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             </button>
                                         </div>
                                         <div class="col-md-3 ml-4 mb-3" id="daily_effected_travelers">
-                                            <p>নির্বাচন করুন: </p>
-                                            <label class="radio-inline"><input type="radio" value="0" class="daily_effected_travelers" name="daily_effected_travelers" checked="checked">&nbsp;সকল &nbsp;</label>
-                                            <label class="radio-inline"><input type="radio" value="1" class="daily_effected_travelers" name="daily_effected_travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                            <label>নির্বাচন করুন: </label>
+                                            <select name="daily_effected_travelers" id="daily_effected_travelers_id"
+                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    <option value="0">সকল</option>
+                                                    <option value="1">নন ট্রাভেলার্স</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label>জেলা</label>
@@ -5112,18 +5115,17 @@ group by date ORDER BY date ");
     $('#daily_effected_travelers').hide();
     $('#daily-infected-district').on('select2:select', function (e) {
         var val = this.value;
-        if(val != 'all'){
+        if(val != 0){
             $('#daily_effected_travelers').show();
         }else{
             $('#daily_effected_travelers').hide();
         }
-        
     });
 
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
     var dis =  $('#daily-infected-district').find(":selected").text();
-    var non_travelers = $('input[name="daily_effected_travelers"]:checked').val();
+    var non_travelers = $('#daily_effected_travelers_id').val();
     // console.log(districts);
     
     
