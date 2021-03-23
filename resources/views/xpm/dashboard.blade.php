@@ -5115,7 +5115,7 @@ group by date ORDER BY date ");
     $('#daily_effected_travelers').hide();
     $('#daily-infected-district').on('select2:select', function (e) {
         var val = this.value;
-        if(val != 0){
+        if(val != 'all'){
             $('#daily_effected_travelers').show();
         }else{
             $('#daily_effected_travelers').hide();
