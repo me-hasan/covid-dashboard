@@ -2076,14 +2076,13 @@ using(district) ORDER BY r.test_positivity DESC");
         $non_traveler = $request->non_traveler;
         $districts_test_positivity = 'districts_test_positivity_view';
         $national_test_positivity = 'daily_data';
+        
+        if($non_traveler != 0){
+            $districts_test_positivity = 'districts_test_positivity_view_non_travelers';
+            $national_test_positivity = 'daily_data_non_travelers';
+        }
 
         if ($districts && count($districts) > 0) {
-            if($non_traveler != 0){
-                $districts_test_positivity = 'districts_test_positivity_view_non_travelers';
-                $national_test_positivity = 'daily_data_non_travelers';
-            }
-
-
             $data['axis'] = $districts;
             $axis[] = ['en' => 'National', 'bn' => 'জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার'];
             foreach ($districts as $div) {
