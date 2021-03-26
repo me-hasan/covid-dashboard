@@ -98,4 +98,11 @@ class LoginController extends Controller
 
         return back()->withInput($request->only('email', 'remember'));
     }
+
+    function authenticated(Request $request, $user)
+    {
+        $user->update([
+            'last_login_at' => now(),
+        ]);
+    }
 }
