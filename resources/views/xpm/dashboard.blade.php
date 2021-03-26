@@ -3366,7 +3366,7 @@ $ydata = [];
         }
     }
 
-    function showNationalLevelTestPosivityChart(chartData) {
+    function showNationalLevelTestPosivityChart(chartData, weeklyOrDaily=2) {
         // console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
@@ -3429,8 +3429,12 @@ $ydata = [];
                     "valueField": "National",
                     "balloonFunction": function (graphDataItem, graph) {
                         var v = 0;
+                        var d = 0;
                         if (graphDataItem.values) {
                             v = graphDataItem.values.value;
+                        }
+                        if (graphDataItem.hasOwnProperty('category')) {
+                            d = graphDataItem.category.toLocaleDateString('bn', options);
                         }
                         
                         var options = {month: 'long', day: 'numeric'};
@@ -3438,7 +3442,12 @@ $ydata = [];
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
 
-                        return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
+                         if(weeklyOrDaily == 1){
+                            return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                        }else{
+                            return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        }
+                     
                     },
                 }],
                 "chartScrollbar": {
@@ -3573,7 +3582,7 @@ $ydata = [];
                         showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
                         hideLoader();
                     }else{
-                        showNationalLevelTestPosivityChart(data);
+                        showNationalLevelTestPosivityChart(data, weeklyOrDaily);
                         hideLoader();
                     }
                     
