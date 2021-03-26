@@ -3521,57 +3521,62 @@ $ydata = [];
         var distArray = $('#district_dhaka_rate').val();
         // var districts = [];
         
-        if (distArray) {
+        if (true) {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/get-dhaka-positive-rate-data',
                 type: 'GET',
                 data: {districts: distArray, weeklyOrDaily: weeklyOrDaily, non_traveler: non_traveler},
                 success: function (data) {
-                    // console.log(data);
+                    console.log(data);
                     var axis = new Array();
-                    $.each(data.axis, function (a, b) {
-                        var obj = {
-                            "id": "g" + a,
-                            "valueAxis": "v" + a,
-                            "lineColor": getRandomColor(a),
-                            "lineThickness": 2,
-                            "bullet": "",
-                            "bulletBorderThickness": 2,
-                            "hideBulletsCount": 30,
-                            "title": b.bn,
-                            "valueField": b.en,
-                            "fillAlphas": 0,
-                            "type": "smoothedLine",
-                            "balloonFunction": function (graphDataItem, graph) {
-                                var options = {month: 'long', day: 'numeric'};
-                                var v = 0;
-                                var d = '';
-                                let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
-                                let previusSevenDay= previusSeven.getDate();
-                                let getMonth= month_name(previusSeven.getMonth());
+                    if(typeof (data.axis) === 'object' && (data.axis) !== 'null'){
+                        $.each(data.axis, function (a, b) {
+                            var obj = {
+                                "id": "g" + a,
+                                "valueAxis": "v" + a,
+                                "lineColor": getRandomColor(a),
+                                "lineThickness": 2,
+                                "bullet": "",
+                                "bulletBorderThickness": 2,
+                                "hideBulletsCount": 30,
+                                "title": b.bn,
+                                "valueField": b.en,
+                                "fillAlphas": 0,
+                                "type": "smoothedLine",
+                                "balloonFunction": function (graphDataItem, graph) {
+                                    var options = {month: 'long', day: 'numeric'};
+                                    var v = 0;
+                                    var d = '';
+                                    let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                                    let previusSevenDay= previusSeven.getDate();
+                                    let getMonth= month_name(previusSeven.getMonth());
 
-                               
-                                if (graphDataItem.values.hasOwnProperty('value')) {
-                                    v = graphDataItem.values.value.toLocaleString('bn');
-                                }
-                                if (graphDataItem.hasOwnProperty('category')) {
-                                    d = graphDataItem.category.toLocaleDateString('bn', options);
-                                }
                                 
-                                if(weeklyOrDaily == 1){
-                                    return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
-                                }else{
-                                    return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
-                                }
-                            },
+                                    if (graphDataItem.values.hasOwnProperty('value')) {
+                                        v = graphDataItem.values.value.toLocaleString('bn');
+                                    }
+                                    if (graphDataItem.hasOwnProperty('category')) {
+                                        d = graphDataItem.category.toLocaleDateString('bn', options);
+                                    }
+                                    
+                                    if(weeklyOrDaily == 1){
+                                        return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                    }else{
+                                        return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                    }
+                                },
 
-                        };
-                        axis.push(obj);
-                    })
-                    showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
+                            };
+                            axis.push(obj);
+                        });
+                        showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
+                        hideLoader();
+                    }else{
+                        showNationalLevelTestPosivityChart(data);
+                        hideLoader();
+                    }
                     
-                    hideLoader();
 
                 },
                 error: function (error) {

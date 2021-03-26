@@ -2116,31 +2116,64 @@ using(district) ORDER BY r.test_positivity DESC");
             else{
                 $dataResult[] = DB::select(DB::raw("SELECT a.report_date as date_of_test, (SELECT 'National') AS district, Round( ( SELECT SUM((b.infected_24_hrs/b.test_24_hrs)*100) / COUNT((b.infected_24_hrs/b.test_24_hrs)*100) FROM {$national_test_positivity} AS b WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 6 ), 2 ) AS 'test_positivity' from {$national_test_positivity} as a order by a.report_date"));
             }
+            try {
+
+                /* make all data into one array */
+                $formatData = [];
+                foreach ($dataResult as $k => $row) {
+                    foreach ($row as $key => $r) {
+                        $formatData[] = [
+                            "date" => $r->date_of_test,
+                            'district' => $r->district,
+                            'test_positivity' => $r->test_positivity,
+                        ];
+                    }
+                }
+    
+                $formateDataResult = $this->dateArrayList($formatData, $weeklyOrDaily);
+    
+                $data['axis'] = $axis;
+                $data['data'] = $formateDataResult;
+    
+            } catch (\Exception $exception) {
+                $data['data'] = [];
+            }
+            return $data;
         }
 
-        try {
+        if(empty($districts)){
 
-            /* make all data into one array */
+            if ($weeklyOrDaily == 2) {
+                $sql = "SELECT Date(a.report_date) as date_of_test, (SELECT 'National') AS district, Round( ( SELECT SUM((b.infected_24_hrs/b.test_24_hrs)*100) / COUNT((b.infected_24_hrs/b.test_24_hrs)*100) FROM $national_test_positivity AS b WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 6 ), 2 ) AS 'test_positivity' from $national_test_positivity as a order by a.report_date";
+            }else{
+                $sql = "SELECT
+                Date(dd.report_date) as date_of_test,
+                (SELECT 'National') AS district,
+                (dd.infected_24_hrs/dd.test_24_hrs)*100 as 'test_positivity'
+                from {$national_test_positivity} AS dd order by dd.report_date";
+            }
+            
+            $dataResult = DB::select(DB::raw($sql));
+            // dd($dataResult);
+
             $formatData = [];
             foreach ($dataResult as $k => $row) {
-                foreach ($row as $key => $r) {
-                    $formatData[] = [
-                        "date" => $r->date_of_test,
-                        'district' => $r->district,
-                        'test_positivity' => $r->test_positivity,
-                    ];
-                }
+                $formatData[] = [
+                    "date" => $row->date_of_test,
+                    'district' => $row->district,
+                    'test_positivity' => $row->test_positivity,
+                ];
+                
             }
-
-            $formateDataResult = $this->dateArrayList($formatData, $weeklyOrDaily);
-
-            $data['axis'] = $axis;
-            $data['data'] = $formateDataResult;
-
-        } catch (\Exception $exception) {
-            $data['data'] = [];
+            if ($weeklyOrDaily == 2) {
+                $result = $this->dateArrayList($formatData, 2);
+            }else{
+                $result = $this->dateArrayList($formatData, 1);
+            }
+            return response()->json($result);
         }
-        return $data;
+
+        
     }
 
     // Function to get all the dates in given range
