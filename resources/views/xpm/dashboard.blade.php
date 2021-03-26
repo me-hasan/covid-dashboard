@@ -1439,14 +1439,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="card-body info-style">
                                             <div class="row">
-
                                                 <h4 id="special_word_8" class="header-title ">
-
                                                     {!! $des_11->component_name_beng ?? '' !!}
-
-
                                                 </h4>
-
                                                     {{-- <div class="col-md-3">
                                                         <label>বিভাগ </label>
                                                         <select name="division[]" id="division_dhaka_rate" multiple
@@ -5120,7 +5115,7 @@ group by date ORDER BY date ");
 
     // Filter daily infected by district
 
-    $('#daily_effected_travelers').hide();
+    /*** $('#daily_effected_travelers').hide();
     $('#daily-infected-district').on('select2:select', function (e) {
         var val = this.value;
         if(val != 'all'){
@@ -5128,7 +5123,7 @@ group by date ORDER BY date ");
         }else{
             $('#daily_effected_travelers').hide();
         }
-    });
+    }); */
 
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
@@ -5137,7 +5132,7 @@ group by date ORDER BY date ");
     // console.log(districts);
     
     
-    if (districts != 'all') {
+    if (districts != 'all' || non_travelers == '1') {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/filter-daily-infected-chart',
@@ -5147,9 +5142,9 @@ group by date ORDER BY date ");
                     // console.log(response);
                     if (response) {
                     response = JSON.parse(response);
-                    dailyInfectedChart(response,dis);
+                        dailyInfectedChart(response,dis);
                     } else {
-                    dailyInfectedChart([]);
+                        dailyInfectedChart([]);
                     }
                     hideLoader();
                 },
