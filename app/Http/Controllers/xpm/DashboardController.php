@@ -2595,10 +2595,16 @@ using(district) ORDER BY r.test_positivity DESC");
         // return $districtArr['districts'];
         $districts = implode(', ', array_map(function ($val) {return sprintf("'%s'", $val);}, $districtArr['districts']));
         $non_travelers = $request->non_travelers;
-
+        
         $tableName = 'division_district_infected';
-        if ($non_travelers == 1){
-            $tableName = 'division_district_infected_non_travelers';
+        if (!empty($non_travelers)){
+            if($non_travelers == 1 && $districts !== "'all'"){
+                // dd($tableName);
+                $tableName = 'division_district_infected_non_travelers';
+            }
+            if($non_travelers == 1 && $districts == "'all'"){
+                $tableName = 'daily_data_non_travelers';
+            }
         }
 
         $queryClause = "";

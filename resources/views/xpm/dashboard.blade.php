@@ -2318,7 +2318,8 @@ $ydata = [];
                         "valueAxes": [
                             {
                                 "position": "left",
-                                "title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                //"title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                "title": "",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -5129,7 +5130,7 @@ group by date ORDER BY date ");
 
     // Filter daily infected by district
 
-    /*** $('#daily_effected_travelers').hide();
+     $('#daily_effected_travelers').hide();
     $('#daily-infected-district').on('select2:select', function (e) {
         var val = this.value;
         if(val != 'all'){
@@ -5137,7 +5138,7 @@ group by date ORDER BY date ");
         }else{
             $('#daily_effected_travelers').hide();
         }
-    }); */
+    }); 
 
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
