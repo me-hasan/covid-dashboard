@@ -77,37 +77,45 @@
                     <div class="info-box-content">
                         <span class="info-box-text">{{ $block['title'] }}</span>
 						<br>
-                       <b> <span class="info-box-number">{{ $block['number'] }}</span> </b>
+                       <div class="num-style">
+				            <span>{{ $block['number'] }}</span> 
+                       </div>
                     </div>
                 </div>
             </div>
             @endforeach
-        
+     </div>
 
         <div class="row">
             @foreach ($list_blocks as $block)
-                <div class="col-md-6">
+                <div class="col-md-<?php echo (0 == $block['id'])?'8':'4' ?>">
                     <h3>{{ $block['title'] }}</h3>
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Last login at</th>
+                            @if(0 == $block['id'])<th>Last login at</th>@endif
+                            @if(0 == $block['id'])<th>Last Stay</th>@endif
+                            @if(0 == $block['id'])<th>Login Count</th>@endif
+                            @if(0 == $block['id'])<th>Action</th>@endif
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($block['entries'] as $entry)
-                            <tr>
-                                <td>{{ $entry->name }}</td>
-                                <td>{{ $entry->email }}</td>
-                                <td>{{ $entry->last_login_at }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3">{{ __('No entries found') }}</td>
-                            </tr>
-                        @endforelse
+                            @forelse($block['entries'] as $entry)
+                                <tr>
+                                    <td><i class="ion-checkmark-circled  {{ (0 == $block['id'])? 'text-success' : 'text-dafault' }} fs-12"></i> {{ $entry->name }}</td>
+                                    <td>{{ $entry->email }}</td>
+                                    @if(0 == $block['id'])<td>{{ ($entry->last_login_at !== null) ? Carbon\Carbon::parse($entry->last_login_at)->diffForHumans($currentTimeStamp) : 'Never Logged In' }}</td>@endif
+                                    @if(0 == $block['id'])<td>{{ Carbon\Carbon::parse($entry->last_login_at)->diffInMinutes($entry->last_logout_at,true) }} Minutes</td>@endif
+                                    @if(0 == $block['id'])<td>{{ $entry->logged_count ?? 'No' }}</td>@endif
+                                    @if(0 == $block['id'])<td><button class="btn btn-sm btn-primary">Detail</button></td>@endif
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="2">{{ __('No entries found') }}</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

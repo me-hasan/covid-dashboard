@@ -101,8 +101,11 @@ class LoginController extends Controller
 
     function authenticated(Request $request, $user)
     {
+        $userInfo = ($user->logged_count === null) ? 0 : $user->logged_count;
+       
         $user->update([
             'last_login_at' => now(),
+            'logged_count' => $userInfo + 1
         ]);
     }
 }
