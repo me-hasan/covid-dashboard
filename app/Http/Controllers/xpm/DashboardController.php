@@ -177,32 +177,42 @@ class DashboardController extends Controller
 
     function getLast14NDays(){
         $today = new Carbon();
-        if($today->dayOfWeek == Carbon::SATURDAY){
+        if($today->dayOfWeek == Carbon::SATURDAY || $today->dayOfWeek == Carbon::TUESDAY){
             $first = new Carbon();
             $last = new Carbon();
         }
         else{
-            $first = new Carbon('last saturday');
-            $last = new Carbon('last saturday');
+            $first = $this->getLastDay($today->dayOfWeek);
+            $last = $this->getLastDay($today->dayOfWeek);
         }
-        $dateArray['first_2_weeks_start'] = $first->subDays(7); 
-        $dateArray['first_2_weeks_end'] = $last->subDays(20);  
+        $dateArray['first_2_weeks_start'] = $first->subDays(5); 
+        $dateArray['first_2_weeks_end'] = $last->subDays(18);  
         return array_reverse($dateArray);
     }
 
     function getLast28NDays(){
         $today = new Carbon();
-        if($today->dayOfWeek == Carbon::SATURDAY){
+        if($today->dayOfWeek == Carbon::SATURDAY || $today->dayOfWeek == Carbon::TUESDAY){
             $first = new Carbon();
             $last = new Carbon();
         }
         else{
-            $first = new Carbon('last saturday');
-            $last = new Carbon('last saturday');
+            $first = $this->getLastDay($today->dayOfWeek);
+            $last = $this->getLastDay($today->dayOfWeek);
         }
-        $dateArray['last_2_weeks_start'] = $first->subDays(21); 
-        $dateArray['last_2_weeks_ends'] = $last->subDays(34);  
+        $dateArray['last_2_weeks_start'] = $first->subDays(19); 
+        $dateArray['last_2_weeks_ends'] = $last->subDays(32);  
         return array_reverse($dateArray);
+    }
+
+    function getLastDay($n){
+        $date = now();
+        if($n == Carbon::SATURDAY){
+            $date =   new Carbon('last saturday');
+        }elseif($n == Carbon::TUESDAY){
+            $date =   new Carbon('last tuesday');
+        }
+        return $date;
     }
 
     public function divisionCompare()
