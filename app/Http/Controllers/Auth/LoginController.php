@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\VisitorTrace;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -106,6 +107,12 @@ class LoginController extends Controller
         $user->update([
             'last_login_at' => now(),
             'logged_count' => $userInfo + 1
+        ]);
+       
+        $visitorTrace = new VisitorTrace;
+        $visitorTrace->create([
+            'user_id' => $user->id,
+            'login_at' => now()
         ]);
     }
 }

@@ -96,6 +96,7 @@ class DashboardController extends Controller
         $data['rm_7'] = $this->risk_matrix_7();
         $data['rm_8'] = $this->risk_matrix_8();
         $data['rm_9'] = $this->risk_matrix_9();
+        $data['matrix_date_selected'] = WeeklyDate::where('status', 1)->orderBy('date_id', 'desc')->first();
         // $data['first_week'] = $this->first_week();
         $data['first_week'] = (object) $this->getLast14NDays();
         // $data['last_week'] = $this->last_week();

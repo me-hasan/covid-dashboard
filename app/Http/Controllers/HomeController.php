@@ -25,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        //$visitors = User::with('getVisitor')->where('logged_count', '>', 0)->get();
+        
         $number_blocks = [
             [
                 'title' => 'Users Logged In Today',
@@ -45,10 +46,10 @@ class HomeController extends Controller
             [
                 'id' => 0,
                 'title' => 'Last Logged In Users',
-                'entries' => User::where('last_login_at', '>', today()->subDays(1))
+                'entries' => User::with('getVisitor')->where('last_login_at', '>', today()->subDays(1))
                     ->orderBy('last_login_at', 'desc')
                     
-                    ->get(),
+                    ->simplePaginate(10),
             ],
             [
                 'id' => 1,
@@ -57,11 +58,11 @@ class HomeController extends Controller
                     ->orwhere('last_login_at', null)
                     ->orderBy('last_login_at', 'desc')
                     
-                    ->get()
+                    ->simplePaginate(10)
             ],
         ];
         $currentTimeStamp = Carbon::now();
-        // dd($currentTimeStamp);
+        // dd($list_blocks);
         $users = User::where('account_level','!=',null)->where('user_type','!=','superadmin')->get();
 
         $administrative_user = $users->where('account_level','administrative')->count();

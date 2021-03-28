@@ -881,7 +881,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div id="last_weekly_date"
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
                                                                     class="fs-20 b1">
-                                                                    <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )
+                                                                    <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$matrix_date_selected->last_weekly_date}} )
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-11 col-md-11">
@@ -933,7 +933,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <thead>
                                                                         <tr>
                                                                             <td colspan="4" class="text-center fs-18" style="font-size: 26px" id="recent_weekly_date"><span
-                                                                                    class="text-danger">আজ {{ $today }}</span>, বিগত ২ সপ্তাহ ( {{$first_week_end}} - {{$first_week_start}} )
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বিগত ২ সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} )
                                                                             </td>
                                                                         </tr>
                                                                         </thead>
