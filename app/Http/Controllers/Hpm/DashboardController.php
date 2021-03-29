@@ -63,9 +63,9 @@ class DashboardController extends Controller
             $data['rm_8'] = $this->risk_matrix_8();
             $data['rm_9'] = $this->risk_matrix_9();
 
-            $data['first_slot'] = $this->rm_first_slot();
-            $data['second_slot'] = $this->rm_second_slot();
-            $data['third_slot'] = $this->rm_third_slot();
+            // $data['first_slot'] = $this->rm_first_slot();
+            // $data['second_slot'] = $this->rm_second_slot();
+            // $data['third_slot'] = $this->rm_third_slot();
 
             $data['first_week'] = $this->first_week();
             $data['last_week'] = $this->last_week();
@@ -1087,38 +1087,38 @@ using(district)");
         return $risk_matrix[0];
       }
 
-      private function rm_first_slot($testCount=200,$test_positive_min=10,$test_positive_max=20, $weekly_date = 382, $table_last='', $table_recent=''){
-        $risk_matrix = DB::select("select count(l.district) as 'first_slot' from
-(select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
-inner join
-(select district from $table_recent where test_positivity<$test_positive_min
-and total_tests>$testCount   and date_id = $weekly_date) as r
-using(district)");
+//       private function rm_first_slot($testCount=200,$test_positive_min=10,$test_positive_max=20, $weekly_date = 382, $table_last='', $table_recent=''){
+//         $risk_matrix = DB::select("select count(l.district) as 'first_slot' from
+// (select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
+// inner join
+// (select district from $table_recent where test_positivity<$test_positive_min
+// and total_tests>$testCount   and date_id = $weekly_date) as r
+// using(district)");
 
-        return $risk_matrix[0];
-      }
+//         return $risk_matrix[0];
+//       }
 
-      private function rm_second_slot($testCount=100,$test_positive_min=21,$test_positive_max=30, $weekly_date = 382, $table_last='', $table_recent=''){
-        $risk_matrix = DB::select("select count(l.district) as 'second_slot' from
-(select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
-inner join
-(select district from $table_recent where test_positivity<$test_positive_min
-and total_tests>$testCount   and date_id = $weekly_date) as r
-using(district)");
+//       private function rm_second_slot($testCount=100,$test_positive_min=21,$test_positive_max=30, $weekly_date = 382, $table_last='', $table_recent=''){
+//         $risk_matrix = DB::select("select count(l.district) as 'second_slot' from
+// (select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
+// inner join
+// (select district from $table_recent where test_positivity<$test_positive_min
+// and total_tests>$testCount   and date_id = $weekly_date) as r
+// using(district)");
 
-        return $risk_matrix[0];
-      }
+//         return $risk_matrix[0];
+//       }
 
-      private function rm_third_slot($testCount=100,$test_positive_min=31,$test_positive_max=100, $weekly_date = 382, $table_last='', $table_recent=''){
-        $risk_matrix = DB::select("select count(l.district) as 'third_slot' from
-(select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
-inner join
-(select district from $table_recent where test_positivity<$test_positive_min
-and total_tests>$testCount   and date_id = $weekly_date) as r
-using(district)");
+//       private function rm_third_slot($testCount=100,$test_positive_min=31,$test_positive_max=100, $weekly_date = 382, $table_last='', $table_recent=''){
+//         $risk_matrix = DB::select("select count(l.district) as 'third_slot' from
+// (select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
+// inner join
+// (select district from $table_recent where test_positivity<$test_positive_min
+// and total_tests>$testCount   and date_id = $weekly_date) as r
+// using(district)");
 
-        return $risk_matrix[0];
-      }
+//         return $risk_matrix[0];
+//       }
 
     private function getLast14DaysData($request) {
         try{
@@ -1660,9 +1660,9 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
             $result['high_to_medium'] = $this->risk_matrix_8($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_medium ?? 0;
             $result['high_to_low'] = $this->risk_matrix_9($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_low ?? 0;
             
-            $result['first_slot'] = $this->rm_first_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->first_slot ?? 0;
-            $result['second_slot'] = $this->rm_second_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->second_slot ?? 0;
-            $result['third_slot'] = $this->rm_third_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->third_slot ?? 0;
+            // $result['first_slot'] = $this->rm_first_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->first_slot ?? 0;
+            // $result['second_slot'] = $this->rm_second_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->second_slot ?? 0;
+            // $result['third_slot'] = $this->rm_third_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->third_slot ?? 0;
             
             $data['result_data'] = $result;
             $data['risk_matrix_data'] = $this->getRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent);
@@ -1742,29 +1742,23 @@ using(district) ORDER BY r.test_positivity DESC");
         $data['low_to_low_table_contentData'] = $this->riskMatrichtmlProcess($low_to_low_table_contentData);
 
         // first slot
-        $first_slot_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
-        (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=31 and date_id = $weekly_date) as l
-        inner join
-        (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=31 and total_tests>200  and date_id = $weekly_date) as r
-        using(district) ORDER BY r.test_positivity DESC");
-        $data['first_slot_district_name'] = $this->getRiskDistrictName($first_slot_table_contentData);
+        $first_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where test_positivity>=10 and test_positivity<=20 and total_tests>$testCount  and date_id = $weekly_date");
+        $first_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=10 and test_positivity<=20 and total_tests>$testCount and date_id = $weekly_date");
+        $data['first_slot_district_name'] = $this->getRiskDistrictClusteringName($first_slot_table_contentDataFirst, $first_slot_table_contentDataSecond);
+
 
         // second slot
-        $second_slot_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
-        (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=20 and test_positivity<=30  and date_id = $weekly_date) as l
-        inner join
-        (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=20 and total_tests>$testCount  and date_id = $weekly_date) as r
-        using(district) ORDER BY r.test_positivity DESC");
-        $data['second_slot_district_name'] = $this->getRiskDistrictName($second_slot_table_contentData);
+        $second_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where test_positivity>=20 and test_positivity<=30 and total_tests>$testCount  and date_id = $weekly_date");
+        $second_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=20 and test_positivity<=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['second_slot_district_name'] = $this->getRiskDistrictClusteringName($second_slot_table_contentDataFirst, $second_slot_table_contentDataSecond);
 
-        // second slot
-        $third_slot_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
-        (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=10 and test_positivity<=20  and date_id = $weekly_date) as l
-        inner join
-        (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=10 and total_tests>$testCount  and date_id = $weekly_date) as r
-        using(district) ORDER BY r.test_positivity DESC");
-        $data['third_slot_district_name'] = $this->getRiskDistrictName($third_slot_table_contentData);
+        
+        // third slot
+        $third_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where test_positivity>=30 and total_tests>$testCount  and date_id = $weekly_date");
+        $third_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['third_slot_district_name'] = $this->getRiskDistrictClusteringName($third_slot_table_contentDataFirst, $third_slot_table_contentDataSecond);
 
+        
         return $data;
     }
 
@@ -1789,6 +1783,21 @@ using(district) ORDER BY r.test_positivity DESC");
         foreach ($items as $item) {
             $arrayData[] = rtrim(en2bnTranslation($item->district)," ");
         }
+        $districtName = implode(", ",$arrayData);
+        return $districtName;
+    }
+
+    public function getRiskDistrictClusteringName($itemsOne, $itemsTow) {
+        $arrayOneData = array();
+        $arrayTwoData = array();
+        $arrayData = array();
+        foreach ($itemsOne as $item) {
+            $arrayOneData[] = rtrim(en2bnTranslation($item->district)," ");
+        }
+        foreach ($itemsTow as $item) {
+            $arrayTwoData[] = rtrim(en2bnTranslation($item->district)," ");
+        }
+        $arrayData = array_unique(array_merge($arrayOneData,$arrayTwoData), SORT_REGULAR);
         $districtName = implode(", ",$arrayData);
         return $districtName;
     }
