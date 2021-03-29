@@ -876,7 +876,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <div class="row">
-                            
                                                             <div class="col-xl-1 col-md-1">
                                                                 <div id="last_weekly_date"
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
@@ -1002,10 +1001,35 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     </table>
                                                                 </div>
                                                             </div>
-                            
                                                         </div>
                             
-                            
+                                                            
+                                                            {{-- start table for red color distribution --}}
+                                                            <div class="row">
+                                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                    <div class="card-body">
+                                                                        <table class="table table-bordered table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>১০% থেকে ২০%</th>
+                                                                                    <th>২১% থেকে ৩০%</th>
+                                                                                    <th>৩১% থেকে <৪০%</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="third_slot_district_name" style="cursor: pointer;background: #FF6347; color: white; width: 30%"></td>
+                                                                                    <td class="second_slot_district_name" style="cursor: pointer;background: #E13531; color: white; width: 30%"></td>
+                                                                                    <td class="first_slot_district_name" style="cursor: pointer;background: #DC143C; color: white; width: 30%"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {{-- start table for red color distribution --}}
+                                                            
+
                             
                                                         <div class="row">
                                                             <div class="col-xl-12 col-lg-12 col-md-12">
@@ -1021,9 +1045,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     </p>
                                                                 </div>
                                                             </div>
-                            
                                                         </div>
+
+
+
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <!-- End :: Risk Matrix -->
@@ -4086,7 +4114,7 @@ $ydata = [];
         }
 
         function rangeChange(data, risk_matrix_data) {
-            // console.log(risk_matrix_data);
+            console.log(risk_matrix_data);
 
             $('.high_to_high_modal_click').html('<strong>অপরিবর্তিত উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
@@ -4118,7 +4146,10 @@ $ydata = [];
             $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
             $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
 
-
+            /* extra slot*/
+            $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
+            $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
+            $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
         }
 
         $('.high_to_high_modal_click').click(function () {

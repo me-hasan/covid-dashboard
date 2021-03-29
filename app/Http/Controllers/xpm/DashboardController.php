@@ -96,6 +96,9 @@ class DashboardController extends Controller
         $data['rm_7'] = $this->risk_matrix_7();
         $data['rm_8'] = $this->risk_matrix_8();
         $data['rm_9'] = $this->risk_matrix_9();
+
+
+        
         $data['matrix_date_selected'] = WeeklyDate::where('status', 1)->orderBy('date_id', 'desc')->first();
         // $data['first_week'] = $this->first_week();
         $data['first_week'] = (object) $this->getLast14NDays();
@@ -1221,6 +1224,8 @@ using(district)");
         return $risk_matrix[0];
     }
 
+   
+
     private function getLast14DaysData($request)
     {
         try {
@@ -1796,6 +1801,9 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
             $result['high_to_high'] = $this->risk_matrix_7($testCount, $test_positive_min, $test_positive_max)->high_to_high ?? 0;
             $result['high_to_medium'] = $this->risk_matrix_8($testCount, $test_positive_min, $test_positive_max)->high_to_medium ?? 0;
             $result['high_to_low'] = $this->risk_matrix_9($testCount, $test_positive_min, $test_positive_max)->high_to_low ?? 0;
+            
+            
+            
             $data['result_data'] = $result;
             $data['risk_matrix_data'] = $this->getRiskMatrixModalData($testCount, $test_positive_min, $test_positive_max);
 
@@ -3142,6 +3150,9 @@ GROUP BY
         $data['rm_7'] = $this->risk_matrix_7();
         $data['rm_8'] = $this->risk_matrix_8();
         $data['rm_9'] = $this->risk_matrix_9();
+
+        
+
         // $data['first_week'] = $this->first_week();
         $data['first_week'] = (object) $this->getLast14NDays();
         // $data['last_week'] = $this->last_week();
