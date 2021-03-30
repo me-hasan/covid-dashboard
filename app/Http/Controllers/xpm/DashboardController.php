@@ -2406,7 +2406,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 (SELECT thedate, division, daily_cases from
                 (SELECT thedate from calendardate where thedate >= '2020-05-20'
                 and thedate <= (date_sub((SELECT max(date_of_test) from
-                division_infected where division = '$selectValue'), interval 7 day))) as T1
+                division_infected where division = '$selectValue'), interval 4 day))) as T1
                 left join
                 (SELECT date_of_test, division, daily_cases from  division_infected
                 where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -2418,7 +2418,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 (SELECT thedate, division, daily_cases from
                 (SELECT thedate from calendardate where thedate >= '2020-05-20'
                 and thedate <= (date_sub((SELECT max(date_of_test) from
-                division_infected where division = '$selectValue'), interval 7 day))) as T1
+                division_infected where division = '$selectValue'), interval 4 day))) as T1
                 left join
                 (select date_of_test, division, daily_cases from  division_infected
                 where division = '$selectValue') as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS $selectValue $comma";
@@ -2480,7 +2480,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 (select thedate, division, district, daily_cases from
                 (select thedate from calendardate where thedate >= '2020-05-20'
                 and thedate <= (date_sub((select max(date_of_test) from
-                division_district_infected where district = \"$selectValue\"), interval 7 day))) as T1
+                division_district_infected where district = \"$selectValue\"), interval 4 day))) as T1
                 left join
                 (select date_of_test, division, district, daily_cases from  division_district_infected
                 where district = \"$selectValue\") as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -2492,7 +2492,7 @@ using(district) ORDER BY r.test_positivity DESC");
                 (select thedate, division, district, daily_cases from
                 (select thedate from calendardate where thedate >= '2020-05-20'
                 and thedate <= (date_sub((select max(date_of_test) from
-                division_district_infected where district = \"$selectValue\"), interval 7 day))) as T1
+                division_district_infected where district = \"$selectValue\"), interval 4 day))) as T1
                 left join
                 (select date_of_test, division, district, daily_cases from  division_district_infected
                 where district = \"$selectValue\") as T2 on T1.thedate=T2.date_of_test) as Q) as a) AS `$selectValue` $comma";
