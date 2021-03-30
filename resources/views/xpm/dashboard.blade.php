@@ -3490,7 +3490,7 @@ $ydata = [];
                         let getMonth= month_name(previusSeven.getMonth());
 
                          if(weeklyOrDaily == 1){
-                            return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                            return "<b>" + graph.title + "</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn')  + "</b></span>";
                         }else{
                             return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
                         }
@@ -3603,7 +3603,7 @@ $ydata = [];
                                 "balloonFunction": function (graphDataItem, graph) {
                                     var options = {month: 'long', day: 'numeric'};
                                     var v = 0;
-                                    var d = '';
+                                    var d = 0;
                                     let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                                     let previusSevenDay= previusSeven.getDate();
                                     let getMonth= month_name(previusSeven.getMonth());

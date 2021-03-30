@@ -2200,7 +2200,7 @@ using(district) ORDER BY r.test_positivity DESC");
     {
         $Date1 = '20-05-2020';
         //$Date2 = '02-01-2021';
-        $Date2 = date('d-m-Y', strtotime("-5 days"));
+        $Date2 = date('d-m-Y', strtotime("-4 days"));
 
         // Declare an empty array
         $array = array();
