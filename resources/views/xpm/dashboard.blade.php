@@ -680,16 +680,34 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         
                                         <div style="background-color: #F5EDDC;
                                             width: 420px;
-                                            height: 150px;
+                                            height: 200px;
                                             border: 1px dotted black;" class="row background">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
-                                                            <div style="width: 12px; height:12px;background-color: #FF3333;border: 1px solid #686868;">
+                                                            <div style="width: 12px; height:12px;background-color: #DC143C;border: 1px solid #686868;">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার > ১০%)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩১% থেকে ৪০%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #F90606;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ২১% থেকে ৩০%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% থেকে ২০% )</p>
                                                         </div>
                                                     </div>
                                                     <div class="row">
