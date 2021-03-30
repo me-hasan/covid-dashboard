@@ -4412,6 +4412,8 @@ from hospitaltemporarydata
 where city = 'Country'
 group by date ORDER BY date ");
 
+
+
     $dates = $general_beds = $icu_beds = [];
     foreach ($vacancy_beds as $key => $vacancy_bed) {
         $dates[] = "'" . convertEnglishDateToBangla($vacancy_bed->date) . "'";;
