@@ -2365,7 +2365,7 @@ $ydata = [];
                             {
                                 "position": "left",
                                 //"title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
-                                "title": "",
+                                "title": "দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
