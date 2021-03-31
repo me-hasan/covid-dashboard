@@ -680,10 +680,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         
                                         <div style="background-color: #F5EDDC;
                                             width: 420px;
-                                            height: 200px;
+                                            height: 150px;
                                             border: 1px dotted black;" class="row background">
                                                 <div class="col-md-12">
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #DC143C;border: 1px solid #686868;">
                                                             </div>
@@ -691,17 +691,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="col-md-11 pt-1">
                                                             <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩১% থেকে ৪০%)</p>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #F90606;border: 1px solid #686868;">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ২১% থেকে ৩০%)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার >১০%)</p>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #686868;">
                                                             </div>
@@ -709,7 +709,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="col-md-11 pt-1">
                                                             <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% থেকে ২০% )</p>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
@@ -1029,9 +1029,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <table class="table table-bordered table-striped">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>১০% থেকে ২০%</th>
+                                                                                    <th>১১% থেকে ২০%</th>
                                                                                     <th>২১% থেকে ৩০%</th>
-                                                                                    <th>৩১% থেকে <৪০%</th>
+                                                                                    <th>৩১% থেকে ৪০% +</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -2349,7 +2349,7 @@ $ydata = [];
 
 
     function dailyInfectedChart(data, dist='') {
-	// console.log(data);
+	 //console.log(data);
         let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
@@ -2368,6 +2368,7 @@ $ydata = [];
                                 "title": "দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)",
                                 "id": "v1",
                                 "minimum": 0,
+                                "maximum": 6000,
                                 "labelFunction": function (value, valueText, valueAxis) {
                                     //get from
                                     return value.toLocaleString("bn-BD");
@@ -2425,6 +2426,7 @@ $ydata = [];
                             "lineThickness": 2,
                             "lineColor": "orange",
                             "type": "smoothedLine",
+                            "gapPeriod": 2,
                             "title": zoneName+" এর দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)", //5 days running average
                             "valueField": "avg",
                             "bullet": "round",
