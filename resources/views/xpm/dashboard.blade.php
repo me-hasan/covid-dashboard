@@ -783,6 +783,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </div>
                             </div>
                             
+
+                            <div class="row"  style="">  
+                                <div class="col-lg-12" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                    <div id="iframeData">
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -4044,6 +4053,7 @@ $ydata = [];
     $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2_16088070260020/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3_16088073716630/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers/Dashboard?%3Aembed=y&amp;%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:800px;width:100%;border:none;overflow:hidden;" frameborder="0" allowFullScreen="true"></iframe>');
 
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange");
