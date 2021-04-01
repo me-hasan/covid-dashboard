@@ -2347,9 +2347,16 @@ $ydata = [];
         //tagDesign(id, tag);
     });
 
+    function extractValue(arr, prop) {
+        let extractedValue = arr.map(item => item[prop]);
+        return extractedValue;
+    }
 
     function dailyInfectedChart(data, dist='') {
-	 //console.log(data);
+	   
+        let _maxArray = extractValue(data, 'infected');
+        let _maxValue = Math.max.apply(Math, _maxArray);
+	 
         let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
@@ -2368,7 +2375,7 @@ $ydata = [];
                                 "title": "দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)",
                                 "id": "v1",
                                 "minimum": 0,
-                                "maximum": 6000,
+                                "maximum": _maxValue,
                                 "labelFunction": function (value, valueText, valueAxis) {
                                     //get from
                                     return value.toLocaleString("bn-BD");
