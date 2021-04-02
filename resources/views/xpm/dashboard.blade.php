@@ -74,6 +74,8 @@
             padding-left: -380px;
         }
 
+         
+
         .my-custom-scrollbar {
             position: relative;
 
@@ -767,7 +769,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
                             </div>
-                            <div class="row"  style="height: 420px !important; overflow:hidden;">  
+                            {{-- <div class="row"  style="height: 420px !important; overflow:hidden;">  
                                 <div class="col-lg-3" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_1">
                                     </div>
@@ -781,12 +783,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_4"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             
 
-                            <div class="row"  style="">  
-                                <div class="col-lg-12" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
-                                    <div id="iframeData">
+                            <div class="row">  
+                                <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                    <div style="margin:0px auto !important;" id="iframeData">
                                     </div>
                                 </div>
                             </div>
@@ -1045,9 +1047,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td class="first_slot_district_name" style="cursor: pointer;background: #FF6347; color: white; width: 30%"></td>
-                                                                                    <td class="second_slot_district_name" style="cursor: pointer;background: #E13531; color: white; width: 30%"></td>
-                                                                                    <td class="third_slot_district_name" style="cursor: pointer;background: #DC143C; color: white; width: 30%"></td>
+                                                                                    <td class="first_slot_district_name" style="background: #FF6347; color: white; width: 30%"></td>
+                                                                                    <td class="second_slot_district_name" style="background: #E13531; color: white; width: 30%"></td>
+                                                                                    <td class="third_slot_district_name" style="background: #DC143C; color: white; width: 30%"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -1646,7 +1648,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     class="select2 form-control btn-outline-primary">
                                                                 <option value="-1">সারাদেশ</option>
                                                                 @foreach ($hospital_name as $value)
-                                                                    <option value="{{ $value->hospital_id ?? '' }}">{{ $value->hospital_name_bng ?? '' }}</option>
+                                                                    <option value="{{ $value->hospital_id ?? '' }}">{{ $value->name_of_hospital ?? '' }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -4049,11 +4051,11 @@ $ydata = [];
      /*==============================Start============================================
     * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
     * */
-    $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1_16088038408650/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    {{-- $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1_16088038408650/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2_16088070260020/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3_16088073716630/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers/Dashboard?%3Aembed=y&amp;%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:800px;width:100%;border:none;overflow:hidden;" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>'); --}}
+    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers/Dashboard_1?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
 
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange");

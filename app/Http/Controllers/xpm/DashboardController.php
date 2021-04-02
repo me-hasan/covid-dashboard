@@ -67,7 +67,7 @@ class DashboardController extends Controller
         $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
 
 
-        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), hospital_name_bng FROM `death_person` WHERE 1 ORDER BY name_of_hospital'));
+        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), name_of_hospital FROM `death_person` WHERE 1 ORDER BY name_of_hospital'));
         // dd($data);
 
         /*$data['tests_per_case_Mayanmar'] = $this->tests_per_case_country('Myanmar');
