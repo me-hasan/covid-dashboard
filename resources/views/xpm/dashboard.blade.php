@@ -1626,8 +1626,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <select name="age_wise_death_by_gender" id="age_wise_death_by_gender"
                                                                     class="select2 form-control btn-outline-primary">
                                                                 <option value="-1">সকল</option>
-                                                                <option value="M">পুরুষ</option>
-                                                                <option value="F">মহিলা</option>
+                                                                <option value="Male">পুরুষ</option>
+                                                                <option value="Female">মহিলা</option>
                                                             
                                                             </select>
                                                         </div>
