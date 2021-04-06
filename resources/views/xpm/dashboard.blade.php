@@ -484,11 +484,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_tested) ? formatInBanglaStyle($total_tested) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে পরীক্ষা</h4>
+                            <h4 class="header-title pb-1">গত ৭ দিনে পরীক্ষা</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}
                             </div>
-                            <div class="summary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে
+                            <div class="summary"><i class="{{$class_1}}"></i> পূর্ববর্তী ৭ দিনে
                                 পরীক্ষার
                                 চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))) : ' ' !!}
                                 টি
@@ -507,12 +507,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে সনাক্তের</h4>
+                            <h4 class="header-title pb-1">গত ৭ দিনে সনাক্তের</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_2}}"></i>
-                                পূর্ববর্তী ১৪ দিনে সনাক্তের
+                                পূর্ববর্তী ৭ দিনে সনাক্তের
                                 চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}
                                 জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
@@ -529,11 +529,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_death) ? formatInBanglaStyle($total_death) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে মৃত্যু</h4>
+                            <h4 class="header-title pb-1">গত ৭ দিনে মৃত্যু</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}
                             </div>
-                            <div class="summary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে
+                            <div class="summary"><i class="{{$class_3}}"></i> পূর্ববর্তী ৭ দিনে
                                 মৃত্যুর
                                 চেয়ে
                                 {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}
@@ -1648,7 +1648,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     class="select2 form-control btn-outline-primary">
                                                                 <option value="-1">সারাদেশ</option>
                                                                 @foreach ($hospital_name as $value)
-                                                                    <option value="{{ $value->hospital_id ?? '' }}">{{ $value->name_of_hospital ?? '' }}</option>
+                                                                    <option value="{{ $value->hospital_id ?? '' }}">{{ $value->hospital_name_bng ?? '' }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -5209,6 +5209,7 @@ group by date ORDER BY date ");
             $('#daily_effected_travelers').show();
         }else{
             $('#daily_effected_travelers').hide();
+            
         }
     }); 
 

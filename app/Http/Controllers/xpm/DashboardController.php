@@ -67,7 +67,7 @@ class DashboardController extends Controller
         $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
 
 
-        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), name_of_hospital FROM `death_person` WHERE 1 ORDER BY name_of_hospital'));
+        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), hospital_name_bng FROM `death_person` WHERE 1 ORDER BY name_of_hospital'));
         // dd($data);
 
         /*$data['tests_per_case_Mayanmar'] = $this->tests_per_case_country('Myanmar');
@@ -1228,6 +1228,7 @@ using(district)");
 
     private function getLast14DaysData($request)
     {
+        
         try {
             $getLast14DaysDeathData = [];
             $getLast14DaysTestData = [];
@@ -1281,34 +1282,34 @@ date>DATE_SUB(DATE_SUB((select max(date) from Div_Dist_Upz_Test_Number), INTERVA
             } else {
                 /*infected_datasql*/
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_infected_person:=(select sum(infected_24_hrs)
-from daily_data where report_date<=(select max(report_date)
-from daily_data) and report_date>DATE_SUB((select max(report_date)
-from daily_data), INTERVAL 14 DAY))";
+                from daily_data where report_date<=(select max(report_date)
+                from daily_data) and report_date>=DATE_SUB((select max(report_date)
+                from daily_data), INTERVAL 7 DAY))";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_last_fourtten_days_infected_person:=(select sum(infected_24_hrs) from daily_data where
-report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and
-report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
-INTERVAL 14 DAY), INTERVAL 14 DAY))";
+                report_date<DATE_SUB((select max(report_date) from daily_data), INTERVAL 7 DAY) and
+                report_date>=DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
+                INTERVAL 7 DAY), INTERVAL 7 DAY))";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_infected_person as 'curr_fourtten_days_infected_person', @nat_last_fourtten_days_infected_person as 'last_fourtten_days_infected_person',
-round((@nat_curr_fourtten_days_infected_person-@nat_last_fourtten_days_infected_person),0) as 'Difference'";
+                round((@nat_curr_fourtten_days_infected_person-@nat_last_fourtten_days_infected_person),0) as 'Difference'";
                 $getLast14DaysinfectedData = DB::select($getLast14DaysDataSql);
 
                 /*testData sql*/
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_test:=(select sum(test_24_hrs)
-from daily_data where report_date<=(select max(report_date)
-from daily_data) and report_date>DATE_SUB((select max(report_date)
-from daily_data), INTERVAL 14 DAY))";
+                from daily_data where report_date<=(select max(report_date)
+                from daily_data) and report_date>=DATE_SUB((select max(report_date)
+                from daily_data), INTERVAL 7 DAY))";
                 $getLast14DaysTestData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_last_fourtten_days_test:=(select sum(test_24_hrs) from daily_data where
-report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and
-report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
-INTERVAL 14 DAY), INTERVAL 14 DAY))";
+                report_date<DATE_SUB((select max(report_date) from daily_data), INTERVAL 7 DAY) and
+                report_date>=DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
+                INTERVAL 7 DAY), INTERVAL 7 DAY))";
                 $getLast14DaysTestData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_test as 'curr_fourtten_days_test', @nat_last_fourtten_days_test as 'last_fourtten_days__test',
-round((@nat_curr_fourtten_days_test-@nat_last_fourtten_days_test),0) as 'Difference'";
+                round((@nat_curr_fourtten_days_test-@nat_last_fourtten_days_test),0) as 'Difference'";
                 $getLast14DaysTestData = DB::select($getLast14DaysDataSql);
-
+                
                 /*death data*/
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_death:=(select sum(death_24_hrs)
 from daily_data where report_date<=(select max(report_date)
@@ -1316,12 +1317,12 @@ from daily_data) and report_date>DATE_SUB((select max(report_date)
 from daily_data), INTERVAL 14 DAY))";
                 $getLast14DaysDeathData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_last_fourtten_days_infected_death:=(select sum(death_24_hrs) from daily_data where
-report_date<=DATE_SUB((select max(report_date) from daily_data), INTERVAL 14 DAY) and
-report_date>DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
-INTERVAL 14 DAY), INTERVAL 14 DAY))";
+                report_date<DATE_SUB((select max(report_date) from daily_data), INTERVAL 7 DAY) and
+                report_date>=DATE_SUB(DATE_SUB((select max(report_date) from daily_data),
+                INTERVAL 7 DAY), INTERVAL 7 DAY))";
                 $getLast14DaysDeathData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_death as 'curr_fourtten_days_death', @nat_last_fourtten_days_infected_death as 'last_fourtten_days_infected_death',
-round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) as 'Difference'";
+                round((@nat_curr_fourtten_days_death-@nat_last_fourtten_days_infected_death),0) as 'Difference'";
                 $getLast14DaysDeathData = DB::select($getLast14DaysDataSql);
 
             }
