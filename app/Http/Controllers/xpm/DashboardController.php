@@ -1312,9 +1312,9 @@ date>DATE_SUB(DATE_SUB((select max(date) from Div_Dist_Upz_Test_Number), INTERVA
                 
                 /*death data*/
                 $getLast14DaysDataSql = "select @nat_curr_fourtten_days_death:=(select sum(death_24_hrs)
-from daily_data where report_date<=(select max(report_date)
-from daily_data) and report_date>DATE_SUB((select max(report_date)
-from daily_data), INTERVAL 14 DAY))";
+                from daily_data where report_date<=(select max(report_date)
+                from daily_data) and report_date>=DATE_SUB((select max(report_date)
+                from daily_data), INTERVAL 7 DAY))";
                 $getLast14DaysDeathData = DB::select($getLast14DaysDataSql);
                 $getLast14DaysDataSql = "select @nat_last_fourtten_days_infected_death:=(select sum(death_24_hrs) from daily_data where
                 report_date<DATE_SUB((select max(report_date) from daily_data), INTERVAL 7 DAY) and
@@ -2236,7 +2236,7 @@ using(district) ORDER BY r.test_positivity DESC");
     public function getDatesFromRangeForAgeWiseDeath($flag)
     {
         $Date1 = '20-05-2020';
-        $Date2 = '02-01-2021';
+        $Date2 = date('d-m-Y', strtotime("-4 days"));;
 
         // Declare an empty array
         $array = array();
