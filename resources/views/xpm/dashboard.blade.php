@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="pm/css/styles.css">
     <link rel="stylesheet" href="pm/css/responsive.css">
     <link href="{{asset('assets/css/icons.css')}}" rel="stylesheet"/>
+    <link href="pm/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
     <!-- modernizr css -->
     <script src="pm/js/vendor/modernizr-2.8.3.min.js"></script>
     <link rel="stylesheet"
@@ -32,6 +33,7 @@
           crossorigin="anonymous"/>
     <!-- INTERNAL Select2 css -->
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet"/>
+    
     <style>
         .header-area {
             padding: 15px 30px;
@@ -1057,6 +1059,152 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 </div>
                                                             </div>
                                                             {{-- start table for red color distribution --}}
+
+
+
+                                                            <div class="row">
+                                                                
+                                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                    <div class="card-body">
+                                                                        <table id="matrix-data-table" class="table table-striped table-bordered" style="width:100%">
+                                                                           <thead>
+                                                                                <tr>
+                                                                                    <th class="border-bottom-0" rowspan="2">জেলা</th>
+                                                                                    <th class="border-bottom-0" colspan="3">১ম সপ্তাহ</th>
+                                                                                    <th class="border-bottom-0" colspan="3"> ২য় সপ্তাহ</th>
+                                                                                </tr>
+                                                                                 <tr>
+                                                                                    <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
+                                                                                    <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
+                                                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                             <tbody>
+                                                                                {{-- @if(count($high_to_high_table_contentData))
+                                                                                    @foreach($high_to_high_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($medium_to_high_table_contentData))
+                                                                                    @foreach($medium_to_high_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($low_to_high_table_contentData))
+                                                                                    @foreach($low_to_high_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($high_to_medium_table_contentData))
+                                                                                    @foreach($high_to_medium_table_contentData as $item)
+                                                                                        <tr>
+                                                                                           <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($medium_to_medium_table_contentData))
+                                                                                    @foreach($medium_to_medium_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($low_to_medium_table_contentData))
+                                                                                    @foreach($low_to_medium_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($high_to_low_table_contentData))
+                                                                                    @foreach($high_to_low_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($medium_to_low_table_contentData))
+                                                                                    @foreach($medium_to_low_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                @if(count($low_to_low_table_contentData))
+                                                                                    @foreach($low_to_low_table_contentData as $item)
+                                                                                        <tr>
+                                                                                            <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->l_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                                            <td>{!! convertEnglishDigitToBangla($item->r_total_test) !!}</td>
+                                                                                            <td> {!! convertEnglishDigitToBangla($item->r_positive) !!}</td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                @endif --}}
+                                                                            </tbody>                                                                                              
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             
 
                             
@@ -1086,10 +1234,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <!-- End :: Risk Matrix -->
                             
                                             <!-- Strat :: Modal Content -->
+
+                                            
                             
                                             <div class="d-none">
+
                                                 <div id="high_to_high_table_content" class="table-responsive b1">
-                                                    <table id="risk_table_popup"
+                                                    <table id="risk_table_popup dataTable"
                                                            class="table table-striped table-bordered text-nowrap dataTable">
                                                         <thead>
                                                         <tr>
@@ -2194,6 +2345,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 </div>
 
 
+
+
             </div>
             <div class="modal-footer">
 
@@ -2258,6 +2411,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/js/select2.js') }}"></script>
+
 
 
 <?php
@@ -4083,10 +4237,23 @@ $ydata = [];
 
 
         $('#weekly_date_submit').on('click', function () {
-
             myrange_ajax_call();
             weekly_date_change();
+
+
+            //load data from local storage
+             window.addEventListener('storage', () => {
+                $('#matrix-data-table tbody').html(localStorage.getItem('riskMatrixData'));
+             });
         });
+
+
+        /*Get all data from local storage*/
+        $('#matrix-data-table tbody').html(localStorage.getItem('riskMatrixData'));
+       
+        
+        
+
 
         function weekly_date_change(){
             let url = new URL('{!! route('weekly.date.change.for.matrix') !!}');
@@ -4153,7 +4320,7 @@ $ydata = [];
         }
 
         function rangeChange(data, risk_matrix_data) {
-            console.log(risk_matrix_data);
+            //console.log(risk_matrix_data.high_to_high_table_contentData);
 
             $('.high_to_high_modal_click').html('<strong>অপরিবর্তিত উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
@@ -4189,7 +4356,26 @@ $ydata = [];
             $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
             $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
             $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
+
+
+
+
+            /*risk matrix all data*/
+           
+            /*remove all data from local storage*/
+            localStorage.removeItem('riskMatrixData');
+            $('#matrix-data-table tbody').html("");
+            //set value
+            localStorage.setItem('riskMatrixData', risk_matrix_data.risk_matrix_all_data);
+            /*Get all data from local storage*/
+            $('#matrix-data-table tbody').html(localStorage.getItem('riskMatrixData'));
+        
         }
+
+        
+
+        
+
 
         $('.high_to_high_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
@@ -4246,7 +4432,9 @@ $ydata = [];
             //hospitalDataModal();
         });
 
-    });
+
+
+});
 
      /*==============================End============================================
     * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
@@ -5259,22 +5447,18 @@ group by date ORDER BY date ");
         $('#loading-sniper').hide();
         $('body').css('overflow', 'auto');
     }
-
-    /*$(function () {
-        $.ajax({
-            url: "{{ route('infected.percentage') }}",
-            type: 'GET',
-            success: function (response) {
-                response = JSON.parse(response);
-                if (response) {
-
-                }
-            }
-        });
-    });*/
-
 </script>
 
+
+<script src="{{asset('pm/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('pm/js/dataTables.bootstrap4.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#matrix-data-table').DataTable({});
+    });
+</script>
 
 
 </body>

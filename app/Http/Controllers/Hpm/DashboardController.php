@@ -1758,6 +1758,15 @@ using(district) ORDER BY r.test_positivity DESC");
         //$third_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
         $data['third_slot_district_name'] = $this->getRiskDistrictClusteringName($third_slot_table_contentDataFirst, $third_slot_table_contentDataSecond=[]);
 
+
+        // Risk Matrix All Data
+        $rist_matrix_all_data = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+        (select district, positive_tests, total_tests, test_positivity from $table_last where  date_id = $weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from $table_recent where date_id = $weekly_date) as r
+        using(district) ORDER BY r.test_positivity DESC");
+        $data['risk_matrix_all_data'] = $this->getRiskMatrixAllData($rist_matrix_all_data);
+
         
         return $data;
     }
@@ -1801,6 +1810,25 @@ using(district) ORDER BY r.test_positivity DESC");
         $districtName = implode(", ",$arrayData);
         return $districtName;
     }
+
+     public function getRiskMatrixAllData($items)
+     {
+        $html = "";
+        if(count($items)) {
+            foreach($items as $key => $item) {
+                $html .= '<tr class="b1">';
+                $html .= "<td >".en2bnTranslation($item->district)."</td>";
+                $html .= "<td>".$item->recent_test_positivity."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item->r_total_test."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item->r_positive."</span></td>";
+                $html .= "<td>".$item->last_test_positivity."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item->l_total_test."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item->l_positive."</span></td>";
+                $html .= "</tr>";
+            }
+        }
+        return $html;
+     }
 
     public function getNationalDailyInfectedData(Request  $request) {
         $data['status'] = 'failed';
