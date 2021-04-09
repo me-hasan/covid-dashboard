@@ -291,6 +291,13 @@
             }
         }
 
+        #matrixFullTableWithAllDistrict th, td {
+            text-align: center;
+        }
+        #matrixFullTableWithAllDistrict th{
+            font-size : 18px
+        }
+
         /* Loader css end */
         .bold{font-weight: bold;}
         .tabLegendItemSwatchHolder {
@@ -1064,19 +1071,20 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div class="col-xl-12 col-lg-12 col-md-12">
                                                                     <div class="card-body">
                                                                         <button type="button" class="btn btn-sm btn-primary pull-right" id="showRiskMatrixBtn" style="font-size:20px">বন্ধ করুন</button>
-                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="hideRiskMatrixBtn" style="font-size:20px">উন্মুক্ত করুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="hideRiskMatrixBtn" style="font-size:20px">সকল জেলা এক নজরে দেখুন</button>
                                                                     </div>
                                                                 </div>
                                                             </div>        
 
 
                                                             <div class="row" id="riskMatrixAllDistrictShowHideTable">
-                                                                
-                                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                                <div class="col-xl-10 col-lg-10">
                                                                     <div class="card-body">
                                                                         <div id="matrix-data-table">&nbsp;</div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
                                                             </div>
                                                             
 
@@ -2437,11 +2445,11 @@ $ydata = [];
 
                         "startDuration": 1,
                         "legend": {
-                            "horizontalGap": 20,
-                            "maxColumns": 10,
+                            "horizontalGap": 15,
+                            "maxColumns": 15,
                             "position": "bottom",
                             "useGraphSettings": true,
-                            "markerSize": 10,
+                            "markerSize": 15,
                             "valueFunction": function (a, value) {
                                 return '';
                             },
