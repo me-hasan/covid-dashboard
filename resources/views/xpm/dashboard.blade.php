@@ -429,7 +429,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </li>
                             </a>
                             <a href="#scroll_daily_last_4weeks_risk">
-                                <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
+                                <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_area_wise">
@@ -831,7 +831,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
                                                     <h2>
-                                                        গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
+                                                        গত ২ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
                                                     </h2>
                                                 </div>
                             
