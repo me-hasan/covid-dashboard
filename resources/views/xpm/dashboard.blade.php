@@ -361,6 +361,7 @@
 
 <!-- Start :: Disease Progression -->
 <?php
+
 $class_1 = 'fa fa-arrow-up mr-1 text-danger';
 if (isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) {
     $class_1 = 'fa fa-arrow-down mr-1 text-success';
@@ -480,6 +481,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
                             <a href="#scroll_daily_last_4weeks_risk">
                                 <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
+                                </li>
+                            </a>
+                            <a href="#scroll_location_of_the_detected_district">
+                                <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের সনাক্তের ভিত্তিতে দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_area_wise">
@@ -1393,14 +1398,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
 
-
+                            @if(Auth::user()->id == 11)
                             {{--2nd matix start here --}}
-                            <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk">
+                            <div class="col-lg-12 mt-2" id="scroll_location_of_the_detected_district">
                                         <div class="invoice-head title-bg-style">
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
                                                     <h2>
-                                                        গত ২ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
+                                                        গত ২ সপ্তাহের সনাক্তের ভিত্তিতে দেশের ৬৪টি জেলার তুলনামূলক অবস্থান 
                                                     </h2>
                                                 </div>
                             
@@ -1410,7 +1415,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             
                                             <div class="row">
                                                 <h4 id="special_word_9" class="header-title ">
-                                                    {!! $des_8->component_name_beng ?? '' !!}
+                                                    {!! $des_12->component_name_beng ?? '' !!}
                                                 </h4>
                                                 <hr>
                                                 <!-- Start :: ঝুঁকি পর্যালোচনা -->
@@ -1522,7 +1527,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     </div>
                                                                     <div class="col-xl-6">
                             
-                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন পরীক্ষা বিবেচনায় সনাক্তের হারের পরিসীমা:
+                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্তের পরিসীমা:
                                                                             <span
                                                                                 id="ex6SliderVal2ndMatrix">{!! convertEnglishDigitToBangla('50:200') !!}</span>
                                                                         </p>
@@ -1615,7 +1620,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div class="card-body">
                             
                                                                     <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                                        {!!$des_8->description_beng ?? '' !!}
+                                                                        {!!$des_12->description_beng ?? '' !!}
                                                                     </div>
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
@@ -1861,7 +1866,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                
                             </div>
                             {{--2nd matix end here --}}
-
+                            @endif
 
                         </div>
                     </div>
