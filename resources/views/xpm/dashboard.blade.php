@@ -4257,10 +4257,16 @@ $ydata = [];
         }
 
         function riskMatrixAllDistrictForDataTable(){
-            $('#matrixFullTableWithAllDistrict').DataTable({
-                "paging": false,
-                "searching": false
-            });
+            if ( $.fn.dataTable.isDataTable( '#matrixFullTableWithAllDistrict' ) ) {
+                table = $('#matrixFullTableWithAllDistrict').DataTable();
+            }
+            else {
+                table = $('#matrixFullTableWithAllDistrict').DataTable( {
+                    paging: false,
+                    searching: false
+                } );
+            }
+            
             $('.table_recent_weekly_date').html($('.recent_weekly_date').html());
             $('.table_last_weekly_date').html($('.last_weekly_date').html());
         }
