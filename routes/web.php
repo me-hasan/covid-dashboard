@@ -147,8 +147,13 @@ Route::get('hpm-get-national-infected-trend', 'Hpm\DashboardController@getNation
 Route::get('hpm-get-national-test-vs-infected-trend', 'Hpm\DashboardController@getNationalTestVsInfectedTrend')->name('hpm.get_national_test_vs_infected_trend');
 Route::get('hpm-get-test-positivity-rate-trend', 'Hpm\DashboardController@getTestPositivityRateTrend')->name('hpm.get_hpm_get_test_positivity_rate_trend');
 Route::get('hpm-get-weekly-comparision-infected-death', 'Hpm\DashboardController@getWeeklyDifferenceData')->name('hpm.get_weekly_comparision_infected_death');
+
 Route::get('hpm-risk-matrix-data', 'Hpm\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData');
 Route::get('xpm-risk-matrix-date-change', 'xpm\DashboardController@getRiskMatrixDateChange')->name('weekly.date.change.for.matrix');
+
+Route::get('hpm-second-risk-matrix-data', 'Hpm\DashboardController@getSecondRiskMatricData')->name('hpm.getSecondRiskMatricData');
+Route::get('xpm-second-risk-matrix-date-change', 'xpm\DashboardController@getSecondRiskMatrixDateChange')->name('weekly.date.change.for.second.matrix');
+
 Route::get('hpm-get-hospital-beds-trend', 'Hpm\DashboardController@getHospitalBedsTrend')->name('hpm.get_hospital_beds_trend');
 Route::get('/admin/f5', function () {
 

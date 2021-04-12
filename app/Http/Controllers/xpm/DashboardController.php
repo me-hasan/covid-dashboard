@@ -96,6 +96,7 @@ class DashboardController extends Controller
         $data['rm_7'] = $this->risk_matrix_7();
         $data['rm_8'] = $this->risk_matrix_8();
         $data['rm_9'] = $this->risk_matrix_9();
+    
 
 
         
@@ -1128,6 +1129,7 @@ using(district)");
         return $risk_matrix[0];
     }
 
+
     private function risk_matrix_2($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
         $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
@@ -1139,6 +1141,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+    
 
     private function risk_matrix_3($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1151,6 +1155,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+   
 
     private function risk_matrix_4($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1163,6 +1169,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+    
 
     private function risk_matrix_5($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1175,6 +1183,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+   
 
     private function risk_matrix_6($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1187,6 +1197,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+    
 
     private function risk_matrix_7($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1199,6 +1211,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+   
 
     private function risk_matrix_8($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1211,6 +1225,8 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
+
 
     private function risk_matrix_9($testCount = 200, $test_positive_min = 5, $test_positive_max = 12)
     {
@@ -1223,6 +1239,7 @@ using(district)");
 
         return $risk_matrix[0];
     }
+    
 
    
 
@@ -1764,6 +1781,22 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
     }
 
     public function getRiskMatrixDateChange(Request $request)
+    {
+        $data['status'] = 'failed';
+        try {
+            $date_id = $request->weekly_date;
+            $data = WeeklyDate::where('date_id', $date_id)->first();
+            $data['recent_weekly_date'] = $data->recent_weekly_date;
+            $data['last_weekly_date'] = $data->last_weekly_date;
+            $data['status'] = 'success';
+        } catch (\Exception $exception) {
+
+        }
+        return $data;
+       
+    }
+
+    public function getSecondRiskMatrixDateChange(Request $request)
     {
         $data['status'] = 'failed';
         try {
