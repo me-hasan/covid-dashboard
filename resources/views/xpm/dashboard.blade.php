@@ -918,7 +918,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div id=""
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
                                                                     class="fs-20 b1 last_weekly_date">
-                                                                    <br>২য় সপ্তাহ: ( {{$matrix_date_selected->last_weekly_date}} )
+                                                                    <br>গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-11 col-md-11">
@@ -970,7 +970,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <thead>
                                                                         <tr>
                                                                             <td colspan="4" class="text-center fs-18 recent_weekly_date" style="font-size: 26px" id=""><span
-                                                                                    class="text-danger">আজ {{ $today }}</span>, ১ম সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} )
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} )
                                                                             </td>
                                                                         </tr>
                                                                         </thead>
@@ -1126,8 +1126,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1150,8 +1150,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1173,8 +1173,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1197,8 +1197,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1220,8 +1220,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                             
                                                         </tr>
                                                         </thead>
@@ -1244,8 +1244,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1268,8 +1268,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1291,8 +1291,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1314,8 +1314,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0"> ১ম সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> ২য় সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -4136,8 +4136,8 @@ $ydata = [];
                 timeout: 30000,
                 success: function (data) {
                     if (data.status == 'success') {
-                        $('.recent_weekly_date').html(data.recent_weekly_date)
-                        $('.last_weekly_date').html(data.last_weekly_date)
+                        $('.recent_weekly_date').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
+                        $('.last_weekly_date').html("গত সপ্তাহ ("+data.last_weekly_date+")")
                     } else {
                         alert("Something Went Wrong");
                     }
