@@ -32,6 +32,15 @@
                 $(".select2").select2();
             });
         </script>
+
+		<script src="{{asset('pm/js/jquery.dataTables.min.js')}}"></script>
+    	<script src="{{asset('pm/js/dataTables.bootstrap4.min.js')}}"></script>
+        <script>
+            $('#bulletin-history').DataTable({
+                paging: true,
+                searching: true
+            });
+       </script>
         @stack('scripts')
 
 

@@ -129,8 +129,13 @@ Route::prefix('admin')->group(function () {
         Route::post('mail/edit/{user}', 'MailController@update')->name('edit-mail');
         Route::delete('mail/{id}', 'MailController@destroy');
         Route::get('sending/email', 'MailController@sendingEmail')->name('sending-mail');   
-        Route::post('sending/email/trigger', 'MailController@sendingEmailTriggered')->name('sending-mail-trigger');   
-
+        Route::post('sending/email/trigger', 'MailController@sendingEmailTriggered')->name('sending-mail-trigger');  
+        
+        /**New  bulletin*/
+        Route::get('news/bulletin/history', 'NewsBulletinController@newsBulletinHistory')->name('news-bulletin-history');
+        Route::get('news/bulletin/create', 'NewsBulletinController@newsBulletinCreate')->name('create-bolletin');
+        Route::post('news/bulletin/genearate', 'NewsBulletinController@newsBulletinGenerate')->name('bulletin-generate');
+        Route::get('news/bulletin/pdf/view/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfView')->name('bolletin-pdf-view');
 
 });
 
