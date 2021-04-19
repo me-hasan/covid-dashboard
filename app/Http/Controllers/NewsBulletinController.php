@@ -59,17 +59,20 @@ class NewsBulletinController extends Controller
         $data_id = $request->calendar_date;
         
         
-
+        set_time_limit(8000000);
         foreach($districts as $key=>$value){    
-            $pdfResults = $this->preparedPdfData($value, $data_id);
-            dd($pdfResults);
+            $pdfResults = '';
+            //$pdfResults = $this->preparedPdfData($value, $data_id);
+            //dd($pdfResults);
             $pdf = PDF::loadView('superadmin.bulletin.bulletin-generator-template', compact('pdfResults'));
 
             $path = storage_path('app/public/dashboard/bulletin/'.$data_id.'/'.$key);
+            
             if(!File::isDirectory($path)){
                 File::makeDirectory($path, 0777, true, true);
             }
             $fileName =  'dashboard' . '.' . 'pdf' ;
+            // dd($path);
             $pdf->save($path . '/' . $fileName);
 
             $bolletin = new NewsBulletinLog;
@@ -85,6 +88,8 @@ class NewsBulletinController extends Controller
         return redirect()->route('news-bulletin-history');
     }
 
+    
+
     public function preparedPdfData($dist, $date_id){
         return $testNonTraveller = 'lll';
     }
@@ -99,6 +104,16 @@ class NewsBulletinController extends Controller
     public function newsBulletinPdfView($id, $name){
         return response()->file('storage/dashboard/bulletin/'.$id.'/'.$name.'/dashboard.pdf');
     }
+
+    public function newsBulletinPdfDownload($id, $name){
+        $file= storage_path(). 'storage/dashboard/bulletin/'.$id.'/'.$name.'/dashboard.pdf';
+
+        $headers = array(
+              'Content-Type: application/pdf',
+            );
+            return response()->download($file); 
+    }
+
 
     
     

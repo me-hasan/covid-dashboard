@@ -136,6 +136,7 @@ Route::prefix('admin')->group(function () {
         Route::get('news/bulletin/create', 'NewsBulletinController@newsBulletinCreate')->name('create-bolletin');
         Route::post('news/bulletin/genearate', 'NewsBulletinController@newsBulletinGenerate')->name('bulletin-generate');
         Route::get('news/bulletin/pdf/view/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfView')->name('bolletin-pdf-view');
+        Route::get('news/bulletin/pdf/download/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfDownload')->name('bolletin-pdf-download');
 
 });
 

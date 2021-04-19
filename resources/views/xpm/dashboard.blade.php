@@ -2742,7 +2742,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
 
                             <div class="col-md-4">
-                                <h3>কারিগরী সহযোগীতায়</h3>
+                                <h3>কারিগরী সহযোগিতায়</h3>
                                 <img src="pm/images/collaborator/e-generation.png" class="" alt="">
                                 <p style="font-size: 16px; float:right">ই-জেনারেশন পাবলিক লিমিটেড কোম্পানি</p>
                             </div>

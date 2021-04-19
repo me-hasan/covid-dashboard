@@ -43,7 +43,7 @@
                             <th>Last</th>
                             <th>Status</th>
                             <th>Count</th>
-                            <th style="width: 150px">Action</th>
+                            <th style="width: 180px">Action</th>
 
                         </tr>
                     </thead>
@@ -62,7 +62,9 @@
                             <td>@if($bolletin->is_active == '1') <span class="btn btn-sm label-success">{{ 'পাঠানো হয়েছে' }}</span> @else <span class="btn btn-sm label-warning">{{ 'পাঠানো হয়নি' }}</span> @endif</td>
                             <td>{{$bolletin->count ?? '--'}}</td>
                             <td>
-                            	<a href="{{ route('bolletin-pdf-view', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" target="_blank" class="btn btn-sm btn-info" style="float: left;margin-right: 5px;"><i class="fas fa-file-pdf"></i></a>
+                            	<a href="{{ route('bolletin-pdf-view', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" target="_blank" class="btn btn-sm btn-primary" style="float: left;margin-right: 5px;" title="View"><i class="fas fa-file-pdf"></i></a>
+                            	<a href="#" target="_blank" class="btn btn-sm btn-info" style="float: left;margin-right: 5px;" title="Send Email"><i class="far fa-envelope"></i></a>
+                            	<a href="{{ route('bolletin-pdf-view', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" target="_blank" class="btn btn-sm btn-success" style="float: left;margin-right: 5px;" title="Download"><i class="fas fa-cloud-download-alt"></i></a>
                             </td>
                         </tr>
                         @endforeach
