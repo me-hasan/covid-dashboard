@@ -2186,16 +2186,20 @@ using(district) ORDER BY r.positive_tests DESC");
      public function getRiskMatrixAllData($items)
      {
         $html = "";
+        $changePostiveColor = "";
         if(count($items)) {
             foreach($items as $key => $item) {
+                $changePositive = $item->r_positive - $item->l_positive;
+                $changePostiveColor = ($changePositive < 0) ? "style='border-left-color:#90EE90 !important; border-width:1px 1px 1px 3px !important; background-color: #e6fff2'" : "style='border-left-color:#FFA07A !important; border-width:1px 1px 1px 3px !important; background-color:#ffe6e6'";
                 $html .= '<tr class="b1">';
-                $html .= "<td style='font-size:18px;'>".en2bnTranslation($item->district)."</td>";
+                $html .= "<td style='font-size: 18px' >".en2bnTranslation($item->district)."</td>";
                 $html .= "<td>".$item->recent_test_positivity."% </td>";
                 $html .= "<td><span style='color:#0636c1d4;'>".$item->r_total_test."</span></td>";
                 $html .= "<td><span style='color:#b50514d4;'>".$item->r_positive."</span></td>";
                 $html .= "<td>".$item->last_test_positivity."% </td>";
                 $html .= "<td><span style='color:#0636c1d4;'>".$item->l_total_test."</span></td>";
                 $html .= "<td><span style='color:#b50514d4;'>".$item->l_positive."</span></td>";
+                $html .= "<td $changePostiveColor>".$changePositive."</td>";
                 $html .= "</tr>";
             }
         }
