@@ -2190,7 +2190,7 @@ using(district) ORDER BY r.positive_tests DESC");
         if(count($items)) {
             foreach($items as $key => $item) {
                 $changePositive = $item->r_positive - $item->l_positive;
-                $changePostiveColor = ($changePositive < 0) ? "style='border-left-color:#90EE90 !important; border-width:1px 1px 1px 3px !important; background-color: #e6fff2'" : "style='border-left-color:#FFA07A !important; border-width:1px 1px 1px 3px !important; background-color:#ffe6e6'";
+                $changePostiveColor = ($changePositive < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositive === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
                 $html .= '<tr class="b1">';
                 $html .= "<td style='font-size: 18px' >".en2bnTranslation($item->district)."</td>";
                 $html .= "<td>".$item->recent_test_positivity."% </td>";
