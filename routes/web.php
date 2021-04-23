@@ -136,8 +136,22 @@ Route::prefix('admin')->group(function () {
         Route::get('news/bulletin/create', 'NewsBulletinController@newsBulletinCreate')->name('create-bolletin');
         Route::post('news/bulletin/genearate', 'NewsBulletinController@newsBulletinGenerate')->name('bulletin-generate');
         Route::get('news/bulletin/pdf/view/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfView')->name('bolletin-pdf-view');
+        Route::get('news/bulletin/pdf/email/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfSendEMail')->name('bolletin-pdf-send-email');
         Route::get('news/bulletin/pdf/download/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfDownload')->name('bolletin-pdf-download');
+        
+        /*bulletin map upload*/
+        Route::get('chart/history', 'NewsBulletinController@chartHistory')->name('chart-history');
+        Route::get('chart/history/view/edit/{id}', 'NewsBulletinController@bulletinChartViewAndEdit')->name('chart-history-view-edit');
+        Route::get('bulletin/chart', 'NewsBulletinController@bulletinChart')->name('bulletin-chart');
+        Route::post('bulletin/chart/upoload', 'NewsBulletinController@bulletinChartUpload')->name('bulletin-chart-upload');
+        Route::post('check/bulletin/chart/upload', 'NewsBulletinController@checkBulletinChartUpload')->name('check.bulletin.chart.upload');
 
+        /*email mapping*/
+        Route::get('email/mapping/history', 'NewsBulletinController@emailMappingHistory')->name('email-mapping-history');
+        Route::get('add/email/mapping', 'NewsBulletinController@addEmailMapping')->name('add-email-mapping');
+        Route::post('save/email/mapping', 'NewsBulletinController@saveEmailMapping')->name('email-mapping-save');
+        Route::get('edit/email/mapping/{id}', 'NewsBulletinController@editEmailMapping')->name('email-mapping-edit');
+        Route::post('update/email/mapping/{id}', 'NewsBulletinController@updateEmailMapping')->name('email-mapping-update');
 });
 
 

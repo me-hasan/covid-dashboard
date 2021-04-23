@@ -44,7 +44,7 @@
 	    <!-- Color Skin css -->
 		<link id="theme" href="{{ asset('assets/colors/color1.css') }}" rel="stylesheet" type="text/css"/>
 
-		<link href="pm/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+		{{-- <link href="pm/css/dataTables.bootstrap4.min.css" rel="stylesheet"/> --}}
 		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	
 	

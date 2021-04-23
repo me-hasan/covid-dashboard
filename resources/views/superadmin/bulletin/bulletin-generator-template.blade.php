@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
     <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
 
          
@@ -8,7 +10,7 @@
                 can be of the full height and width !
              **/
             @page {
-                margin: .2cm .2cm;
+                margin: .3cm .3cm .2cm .3cm;
             }
 
             
@@ -65,13 +67,15 @@
 
         /* Glyph, by Harry Roberts */
 
-hr.style-six {
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
+        hr.style-six {
+            border: 0;
+            height: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
         </style>
+
+
     </head>
     <body>
         <!-- Define header and footer blocks before your content -->
@@ -96,95 +100,34 @@ hr.style-six {
 
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
-        
-        
-        <h3 style="font-size:18; color:#6DA641; padding-top: 10px">Weekly Analysis of Covid-19 Indicators in Dhaka District (April 4 - April 10,2021)</h3>
-        <table style="border-collapse: collapse; border-spacing: 0; margin : 80px auto 0px auto;">
-            <thead>
-                <tr>
-                    <th>Covid-19 Indicators</th>
-                    <th>2 weeks ago<br>(Mar 28-Apr 03)</th>
-                    <th>Last Week<br>(Apr04-Apr-10)</th>
-                    <th>Change</th>
-                    <th>Dhaka Divison <br>(Last 2 weeks)</th>
-                    <th>National <br>(Last 2 weeks)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Tests (Non-Traveller)</td>
-                    <td>62032</td>
-                    <td>70939</td>
-                    <td>+8907</td>
-                    <td>158141</td>
-                    <td>230453</td>
-                </tr>
-                <tr>
-                    <td>Tests (Traveller)</td>
-                    <td>10552</td>
-                    <td>10756</td>
-                    <td>+207</td>
-                    <td>45296</td>
-                    <td>133475</td>
-                </tr>
-                <tr>
-                    <td>Cases (Non-Traveller)</td>
-                    <td>22198</td>
-                    <td>23323</td>
-                    <td>+1125</td>
-                    <td>52108</td>
-                    <td>70118</td>
-                </tr>
-                <tr>
-                    <td>Cases (Traveller)</td>
-                    <td>1021</td>
-                    <td>867</td>
-                    <td>-154</td>
-                    <td>3381</td>
-                    <td>7814</td>
-                </tr>
-                <tr>
-                    <td>Test Positivity (Non-Traveller)</td>
-                    <td>35.78%</td>
-                    <td>32.88%</td>
-                    <td>-2.91%</td>
-                    <td>32.95%</td>
-                    <td>30.43%</td>
-                </tr>
-                <tr>
-                    <td>Test Positivity (Traveller)</td>
-                    <td>9.68%</td>
-                    <td>8.06%</td>
-                    <td>-1.62%</td>
-                    <td>7.46%</td>
-                    <td>5.85%</td>
-                </tr>
-                <tr>
-                    <td>Deaths</td>
-                    <td>138</td>
-                    <td>227</td>
-                    <td>+89</td>
-                    <td>476</td>
-                    <td>697</td>
-                </tr>
-                <tr>
-                    <td>Unused Hospital Beds (General)</td>
-                    <td>3541</td>
-                    <td>2966</td>
-                    <td>-575</td>
-                    <td>14405</td>
-                    <td>73332</td>
-                </tr>
-                <tr>
-                    <td>Unused Hospital Beds (ICU)</td>
-                    <td>25</td>
-                    <td>30</td>
-                    <td>+5</td>
-                    <td>102</td>
-                    <td>471</td>
-                </tr>
-            </tbody>
-        </table>
+        <table border="0" style="border-collapse: collapse; border-spacing: 0; margin : 80px auto 0px auto; width:100%">
+            <tr>
+                <td style="text-align:left">District Name: {{ $labelArray['district_name'] ?? '---' }}</td>
+                <td style="text-align:right">Date: {{ $labelArray['date'] ?? '---' }}</td>
+            </tr>
+        <table>
+
+
+        <div stayle="margin: 40px auto">
+            <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
+            <img height="700px" style"max-height:700px; min-height:700px; width:100%" src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
+        </div>
+
+        <div stayle="margin: 40px auto">
+            <h3 style="font-size:14; color:#6DA641; padding-top: 20px">{{ $labelArray['third_chart']['title'] ?? '---' }}</h3>
+            <img height="320px" style"max-height:320px; min-height:320px; width:100%" src="{{ $labelArray['third_chart']['path'] }}"  alt="chart2" >
+        </div>
+
+        <div stayle="margin: 40px auto">
+            <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['second_chart']['title'] ?? '---' }}</h3>
+            <img height="320px" style"max-height:320px; min-height:320px; width:100%" src="{{ $labelArray['second_chart']['path'] }}"  alt="chart1" >
+        </div>
+
+        <div stayle="margin: 40px auto">
+            <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['first_chart']['title'] ?? '---' }}</h3>
+            {!! $labelArray['first_chart']['table'] ?? '---' !!}
+        </div>
+
         </main>
     </body>
 </html>

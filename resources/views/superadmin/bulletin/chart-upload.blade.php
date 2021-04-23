@@ -15,10 +15,9 @@
         <div class="card">
             <div class="card-header">
                 <div style="width: 100%">
-                    <a href="{{ route('news-bulletin-history') }}" class="btn btn-info pull-right"> বুলেটিন এর তালিকায় ফিরে যান</a>
                     <div style="float: left;margin-top: 18px;">
                         <h3 class="panel-title txt-dark">
-                            বুলেটিন
+                            Bulletin Chart Upload
                         </h3>
                     </div>
                 </div>
@@ -36,16 +35,14 @@
                       </ul>
                   </div>
                 @endif
-                <form method="post" action="{{route('bulletin-generate')}}" enctype="multipart/form-data">
+                <form method="post" action="{{route('bulletin-chart-upload')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
-                    
-                    
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="form-group">
                             <label>তারিখ নির্বাচন করুন </label>
-                                <select required class="form-control select2" name="calendar_date" onchange="checkUpload()" id="calendar_date">
+                                <select class="form-control" name="calendar_date">
                                     <option value="">নির্বাচন করুন</option>
                                     @foreach($calendar as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -54,10 +51,10 @@
                                
                             </div>
                         </div>
-                        <div class="col-8">
+                        <div class="col-6">
                             <div class="form-group">
                             <label>জেলা নির্বাচন করুন </label>
-                                <select required multiple class="form-control select2" name="district_name[]" onchange="checkUpload()" id="district_name">
+                                <select class="form-control" name="district_name">
                                     <option value="">নির্বাচন করুন</option>
                                     @foreach($districts as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -68,7 +65,39 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="submitButton"></div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>১. দৈনিক সনাক্তের সংখ্যা</label>
+                                <input type="file" name="daily_effected"  class="form-control-file">
+                                <span>File Max Size : 1MB</span>
+                            </div>
+                        </div>
+                   </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>২. জেলা ভিত্তিক দৈনিক পরীক্ষা বিবেচনায় সনাক্তের হার</label>
+                                <input type="file" name="district_chart"  class="form-control-file">
+                                <span>File Max Size : 1MB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>৩. ম্যাপ</label>
+                                <input type="file" name="map"  class="form-control-file">
+                                <span>File Max Size : 1MB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ route('chart-history') }}" type="submit" class="btn btn-warning pull-right">Cancel</a>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -76,24 +105,9 @@
     </div>
 </div>
 <!-- End Row -->
-
-    <script>
-        function checkUpload()
-        {
-            var date_id = $('#calendar_date').val();
-            var district_name = $('#district_name').val();
-            //$('#submitButton').html('');
-            $.ajax({
-                url: "{{ route('check.bulletin.chart.upload') }}",
-                type: 'POST',
-                data: {"_token": "{{ csrf_token() }}","date_id": date_id, "district_name": district_name},
-                success: function(data) {
-                $('#submitButton').html(data);
-            }
-            });
-        };
-    </script>
 @endsection
+{{-- @push('scripts')
 
-   
 
+@endpush
+ --}}
