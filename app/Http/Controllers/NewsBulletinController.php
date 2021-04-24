@@ -71,7 +71,6 @@ class NewsBulletinController extends Controller
         })->toArray();
         
         
-        
         set_time_limit(8000000);
         foreach($districtsArray as $key=>$value){    
             $pdfResults = '';
@@ -93,7 +92,7 @@ class NewsBulletinController extends Controller
             $pdf->save($path . '/' . $fileName);
 
             $bolletin = new NewsBulletinLog;
-            $bolletin->district_name = $value;
+            $bolletin->district_name = $key;
             $bolletin->date_id = $data_id;
             $bolletin->status = 0;
             $bolletin->count = 0;
@@ -435,7 +434,6 @@ class NewsBulletinController extends Controller
         
 
         $to_email = EmailMapping::find($id);
-        $to_email->district_name = $dist;
         $to_email->to_address = $to_addr;
         $to_email->status = 1;
         $to_email->save();
@@ -459,19 +457,40 @@ class NewsBulletinController extends Controller
 
     public function newsBulletinPdfSendEMail(Request $request, $date_id, $district)
     {
-        dd('dd');
-        $mailList = MailModel::whereIn('id', $request->userId)->get()->pluck('mail');
+        $mailList = EmailMapping::with('ccEmail')->where('district_name', $district)->first();
+        $toMailAddress = $mailList->to_address;
+        $ccMailAddeess = $mailList->ccEmail->map(function($q){ return $q->cc_address; })->toArray();
+        
+
         //$pdf_file_path = storage_path('app/public/dashboard/pdf/' . $this->fileNameGenerate() . '.pdf');
-        $pdf_file_path = storage_path('app/public/dashboard/source/dashboard.corona.gov.bd.pdf');
+        $pdf_file_path = storage_path("app/public/dashboard/bulletin/$date_id/$district/dashboard.pdf");
         $data = ['name' => 'khayrk hasan pdf'];
         $data2 = ['id' => '1195'];
         //PDF::loadView('emails.dashboard.hpm-pdf', $data)->save($pdf_file_path);
-        if (count($mailList) > 0) {
-            $users = $mailList;
-            $this->sendMail($users, $data2, $pdf_file_path);
+        if (!empty($toMailAddress)) {
+            
+            $this->sendMail($toMailAddress, $ccMailAddeess, $data2, $pdf_file_path);
         }
         return redirect()->back();
         // unlink($my_pdf_path);
+    }
+
+
+     /**
+     * sending email to user
+     *
+     * @param string $emails
+     * @param obj $data2
+     * @param filePath $pdf
+     * @return void
+     */
+    public function sendMail($toEmails, $ccEmail, $data2, $pdf)
+    {
+       
+            //dispatch(new SendEmailJob($email, $data2, $pdf)); // for queue job
+            Mail::to($toEmails)->cc($ccEmail)->send(new HpmDashboardMail($data2, $pdf));
+       
+
     }
     
 }
