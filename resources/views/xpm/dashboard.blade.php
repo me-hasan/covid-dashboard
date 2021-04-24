@@ -356,6 +356,15 @@
         .modal-content {
             width: 108% !important;
         }
+
+        #matrixFullTableWithAllDistrict {
+		counter-reset: serial-number;  /* Set the serial number counter to 0 */
+		}
+		#matrixFullTableWithAllDistrict td:first-child:before {
+		counter-increment: serial-number;  /* Increment the serial number counter */
+		content: counter(serial-number);  /* Display the counter */
+		}
+
     </style>
 </head>
 
@@ -4759,6 +4768,7 @@ $ydata = [];
              var riskMatrixTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
                                                     <th class="border-bottom-0" rowspan="2">জেলা</th>
                                                     <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
                                                     <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
@@ -4880,7 +4890,7 @@ $ydata = [];
         }
 
         //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
-        $("#ex12c2ndMatrix").slider({id: "slider12c2ndMatrix", min: 0, max: 500, range: true, value: [50, 200]});
+        $("#ex12c2ndMatrix").slider({id: "slider12c2ndMatrix", min: 0, max: 500, range: true, value: [50, 100]});
 
         $("#ex12c2ndMatrix").on("slide", function (slideEvt) {
             $("#ex6SliderVal2ndMatrix").text(englishToBangla(slideEvt.value[0]) + ',' + englishToBangla(slideEvt.value[1]));
