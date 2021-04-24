@@ -1113,9 +1113,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <table class="table table-bordered table-striped">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>১১% থেকে ২০%</th>
-                                                                                    <th>২১% থেকে ৩০%</th>
-                                                                                    <th>৩১% থেকে ৪০% +</th>
+                                                                                    <th>১০% থেকে ১৯%</th>
+                                                                                    <th>২০% থেকে ২৯%</th>
+                                                                                    <th>৩০% থেকে ৪০% +</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
