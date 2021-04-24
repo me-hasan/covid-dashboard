@@ -30,7 +30,7 @@
                 top: 0cm;
                 left: 0cm;
                 right: 0cm;
-                height: 3cm;
+                height: 2cm;
             }
 
             /** Define the footer rules **/
@@ -73,6 +73,13 @@
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
+        img {
+            height: 320px;
+            width: 100%;
+        }
+
+        
+        
         </style>
 
 
@@ -81,7 +88,7 @@
         <!-- Define header and footer blocks before your content -->
         <header>
             <div style="height: 115px">
-               <img style="width: 100%; height="90px" padding: 5px 5px" src="logo/pdfresizer.png" alt="" srcset="">
+               <img style="width:100%; height:125px" src="logo/pdfresizer.png" alt="" srcset="">
             </div>
             <br>
             <hr class="style-six">
@@ -90,10 +97,12 @@
         <footer>
            <hr class="style-six">
             <div style="height: 45px">
-               <div style="float: left; clear: right"><img style="height: 40px; padding-left: 20px" src="logo/a2i.png" alt="" srcset=""></div>
+               <div style="float: left; clear: right">
+                    <img style="height: 40px; width:40px;" src="logo/a2i.png" alt="" srcset="">
+                </div>
                <div style="float: right">
                    <h1 style="font-size:25px;font-weight:bold; float:right">সার্বিক সহযোগিতায়</h1>
-                   <img style="height: 40px; padding-right: 20px" src="logo/egen.png" alt="" srcset="">
+                   <img style="height: 40px; width:auto;" src="logo/egen.png" alt="" srcset="">
                </div>
             </div>
         </footer>
@@ -110,17 +119,17 @@
 
         <div stayle="margin: 40px auto">
             <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
-            <img height="700px" style"max-height:700px; min-height:700px; width:100%" src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
+            <img style="height: 700px!important" src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
         </div>
 
         <div stayle="margin: 40px auto">
             <h3 style="font-size:14; color:#6DA641; padding-top: 20px">{{ $labelArray['third_chart']['title'] ?? '---' }}</h3>
-            <img height="320px" style"max-height:320px; min-height:320px; width:100%" src="{{ $labelArray['third_chart']['path'] }}"  alt="chart2" >
+            <img  src="{{ $labelArray['third_chart']['path'] }}"  alt="chart2" >
         </div>
 
         <div stayle="margin: 40px auto">
             <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['second_chart']['title'] ?? '---' }}</h3>
-            <img height="320px" style"max-height:320px; min-height:320px; width:100%" src="{{ $labelArray['second_chart']['path'] }}"  alt="chart1" >
+            <img  src="{{ $labelArray['second_chart']['path'] }}"  alt="chart1" >
         </div>
 
         <div stayle="margin: 40px auto">

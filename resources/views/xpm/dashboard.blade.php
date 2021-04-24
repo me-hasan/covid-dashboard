@@ -1529,7 +1529,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             
                                                                         <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্তের পরিসীমা:
                                                                             <span
-                                                                                id="ex6SliderVal2ndMatrix">{!! convertEnglishDigitToBangla('50:200') !!}</span>
+                                                                                id="ex6SliderVal2ndMatrix">{!! convertEnglishDigitToBangla('50:100') !!}</span>
                                                                         </p>
                                                                         <input style="width: 100%;" id="ex12c2ndMatrix" type="text"><br/>
                             
