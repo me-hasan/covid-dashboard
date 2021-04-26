@@ -1134,8 +1134,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <div class="row">
                                                                 <div class="col-xl-12 col-lg-12 col-md-12">
                                                                     <div class="card-body">
-                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="showRiskMatrixBtn" style="font-size:20px">বন্ধ করুন</button>
-                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="hideRiskMatrixBtn" style="font-size:20px">সকল জেলা এক নজরে দেখুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="showRiskMatrixBtn" style="font-size:20px; border-radius: 0px 4px 4px 0px; min-width: 225px">সকল জেলা বন্ধ করুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="hideRiskMatrixBtn" style="font-size:20px; border-radius: 0px 4px 4px 0px;  min-width: 225px">সকল জেলা এক নজরে দেখুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-success pull-right" id="showTravellerBtn" style="font-size:20px; border-radius: 4px 0px 0px 4px;  min-width: 225px">ট্রাভেলার বন্ধ করুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-success pull-right" id="hideTravellerBtn" style="font-size:20px; border-radius: 4px 0px 0px 4px;  min-width: 225px">ট্রাভেলার এক নজরে দেখুন</button>
                                                                     </div>
                                                                 </div>
                                                             </div>        
@@ -1146,6 +1148,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div class="col-xl-10 col-lg-10">
                                                                     <div class="card-body">
                                                                         <div id="matrix-data-table">&nbsp;</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                            </div>
+                                                            
+                                                            
+                                                            <div class="row" id="travellerAllDistrictShowHideTable">
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                                <div class="col-xl-10 col-lg-10">
+                                                                    <div class="card-body">
+                                                                        <div id="traveller-data-table">&nbsp;</div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-1 col-lg-1">&nbsp;</div>
@@ -4790,6 +4803,34 @@ $ydata = [];
             setTimeout(riskMatrixAllDistrictForDataTable, 3000);
             
             $('#matrix-data-table').html(riskMatrixTableHead+riskMatrixTableBody+riskMatrixTableFooter);
+
+
+            /*traveller all data start here*/
+             var travellerTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
+                                                    <th class="border-bottom-0" rowspan="2">জেলা</th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" rowspan="2">পজিটিভের পরিবর্তন</th>
+                                                </tr>
+                                                    <tr>
+                                                    <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>`;
+            var travellerTableBody = risk_matrix_data.traveller_all_data; 
+            var travellerTableFooter = '</tbody></table>';
+            
+            setTimeout(travellerAllDistrictForDataTable, 3000);
+            
+            $('#traveller-data-table').html(travellerTableHead+travellerTableBody+travellerTableFooter);
         
         }
 
@@ -4799,6 +4840,22 @@ $ydata = [];
             }
             else {
                 table = $('#matrixFullTableWithAllDistrict').DataTable( {
+                    paging: false,
+                    searching: false
+                } );
+            }
+            
+            $('.table_recent_weekly_date').html($('.recent_weekly_date').html());
+            $('.table_last_weekly_date').html($('.last_weekly_date').html());
+        }
+
+
+        function travellerAllDistrictForDataTable(){
+            if ( $.fn.dataTable.isDataTable( '#travellerFullTableWithAllDistrict' ) ) {
+                table = $('#travellerFullTableWithAllDistrict').DataTable();
+            }
+            else {
+                table = $('#travellerFullTableWithAllDistrict').DataTable( {
                     paging: false,
                     searching: false
                 } );
@@ -6097,6 +6154,19 @@ group by date ORDER BY date ");
             $('#hideRiskMatrixBtn').hide();
             $('#showRiskMatrixBtn').show();
             $("#riskMatrixAllDistrictShowHideTable").show();
+        });
+
+        $('#travellerAllDistrictShowHideTable').hide();
+        $('#showTravellerBtn').hide();
+        $("#showTravellerBtn").click(function() {
+            $('#hideTravellerBtn').show();
+            $('#showTravellerBtn').hide();
+            $("#travellerAllDistrictShowHideTable").hide();
+        });
+        $("#hideTravellerBtn").click(function() {
+            $('#hideTravellerBtn').hide();
+            $('#showTravellerBtn').show();
+            $("#travellerAllDistrictShowHideTable").show();
         });
     });
 </script>

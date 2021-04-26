@@ -2014,6 +2014,15 @@ using(district) ORDER BY r.test_positivity DESC");
         using(district) ORDER BY r.test_positivity DESC");
         $data['risk_matrix_all_data'] = $this->getRiskMatrixAllData($rist_matrix_all_data);
 
+
+        // Traveller All Data
+        $traveller_all_data = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+        (select district, positive_tests, total_tests, test_positivity from tp_matrix_last_travelers where  date_id = $weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from tp_matrix_recent_travelers where date_id = $weekly_date) as r
+        using(district) ORDER BY r.test_positivity DESC");
+        $data['traveller_all_data'] = $this->getRiskMatrixAllData($traveller_all_data);
+
         
         return $data;
     }
