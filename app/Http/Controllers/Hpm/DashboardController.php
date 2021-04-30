@@ -1783,7 +1783,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
             $table_last = 'tp_matrix_last';
             $table_recent = 'tp_matrix_recent';
 
-            $travelers = $request->input('travelers_2nd_matrix');
+            $travelers = $request->input('travelers');
             if($travelers == 1){
                 $table_last = 'tp_matrix_last_non_travelers';
                 $table_recent = 'tp_matrix_recent_non_travelers';
@@ -1798,7 +1798,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
                 $test_positive_min = $test_positive_data_rate[0];
                 $test_positive_max = $test_positive_data_rate[1];
             }
-
+            
             $result['low_to_high'] = $this->second_risk_matrix_1($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_high ?? 0;
             $result['low_to_medium'] = $this->second_risk_matrix_2($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_medium ?? 0;
             $result['low_to_low'] = $this->second_risk_matrix_3($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_low ?? 0;
@@ -1810,7 +1810,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
             $result['high_to_low'] = $this->second_risk_matrix_9($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_low ?? 0;
             
             
-            // dd($result);
+            
             $data['result_data'] = $result;
             $data['risk_matrix_data'] = $this->getSecondRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent);
 
