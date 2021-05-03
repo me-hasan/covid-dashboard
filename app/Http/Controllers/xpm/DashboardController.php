@@ -2133,8 +2133,8 @@ using(district) ORDER BY r.test_positivity DESC");
         $national_test_positivity = 'daily_data';
         
         if($non_traveler != 0){
-            $districts_test_positivity = 'districts_test_positivity_view_non_travelers';
-            $national_test_positivity = 'daily_data_non_travelers';
+            $districts_test_positivity = ($non_traveler == 1) ? 'districts_test_positivity_view_non_travelers' : 'districts_test_positivity_view_travelers';
+            $national_test_positivity = ($non_traveler == 1) ? 'daily_data_non_travelers' : 'daily_data_travelers';
         }
 
         if ($districts && count($districts) > 0) {

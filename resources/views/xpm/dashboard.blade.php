@@ -2123,6 +2123,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 class="select2 form-control btn-outline-primary select_district">
                                                                 <option value="0">সকল</option>
                                                                 <option value="1">নন ট্রাভেলার্স</option>
+                                                                <option value="2">ট্রাভেলার্স</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm mt-4 mx-auto">
