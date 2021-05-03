@@ -2652,15 +2652,13 @@ using(district) ORDER BY r.test_positivity DESC");
         $non_travelers = $request->non_travelers;
         
         $tableName = 'division_district_infected';
-        if (!empty($non_travelers)){
-            if($non_travelers == 1 && $districts !== "'all'"){
-                // dd($tableName);
-                $tableName = 'division_district_infected_non_travelers';
-            }
-            if($non_travelers == 1 && $districts == "'all'"){
-                $tableName = 'daily_data_non_travelers';
-            }
+        
+        if($non_travelers !== "all" && $districts !== "'all'"){
+            $tableName =  ($non_travelers == 1) ? 'division_district_infected_non_travelers' : 'division_district_infected_travelers';
         }
+          
+            
+                
 
         $queryClause = "";
         if ($districts !== "'all'") {

@@ -689,14 +689,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <label>নির্বাচন করুন: </label>
                                             <select name="daily_effected_travelers" id="daily_effected_travelers_id"
                                                     class="select2 form-control btn-outline-primary select_district">
-                                                    <option value="0">সকল</option>
+                                                    <option value="all">সকল</option>
                                                     <option value="1">নন ট্রাভেলার্স</option>
+                                                    <option value="2">ট্রাভেলার্স</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label>জেলা</label>
                                             <select name="district[]" id="daily-infected-district"
-                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    class="select2-show-search form-control btn-outline-primary select_district">
                                                     <option value="all">সারাদেশ</option>
                                                     {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
 
@@ -6076,17 +6077,17 @@ group by date ORDER BY date ");
 
 
     // Filter daily infected by district
+    $('#daily_effected_travelers').hide();
 
-     $('#daily_effected_travelers').hide();
     $('#daily-infected-district').on('select2:select', function (e) {
         var val = this.value;
         if(val != 'all'){
             $('#daily_effected_travelers').show();
         }else{
             $('#daily_effected_travelers').hide();
-            
+           // $('#daily_effected_travelers').select2("val", "all");
         }
-    }); 
+    });
 
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
@@ -6095,7 +6096,7 @@ group by date ORDER BY date ");
     // console.log(districts);
     
     
-    if (districts != 'all' || non_travelers == '1') {
+    if (districts != 'all' || non_travelers != 'all') {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/filter-daily-infected-chart',
