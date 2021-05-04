@@ -2329,7 +2329,7 @@ using(district) ORDER BY r.test_positivity DESC");
     public function getNationLevelTestPositivityData(Request $request)
     {
         try {
-            $sql = "SELECT a.report_date as date_of_test, (SELECT 'National') AS district, Round( ( SELECT SUM((b.infected_24_hrs/b.test_24_hrs)*100) / COUNT((b.infected_24_hrs/b.test_24_hrs)*100) FROM daily_data AS b WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 6 ), 2 ) AS 'test_positivity' from daily_data as a order by a.report_date";
+            $sql = "SELECT a.report_date as date_of_test, (SELECT 'National') AS district, Round( ( SELECT SUM((b.infected_24_hrs/b.test_24_hrs)*100) / COUNT((b.infected_24_hrs/b.test_24_hrs)*100) FROM daily_data AS b WHERE DATEDIFF(a.report_date, b.report_date) BETWEEN 0 AND 4 ), 2 ) AS 'test_positivity' from daily_data as a order by a.report_date";
         
             $dataResult = DB::select(DB::raw($sql));
 
@@ -2344,7 +2344,8 @@ using(district) ORDER BY r.test_positivity DESC");
                 
             }
 
-            $result = $this->dateArrayList($formatData, 2);
+            $result = $this->dateArrayList($formatData, 1);
+            // dd($result);
 
             return response()->json($result);
         } catch (\Exception $exception) {

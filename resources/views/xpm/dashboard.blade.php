@@ -2095,12 +2095,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <label>নির্বাচন করুন </label>
                                                         <div class="row">
                                                             <label class="radio-inline" for="radios-1" style="cursor:pointer">
-                                                            <input type="radio" name="weeklyOrDaily" id="radios-1" value="2" checked="checked">
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-1" value="2">
                                                             সাপ্তাহিক
                                                             </label> 
                                                             &nbsp;&nbsp;&nbsp;
                                                             <label class="radio-inline" for="radios-0" style="cursor:pointer">
-                                                            <input type="radio" name="weeklyOrDaily" id="radios-0" value="1">
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-0" value="1" checked="checked">
                                                                 দৈনিক
                                                             </label> 
                                                         
