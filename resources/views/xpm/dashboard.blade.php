@@ -2067,9 +2067,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <div class="row">
                                                                     <div class="col-xl-6">
                                                                         <div class="slidecontainer">
-                                                                            <p>গত ৭ দিনে পরীক্ষার সংখ্যা: <span
+                                                                            <p>গত ৭ দিনে সনাক্তের সংখ্যা: <span
                                                                                     id="demo3rdMatrix">{!! convertEnglishDigitToBangla('100') !!}</span>
-                                                                                এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।
                                                                             </p>
                                                                             <input type="range" min="50" max="1000" value="100"
                                                                                    class="slider3rdMap" id="myRange3rdMatrix">
@@ -2104,7 +2103,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             <td class="bold">কম ঝুঁকিপূর্ণ</td>
                                                                         </tr> --}}
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর বেশি <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর বেশি <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
                                                                             <td style="cursor: pointer;background: #cc0033; color: white; width: 35%"
                                                                                 class="high_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2115,7 +2114,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০</span> <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর কম</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০</span> <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর কম</td>
                                                                             {{-- <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
                                                                                 class="high_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2123,7 +2122,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td> --}}
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর বেশি <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর কম</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর বেশি <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর কম</td>
                                                                             <td style="background: #E13531; cursor: pointer; color: white"
                                                                                 class="medium_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2134,7 +2133,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
                                                                             {{-- <td style="cursor: pointer;background: #499227; color: white"
                                                                                 class="medium_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2142,7 +2141,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td> --}}
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০</span> <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০</span> <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
                                                                             <td style="background: #FD694D; cursor: pointer; color: white"
                                                                                 class="low_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2153,7 +2152,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর কম </td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর কম </td>
                                                                             {{-- <td style="background: #37761D; cursor: pointer; color: white"
                                                                                 class="low_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
