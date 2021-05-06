@@ -2100,7 +2100,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             <td class="bold">কম ঝুঁকিপূর্ণ</td>
                                                                         </tr> --}}
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি ১০ এর বেশি <br> টেস্ট ১০০ এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর বেশি <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
                                                                             <td style="cursor: pointer;background: #cc0033; color: white; width: 35%"
                                                                                 class="high_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2111,7 +2111,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি ৫ থেকে ১০ <br> টেস্ট ১০০ এর কম</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০</span> <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর কম</td>
                                                                             {{-- <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
                                                                                 class="high_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2119,7 +2119,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td> --}}
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি ১০ এর বেশি <br> টেস্ট ১০০ এর কম</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর বেশি <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর কম</td>
                                                                             <td style="background: #E13531; cursor: pointer; color: white"
                                                                                 class="medium_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2130,7 +2130,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি ৫ এর কম <br> টেস্ট ১০০ এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
                                                                             {{-- <td style="cursor: pointer;background: #499227; color: white"
                                                                                 class="medium_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2138,7 +2138,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td> --}}
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি ৫ থেকে ১০ <br> টেস্ট ১০০ এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০</span> <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
                                                                             <td style="background: #FD694D; cursor: pointer; color: white"
                                                                                 class="low_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2149,7 +2149,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি ৫ এর কম <br> টেস্ট ১০০ এর কম </td>
+                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> টেস্ট <span class="slider3rdMatrix">১০০</span> এর কম </td>
                                                                             {{-- <td style="background: #37761D; cursor: pointer; color: white"
                                                                                 class="low_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2202,7 +2202,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2211,8 +2210,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr class="b1">
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
+                                                               </tr>
                                                             @endforeach
                                                         @endif
                             
@@ -2226,7 +2224,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2235,8 +2232,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
+                                                               </tr>
                                                             @endforeach
                                                         @endif
                                                         </tbody>
@@ -2249,7 +2245,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2258,9 +2253,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                            
-                                                                </tr>
+                                                               </tr>
                                                             @endforeach
                                                         @endif
                                                         </tbody>
@@ -2273,7 +2266,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2282,7 +2274,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2296,8 +2287,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2306,8 +2295,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                                                                </tr>
+                                                               </tr>
                                                             @endforeach
                                                         @endif
                                                         </tbody>
@@ -2320,7 +2308,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2329,9 +2316,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
-                            
-                                                                </tr>
+                                                               </tr>
                                                             @endforeach
                                                         @endif
                                                         </tbody>
@@ -2344,7 +2329,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2353,7 +2337,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2367,7 +2350,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2376,7 +2358,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2390,7 +2371,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2399,7 +2379,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <tr>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
-                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -5165,7 +5144,6 @@ $ydata = [];
     
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange");
-        var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
         //  output.innerHTML = englishToBangla(slider.value);
 
@@ -5461,7 +5439,6 @@ $ydata = [];
     */
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange2ndMatrix");
-        var slider = document.getElementById("myRange2ndMatrix");
         var output = document.getElementById("demo2ndMatrix");
         //  output.innerHTML = englishToBangla(slider.value);
 
@@ -5660,12 +5637,14 @@ $ydata = [];
     */
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange3rdMatrix");
-        var slider = document.getElementById("myRange3rdMatrix");
+       
         var output = document.getElementById("demo3rdMatrix");
         //  output.innerHTML = englishToBangla(slider.value);
 
         slider.oninput = function () {
-            output.innerHTML = englishToBangla(this.value);
+            let sliderValue = englishToBangla(this.value);
+            output.innerHTML = sliderValue;
+            $('.slider3rdMatrix').text(sliderValue);
         }
 
         //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
@@ -5673,6 +5652,8 @@ $ydata = [];
 
         $("#ex12c3rdMatrix").on("slide", function (slideEvt) {
             $("#ex6SliderVal3rdMatrix").text(englishToBangla(slideEvt.value[0]) + ',' + englishToBangla(slideEvt.value[1]));
+            $('.minRange3rd').text(englishToBangla(slideEvt.value[0]));
+            $('.maxRange3rd').text(englishToBangla(slideEvt.value[1]));
             third_matrix_myrange_ajax_call();
         });
         third_matrix_myrange_ajax_call();
