@@ -174,6 +174,9 @@ Route::get('xpm-risk-matrix-date-change', 'xpm\DashboardController@getRiskMatrix
 Route::get('hpm-second-risk-matrix-data', 'Hpm\DashboardController@getSecondRiskMatricData')->name('hpm.getSecondRiskMatricData');
 Route::get('xpm-second-risk-matrix-date-change', 'xpm\DashboardController@getSecondRiskMatrixDateChange')->name('weekly.date.change.for.second.matrix');
 
+Route::get('hpm-third-risk-matrix-data', 'Hpm\DashboardController@getThirdRiskMatricData')->name('hpm.getThirdRiskMatricData');
+Route::get('xpm-third-risk-matrix-date-change', 'xpm\DashboardController@getThirdRiskMatrixDateChange')->name('weekly.date.change.for.third.matrix');
+
 Route::get('hpm-get-hospital-beds-trend', 'Hpm\DashboardController@getHospitalBedsTrend')->name('hpm.get_hospital_beds_trend');
 Route::get('/admin/f5', function () {
 

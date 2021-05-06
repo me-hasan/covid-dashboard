@@ -1814,6 +1814,22 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
        
     }
 
+    public function getThirdRiskMatrixDateChange(Request $request)
+    {
+        $data['status'] = 'failed';
+        try {
+            $date_id = $request->weekly_date;
+            $data = WeeklyDate::where('date_id', $date_id)->first();
+            $data['recent_weekly_date'] = $data->recent_weekly_date;
+            $data['last_weekly_date'] = $data->last_weekly_date;
+            $data['status'] = 'success';
+        } catch (\Exception $exception) {
+
+        }
+        return $data;
+       
+    }
+
     public function getRiskMatricData(Request $request)
     {
         $data['status'] = 'failed';
