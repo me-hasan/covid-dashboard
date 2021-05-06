@@ -2067,7 +2067,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                     id="demo3rdMatrix">{!! convertEnglishDigitToBangla('100') !!}</span>
                                                                                 এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।
                                                                             </p>
-                                                                            <input type="range" min="50" max="500" value="100"
+                                                                            <input type="range" min="50" max="1000" value="100"
                                                                                    class="slider3rdMap" id="myRange3rdMatrix">
                                                                         </div>
                                                                     </div>
