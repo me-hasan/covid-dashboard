@@ -117,6 +117,7 @@ class DashboardController extends Controller
         $data['des_7'] = $this->description_insight_qry('304'); // Test Per Cases For South Asian Countries
         $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
         $data['des_12'] = $this->description_insight_qry('402'); // Risk Matrix
+        $data['des_13'] = $this->description_insight_qry('403'); // Risk Matrix
         $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
         $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
         $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
