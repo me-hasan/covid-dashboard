@@ -718,12 +718,12 @@ class NewsBulletinController extends Controller
 
         //$pdf_file_path = storage_path('app/public/dashboard/pdf/' . $this->fileNameGenerate() . '.pdf');
         $pdf_file_path = storage_path("app/public/dashboard/bulletin/$date_id/$district/dashboard.pdf");
-        $data = ['name' => 'khayrk hasan pdf'];
-        $data2 = ['id' => '1195'];
+        //$data = ['name' => 'khayrk hasan pdf'];
+        //$data2 = ['id' => '1195'];
         //PDF::loadView('emails.dashboard.hpm-pdf', $data)->save($pdf_file_path);
         if (!empty($toMailAddress)) {
             
-            $this->sendMail($toMailAddress, $ccMailAddeess, $data2, $pdf_file_path);
+            $this->sendMail($toMailAddress, $ccMailAddeess, $pdf_file_path);
         }
         NewsBulletinLog::where('date_id', $date_id)->where('district_name', $district)->update(['status'=> 1, 'count'=>1 ]);
         return redirect()->back()->with('success','Email sent successfully.');
@@ -739,14 +739,14 @@ class NewsBulletinController extends Controller
      * @param filePath $pdf
      * @return void
      */
-    public function sendMail($toEmails, $ccEmail, $data2, $pdf)
+    public function sendMail($toEmails, $ccEmail, $pdf)
     {
        
         $mail = new PHPMailer(true);
 
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'mail.dashboard.corona.gov.bd';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -757,27 +757,36 @@ class NewsBulletinController extends Controller
             // dd($mail);
             //Recipients
             $mail->setFrom('newsletter@dashboard.corona.gov.bd', 'Mailer');
-            $mail->addAddress('khayrul.web@gmail.com', 'Joe User');     //Add a recipient
-            //$mail->addAddress('Md Khayrul Hasan');               //Name is optional
-            //$mail->addReplyTo('newsletter@dashboard.corona.gov.bd', 'Information');
-            //$mail->addCC('khayrul.web@gmail.com');
-            //$mail->addBCC('bcc@example.com');
+            $mail->addAddress($toEmails);     //Add a recipient
+            $mail->addReplyTo('newsletter@dashboard.corona.gov.bd', 'Information');
+
+            foreach($ccEmail as $key=> $value){
+                $mail->addCC($value);
+            }
             
             //Attachments
-            //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-            //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+            // dd($pdf);
+            $mail->addAttachment($pdf);         //Add attachments
             
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
+            $mail->Subject = 'National COVID-19 Dashboard, DGHS';
             $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
             
             //dd('dd');
             $mail->send();
             //echo 'Message has been sent';
-            dd('dd');
+            
         } catch (Exception $e) {
+            dd($e);
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
             //dispatch(new SendEmailJob($email, $data2, $pdf)); // for queue job
