@@ -76,13 +76,13 @@ class NewsBulletinController extends Controller
         })->toArray();
         
         
-        set_time_limit(8000000);
+        //set_time_limit(8000000);
         foreach($districtsArray as $key=>$value){    
             $pdfResults = '';
            
             $path = storage_path('app/public/dashboard/bulletin/'.$data_id.'/'.$key); //stor path 
             
-            $uploadPathForPdf = asset("storage/dashboard/chart/$data_id/$key/"); //upload chart path for pdf
+            $uploadPathForPdf = storage_path("app/public/dashboard/chart/$data_id/$key/"); //upload chart path for pdf
             $labelArray = $this->pdfDataPrepare($data_id, $value, $uploadPathForPdf);
             
 
@@ -747,6 +747,7 @@ class NewsBulletinController extends Controller
         try {
             //Server settings
             //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->CharSet = 'UTF-8';
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'mail.dashboard.corona.gov.bd';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -756,7 +757,7 @@ class NewsBulletinController extends Controller
             $mail->Port       = 25;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
             // dd($mail);
             //Recipients
-            $mail->setFrom('newsletter@dashboard.corona.gov.bd', 'Mailer');
+            $mail->setFrom('newsletter@dashboard.corona.gov.bd', 'জাতীয় কোভিড-১৯ ড্যাশবোর্ড');
             $mail->addAddress($toEmails);     //Add a recipient
             $mail->addReplyTo('newsletter@dashboard.corona.gov.bd', 'Information');
 
@@ -770,8 +771,13 @@ class NewsBulletinController extends Controller
             
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'National COVID-19 Dashboard, DGHS';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->Subject = 'জাতীয় কোভিড-১৯ ড্যাশবোর্ড সাপ্তাহিক বুলেটিন';
+            $mail->Body    = '<p>সম্মানিত স্যার,</p>
+            <p>এটুআই প্রোগ্রামের পক্ষ থেকে শুভেচ্ছা।</p>
+            <p>বর্তমান কোভিড-১৯ পরিস্থিতিতে ডাটাভিত্তিক স্বাস্থ্যসেবা নিশ্চিত করা খুবই গুরুত্বপূর্ণ একটি বিষয়। সে লক্ষ্যে করোনা মহামারী পরিস্থিতিতে সর্বস্তরের নীতি নির্ধারকবর্গের ডাটাভিত্তিক সিদ্ধান্ত গ্রহণের মাধ্যমে স্বাস্থ্যসেবা নিশ্চিত করার নিমিত্ত &ldquo;জাতীয় কোভিড-১৯ ড্যাশবোর্ড&rdquo;-টি তৈরি করা হয়েছে। আপনার জেলার সাপ্তাহিক তথ্য-উপাত্ত বিশ্লেষণ করে নীতি প্রণয়ন ও নির্ধারণে সহায়তা করার লক্ষে এই ইমেইলে &ldquo;<b>জাতীয় কোভিড-১৯ ড্যাশবোর্ড&rdquo;-এর সাপ্তাহিক বুলেটিনটি সংযুক্ত করা হয়েছে। বুলেটিনটি দেখার জন্য অনুরোধ করা হল।</b></p>
+            <p>&ldquo;জাতীয় কোভিড-১৯ ড্যাশবোর্ড&rdquo;-টি বিস্তারিত দেখতে নিম্মক্ত লিংকে ক্লিক করুন।</p>
+            <p>লিংক: <a href="https://dashboard.corona.gov.bd/">https://dashboard.corona.gov.bd/</a><br />ইউজার আইডি: আপনার অফিসিয়াল ইমেইল <br />পাসওয়ার্ড: 123456</p>
+            <p>ধন্যবাদ ও কৃতজ্ঞতাসহ,<br />নওমী জেসিকা<br />রিসার্চ অ্যাসিস্ট্যান্ট<br />এটুআই প্রোগ্রাম<br />মোবাইল নংঃ ০১৭৭৭৯৭৬৮২৫</p>';
             //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
             $mail->SMTPOptions = array(
                 'ssl' => array(
