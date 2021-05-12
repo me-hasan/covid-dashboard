@@ -1950,7 +1950,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
                             {{--3rd matix start here --}}
-                            <div class="col-lg-12 mt-2" id="scroll_location_of_the_3rd_matrix" style="display:none">
+                            <div class="col-lg-12 mt-2" id="scroll_location_of_the_3rd_matrix">
                                         <div class="invoice-head title-bg-style">
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
