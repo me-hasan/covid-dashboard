@@ -390,6 +390,12 @@
             }
         }
 
+        .iconImageSize {
+            position: relative;
+            top: 2px;
+            width: 15px;
+        }
+
         #matrixFullTableWithAllDistrict th, td {
             text-align: center;
         }
@@ -416,7 +422,7 @@
 
 
         .verticalLabel {
-           font-size: 14px; width: 15%; vertical-align: middle !important;
+           width: 10%; vertical-align: middle !important;
         }
 
     </style>
@@ -2028,7 +2034,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     $low_to_low[] = rtrim(en2bnTranslation($result->district), " ");
                                                 }
                             
-                            
+                                                $lessThen = sprintf("iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAAlklEQVRIie2VQQqDMBBFH+0NvEl3bVHcZNsju5LepbtiLqCbTAmBWjEzqaAPZhWYl/kMCRys5KzcrwUq4KXc94MDemAEvIWgBrogiEuNeIK0VCaaE4zh7JYj+BaR1BN4bFpw53dELkcgeGuBoB7RSeFSWRSLrtgyCObr/XfhkifoWkr41hQJ5t9ESjzhYCkSGuBSQrQjJotwcmptsFf4AAAAAElFTkSuQmCC");
+                                                $greaterThen = sprintf("iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAAhElEQVRIie3VOwqAMBCE4R/PY2Xls7P1yFbiecR4AG1Mo/EBZrZyIG0+MoRd+BM5KVBZQAuwAgPQKqH1cEagU0AugEleWO6XhjAJWAP9DRi9UnOw5bnS3AqcYkI+V5Wekij0mLmrzqkB/xmKL4D8e8sBsxFkNlTN1sSM0eLLgEYJ/HmdDa55cbAPKfeyAAAAAElFTkSuQmCC");
                                                 //echo implode(",",$resultstr);
                             
                                                 ?>
@@ -2036,13 +2043,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <div class="row">
-                                                            {{-- <div class="col-xl-1 col-md-1">
+                                                            <div class="col-xl-1 col-md-1">
                                                                 <div id=""
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
                                                                     class="fs-20 b1 last_weekly_date_third_matrix">
                                                                     <br>গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )
                                                                 </div>
-                                                            </div> --}}
+                                                            </div>
                                                             <div class="col-xl-12 col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-xl-3">
@@ -2096,14 +2103,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody class="fs-20 text-center risk_matrix">
-                                                                        {{-- <tr>
-                                                                            <td></td>
-                                                                            <td class="bold">উচ্চ ঝুঁকিপূর্ণ</td>
-                                                                            <td class="bold">মধ্যম ঝুঁকিপূর্ণ</td>
-                                                                            <td class="bold">কম ঝুঁকিপূর্ণ</td>
-                                                                        </tr> --}}
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর সমান বা বেশি <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
+                                                                            <td></td>
+                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 10% </td>
+                                                                            <td class="bold"> 5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 10% </td>
+                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 5% </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 15</td>
                                                                             <td style="cursor: pointer;background: #cc0033; color: white; width: 35%"
                                                                                 class="high_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2114,15 +2121,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০ এর কম</span> <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর কম</td>
-                                                                            {{-- <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
+                                                                            <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
                                                                                 class="high_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">   {{ convertEnglishDigitToBangla($rm_9->high_to_low)}} টি জেলা
-                                                                            </td> --}}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="maxRange3rd">১০</span> এর সমান বা বেশি <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর কম</td>
+                                                                            <td class="bold verticalLabel">10 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">15</td>
                                                                             <td style="background: #E13531; cursor: pointer; color: white"
                                                                                 class="medium_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2133,15 +2139,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
-                                                                            {{-- <td style="cursor: pointer;background: #499227; color: white"
+                                                                            <td style="cursor: pointer;background: #499227; color: white"
                                                                                 class="medium_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
-                                                                            </td> --}}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> থেকে <span class="maxRange3rd">১০ এর কম</span> <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর সমান বা বেশি</td>
+                                                                            <td class="bold verticalLabel">5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">10</td>
                                                                             <td style="background: #FD694D; cursor: pointer; color: white"
                                                                                 class="low_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -2152,12 +2157,65 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
                                                                             </td>
-                                                                            <td class="bold verticalLabel">পজিটিভিটি <span class="minRange3rd">৫</span> এর কম <br> সনাক্ত <span class="slider3rdMatrix">১০০</span> এর কম </td>
-                                                                            {{-- <td style="background: #37761D; cursor: pointer; color: white"
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
                                                                                 class="low_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
-                                                                            </td> --}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel">3 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">5</td>
+                                                                            <td style="background: #E13531; cursor: pointer; color: white"
+                                                                                class="medium_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #FC842D; cursor: pointer; color: white"
+                                                                                class="medium_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="cursor: pointer;background: #499227; color: white"
+                                                                                class="medium_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel">0.01 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">3</td>
+                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
+                                                                                class="low_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="low_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="low_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel">0</td>
+                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
+                                                                                class="low_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="low_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="low_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
+                                                                            </td>
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
