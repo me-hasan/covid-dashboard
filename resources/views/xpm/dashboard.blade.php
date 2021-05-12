@@ -2050,7 +2050,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <br>গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xl-12 col-md-12">
+                                                            <div class="col-xl-11 col-md-11">
                                                                 <div class="row">
                                                                     <div class="col-xl-3">
                                                                         <p>তারিখ নির্বাচন করুন: </p>
