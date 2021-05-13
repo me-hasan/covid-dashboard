@@ -2164,17 +2164,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <tr>
                                                                             <td class="bold verticalLabel">0</td>
                                                                             <td style="background: #FC6E00; cursor: pointer; color: white"
-                                                                                class="low_to_high_third_matrix_modal_click"
+                                                                                class="zero_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
                                                                             </td>
                                                                             <td style="background: #FC6E00; cursor: pointer; color: white"
-                                                                                class="low_to_medium_third_matrix_modal_click"
+                                                                                class="zero_to_medium_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
                                                                             </td>
                                                                             <td style="background: #37761D; cursor: pointer; color: white"
-                                                                                class="low_to_low_third_matrix_modal_click"
+                                                                                class="zero_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
                                                                             </td>
@@ -5787,6 +5787,9 @@ $ydata = [];
             $('.medium_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_low_district_name);
             $('.medium_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_medium_district_name);
             $('.low_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.low_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
+            $('.zero_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
+            $('.zero_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
+            $('.zero_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
             /*modal data*/
             $('#high_to_high_third_matrix_table_content tbody').html(risk_matrix_data.high_to_high_table_contentData);
             $('#medium_to_high_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_high_table_contentData);
@@ -5797,6 +5800,9 @@ $ydata = [];
             $('#high_to_low_third_matrix_table_content tbody').html(risk_matrix_data.high_to_low_table_contentData);
             $('#medium_to_low_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_low_table_contentData);
             $('#low_to_low_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+            $('#zero_to_high_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+            $('#zero_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+            $('#zero_to_low_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
             /*district data*/
             $('.high_to_high_district').html(risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_district').html(risk_matrix_data.high_to_low_district_name);
@@ -5807,6 +5813,9 @@ $ydata = [];
             $('.medium_to_high_district').html(risk_matrix_data.medium_to_high_district_name);
             $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
             $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
+            $('.zero_to_high_district').html(risk_matrix_data.zero_to_high_district_name);
+            $('.zero_to_medium_district').html(risk_matrix_data.zero_to_medium_district_name);
+            $('.zero_to_low_district').html(risk_matrix_data.zero_to_low_district_name);
        
         }
 
@@ -5862,6 +5871,24 @@ $ydata = [];
         });
 
         $('.low_to_low_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.zero_to_high_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.zero_to_medium_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.zero_to_low_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
             //hospitalDataModal();
