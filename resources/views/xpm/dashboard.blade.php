@@ -391,8 +391,6 @@
         }
 
         .iconImageSize {
-            position: relative;
-            top: 2px;
             width: 15px;
         }
 
@@ -2110,85 +2108,49 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 5% </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 15</td>
-                                                                            <td style="cursor: pointer;background: #cc0033; color: white; width: 35%"
+                                                                            <td class="bold verticalLabel"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 10</td>
+                                                                            <td style="cursor: pointer;background: #800000; color: white; width: 35%"
                                                                                 class="high_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">অপরিবর্তিত উচ্চ ঝুঁকি <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
                                                                             </td>
-                                                                            <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white; width: 35%"
+                                                                            <td style="background: #FF0000; cursor: pointer;text-decoration: none; color: white; width: 35%"
                                                                                 class="high_to_medium_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
+                                                                            <td style="cursor: pointer;background: #FF0000; color: white; width:  30%;"
                                                                                 class="high_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">   {{ convertEnglishDigitToBangla($rm_9->high_to_low)}} টি জেলা
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">10 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">15</td>
-                                                                            <td style="background: #E13531; cursor: pointer; color: white"
-                                                                                class="medium_to_high_third_matrix_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="background: #FC842D; cursor: pointer; color: white"
-                                                                                class="medium_to_medium_third_matrix_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="cursor: pointer;background: #499227; color: white"
-                                                                                class="medium_to_low_third_matrix_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
                                                                             <td class="bold verticalLabel">5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">10</td>
-                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
-                                                                                class="low_to_high_third_matrix_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
-                                                                            </td>
-                                                                            <td style="background: #37761D; cursor: pointer; color: white"
-                                                                                class="low_to_medium_third_matrix_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
-                                                                            </td>
-                                                                            <td style="background: #37761D; cursor: pointer; color: white"
-                                                                                class="low_to_low_third_matrix_modal_click"
-                                                                                data-target="#modaldemo1"
-                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="bold verticalLabel">3 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">5</td>
-                                                                            <td style="background: #E13531; cursor: pointer; color: white"
+                                                                            <td style="background: #800000; cursor: pointer; color: white"
                                                                                 class="medium_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} টি জেলা
                                                                             </td>
-                                                                            <td style="background: #FC842D; cursor: pointer; color: white"
+                                                                            <td style="background: #FF0000; cursor: pointer; color: white"
                                                                                 class="medium_to_medium_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
                                                                             </td>
-                                                                            <td style="cursor: pointer;background: #499227; color: white"
+                                                                            <td style="cursor: pointer;background: #FC6E00; color: white"
                                                                                 class="medium_to_low_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">0.01 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">3</td>
-                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
+                                                                            <td class="bold verticalLabel">0.01 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">5</td>
+                                                                            <td style="background: #FF0000; cursor: pointer; color: white"
                                                                                 class="low_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
                                                                             </td>
-                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                            <td style="background: #FC6E00; cursor: pointer; color: white"
                                                                                 class="low_to_medium_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
@@ -2201,12 +2163,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         </tr>
                                                                         <tr>
                                                                             <td class="bold verticalLabel">0</td>
-                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
+                                                                            <td style="background: #FC6E00; cursor: pointer; color: white"
                                                                                 class="low_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
                                                                             </td>
-                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                            <td style="background: #FC6E00; cursor: pointer; color: white"
                                                                                 class="low_to_medium_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
                                                                                 data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
