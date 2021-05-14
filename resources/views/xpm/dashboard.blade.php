@@ -2070,7 +2070,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 </div>
                                                                 <br>
                                                                 <div class="row">
-                                                                    <div class="col-xl-6">
+                                                                    <div class="col-xl-12">
                                                                         <div class="slidecontainer">
                                                                             <p>গত ৭ দিনে সনাক্তের সংখ্যা: <span
                                                                                     id="demo3rdMatrix">{!! convertEnglishDigitToBangla('100') !!}</span>
@@ -2079,7 +2079,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                    class="slider3rdMap" id="myRange3rdMatrix">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-xl-6">
+                                                                    <div class="col-xl-6" style="display:none">
                             
                                                                         <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্তের পরিসীমা:
                                                                             <span
@@ -2223,18 +2223,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0">গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($high_to_high_table_contentData))
                                                             @foreach($high_to_high_table_contentData as $item)
                                                                 <tr class="b1">
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                </tr>
                                                             @endforeach
                                                         @endif
@@ -2247,18 +2247,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($medium_to_high_table_contentData))
                                                             @foreach($medium_to_high_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                </tr>
                                                             @endforeach
                                                         @endif
@@ -2270,18 +2270,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($low_to_high_table_contentData))
                                                             @foreach($low_to_high_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                </tr>
                                                             @endforeach
                                                         @endif
@@ -2293,18 +2293,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($high_to_medium_table_contentData))
                                                             @foreach($high_to_medium_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2316,18 +2316,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($medium_to_medium_table_contentData))
                                                             @foreach($medium_to_medium_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                </tr>
                                                             @endforeach
                                                         @endif
@@ -2339,18 +2339,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($low_to_medium_table_contentData))
                                                             @foreach($low_to_medium_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                </tr>
                                                             @endforeach
                                                         @endif
@@ -2362,18 +2362,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($high_to_low_table_contentData))
                                                             @foreach($high_to_low_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2385,18 +2385,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($medium_to_low_table_contentData))
                                                             @foreach($medium_to_low_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2408,18 +2408,92 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
-                                                            <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @if(count($low_to_low_table_contentData))
                                                             @foreach($low_to_low_table_contentData as $item)
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
                                                                     <td>{!! en2bnTranslation($item->district) !!}</td>
                                                                     <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+                                                <div id="zero_to_high_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+
+                                                <div id="zero_to_medium_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+
+                                                <div id="zero_to_low_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -5697,6 +5771,7 @@ $ydata = [];
             $('.maxRange3rd').text(englishToBangla(slideEvt.value[1]));
             third_matrix_myrange_ajax_call();
         });
+        
         third_matrix_myrange_ajax_call();
 
 
@@ -5725,7 +5800,7 @@ $ydata = [];
                 success: function (data) {
                     if (data.status == 'success') {
                         $('.recent_weekly_date_third_matrix').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
-                        {{-- $('.last_weekly_date_third_matrix').html("গত সপ্তাহ ("+data.last_weekly_date+")") --}}
+                        $('.last_weekly_date_third_matrix').html("গত সপ্তাহ ("+data.last_weekly_date+")") 
                     } else {
                         alert("Something Went Wrong");
                     }
@@ -5878,19 +5953,19 @@ $ydata = [];
 
         $('.zero_to_high_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
-            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            $('#modalContent').html($('#zero_to_high_third_matrix_table_content').html());
             //hospitalDataModal();
         });
 
         $('.zero_to_medium_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
-            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            $('#modalContent').html($('#zero_to_medium_third_matrix_table_content').html());
             //hospitalDataModal();
         });
 
         $('.zero_to_low_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
-            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            $('#modalContent').html($('#zero_to_low_third_matrix_table_content').html());
             //hospitalDataModal();
         });
     });
