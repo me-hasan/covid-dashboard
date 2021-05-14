@@ -555,7 +555,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </li>
                             </a>
                             <a href="#scroll_location_of_the_3rd_matrix">
-                                <li><span class="bullet-point"></span> <span>গত ১ সপ্তাহের সনাক্ত এবং ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান</span>
+                                <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের সনাক্ত এবং ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান</span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_area_wise">
@@ -1959,7 +1959,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
                                                     <h2>
-                                                        গত ১ সপ্তাহের সনাক্ত এবং ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান 
+                                                        গত ২ সপ্তাহের সনাক্ত এবং ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান 
                                                     </h2>
                                                 </div>
                             
@@ -2410,7 +2410,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2459,7 +2459,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2477,6 +2477,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     </table>
                                                 </div>
 
+
                                                 <div id="zero_to_low_third_matrix_table_content" class="table-responsive b1">
                                                     <table id="risk_table_popup"
                                                            class="table table-striped table-bordered text-nowrap b1 dataTable">
@@ -2484,7 +2485,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -5862,9 +5863,9 @@ $ydata = [];
             $('.medium_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_low_district_name);
             $('.medium_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_medium_district_name);
             $('.low_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.low_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
-            $('.zero_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
-            $('.zero_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
-            $('.zero_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
+            $('.zero_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.zero_to_high_district_name);
+            $('.zero_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.zero_to_medium_district_name);
+            $('.zero_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.zero_to_low_district_name);
             /*modal data*/
             $('#high_to_high_third_matrix_table_content tbody').html(risk_matrix_data.high_to_high_table_contentData);
             $('#medium_to_high_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_high_table_contentData);
@@ -5875,9 +5876,9 @@ $ydata = [];
             $('#high_to_low_third_matrix_table_content tbody').html(risk_matrix_data.high_to_low_table_contentData);
             $('#medium_to_low_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_low_table_contentData);
             $('#low_to_low_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
-            $('#zero_to_high_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
-            $('#zero_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
-            $('#zero_to_low_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+            $('#zero_to_high_third_matrix_table_content tbody').html(risk_matrix_data.zero_to_high_table_contentData);
+            $('#zero_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.zero_to_medium_table_contentData);
+            $('#zero_to_low_third_matrix_table_content tbody').html(risk_matrix_data.zero_to_low_table_contentData);
             /*district data*/
             $('.high_to_high_district').html(risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_district').html(risk_matrix_data.high_to_low_district_name);
