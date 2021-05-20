@@ -594,7 +594,7 @@ class NewsBulletinController extends Controller
                     <div class="shadow">
                         <div class="info-tab tip-icon" title="Useful Tips"><i></i></div>
                         <div class="tip-box">
-                            <p><strong>সতর্কতা :</strong> আপানকে যদি বুলেটিন তৈরী করতে চান, তাহলে প্রথমে নিন্মোক্ত জেলা সমূহের চার্ট গুলো আপলোড করে আসতে হবে|</p>
+                            <p><strong>সতর্কতা :</strong> আপনি যদি বুলেটিন তৈরী করতে চান, তাহলে প্রথমে নিন্মোক্ত জেলা সমূহের চার্ট গুলো আপলোড করতে হবে|</p>
                             '.$ul.'
                         </div>
                     </div>
