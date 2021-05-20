@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CcEmail;
 use App\ChartUploadLog;
+use App\DistrictPopulation;
 use App\EmailMapping;
 use DB;
 use File;
@@ -86,8 +87,8 @@ class NewsBulletinController extends Controller
             $labelArray = $this->pdfDataPrepare($data_id, $value, $uploadPathForPdf);
             
 
-            //$pdf = PDF::loadView('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
-            return view('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
+            $pdf = PDF::loadView('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
+            //return view('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
             
             
             if(!File::isDirectory($path)){
@@ -115,8 +116,10 @@ class NewsBulletinController extends Controller
 
     function pdfDataPrepare($date_id, $dist, $path){
         $lebelInfo = WeeklyDate::where('date_id', $date_id)->first();
+        $_population = DistrictPopulation::where('District', $dist)->first();
         $_district_name = $dist;
         return [
+            'population' => number_format($_population->Population,2) ?? '',
             'district_name'=> $_district_name,
             'date'=> $lebelInfo->date_eng,
             'recent'=>'Last Week ('.$lebelInfo->recent_weekly_date.')',

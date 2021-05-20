@@ -109,7 +109,7 @@
         <main>
         
        
-                <table border="0" style="margin: 170px auto;border-collapse: collapse; border-spacing: 0; width:100%">
+                <table border="0" style="margin: 40px auto;border-collapse: collapse; border-spacing: 0; width:100%">
                     <tr>
                         <td style="text-align:left; width: 10%">Name of District</td>
                         <td style="text-align:right; width: 10%">{{ $labelArray['district_name'] ?? '---' }}</td>
@@ -126,13 +126,8 @@
             
        
         <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['first_chart']['title'] ?? '---' }}</h3>
-            {!! $labelArray['first_chart']['table'] ?? '---' !!}
-        </div>
-
-        <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['second_chart']['title'] ?? '---' }}</h3>
-            <img  src="{{ $labelArray['second_chart']['path'] }}"  alt="chart1" >
+            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
+            <img src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
         </div>
 
         <div stayle="margin: 40px auto">
@@ -141,9 +136,15 @@
         </div>
 
         <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
-            <img src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
+            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['second_chart']['title'] ?? '---' }}</h3>
+            <img  src="{{ $labelArray['second_chart']['path'] }}"  alt="chart1" >
         </div>
+        
+        <div stayle="margin: 40px auto">
+            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['first_chart']['title'] ?? '---' }}</h3>
+            {!! $labelArray['first_chart']['table'] ?? '---' !!}
+        </div>
+
 
         </main>
     </body>
