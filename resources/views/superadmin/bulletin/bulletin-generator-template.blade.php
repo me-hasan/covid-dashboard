@@ -73,18 +73,16 @@
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
+
         img {
             height: 320px;
             width: 100%;
         }
 
-        
-        
         </style>
-
-
     </head>
     <body>
+
         <!-- Define header and footer blocks before your content -->
         <header>
             <div style="height: 115px">
@@ -109,32 +107,42 @@
 
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
-        <table border="0" style="border-collapse: collapse; border-spacing: 0; margin : 80px auto 0px auto; width:100%">
-            <tr>
-                <td style="text-align:left">District Name: {{ $labelArray['district_name'] ?? '---' }}</td>
-                <td style="text-align:right">Date: {{ $labelArray['date'] ?? '---' }}</td>
-            </tr>
-        <table>
-
-
+        
+       
+                <table border="0" style="margin: 170px auto;border-collapse: collapse; border-spacing: 0; width:100%">
+                    <tr>
+                        <td style="text-align:left; width: 10%">Name of District</td>
+                        <td style="text-align:right; width: 10%">{{ $labelArray['district_name'] ?? '---' }}</td>
+                        <td style="border:none; width: 10%">&nbsp;</td>
+                        <td style="border:none; width: 20%">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left">Population (2020)</td>
+                        <td style="text-align:right">{{ $labelArray['population'] ?? '---' }}</td>
+                        <td style="border:none;">&nbsp;</td>
+                        <td style="width: 20%">Date : {{ $labelArray['date'] ?? '---' }}</td>
+                    </tr>
+                <table>
+            
+       
         <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
-            <img src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
+            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['first_chart']['title'] ?? '---' }}</h3>
+            {!! $labelArray['first_chart']['table'] ?? '---' !!}
         </div>
 
         <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#6DA641; padding-top: 20px">{{ $labelArray['third_chart']['title'] ?? '---' }}</h3>
-            <img  src="{{ $labelArray['third_chart']['path'] }}"  alt="chart2" >
-        </div>
-
-        <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['second_chart']['title'] ?? '---' }}</h3>
+            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['second_chart']['title'] ?? '---' }}</h3>
             <img  src="{{ $labelArray['second_chart']['path'] }}"  alt="chart1" >
         </div>
 
         <div stayle="margin: 40px auto">
-            <h3 style="font-size:14; color:#6DA641; padding-top: 50px">{{ $labelArray['first_chart']['title'] ?? '---' }}</h3>
-            {!! $labelArray['first_chart']['table'] ?? '---' !!}
+            <h3 style="font-size:14; color:#000000; padding-top: 20px">{{ $labelArray['third_chart']['title'] ?? '---' }}</h3>
+            <img  src="{{ $labelArray['third_chart']['path'] }}"  alt="chart2" >
+        </div>
+
+        <div stayle="margin: 40px auto">
+            <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
+            <img src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
         </div>
 
         </main>

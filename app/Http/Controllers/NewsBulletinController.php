@@ -86,7 +86,8 @@ class NewsBulletinController extends Controller
             $labelArray = $this->pdfDataPrepare($data_id, $value, $uploadPathForPdf);
             
 
-            $pdf = PDF::loadView('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
+            //$pdf = PDF::loadView('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
+            return view('superadmin.bulletin.bulletin-generator-template', compact('pdfResults', 'labelArray', 'uploadPathForPdf'));
             
             
             if(!File::isDirectory($path)){
@@ -131,7 +132,7 @@ class NewsBulletinController extends Controller
     
 
     public function indicatorsDataPrepare($dist, $date_id){
-        $dateData = DB::select("SELECT l.from_date as l_from_date, l.to_date as l_to_date, r.from_date as r_from_date, r.to_date as r_to_date FROM tp_matrix_last as l LEFT JOIN tp_matrix_recent r ON r.date_id = l.date_id limit 1");
+        $dateData = DB::select("SELECT l.from_date as l_from_date, l.to_date as l_to_date, r.from_date as r_from_date, r.to_date as r_to_date FROM tp_matrix_last as l LEFT JOIN tp_matrix_recent r ON r.date_id = l.date_id where r.date_id = $date_id limit 1");
         $date = [];
         foreach($dateData as $d){
             $date['l_from_date'] = $d->l_from_date;
@@ -401,21 +402,20 @@ class NewsBulletinController extends Controller
         return '<table style="border-collapse: collapse; border-spacing: 0; margin : 80px auto 0px auto;">
         <thead>
             <tr>
-                <th>Covid-19 Indicators</th>
-                <th>2 weeks ago<br>('.$date['l_from_date'].'-'.$date['l_to_date'].')</th>
-                <th>Last Week<br>('.$date['r_from_date'].'-'.$date['r_to_date'].')</th>
+                <th colspan="2">Covid-19 Indicators</th>
+                <th>2 weeks ago<br>('.\Carbon\Carbon::parse($date['l_from_date'])->format('d M, Y').' - '.\Carbon\Carbon::parse($date['l_to_date'])->format('d M, Y').')</th>
+                <th>Last Week<br>('.\Carbon\Carbon::parse($date['r_from_date'])->format('d M, Y').' - '.\Carbon\Carbon::parse($date['r_to_date'])->format('d M, Y').')</th>
                 <th>Change</th>
-                <th>Dhaka Divison <br>(Last 2 weeks)</th>
                 <th>National <br>(Last 2 weeks)</th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <td rowspan="2">Total COVID-19 Test Performed</td>
                 <td>Tests (Non-Traveller)</td>
                 <td>'.$casesNonTravelersLastWeek.'</td>
                 <td>'.$casesNonTravelersRecentWeek.'</td>
                 <td>'.$casesNonTravelersChange.'</td>
-                <td></td>
                 <td>'.$nationalCasesNonTravelersLastWeek.'</td>
             </tr>
             <tr>
@@ -423,15 +423,14 @@ class NewsBulletinController extends Controller
                 <td>'.$casesTravelersLastWeek.'</td>
                 <td>'.$casesTravelersRecentWeek.'</td>
                 <td>'.$casesTravelersChange.'</td>
-                <td></td>
                 <td>'.$nationalCasesTravelersLastWeek.'</td>
             </tr>
             <tr>
+                <td rowspan="2">Reported Cases of COVID-19</td>
                 <td>Cases (Non-Traveller)</td>
                 <td>'.$testNonTravelersLastWeek.'</td>
                 <td>'.$testNonTravelersRecentWeek.'</td>
                 <td>'.$testNonTravelersChange.'</td>
-                <td></td>
                 <td>'.$nationalTestNonTravelersLastWeek.'</td>
             </tr>
             <tr>
@@ -439,15 +438,14 @@ class NewsBulletinController extends Controller
                 <td>'.$testTravelersLastWeek.'</td>
                 <td>'.$testTraverRecentWeek.'</td>
                 <td>'.$testTravelersChange.'</td>
-                <td></td>
                 <td>'.$nationalTestTravelersLastWeek.'</td>
             </tr>
             <tr>
+                <td rowspan="2">COVID-19 Test Positivity(%)</td>
                 <td>Test Positivity (Non-Traveller)</td>
                 <td>'.$positivityNonTravelersLastWeek.'</td>
                 <td>'.$positivityNonTravelersRecentWeek.'</td>
                 <td>'.$positivityNonTravelersChange.'</td>
-                <td></td>
                 <td>'.$nationalPositivityNonTravelersLastWeek.'</td>
             </tr>
             <tr>
@@ -455,15 +453,14 @@ class NewsBulletinController extends Controller
                 <td>'.$positivityTravelersLastWeek.'</td>
                 <td>'.$positivityTraverRecentWeek.'</td>
                 <td>'.$positivityNonTravelersChange.'</td>
-                <td></td>
                 <td>'.$nationalPositivityNonTravelersLastWeek.'</td>
             </tr>
             <tr>
+                <td rowspan="2">Hospitalization of COVID-19 cases</td>
                 <td>Unused Hospital Beds (General)</td>
                 <td>'.$hospitalizationGeneralLastWeek.'</td>
                 <td>'.$hospitalizationGeneralRecentWeek.'</td>
                 <td>'.$hospitalizationGeneralChange.'</td>
-                <td></td>
                 <td>'.$nationalHospitalizationGeneralLastWeek.'</td>
             </tr>
             <tr>
@@ -471,7 +468,6 @@ class NewsBulletinController extends Controller
                 <td>'.$hospitalizationIcuLastWeek.'</td>
                 <td>'.$hospitalizationIcuRecentWeek.'</td>
                 <td>'.$hospitalizationIcuChange.'</td>
-                <td></td>
                 <td>'.$nationalHospitalizationIcuLastWeek.'</td>
             </tr>
         </tbody>
