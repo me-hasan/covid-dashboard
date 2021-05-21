@@ -2225,8 +2225,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0">গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2250,8 +2251,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2274,8 +2276,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>                                                        
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2298,8 +2301,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2322,8 +2326,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2346,8 +2351,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2370,8 +2376,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2394,8 +2401,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2418,8 +2426,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2443,8 +2452,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2469,8 +2479,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2496,8 +2507,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <tr>
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
                                                             <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            {{-- <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th> --}}
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
