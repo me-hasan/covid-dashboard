@@ -401,13 +401,16 @@
             font-size : 18px
         }
 
+
+
         /* Loader css end */
         .bold{font-weight: bold;}
         .tabLegendItemSwatchHolder {
             margin-left: 15px;
         }
+        
         .modal-content {
-            width: 108% !important;
+            width: 115% !important;
         }
 
         #matrixFullTableWithAllDistrict {
@@ -422,6 +425,8 @@
         .verticalLabel {
            width: 10%; vertical-align: middle !important;
         }
+
+      
 
     </style>
 </head>
