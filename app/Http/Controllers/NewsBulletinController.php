@@ -578,7 +578,11 @@ class NewsBulletinController extends Controller
             return ['clean' => $this->cleanDistricName($dist->district), 'original'=> en2bnTranslation($dist->district)];
         })->pluck('original', 'clean');
 
-        $existDistrict = NewsBulletinLog::where('date_id', $request->date_id)->get()->pluck('district_name');
+        if($request->table == 2){
+            $existDistrict = NewsBulletinLog::where('date_id', $request->date_id)->get()->pluck('district_name');
+        }else{
+            $existDistrict = ChartUploadLog::where('date_id', $request->date_id)->get()->pluck('district_name');
+        }
         
         foreach($existDistrict as $value){
             unset($districts[$value]);

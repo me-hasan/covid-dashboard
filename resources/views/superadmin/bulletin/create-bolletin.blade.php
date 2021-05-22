@@ -45,7 +45,7 @@
                         <div class="col-4">
                             <div class="form-group">
                             <label>তারিখ নির্বাচন করুন </label>
-                                <select required class="form-control select2" name="calendar_date" onchange="checkDistrict()" id="calendar_date">
+                                <select required class="form-control select2" name="calendar_date" table="2" onchange="checkDistrict()" id="calendar_date">
                                     <option value="">নির্বাচন করুন</option>
                                     @foreach($calendar as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -81,11 +81,12 @@
         function checkDistrict()
         {
             var date_id = $('#calendar_date').val();
+            var table = $('#calendar_date').attr('table');
             $('#district_name').html('').select2({data: [{id: '', text: ''}]});
             $.ajax({
                 url: "{{ route('check.bulletin.district.list') }}",
                 type: 'POST',
-                data: {"_token": "{{ csrf_token() }}","date_id": date_id},
+                data: {"_token": "{{ csrf_token() }}","date_id": date_id, "table": table},
                 success: function(data) {
                     $("#district_name").select2({
                         data: data
