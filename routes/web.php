@@ -145,6 +145,7 @@ Route::prefix('admin')->group(function () {
         Route::get('bulletin/chart', 'NewsBulletinController@bulletinChart')->name('bulletin-chart');
         Route::post('bulletin/chart/upoload', 'NewsBulletinController@bulletinChartUpload')->name('bulletin-chart-upload');
         Route::post('check/bulletin/chart/upload', 'NewsBulletinController@checkBulletinChartUpload')->name('check.bulletin.chart.upload');
+        Route::post('check/bulletin/district/list', 'NewsBulletinController@checkBulletinDistrictList')->name('check.bulletin.district.list');
 
         /*email mapping*/
         Route::get('email/mapping/history', 'NewsBulletinController@emailMappingHistory')->name('email-mapping-history');

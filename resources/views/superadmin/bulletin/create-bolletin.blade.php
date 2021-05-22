@@ -45,7 +45,7 @@
                         <div class="col-4">
                             <div class="form-group">
                             <label>তারিখ নির্বাচন করুন </label>
-                                <select required class="form-control select2" name="calendar_date" onchange="checkUpload()" id="calendar_date">
+                                <select required class="form-control select2" name="calendar_date" onchange="checkDistrict()" id="calendar_date">
                                     <option value="">নির্বাচন করুন</option>
                                     @foreach($calendar as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -58,10 +58,10 @@
                             <div class="form-group">
                             <label>জেলা নির্বাচন করুন </label>
                                 <select required multiple class="form-control select2" name="district_name[]" onchange="checkUpload()" id="district_name">
-                                    <option value="">নির্বাচন করুন</option>
+                                    {{-- <option value="">নির্বাচন করুন</option>
                                     @foreach($districts as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                                
                             </div>
@@ -78,6 +78,23 @@
 <!-- End Row -->
 
     <script>
+        function checkDistrict()
+        {
+            var date_id = $('#calendar_date').val();
+            $('#district_name').html('').select2({data: [{id: '', text: ''}]});
+            $.ajax({
+                url: "{{ route('check.bulletin.district.list') }}",
+                type: 'POST',
+                data: {"_token": "{{ csrf_token() }}","date_id": date_id},
+                success: function(data) {
+                    $("#district_name").select2({
+                        data: data
+                    });
+                    $('#submitButton').html('');
+                }
+            });
+        };
+        
         function checkUpload()
         {
             var date_id = $('#calendar_date').val();

@@ -53,7 +53,7 @@ class NewsBulletinController extends Controller
         $districts =  DB::table('div_dist')->get()->map(function($dist) {
             return ['clean' => $this->cleanDistricName($dist->district), 'original'=> en2bnTranslation($dist->district)];
         })->pluck('original', 'clean');
-        $calendar = WeeklyDate::doesnthave('notGenerated')->orderBy('date_id', 'DESC')->get()->pluck('date_ban', 'date_id');
+        $calendar = WeeklyDate::orderBy('date_id', 'DESC')->get()->pluck('date_ban', 'date_id');
         
         return view("superadmin.bulletin.create-bolletin", compact('calendar', 'districts'));
     }
@@ -510,7 +510,7 @@ class NewsBulletinController extends Controller
         $districts =  DB::table('div_dist')->get()->map(function($dist) {
             return ['clean' => $this->cleanDistricName($dist->district), 'original'=> en2bnTranslation($dist->district)];
         })->pluck('original', 'clean');
-        $calendar = WeeklyDate::doesnthave('notGenerated')->orderBy('date_id', 'DESC')->get()->pluck('date_ban', 'date_id');
+        $calendar = WeeklyDate::orderBy('date_id', 'DESC')->get()->pluck('date_ban', 'date_id');
         return view("superadmin.bulletin.chart-upload", compact('calendar', 'districts'));
     }
 
@@ -518,7 +518,7 @@ class NewsBulletinController extends Controller
         $districts =  DB::table('div_dist')->get()->map(function($dist) {
             return ['clean' => $this->cleanDistricName($dist->district), 'original'=> en2bnTranslation($dist->district)];
         })->pluck('original', 'clean');
-        $calendar = WeeklyDate::doesnthave('notGenerated')->orderBy('date_id', 'DESC')->get()->pluck('date_ban', 'date_id');
+        $calendar = WeeklyDate::orderBy('date_id', 'DESC')->get()->pluck('date_ban', 'date_id');
         $exitsData = ChartUploadLog::find($id);
         return view("superadmin.bulletin.chart-upload-update", compact('calendar', 'districts', 'exitsData'));
     }
@@ -571,6 +571,28 @@ class NewsBulletinController extends Controller
               return redirect()->back()
               ->withSuccess('Great! file has been successfully uploaded.');
            }
+    }
+
+    public function checkBulletinDistrictList(Request $request){
+        $districts =  DB::table('div_dist')->get()->map(function($dist) {
+            return ['clean' => $this->cleanDistricName($dist->district), 'original'=> en2bnTranslation($dist->district)];
+        })->pluck('original', 'clean');
+
+        $existDistrict = NewsBulletinLog::where('date_id', $request->date_id)->get()->pluck('district_name');
+        
+        foreach($existDistrict as $value){
+            unset($districts[$value]);
+        }
+        $newArray = [];
+
+        foreach($districts as $key=> $val){
+            $newArray[]=[
+                'id' => $key,
+                'text' => $val
+            ];
+        }
+
+        return $newArray;
     }
 
     public function checkBulletinChartUpload(Request $request){
