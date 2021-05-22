@@ -127,7 +127,7 @@
        
         <div stayle="margin: 40px auto">
             <h3 style="font-size:14; color:#000000; padding-top: 50px">{{ $labelArray['fourth_chart']['title'] ?? '---' }}</h3>
-            <img src="{{ $labelArray['fourth_chart']['path'] }}"  alt="chart3" >
+            <img src="{{ $labelArray['fourth_chart']['path'] }}" height="650"  alt="chart3" >
         </div>
 
         <div stayle="margin: 40px auto">
