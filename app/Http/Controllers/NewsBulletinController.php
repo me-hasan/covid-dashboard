@@ -168,7 +168,7 @@ class NewsBulletinController extends Controller
 
         /*cases change*/
         $casesNonTravelersChange =  $casesNonTravelersRecentWeek - $casesNonTravelersLastWeek;
-        $casesTravelersChange =  $casesTravelersLastWeek - $casesTravelersRecentWeek;
+        $casesTravelersChange =  $casesTravelersRecentWeek - $casesTravelersLastWeek;
         $casesChange =  $casesTotalLastWeek + $casesTotalRecentWeek;
 
         /*division cases*/
@@ -414,49 +414,49 @@ class NewsBulletinController extends Controller
         </thead>
         <tbody>
             <tr>
-                <td rowspan="2">Total COVID-19 Test Performed</td>
-                <td>Tests (Non-Traveller)</td>
+                <td rowspan="2">Reported Cases of COVID-19</td>
+                <td>Cases (Non-Traveller)</td>
                 <td>'.$casesNonTravelersLastWeek.'</td>
                 <td>'.$casesNonTravelersRecentWeek.'</td>
-                <td>'.$casesNonTravelersChange.'</td>
+                <td>'.number_format($casesNonTravelersChange,2).'</td>
                 <td>'.$nationalCasesNonTravelersLastWeek.'</td>
             </tr>
             <tr>
-                <td>Tests (Traveller)</td>
+                <td>Cases (Traveller)</td>
                 <td>'.$casesTravelersLastWeek.'</td>
                 <td>'.$casesTravelersRecentWeek.'</td>
-                <td>'.$casesTravelersChange.'</td>
+                <td>'.number_format($casesTravelersChange,2).'</td>
                 <td>'.$nationalCasesTravelersLastWeek.'</td>
             </tr>
             <tr>
-                <td rowspan="2">Reported Cases of COVID-19</td>
-                <td>Cases (Non-Traveller)</td>
+                <td rowspan="2">Total COVID-19 Test Performed</td>
+                <td>Tests (Non-Traveller)</td>
                 <td>'.$testNonTravelersLastWeek.'</td>
                 <td>'.$testNonTravelersRecentWeek.'</td>
-                <td>'.$testNonTravelersChange.'</td>
+                <td>'.number_format($testNonTravelersChange,2).'</td>
                 <td>'.$nationalTestNonTravelersLastWeek.'</td>
             </tr>
             <tr>
-                <td>Cases (Traveller)</td>
+                <td>Tests (Traveller)</td>
                 <td>'.$testTravelersLastWeek.'</td>
                 <td>'.$testTraverRecentWeek.'</td>
-                <td>'.$testTravelersChange.'</td>
+                <td>'.number_format($testTravelersChange,2).'</td>
                 <td>'.$nationalTestTravelersLastWeek.'</td>
             </tr>
             <tr>
                 <td rowspan="2">COVID-19 Test Positivity(%)</td>
                 <td>Test Positivity (Non-Traveller)</td>
-                <td>'.$positivityNonTravelersLastWeek.'</td>
-                <td>'.$positivityNonTravelersRecentWeek.'</td>
-                <td>'.$positivityNonTravelersChange.'</td>
-                <td>'.$nationalPositivityNonTravelersLastWeek.'</td>
+                <td>'.number_format($positivityNonTravelersLastWeek,2).'</td>
+                <td>'.number_format($positivityNonTravelersRecentWeek,2).'</td>
+                <td>'.number_format($positivityNonTravelersChange,2).'</td>
+                <td>'.number_format($nationalPositivityNonTravelersLastWeek,2).'</td>
             </tr>
             <tr>
                 <td>Test Positivity (Traveller)</td>
-                <td>'.$positivityTravelersLastWeek.'</td>
-                <td>'.$positivityTraverRecentWeek.'</td>
-                <td>'.$positivityNonTravelersChange.'</td>
-                <td>'.$nationalPositivityNonTravelersLastWeek.'</td>
+                <td>'.number_format($positivityTravelersLastWeek,2).'</td>
+                <td>'.number_format($positivityTraverRecentWeek,2).'</td>
+                <td>'.number_format($positivityNonTravelersChange,2).'</td>
+                <td>'.number_format($nationalPositivityNonTravelersLastWeek,2).'</td>
             </tr>
             <tr>
                 <td rowspan="2">Hospitalization of COVID-19 cases</td>
