@@ -121,7 +121,7 @@ class NewsBulletinController extends Controller
         return [
             'population' => number_format($_population->Population,2) ?? '',
             'district_name'=> $_district_name,
-            'date'=> $lebelInfo->date_eng,
+            'date'=> \Carbon\Carbon::parse($lebelInfo->date_eng)->format('d M, Y'),
             'recent'=>'Last Week ('.$lebelInfo->recent_weekly_date.')',
             'last'=>'2 Week Age ('.$lebelInfo->last_weekly_date.')',
             'first_chart'=> ['title'=>"Weekly Analysis of COVID-19 Indicators in {$_district_name} District", 'table'=> $this->indicatorsDataPrepare($dist, $date_id)],
