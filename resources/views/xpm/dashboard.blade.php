@@ -421,6 +421,14 @@
 		content: counter(serial-number);  /* Display the counter */
 		}
 
+        #travellerFullTableWithAllDistrict {
+		counter-reset: serial-number;  /* Set the serial number counter to 0 */
+		}
+		#travellerFullTableWithAllDistrict td:first-child:before {
+		counter-increment: serial-number;  /* Increment the serial number counter */
+		content: counter(serial-number);  /* Display the counter */
+		}
+
 
         .verticalLabel {
            width: 10%; vertical-align: middle !important;
@@ -5457,7 +5465,7 @@ $ydata = [];
 
 
             /*traveller all data start here*/
-             var travellerTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
+             var travellerTableHead = `<table id="travellerFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
@@ -5492,7 +5500,10 @@ $ydata = [];
             else {
                 table = $('#matrixFullTableWithAllDistrict').DataTable( {
                     paging: false,
-                    searching: false
+                    searching: true,
+                    "oLanguage": {
+                        "sSearch": "অনুসন্ধান করুন:"
+                    }
                 } );
             }
             
@@ -5508,7 +5519,10 @@ $ydata = [];
             else {
                 table = $('#travellerFullTableWithAllDistrict').DataTable( {
                     paging: false,
-                    searching: false
+                    searching: true,
+                    "oLanguage": {
+                        "sSearch": "অনুসন্ধান করুন:"
+                    }
                 } );
             }
             
