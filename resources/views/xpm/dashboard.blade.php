@@ -2077,11 +2077,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-3 ml-4 mb-3">
-                                                                        <p>নির্বাচন করুন: </p>
-                                                                        <label class="radio-inline"><input type="radio" value="0" class="travelers_3rd_matrix" name="travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
-                                                                        <label class="radio-inline"><input type="radio" value="1" class="travelers_3rd_matrix" name="travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
+                                                                        <p>নির্বাচন করুন: <span style="font-weight:bold">(প্রতি লাখে সনাক্ত)</span></p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
                                                                     </div>
-                                                                    <div class="col-xl-3">
+                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                        <p>নির্বাচন করুন: <span style="font-weight:bold">(টেস্ট পজিটিভিটি)</span></p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
+                                                                    </div>
+                                                                    <div class="col-xl-1">
                                                                         <br>
                                                                         <button type="button" class="btn btn-sm btn-primary" id="weekly_date__3rd_matrix_submit">পরিবর্তন করুন</button>
                                                                     </div>
@@ -5878,7 +5883,8 @@ $ydata = [];
                     'test_count': $('#myRange3rdMatrix').val(),
                     'test_positive_data_rate': $('#ex12c3rdMatrix').val(),
                     'weekly_date': $('#weekly_date_3rd_matrix').val(),
-                    'travelers' : $('input[name="travelers_3rd_matrix"]:checked').val()
+                    'case_travelers' : $('input[name="cases_travelers_3rd_matrix"]:checked').val(),
+                    'test_travelers' : $('input[name="test_travelers_3rd_matrix"]:checked').val()
                 },
                 timeout: 30000,
                 success: function (data) {
