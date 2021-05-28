@@ -2422,7 +2422,7 @@ ORDER BY r.positive_tests DESC");
 ORDER BY r.positive_tests DESC");
 
         $test_low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
 ORDER BY r.positive_tests DESC");
 
         $low_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_medium_table_contentData, $test_low_to_medium_table_contentData);
