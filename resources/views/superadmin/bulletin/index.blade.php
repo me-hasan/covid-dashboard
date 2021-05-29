@@ -63,7 +63,7 @@
                             <td>{{$bolletin->count ?? '--'}}</td>
                             <td>
                             	<a href="{{ route('bolletin-pdf-view', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" target="_blank" class="btn btn-sm btn-primary" style="float: left;margin-right: 5px;" title="View"><i class="fas fa-file-pdf"></i></a>
-                            	<a href="{{ route('bolletin-pdf-send-email', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" target="_blank" class="btn btn-sm btn-info" style="float: left;margin-right: 5px;" title="Send Email"><i class="far fa-envelope"></i></a>
+                            	<a href="{{ route('bolletin-pdf-send-email', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" class="btn btn-sm btn-info" style="float: left;margin-right: 5px;" title="Send Email"><i class="far fa-envelope"></i></a>
                             	<a href="{{ route('bolletin-pdf-view', ['date_id'=>$bolletin->date_id, 'district'=>$bolletin->change_name]) }}" target="_blank" class="btn btn-sm btn-success" style="float: left;margin-right: 5px;" title="Download"><i class="fas fa-cloud-download-alt"></i></a>
                             </td>
                         </tr>

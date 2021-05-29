@@ -44,7 +44,7 @@ class NewsBulletinController extends Controller
      */
     public function newsBulletinHistory(Request $request)
     {
-        $bolletins= NewsBulletinLog::with('weeklyDate')->get();
+        $bolletins= NewsBulletinLog::with('weeklyDate')->orderBy('date_id')->get();
         // dd($bolletins);
         return view("superadmin.bulletin.index", compact('bolletins'));
     }
