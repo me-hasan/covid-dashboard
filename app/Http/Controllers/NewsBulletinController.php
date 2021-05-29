@@ -528,9 +528,9 @@ class NewsBulletinController extends Controller
         request()->validate([
             'calendar_date'  => 'required',
             'district_name'  => 'required',
-            'daily_effected'  => 'required|mimes:jpg,png|max:1048',
-            'district_chart'  => 'required|mimes:jpg,png|max:1048',
-            'map'  => 'required|mimes:jpg,png|max:1048',
+            'daily_effected'  => 'required|mimes:jpg,jpeg,png|max:1048',
+            'district_chart'  => 'required|mimes:jpg,jpeg,png|max:1048',
+            'map'  => 'required|mimes:jpg,jpeg,png|max:1048',
         ],[
             'calendar_date.required'  => '* তারিখ আবশ্যক',
             'district_name.required'  => '* জেলার নাম আবশ্যক',
