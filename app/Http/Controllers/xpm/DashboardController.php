@@ -2691,7 +2691,7 @@ using(district) ORDER BY r.test_positivity DESC");
         COALESCE(daily_cases, 0) AS daily_cases FROM
         (select thedate, division, district, daily_cases from
         (select thedate from calendardate where thedate >= '2020-05-20'
-        and thedate <= (date_sub(curdate(), interval 2 day))) as T1
+        and thedate <= (date_sub(curdate(), interval 1 day))) as T1
         left join
         (select date_of_test, division, district, daily_cases from  {$tableName}
         {$queryClause}) as T2 on T1.thedate=T2.date_of_test) as R) AS b
@@ -2702,7 +2702,7 @@ using(district) ORDER BY r.test_positivity DESC");
         COALESCE(daily_cases, 0) AS daily_cases FROM
         (select thedate, division, district, daily_cases from
         (select thedate from calendardate where thedate >= '2020-05-20'
-        and thedate <= (date_sub(curdate(), interval 2 day))) as T1
+        and thedate <= (date_sub(curdate(), interval 1 day))) as T1
         left join
         (select date_of_test, division, district, daily_cases from  {$tableName}
         {$queryClause}) as T2 on T1.thedate=T2.date_of_test) as Q) as a");
