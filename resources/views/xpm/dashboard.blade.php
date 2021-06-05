@@ -564,7 +564,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </li>
                             </a>
 
-                            @if((Auth::user()->id ?? 0)  == 10)
+                            @if((Auth::user()->id ?? 0)  == 11)
                             <a href="#scroll_location_of_the_detected_district">
                                 <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের সনাক্তের ভিত্তিতে দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
                                 </li>
@@ -1211,7 +1211,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </div>
                                                             {{-- start table for red color distribution --}}
 
-                                                            @if((Auth::user()->id ?? 0)  == 10)
+                                                            @if((Auth::user()->id ?? 0)  == 11)
                                                             <div class="row">
                                                                 <div class="col-xl-12 col-lg-12 col-md-12">
                                                                     <div class="card-body">
@@ -1501,7 +1501,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
 
-                            @if((Auth::user()->id ?? 0)  == 10)
+                            @if((Auth::user()->id ?? 0)  == 11)
                             {{--2nd matix start here --}}
                             <div class="col-lg-12 mt-2" id="scroll_location_of_the_detected_district">
                                         <div class="invoice-head title-bg-style">
@@ -2059,14 +2059,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <div class="row">
-                                                            {{-- <div class="col-xl-1 col-md-1">
-                                                                <div id=""
-                                                                    style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
-                                                                    class="fs-20 b1 recent_weekly_date_third_matrix">
-                                                                    <br>গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )
+                                                            <div class="col-xl-1 col-md-1">
+                                                                <div id="" style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;" class="fs-20 b1">
+                                                                    প্রতি লাখে সনাক্ত
                                                                 </div>
-                                                            </div> --}}
-                                                            <div class="col-xl-12 col-md-12">
+                                                            </div>
+                                                            <div class="col-xl-11 col-md-11">
                                                                 <div class="row">
                                                                     <div class="col-xl-3">
                                                                         <p>তারিখ নির্বাচন করুন: </p>
@@ -2119,7 +2117,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <thead>
                                                                         <tr>
                                                                             <td colspan="4" class="text-center fs-18 recent_weekly_date_third_matrix" style="font-size: 26px" id=""><span
-                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} )
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} ) <br>
+                                                                                    <span style="position: relative; top: 40px; right:40%; font-size: 23px">টেস্ট পজিটিভিটি</span>
                                                                             </td>
                                                                         </tr>
                                                                         </thead>
@@ -2927,8 +2926,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <p class="footer-note">
                                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                     <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                        id="last_date_10"> {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}
-                                                                        {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</span>
+                                                                        id="last_date_10">
+                                                                        {!! convertEnglishMonthDateToBangla(date('d-m-Y', strtotime("-2 days"))) !!}</span>
                                                                 </p>
                                                             </div>
 
