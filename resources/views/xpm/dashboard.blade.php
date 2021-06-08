@@ -493,6 +493,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <a href="{{route('xpm.vaccination')}}"><i
                                     class=""></i><span>টিকাদান কর্মসূচি</span></a>
                         </li>
+                        
+                        <li class="active">
+                            <a href="{{route('socio.economic')}}"><i
+                                    class=""></i><span>আর্থ-সামাজিক</span></a>
+                        </li>
 
                     </ul>
                     <ul class="metismenu">
