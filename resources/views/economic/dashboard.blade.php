@@ -550,7 +550,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         <div class="card-body">
                             <div class="invoice-head title-bg-style">
                                 <div class="row">
-                                    <div class="iv-left col-6 ">
+                                    <div class="iv-left col-12">
                                         <h2>Overseas employment and remittance</h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
@@ -587,85 +587,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                                 <div class="col-lg-9 mt-2">
-
-                                    {{--  Filter   --}}
-                                    <div class="row flex-row-reverse">
-                                        {{--  <div class="col-md-3">
-                                            <label>বিভাগ</label>
-                                            <select name="division[]" id="division" multiple
-                                                    class="select2 form-control btn-outline-primary division_select">
-
-                                                @foreach($division_list as $division)
-                                                    <option value="{!! $division !!}"
-                                                            class="b1">{!! en2bnTranslation($division) !!} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>  --}}
-                                        <div class="col-md-2">
-                                            <button id="filter-daily-infected-search"
-                                                    class="btn btn-sm district_cms_search b1" style="position: relative; top:24px">
-                                                <svg class="header-icon search-icon" x="1008" y="1248"
-                                                     viewBox="0 0 24 24" height="50%" width="50%"
-                                                     preserveAspectRatio="xMidYMid meet" focusable="false">
-                                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
-                                                    <path
-                                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label>বয়স</label>
-                                            <select name="district[]" id="daily-infected-district"
-                                                    class="select2 form-control btn-outline-primary select_district">
-                                                    <option value="all">সব</option>
-                                                    <option value="" class="b1">০ থেকে ১০ </option>
-                                                    <option value="" class="b1">১ থেকে ২0 </option>
-                                                    <option value="" class="b1">২১ থেকে ৩0 </option>
-                                                    <option value="" class="b1">৩১ থেকে ৪0 </option>
-                                                    <option value="" class="b1">৪১ থেকে ৫0 </option>
-                                                    <option value="" class="b1">৫১ থেকে ৬0 </option>
-                                                    <option value="" class="b1">৬0+ </option>
-
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label>লিঙ্গ</label>
-                                            <select name="district[]" id="daily-infected-district"
-                                                    class="select2 form-control btn-outline-primary select_district">
-                                                    <option value="all">সব</option>
-                                                    <option value="" class="b1">পুরুষ </option>
-                                                    <option value="" class="b1">মহিলা </option>
-                                                    
-                                                
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label>উপজেলা</label>
-                                            <select name="district[]" id="daily-infected-district"
-                                                    class="select2 form-control btn-outline-primary select_district">
-                                                    <option value="all">সারাদেশ</option>
-                                                    {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
-
-                                                @foreach($district_list as $district)
-                                                    <option value="{!! $district->district !!}"
-                                                            class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label>জেলা</label>
-                                            <select name="district[]" id="daily-infected-district"
-                                                    class="select2 form-control btn-outline-primary select_district">
-                                                    <option value="all">সারাদেশ</option>
-                                                    {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
-
-                                                @foreach($district_list as $district)
-                                                    <option value="{!! $district->district !!}"
-                                                            class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                     {{--  end  --}}
                                     <div class="card">
                                         <div id="national_dialy_infected_trend"></div>
@@ -793,8 +714,65 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         </div>
                     </div>
                 </div>
-                 <!-- normalized per 100 people end -->
+                <!-- normalized per 100 people end -->
 
+
+
+
+
+                <!-- Statistics area start -->
+                <div class="col-lg-12 mt-4" id="scroll_daily_affected">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="invoice-head title-bg-style">
+                                <div class="row">
+                                    <div class="iv-left col-12">
+                                        <h2>District wise overseas employment 2005 to 2019</h2>
+                                    </div>
+                                    <div class="iv-right offset-md-4 col-2 " style="display: none">
+                                        <select name="" id="daily-infected-total-select" class="form-control">
+                                            <option value="">তথ্যসূত্র বাছাই করুন</option>
+                                            <option value="MIS-DGHS">MIS-DGHS</option>
+                                            <option value="IEDCR">IEDCR</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-3 mt-2">
+                                    <div class="card">
+                                        <div class="card-body info-style">
+                                            <h4 id="special_word_1" class="header-title">
+                                                শিরোনাম
+                                                {{-- {!! $des_1->component_name_beng ?? '' !!} --}}
+                                            </h4>
+                                            <div class="the-number">
+                                            </div>
+                                            <h4 class="header-title"></h4>
+                                            <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                <strong>বর্ণনা:</strong>
+                                                {{-- নীতি বিবৃতি --}}
+                                                {{-- {!! $des_1->description_beng ?? '' !!} --}}
+                                            </div>
+                                            {{-- <p class="footer-note">
+                                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_1"></span>
+                                            </p> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    {{--  end  --}}
+                                    <div class="card">
+                                        <div id="districtWiseOverseasEmployment" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Statistics area end -->
 
 
 
@@ -808,9 +786,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-12 ">
                                         <h3>
-                                           Cumulative comparison of Registered vs Vaccinated 
-By District/Sub District, Gender, Age Group
-
+                                           Female Overseas Workers
                                         </h3>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
@@ -833,71 +809,6 @@ By District/Sub District, Gender, Age Group
                                             শিরোনাম
                                             {{-- {!! $des_2->component_name_beng ?? '' !!} --}}
                                         </h4>
-
-                                        
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>জেলা</label>
-                                                <select name="district[]" id="district" multiple
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                    @foreach($district_list as $district)
-                                                        <option value="{!! $district->district !!}"
-                                                                class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>উপজেলা</label>
-                                                <select name="district[]" id="daily-infected-district"
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                        <option value="all">সারাদেশ</option>
-                                                        {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
-
-                                                    @foreach($district_list as $district)
-                                                        <option value="{!! $district->district !!}"
-                                                                class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>বয়স</label>
-                                                <select name="district[]" id="daily-infected-district"
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                        <option value="all">সব</option>
-                                                        <option value="" class="b1">০ থেকে ১০ </option>
-                                                        <option value="" class="b1">১ থেকে ২0 </option>
-                                                        <option value="" class="b1">২১ থেকে ৩0 </option>
-                                                        <option value="" class="b1">৩১ থেকে ৪0 </option>
-                                                        <option value="" class="b1">৪১ থেকে ৫0 </option>
-                                                        <option value="" class="b1">৫১ থেকে ৬0 </option>
-                                                        <option value="" class="b1">৬0+ </option>
-
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>লিঙ্গ</label>
-                                                <select name="district[]" id="daily-infected-district"
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                        <option value="all">সব</option>
-                                                        <option value="" class="b1">পুরুষ </option>
-                                                        <option value="" class="b1">মহিলা </option>
-                                                        
-                                                    
-                                                </select>
-                                            </div>
-                                            <div class="col-sm mt-4">
-                                                <button id="filter-division"
-                                                        class="btn btn-sm district_cms_search b1">
-                                                    <svg class="header-icon search-icon" x="1008" y="1248"
-                                                         viewBox="0 0 24 24" height="100%" width="100%"
-                                                         preserveAspectRatio="xMidYMid meet" focusable="false">
-                                                        <path d="M0 0h24v24H0V0z" fill="none"></path>
-                                                        <path
-                                                            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
 
                                         <div id="cumulativeComparisonOfRegisteredVsVaccinated" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
 
@@ -927,11 +838,7 @@ By District/Sub District, Gender, Age Group
                             <div class="invoice-head title-bg-style">
                                 <div class="row">
                                     <div class="iv-left col-12 ">
-                                        <h3>
-                                           Resource Management metrics: Cumulative Vaccine shipped vs required vs administered
-
-
-                                        </h3>
+                                        <h3>IPA Income</h3>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
                                         <select name="" id="area-wise-infected-total" class="form-control">
@@ -951,75 +858,9 @@ By District/Sub District, Gender, Age Group
 
                                         <h4 id="special_word_4" class="header-title">
                                             শিরোনাম
-                                            {{-- {!! $des_2->component_name_beng ?? '' !!} --}}
                                         </h4>
 
-                                        
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>জেলা</label>
-                                                <select name="district[]" id="district" multiple
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                    @foreach($district_list as $district)
-                                                        <option value="{!! $district->district !!}"
-                                                                class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>উপজেলা</label>
-                                                <select name="district[]" id="daily-infected-district"
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                        <option value="all">সারাদেশ</option>
-                                                        {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
-
-                                                    @foreach($district_list as $district)
-                                                        <option value="{!! $district->district !!}"
-                                                                class="b1">{!! en2bnTranslation($district->district) !!} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>বয়স</label>
-                                                <select name="district[]" id="daily-infected-district"
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                        <option value="all">সব</option>
-                                                        <option value="" class="b1">০ থেকে ১০ </option>
-                                                        <option value="" class="b1">১ থেকে ২0 </option>
-                                                        <option value="" class="b1">২১ থেকে ৩0 </option>
-                                                        <option value="" class="b1">৩১ থেকে ৪0 </option>
-                                                        <option value="" class="b1">৪১ থেকে ৫0 </option>
-                                                        <option value="" class="b1">৫১ থেকে ৬0 </option>
-                                                        <option value="" class="b1">৬0+ </option>
-
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label>লিঙ্গ</label>
-                                                <select name="district[]" id="daily-infected-district"
-                                                        class="select2 form-control btn-outline-primary select_district">
-                                                        <option value="all">সব</option>
-                                                        <option value="" class="b1">পুরুষ </option>
-                                                        <option value="" class="b1">মহিলা </option>
-                                                        
-                                                    
-                                                </select>
-                                            </div>
-                                            <div class="col-sm mt-4">
-                                                <button id="filter-division"
-                                                        class="btn btn-sm district_cms_search b1">
-                                                    <svg class="header-icon search-icon" x="1008" y="1248"
-                                                         viewBox="0 0 24 24" height="100%" width="100%"
-                                                         preserveAspectRatio="xMidYMid meet" focusable="false">
-                                                        <path d="M0 0h24v24H0V0z" fill="none"></path>
-                                                        <path
-                                                            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div id="demandSupplyAnalysis" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+                                        <div id="demandSupplyAnalysis" style="width: 100%; height: 550px; background-color: #FFFFFF;" ></div>
 
                                         <div class="alert mt-3 p-0 text-justify" role="alert">
                                             <strong>বর্ণনা:</strong>
@@ -1041,91 +882,8 @@ By District/Sub District, Gender, Age Group
 
 
                 <!-- Statistics area end -->
-                <!-- Statistics area start -->
-                <div class="col-lg-12 mt-4" id="scroll_test_status">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            
-
-                            <div class="row">
-                                <div class="col-lg-6 mt-2">
-                                    <div class="card">
-                                        <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison">
-                                            <div class="row">
-                                                <div class="iv-left col-12">
-                                                    <h2>দৈনিক  নিবন্ধকরণ ও বিতরণের সংখ্যার তুলনা</h2>
-                                                </div>
-            
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 mt-2">
-                                            <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
-                                                শিরোনাম 
-                                                {{-- {!! $des_4->component_name_beng ?? '' !!} --}}
-                                            </h4>
-                                        </div>
-                                        <div class="card-body purple-style info-style">
-
-                                            {{--<h4 style="height: 150px;" id="special_word_5" class="header-title ">--}}
-                                                {{--{!! $des_4->component_name_beng ?? '' !!}--}}
-                                            {{--</h4>--}}
-
-                                            <div id="ambarchart4"></div>
-                                            <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                <strong>বর্ণনা:</strong>
-                                                {{-- নীতি বিবৃতি  --}}
-                                                {{-- {!! $des_4->description_beng ?? '' !!} --}}
-                                            </div>
-                                            {{-- <p class="footer-note">
-                                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_5"></span>
-                                            </p> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="col-lg-6 mt-2">
-                                    <div class="card">
-                                        <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison_rate">
-                                            <div class="row">
-                                                <div class="iv-left col-12">
-                                                    <h2>নিবন্ধকরণ এর বিবেচনায় বিতরণের হারের সাপ্তাহিক গড়</h2>
-                                                </div>
-            
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 mt-2">
-                                            <h4 style="height: 150px; margin-bottom: -85px;" id="special_word_5" class="header-title ">
-                                                শিরোনাম
-                                                {{-- {!! $des_5->component_name_beng ?? '' !!} --}}
-                                            </h4>
-                                        </div>
-                                        <div class="card-body purple-style info-style">
-
-                                            {{--<h4 style="height: 150px;" id="special_word_6" class="header-title ">--}}
-                                                {{--{!! $des_5->component_name_beng ?? '' !!}--}}
-                                            {{--</h4>--}}
-
-                                            <div id="ambarchart1"></div>
-                                            <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                <strong>বর্ণনা:</strong>
-                                                {{-- নীতি বিবৃতি  --}}
-                                                {{-- {!! $des_5->description_beng ?? '' !!} --}}
-                                            </div>
-                                            {{-- <p class="footer-note">
-                                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_6"></span>
-                                            </p> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                    </div>
-                </div>
+                
+                
 
 
                 <!--Section 3(Last) strat here-->
@@ -1713,313 +1471,248 @@ $ydata = [];
 
 
     function dailyInfectedChart(data, dist='') {
+    
 	// console.log(data);
-        let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
             var chart = AmCharts.makeChart("national_dialy_infected_trend", {
                 "type": "serial",
-                "theme": "none",
-                "marginRight": 80,
+                "addClassNames": true,
+                "theme": "light",
+                "balloon": {
+                    "adjustBorderColor": false,
+                    "color": "#050606"
+                },
+                "valueAxes": [
+                    {
+                        "position": "left",
+                        //"title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
+                        "title": "Number of employment",
+                        "id": "v1",
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            //get from
+                            return value;
+                        },
+
+                    },
+                    {
+                        "position": "right",
+                        "title": "$ USD in millions",
+                        "id": "v2",
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            return value;
+                        },
+                    },
+
+                ],
                 "dataProvider": [
                       {
                         "date": "2000",
-                        "infected": "1617",
-                        "avg": "1617.00",
-                        "total_infected": 26738,
-                        "tested": "10207",
-                        "tested_data": 10207,
-                        "case": "1617"
+                        "employment": "222686",
+                        "remitace": "1954.95",
                       },
                       {
                         "date": "2001",
-                        "infected": "1773",
-                        "avg": "1695.00",
-                        "total_infected": 28511,
-                        "tested": "10234.5",
-                        "tested_data": 10234.5,
-                        "case": "1695"
+                        "employment": "189060",
+                        "remitace": "2071.03",
                       },
                       {
                         "date": "2002",
-                        "infected": "1694",
-                        "avg": "1694.67",
-                        "total_infected": 30205,
-                        "tested": "10065.33",
-                        "tested_data": 10065.33,
-                        "case": "1694.67"
+                        "employment": "225256",
+                        "remitace": "2847.79",
                       },
                       {
                         "date": "2003",
-                        "infected": "1873",
-                        "avg": "1739.25",
-                        "total_infected": 32078,
-                        "tested": "10257.5",
-                        "tested_data": 10257.5,
-                        "case": "1739.25"
+                        "employment": "254190",
+                        "remitace": "3177.63",
                       },
                       {
                         "date": "2004",
-                        "infected": "1532",
-                        "avg": "1697.80",
-                        "total_infected": 33610,
-                        "tested": "9987.6",
-                        "tested_data": 9987.6,
-                        "case": "1697.8"
+                        "employment": "272958",
+                        "remitace": "3564.31",
                       },
                       {
                         "date": "2005",
-                        "infected": "1975",
-                        "avg": "1744.00",
-                        "total_infected": 35585,
-                        "tested": "9898.17",
-                        "tested_data": 9898.17,
-                        "case": "1744"
+                        "employment": "252702",
+                        "remitace": "4249.87",
                       },
                       {
                         "date": "2006",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "381516",
+                        "remitace": "5484.08",
                       },
                       {
                         "date": "2007",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "832609",
+                        "remitace": "6562.71",
                       },
                       {
                         "date": "2008",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "875055",
+                        "remitace": "8979",
                       },
                       {
                         "date": "2009",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "475278",
+                        "remitace": "10717.73",
                       },
                       {
                         "date": "2010",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "390702",
+                        "remitace": "11004.73",
                       },
                       {
                         "date": "2011",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "568062",
+                        "remitace": "12168.09",
                       },
                       {
                         "date": "2012",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "607798",
+                        "remitace": "14163.99",
                       },
                       {
                         "date": "2013",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "409253",
+                        "remitace": "13832.13",
                       },
                       {
                         "date": "2014",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "425684",
+                        "remitace": "14942.57",
                       },
                       {
                         "date": "2015",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "555881",
+                        "remitace": "15270.99",
                       },
                       {
                         "date": "2016",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "757731",
+                        "remitace": "13609.77",
                       },
                       {
                         "date": "2017",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "1008525",
+                        "remitace": "13526.84",
                       },
                       {
                         "date": "2018",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "734181",
+                        "remitace": "15544.68",
                       },
                       {
                         "date": "2019",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "700159",
+                        "remitace": "18354.94",
                       },
                       {
                         "date": "2020",
-                        "infected": "1166",
-                        "avg": "1661.43",
-                        "total_infected": 36751,
-                        "tested": "9256.57",
-                        "tested_data": 9256.57,
-                        "case": "1661.43"
+                        "employment": "217669",
+                        "remitace": "21752.27",
                       },
                       
                  ],
-                "legend": {
-                    "horizontalGap": 10,
-                    "maxColumns": 2,
-                    "position": "bottom",
-                    "useGraphSettings": true,
-                    "markerSize": 20,
-                    "valueFunction": function (a, value) {
-                        return '';
-                    },
-                    "align": "center"
+                "startDuration": 1,
+                        "legend": {
+                            "horizontalGap": 15,
+                            "maxColumns": 15,
+                            "position": "bottom",
+                            "useGraphSettings": true,
+                            "markerSize": 15,
+                            "valueFunction": function (a, value) {
+                                return '';
+                            },
+                            "align": "center"
+                        },
+                        "graphs": [{
+                            "valueAxis": "v2",
+                            "id": "g1",
+                            "alphaField": "alpha",
+                            "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+                            "fillColorsField": "color",
+                            "title": "Number of employment",
+                            "type": "column",
+                            "fillAlphas": 1,
+                            "lineAlpha": 0,
+                            "lineColor": "rgb(160, 28, 251)",
+                            "valueField": "employment",
+                            "dashLengthField": "dashLengthColumn",
+                            "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = "Number of employment";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value + "</b></span>";
+                            }
+                        }, {
+                            "valueAxis": "v1",
+                            "id": "graph2",
+                            "lineThickness": 2,
+                            "lineColor": "rgb(251, 49, 28)",
+                            "type": "smoothedLine",
+                            "gapPeriod": 2,
+                            "title": "$ USD in millions", //5 days running average
+                            "valueField": "remitace",
+                            "bullet": "round",
+                            "bulletSize": 7,
+                            "fillAlphas": 0,
+                            "lineAlpha": 1,
+                            "bulletBorderAlpha": 10,
+                            "bullegit addtColor": "#FFFFFF",
+                            "useLineColorForBulletBorder": true,
+                            "bulletBorderThickness": 3,
+                             "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = "$ USD in millions";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value + "</b></span>";
+                            }
+                        }],
+                        "chartCursor": {
+                            "cursorPosition": "mouse",
+                            "showNextAvailable": false,
+                            "categoryBalloonFunction": function (date) {
+                                var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                                return date.getFullYear();
+                            },
+                        },
+                        "categoryField": "date",
+                        "categoryAxis": {
+                            "parseDates": true,
+                            "minPeriod": "hh",
+                            "showLastLabel": true,
+                            "labelFunction": function (value, date, categoryAxis) {
+                                var options = new Array();
+                                options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                                options["MMM"] = {year: 'numeric', month: 'long'};
+                                options["YY"] = {year: 'numeric', month: 'long'};
+                                return date.getFullYear();
+                            },
+                            "labelRotation": 30,
+                            "autoGridCount": false,
+                            "equalSpacing": true,
+                            "gridCount": 10,
+                            "showFirstLabel": true,
+                            "showLastLabel": true,
 
-                },
-                "valueAxes": [{
-                    "position": "left",
-                    "title": zoneName+" এর দৈনিক নিবন্ধনের সংখ্যা",
-                    "id": "v1",
-                    "minimum": 0,
-                    "labelFunction": function (value, valueText, valueAxis) {
-                        return value.toLocaleString("bn-BD");
-                    },
+                        },
+                        "chartScrollbar": {
+                            "graph": "g1",
+                            "gridAlpha": 0,
+                            "color": "#888888",
+                            "scrollbarHeight": 55,
+                            "backgroundAlpha": 0,
+                            "selectedBackgroundAlpha": 0.1,
+                            "selectedBackgroundColor": "#888888",
+                            "graphFillAlpha": 0,
+                            "autoGridCount": true,
+                            "selectedGraphFillAlpha": 0,
+                            "graphLineAlpha": 0.2,
+                            "graphLineColor": "#c2c2c2",
+                            "selectedGraphLineColor": "#888888",
+                            "selectedGraphLineAlpha": 1
 
-                },
-                ],
-
-                "graphs": [{
-                    "valueAxis": "v1",
-                    "id": "g1",
-                    "balloonText": "[[title]]: [[value]]",
-                    "columnWidth": 10,
-                    "lineThickness": 10,
-                    "fillAlphas": 1,
-                    "lineColor": "rgb(103, 183, 220)",
-                    "title": zoneName+" এর দৈনিক নিবন্ধকরণ",
-                    "type": "column",
-                    "valueField": "infected",
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = zoneName+" এর দৈনিক নিবন্ধকরণ";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value + "</b></span>";
-                    }
-                }, {
-                    "id": "g2",
-                    "balloonText": "[[title]]: [[value]]",
-                    "lineThickness": 2,
-                    "lineColor": "orange",
-                    "type": "smoothedLine",
-                    "title": zoneName+" এর দৈনিক নিবন্ধকরণ (৭ দিনের  চলমান গড়)", //5 days running average
-                    "valueField": "avg",
-                    "bullet": "round",
-                    "bulletSize": 7,
-                    "bulletBorderAlpha": 10,
-                    "bullegit addtColor": "#FFFFFF",
-                    "useLineColorForBulletBorder": true,
-                    "bulletBorderThickness": 3,
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = zoneName+"- দৈনিক নিবন্ধকরণ (৭ দিনের  চলমান গড়)";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value + "</b></span>";
-                    }
-                }],
-                "chartCursor": {
-                    "cursorPosition": "mouse",
-                    "showNextAvailable": true,
-                    "categoryBalloonFunction": function (date) {
-                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
-                        return date;
-                    },
-                },
-                "autoMarginOffset": 5,
-                "columnWidth": 1,
-                "categoryField": "date",
-		            "categoryAxis": {
-		    
-		            "equalSpacing": false,
-                "parseDates": true,
-	              "minPeriod": "hh",
-		            //  "showLastLabel": true,	
-                "labelFunction": function (value, date, categoryAxis) {
-                        var options = new Array();
-                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
-                        options["MMM"] = {year: 'numeric', month: 'long'};
-                        options["YY"] = {year: 'numeric', month: 'long'};
-                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                },
-                //"equalSpacing": true,
-                "showFirstLabel": true,
-                 "showLastLabel": true,
-
-                },
-
-                "chartScrollbar": {
-                    "graph": "g2",
-                    "gridAlpha": 0,
-                    "color": "#888888",
-                    "scrollbarHeight": 55,
-                    "backgroundAlpha": 0,
-                    "selectedBackgroundAlpha": 0.1,
-                    "selectedBackgroundColor": "#888888",
-                    "graphFillAlpha": 0,
-                    "autoGridCount": true,
-                    "selectedGraphFillAlpha": 0,
-                    "graphLineAlpha": 0.2,
-                    "graphLineColor": "#c2c2c2",
-                    "selectedGraphLineColor": "#888888",
-                    "selectedGraphLineAlpha": 1
-
-                },
+                        }
 
             });
 
@@ -2035,6 +1728,322 @@ $ydata = [];
 
         }
     }
+
+
+
+
+
+
+    function districtWiseOverseasEmployment(data, dist='') {
+        if ($('#national_dialy_infected_trend').length) {
+            $('#last_date_1').html(" " + m_last_date);
+            var chart = AmCharts.makeChart("districtWiseOverseasEmployment", {
+                "type": "serial",
+                "addClassNames": true,
+                "theme": "light",
+                "balloon": {
+                    "adjustBorderColor": false,
+                    "color": "#050606"
+                },
+                "valueAxes": [
+                    {
+                        "position": "left",
+                        //"title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
+                        "title": "Number of employment",
+                        "id": "v1",
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            //get from
+                            return value;
+                        },
+
+                    },
+                    {
+                        "position": "left",
+                        "title": "Number of overseas employment",
+                        "id": "v2",
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            return value;
+                        },
+                    },
+
+                ],
+                "dataProvider": [
+                      
+                      {
+                        "district": "Bagerhat",
+                        "employment": "40358",
+                      },{
+                        "district": "Barguna",
+                        "employment": "39127",
+                      },{
+                        "district": "Barishal",
+                        "employment": "122017",
+                      },{
+                        "district": "Bhola",
+                        "employment": "79497",
+                      },{
+                        "district": "Bogura",
+                        "employment": "117007",
+                      },{
+                        "district": "Brahmanbaria",
+                        "employment": "479581",
+                      },{
+                        "district": "Chandpur",
+                        "employment": "358002",
+                      },{
+                        "district": "Chapai Nawabganj",
+                        "employment": "82394",
+                      },{
+                        "district": "Chattogram",
+                        "employment": "715548",
+                      },{
+                        "district": "Chuadanga",
+                        "employment": "43038",
+                      },{
+                        "district": "Cox's Bazar",
+                        "employment": "110021",
+                      },{
+                        "district": "Cumilla",
+                        "employment": "939773",
+                      },{
+                        "district": "Dhaka",
+                        "employment": "397258",
+                      },{
+                        "district": "Dinajpur",
+                        "employment": "23896",
+                      },{
+                        "district": "Faridpur",
+                        "employment": "190779",
+                      },{
+                        "district": "Feni",
+                        "employment": "227326",
+                      },{
+                        "district": "Gaibandha",
+                        "employment": "38791",
+                      },{
+                        "district": "Gazipur",
+                        "employment": "203396",
+                      },{
+                        "district": "Gopalganj",
+                        "employment": "52645",
+                      },{
+                        "district": "Habiganj",
+                        "employment": "162553",
+                      },{
+                        "district": "Jaipurhat",
+                        "employment": "23419",
+                      },{
+                        "district": "Jamalpur",
+                        "employment": "77760",
+                      },{
+                        "district": "Jashore",
+                        "employment": "102526",
+                      },{
+                        "district": "Jhalakati",
+                        "employment": "32430",
+                      },{
+                        "district": "Jhenaidah",
+                        "employment": "81984",
+                      },{
+                        "district": "Khagrachari",
+                        "employment": "8614",
+                      },{
+                        "district": "Khulna",
+                        "employment": "38975",
+                      },{
+                        "district": "Kishoreganj",
+                        "employment": "225060",
+                      },{
+                        "district": "Kurigram",
+                        "employment": "20446",
+                      },{
+                        "district": "Kushtia",
+                        "employment": "92422",
+                      },{
+                        "district": "Lakshmipur",
+                        "employment": "216604",
+                      },{
+                        "district": "Lalmonirhat",
+                        "employment": "7166",
+                      },{
+                        "district": "Madaripur",
+                        "employment": "119972",
+                      },{
+                        "district": "Magura",
+                        "employment": "40090",
+                      },{
+                        "district": "Manikganj",
+                        "employment": "187778",
+                      },{
+                        "district": "Meherpur",
+                        "employment": "62906",
+                      },{
+                        "district": "Moulvibazar",
+                        "employment": "174241",
+                      },{
+                        "district": "Munshiganj",
+                        "employment": "253120",
+                      },{
+                        "district": "Mymensingh",
+                        "employment": "194906",
+                      },{
+                        "district": "Naogaon",
+                        "employment": "68945",
+                      },{
+                        "district": "Narail",
+                        "employment": "34752",
+                      },{
+                        "district": "Narayanganj",
+                        "employment": "218912",
+                      },{
+                        "district": "Narsingdi",
+                        "employment": "253493",
+                      },{
+                        "district": "Natore",
+                        "employment": "41411",
+                      },{
+                        "district": "Netrakona",
+                        "employment": "41233",
+                      },{
+                        "district": "Nilphamari",
+                        "employment": "15236",
+                      },{
+                        "district": "Noakhali",
+                        "employment": "341812",
+                      },{
+                        "district": "Pabna",
+                        "employment": "100045",
+                      },{
+                        "district": "Panchagarh",
+                        "employment": "5417",
+                      },{
+                        "district": "Patuakhali",
+                        "employment": "36535",
+                      },{
+                        "district": "Pirojpur",
+                        "employment": "52684",
+                      },{
+                        "district": "Rajbari",
+                        "employment": "68621",
+                      },{
+                        "district": "Rajshahi",
+                        "employment": "42386",
+                      },{
+                        "district": "Rangamati",
+                        "employment": "4985",
+                      },{
+                        "district": "Rangpur",
+                        "employment": "30006",
+                      },{
+                        "district": "Satkhira",
+                        "employment": "39810",
+                      },{
+                        "district": "Shariatpur",
+                        "employment": "115311",
+                      },{
+                        "district": "Sherpur",
+                        "employment": "18776",
+                      },{
+                        "district": "Sirajganj",
+                        "employment": "61868",
+                      },{
+                        "district": "Sunamganj",
+                        "employment": "123329",
+                      },{
+                        "district": "Sylhet",
+                        "employment": "216175",
+                      },{
+                        "district": "Tangail",
+                        "employment": "435368",
+                      },{
+                        "district": "Thakurgaon",
+                        "employment": "12621",
+                      }
+                 ],
+                "startDuration": 1,
+                        "legend": {
+                            "horizontalGap": 15,
+                            "maxColumns": 15,
+                            "position": "bottom",
+                            "useGraphSettings": true,
+                            "markerSize": 15,
+                            "valueFunction": function (a, value) {
+                                return '';
+                            },
+                            "align": "center"
+                        },
+                        "graphs": [{
+                            "valueAxis": "v2",
+                            "id": "g1",
+                            "alphaField": "alpha",
+                            "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+                            "fillColorsField": "color",
+                            "title": "Number of employment",
+                            "type": "column",
+                            "fillAlphas": 1,
+                            "lineAlpha": 0,
+                            "lineColor": "rgb(160, 28, 251)",
+                            "valueField": "employment",
+                            "dashLengthField": "dashLengthColumn",
+                            "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = "Number of employment";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value + "</b></span>";
+                            }
+                        }],
+                        "chartCursor": {
+                            "cursorPosition": "mouse",
+                            "showNextAvailable": false,
+                        },
+                        "categoryField": "district",
+                        "categoryAxis": {
+                            "showLastLabel": true,
+                            "labelFunction": function (value, date, categoryAxis) {
+                               return value;
+                            },
+                            "labelRotation": 90,
+                            "autoGridCount": false,
+                            "equalSpacing": true,
+                            "gridCount": 70,
+                            "showFirstLabel": true,
+                            "showLastLabel": true,
+
+                        },
+                        "chartScrollbar": {
+                            "graph": "g1",
+                            "gridAlpha": 0,
+                            "color": "#888888",
+                            "scrollbarHeight": 55,
+                            "backgroundAlpha": 0,
+                            "selectedBackgroundAlpha": 0.1,
+                            "selectedBackgroundColor": "#888888",
+                            "graphFillAlpha": 0,
+                            "autoGridCount": true,
+                            "selectedGraphFillAlpha": 0,
+                            "graphLineAlpha": 0.2,
+                            "graphLineColor": "#c2c2c2",
+                            "selectedGraphLineColor": "#888888",
+                            "selectedGraphLineAlpha": 1
+
+                        }
+
+                    });
+
+                  chart.addListener("dataUpdated", zoomChart);
+                  zoomChart();
+
+                  function zoomChart() {
+                      // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+                      //chart.zoomToIndexes(data.length - 40, chartData.length - 1);
+                  }
+              }
+          }
+
+
+
+
 
     function englishToBangla(num) {
         var num = new Number(num).toLocaleString("bn-BD");
@@ -8822,6 +8831,45 @@ group by date ORDER BY date ");
     // console.log(mdata);
 
 
+
+
+
+
+
+    // Get daily infected total result
+    $(document).on('change', '#daily-infected-total-select', function () {
+        showLoader();
+        let selectedOrg = $('#daily-infected-total-select option:selected').val();
+        if (selectedOrg) {
+            if (selectedOrg == 'MIS-DGHS') {
+
+                dailyInfectedChart(mdata);
+                hideLoader();
+            }
+            if (selectedOrg == 'IEDCR') {
+                $.ajax({
+                    url: "{{ route('daily.infected.chart', '[]') }}",
+                    type: 'GET',
+                    success: function (response) {
+                        if (response) {
+
+                            response = JSON.parse(response);
+                            districtWiseOverseasEmployment(response);
+                        } else {
+                            districtWiseOverseasEmployment([]);
+                        }
+                        hideLoader();
+                    }
+                });
+            }
+        }
+    });
+    districtWiseOverseasEmployment(mdata);
+
+
+
+
+
     // Filter daily infected by district
 
     $('#filter-daily-infected-search').click(function () {
@@ -9237,44 +9285,64 @@ AmCharts.makeChart("categoryWiseOverseasEmployement",
      AmCharts.makeChart("cumulativeComparisonOfRegisteredVsVaccinated",
           {
 					"type": "serial",
-					"categoryField": "category",
+          "dataDateFormat": "YYYY-MM-DD",
+					"categoryField": "date",
 					"startDuration": 1,
-					"categoryAxis": {
-						"gridPosition": "start"
-					},
 					"trendLines": [],
 					"graphs": [
 						{
-							"balloonText": "[[title]] of [[category]]:[[value]]",
+							"id": "AmGraph-7",
+              "balloonText": " [[title]] || [[value]]",
 							"bullet": "round",
-                            "type": "smoothedLine",
-							"id": "AmGraph-1",
-							"title": "পাঠানো হয়েছে",
 							"type": "smoothedLine",
-							"valueField": "column-1"
+							"title": "Employment",
+							"valueField": "employment",
+              "lineColor": "rgb(199, 0, 57)",
+              "lineThickness": 2,
+              "bulletSize": 7,
 						},
-						{
-							"balloonText": "[[title]] of [[category]]:[[value]]",
+						{{--  {
+              "balloonText": " [[title]] || [[value]]",
 							"bullet": "round",
-							"id": "AmGraph-2",
-							"title": "প্রয়োজন",
+							"id": "AmGraph-8",
 							"type": "smoothedLine",
-							"valueField": "column-2"
-						},
-						{
-              "balloonText": "[[title]] of [[category]]:[[value]]",
-							"bullet": "round",
-							"id": "AmGraph-3",
-							"title": "পরিচালিত",
-							"valueField": "column-3"
-						}
+							"title": "Increase",
+							"valueField": "increase",
+              "lineColor": "rgb(87, 250, 51)",
+              "lineThickness": 2,
+              "bulletSize": 7,
+						}  --}}
 					],
+          "chartCursor": {
+              "valueLineEnabled": true,
+              "valueLineBalloonEnabled": true,
+              "valueLineAlpha": 0.5,
+              "fullWidth": true,
+              "cursorAlpha": 0.05,
+              "categoryBalloonFunction": function (date) {
+                  return date;
+              },
+          },
 					"guides": [],
 					"valueAxes": [
 						{
-							"id": "ValueAxis-1",
-							
-						}
+              "position": "left",
+							"title": "Employment",
+              "id": "AmGraph-7",
+              "minimum": 0,
+              "labelFunction": function (value, valueText, valueAxis) {
+                  return value;
+              }
+						},
+            {{--  {
+              "position": "right",
+							"title": "Increase",
+							"id": "AmGraph-8",
+              "minimum": -100,
+              "labelFunction": function (value, valueText, valueAxis) {
+                  return value;
+              }
+						}  --}}
 					],
 					"allLabels": [],
 					"balloon": {},
@@ -9290,145 +9358,232 @@ AmCharts.makeChart("categoryWiseOverseasEmployement",
 						}
 					],
 					"dataProvider": [
-						{
-							"category": "২৯ জানুয়ারি ২০২১",
-							"column-1": "2000",
-							"column-2": "1300",
-							"column-3": "1000"
+            {
+							"date": "2008",
+							"employment": "20842",
+							"increase": "9.15"
+						},
+            {
+							"date": "2009",
+							"employment": "22224",
+							"increase": "24.67"
+						},
+            {
+							"date": "2010",
+							"employment": "27706",
+							"increase": "24.67"
 						},
 						{
-							"category": "০৩ ফেব্রুয়ারি",
-							"column-1": "4000",
-							"column-2": "3000",
-							"column-3": "2000"
+							"date": "2011",
+							"employment": "30579",
+							"increase": "10.37"
 						},
 						{
-							"category": "০৮ ফেব্রুয়ারি",
-							"column-1": "6000",
-							"column-2": "4500",
-							"column-3": "3500"
+							"date": "2012",
+							"employment": "37304",
+							"increase": "21.99"
 						},
 						{
-							"category": "১৩ ফেব্রুয়ারি",
-							"column-1": "8000",
-							"column-2": "6000",
-							"column-3": "4500"
+							"date": "2013",
+							"employment": "56400",
+							"increase": "51.19"
 						},
 						{
-							"category": "১৮ ফেব্রুয়ারি",
-							"column-1": "10000",
-							"column-2": "7500",
-							"column-3": "6500"
+							"date": "2014",
+							"employment": "76007",
+							"increase": "34.76"
 						},
 						{
-							"category": "২৩ ফেব্রুয়ারি",
-							"column-1": "16000",
-							"column-2": "9000",
-							"column-3": "7000"
+							"date": "2015",
+							"employment": "103718",
+							"increase": "36.46"
 						},
 						{
-							"category": "২৮ ফেব্রুয়ারি ২০২১",
-							"column-1": "18000",
-							"column-2": "10000",
-							"column-3": "8500"
+							"date": "2016",
+							"employment": "118088",
+							"increase": "13.85"
+						},
+						{
+							"date": "2017",
+							"employment": "121925",
+							"increase": "3.25"
+						},
+            {
+							"date": "2018",
+							"employment": "101695",
+							"increase": "-16.59"
+						},
+            {
+							"date": "2019",
+							"employment": "104786",
+							"increase": "3.04"
+						},
+            {
+							"date": "2020",
+							"employment": "21934",
+							"increase": "-79.07"
 						}
 					]
-				}
-        );
+				});
 
 
 
 
 
         // demand Supply Analysis
-
-        AmCharts.makeChart("demandSupplyAnalysis",
-				{
-                "type": "serial",
-                "categoryField": "category",
-                "startDuration": 1,
-                "categoryAxis": {
-                    "gridPosition": "start"
-                },
-                "trendLines": [],
-                "graphs": [
-                    {
-                        "balloonText": "[[title]] of [[category]]:[[value]]",
-                        "bullet": "round",
-                        "type": "smoothedLine",
-                        "id": "AmGraph-1",
-                        "title": "রেজিস্ট্রেশন",
-                        "type": "smoothedLine",
-                        "valueField": "column-1"
-                    },
-                    {
-                        "balloonText": "[[title]] of [[category]]:[[value]]",
-                        "bullet": "round",
-                        "id": "AmGraph-2",
-                        "title": "ভ্যাক্সিনেশন",
-                        "type": "smoothedLine",
-                        "valueField": "column-2"
-                    }
-                ],
-                "guides": [],
-                "valueAxes": [
-                    {
-                        "id": "ValueAxis-1",
-                        
-                    }
-                ],
-                "allLabels": [],
-                "balloon": {},
-                "legend": {
-                    "enabled": true,
-                    "useGraphSettings": true
-                },
-                "titles": [
-                    {
-                        "id": "Title-1",
-                        "size": 15,
-                        "text": ""
-                    }
-                ],
+         function hospitalGeneralFilter(design) { 
+           
+            
+            var hospitalGeneralBedchart = AmCharts.makeChart("demandSupplyAnalysis",{
                 "dataProvider": [
-                    {
-                        "category": "২৯-জানু ২০২১",
-                        "column-1": "2500",
-                        "column-2": "1500"
-                    },
-                    {
-                        "category": "০৩ ফেব্রুয়ারি",
-                        "column-1": "4000",
-                        "column-2": "2600"
-                    },
-                    {
-                        "category": "০৮ ফেব্রুয়ারি",
-                        "column-1": "6000",
-                        "column-2": "4000"
-                    },
-                    {
-                        "category": "১৩ ফেব্রুয়ারি",
-                        "column-1": "9000",
-                        "column-2": "5000"
-                    },
-                    {
-                        "category": "২৮ ফেব্রুয়ারি",
-                        "column-1": "12000",
-                        "column-2": "6000"
-                    },
-                    {
-                        "category": "০১ মার্চ",
-                        "column-1": "16000",
-                        "column-2": "7500"
-                    },
-                    {
-                        "category": "১০ মার্চ ২০২১",
-                        "column-1": "20000",
-                        "column-2": "9000"
+                      {
+                        "group": "General People",
+                        "BeforeLockdown": "17825.65977",
+                        "DuringLockdown": "10585.06973",
+                      },
+                      {
+                        "group": "Migrant",
+                        "BeforeLockdown": "15877.25",
+                        "DuringLockdown": "9109.935517",
+                      },
+                      {
+                        "group": "Rohinga",
+                        "BeforeLockdown": "6591.805054",
+                        "DuringLockdown": "4760.918919",
+                      }
+                ],
+                "type": "serial",
+                "theme": "none",
+                "categoryField": "group",
+                  
+                  "graphs": design.graphs,
+                  "valueAxes": design.valueAxes,
+                  "chartCursor": design.chartCursor,
+                  "categoryAxis": design.categoryAxis,
+                  "legend": design.legend,
+                  "chartScrollbar": design.chartScrollbar,  
+              });
+
+              hospitalGeneralBedchart.addListener("dataUpdated", zoomChart);
+              zoomChart();
+
+          }
+
+           hospitalGeneralFilter(stackedChartedDesign());
+
+
+
+         /* ======================Stack Chart Common Desin start================================= */
+        function stackedChartedDesign(text=''){
+        return {
+            "graphs": [
+                {
+                    "balloonText": "[[title]] of [[category]]:[[value]]",
+                    "markerType": "circle",
+                    "fillAlphas": 1,
+                    "valueAxis": "v1",
+                    "lineColor": "#C70039",
+                    "id": "g1",
+                    "title": text+" Before Lockdown",
+                    "type": "column",
+                    "valueField": "BeforeLockdown",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        let total =   graphDataItem.values.total;
+                        let blank =   graphDataItem.values.value;
+                        var title = "";
+                        return "<b>" + title + "</b> <span style='font-size:14px' class='g-v'><b>" + blank + "</b></span>";
                     }
-                ]
-            }
-			);
+                },
+                {
+                    "balloonText": "[[title]] of [[category]]:[[value]]",
+                    "markerType": "circle",
+                    "fillAlphas": 1,
+                    "lineColor": "#08D5D5",
+                    "valueAxis": "v2",
+                    "id": "g2",
+                    "title": text+" During Lockdown",
+                    "type": "column",
+                    "valueField": "DuringLockdown",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var total = graphDataItem.values.total - graphDataItem.values.value;
+                        var blank = total - graphDataItem.values.value;
+                        var admited = graphDataItem.values.value;
+                        var title = "";
+                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'><b>" + admited + "</b></span>";
+                    }
+                }
+                
+            ],
+                "valueAxes": [{
+                    "position": "left",
+                    "title": "Monthly average income (TK)",
+                    "id": "v1",
+                    "minimum": 0,
+                    "labelFunction": function (value, valueText, valueAxis) {
+                        return value;
+                    },
+
+                }],
+                "chartCursor": {
+                    "cursorPosition": "mouse",
+                    "showNextAvailable": false,
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return date;
+                    },
+                },
+                "categoryAxis": {
+                    "showLastLabel": true,
+                    "labelFunction": function (value, date, categoryAxis) {
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return value;
+                    },
+                    "labelRotation": 45,
+                    "autoGridCount": false,
+                    "equalSpacing": true,
+                    "gridCount": 14,
+                    "showFirstLabel": true,
+                    "showLastLabel": true,
+
+                },
+
+                "legend": {
+                    "horizontalGap": 10,
+                    "maxColumns": 1,
+                    "position": "bottom",
+                    "useGraphSettings": true,
+                    "markerSize": 10,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+
+                "chartScrollbar": {
+                        "graph": "g1",
+                        "gridAlpha": 0,
+                        "color": "#888888",
+                        "scrollbarHeight": 55,
+                        "backgroundAlpha": 0,
+                        "selectedBackgroundAlpha": 0.1,
+                        "selectedBackgroundColor": "#888888",
+                        "graphFillAlpha": 0,
+                        "autoGridCount": true,
+                        "selectedGraphFillAlpha": 0,
+                        "graphLineAlpha": 0.2,
+                        "graphLineColor": "#c2c2c2",
+                        "selectedGraphLineColor": "#888888",
+                        "selectedGraphLineAlpha": 1
+
+                }   
+            
+        }
+    }
+    /* ======================Stack Chart Common Desin start================================= */
+
 
 </script>
 
