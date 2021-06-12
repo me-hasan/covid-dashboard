@@ -434,7 +434,9 @@
            width: 10%; vertical-align: middle !important;
         }
 
-      
+      table.dataTable > thead > tr > th:not(.sorting_disabled), table.dataTable > thead > tr > td:not(.sorting_disabled){
+          font-size : 15px
+      }
 
     </style>
 </head>
@@ -1061,8 +1063,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <div class="col-xl-1 col-md-1">
                                                                 <div id=""
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
-                                                                    class="fs-20 b1 last_weekly_date">
-                                                                    <br>গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )
+                                                                    class="fs-20 b1">
+                                                                    <br><span class="last_weekly_date"> গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )</span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-11 col-md-11">
@@ -2116,8 +2118,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         style="width: 100%; min-width: 400px;">
                                                                         <thead>
                                                                         <tr>
-                                                                            <td colspan="4" class="text-center fs-18 recent_weekly_date_third_matrix" style="font-size: 26px" id=""><span
-                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} ) <br>
+                                                                            <td colspan="4" class="text-center fs-18" style="font-size: 26px" id=""><span class="recent_weekly_date_third_matrix"><span
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} ) <br></span>
                                                                                     <span style="position: relative; top: 40px; right:40%; font-size: 23px">টেস্ট পজিটিভিটি</span>
                                                                             </td>
                                                                         </tr>
@@ -2248,8 +2250,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2274,8 +2276,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2299,8 +2301,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>                                                        
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>                                                        
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2324,8 +2326,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2349,8 +2351,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2374,8 +2376,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2399,8 +2401,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2424,8 +2426,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2449,8 +2451,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2475,8 +2477,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2502,8 +2504,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -2530,8 +2532,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <th class="border-bottom-0">ক্রমিক নং</th>
                                                             <th class="border-bottom-0">জেলা</th>
                                                             <th class="border-bottom-0">জনসংখ্যা</th>
-                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -5954,6 +5956,8 @@ $ydata = [];
         $('.high_to_high_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#high_to_high_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
 
         });
@@ -5961,66 +5965,88 @@ $ydata = [];
         $('.medium_to_high_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#medium_to_high_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.low_to_high_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#low_to_high_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.high_to_medium_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#high_to_medium_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.medium_to_medium_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#medium_to_medium_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.low_to_medium_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#low_to_medium_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.high_to_low_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#high_to_low_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.medium_to_low_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#medium_to_low_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.low_to_low_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.zero_to_high_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#zero_to_high_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.zero_to_medium_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#zero_to_medium_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
             //hospitalDataModal();
         });
 
         $('.zero_to_low_third_matrix_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
             $('#modalContent').html($('#zero_to_low_third_matrix_table_content').html());
+            $('.perPositivityHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perLakHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());   
             //hospitalDataModal();
         });
     });

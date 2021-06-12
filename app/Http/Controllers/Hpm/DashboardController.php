@@ -1975,22 +1975,28 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
         $data['status'] = 'failed';
         try{
 
-            $case_table_last = 'v_tp_matrix_last';
-            $case_table_recent = 'v_tp_matrix_recent';
-            $test_table_last = 'v_tp_matrix_last';
-            $test_table_recent = 'v_tp_matrix_recent';
+            $case_table_recent = '';
+            $case_table_last = '';
+            $test_table_recent = '';
+            $test_table_last = '';
 
             $case_travelers = $request->input('case_travelers');
             if($case_travelers == 1){
-                $case_table_last = 'v_tp_matrix_last_non_travelers';
                 $case_table_recent = 'v_tp_matrix_recent_non_travelers';
             }
+            if($case_travelers == 0){
+                $case_table_recent = 'v_tp_matrix_recent';
+            }
+            
 
             $test_travelers = $request->input('test_travelers');
             if($test_travelers == 1){
-                $test_table_last = 'v_tp_matrix_last_non_travelers';
                 $test_table_recent = 'v_tp_matrix_recent_non_travelers';
             }
+            if($test_travelers == 0){
+                $test_table_recent = 'v_tp_matrix_recent';
+            }
+            
 
             $testCount = $request->input('test_count');
             $weekly_date = $request->input('weekly_date');
@@ -2527,16 +2533,28 @@ ORDER BY r.positive_tests DESC");
 
     public function thirdRiskMatrixIntersect($cases, $test){
         $newArray = [];
-        foreach($cases as $value){
-            if(!empty($value->district) && isset($value->district)){
-                foreach($test as $val){
-                    if($value->district === $val->district){
-                        $newArray[] = $value;
+        $reform = [];
+       
+        
+        foreach($cases as $c){
+            if(!empty($c->district) && isset($c->district)){
+                foreach($test as $k=> $t){
+                   if($c->district === $t->district){
+                       $reform['district'] =  $c->district;
+                       $reform['population'] =  $c->population;
+                       $reform['r_positive'] = $c->r_positive;
+                       $reform['r_total_test'] =  $c->r_total_test;
+                       $reform['recent_test_positivity'] =  $c->recent_test_positivity;
+                       $reform['population_infected_Per_Lakh'] = $t->population_infected_Per_Lakh;
+                       $newArray[] = $reform; 
                     }
                 }
             }
         }
         return $newArray;
+
+        
+
     }
     
 
@@ -2571,13 +2589,14 @@ ORDER BY r.positive_tests DESC");
     public function thirdRiskMatrichtmlProcess($items) {
         $html = "";
         if(count($items)) {
-            foreach($items as $key => $item) {
-                $lakhPerInfec = number_format($item->population_infected_Per_Lakh, 2);
+            $object = json_decode(json_encode($items), FALSE);
+            foreach($object as $key => $item) {
+                $lakhPerInfec = number_format($item->population_infected_Per_Lakh ?? 0, 2);
                 $html .= '<tr class="b1">';
                 $html .= "<td>".convertEnglishDigitToBangla($key+1)."</td>";
-                $html .= "<td>".en2bnTranslation($item->district)."</td>";
-                $html .= "<td>".convertEnglishDigitToBangla($item->population)."</td>";
-                $html .= "<td>".convertEnglishDigitToBangla($item->recent_test_positivity)."% (<span style='color:#0636c1d4;'>".convertEnglishDigitToBangla($item->r_total_test)."</span>, <span style='color:#b50514d4;'>".convertEnglishDigitToBangla($item->r_positive)."</span>)</td>";
+                $html .= "<td>".en2bnTranslation($item->district ?? '')."</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($item->population ?? 0)."</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($item->recent_test_positivity ?? 0)."% (<span style='color:#0636c1d4;'>".convertEnglishDigitToBangla($item->r_total_test ?? 0)."</span>, <span style='color:#b50514d4;'>".convertEnglishDigitToBangla($item->r_positive ?? 0)."</span>)</td>";
                 $html .= "<td>".convertEnglishDigitToBangla($lakhPerInfec)."</td>";
                 $html .= "</tr>";
             }
@@ -2601,11 +2620,16 @@ ORDER BY r.positive_tests DESC");
 
     public function getSecondRiskDistrictName($items) {
         $arrayData = array();
-        foreach ($items as $item) {
-            $arrayData[] =  rtrim(en2bnTranslation($item->district)," ");
+        if(!empty($items)){
+            $object = json_decode(json_encode($items), FALSE);
+            foreach ($object as $item) {
+                $arrayData[] =  rtrim(en2bnTranslation($item->district ?? '')," ");
+            }
+            $districtName = implode(", ",$arrayData);
+            return $districtName;
+        }else{
+            return '';
         }
-        $districtName = implode(", ",$arrayData);
-        return $districtName;
     }
 
     public function getRiskDistrictClusteringName($itemsOne, $itemsTow) {
