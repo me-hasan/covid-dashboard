@@ -472,7 +472,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             </div>
         </div>
         <!-- page title area end -->
-        <div class="main-content-inner login-bg">
+
+
+
+        <!-- Social Campain area start -->
+        {{--  <div class="main-content-inner login-bg">
             <div class="row">
                 <div class="col-lg-4 mt-4">
                     <div style="height: 220px" class="card purple-card">
@@ -542,8 +546,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  --}}
                 <!-- Social Campain area end -->
+
+
+
+
+
                 <!-- Statistics area start -->
                 <div class="col-lg-12 mt-4" id="scroll_daily_affected">
                     <div class="card shadow-sm">
