@@ -1013,11 +1013,10 @@ using(district)");
       private function third_risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
 
         $case_risk_matrix =  DB::select("SELECT r.district from
-        (select district from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 AND total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $case_table_recent where population_infected_Per_Lakh >= 0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $test_risk_matrix =  DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity>=$test_positive_max
-        and total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
       }
@@ -1049,8 +1048,7 @@ using(district)");
         (select district from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
         
         $test_risk_matrix = DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity>=$test_positive_min
-        and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1080,11 +1078,10 @@ using(district)");
 
       private function third_risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from
-        (select district from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 AND total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
         
         $test_risk_matrix = DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity<$test_positive_min
-        and total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1118,8 +1115,7 @@ using(district)");
         (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
         
         $test_risk_matrix = DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity>=$test_positive_max
-        and total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1149,11 +1145,10 @@ using(district)");
 
       private function third_risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from
-        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount   and date_id = $weekly_date) as r");
+        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
         
         $test_risk_matrix = DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity>=$test_positive_min and
-        test_positivity<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1183,11 +1178,10 @@ using(district)");
 
       private function third_risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from
-        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount   and date_id = $weekly_date) as r");
+        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
         
         $test_risk_matrix = DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity<$test_positive_min
-        and total_tests>$testCount   and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1221,8 +1215,7 @@ using(district)");
         (select district from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount  and date_id = $weekly_date) as r");
          
          $test_risk_matrix = DB::select("SELECT r.district from 
-        (select district from $test_table_recent where test_positivity>=$test_positive_max
-         and total_tests>$testCount  and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1253,11 +1246,10 @@ using(district)");
 
       private function third_risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from 
-        (select district from $case_table_recent where population_infected_Per_Lakh >=10 and test_positivity<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r");
+        (select district from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount  and date_id = $weekly_date) as r");
         
         $test_risk_matrix = DB::select("SELECT r.district from 
-        (select district from $test_table_recent where test_positivity>=$test_positive_min
-        and test_positivity<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1288,10 +1280,9 @@ using(district)");
       }
 
       private function third_risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
-        $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount   and date_id = $weekly_date) as r");
+        $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where population_infected_Per_Lakh >=10 AND total_tests>$testCount  and date_id = $weekly_date) as r");
         
-        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity<$test_positive_min
-        and total_tests>$testCount   and date_id = $weekly_date) as r");
+        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity< 5 AND total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1301,8 +1292,7 @@ using(district)");
       private function third_risk_matrix_10($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where population_infected_Per_Lakh = 0 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
-        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity>$test_positive_max
-        and total_tests>$testCount  and date_id = $weekly_date) as r");
+        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity> 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1310,10 +1300,10 @@ using(district)");
 
       private function third_risk_matrix_11($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from
-(select district from $case_table_recent where population_infected_Per_Lakh = 0  and date_id = $weekly_date) as r");
+(select district from $case_table_recent where total_tests>$testCount and population_infected_Per_Lakh = 0  and date_id = $weekly_date) as r");
 
         $test_risk_matrix = DB::select("SELECT r.district from
-        (select district from $test_table_recent where test_positivity <$test_positive_max and test_positivity >=$test_positive_min and date_id = $weekly_date) as r");
+        (select district from $test_table_recent where total_tests>$testCount and test_positivity < 10 and test_positivity >= 5 and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -1322,8 +1312,7 @@ using(district)");
       private function third_risk_matrix_12($testCount=200,$test_positive_min=5,$test_positive_max=10, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
         $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where total_tests>$testCount  and population_infected_Per_Lakh = 0 and date_id = $weekly_date) as r");
 
-        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity<$test_positive_min
-        and total_tests>$testCount  and date_id = $weekly_date) as r");
+        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity< 5 and total_tests>$testCount and date_id = $weekly_date) as r");
 
         $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
         return count($risk_matrix);
@@ -2357,7 +2346,7 @@ using(district) ORDER BY r.positive_tests DESC");
          ORDER BY r.positive_tests DESC");
 
         $test_high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r
         ORDER BY r.positive_tests DESC");
         
         $high_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_high_table_contentData, $test_high_to_high_table_contentData);
@@ -2372,7 +2361,7 @@ using(district) ORDER BY r.positive_tests DESC");
  ORDER BY r.positive_tests DESC");
 
         $test_medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r
          ORDER BY r.positive_tests DESC");
 
         $medium_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_medium_to_high_table_contentData, $test_medium_to_high_table_contentData);  
@@ -2382,11 +2371,11 @@ using(district) ORDER BY r.positive_tests DESC");
 
         //low_to_high
         $case_low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >= 0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r
 ORDER BY r.positive_tests DESC");
 
         $test_low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r
         ORDER BY r.positive_tests DESC");
 
         $low_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_high_table_contentData, $test_low_to_high_table_contentData); 
@@ -2400,7 +2389,7 @@ ORDER BY r.positive_tests DESC");
  ORDER BY r.positive_tests DESC");
  
  $test_high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r
  ORDER BY r.positive_tests DESC");
         
         $high_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_medium_table_contentData, $test_high_to_medium_table_contentData);
@@ -2414,7 +2403,7 @@ ORDER BY r.positive_tests DESC");
  ORDER BY r.positive_tests DESC");
 
         $test_medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population, r.population from
-        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r
         ORDER BY r.positive_tests DESC");
 
         $medium_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_medium_to_medium_table_contentData, $test_medium_to_medium_table_contentData);
@@ -2428,7 +2417,7 @@ ORDER BY r.positive_tests DESC");
 ORDER BY r.positive_tests DESC");
 
         $test_low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r
 ORDER BY r.positive_tests DESC");
 
         $low_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_medium_table_contentData, $test_low_to_medium_table_contentData);
@@ -2442,7 +2431,7 @@ ORDER BY r.positive_tests DESC");
 ORDER BY r.positive_tests DESC");
 
         $test_high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity<$test_positive_min AND total_tests>$testCount  and date_id = $weekly_date) as r
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 AND total_tests>$testCount  and date_id = $weekly_date) as r
         ORDER BY r.positive_tests DESC");
 
         $high_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_low_table_contentData, $test_high_to_low_table_contentData);
@@ -2456,7 +2445,7 @@ ORDER BY r.positive_tests DESC");
  ORDER BY r.positive_tests DESC");
  
         $test_medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity<$test_positive_min and total_tests>$testCount  and date_id = $weekly_date) as r
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r
  ORDER BY r.positive_tests DESC");
 
         $medium_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_medium_to_low_table_contentData, $test_medium_to_low_table_contentData);
@@ -2464,14 +2453,13 @@ ORDER BY r.positive_tests DESC");
         $data['medium_to_low_table_contentData'] = $this->thirdRiskMatrichtmlProcess($medium_to_low_table_contentData);
 
 
-        //low_to_low
+        //low_to_low 
         $case_low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population  from
     (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r
      ORDER BY r.positive_tests DESC");
      
         $test_low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population  from
-    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity<$test_positive_min
-    and total_tests>$testCount  and date_id = $weekly_date) as r
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r
      ORDER BY r.positive_tests DESC");
 
         $low_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_low_table_contentData, $test_low_to_low_table_contentData);
@@ -2486,9 +2474,7 @@ ORDER BY r.positive_tests DESC");
      ORDER BY r.positive_tests DESC");
      
        $test_zero_to_high_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>$test_positive_max
-    and total_tests>$testCount  and date_id = $weekly_date) as r
-     ORDER BY r.positive_tests DESC");
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity> 10 and total_tests>$testCount  and date_id = $weekly_date) as r ORDER BY r.positive_tests DESC");
 
         $zero_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_zero_to_high_table_contentData, $test_zero_to_high_table_contentData);
         $data['zero_to_high_district_name'] = $this->getSecondRiskDistrictName($zero_to_high_table_contentData);
@@ -2497,13 +2483,11 @@ ORDER BY r.positive_tests DESC");
 
         //zero_to_medium
         $case_zero_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where positive_tests<$test_positive_min
-    and total_tests>$testCount and population_infected_Per_Lakh = 0  and date_id = $weekly_date) as r
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where total_tests>$testCount and population_infected_Per_Lakh = 0  and date_id = $weekly_date) as r
     ORDER BY r.positive_tests DESC");
     
         $test_zero_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where positive_tests<$test_positive_min
-    and total_tests>$testCount and test_positivity <$test_positive_max and test_positivity >=$test_positive_min and date_id = $weekly_date) as r
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where total_tests>$testCount and test_positivity < 10 and test_positivity >= 5 and date_id = $weekly_date) as r
     ORDER BY r.positive_tests DESC");
 
         $zero_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_zero_to_medium_table_contentData, $test_zero_to_medium_table_contentData);
@@ -2518,8 +2502,7 @@ ORDER BY r.positive_tests DESC");
      ORDER BY r.positive_tests DESC");
      
         $test_zero_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh , r.population from
-    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity<$test_positive_min
-    and total_tests>$testCount and date_id = $weekly_date) as r
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 and total_tests>$testCount and date_id = $weekly_date) as r
      ORDER BY r.positive_tests DESC");
 
         $zero_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_zero_to_low_table_contentData, $test_zero_to_low_table_contentData);
