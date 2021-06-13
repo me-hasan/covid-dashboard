@@ -2525,12 +2525,12 @@ ORDER BY r.positive_tests DESC");
                    if($c->district === $t->district){
                        $reform['district'] =  $c->district;
                        $reform['population'] =  $c->population;
-                       $reform['r_positive'] = ($cFlag == 0) ? $c->r_positive : $t->r_positive;
-                       $reform['r_total_test'] = ($cFlag == 0) ? $c->r_total_test: $t->r_total_test;
-                       $reform['recent_test_positivity'] = ($cFlag == 0) ? $c->recent_test_positivity: $t->recent_test_positivity;
-                       $reform['population_infected_Per_Lakh'] = ($tFlag == 0) ? $c->population_infected_Per_Lakh: $t->population_infected_Per_Lakh;
-                       $newArray[] = $reform; 
-                    }
+                       $reform['r_positive'] = ($tFlag == 0) ? $c->r_positive : $t->r_positive;
+                       $reform['r_total_test'] = ($tFlag == 0) ? $c->r_total_test: $t->r_total_test;
+                       $reform['recent_test_positivity'] = ($tFlag == 0) ? $c->recent_test_positivity: $t->recent_test_positivity;
+                       $reform['population_infected_Per_Lakh'] = ($cFlag == 0) ? $c->population_infected_Per_Lakh: $t->population_infected_Per_Lakh;
+		       $newArray[] = $reform;
+		   }
                 }
             }
         }

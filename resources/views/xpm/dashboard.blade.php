@@ -571,7 +571,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </li>
                             </a>
 
-                            @if((Auth::user()->id ?? 0)  == 11)
+                            @if((Auth::user()->id ?? 0)  == 10)
                             <a href="#scroll_location_of_the_detected_district">
                                 <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের সনাক্তের ভিত্তিতে দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
                                 </li>
@@ -1218,7 +1218,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </div>
                                                             {{-- start table for red color distribution --}}
 
-                                                            @if((Auth::user()->id ?? 0)  == 11)
+                                                            @if((Auth::user()->id ?? 0)  == 10)
                                                             <div class="row">
                                                                 <div class="col-xl-12 col-lg-12 col-md-12">
                                                                     <div class="card-body">
@@ -1508,7 +1508,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
 
-                            @if((Auth::user()->id ?? 0)  == 11)
+                            @if((Auth::user()->id ?? 0)  == 10)
                             {{--2nd matix start here --}}
                             <div class="col-lg-12 mt-2" id="scroll_location_of_the_detected_district">
                                         <div class="invoice-head title-bg-style">

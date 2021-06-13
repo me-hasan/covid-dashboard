@@ -326,4 +326,4 @@ Route::get('vaccination-dashboard', 'vaccination\DashboardController@index')->na
 
 
 Route::get('socio-economic-dashboard', 'socioEconomic\DashboardController@index')->name('socio.economic');
-
+URL::forceScheme('https');
