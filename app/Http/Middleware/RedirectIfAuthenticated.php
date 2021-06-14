@@ -36,6 +36,12 @@ class RedirectIfAuthenticated
                 case 'hpm':
                     $redirectTo = RouteServiceProvider::XPM_DASHBOARD;
                     break;
+                case 'vaccination':
+                    return RouteServiceProvider::VACCINATION;
+                    break;
+                case 'socio':
+                    return RouteServiceProvider::SOCIO_ECONOMIC;
+                    break;    
                 default:
                     $redirectTo = RouteServiceProvider::IEDCR_DASHBOARD;
                     break;

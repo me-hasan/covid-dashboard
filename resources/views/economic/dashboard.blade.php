@@ -339,19 +339,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 <nav>
                     <ul class="metismenu" id="menu">
                         <li class="active">
-                            <a href="{{route('xpm.dashboard')}}"><i
-                                    class="ti-dashboard"></i><span>জাতীয় কোভিড-১৯</span></a>
-                        </li>
-
-                        <li class="active">
-                            <a href="{{route('xpm.dashboard')}}"><i
-                                    class=""></i><span>পরিস্থিতি</span></a>
-                        </li>
-                        <li class="active">
-                            <a href="{{route('xpm.vaccination')}}"><i
-                                    class=""></i><span>টিকাদান কর্মসূচি</span></a>
-                        </li>
-                        <li class="active">
                             <a href="{{route('socio.economic')}}"><i
                                     class=""></i><span>আর্থ-সামাজিক</span></a>
                         </li>

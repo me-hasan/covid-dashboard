@@ -61,6 +61,12 @@ class LoginController extends Controller
                 case 'hpm':
                     return RouteServiceProvider::XPM_DASHBOARD;
                     break;
+                case 'vaccination':
+                    return RouteServiceProvider::VACCINATION;
+                    break;
+                case 'socio':
+                    return RouteServiceProvider::SOCIO_ECONOMIC;
+                    break;
                 default:
                     return RouteServiceProvider::IEDCR_DASHBOARD;
                     break;

@@ -322,8 +322,8 @@ Route::get('/filter-daily-infected-chart', 'xpm\DashboardController@filterdailyI
  */
 
 
-Route::get('vaccination-dashboard', 'vaccination\DashboardController@index')->name('xpm.vaccination');
+Route::get('vaccination', 'vaccination\DashboardController@index')->name('xpm.vaccination');
 
 
-Route::get('socio-economic-dashboard', 'socioEconomic\DashboardController@index')->name('socio.economic');
-URL::forceScheme('https');
+Route::get('socio-economic', 'socioEconomic\DashboardController@index')->name('socio.economic');
+// URL::forceScheme('https');

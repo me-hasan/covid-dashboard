@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
     public function checkValidUser()
     {
-        if (auth()->user()->user_type != 'hpm') {
+        if (auth()->user()->user_type != 'vaccination') {
             abort(401);
         }
     }
