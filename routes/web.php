@@ -326,4 +326,4 @@ Route::get('vaccination', 'vaccination\DashboardController@index')->name('xpm.va
 
 
 Route::get('socio-economic', 'socioEconomic\DashboardController@index')->name('socio.economic');
-// URL::forceScheme('https');
+URL::forceScheme('https');
