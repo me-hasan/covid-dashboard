@@ -2789,11 +2789,14 @@ GROUP BY
                         ( infected_24_hrs / test_24_hrs )* 100 AS 'test_positivity'
                     FROM
                         daily_data a
-                    GROUP BY
+                    GROUP BY YEAR(a.report_date),
                         WEEK (
                         a.report_date) ORDER BY a.report_date");
 
-        foreach ($infected as $row) {
+		
+	//dd($infected);
+	
+	foreach ($infected as $row) {
             $categories[] = "'" . convertEnglishDateToBangla($row->report_date) . "'";
             $mdates[] = $row->report_date;
             $total_infectedData[] = doubleval($row->infected_24_hrs);
