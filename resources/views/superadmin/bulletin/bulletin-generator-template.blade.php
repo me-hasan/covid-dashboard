@@ -86,7 +86,7 @@
         <!-- Define header and footer blocks before your content -->
         <header>
             <div style="height: 115px">
-               <img style="width:100%; height:125px" src="logo/pdfresizer.png" alt="" srcset="">
+               <img style="width:100%; height:135px" src="logo/header.png" alt="" srcset="">
             </div>
             <br>
             <hr class="style-six">
@@ -94,14 +94,10 @@
 
         <footer>
            <hr class="style-six">
-            <div style="height: 45px">
-               <div style="float: left; clear: right">
-                    <img style="height: 40px; width:40px;" src="logo/a2i.png" alt="" srcset="">
+            <div style="height: 50px">
+               <div style="margin: 0 auto; width: 100%">
+                    <img style="margin-left: 25%; height: 50px; width: 45%" src="logo/fotter.png" alt="" srcset="">
                 </div>
-               <div style="float: right">
-                   <h1 style="font-size:25px;font-weight:bold; float:right">সার্বিক সহযোগিতায়</h1>
-                   <img style="height: 40px; width:auto;" src="logo/egen.png" alt="" srcset="">
-               </div>
             </div>
         </footer>
 
