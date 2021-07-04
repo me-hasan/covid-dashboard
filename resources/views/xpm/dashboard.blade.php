@@ -692,6 +692,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_death) ? formatInBanglaStyle($total_death) : ' ' !!}
                                 </div>
                             </div>
+                            
                             <?php
                             $deathPercentages = 0;
                             if(isset($last_14_days['getLast14DaysTestData'][0])){
