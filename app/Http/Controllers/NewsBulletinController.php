@@ -126,7 +126,7 @@ class NewsBulletinController extends Controller
             'last'=>'2 Week Age ('.$lebelInfo->last_weekly_date.')',
             'first_chart'=> ['title'=>"Weekly Analysis of COVID-19 Indicators in {$_district_name} District", 'table'=> $this->indicatorsDataPrepare($dist, $date_id)],
             'second_chart'=> ['title'=> "Daily Reported of Covid-19 Cases in {$_district_name} District", 'path'=> $path.'/chart1.png'],
-            'third_chart'=> ['title'=> "Daily Non-Traveller Positivity Rate Comparison Between {$_district_name} District, {$_district_name} Division and National(Since February)", 'path'=> $path.'/chart2.png'],
+            'third_chart'=> ['title'=> "Daily Positivity Rate Comparison Between {$_district_name} District, {$_district_name} Division and National(Since February)", 'path'=> $path.'/chart2.png'],
             'fourth_chart'=> ['title'=> "Location of Active Covid-19 Cases in {$_district_name} District and {$_district_name} City", 'path'=> $path.'/chart3.png'],
         ];
 

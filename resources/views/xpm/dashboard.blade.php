@@ -634,14 +634,20 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_tested) ? formatInBanglaStyle($total_tested) : ' ' !!}
                                 </div>
                             </div>
+                            <?php
+                            $testPercentages = 0;
+                            if(isset($last_14_days['getLast14DaysTestData'][0])){
+                                $testPercentages = (abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))*100)/$last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test;
+                            }
+                            ?>
                             <h4 class="header-title pb-1">গত ৭ দিনে পরীক্ষা</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_1}}"></i> পূর্ববর্তী ৭ দিনে
                                 পরীক্ষার
-                                চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))) : ' ' !!}
-                                টি
+                                চেয়ে <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))) : ' ' !!}</span>
+                                টি বা <span style="border-bottom: 3px solid purple;">{!! formatInBanglaStyle($testPercentages) !!}%</span>
                                 @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
@@ -657,14 +663,21 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
                             </div>
+                            <?php
+                            $infectedPercentages = 0;
+                            if(isset($last_14_days['getLast14DaysTestData'][0])){
+                                $infectedPercentages = (abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))*100)/$last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person;
+                            }
+                            ?>
                             <h4 class="header-title pb-1">গত ৭ দিনে সনাক্তের</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_2}}"></i>
                                 পূর্ববর্তী ৭ দিনে সনাক্তের
-                                চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}
-                                জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
+                                চেয়ে <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}</span>
+                                জন বা <span style="border-bottom: 3px solid purple;">{!! formatInBanglaStyle($infectedPercentages) !!}%</span>
+                                @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
                         </div>
@@ -679,6 +692,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_death) ? formatInBanglaStyle($total_death) : ' ' !!}
                                 </div>
                             </div>
+                            
+                            <?php
+                            $deathPercentages = 0;
+                            if(isset($last_14_days['getLast14DaysTestData'][0])){
+                                $deathPercentages = (abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))*100)/$last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death;
+                            }
+                            ?>
                             <h4 class="header-title pb-1">গত ৭ দিনে মৃত্যু</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}
@@ -686,9 +706,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="summary"><i class="{{$class_3}}"></i> পূর্ববর্তী ৭ দিনে
                                 মৃত্যুর
                                 চেয়ে
-                                {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}
+                                <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}</span>
 
-                                জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
+                                জন বা <span style="border-bottom: 3px solid purple;">{!! formatInBanglaStyle($deathPercentages) !!}%</span>
+                                @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
                         </div>
