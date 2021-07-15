@@ -605,9 +605,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <li><span class="bullet-point"></span>
                                     <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
                             </a>
+
+                            @if((Auth::user()->id ?? 0)  == 10)
                             <a href="#scroll_daily_covid_hospital_storage_and_usage">
                                 <li><span class="bullet-point"></span>
                                     <span>কোভিড হাসপাতালসমূহের ধারণ ক্ষমতা ও ব্যবহার </span></li>
+                            </a>
+                            @endif
+
+                            <a href="#scroll_daily_covid_weeklycity_corporation_map">
+                                <li><span class="bullet-point"></span>
+                                    <span>সাপ্তাহিক সিটি কর্পোরেশন সংক্রামক ম্যাপ</span></li>
                             </a>
                             <a href="#scroll_daily_south_asian_countries_differentiation">
                                 <li><span class="bullet-point"></span>
@@ -3181,6 +3189,71 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     </div>
                 </div>
                 <!--Section 3(Last) end here-->
+
+
+                @if((Auth::user()->id ?? 0)  == 10)
+                {{-- map start here --}}
+                  <div class="col-lg-12 mt-2" id="scroll_daily_covid_weeklycity_corporation_map">
+
+
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="invoice-head title-bg-style">
+                                <div class="row">
+                                    <div class="iv-left col-12 ">
+                                        <h2>
+                                            সাপ্তাহিক সিটি কর্পোরেশন সংক্রামক ম্যাপ
+                                        </h2>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card-body info-style">
+                                <div class="row">
+
+                                    {{-- <h4 id="special_word_11" class="header-title ">
+                                        {!! $des_10->component_name_beng ?? '' !!}
+
+                                    </h4> --}}
+
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="row pt-2 pr-3">
+                                            <div class="col-xl-12 col-md-12">
+                                                
+                                                
+                                                <div class="row">  
+                                                    <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                        <div style="margin:0px auto !important;" id="iframeMapOneData">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="row">  
+                                                    <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                        <div style="margin:0px auto !important;" id="iframeMapTwoData">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- map end here --}}
+
+                 @endif
+
+
+
+
                 <!-- Statistics area start -->
                 <div class="col-lg-12 mt-4" id="scroll_daily_south_asian_countries_differentiation">
 
@@ -5322,7 +5395,9 @@ $ydata = [];
     $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2_16088070260020/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3_16088073716630/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>'); --}}
-    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers3/Dashboard?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers3_16263431638770/Dashboard?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeMapOneData').html('<iframe src="https://moru.maps.arcgis.com/apps/dashboards/7097cccb4e874d3db948661a9befeee6?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeMapTwoData').html('<iframe src="https://moru.maps.arcgis.com/apps/dashboards/05cd4ef7880a45b5b07eea30a47b9e20?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
     
     $(document).ready(function ($) {
         var slider = document.getElementById("myRange");
