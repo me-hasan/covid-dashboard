@@ -1229,9 +1229,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="first_slot_district_name" style="background: #FD8065; color: white; width: 25%"></td>
-                                                                                    <td class="second_slot_district_name" style="background: #FF5733; color: white; width: 25%"></td>
-                                                                                    <td class="third_slot_district_name" style="background: #DC143C; color: white; width: 25%"></td>
-                                                                                    <td class="fourth_slot_district_name" style="background: #481005; color: white; width: 25%"></td>
+                                                                                    <td class="second_slot_district_name" style="background: #E13531; color: white; width: 25%"></td>
+                                                                                    <td class="third_slot_district_name" style="background: #D30D0D; color: white; width: 25%"></td>
+                                                                                    <td class="fourth_slot_district_name" style="background: #911d07; color: white; width: 25%"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
