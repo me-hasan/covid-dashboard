@@ -1222,14 +1222,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                                 <tr>
                                                                                     <th>১০% থেকে ১৯%</th>
                                                                                     <th>২০% থেকে ২৯%</th>
-                                                                                    <th>৩০% থেকে ৪০% +</th>
+                                                                                    <th>৩০% থেকে ৩৯%</th>
+                                                                                    <th>৪০% +</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td class="first_slot_district_name" style="background: #FF6347; color: white; width: 30%"></td>
-                                                                                    <td class="second_slot_district_name" style="background: #E13531; color: white; width: 30%"></td>
-                                                                                    <td class="third_slot_district_name" style="background: #DC143C; color: white; width: 30%"></td>
+                                                                                    <td class="first_slot_district_name" style="background: #FD8065; color: white; width: 25%"></td>
+                                                                                    <td class="second_slot_district_name" style="background: #FF5733; color: white; width: 25%"></td>
+                                                                                    <td class="third_slot_district_name" style="background: #DC143C; color: white; width: 25%"></td>
+                                                                                    <td class="fourth_slot_district_name" style="background: #481005; color: white; width: 25%"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -5531,6 +5533,7 @@ $ydata = [];
             $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
             $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
             $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
+            $('.fourth_slot_district_name').html(risk_matrix_data.fourth_slot_district_name);
 
 
 
