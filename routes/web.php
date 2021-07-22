@@ -329,3 +329,14 @@ Route::get('socio-economic', 'socioEconomic\DashboardController@index')->name('s
 Route::get('socio-economic/education', 'socioEconomic\DashboardController@education')->name('socio.economic.education');
 Route::get('socio-economic/employment', 'socioEconomic\DashboardController@employment')->name('socio.economic.employment');
 // URL::forceScheme('https');
+
+
+
+/**
+ * ====================================================
+ * start public path====================================
+ * ====================================================
+ */
+
+
+Route::get('webportal', 'combinded\DashboardController@index')->name('combinded.card');
