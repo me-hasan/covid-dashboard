@@ -253,6 +253,52 @@
 
 
 
+        .sliderTableData {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .sliderTableData:hover {
+            opacity: 1;
+        }
+
+        .sliderTableData::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .sliderTableData::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        #slider12aTableData .slider-track-high, #slider12cTableData .slider-track-high {
+            background: red;
+        }
+
+        #slider12bTableData .slider-track-low, #slider12cTableData .slider-track-low {
+            background: green;
+        }
+
+        #slider12cTableData .slider-selection {
+            background: white;
+        }
+
+
+
+
 
         .table-responsive {
             display: block;
@@ -266,7 +312,7 @@
         }
 
         .page-container {
-            padding-left: 220px;
+            padding-left: 0;
         }
 
         .sidebar-menu {
@@ -800,9 +846,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         
                             
                                             <div class="row">
-                                                <h4 id="special_word_9" class="header-title ">
+                                                {{--  <h4 id="special_word_9" class="header-title ">
                                                     {!! $des_13->component_name_beng ?? '' !!}
-                                                </h4>
+                                                </h4>  --}}
                                                 <hr>
                                                 <!-- Start :: ঝুঁকি পর্যালোচনা -->
                                                 <?php
@@ -1027,9 +1073,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <div class="col-xl-12 col-lg-12 col-md-12">
                                                                 <div class="card-body">
                             
-                                                                    <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                                    {{--  <div class="alert mt-3 p-0 text-justify" role="alert">
                                                                         {!!$des_13->description_beng ?? '' !!}
-                                                                    </div>
+                                                                    </div>  --}}
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                         <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
@@ -1046,6 +1092,67 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                                 </div>
                                             </div>
+
+
+
+                                                <br>
+                                                <br>
+                                                <br>
+
+                                            {{--  table start here   --}}
+                                            <div class="row">
+                                                <div class="col-xl-3">
+                                                    <p>তারিখ নির্বাচন করুন: </p>
+                                                    <select name="weekly_date_table_data" id="weekly_date_table_data" style="width: 100%" class="form-control">
+                                                        @foreach ($weekly_date as $value)
+                                                            <option value="{{ $value->date_id }}">{{ $value->date_ban }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 ml-4 mb-3">
+                                                    <p>নির্বাচন করুন: <span style="font-weight:bold">(প্রতি লাখে সনাক্ত)</span></p>
+                                                    <label class="radio-inline"><input type="radio" value="0" class="cases_travelers_table_data" name="cases_travelers_table_data" checked>&nbsp;সকল &nbsp;</label>
+                                                    <label class="radio-inline"><input type="radio" value="1" class="cases_travelers_table_data" name="cases_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
+                                                </div>
+                                                <div class="col-md-3 ml-4 mb-3">
+                                                    <p>নির্বাচন করুন: <span style="font-weight:bold">(টেস্ট পজিটিভিটি)</span></p>
+                                                    <label class="radio-inline"><input type="radio" value="0" class="test_travelers_table_data" name="test_travelers_table_data" checked>&nbsp;সকল &nbsp;</label>
+                                                    <label class="radio-inline"><input type="radio" value="1" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
+                                                </div>
+                                                <div class="col-xl-1">
+                                                    <br>
+                                                    <button type="button" class="btn btn-sm btn-primary" id="weekly_date_table_data_submit">পরিবর্তন করুন</button>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="slidecontainer">
+                                                        <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
+                                                                id="demoTableData">{!! convertEnglishDigitToBangla('100') !!}</span>
+                                                        এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p>
+                                                        <input style="display:block" type="range" min="50" max="1000" value="100"
+                                                                class="sliderTableData" id="myRangeTableData">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6" style="display:none">
+        
+                                                    <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্তের পরিসীমা:
+                                                        <span
+                                                            id="ex6SliderValTableData">{!! convertEnglishDigitToBangla('5:10') !!}</span>
+                                                    </p>
+                                                    <input style="width: 100%;" id="ex12cTableData" type="text"><br/>
+        
+                                                </div>
+                                            </div>
+                                            {{--  table end here   --}}
+
+
+
+
+
+
+
                                             <!-- End :: Risk Matrix -->
                             
                                             <!-- Strat :: Modal Content -->
@@ -1392,20 +1499,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             </div>
                                         </div>
                                           <div class="row">
-                                            <div class="col-lg-8 mt-2">
+                                            <div class="col-lg-12 mt-2">
                                               
                                                 <div id="ambarchart1"></div>
-                                            
-                                            </div>
-                                            <div class="col-lg-4 mt-2">
-                                                <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                    <strong>বর্ণনা:</strong>
-                                                    {!! $des_5->description_beng ?? '' !!}
-                                                </div>
                                                 <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                     <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_5"></span>
                                                 </p>
+                                            
                                             </div>
                                           </div>
                                     </div>
@@ -1430,9 +1531,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="card-body info-style">
                                             <div class="row">
-                                                <h4 id="special_word_8" class="header-title ">
+                                                {{--  <h4 id="special_word_8" class="header-title ">
                                                     {!! $des_11->component_name_beng ?? '' !!}
-                                                </h4>
+                                                </h4>  --}}
                                                     {{-- <div class="col-md-3">
                                                         <label>বিভাগ </label>
                                                         <select name="division[]" id="division_dhaka_rate" multiple
@@ -1501,11 +1602,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                                 </div>
 
-                                                <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                {{--  <div class="alert mt-3 p-0 text-justify" role="alert">
                                                     <strong>বর্ণনা:</strong>
                                                     {!!  $des_11->description_beng ?? '' !!}
 
-                                                </div>
+                                                </div>  --}}
                                                 <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                     <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_8"></span>
@@ -3739,7 +3840,124 @@ $ydata = [];
             //hospitalDataModal();
         });
     });
+
+
      /*==============================End============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 3rd map
+    * */
+    
+    
+    
+    /*==============================Start============================================
+    * matrix table data
+    * */
+    
+    $(document).ready(function ($) {
+        var slider = document.getElementById("myRangeTableData");
+       
+        var output = document.getElementById("demoTableData");
+        //  output.innerHTML = englishToBangla(slider.value);
+
+        slider.oninput = function () {
+            let sliderValue = englishToBangla(this.value);
+            output.innerHTML = sliderValue;
+            $('.sliderTableData').text(sliderValue);
+        }
+
+        //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
+        $("#ex12cTableData").slider({id: "slider12cTableData", min: 0, max: 100, range: true, value: [5, 10]});
+
+        $("#ex12cTableData").on("slide", function (slideEvt) {
+            $("#ex6SliderValTableData").text(englishToBangla(slideEvt.value[0]) + ',' + englishToBangla(slideEvt.value[1]));
+            $('.minRangeTableData').text(englishToBangla(slideEvt.value[0]));
+            $('.maxRangeTableData').text(englishToBangla(slideEvt.value[1]));
+            table_data_myrange_ajax_call();
+        });
+        
+        table_data_myrange_ajax_call();
+
+
+        $('#myRangeTableData').on('click', function () {
+            table_data_myrange_ajax_call();
+        });
+
+
+        $('#weekly_date_table_data_submit').on('click', function () {
+            table_data_myrange_ajax_call();
+            table_data_weekly_date_change();
+        });
+
+
+
+        function table_data_weekly_date_change(){
+            let url = new URL('{!! route('weekly.date.change.for.third.matrix.public') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'weekly_date': $('#weekly_date_table_data').val(),
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.recent_weekly_date_table_data').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
+                        $('.last_weekly_date_table_data').html("গত সপ্তাহ ("+data.last_weekly_date+")") 
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+        function table_data_myrange_ajax_call() {
+            // console.log(hpm.getThirdRiskMatricData);
+            let result;
+            let url = new URL('{!! route('hpm.getThirdRiskMatricData.public') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'test_count': $('#myRange3rdMatrix').val(),
+                    'test_positive_data_rate': $('#ex12c3rdMatrix').val(),
+                    'weekly_date': $('#weekly_date_3rd_matrix').val(),
+                    'case_travelers' : $('input[name="cases_travelers_3rd_matrix"]:checked').val(),
+                    'test_travelers' : $('input[name="test_travelers_3rd_matrix"]:checked').val()
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        
+                        thirdMatrixrangeChange(data.result_data, data.risk_matrix_data);
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+
+        
+        
+    });
+    /*==============================End============================================
     * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 3rd map
     * */
 
