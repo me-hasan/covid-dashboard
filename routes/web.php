@@ -346,3 +346,5 @@ Route::get('/infected-percentage-public', 'combinded\DashboardController@infecte
 Route::get('hpm-risk-matrix-data-public', 'combinded\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData.public');
 Route::get('hpm-third-risk-matrix-data-public', 'combinded\DashboardController@getRiskMatrixModalDataPublic')->name('hpm.getThirdRiskMatricData.public');
 Route::get('xpm-third-risk-matrix-date-change-public', 'combinded\DashboardController@getThirdRiskMatrixDateChange')->name('weekly.date.change.for.third.matrix.public');
+
+Route::get('all-table-data-public', 'combinded\DashboardController@getAllTableData')->name('get.table.data.public');

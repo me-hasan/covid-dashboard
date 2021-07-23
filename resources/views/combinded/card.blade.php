@@ -1145,6 +1145,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
         
                                                 </div>
                                             </div>
+
+
+                                            <div class="row" id="riskMatrixAllDistrictShowHideTables">
+                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                <div class="col-xl-10 col-lg-10">
+                                                    <div class="card-body">
+                                                        <div id="matrix-data-table">&nbsp;</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                            </div>
                                             {{--  table end here   --}}
 
 
@@ -3884,25 +3895,32 @@ $ydata = [];
 
         $('#weekly_date_table_data_submit').on('click', function () {
             table_data_myrange_ajax_call();
-            table_data_weekly_date_change();
+            
         });
 
 
+ 
 
-        function table_data_weekly_date_change(){
-            let url = new URL('{!! route('weekly.date.change.for.third.matrix.public') !!}');
+        function table_data_myrange_ajax_call() {
+            // console.log(hpm.getThirdRiskMatricData);
+            let result;
+            let url = new URL('{!! route('get.table.data.public') !!}');
             $.ajax({
 
                 type: "GET",
                 url: url.toString(),
                 data: {
+                    'test_count': $('#myRangeTableData').val(),
+                    'test_positive_data_rate': $('#ex12cTableData').val(),
                     'weekly_date': $('#weekly_date_table_data').val(),
+                    'case_travelers' : $('input[name="cases_travelers_table_data"]:checked').val(),
+                    'test_travelers' : $('input[name="test_travelers_table_data"]:checked').val()
                 },
                 timeout: 30000,
                 success: function (data) {
                     if (data.status == 'success') {
-                        $('.recent_weekly_date_table_data').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
-                        $('.last_weekly_date_table_data').html("গত সপ্তাহ ("+data.last_weekly_date+")") 
+                        
+                        tableDataChange(data.risk_matrix_all_data);
                     } else {
                         alert("Something Went Wrong");
                     }
@@ -3918,45 +3936,59 @@ $ydata = [];
             return false;
         }
 
-        function table_data_myrange_ajax_call() {
-            // console.log(hpm.getThirdRiskMatricData);
-            let result;
-            let url = new URL('{!! route('hpm.getThirdRiskMatricData.public') !!}');
-            $.ajax({
-
-                type: "GET",
-                url: url.toString(),
-                data: {
-                    'test_count': $('#myRange3rdMatrix').val(),
-                    'test_positive_data_rate': $('#ex12c3rdMatrix').val(),
-                    'weekly_date': $('#weekly_date_3rd_matrix').val(),
-                    'case_travelers' : $('input[name="cases_travelers_3rd_matrix"]:checked').val(),
-                    'test_travelers' : $('input[name="test_travelers_3rd_matrix"]:checked').val()
-                },
-                timeout: 30000,
-                success: function (data) {
-                    if (data.status == 'success') {
-                        
-                        thirdMatrixrangeChange(data.result_data, data.risk_matrix_data);
-                    } else {
-                        alert("Something Went Wrong");
-                    }
-                },
-                error: function (request, status, error) {
-                    console.log("Request Param");
-                    // console.log(request.responseText);
-                    console.log("Status Param");
-                    console.log(status);
-                    console.log(error);
-                }
-            });
-            return false;
+        function tableDataChange(risk_matrix_data) {
+            /*risk matrix all data start here*/
+             var riskMatrixTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
+                                                    <th class="border-bottom-0" rowspan="2">জেলা</th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="2">পরিবর্তন</th>
+                                                </tr>
+                                                    <tr>
+                                                    <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0">পজিটিভ</th>
+                                                    <th class="border-bottom-0">পজিটিভিটি</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>`;
+            var riskMatrixTableBody = risk_matrix_data; 
+            var riskMatrixTableFooter = '</tbody></table>';
+            
+            setTimeout(riskMatrixAllDistrictForDataTable, 3000);
+            
+            $('#matrix-data-table').html(riskMatrixTableHead+riskMatrixTableBody+riskMatrixTableFooter);
         }
 
 
         
         
     });
+
+    function riskMatrixAllDistrictForDataTable(){
+        if ( $.fn.dataTable.isDataTable( '#matrixFullTableWithAllDistrict' ) ) {
+            table = $('#matrixFullTableWithAllDistrict').DataTable();
+        }
+        else {
+            table = $('#matrixFullTableWithAllDistrict').DataTable( {
+                paging: false,
+                searching: true,
+                "oLanguage": {
+                    "sSearch": "অনুসন্ধান করুন:"
+                }
+            } );
+        }
+        
+        $('.table_recent_weekly_date').html($('.recent_weekly_date').html());
+        $('.table_last_weekly_date').html($('.last_weekly_date').html());
+    }
     /*==============================End============================================
     * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 3rd map
     * */
