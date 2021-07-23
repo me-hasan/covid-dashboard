@@ -5576,7 +5576,7 @@ $ydata = [];
                                                     <th class="border-bottom-0" rowspan="2">জেলা</th>
                                                     <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
                                                     <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
-                                                    <th class="border-bottom-0" colspan="2">পজিটিভের পরিবর্তন</th>
+                                                    <th class="border-bottom-0" colspan="2">পরিবর্তন</th>
                                                 </tr>
                                                     <tr>
                                                     <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
