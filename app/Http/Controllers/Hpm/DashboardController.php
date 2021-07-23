@@ -2642,7 +2642,9 @@ ORDER BY r.positive_tests DESC");
         if(count($items)) {
             foreach($items as $key => $item) {
                 $changePositive = $item->r_positive - $item->l_positive;
+                $changePositivity = number_format(($item->recent_test_positivity - $item->last_test_positivity), 2);
                 $changePostiveColor = ($changePositive < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositive === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
+                $changePostivityColor = ($changePositivity < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositivity === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
                 $html .= '<tr class="b1">';
                 $html .= "<td>&nbsp;</td>";
                 $html .= "<td style='font-size: 18px' >".en2bnTranslation($item->district)."</td>";
@@ -2653,6 +2655,7 @@ ORDER BY r.positive_tests DESC");
                 $html .= "<td><span style='color:#0636c1d4;'>".$item->l_total_test."</span></td>";
                 $html .= "<td><span style='color:#b50514d4;'>".$item->l_positive."</span></td>";
                 $html .= "<td $changePostiveColor>".$changePositive."</td>";
+                $html .= "<td $changePostivityColor>".$changePositivity." % </td>";
                 $html .= "</tr>";
             }
         }
