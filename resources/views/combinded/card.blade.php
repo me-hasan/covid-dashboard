@@ -910,7 +910,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
                                                                                     id="demo3rdMatrix">{!! convertEnglishDigitToBangla('100') !!}</span>
                                                                             এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p>
-                                                                            <input type="range" min="50" max="1000" value="100"
+                                                                            <input style="display:none" type="range" min="50" max="1000" value="100"
                                                                                    class="slider3rdMap" id="myRange3rdMatrix">
                                                                         </div>
                                                                     </div>
@@ -1392,12 +1392,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             </div>
                                         </div>
                                           <div class="row">
-                                            <div class="col-lg-6 mt-2">
+                                            <div class="col-lg-8 mt-2">
                                               
                                                 <div id="ambarchart1"></div>
                                             
                                             </div>
-                                            <div class="col-lg-6 mt-2">
+                                            <div class="col-lg-4 mt-2">
                                                 <div class="alert mt-3 p-0 text-justify" role="alert">
                                                     <strong>বর্ণনা:</strong>
                                                     {!! $des_5->description_beng ?? '' !!}
@@ -2589,7 +2589,7 @@ $ydata = [];
         let xdata = [];
 
         $.ajax({
-            url: "{{ route('infected.percentage') }}",
+            url: "{{ route('infected.percentage-public') }}",
             type: 'GET',
             success: function (response) {
                 
@@ -2992,7 +2992,7 @@ $ydata = [];
     }
 
     $.ajax({
-        url: '{{url("/")}}/get-national-level-test-positivity-data',
+        url: '{{url("/")}}/get-national-level-test-positivity-data-public',
         type: 'GET',
         data: {},
         success: function (data) {
@@ -3018,7 +3018,7 @@ $ydata = [];
         if (true) {
             showLoader();
             $.ajax({
-                url: '{{url("/")}}/get-dhaka-positive-rate-data',
+                url: '{{url("/")}}/get-dhaka-positive-rate-data-public',
                 type: 'GET',
                 data: {districts: distArray, weeklyOrDaily: weeklyOrDaily, non_traveler: non_traveler},
                 success: function (data) {
@@ -3533,7 +3533,7 @@ $ydata = [];
 
 
         function third_matrix_weekly_date_change(){
-            let url = new URL('{!! route('weekly.date.change.for.third.matrix') !!}');
+            let url = new URL('{!! route('weekly.date.change.for.third.matrix.public') !!}');
             $.ajax({
 
                 type: "GET",
@@ -3565,7 +3565,7 @@ $ydata = [];
         function third_matrix_myrange_ajax_call() {
             // console.log(hpm.getThirdRiskMatricData);
             let result;
-            let url = new URL('{!! route('hpm.getThirdRiskMatricData') !!}');
+            let url = new URL('{!! route('hpm.getThirdRiskMatricData.public') !!}');
             $.ajax({
 
                 type: "GET",

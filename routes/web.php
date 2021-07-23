@@ -340,3 +340,9 @@ Route::get('socio-economic/employment', 'socioEconomic\DashboardController@emplo
 
 
 Route::get('webportal', 'combinded\DashboardController@index')->name('combinded.card');
+Route::get('get-national-level-test-positivity-data-public', 'combinded\DashboardController@getNationLevelTestPositivityData')->name('get-national-level-test-positivity-data-public');
+Route::get('get-dhaka-positive-rate-data-public', 'combinded\DashboardController@getDhakaPositiveRateData')->name('get-dhaka-positive-rate-data-public');
+Route::get('/infected-percentage-public', 'combinded\DashboardController@infectedPercentage')->name('infected.percentage-public');
+Route::get('hpm-risk-matrix-data-public', 'combinded\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData.public');
+Route::get('hpm-third-risk-matrix-data-public', 'combinded\DashboardController@getRiskMatrixModalDataPublic')->name('hpm.getThirdRiskMatricData.public');
+Route::get('xpm-third-risk-matrix-date-change-public', 'combinded\DashboardController@getThirdRiskMatrixDateChange')->name('weekly.date.change.for.third.matrix.public');
