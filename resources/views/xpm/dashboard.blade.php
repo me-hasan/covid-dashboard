@@ -857,12 +857,108 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             
                             <div class="row">
-                                <div class="col-lg-8"></div>
+                                    <div class="col-lg-4"></div>
                                     <div class="col-lg-4">
                                         
                                         <div style="background-color: #F5EDDC;
                                             width: 420px;
-                                            height: 150px;
+                                            height: 125px;
+                                            border: 1px dotted black;" class="row background">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #330000;border: 1px solid #330000;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> অধিকতর গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৪০% +)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #911d07;border: 1px solid #911d07;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩০% - ৩৯%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #D30D0D;border: 1px solid #D30D0D;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ২০% - ২৯%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #FD8065;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% - ১৯% )</p>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</p>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #1FAA0D;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার < ৫%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: rgb(255, 255, 255);border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সাদা (পরীক্ষা বিবেচনায় সনাক্তের হার o%) </p>
+
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="row ">
+                                                        {{-- <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #C8C0BD;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> ধূসর (টেস্টের সংখ্যা < ১০০) </p>
+
+                                                        </div>
+                                                        <br>
+                                                        <div class="d-flex justify-content-start pt-2">
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(226, 5, 5);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(196, 151, 6);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(19, 167, 0);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255);"></span>
+                                                            <p style="font-size:16px;margin-bottom: 0px; margin-left: 3px;"> ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</p>
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-4">
+                                        
+                                        <div style="background-color: #F5EDDC;
+                                            width: 420px;
+                                            height: 125px;
                                             border: 1px dotted black;" class="row background">
                                                 <div class="col-md-12">
                                                     {{-- <div class="row">
@@ -874,7 +970,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩১% থেকে ৪০%)</p>
                                                         </div>
                                                     </div> --}}
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #F90606;border: 1px solid #686868;">
                                                             </div>
@@ -882,7 +978,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="col-md-11 pt-1">
                                                             <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার >১০%)</p>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #686868;">
@@ -893,12 +989,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         </div>
                                                     </div> --}}
                                                     <div class="row">
+                                                        <br>
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - <১০%)</p>
 
 
                                                         </div>
