@@ -683,12 +683,108 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             
                             <div class="row">
-                                <div class="col-lg-8"></div>
+                                <div class="col-lg-4"></div>
                                     <div class="col-lg-4">
                                         
                                         <div style="background-color: #F5EDDC;
                                             width: 420px;
-                                            height: 150px;
+                                            height: 125px;
+                                            border: 1px dotted black;" class="row background">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #330000;border: 1px solid #330000;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> অধিকতর গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৪০% +)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #911d07;border: 1px solid #911d07;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩০% - ৩৯%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #D30D0D;border: 1px solid #D30D0D;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ২০% - ২৯%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #FD8065;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% - ১৯% )</p>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</p>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #1FAA0D;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার < ৫%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: rgb(255, 255, 255);border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সাদা (পরীক্ষা বিবেচনায় সনাক্তের হার o%) </p>
+
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="row ">
+                                                        {{-- <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #C8C0BD;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> ধূসর (টেস্টের সংখ্যা < ১০০) </p>
+
+                                                        </div>
+                                                        <br>
+                                                        <div class="d-flex justify-content-start pt-2">
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(226, 5, 5);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(196, 151, 6);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(19, 167, 0);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255);"></span>
+                                                            <p style="font-size:16px;margin-bottom: 0px; margin-left: 3px;"> ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</p>
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-4">
+                                        
+                                        <div style="background-color: #F5EDDC;
+                                            width: 420px;
+                                            height: 125px;
                                             border: 1px dotted black;" class="row background">
                                                 <div class="col-md-12">
                                                     {{-- <div class="row">
@@ -700,7 +796,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩১% থেকে ৪০%)</p>
                                                         </div>
                                                     </div> --}}
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #F90606;border: 1px solid #686868;">
                                                             </div>
@@ -708,7 +804,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="col-md-11 pt-1">
                                                             <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার >১০%)</p>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #686868;">
@@ -719,12 +815,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         </div>
                                                     </div> --}}
                                                     <div class="row">
+                                                        <br>
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - <১০%)</p>
 
 
                                                         </div>
@@ -3585,7 +3682,7 @@ $ydata = [];
     $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2_16088070260020/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3_16088073716630/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>'); --}}
-    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_16264795316950/Dashboard?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers3_16263431638770/Dashboard?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeMapOneData').html('<iframe src="https://moru.maps.arcgis.com/apps/dashboards/7097cccb4e874d3db948661a9befeee6?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeMapTwoData').html('<iframe src="https://moru.maps.arcgis.com/apps/dashboards/05cd4ef7880a45b5b07eea30a47b9e20?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
     
@@ -3895,7 +3992,6 @@ $ydata = [];
 
         $('#weekly_date_table_data_submit').on('click', function () {
             table_data_myrange_ajax_call();
-            
         });
 
 
@@ -3919,8 +4015,35 @@ $ydata = [];
                 timeout: 30000,
                 success: function (data) {
                     if (data.status == 'success') {
-                        
                         tableDataChange(data.risk_matrix_all_data);
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+        function weekly_date_change(){
+            let url = new URL('{!! route('weekly.date.change.for.table') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'weekly_date': $('#weekly_date_table_data').val(),
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.table_recent_weekly_date').html(data.recent_weekly_date)
                     } else {
                         alert("Something Went Wrong");
                     }
@@ -3944,18 +4067,11 @@ $ydata = [];
                                                     <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
                                                     <th class="border-bottom-0" rowspan="2">জেলা</th>
                                                     <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
-                                                    <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
-                                                    <th class="border-bottom-0" colspan="2">পরিবর্তন</th>
                                                 </tr>
                                                     <tr>
                                                     <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
                                                     <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
                                                     <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
-                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
-                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
-                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
-                                                    <th class="border-bottom-0">পজিটিভ</th>
-                                                    <th class="border-bottom-0">পজিটিভিটি</th>
                                                 </tr>
                                             </thead>
                                                 <tbody>`;
@@ -3965,6 +4081,7 @@ $ydata = [];
             setTimeout(riskMatrixAllDistrictForDataTable, 3000);
             
             $('#matrix-data-table').html(riskMatrixTableHead+riskMatrixTableBody+riskMatrixTableFooter);
+            weekly_date_change();
         }
 
 

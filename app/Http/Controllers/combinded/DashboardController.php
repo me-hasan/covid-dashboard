@@ -3747,14 +3747,14 @@ GROUP BY
             if(!empty($c->district) && isset($c->district)){
                 foreach($test as $k=> $t){
                 if($c->district === $t->district){
-                    $reform['district'] =  $c->district;
-                    $reform['population'] =  $c->population;
-                    $reform['r_positive'] = ($tFlag == 0) ? $c->r_positive : $t->r_positive;
-                    $reform['r_total_test'] = ($tFlag == 0) ? $c->r_total_test: $t->r_total_test;
-                    $reform['recent_test_positivity'] = ($tFlag == 0) ? $c->recent_test_positivity: $t->recent_test_positivity;
-                    $reform['population_infected_Per_Lakh'] = ($cFlag == 0) ? $c->population_infected_Per_Lakh: $t->population_infected_Per_Lakh;
-            $newArray[] = $reform;
-        }
+                        $reform['district'] =  $c->district;
+                        $reform['population'] =  $c->population;
+                        $reform['r_positive'] = ($tFlag == 0) ? $c->r_positive : $t->r_positive;
+                        $reform['r_total_test'] = ($tFlag == 0) ? $c->r_total_test: $t->r_total_test;
+                        $reform['recent_test_positivity'] = ($tFlag == 0) ? $c->recent_test_positivity: $t->recent_test_positivity;
+                        $reform['population_infected_Per_Lakh'] = ($cFlag == 0) ? $c->population_infected_Per_Lakh: $t->population_infected_Per_Lakh;
+                        $newArray[] = $reform;
+                    }
                 }
             }
         }
@@ -3848,7 +3848,7 @@ GROUP BY
                 
                 $high_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_high_table_contentData, $test_high_to_high_table_contentData, $case_table_recent, $test_table_recent);
             
-                //dd($high_to_high_table_contentData);
+                // dd($high_to_high_table_contentData);
 
                 $data['risk_matrix_all_data'] = $this->getRiskMatrixAllData($high_to_high_table_contentData);
                 // $data['risk_matrix_all_data'] = $high_to_high_table_contentData ;
@@ -3864,30 +3864,27 @@ GROUP BY
 
     public function getRiskMatrixAllData($items)
      {
+        //  dd($items);
         $html = "";
         $changePostiveColor = "";
         if(count($items)) {
             foreach($items as $key => $item) {
-                $changePositive = $item->r_positive - $item->l_positive;
-                $changePositivity = number_format(($item->recent_test_positivity - $item->last_test_positivity), 2);
-                $changePostiveColor = ($changePositive < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositive === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
-                $changePostivityColor = ($changePositivity < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositivity === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
+                
                 $html .= '<tr class="b1">';
                 $html .= "<td>&nbsp;</td>";
-                $html .= "<td style='font-size: 18px' >".en2bnTranslation($item->district)."</td>";
-                $html .= "<td>".$item->recent_test_positivity."% </td>";
-                $html .= "<td><span style='color:#0636c1d4;'>".$item->r_total_test."</span></td>";
-                $html .= "<td><span style='color:#b50514d4;'>".$item->r_positive."</span></td>";
-                $html .= "<td>".$item->last_test_positivity."% </td>";
-                $html .= "<td><span style='color:#0636c1d4;'>".$item->l_total_test."</span></td>";
-                $html .= "<td><span style='color:#b50514d4;'>".$item->l_positive."</span></td>";
-                $html .= "<td $changePostiveColor>".$changePositive."</td>";
-                $html .= "<td $changePostivityColor>".$changePositivity." % </td>";
+                $html .= "<td style='font-size: 18px' >".en2bnTranslation($item['district'])."</td>";
+                $html .= "<td>".$item['recent_test_positivity']."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item['r_total_test']."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item['r_positive']."</span></td>";
+                
                 $html .= "</tr>";
             }
         }
         return $html;
      }
+
+  
+     
 
 
 
