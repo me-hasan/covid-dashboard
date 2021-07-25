@@ -1875,9 +1875,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
         integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
         crossorigin="anonymous"></script>
 <!-- INTERNAL Highhcart -->
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-3d.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
 <script src="{{asset('pm/js/bn.js')}}"></script>
 <!-- INTERNAL Select2 js -->
 
@@ -1894,46 +1893,8 @@ $sum = 0;
 $mdate = '';
 $xdate = '';
 
-foreach ($nation_wide_MovingAvgInfected as $k => $row) {
-    $date_arr[] = convertEnglishDateToBangla($row->report_date);
-    $infected_arr[] = $row->infected_24_hrs;
-    $avg_arr[] = $row->five_dayMovingAvgInfected;
-    $sum = $sum + $row->infected_24_hrs;
-    $test_arr = explode(",", $testsVsCases['totalTest']);
-    $test_arr_data = $testsVsCases['totalTestData'];
-    $case_arr = explode(",", $testsVsCases['totalCase']);
-    $mdate = $row->report_date;
 
-    $mdata [] = [
-        "date" => $row->report_date,
-        "infected" => $row->infected_24_hrs,
-        "avg" => $row->five_dayMovingAvgInfected,
-        "total_infected" => $row1_left_trend_infected_data[$k],
-        "tested" => $test_arr[$k],
-        "tested_data" => $test_arr_data[$k],
-        "case" => $case_arr[$k],
 
-    ];
-}
-//dd($mdata);
-//$xdata = array();
-//$last_dates = explode(",", $forteen_day_infected['dateRange']);
-//$last_dates = $forteen_day_infected['mdates'];
-//$x = explode(",", $forteen_day_infected['total_infected']);
-//$y = explode(",", $forteen_day_infected['total_test_positivity']);
-//
-//
-//foreach ($last_dates as $k => $d) {
-//    $xdata [] = [
-//        "date" => $d,
-//        "infected" => $x[$k],
-//        "test_positive" => $y[$k],
-//    ];
-//    $xdate = $d;
-//}
-$infected = implode(",", $infected_arr);
-$avg = implode(",", $avg_arr);
-$ydata = [];
 
 ?>
 
@@ -1945,28 +1906,15 @@ $ydata = [];
 
     var mdata = <?php echo json_encode($mdata)?>;
     // console.log(mdata);
-    {{--var xdata = <?php echo json_encode($xdata)?>;--}}
+   
     var msize = Object.keys(mdata).length;
     // var xsize = Object.keys(xdata).length;
 
-    var m_last_date = new Date(mdata[msize - 1].date).toLocaleDateString('bn', options);
+    var m_last_date = {};
     // var x_last_date = new Date(xdata[xsize - 1].date).toLocaleDateString('bn', options);
 
 
-    var tags = {
-        "special_word_1": ["অক্টোবর মাসের শুরু থেকে সনাক্তের সংখ্যা দৈনিক ১৫০০", "মহামারীর অপরিবর্তিত অবস্থাকে"],
-        "special_word_2": ["প্রতি হাজারে প্রায় ১৪ জনের", "প্রতিবেশী দেশগুলোর তুলনায় কম"],
-        "special_word_3": ["করোনায় দৈনিক প্রায় একই সংখ্যক মানুষ সনাক্তের হচ্ছে"],
-        "special_word_4": ["পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন"],
-        "special_word_5": ["মহামারীটি এর বর্তমান গতিতেই আগাচ্ছে - এর গতি এই মূহুর্তে কমছে না বা বাড়ছে না"],
-        "special_word_6": ["মহামারীটির উন্নতি হচ্ছে না বরং স্থির অবস্থায় বিরাজমান আছে"],
-        "special_word_7": ["লাল এলাকায় আরও বেশি করে পরীক্ষা করা দরকার"],
-        "special_word_8": ["পরীক্ষাকৃত ব্যক্তিদের মধ্যে সনাক্তের্রের সংখ্যা কিছুটা কমে আসলেও এখনো বেশ উঁচু"],
-        "special_word_9": ["লাল ঘরে কোন জেলাগুলো রয়েছে এবং তাদের অবস্থা উন্নতির দিকে কেন যাচ্ছে না"],
-        "special_word_10": ["বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে", "সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি"],
-        "special_word_11": ["আইসিইউ শয্যার ব্যবহার এখনও অধিক"],
-
-    }
+ 
 
 
     var tagDesign = function (id, tag) {
@@ -1980,9 +1928,7 @@ $ydata = [];
 
     };
 
-    $.each(tags, function (id, tag) {
-        //tagDesign(id, tag);
-    });
+    
 
     function extractValue(arr, prop) {
         let extractedValue = arr.map(item => item[prop]);
@@ -3581,18 +3527,8 @@ $ydata = [];
 
 
 
-    $.ajax({
-    url: '{{url("/")}}/get-age-wise-death-data',
-    type: 'GET',
-    data: {},
-        success: function (data) {
-            showNationalLevelAgeWiseDeathChart(data);
-            // hideLoader();
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+  
+  
 
     $('#filter-age-wise-death').click(function () {
         var genderTitle = '';
@@ -3659,17 +3595,6 @@ $ydata = [];
 
 
 
-    $.ajax({
-        url: '{{url("/")}}/get-division-data',
-        type: 'GET',
-        data: {},
-        success: function (data) {
-            showDivisionChart(data);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
 
     
 
