@@ -526,9 +526,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 <!-- page container area start -->
 <div class="page-container">
         <div class="header_dashboard_part" style="">
-          <img style="float:left;margin: 3px 19px;" src="http://103.247.238.92/webportal/files/logo/GoB.png"/>
+          <img style="float:left;margin: 3px 19px;" src="pm/images/icon/GoB.png"/>
           <h1>COVID-19 Dynamic Dashboard for Bangladesh</h1>
-          <img style="float:right;margin-right:36px;margin-top:3px;"  src="http://103.247.238.92/webportal/files/logo/dghs.png"/>
+          <img style="float:right;margin-right:36px;margin-top:3px;"  src="pm/images/icon/dghs.png"/>
         </div>
 
         <div class="main-menu" style="padding: 2px 0 0 0;">
@@ -536,10 +536,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 <nav>
                     
                     <ul class="tab_nab_dashboard">
-                      <li style="margin-left:1px;"><a href="http://103.247.238.92/webportal/pages/covid19.php">National Statistics</a></li>
-                      <li><a href="" style="background-color: #006d2c">Weekly Dashboard</a></li>
-                      <li><a href="http://103.247.238.92/webportal/pages/covid19-bedstatus-display.php">Hospital Information</a></li>
-                      <li><a href="http://103.247.238.92/webportal/pages/covid19-vaccination-update.php">Vaccination</a></li>
+                        <li style="margin-left:1px;"><a href="http://103.247.238.92/webportal/pages/covid19_temp.php">National Statistics</a></li>
+                        <li><a href="https://dashboard.corona.gov.bd/webportal" style="background-color: #006d2c">Weekly Dashboard</a></li>
+                        <li><a href="http://103.247.238.92/webportal/pages/covid19-bedstatus-display-tempr.php">Hospital Information</a></li>
+                        <li><a href="http://103.247.238.92/webportal/pages/covid19-vaccination-update-tempr.php">Vaccination</a></li>
                     </ul>
                 </nav>
             </div>
@@ -1082,12 +1082,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         <tbody class="fs-20 text-center risk_matrix">
                                                                         <tr>
                                                                             <td></td>
-                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 10% </td>
-                                                                            <td class="bold"> 5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 10% </td>
-                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 5% </td>
+                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= ১০% </td>
+                                                                            <td class="bold"> ৫ - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> ১০% </td>
+                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> ৫% </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 10</td>
+                                                                            <td class="bold verticalLabel"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= ১০</td>
                                                                             <td style="cursor: pointer;background: #800000; color: white; width: 35%"
                                                                                 class="high_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -1105,7 +1105,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">10</td>
+                                                                            <td class="bold verticalLabel">৫ - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">১০</td>
                                                                             <td style="background: #800000; cursor: pointer; color: white"
                                                                                 class="medium_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -1123,7 +1123,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">0.01 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">5</td>
+                                                                            <td class="bold verticalLabel">০.০১ - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">৫</td>
                                                                             <td style="background: #FF0000; cursor: pointer; color: white"
                                                                                 class="low_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
@@ -1141,7 +1141,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="bold verticalLabel">0</td>
+                                                                            <td class="bold verticalLabel">০</td>
                                                                             <td style="background: #FC6E00; cursor: pointer; color: white"
                                                                                 class="zero_to_high_third_matrix_modal_click"
                                                                                 data-target="#modaldemo1"
