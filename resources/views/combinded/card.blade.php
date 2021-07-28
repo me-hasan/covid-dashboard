@@ -554,7 +554,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
         
             <div class="row">
                 <div class="col-lg-4 mt-4">
-                    <div style="height: 220px" class="card purple-card">
+                    <div style="height: 240px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট পরীক্ষা</h4>
@@ -579,11 +579,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
+                            <p class="footer-note" style="font-size: 12px">
+                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> ২৬ জুলাই ২০২১</span>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 mt-4">
-                    <div style="height: 220px" class="card purple-card">
+                    <div style="height: 240px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট সনাক্তের</h4>
@@ -608,11 +612,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
+                            <p class="footer-note" style="font-size: 12px">
+                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> ২৬ জুলাই ২০২১</span>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 mt-4">
-                    <div style="height: 220px" class="card purple-card">
+                    <div style="height: 240px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট মৃত্যু</h4>
@@ -640,6 +648,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
+                            <p class="footer-note" style="font-size: 12px">
+                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> ২৬ জুলাই ২০২১</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -653,7 +665,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                            
 
                             {{-- map start here --}}
-                            <div class="invoice-head title-bg-style" id="scroll_daily_risk_dist_wise_test_positive">
+                            <div class="invoice-head title-bg-style" id="scroll_daily_risk_dist_wise_test_positive" id="accordion">
                                 <div class="row">
                                     <div class="iv-left col-8 ">
                                         <h2>
@@ -922,9 +934,20 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </div>
                             </div>
                             {{-- map end here --}}
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                    <div class="card-body">
+                                        <p class="footer-note">
+                                            <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{$matrix_date_selected->date_ban}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
-
-                            
+                            <br>
+                            <br>
+                            <br>
                             
 
 
@@ -1163,30 +1186,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 </div>
                                                             </div>
                                                         </div>
-                            
-                                                   
-                                                   
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-lg-12 col-md-12">
-                                                                <div class="card-body">
-                            
-                                                                    {{--  <div class="alert mt-3 p-0 text-justify" role="alert">
-                                                                        {!!$des_13->description_beng ?? '' !!}
-                                                                    </div>  --}}
-                                                                    <p class="footer-note">
-                                                                        <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                                        <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{$first_week_start}}</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-
                                                     </div>
+                                                </div>
+                                            </div>
 
-
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                    <div class="card-body">
+                                                        <p class="footer-note">
+                                                            <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{$matrix_date_selected->date_ban}}</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1242,9 +1253,16 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
         
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                    <div class="card-body">
+                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="showRiskMatrixBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px; min-width: 225px">সকল জেলা বন্ধ করুন</button>
+                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="hideRiskMatrixBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সকল জেলা এক নজরে দেখুন</button>
+                                                    </div>
+                                                </div>
+                                            </div>  
 
-
-                                            <div class="row" id="riskMatrixAllDistrictShowHideTables">
+                                            <div class="row" id="riskMatrixAllDistrictShowHideTable">
                                                 <div class="col-xl-1 col-lg-1">&nbsp;</div>
                                                 <div class="col-xl-10 col-lg-10">
                                                     <div class="card-body">
@@ -1256,9 +1274,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             {{--  table end here   --}}
 
 
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                    <div class="card-body">
+                                                        <p class="footer-note">
+                                                            <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{$matrix_date_selected->date_ban}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-
-
+                                           
 
 
                                             <!-- End :: Risk Matrix -->
@@ -1612,7 +1639,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div id="ambarchart1"></div>
                                                 <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_5"></span>
+                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_update_date"></span>
                                                 </p>
                                             
                                             </div>
@@ -1620,6 +1647,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                              </div>
+
+                             <br>
+                             <br>
+                             <br>
 
                             
 
@@ -1717,7 +1748,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 </div>  --}}
                                                 <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_8"></span>
+                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_update_date"></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -1762,23 +1793,30 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="col-xl-12 col-md-12">
                                         <div class="row pt-2 pr-3">
                                             <div class="col-xl-12 col-md-12">
-                                                
-                                                
-                                                <div class="row">  
-                                                    <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
-                                                        <div style="margin:0px auto !important;" id="iframeMapOneData">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-lg-12 col-md-12">
+                                                        <div class="card-body">
+                                                            <button type="button" class="btn btn-sm btn-primary pull-right" id="showCorporationBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সিটি কর্পোরেশন ম্যাপ বন্ধ করুন</button>
+                                                            <button type="button" class="btn btn-sm btn-primary pull-right" id="hideCorporationBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সিটি কর্পোরেশন ম্যাপ এক নজরে দেখুন</button>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                                <div id="cityCorporationShowHideTable">
+                                                    <div class="row">  
+                                                        <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                            <div style="margin:0px auto !important;" id="iframeMapOneData">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <div class="row">  
+                                                        <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                            <div style="margin:0px auto !important;" id="iframeMapTwoData">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <br/>
-                                                <br/>
-                                                <div class="row">  
-                                                    <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
-                                                        <div style="margin:0px auto !important;" id="iframeMapTwoData">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
 
                                                 
                                             </div>
@@ -1893,6 +1931,28 @@ $sum = 0;
 $mdate = '';
 $xdate = '';
 
+foreach ($nation_wide_MovingAvgInfected as $k => $row) {
+    $date_arr[] = convertEnglishDateToBangla($row->report_date);
+    $infected_arr[] = $row->infected_24_hrs;
+    $avg_arr[] = $row->five_dayMovingAvgInfected;
+    $sum = $sum + $row->infected_24_hrs;
+    $test_arr = explode(",", $testsVsCases['totalTest']);
+    $test_arr_data = $testsVsCases['totalTestData'];
+    $case_arr = explode(",", $testsVsCases['totalCase']);
+    $mdate = $row->report_date;
+
+    $mdata [] = [
+        "date" => $row->report_date,
+        "infected" => $row->infected_24_hrs,
+        "avg" => $row->five_dayMovingAvgInfected,
+        "total_infected" => $row1_left_trend_infected_data[$k],
+        "tested" => $test_arr[$k],
+        "tested_data" => $test_arr_data[$k],
+        "case" => $case_arr[$k],
+
+    ];
+}
+
 
 
 
@@ -1905,12 +1965,12 @@ $xdate = '';
     var options = {year: 'numeric', month: 'long', day: 'numeric'};
 
     var mdata = <?php echo json_encode($mdata)?>;
-    // console.log(mdata);
-   
+    
+    
     var msize = Object.keys(mdata).length;
     // var xsize = Object.keys(xdata).length;
 
-    var m_last_date = {};
+    var m_last_date = new Date(mdata[msize - 1].date).toLocaleDateString('bn', options);
     // var x_last_date = new Date(xdata[xsize - 1].date).toLocaleDateString('bn', options);
 
 
@@ -2739,7 +2799,7 @@ $xdate = '';
 
     if ($('#ambarchart1').length) {
 
-        $('#last_date_6').html(" " + m_last_date);
+        $('.last_update_date').html(" " + m_last_date);
 
         let xdata = [];
 
@@ -4249,142 +4309,13 @@ group by date ORDER BY date ");
     $hospital_vacancy_icus = implode(",", $icu_beds);
     ?>
     // Hospital সাধারণ শয্যা
-    Highcharts.chart('hospital_general_beds', {
-        chart: {
-            type: 'pie',
-            options3d: {
-                enabled: true,
-                alpha: 60,
-                beta: 0
-            },
-            height: 250,
-            margin: [0, 0, 30, 0],
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: 'সাধারণ শয্যা',
-            y: 20,
-            style: {
-                fontSize: 18,
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            labelFormatter: function () {
-                return this.name + ': <b> ' + englishToBangla(this.y) + '%</b>';
-            },
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        tooltip: {
-            //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                depth: 35,
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true
-            }
-        },
-
-        colors: ['#f44336', '#4caf50'],
-        series: [{
-            type: 'pie',
-            name: 'শয্যা',
-            data: [
-                ['ভর্তি', <?= number_format($nation_hospital->percent_General_Beds_Occupied, 2);?>],
-                ['খালি', <?= number_format((100 - $nation_hospital->percent_General_Beds_Occupied), 2);?>]
-            ]
-        }]
-    });
+    
+    
+        
 
     // Hospital আইসিইউ  শয্যা
-    Highcharts.chart('hospital_icu_beds', {
-        chart: {
-            type: 'pie',
-            options3d: {
-                enabled: true,
-                alpha: 60,
-                beta: 0
-            },
-            height: 250,
-            margin: [0, 0, 30, 0],
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: 'আইসিইউ শয্যা',
-            style: {
-                fontSize: 18,
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            labelFormatter: function () {
-                return this.name + ': <b> ' + englishToBangla(this.y) + '%</b>';
-            },
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        tooltip: {
-            //pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                depth: 35,
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true
-            }
-        },
-        colors: ['#f44336', '#4caf50'],
-        series: [{
-            type: 'pie',
-            name: 'শয্যা',
-            data: [
-                ['ভর্তি', <?= number_format($nation_hospital->percent_ICU_Beds_Occupied, 2);?>],
-                ['খালি', <?= number_format((100 - $nation_hospital->percent_ICU_Beds_Occupied), 2);?>]
-            ]
-        }]
-    });
+    
+    
 
     $(document).ready(function (e) {
         $('input[name="availability"]').click(function () {
@@ -4606,120 +4537,8 @@ group by date ORDER BY date ");
     $('#last_date_11').html(" " + zdate);
 
 
-    /*Haspatal beds ===================== Start ===========================  */
-    /* general beds==== */
-    function hospitalGeneralFilter(design, hospitalData) { 
-       var generalData = hospitalData.general;
-      
-       var hospitalGeneralBedchart = AmCharts.makeChart("hospital_general_bed_stacked_chart",{
-           "dataProvider": generalData,
-           "type": "serial",
-           "theme": "none",
-           "categoryField": "date",
-            
-            "graphs": design.graphs,
-            "valueAxes": design.valueAxes,
-            "chartCursor": design.chartCursor,
-            "categoryAxis": design.categoryAxis,
-            "legend": design.legend,
-            "chartScrollbar": design.chartScrollbar,  
-        });
-
-        hospitalGeneralBedchart.addListener("dataUpdated", zoomChart);
-        zoomChart();
-
-    }
-
-    /* icu beds==== */
-    function hospitalIcuFilter(design, hospitalData) { 
-       var icuData = hospitalData.icu;
-
-       var hospitalGeneralBedchart = AmCharts.makeChart("hospital_icu_bed_stacked_chart",{
-           "dataProvider": icuData,
-           "type": "serial",
-           "theme": "none",
-           "categoryField": "date",
-            
-            // "colors": [
-            //     "#32BA32",
-            //     "#FF0000",
-            //     "#32BA80"
-            // ],
-            
-            "graphs": design.graphs,
-            "valueAxes": design.valueAxes,
-            "chartCursor": design.chartCursor,
-            "categoryAxis": design.categoryAxis,
-            "legend": design.legend,
-            "chartScrollbar": design.chartScrollbar,  
-        });
-
-        hospitalGeneralBedchart.addListener("dataUpdated", zoomChart);
-        zoomChart();
-
-    }
-
-
-    $.ajax({
-        url: '{{url("/")}}/get-hospital-name',
-        type: 'GET',
-        data: {},
-        success: function (data) {
-            var option = '<option value="All">সারা দেশ</option>';
-            option += '<option value="Dhaka">ঢাকা শহর</option>';
-            option += '<option value="Chittagong">চট্টগ্রাম শহর</option>';
-            option += '<option value="Others">অন্যান্য</option>';
-
-            $.each(data, function (a, b) {
-                option = option + '<option value="' + b.name + '">' + b.name_bn + '</option>';
-            });
-
-            /* age wise death */
-            // $('#age_wise_hospital_hospital_filter').empty();
-            // $('#age_wise_hospital_hospital_filter').append(option);
-            /* age wise death */
-
-            $('#hospital_filter').empty();
-            $('#hospital_filter').append(option);
-            $('#hospital_filter').select2();
-
-            $('#hospital_filter').val('All').trigger('change');
-
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-
-
-
-    $("#hospital_filter").on('change', function () {
-
-        var text = $("#hospital_filter option:selected").text();
-        
-
-        $.ajax({
-            url: '{{url("/")}}/get-hospital-data',
-            type: 'GET',
-            data: {hospital: this.value, text: text},
-            success: function (data) {
-                
-                
-                    hospitalGeneralFilter(stackedChartedDesign(text), data);
-                    hospitalIcuFilter(stackedChartedDesign(text), data);
-               
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    });
-
-  
     
-   
     
-    /* ========================= end hospital general data=========================== */
 
 
     /* ======================Stack Chart Common Desin start================================= */
@@ -4864,13 +4683,7 @@ group by date ORDER BY date ");
 
 
     /**...last update show...*/
-    $(document).ready(function()
-    {
-        var date = $('#last_date_9').html();
-        $('#last_date_map_update').html(date);
-        $('#last_date_8').html(date);
-        $('#last_date_10').html(' ২ জানুয়ারী');
-    });
+   
 
     var data = {
         id: "-1",
@@ -5050,31 +4863,33 @@ group by date ORDER BY date ");
 
 
 <script>
-    $(document).ready(function() {
-        $('#riskMatrixAllDistrictShowHideTable').hide();
-        $('#showRiskMatrixBtn').hide();
+     $(document).ready(function() {
+        $('#hideRiskMatrixBtn').hide();
         $("#showRiskMatrixBtn").click(function() {
             $('#hideRiskMatrixBtn').show();
             $('#showRiskMatrixBtn').hide();
             $("#riskMatrixAllDistrictShowHideTable").hide();
         });
+        
         $("#hideRiskMatrixBtn").click(function() {
             $('#hideRiskMatrixBtn').hide();
             $('#showRiskMatrixBtn').show();
             $("#riskMatrixAllDistrictShowHideTable").show();
         });
 
-        $('#travellerAllDistrictShowHideTable').hide();
-        $('#showTravellerBtn').hide();
-        $("#showTravellerBtn").click(function() {
-            $('#hideTravellerBtn').show();
-            $('#showTravellerBtn').hide();
-            $("#travellerAllDistrictShowHideTable").hide();
+        // two
+
+        $('#cityCorporationShowHideTable').hide();
+        $('#showCorporationBtn').hide();
+        $("#showCorporationBtn").click(function() {
+            $('#hideCorporationBtn').show();
+            $('#showCorporationBtn').hide();
+            $("#cityCorporationShowHideTable").hide();
         });
-        $("#hideTravellerBtn").click(function() {
-            $('#hideTravellerBtn').hide();
-            $('#showTravellerBtn').show();
-            $("#travellerAllDistrictShowHideTable").show();
+        $("#hideCorporationBtn").click(function() {
+            $('#hideCorporationBtn').hide();
+            $('#showCorporationBtn').show();
+            $("#cityCorporationShowHideTable").show();
         });
     });
 </script>
