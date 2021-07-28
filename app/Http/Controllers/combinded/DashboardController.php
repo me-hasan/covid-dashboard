@@ -145,6 +145,7 @@ class DashboardController extends Controller
 
         
         $data['matrix_date_selected'] = WeeklyDate::where('status', 1)->orderBy('date_id', 'desc')->first();
+        //dd($data['matrix_date_selected']);
         // $data['first_week'] = $this->first_week();
         $data['first_week'] = (object) $this->getLast14NDays();
         // $data['last_week'] = $this->last_week();

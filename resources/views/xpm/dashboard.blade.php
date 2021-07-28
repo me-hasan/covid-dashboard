@@ -3756,8 +3756,8 @@ $ydata = [];
     var options = {year: 'numeric', month: 'long', day: 'numeric'};
 
     var mdata = <?php echo json_encode($mdata)?>;
-    // console.log(mdata);
-    {{--var xdata = <?php echo json_encode($xdata)?>;--}}
+    
+    
     var msize = Object.keys(mdata).length;
     // var xsize = Object.keys(xdata).length;
 
