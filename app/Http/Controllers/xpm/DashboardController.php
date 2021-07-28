@@ -2251,9 +2251,10 @@ using(district) ORDER BY r.test_positivity DESC");
     // Function to get all the dates in given range
     public function getDatesFromRange($flag)
     {
+        $maxDate = DB::select(DB::raw('SELECT max(report_date) as date FROM national_dashboard.daily_data'))[0]->date ?? '';
         $Date1 = '20-05-2020';
         //$Date2 = '02-01-2021';
-        $Date2 = date('d-m-Y', strtotime("-2 days"));
+        $Date2 = date('d-m-Y', strtotime($maxDate));
 
         // Declare an empty array
         $array = array();
