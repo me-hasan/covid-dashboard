@@ -947,12 +947,69 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                             <br>
                             <br>
+                            {{-- map start here --}}
+                            <div class="invoice-head title-bg-style">
+                                <div class="row">
+                                    <div class="iv-left col-12 ">
+                                        <h2>
+                                            সাপ্তাহিক সিটি কর্পোরেশন সংক্রামক ম্যাপ
+                                        </h2>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card-body info-style">
+                                <div class="row">
+
+                                    {{-- <h4 id="special_word_11" class="header-title ">
+                                        {!! $des_10->component_name_beng ?? '' !!}
+
+                                    </h4> --}}
+
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="row pt-2 pr-3">
+                                            <div class="col-xl-12 col-md-12">
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-lg-12 col-md-12">
+                                                        <div class="card-body">
+                                                            <button type="button" class="btn btn-sm btn-primary pull-right" id="showCorporationBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সিটি কর্পোরেশন ম্যাপ বন্ধ করুন</button>
+                                                            <button type="button" class="btn btn-sm btn-primary pull-right" id="hideCorporationBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সিটি কর্পোরেশন ম্যাপ এক নজরে দেখুন</button>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                                <div id="cityCorporationShowHideTable">
+                                                    <div class="row">  
+                                                        <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                            <div style="margin:0px auto !important;" id="iframeMapOneData">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <div class="row">  
+                                                        <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                            <div style="margin:0px auto !important;" id="iframeMapTwoData">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- map end here --}}
+                            <bbr>
+                            <br>
                             <br>
                             
 
 
-                            {{--3rd matix start here --}}
-                            <div class="col-lg-12 mt-2" id="scroll_location_of_the_3rd_matrix">
+                                        {{--3rd matix start here --}}
+                                        <div class="col-lg-12 mt-2" id="scroll_location_of_the_3rd_matrix">
                                         <div class="invoice-head title-bg-style">
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
@@ -1764,75 +1821,6 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                
                
-               
-                {{-- map start here --}}
-                  <div class="col-lg-12 mt-2" id="scroll_daily_covid_weeklycity_corporation_map">
-
-
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <div class="invoice-head title-bg-style">
-                                <div class="row">
-                                    <div class="iv-left col-12 ">
-                                        <h2>
-                                            সাপ্তাহিক সিটি কর্পোরেশন সংক্রামক ম্যাপ
-                                        </h2>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="card-body info-style">
-                                <div class="row">
-
-                                    {{-- <h4 id="special_word_11" class="header-title ">
-                                        {!! $des_10->component_name_beng ?? '' !!}
-
-                                    </h4> --}}
-
-                                    <div class="col-xl-12 col-md-12">
-                                        <div class="row pt-2 pr-3">
-                                            <div class="col-xl-12 col-md-12">
-                                                <div class="row">
-                                                    <div class="col-xl-12 col-lg-12 col-md-12">
-                                                        <div class="card-body">
-                                                            <button type="button" class="btn btn-sm btn-primary pull-right" id="showCorporationBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সিটি কর্পোরেশন ম্যাপ বন্ধ করুন</button>
-                                                            <button type="button" class="btn btn-sm btn-primary pull-right" id="hideCorporationBtn" style="font-size:20px; border-radius: 4px 4px 4px 4px;  min-width: 225px">সিটি কর্পোরেশন ম্যাপ এক নজরে দেখুন</button>
-                                                        </div>
-                                                    </div>
-                                                </div>  
-                                                <div id="cityCorporationShowHideTable">
-                                                    <div class="row">  
-                                                        <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
-                                                            <div style="margin:0px auto !important;" id="iframeMapOneData">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    <br/>
-                                                    <div class="row">  
-                                                        <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
-                                                            <div style="margin:0px auto !important;" id="iframeMapTwoData">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                
-                                            </div>
-                                          </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- map end here --}}
-
-                 
-
-
-
 
             </div>
         </div>
@@ -1931,27 +1919,7 @@ $sum = 0;
 $mdate = '';
 $xdate = '';
 
-foreach ($nation_wide_MovingAvgInfected as $k => $row) {
-    $date_arr[] = convertEnglishDateToBangla($row->report_date);
-    $infected_arr[] = $row->infected_24_hrs;
-    $avg_arr[] = $row->five_dayMovingAvgInfected;
-    $sum = $sum + $row->infected_24_hrs;
-    $test_arr = explode(",", $testsVsCases['totalTest']);
-    $test_arr_data = $testsVsCases['totalTestData'];
-    $case_arr = explode(",", $testsVsCases['totalCase']);
-    $mdate = $row->report_date;
 
-    $mdata [] = [
-        "date" => $row->report_date,
-        "infected" => $row->infected_24_hrs,
-        "avg" => $row->five_dayMovingAvgInfected,
-        "total_infected" => $row1_left_trend_infected_data[$k],
-        "tested" => $test_arr[$k],
-        "tested_data" => $test_arr_data[$k],
-        "case" => $case_arr[$k],
-
-    ];
-}
 
 
 
@@ -1970,7 +1938,7 @@ foreach ($nation_wide_MovingAvgInfected as $k => $row) {
     var msize = Object.keys(mdata).length;
     // var xsize = Object.keys(xdata).length;
 
-    var m_last_date = new Date(mdata[msize - 1].date).toLocaleDateString('bn', options);
+    var m_last_date = {};
     // var x_last_date = new Date(xdata[xsize - 1].date).toLocaleDateString('bn', options);
 
 
