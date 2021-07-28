@@ -581,7 +581,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             <p class="footer-note" style="font-size: 12px">
                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> ২৬ জুলাই ২০২১</span>
+                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_date_update"></span>
                             </p>
                         </div>
                     </div>
@@ -614,7 +614,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             <p class="footer-note" style="font-size: 12px">
                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> ২৬ জুলাই ২০২১</span>
+                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_date_update"></span>
                             </p>
                         </div>
                     </div>
@@ -650,7 +650,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             <p class="footer-note" style="font-size: 12px">
                                 <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> ২৬ জুলাই ২০২১</span>
+                                || সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_date_update"></span>
                             </p>
                         </div>
                     </div>
@@ -939,7 +939,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card-body">
                                         <p class="footer-note">
                                             <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{$matrix_date_selected->date_ban}}</span>
+                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{ ($matrix_date_selected->date_ban) }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -1195,7 +1195,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <div class="card-body">
                                                         <p class="footer-note">
                                                             <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{$matrix_date_selected->date_ban}}</span>
+                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{ convertEnglishDateToBangla($matrix_date_selected->date_eng) }}</span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1279,7 +1279,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <div class="card-body">
                                                         <p class="footer-note">
                                                             <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{$matrix_date_selected->date_ban}}</span>
+                                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{convertEnglishDateToBangla($matrix_date_selected->date_eng)}}</span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1639,7 +1639,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div id="ambarchart1"></div>
                                                 <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_update_date"></span>
+                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_date_update"></span>
                                                 </p>
                                             
                                             </div>
@@ -1748,7 +1748,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 </div>  --}}
                                                 <p class="footer-note">
                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span class="last_update_date"></span>
+                                                    <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_update"> {{ convertEnglishDateToBangla($top_banner_date) }}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -2799,7 +2799,7 @@ foreach ($nation_wide_MovingAvgInfected as $k => $row) {
 
     if ($('#ambarchart1').length) {
 
-        $('.last_update_date').html(" " + m_last_date);
+        //$('.last_update_date').html(" " + m_last_date);
 
         let xdata = [];
 
@@ -4542,6 +4542,13 @@ group by date ORDER BY date ");
 
 
     /* ======================Stack Chart Common Desin start================================= */
+    /**...last update show...*/
+    $(document).ready(function()
+    {
+        var date = $('#last_date_update').html();
+        $('.last_date_update').html(date);
+    });
+
     function stackedChartedDesign(text){
         return {
             "graphs": [
