@@ -519,9 +519,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 <!--[if lt IE 8]>
 <![endif]-->
 <!-- preloader area start -->
-<div id="preloader">
+{{-- <div id="preloader">
     <div class="loader"></div>
-</div>
+</div> --}}
 <!-- preloader area end -->
 <!-- page container area start -->
 <div class="page-container">
