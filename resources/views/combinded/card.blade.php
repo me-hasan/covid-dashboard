@@ -590,7 +590,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div style="height: 240px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
-                                <h4 class="header-title pb-1">সর্বমোট সনাক্তের</h4>
+                                <h4 class="header-title pb-1">সর্বমোট সনাক্ত</h4>
                                 <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
@@ -601,7 +601,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 $infectedPercentages = (abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))*100)/$last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person;
                             }
                             ?>
-                            <h4 class="header-title pb-1">গত ৭ দিনে সনাক্তের</h4>
+                            <h4 class="header-title pb-1">গত ৭ দিনে সনাক্ত</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!}
                             </div>
