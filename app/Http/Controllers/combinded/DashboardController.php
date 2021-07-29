@@ -94,42 +94,16 @@ class DashboardController extends Controller
         $data['fourth_slot_district_name'] = $this->getRiskDistrictClusteringName($fourth_slot_table_contentDataFirst, $fourth_slot_table_contentDataSecond=[]);
 
 
-
-        //$testPositivityMap = $this->testPositivityMap($request);
-
-        $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
-
+        
         $data['weekly_date'] = WeeklyDate::where('status', 1)->get()->sortByDesc("date_id");
 
-        // shamvil start
-        // row 1
-        $data['nation_wide_MovingAvgInfected'] = $this->nation_wide_five_dayMovingAvgInfected($request);
-        // row 2
-        $data['forteen_day_infected'] = $this->get_14days_infected($request); // 14 days songcromon & songcromoner har
-        $data['days_infected'] = $this->nation_wise_14_days_infected();
-        $data['days_death'] = $this->nation_wise_14_days_death();
+        
+       
+        
         $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
 
 
-        $data['hospital_name'] = DB::select(DB::raw('SELECT DISTINCT(`hospital_id`), hospital_name_bng FROM `death_person` WHERE 1 ORDER BY name_of_hospital'));
-        // dd($data);
-
-        /*$data['tests_per_case_Mayanmar'] = $this->tests_per_case_country('Myanmar');
-        $data['tests_per_case_Sri'] = $this->tests_per_case_country('Sri Lanka');
-        $data['tests_per_case_Nepal'] = $this->tests_per_case_country('Nepal');
-        $data['tests_per_case_Maldives'] = $this->tests_per_case_country('Maldives');
-        $data['tests_per_case_India'] = $this->tests_per_case_country('India');
-        $data['tests_per_case_Pakistan'] = $this->tests_per_case_country('Pakistan');
-        $data['tests_per_case_Bangladesh'] = $this->tests_per_case_country('Bangladesh');
-         */
-
-        // row 4
-        $data['nation_hospital'] = $dhaka_hospital = $this->nation_wide_hospital();
-        $data['dhaka_hospital'] = $dhaka_hospital = $this->city_wise_hospital('Dhaka');
-        $data['ctg_hospital'] = $ctg_hospital = $this->city_wise_hospital('Chittagong');
-
-        $data['dhaka_hospital_details'] = $dhaka_hospital_details = $this->city_wise_hospital_details('Dhaka');
-        $data['ctg_hospital_details'] = $ctg_hospital_details = $this->city_wise_hospital_details('Chittagong');
+        
         // row 6
         $data['rm_1'] = $this->risk_matrix_1();
         $data['rm_2'] = $this->risk_matrix_2();
@@ -173,31 +147,7 @@ class DashboardController extends Controller
         $i = 0;
         $divisionlist = [];
         $seriesData = [];
-        /*
-        $data['series_data'] = json_encode($seriesData);
-        $data['categories'] = json_encode($cumulativeInfectedPerson['categories']) ?? [];
-        $data['testPositivityMap'] = $testPositivityMap;
-
-        // 5 oct
-        $cumulativeInfectedPerson_onlyDhaka = $this->cumulativeInfectedPerson_dhaka($request);
-        $k = 0;
-        $dhk_divisionlist = [];
-        $dhk_seriesData = [];
-        if (count($cumulativeInfectedPerson_onlyDhaka['division_data'])) {
-        foreach ($cumulativeInfectedPerson_onlyDhaka['division_data'] as $key => $dist) {
-        $dhk_seriesData[$k]['type'] = 'spline';
-        $dhk_seriesData[$k]['name'] = en2bnTranslation($key);
-        $dhk_seriesData[$k]['data'] = $dist ?? [];
-        $dhk_seriesData[$k]['marker']['enabled'] = false;
-        $dhk_seriesData[$k]['marker']['symbol'] = 'circle';
-        $dhk_divisionlist[] = $key;
-        $k++;
-        }
-        }
-
-        $data['series_data_dhk'] = json_encode($dhk_seriesData);
-        $data['categories_dhk'] = json_encode($cumulativeInfectedPerson_onlyDhaka['categories']) ?? [];
-         */
+        
 
         // row 1 left side
         $cumulativeInfection = $this->getCumulativeInfectionData($request);
@@ -217,14 +167,6 @@ class DashboardController extends Controller
         $data['total_infected'] = DB::table('daily_data')->selectRaw('infected_total')->orderBy('report_date', 'DESC')->first()->infected_total;
         $data['total_death'] = DB::table('daily_data')->selectRaw('death_total')->orderBy('report_date', 'DESC')->first()->death_total;
         //dd($data['total_death']);
-
-        /*  $hospitalGeneralBedStacked = DB::select("SELECT date, alocatedGeneralBed as 'total_bed', AdmittedGeneralBed as 'occupied_bed',
-        round(generalBedOccupencyRate, 2) as 'occupency_rate'
-        from hospitaltemporarydata
-        where city = 'Country' LIMIT 10");
-
-        $data['hospitalGeneralBedStackedData'] =  json_encode($hospitalGeneralBedStacked); */
-
         return view('combinded.card', $data);
     }
 
