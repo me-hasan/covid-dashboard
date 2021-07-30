@@ -122,37 +122,34 @@ class DashboardController extends Controller
         $data['top_banner_date'] = DB::select(DB::raw('SELECT max(report_date) as date FROM national_dashboard.daily_data'))[0]->date ?? '';
        
         // $data['first_week'] = $this->first_week();
-        $data['first_week'] = (object) $this->getLast14NDays();
+        // $data['first_week'] = (object) $this->getLast14NDays();
         // $data['last_week'] = $this->last_week();
-        $data['last_week'] = (object) $this->getLast28NDays();
+        // $data['last_week'] = (object) $this->getLast28NDays();
         // dd($data['last_week']);
         // description and insight
-        $data['des_1'] = $this->description_insight_qry('101'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
-        $data['des_2'] = $this->description_insight_qry('201'); //Daily New Cases by Region / অঞ্চল তুলনা
-        $data['des_3'] = $this->description_insight_qry('202'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
-        $data['des_4'] = $this->description_insight_qry('301'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
-        $data['des_5'] = $this->description_insight_qry('302'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
-        $data['des_6'] = $this->description_insight_qry('303'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
-        $data['des_7'] = $this->description_insight_qry('304'); // Test Per Cases For South Asian Countries
-        $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
-        $data['des_12'] = $this->description_insight_qry('402'); // Risk Matrix
-        $data['des_13'] = $this->description_insight_qry('403'); // Risk Matrix
-        $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
-        $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
-        $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
+        // $data['des_1'] = $this->description_insight_qry('101'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+        // $data['des_2'] = $this->description_insight_qry('201'); //Daily New Cases by Region / অঞ্চল তুলনা
+        // $data['des_3'] = $this->description_insight_qry('202'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+        // $data['des_4'] = $this->description_insight_qry('301'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+        // $data['des_5'] = $this->description_insight_qry('302'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+        // $data['des_6'] = $this->description_insight_qry('303'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+        // $data['des_7'] = $this->description_insight_qry('304'); // Test Per Cases For South Asian Countries
+        // $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
+        // $data['des_12'] = $this->description_insight_qry('402'); // Risk Matrix
+        // $data['des_13'] = $this->description_insight_qry('403'); // Risk Matrix
+        // $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
+        // $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
+        // $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
         // shamvil end
 
         //Test vs Cases (Robi)
-        $data['testsVsCases'] = $this->getNationWiseTestsAndCases($request);
-        $i = 0;
-        $divisionlist = [];
-        $seriesData = [];
+        
+        
         
 
         // row 1 left side
-        $cumulativeInfection = $this->getCumulativeInfectionData($request);
-        $data['row1_left_trend_date'] = $cumulativeInfection['dateBangla'];
-        $data['row1_left_trend_infected_data'] = $cumulativeInfection['infected_person_date'];
+        
+        
 
         $data['division_list'] = DB::table('div_dist')->groupBY('division')->pluck('division');
 
@@ -160,8 +157,6 @@ class DashboardController extends Controller
 
         $data['last_14_days'] = $this->getLast14DaysData($request);
 
-        //$data['division_compare'] = $this->divisionCompare($request);
-        $data['division_compare'] = [];
 
         $data['total_tested'] = DB::table('daily_data')->selectRaw('test_total')->orderBy('report_date', 'DESC')->first()->test_total;
         $data['total_infected'] = DB::table('daily_data')->selectRaw('infected_total')->orderBy('report_date', 'DESC')->first()->infected_total;

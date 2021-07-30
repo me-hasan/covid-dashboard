@@ -536,10 +536,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 <nav>
                     
                     <ul class="tab_nab_dashboard">
-                        <li style="margin-left:1px;"><a href="http://103.247.238.92/webportal/pages/covid19_temp.php">National Statistics</a></li>
-                        <li><a href="https://dashboard.corona.gov.bd/webportal" style="background-color: #006d2c">Weekly Dashboard</a></li>
-                        <li><a href="http://103.247.238.92/webportal/pages/covid19-bedstatus-display-tempr.php">Hospital Information</a></li>
-                        <li><a href="http://103.247.238.92/webportal/pages/covid19-vaccination-update-tempr.php">Vaccination</a></li>
+                        <li style="margin-left:1px;"><a class="navbar-brand" href="http://103.247.238.92/webportal/pages/covid19.php">National Statistics</a> </li>
+                        <li><a href="https://dashboard.corona.gov.bd/webportal" style="background-color:#006d2c">Weekly Dashboard</a></li>
+                        <li><a href="http://103.247.238.92/webportal/pages/covid19-bedstatus-display.php">Hospital Information</a></li>
+                        <li><a href="http://103.247.238.92/webportal/pages/covid19-vaccination-update.php">Vaccination</a></li>
                     </ul>
                 </nav>
             </div>
@@ -682,17 +682,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </div>
                             </div>
                             
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body info-style">
-                                            <h4 style="margin-top: 27px;" id="special_word_7" class="header-title ">
-                                                {!! $des_6->component_name_beng ?? '' !!}
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             
                             <div class="row">
                                 <div class="col-lg-4"></div>
@@ -1029,12 +1019,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <hr>
                                                 <!-- Start :: ঝুঁকি পর্যালোচনা -->
                                                 <?php
-                                                $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
-                                                $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end);
+                                                
                             
-                            
-                                                $last_week_start = convertEnglishDateToBangla($last_week->last_2_weeks_start);
-                                                $last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends);
                                                 $today = convertEnglishDateToBangla(date('Y-m-d'));
                                                 
                                                 
