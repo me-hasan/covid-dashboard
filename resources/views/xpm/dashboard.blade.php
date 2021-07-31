@@ -1383,7 +1383,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                         <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{ convertEnglishDateToBangla($top_banner_date) }}</span>
+                                                                            id="last_date_9"> {{ convertEnglishDateToBangla($matrix_date_selected->date_eng) }}</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
