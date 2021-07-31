@@ -102,6 +102,7 @@ class DashboardController extends Controller
 
         
         $data['matrix_date_selected'] = WeeklyDate::where('status', 1)->orderBy('date_id', 'desc')->first();
+        $data['top_banner_date'] = DB::select(DB::raw('SELECT max(report_date) as date FROM national_dashboard.daily_data'))[0]->date ?? '';
         // $data['first_week'] = $this->first_week();
         $data['first_week'] = (object) $this->getLast14NDays();
         // $data['last_week'] = $this->last_week();

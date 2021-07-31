@@ -1383,7 +1383,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                         <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{$first_week_start}}</span>
+                                                                            id="last_date_9"> {{ convertEnglishDateToBangla($top_banner_date) }}</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -1854,7 +1854,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                         <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{$first_week_start}}</span>
+                                                                            class="last_date_9"> </span>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -2345,7 +2345,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                         <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{$first_week_start}}</span>
+                                                                            class="last_date_9"> </span>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -7082,6 +7082,7 @@ group by date ORDER BY date ");
     $(document).ready(function()
     {
         var date = $('#last_date_9').html();
+        $('.last_date_9').html(date);
         $('#last_date_map_update').html(date);
         $('#last_date_8').html(date);
         $('#last_date_10').html(' ২ জানুয়ারী');
