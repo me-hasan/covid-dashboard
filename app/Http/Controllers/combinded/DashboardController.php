@@ -3747,54 +3747,34 @@ GROUP BY
         $data['status'] = 'failed';
             try{
 
-                $case_table_recent = '';
-                $case_table_last = '';
-                $test_table_recent = '';
-                $test_table_last = '';
-
-                $case_travelers = $request->input('case_travelers');
-                if($case_travelers == 1){
-                    $case_table_recent = 'v_tp_matrix_recent_non_travelers';
-                }
-                if($case_travelers == 0){
-                    $case_table_recent = 'v_tp_matrix_recent';
-                }
+                $table_recent = '';
+                $table_last = '';
                 
 
-                $test_travelers = $request->input('test_travelers');
-                if($test_travelers == 1){
-                    $test_table_recent = 'v_tp_matrix_recent_non_travelers';
+                $travelers = $request->input('test_travelers');
+                if($travelers == 1){
+                    $table_recent = 'tp_matrix_recent_non_travelers';
+                    $table_last = 'tp_matrix_last_non_travelers';
                 }
-                if($test_travelers == 0){
-                    $test_table_recent = 'v_tp_matrix_recent';
+                if($travelers == 0){
+                    $table_recent = 'tp_matrix_recent';
+                    $table_last = 'tp_matrix_last';
                 }
                 
 
                 $testCount = $request->input('test_count');
                 $weekly_date = $request->input('weekly_date');
-                $test_positive_data_rate = explode(",",$request->input('test_positive_data_rate'));
-                $test_positive_min = 0;
-                $test_positive_max = 0;
-                if(is_array($test_positive_data_rate) && count($test_positive_data_rate) == 2) {
-                    $test_positive_min = $test_positive_data_rate[0];
-                    $test_positive_max = $test_positive_data_rate[1];
-                }
-
-                $case_high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-                (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where total_tests>$testCount  and date_id = $weekly_date) as r
-                ORDER BY r.positive_tests DESC");
-
-                $test_high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
-                (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where total_tests>$testCount  and date_id = $weekly_date) as r
-                ORDER BY r.positive_tests DESC");
+            
                 
-                $high_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_high_table_contentData, $test_high_to_high_table_contentData, $case_table_recent, $test_table_recent);
-            
-                // dd($high_to_high_table_contentData);
-
-                $data['risk_matrix_all_data'] = $this->getRiskMatrixAllData($high_to_high_table_contentData);
-                // $data['risk_matrix_all_data'] = $high_to_high_table_contentData ;
-            
+                $rist_matrix_all_data = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+                (select district, positive_tests, total_tests, test_positivity from $table_last where  date_id = $weekly_date and total_tests>$testCount ) as l
+                inner join
+                (select district, positive_tests, total_tests, test_positivity from $table_recent where date_id = $weekly_date and total_tests>$testCount ) as r
+                using(district) ORDER BY r.test_positivity DESC");
+               
+        
+                $data['risk_matrix_all_data'] = $this->getAllTableDataFormate($rist_matrix_all_data);
+                    
             
                 $data['status'] = 'success';
             }catch (\Exception $exception) {
@@ -3802,6 +3782,35 @@ GROUP BY
             }
             return $data;
     }
+
+
+     public function getAllTableDataFormate($items)
+     {
+        
+        $html = "";
+        $changePostiveColor = "";
+        if(count($items)) {
+            foreach($items as $key => $item) {
+                $changePositive = $item->r_positive - $item->l_positive;
+                $changePositivity = number_format(($item->recent_test_positivity - $item->last_test_positivity), 2);
+                $changePostiveColor = ($changePositive < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositive === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
+                $changePostivityColor = ($changePositivity < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositivity === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
+                $html .= '<tr class="b1">';
+                $html .= "<td>&nbsp;</td>";
+                $html .= "<td style='font-size: 18px' >".en2bnTranslation($item->district)."</td>";
+                $html .= "<td>".$item->recent_test_positivity."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item->r_total_test."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item->r_positive."</span></td>";
+                $html .= "<td>".$item->last_test_positivity."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item->l_total_test."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item->l_positive."</span></td>";
+                $html .= "<td $changePostiveColor>".$changePositive."</td>";
+                $html .= "<td $changePostivityColor>".$changePositivity." % </td>";
+                $html .= "</tr>";
+            }
+        }
+        return $html;
+     }
 
 
     public function getRiskMatrixAllData($items)

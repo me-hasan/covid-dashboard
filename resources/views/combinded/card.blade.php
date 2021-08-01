@@ -1261,12 +1261,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 ml-4 mb-3">
-                                                    <p>নির্বাচন করুন: <span style="font-weight:bold">(প্রতি লাখে সনাক্ত)</span></p>
-                                                    <label class="radio-inline"><input type="radio" value="0" class="cases_travelers_table_data" name="cases_travelers_table_data" checked>&nbsp;সকল &nbsp;</label>
-                                                    <label class="radio-inline"><input type="radio" value="1" class="cases_travelers_table_data" name="cases_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
-                                                </div>
-                                                <div class="col-md-3 ml-4 mb-3">
-                                                    <p>নির্বাচন করুন: <span style="font-weight:bold">(টেস্ট পজিটিভিটি)</span></p>
+                                                    <p>নির্বাচন করুন:</p>
                                                     <label class="radio-inline"><input type="radio" value="0" class="test_travelers_table_data" name="test_travelers_table_data" checked>&nbsp;সকল &nbsp;</label>
                                                     <label class="radio-inline"><input type="radio" value="1" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
                                                 </div>
@@ -3948,7 +3943,6 @@ $xdate = '';
                     'test_count': $('#myRangeTableData').val(),
                     'test_positive_data_rate': $('#ex12cTableData').val(),
                     'weekly_date': $('#weekly_date_table_data').val(),
-                    'case_travelers' : $('input[name="cases_travelers_table_data"]:checked').val(),
                     'test_travelers' : $('input[name="test_travelers_table_data"]:checked').val()
                 },
                 timeout: 30000,
@@ -3999,18 +3993,26 @@ $xdate = '';
         }
 
         function tableDataChange(risk_matrix_data) {
+            console.log(risk_matrix_data);
             /*risk matrix all data start here*/
-             var riskMatrixTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
+            var riskMatrixTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
                                                     <th class="border-bottom-0" rowspan="2">জেলা</th>
                                                     <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="2">পরিবর্তন</th>
                                                 </tr>
                                                     <tr>
                                                     <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
                                                     <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
                                                     <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0">পজিটিভ</th>
+                                                    <th class="border-bottom-0">পজিটিভিটি</th>
                                                 </tr>
                                             </thead>
                                                 <tbody>`;
