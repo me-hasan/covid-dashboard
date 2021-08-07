@@ -444,9 +444,9 @@
 <!-- Start :: Disease Progression -->
 <?php
 
-$class_1 = 'fa fa-arrow-up mr-1 text-danger';
+$class_1 = 'fa fa-arrow-up mr-1 text-success';
 if (isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) {
-    $class_1 = 'fa fa-arrow-down mr-1 text-success';
+    $class_1 = 'fa fa-arrow-down mr-1 text-danger';
 }
 
 $class_2 = 'fa fa-arrow-up mr-1 text-danger';

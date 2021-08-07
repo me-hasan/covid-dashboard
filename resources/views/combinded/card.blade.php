@@ -499,9 +499,9 @@
 <!-- Start :: Disease Progression -->
 <?php
 
-$class_1 = 'fa fa-arrow-up mr-1 text-danger';
+$class_1 = 'fa fa-arrow-up mr-1 text-success';
 if (isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) {
-    $class_1 = 'fa fa-arrow-down mr-1 text-success';
+    $class_1 = 'fa fa-arrow-down mr-1 text-danger';
 }
 
 $class_2 = 'fa fa-arrow-up mr-1 text-danger';
@@ -554,11 +554,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
         
             <div class="row">
                 <div class="col-lg-4 mt-4">
-                    <div style="height: 240px" class="card purple-card">
+                    <div style="height: 245px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট পরীক্ষা</h4>
-                                <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
+                                <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px; ">
                                     {!! isset($total_tested) ? formatInBanglaStyle($total_tested) : ' ' !!}
                                 </div>
                             </div>
@@ -587,7 +587,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     </div>
                 </div>
                 <div class="col-lg-4 mt-4">
-                    <div style="height: 240px" class="card purple-card">
+                    <div style="height: 245px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট সনাক্ত</h4>
@@ -620,7 +620,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     </div>
                 </div>
                 <div class="col-lg-4 mt-4">
-                    <div style="height: 240px" class="card purple-card">
+                    <div style="height: 245px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
                                 <h4 class="header-title pb-1">সর্বমোট মৃত্যু</h4>
