@@ -20,7 +20,7 @@ Route::get('hellow', function () {
 });
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
-Auth::routes();
+Auth::routes(['register']);
 
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin')->name('login_admin');
@@ -329,7 +329,6 @@ Route::get('socio-economic/education', 'socioEconomic\DashboardController@educat
 Route::get('socio-economic/employment', 'socioEconomic\DashboardController@employment')->name('socio.economic.employment');
 URL::forceScheme('https');
 // URL::forceScheme('https');
-
 
 
 /**

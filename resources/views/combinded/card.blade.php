@@ -493,6 +493,13 @@
           font-size : 15px
       }
 
+	ul.tab_nab_dashboard li {
+   	 list-style: none;
+   	 width: 25%;
+    	float: left;
+    	margin-left: 0!important;
+	}
+
     </style>
 </head>
 
