@@ -1274,10 +1274,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <div class="slidecontainer">
-                                                        <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
+                                                        {{-- <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
                                                                 id="demoTableData">{!! convertEnglishDigitToBangla('100') !!}</span>
-                                                        এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p>
-                                                        <input style="display:block" type="range" min="50" max="1000" value="100"
+                                                        এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p> --}}
+                                                        <input style="display:none" type="range" min="50" max="1000" value="1"
                                                                 class="sliderTableData" id="myRangeTableData">
                                                     </div>
                                                 </div>
