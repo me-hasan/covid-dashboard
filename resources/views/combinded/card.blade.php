@@ -898,10 +898,18 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </div>
                             </div>
 
-
+                            <br/>
+                            <br/>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card-body">
+
+                                        <div class="col-md-3 ml-4 mb-3">
+                                            <p>নির্বাচন করুন</p>
+                                            <label class="radio-inline"><input type="radio" value="0" class="cases_all_none_travelers" name="cases_all_none_travelers" checked="">&nbsp;সকল &nbsp;</label>
+                                            <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                        </div>
+
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -4853,6 +4861,30 @@ group by date ORDER BY date ");
             $('#hideCorporationBtn').hide();
             $('#showCorporationBtn').show();
             $("#cityCorporationShowHideTable").show();
+        });
+    });
+
+
+
+
+    // 4 cards
+    $('.cases_all_none_travelers').on('click', function(){
+        var radioValue = $("input[name='cases_all_none_travelers']:checked").val();
+        $.ajax({
+            url: '{{url("/")}}/card-infected-data',
+            type: 'GET',
+            data: {selected: radioValue},
+            success: function (response) {
+                if (response) {
+                    $('.first_slot_district_name').html(response.first_slot_district_name);
+                    $('.second_slot_district_name').html(response.second_slot_district_name);
+                    $('.third_slot_district_name').html(response.third_slot_district_name);
+                    $('.fourth_slot_district_name').html(response.fourth_slot_district_name);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
         });
     });
 </script>

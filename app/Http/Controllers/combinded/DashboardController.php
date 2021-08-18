@@ -63,6 +63,49 @@ class DashboardController extends Controller
         return $districtName;
     }
 
+    public function getCardInfectedData(Request $request)
+    {
+        try {
+        $selectedValue = request('selected');
+        $table_recent = 'tp_matrix_recent';
+        if($selectedValue == '1'){
+            $table_recent = 'tp_matrix_recent_non_travelers';
+        }
+
+        $testCount = 100;
+        $weekly_date = \Illuminate\Support\Facades\DB::select("SELECT max(date_id) as max_date FROM national_dashboard.weekly_dates")[0]->max_date;
+        
+
+        // first slot
+        $first_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=10 and floor(test_positivity)<20 and total_tests>$testCount  and date_id = $weekly_date ORDER BY test_positivity desc");
+        //$first_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=10 and test_positivity<=20 and total_tests>$testCount and date_id = $weekly_date");
+        $data['first_slot_district_name'] = $this->getRiskDistrictClusteringName($first_slot_table_contentDataFirst, $first_slot_table_contentDataSecond=[]);
+
+
+        // second slot
+        $second_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=20 and floor(test_positivity)<30 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$second_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=20 and test_positivity<=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['second_slot_district_name'] = $this->getRiskDistrictClusteringName($second_slot_table_contentDataFirst, $second_slot_table_contentDataSecond=[]);
+
+        
+        // third slot
+        $third_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=30 and floor(test_positivity)<40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$third_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['third_slot_district_name'] = $this->getRiskDistrictClusteringName($third_slot_table_contentDataFirst, $third_slot_table_contentDataSecond=[]);
+
+        // fourth slot
+        $fourth_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$fourth_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['fourth_slot_district_name'] = $this->getRiskDistrictClusteringName($fourth_slot_table_contentDataFirst, $fourth_slot_table_contentDataSecond=[]);
+        $data['status'] = 'success';
+        
+        }catch (\Exception $exception) {
+            dd($exception);
+        }
+        return $data;
+    }
+
+
     public function index(Request $request)
     {
         
