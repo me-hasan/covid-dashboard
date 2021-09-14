@@ -905,11 +905,19 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </div>
                             </div>
 
-
+                            <br/>
+                            <br/>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card-body">
-                                        <table class="table table-bordered table-striped">
+
+                                        <div class="col-md-3 ml-4 mb-3">
+                                            <p>নির্বাচন করুন</p>
+                                            <label class="radio-inline"><input type="radio" value="0" class="cases_all_none_travelers" name="cases_all_none_travelers" checked="">&nbsp;সকল &nbsp;</label>
+                                            <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                        </div>
+
+				     {{--   <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>১০% থেকে ১৯%</th>
@@ -926,7 +934,26 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <td class="fourth_slot_district_name" style="background: #460000; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
                                                 </tr>
                                             </tbody>
+					</table> --}}
+					<table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>০% থেকে ৪%</th>
+                                                    <th>৫% থেকে ৯%</th>
+                                                    <th>১০% থেকে ১৯%</th>
+                                                    <th>২০% +</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="first_slot_district_name" style="background: #00aa00; color: white; width: 25%">{{ $first_slot_district_name }}</td>
+                                                    <td class="second_slot_district_name" style="background: #ffaa00; color: white; width: 25%">{{ $second_slot_district_name }}</td>
+                                                    <td class="third_slot_district_name" style="background: #fd8065; color: white; width: 25%">{{ $third_slot_district_name }}</td>
+                                                    <td class="fourth_slot_district_name" style="background: #e13531; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
+
                                     </div>
                                 </div>
                             </div>
@@ -4860,6 +4887,30 @@ group by date ORDER BY date ");
             $('#hideCorporationBtn').hide();
             $('#showCorporationBtn').show();
             $("#cityCorporationShowHideTable").show();
+        });
+    });
+
+
+
+
+    // 4 cards
+    $('.cases_all_none_travelers').on('click', function(){
+        var radioValue = $("input[name='cases_all_none_travelers']:checked").val();
+        $.ajax({
+            url: '{{url("/")}}/card-infected-data',
+            type: 'GET',
+            data: {selected: radioValue},
+            success: function (response) {
+                if (response) {
+                    $('.first_slot_district_name').html(response.first_slot_district_name);
+                    $('.second_slot_district_name').html(response.second_slot_district_name);
+                    $('.third_slot_district_name').html(response.third_slot_district_name);
+                    $('.fourth_slot_district_name').html(response.fourth_slot_district_name);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
         });
     });
 </script>
