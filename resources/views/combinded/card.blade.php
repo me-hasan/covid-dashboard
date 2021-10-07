@@ -699,7 +699,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> অধিকতর গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৪০% +)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> অধিকতর গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩০% - ৩৯%)</p>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -708,7 +708,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩০% - ৩৯%)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার  ২০% - ২৯%)</p>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -717,10 +717,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                             </div>
                                                         </div>
                                                         <div class="col-md-11 pt-1">
-                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ২০% - ২৯%)</p>
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% - ১৯%)</p>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #FD8065;">
                                                             </div>
@@ -728,7 +728,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <div class="col-md-11 pt-1">
                                                             <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% - ১৯% )</p>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     {{-- <div class="row">
                                                         <div class="col-md-1 pt-2 pb-1">
                                                             <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
