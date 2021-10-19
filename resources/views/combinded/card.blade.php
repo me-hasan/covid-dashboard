@@ -917,7 +917,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;নন ট্রাভেলার্স</label>
                                         </div>
 
-                                        {{-- <table class="table table-bordered table-striped">
+				       {{--   <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>১০% থেকে ১৯%</th>
@@ -934,7 +934,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                     <td class="fourth_slot_district_name" style="background: #460000; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
                                                 </tr>
                                             </tbody>
-					</table> --}}
+					</table> 
 					<table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -966,7 +966,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <tr>
                                                     <td class="first_slot_district_name" style="background: #00aa00; color: white; width: 25%">{{ $first_slot_district_name }}</td>
                                                     <td class="second_slot_district_name" style="background: #ffaa00; color: white; width: 25%">{{ $second_slot_district_name }}</td>
-                                                    <td class="third_slot_district_name" style="background: #fd8065; color: white; width: 25%">{{ $third_slot_district_name }}</td>
+                                                    <td class="third_slot_district_name" style="background: #ff0000; color: white; width: 25%">{{ $third_slot_district_name }}</td>
                                                     <td class="fourth_slot_district_name" style="background: #e13531; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
                                                 </tr>
                                             </tbody>
@@ -1329,7 +1329,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         {{-- <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
                                                                 id="demoTableData">{!! convertEnglishDigitToBangla('100') !!}</span>
                                                         এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p> --}}
-                                                        <input style="display:none" type="range" min="50" max="1000" value="1"
+                                                        <input style="display:none" type="range" min="0" max="1000" value="1"
                                                                 class="sliderTableData" id="myRangeTableData">
                                                     </div>
                                                 </div>
