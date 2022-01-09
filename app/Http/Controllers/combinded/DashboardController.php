@@ -205,6 +205,15 @@ class DashboardController extends Controller
         $data['total_tested'] = DB::table('daily_data')->selectRaw('test_total')->orderBy('report_date', 'DESC')->first()->test_total;
         $data['total_infected'] = DB::table('daily_data')->selectRaw('infected_total')->orderBy('report_date', 'DESC')->first()->infected_total;
         $data['total_death'] = DB::table('daily_data')->selectRaw('death_total')->orderBy('report_date', 'DESC')->first()->death_total;
+
+
+
+        // First matrix
+        $data['first_week'] = $this->first_week();
+        $data['last_week'] = $this->last_week();
+
+        
+
         //dd($data['total_death']);
         return view('combinded.card', $data);
     }
@@ -1899,7 +1908,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
 
             $data['status'] = 'success';
         }catch (\Exception $exception) {
-            
+            dd($exception);
         }
         return $data;
     }
@@ -3877,10 +3886,30 @@ GROUP BY
         return $html;
      }
 
-  
+
+
+     public function matrix(){
+        $data['first_week'] = $this->first_week();
+        $data['weekly_date'] = WeeklyDate::where('status', 1)->get()->sortByDesc("date_id");
+        $data['last_week'] = $this->last_week();
+        $data['matrix_date_selected'] = WeeklyDate::where('status', 1)->orderBy('date_id', 'desc')->first();
+        $data['top_banner_date'] = DB::select(DB::raw('SELECT max(report_date) as date FROM national_dashboard.daily_data'))[0]->date ?? '';
+        $data['rm_1'] = $this->risk_matrix_1();
+        $data['rm_2'] = $this->risk_matrix_2();
+        $data['rm_3'] = $this->risk_matrix_3();
+        $data['rm_4'] = $this->risk_matrix_4();
+        $data['rm_5'] = $this->risk_matrix_5();
+        $data['rm_6'] = $this->risk_matrix_6();
+        $data['rm_7'] = $this->risk_matrix_7();
+        $data['rm_8'] = $this->risk_matrix_8();
+        $data['rm_9'] = $this->risk_matrix_9();
+
+
+        return view('combinded.matix', $data);
+     }
      
 
-
+  
 
 
 
