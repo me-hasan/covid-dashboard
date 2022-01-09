@@ -350,3 +350,7 @@ Route::get('xpm-third-risk-matrix-date-change-public', 'combinded\DashboardContr
 Route::get('all-table-data-public', 'combinded\DashboardController@getAllTableData')->name('get.table.data.public');
 Route::get('table-date-change', 'combinded\DashboardController@getRiskMatrixDateChange')->name('weekly.date.change.for.table');
 Route::get('card-infected-data', 'combinded\DashboardController@getCardInfectedData');
+
+
+Route::get('matix', 'combinded\DashboardController@matrix')->name('combinded.matix');
+Route::get('webportal-risk-matrix-data-public', 'combinded\MatrixController@getRiskMatricData')->name('webportal.getRiskMatricData.public');
