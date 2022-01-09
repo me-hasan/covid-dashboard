@@ -5561,11 +5561,11 @@ group by date ORDER BY date ");
             $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
 
             /* extra slot*/
-            $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
+           /* $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
             $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
             $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
             $('.fourth_slot_district_name').html(risk_matrix_data.fourth_slot_district_name);
-
+	    */	
 
 
 

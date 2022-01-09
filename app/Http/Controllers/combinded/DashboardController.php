@@ -212,7 +212,6 @@ class DashboardController extends Controller
         $data['first_week'] = $this->first_week();
         $data['last_week'] = $this->last_week();
 
-        
 
         //dd($data['total_death']);
         return view('combinded.card', $data);
