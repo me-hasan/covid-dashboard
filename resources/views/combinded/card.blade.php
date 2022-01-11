@@ -955,7 +955,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card-body">
                                         <p class="footer-note">
                                             <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{ ($matrix_date_selected->date_ban) }}</span>
+                                            <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span> {{ convertEnglishDateToBangla($matrix_date_selected->date_eng) }}</span>
                                         </p>
                                     </div>
                                 </div>
