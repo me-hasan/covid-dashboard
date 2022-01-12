@@ -525,13 +525,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 <!-- preloader area end -->
 <!-- page container area start -->
 <div class="page-container">
-        <div class="header_dashboard_part" style="">
+        {{-- <div class="header_dashboard_part" style="">
           <img style="float:left;margin: 3px 19px;" src="pm/images/icon/GoB.png"/>
           <h1>COVID-19 Dynamic Dashboard for Bangladesh</h1>
           <img style="float:right;margin-right:36px;margin-top:3px;"  src="pm/images/icon/dghs.png"/>
-        </div>
+        </div> --}}
 
-        <div class="main-menu" style="padding: 2px 0 0 0;">
+        {{-- <div class="main-menu" style="padding: 2px 0 0 0;">
             <div class="menu-inner">
                 <nav>
                     
@@ -543,7 +543,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     </ul>
                 </nav>
             </div>
-        </div>
+        </div> --}}
     
     <!-- main content area start -->
     <div class="main-content">
