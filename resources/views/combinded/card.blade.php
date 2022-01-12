@@ -907,7 +907,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                             <br/>
                             <br/>
-                            <div class="row">
+                            <div class="row" style="display:none">
                                 <div class="col-lg-12">
                                     <div class="card-body">
 
@@ -1003,7 +1003,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
                               {{-- 1st matix start here --}}
-                                    <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk">
+                                    <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk" style="display:none">
                                        <div class="invoice-head title-bg-style">
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
