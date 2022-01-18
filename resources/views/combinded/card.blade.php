@@ -904,10 +904,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                             </div>
-
+		             @if((Auth::user()->id ?? 0)  == 10)		
                             <br/>
-                            <br/>
-                            <div class="row" style="display:none">
+			    <br/>
+			    <div class="row" style="">
                                 <div class="col-lg-12">
                                     <div class="card-body">
 
@@ -974,7 +974,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                                     </div>
                                 </div>
-                            </div>
+			    </div>
+			    @endif	
                             {{-- map end here --}}
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12">
