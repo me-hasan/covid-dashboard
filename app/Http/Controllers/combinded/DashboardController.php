@@ -217,6 +217,118 @@ class DashboardController extends Controller
         return view('combinded.card', $data);
     }
 
+    public function iframe(Request $request)
+    {
+        
+        $table_recent = 'tp_matrix_recent';
+        $testCount = 100;
+        $weekly_date = \Illuminate\Support\Facades\DB::select("SELECT max(date_id) as max_date FROM national_dashboard.weekly_dates")[0]->max_date;
+        
+
+        // first slot
+        $first_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=10 and floor(test_positivity)<20 and total_tests>$testCount  and date_id = $weekly_date ORDER BY test_positivity desc");
+        //$first_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=10 and test_positivity<=20 and total_tests>$testCount and date_id = $weekly_date");
+        $data['first_slot_district_name'] = $this->getRiskDistrictClusteringName($first_slot_table_contentDataFirst, $first_slot_table_contentDataSecond=[]);
+
+
+        // second slot
+        $second_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=20 and floor(test_positivity)<30 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$second_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=20 and test_positivity<=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['second_slot_district_name'] = $this->getRiskDistrictClusteringName($second_slot_table_contentDataFirst, $second_slot_table_contentDataSecond=[]);
+
+        
+        // third slot
+        $third_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=30 and floor(test_positivity)<40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$third_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['third_slot_district_name'] = $this->getRiskDistrictClusteringName($third_slot_table_contentDataFirst, $third_slot_table_contentDataSecond=[]);
+
+        
+        // fourth slot
+        $fourth_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$fourth_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['fourth_slot_district_name'] = $this->getRiskDistrictClusteringName($fourth_slot_table_contentDataFirst, $fourth_slot_table_contentDataSecond=[]);
+
+
+        
+        $data['weekly_date'] = WeeklyDate::where('status', 1)->get()->sortByDesc("date_id");
+
+        
+       
+        
+        $data['days_test_positivity'] = $this->nation_wise_14_days_test_positivity();
+
+
+        
+        // row 6
+        $data['rm_1'] = $this->risk_matrix_1();
+        $data['rm_2'] = $this->risk_matrix_2();
+        $data['rm_3'] = $this->risk_matrix_3();
+        $data['rm_4'] = $this->risk_matrix_4();
+        $data['rm_5'] = $this->risk_matrix_5();
+        $data['rm_6'] = $this->risk_matrix_6();
+        $data['rm_7'] = $this->risk_matrix_7();
+        $data['rm_8'] = $this->risk_matrix_8();
+        $data['rm_9'] = $this->risk_matrix_9();
+    
+
+
+        
+        $data['matrix_date_selected'] = WeeklyDate::where('status', 1)->orderBy('date_id', 'desc')->first();
+        $data['top_banner_date'] = DB::select(DB::raw('SELECT max(report_date) as date FROM national_dashboard.daily_data'))[0]->date ?? '';
+       
+        // $data['first_week'] = $this->first_week();
+        // $data['first_week'] = (object) $this->getLast14NDays();
+        // $data['last_week'] = $this->last_week();
+        // $data['last_week'] = (object) $this->getLast28NDays();
+        // dd($data['last_week']);
+        // description and insight
+        // $data['des_1'] = $this->description_insight_qry('101'); // Daily National Cases / সংক্রমণের ক্রমবর্ধমান দৈনিক পরিবর্তন
+        // $data['des_2'] = $this->description_insight_qry('201'); //Daily New Cases by Region / অঞ্চল তুলনা
+        // $data['des_3'] = $this->description_insight_qry('202'); //Total National Cases / সংক্রমণের ক্রমবর্ধমান পরিবর্তন
+        // $data['des_4'] = $this->description_insight_qry('301'); //Daily Tests and Cases / পরীক্ষা বনাম আক্রান্ত
+        // $data['des_5'] = $this->description_insight_qry('302'); // Tests vs Cases (Positivity Rate) / বিগত ১৪ দিনের সংক্রমণ ও সংক্রমণের হার
+        // $data['des_6'] = $this->description_insight_qry('303'); // Risk Map by District (14 Days) / পরীক্ষা ভিত্তিক ঝুঁকি
+        // $data['des_7'] = $this->description_insight_qry('304'); // Test Per Cases For South Asian Countries
+        // $data['des_8'] = $this->description_insight_qry('401'); // Risk Matrix
+        // $data['des_12'] = $this->description_insight_qry('402'); // Risk Matrix
+        // $data['des_13'] = $this->description_insight_qry('403'); // Risk Matrix
+        // $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
+        // $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
+        // $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
+        // shamvil end
+
+        //Test vs Cases (Robi)
+        
+        
+        
+
+        // row 1 left side
+        
+        
+
+        $data['division_list'] = DB::table('div_dist')->groupBY('division')->pluck('division');
+
+        $data['district_list'] = DB::table('div_dist')->get();
+
+        $data['last_14_days'] = $this->getLast14DaysData($request);
+
+
+        $data['total_tested'] = DB::table('daily_data')->selectRaw('test_total')->orderBy('report_date', 'DESC')->first()->test_total;
+        $data['total_infected'] = DB::table('daily_data')->selectRaw('infected_total')->orderBy('report_date', 'DESC')->first()->infected_total;
+        $data['total_death'] = DB::table('daily_data')->selectRaw('death_total')->orderBy('report_date', 'DESC')->first()->death_total;
+
+
+
+        // First matrix
+        $data['first_week'] = $this->first_week();
+        $data['last_week'] = $this->last_week();
+
+        
+
+        //dd($data['total_death']);
+        return view('combinded.iframe', $data);
+    }
+
     function getLast14NDays(){
         $today = new Carbon();
         if($today->dayOfWeek == Carbon::SATURDAY || $today->dayOfWeek == Carbon::TUESDAY){

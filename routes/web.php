@@ -353,3 +353,5 @@ Route::get('card-infected-data', 'combinded\DashboardController@getCardInfectedD
 
 Route::get('matix', 'combinded\DashboardController@matrix')->name('combinded.matix');
 Route::get('webportal-risk-matrix-data-public', 'combinded\MatrixController@getRiskMatricData')->name('webportal.getRiskMatricData.public');
+
+Route::get('iframe', 'combinded\DashboardController@iframe')->name('combinded.iframe');
