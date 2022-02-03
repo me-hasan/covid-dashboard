@@ -551,7 +551,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 </nav>
             </div>
         </div>
-    
+    @if((Auth::user()->id ?? 0)  == 10) 
     <!-- main content area start -->
     <div class="main-content">
 
@@ -1004,7 +1004,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
                               {{-- 1st matix start here --}}
-                                    <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk" style="display:none">
+                                    <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk" style="">
                                        <div class="invoice-head title-bg-style">
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
@@ -2350,7 +2350,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                
 
             </div>
-        </div>
+	</div>
+
+
+
+@endif
     </div>
 
     <!-- main content area end -->
