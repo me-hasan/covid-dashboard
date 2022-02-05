@@ -67,8 +67,12 @@ class DashboardController extends Controller
     {
         try {
         $selectedValue = request('selected');
-        $table_recent = 'tp_matrix_recent';
+	$table_recent = 'tp_matrix_recent';
         if($selectedValue == '1'){
+            $table_recent = 'tp_matrix_recent_only_travelers';
+        }
+
+        if($selectedValue == '2'){
             $table_recent = 'tp_matrix_recent_non_travelers';
         }
 
@@ -115,25 +119,25 @@ class DashboardController extends Controller
         
 
         // first slot
-        $first_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=0 and floor(test_positivity)<5 and total_tests>$testCount  and date_id = $weekly_date ORDER BY test_positivity desc");
+        $first_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=10 and floor(test_positivity)<20 and total_tests>$testCount  and date_id = $weekly_date ORDER BY test_positivity desc");
         //$first_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=10 and test_positivity<=20 and total_tests>$testCount and date_id = $weekly_date");
         $data['first_slot_district_name'] = $this->getRiskDistrictClusteringName($first_slot_table_contentDataFirst, $first_slot_table_contentDataSecond=[]);
 
 
         // second slot
-        $second_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=5 and floor(test_positivity)<10 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        $second_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=20 and floor(test_positivity)<30 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
         //$second_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=20 and test_positivity<=30 and total_tests>$testCount and date_id = $weekly_date");
         $data['second_slot_district_name'] = $this->getRiskDistrictClusteringName($second_slot_table_contentDataFirst, $second_slot_table_contentDataSecond=[]);
 
         
         // third slot
-        $third_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=10 and floor(test_positivity)<20 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        $third_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=30 and floor(test_positivity)<40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
         //$third_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
         $data['third_slot_district_name'] = $this->getRiskDistrictClusteringName($third_slot_table_contentDataFirst, $third_slot_table_contentDataSecond=[]);
 
         
         // fourth slot
-        $fourth_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=20 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        $fourth_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
         //$fourth_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
         $data['fourth_slot_district_name'] = $this->getRiskDistrictClusteringName($fourth_slot_table_contentDataFirst, $fourth_slot_table_contentDataSecond=[]);
 
@@ -212,6 +216,7 @@ class DashboardController extends Controller
         $data['first_week'] = $this->first_week();
         $data['last_week'] = $this->last_week();
 
+        
 
         //dd($data['total_death']);
         return view('combinded.card', $data);
@@ -1978,7 +1983,7 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
 
     public function getRiskMatricData(Request $request)
     {
-        $data['status'] = 'failed';
+	$data['status'] = 'failed';
         try{
 
             $table_last = 'tp_matrix_last';
@@ -1986,6 +1991,11 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
 
             $travelers = $request->input('travelers');
             if($travelers == 1){
+                $table_last = 'tp_matrix_last_only_travelers';
+                $table_recent = 'tp_matrix_recent_only_travelers';
+            }
+
+            if($travelers == 2){
                 $table_last = 'tp_matrix_last_non_travelers';
                 $table_recent = 'tp_matrix_recent_non_travelers';
             }
@@ -2955,7 +2965,7 @@ GROUP BY
                         ( infected_24_hrs / test_24_hrs )* 100 AS 'test_positivity'
                     FROM
                         daily_data a
-                    GROUP BY YEAR(a.report_date),
+                    GROUP BY
                         WEEK (
                         a.report_date) ORDER BY a.report_date");
 
@@ -3916,9 +3926,15 @@ GROUP BY
 
                 $travelers = $request->input('test_travelers');
                 if($travelers == 1){
+                    $table_recent = 'tp_matrix_recent_only_travelers';
+                    $table_last = 'tp_matrix_last_only_travelers';
+		}
+
+		 if($travelers == 2){
                     $table_recent = 'tp_matrix_recent_non_travelers';
                     $table_last = 'tp_matrix_last_non_travelers';
                 }
+
                 if($travelers == 0){
                     $table_recent = 'tp_matrix_recent';
                     $table_last = 'tp_matrix_last';
