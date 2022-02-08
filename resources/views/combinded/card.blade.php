@@ -493,13 +493,6 @@
           font-size : 15px
       }
 
-	ul.tab_nab_dashboard li {
-   	 list-style: none;
-   	 width: 25%;
-    	float: left;
-    	margin-left: 0!important;
-	}
-
     </style>
 </head>
 
@@ -551,7 +544,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                 </nav>
             </div>
         </div>
-    @if((Auth::user()->id ?? 0)  == 10) 
+    
     <!-- main content area start -->
     <div class="main-content">
 
@@ -904,55 +897,22 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                             </div>
-		             @if((Auth::user()->id ?? 0)  == 10)		
+
                             <br/>
-			    <br/>
-			    <div class="row" style="">
+                            <br/>
+                            <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card-body">
 
                                         <div class="col-md-3 ml-4 mb-3">
-                                            <p>নির্বাচন করুন</p>
+                                            <p><b>নির্বাচন করুন</b></p>
                                             <label class="radio-inline"><input type="radio" value="0" class="cases_all_none_travelers" name="cases_all_none_travelers" checked="">&nbsp;সকল &nbsp;</label>
-                                            <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                            <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;ট্রাভেলার্স &nbsp;</label>
+                                            <label class="radio-inline"><input type="radio" value="2" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;নন ট্রাভেলার্স</label>
                                         </div>
 
-				       {{--   <table class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>১০% থেকে ১৯%</th>
-                                                    <th>২০% থেকে ২৯%</th>
-                                                    <th>৩০% থেকে ৩৯%</th>
-                                                    <th>৪০% +</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="first_slot_district_name" style="background: #FD8065; color: white; width: 25%">{{ $first_slot_district_name }}</td>
-                                                    <td class="second_slot_district_name" style="background: #E13531; color: white; width: 25%">{{ $second_slot_district_name }}</td>
-                                                    <td class="third_slot_district_name" style="background: #911d07; color: white; width: 25%">{{ $third_slot_district_name }}</td>
-                                                    <td class="fourth_slot_district_name" style="background: #460000; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
-                                                </tr>
-                                            </tbody>
-					</table> 
-					<table class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>০% থেকে ৪.৯৯%</th>
-							    <th>৫% থেকে ৯.৯৯%</th>
-	<th> ১০% থেকে ১৯.৯৯%</th>
-                                                    <th>২০% +</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="first_slot_district_name" style="background: #00aa00; color: white; width: 25%">{{ $first_slot_district_name }}</td>
-                                                    <td class="second_slot_district_name" style="background: #ffaa00; color: white; width: 25%">{{ $second_slot_district_name }}</td>
-                                                    <td class="third_slot_district_name" style="background: #ff0000; color: white; width: 25%">{{ $third_slot_district_name }}</td>
-                                                    <td class="fourth_slot_district_name" style="background: #e13531; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table> --}}
+                                        
+                                        
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -966,16 +926,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <tr>
                                                     <td class="first_slot_district_name" style="background: #00aa00; color: white; width: 25%">{{ $first_slot_district_name }}</td>
                                                     <td class="second_slot_district_name" style="background: #ffaa00; color: white; width: 25%">{{ $second_slot_district_name }}</td>
-                                                    <td class="third_slot_district_name" style="background: #ff0000; color: white; width: 25%">{{ $third_slot_district_name }}</td>
+                                                    <td class="third_slot_district_name" style="background: #fd8065; color: white; width: 25%">{{ $third_slot_district_name }}</td>
                                                     <td class="fourth_slot_district_name" style="background: #e13531; color: white; width: 25%">{{ $fourth_slot_district_name }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div>
-			    </div>
-			    @endif	
+                            </div>
                             {{-- map end here --}}
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -1004,7 +962,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
 
                               {{-- 1st matix start here --}}
-                                    <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk" style="">
+                                    <div class="col-lg-12 mt-2" id="scroll_daily_last_4weeks_risk">
                                        <div class="invoice-head title-bg-style">
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
@@ -1108,10 +1066,11 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                    <div class="col-md-4 ml-4 mb-6">
                                                                         <p>নির্বাচন করুন: </p>
                                                                         <label class="radio-inline"><input type="radio" value="0" class="travelers" name="travelers" checked>&nbsp;সকল &nbsp;</label>
-                                                                        <label class="radio-inline"><input type="radio" value="1" class="travelers" name="travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="travelers" name="travelers">&nbsp;ট্রাভেলার্স &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="2" class="travelers" name="travelers">&nbsp;নন ট্রাভেলার্স</label>
                                                                     </div>
                                                                     <div class="col-xl-3">
                                                                         <br>
@@ -1809,7 +1768,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div class="col-md-3 ml-4 mb-3">
                                                     <p>নির্বাচন করুন:</p>
                                                     <label class="radio-inline"><input type="radio" value="0" class="test_travelers_table_data" name="test_travelers_table_data" checked>&nbsp;সকল &nbsp;</label>
-                                                    <label class="radio-inline"><input type="radio" value="1" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
+                                                    <label class="radio-inline"><input type="radio" value="1" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;ট্রাভেলার্স &nbsp;</label>
+                                                    <label class="radio-inline"><input type="radio" value="2" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
                                                 </div>
                                                 <div class="col-xl-1">
                                                     <br>
@@ -1823,7 +1783,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         {{-- <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
                                                                 id="demoTableData">{!! convertEnglishDigitToBangla('100') !!}</span>
                                                         এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p> --}}
-                                                        <input style="display:none" type="range" min="0" max="1000" value="1"
+                                                        <input style="display:none" type="range" min="50" max="1000" value="1"
                                                                 class="sliderTableData" id="myRangeTableData">
                                                     </div>
                                                 </div>
@@ -2350,11 +2310,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                
 
             </div>
-	</div>
-
-
-
-@endif
+        </div>
     </div>
 
     <!-- main content area end -->
@@ -5566,11 +5522,11 @@ group by date ORDER BY date ");
             $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
 
             /* extra slot*/
-           /* $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
-            $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
-            $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
-            $('.fourth_slot_district_name').html(risk_matrix_data.fourth_slot_district_name);
-	    */	
+           // $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
+           // $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
+           // $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
+           // $('.fourth_slot_district_name').html(risk_matrix_data.fourth_slot_district_name);
+            	
 
 
 
