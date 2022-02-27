@@ -3468,8 +3468,11 @@ GROUP BY
             $test_table_recent = '';
             $test_table_last = '';
 
-            $case_travelers = $request->input('case_travelers');
-            if($case_travelers == 1){
+	    $case_travelers = $request->input('case_travelers');
+	    if($case_travelers == 1){
+                $case_table_recent = 'v_tp_matrix_recent_only_travelers';
+            }
+            if($case_travelers == 2){
                 $case_table_recent = 'v_tp_matrix_recent_non_travelers';
             }
             if($case_travelers == 0){
@@ -3477,8 +3480,11 @@ GROUP BY
             }
             
 
-            $test_travelers = $request->input('test_travelers');
-            if($test_travelers == 1){
+	    $test_travelers = $request->input('test_travelers');
+	    if($test_travelers == 1){
+                $test_table_recent = 'v_tp_matrix_recent_only_travelers';
+            }
+            if($test_travelers == 2){
                 $test_table_recent = 'v_tp_matrix_recent_non_travelers';
             }
             if($test_travelers == 0){
