@@ -40,7 +40,7 @@
         .header_dashboard_part h1{text-align: center; width: calc(100% - 185px); float: left; color: #fff; font-size: 19px; font-weight: 700; font-family: 'Source Sans Pro'; margin: 0 auto; padding-top: 16px; letter-spacing: 0.49px;}
         .header_dashboard_part img{width:42px;height:42px;}
         ul.tab_nab_dashboard{margin:0;padding:0;background-color:lightgray;width:100%;margin-top:5px;height:44px;}
-	ul.tab_nab_dashboard li{list-style:none;  width: 24.9%;	float:left;}
+	ul.tab_nab_dashboard li{list-style:none;  width: 24.9%;	float:left; margin:0; padding:0; }
         ul.tab_nab_dashboard li a{background-color: gray; color: white; padding: 12px 25px; text-align: center; text-decoration: none; display: inline-block; border: 1px solid green; width: 100%; box-sizing: border-box; font-size: 14px; font-family: 'Source Sans Pro'; font-weight: bold;}
         ul.tab_nab_dashboard li a:hover{background-color: #006d2c}
 
@@ -907,7 +907,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="col-md-3 ml-4 mb-3">
                                             <p><b>নির্বাচন করুন</b></p>
                                             <label class="radio-inline"><input type="radio" value="0" class="cases_all_none_travelers" name="cases_all_none_travelers" checked="">&nbsp;সকল &nbsp;</label>
-				       {{--     <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;ট্রাভেলার্স &nbsp;</label>    --}}
+				            <label class="radio-inline"><input type="radio" value="1" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;ট্রাভেলার্স &nbsp;</label>    
                                             <label class="radio-inline"><input type="radio" value="2" class="cases_all_none_travelers" name="cases_all_none_travelers">&nbsp;নন ট্রাভেলার্স</label>
                                         </div>
 
@@ -1069,7 +1069,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <div class="col-md-4 ml-4 mb-6">
                                                                         <p>নির্বাচন করুন: </p>
                                                                         <label class="radio-inline"><input type="radio" value="0" class="travelers" name="travelers" checked>&nbsp;সকল &nbsp;</label>
-								      {{--  <label class="radio-inline"><input type="radio" value="1" class="travelers" name="travelers">&nbsp;ট্রাভেলার্স &nbsp;</label>    --}}
+								       <label class="radio-inline"><input type="radio" value="1" class="travelers" name="travelers">&nbsp;ট্রাভেলার্স &nbsp;</label>    
                                                                         <label class="radio-inline"><input type="radio" value="2" class="travelers" name="travelers">&nbsp;নন ট্রাভেলার্স</label>
                                                                     </div>
                                                                     <div class="col-xl-3">
@@ -1605,13 +1605,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <div class="col-md-4 ml-4 mb-4">
                                                                         <p>নির্বাচন করুন: <span style="font-weight:bold">(প্রতি লাখে সনাক্ত)</span></p>
                                                                         <label class="radio-inline"><input type="radio" value="0" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
-							       {{-- 	<label class="radio-inline"><input type="radio" value="1" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix">&nbsp;ট্রাভেলার্স &nbsp;</label>    --}}   
-									<label class="radio-inline"><input type="radio" value="2" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
+							       	<label class="radio-inline"><input type="radio" value="1" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix">&nbsp;ট্রাভেলার্স &nbsp;</label>    <label class="radio-inline"><input type="radio" value="2" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
 								    </div>
                                                                     <div class="col-md-4 ml-4 mb-4">
                                                                         <p>নির্বাচন করুন: <span style="font-weight:bold">(টেস্ট পজিটিভিটি)</span></p>
                                                                         <label class="radio-inline"><input type="radio" value="0" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
-								      {{--  <label class="radio-inline"><input type="radio" value="1" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix">&nbsp;ট্রাভেলার্স &nbsp;</label>     --}}
+								       <label class="radio-inline"><input type="radio" value="1" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix">&nbsp;ট্রাভেলার্স &nbsp;</label>     
 									<label class="radio-inline"><input type="radio" value="2" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>	
 								    </div>
                                                                     <div class="col-xl-1">
@@ -1770,7 +1769,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div class="col-md-3 ml-4 mb-3">
                                                     <p>নির্বাচন করুন:</p>
                                                     <label class="radio-inline"><input type="radio" value="0" class="test_travelers_table_data" name="test_travelers_table_data" checked>&nbsp;সকল &nbsp;</label>
-					      {{--      <label class="radio-inline"><input type="radio" value="1" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;ট্রাভেলার্স &nbsp;</label>    --}}
+					       <label class="radio-inline"><input type="radio" value="1" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;ট্রাভেলার্স &nbsp;</label>    
                                                     <label class="radio-inline"><input type="radio" value="2" class="test_travelers_table_data" name="test_travelers_table_data">&nbsp;নন ট্রাভেলার্স</label>
                                                 </div>
                                                 <div class="col-xl-1">
