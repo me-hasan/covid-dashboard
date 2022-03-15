@@ -1862,15 +1862,19 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
     public function getRiskMatricData(Request  $request) {
         $data['status'] = 'failed';
         try{
-
-            $table_last = 'tp_matrix_last';
-            $table_recent = 'tp_matrix_recent';
-
-            $travelers = $request->input('travelers');
-            if($travelers == 1){
-                $table_last = 'tp_matrix_last_non_travelers';
-                $table_recent = 'tp_matrix_recent_non_travelers';
-            }
+        $travelers = $request->input('travelers');
+	if($travelers == 0){
+	$table_last = 'tp_matrix_last';
+	$table_recent = 'tp_matrix_recent';
+	}	
+	if($travelers == 1){
+	$table_last = 'tp_matrix_last_only_travelers';
+	$table_recent = 'tp_matrix_recent_only_travelers';
+	}
+	if($travelers == 2){
+	$table_last = 'tp_matrix_last_non_travelers';
+	$table_recent = 'tp_matrix_recent_non_travelers';
+	}
 
             $testCount = $request->input('test_count');
             $weekly_date = $request->input('weekly_date');
@@ -1900,8 +1904,8 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
             $data['risk_matrix_data'] = $this->getRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent);
 
             $data['status'] = 'success';
-        }catch (\Exception $exception) {
-            
+	}catch (\Exception $exception) {
+		dd($exception);
         }
         return $data;
     }
@@ -1913,7 +1917,8 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
             $table_last = 'tp_matrix_last';
             $table_recent = 'tp_matrix_recent';
 
-            $travelers = $request->input('travelers');
+
+	    $travelers = $request->input('travelers');
             if($travelers == 1){
                 $table_last = 'tp_matrix_last_non_travelers';
                 $table_recent = 'tp_matrix_recent_non_travelers';
