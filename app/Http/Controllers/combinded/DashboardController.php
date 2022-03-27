@@ -3949,7 +3949,7 @@ GROUP BY
                 $weekly_date = $request->input('weekly_date');
             
                 
-                $rist_matrix_all_data = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+                $rist_matrix_all_data = \Illuminate\Support\Facades\DB::select(" SELECT distinct l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
                 (select district, positive_tests, total_tests, test_positivity from $table_last where  date_id = $weekly_date ) as l
                 inner join
                 (select district, positive_tests, total_tests, test_positivity from $table_recent where date_id = $weekly_date ) as r
