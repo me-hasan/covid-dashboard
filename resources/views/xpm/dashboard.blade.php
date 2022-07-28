@@ -704,8 +704,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <?php
                             $deathPercentages = 0;
                             if(isset($last_14_days['getLast14DaysTestData'][0])){
-                                $deathPercentages = number_format((($last_14_days['getLast14DaysDeathData'][0]->Difference)*100)/$last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death, 2);
-                            }
+			    $deathPercentageFlag = true;
+                                if($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death == 0){
+                                    $deathPercentageFlag = false;
+                                }
+
+                                if($deathPercentageFlag){
+                                    $deathPercentages = number_format((($last_14_days['getLast14DaysDeathData'][0]->Difference)*100)/$last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death, 2);
+                                }
+			    }
                             ?>
                             <h4 class="header-title pb-1">গত ৭ দিনে মৃত্যু</h4>
                             <div style="font-size: 55px;" class="the-number">
@@ -716,8 +723,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 চেয়ে
                                 <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}</span>
 
-                                জন বা <span style="border-bottom: 3px solid purple;">{!! bfn($deathPercentages) !!}%</span>
-                                @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
+
+জন@if($deathPercentageFlag) বা <span style="border-bottom: 3px solid purple;">{!! bfn($deathPercentages) !!} %</span> @endif
+
+@if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
                         </div>
