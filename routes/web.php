@@ -199,13 +199,13 @@ Route::get('/admin/f5', function () {
 //================New Route For Dashboard Developed By SoftBD Ltd.====//
 Route::redirect('xpm-dashboard', 'national-dashboard');
 Route::redirect('hpm-dashboard', 'national-dashboard');
-Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard')->middleware('first_time_login');
+Route::get('national-dashboard', 'xpm\DashboardController@index')->middleware('first_time_login');
 
 Route::get('national-dashboard/testdata', 'xpm\DashboardController@testData')->middleware('first_time_login');
 Route::get('force-first-time-password-reset', 'xpm\DashboardController@forceFirstTimeResetPassword')->name('force.reset.password');
 Route::post('force-first-time-password-submit', 'xpm\DashboardController@submitforceFirstTimePassword')->name('submit.force.password');
 
-Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
+Route::get('xpm-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
 Route::get('age-graph', 'xpm\DashboardController@edgeGraph')->name('xpm.edge-graph');
 Route::get('xpm-get-district-comparision-data', 'xpm\DashboardController@getCumulativeInfectedData')->name('xpm.get_district_comparision');
 Route::get('xpm-get-national-daily-infected-trend', 'xpm\DashboardController@getNationalDailyInfectedData')->name('xpm.get_national_daily_infected_trend');

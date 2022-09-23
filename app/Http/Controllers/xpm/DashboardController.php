@@ -50,11 +50,11 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        
+        // dd('dd');
         $this->checkValidUser();
         //$testPositivityMap = $this->testPositivityMap($request);
 
-        $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
+        //$cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
 
         $data['weekly_date'] = WeeklyDate::where('status', 1)->get()->sortByDesc("date_id");
 

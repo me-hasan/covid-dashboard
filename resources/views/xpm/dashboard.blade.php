@@ -601,10 +601,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </a>
 
                             
-                            <a href="#scroll_daily_age_wise_affect_death">
+                            {{--  <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
                                     <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
-                            </a>
+                            </a>  --}}
 
                             @if((Auth::user()->id ?? 0)  == 10)
                             <a href="#scroll_daily_covid_hospital_storage_and_usage">
@@ -2971,7 +2971,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                 <!-- section 2 start here -->
 
-                <div class="col-lg-12 mt-2" id="scroll_daily_age_wise_affect_death">
+                {{--  <div class="col-lg-12 mt-2" id="scroll_daily_age_wise_affect_death">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="invoice-head title-bg-style">
@@ -3076,7 +3076,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>  --}}
 
                         <!--Section 2 end here-->
                     </div>
@@ -5124,7 +5124,7 @@ $ydata = [];
     * age wise death deault
     * */
 
-    
+    /*
 
     function showNationalLevelAgeWiseDeathChart(chartData) {
         //console.log('hello');
@@ -5398,11 +5398,14 @@ $ydata = [];
         } 
     }
 
+    */
 
 
 
 
-    $.ajax({
+
+
+   /* $.ajax({
     url: '{{url("/")}}/get-age-wise-death-data',
     type: 'GET',
     data: {},
@@ -5413,7 +5416,7 @@ $ydata = [];
         error: function (error) {
             console.log(error);
         }
-    });
+    });  */
 
     $('#filter-age-wise-death').click(function () {
         var genderTitle = '';
