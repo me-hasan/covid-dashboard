@@ -38,7 +38,14 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+	    //return redirect('/');
+	    //$this->middleware('guest');
+	    $this->middleware('auth');
+	    if (Route::is == 'register') {
+		 return redirect($redirectTo);
+  
+		    // show companies menu or something
+	    }
     }
 
     /**

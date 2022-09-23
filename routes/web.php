@@ -20,7 +20,7 @@ Route::get('hellow', function () {
 });
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
-Auth::routes();
+Auth::routes(['register']);
 
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin')->name('login_admin');
@@ -129,9 +129,30 @@ Route::prefix('admin')->group(function () {
         Route::post('mail/edit/{user}', 'MailController@update')->name('edit-mail');
         Route::delete('mail/{id}', 'MailController@destroy');
         Route::get('sending/email', 'MailController@sendingEmail')->name('sending-mail');   
-        Route::post('sending/email/trigger', 'MailController@sendingEmailTriggered')->name('sending-mail-trigger');   
+        Route::post('sending/email/trigger', 'MailController@sendingEmailTriggered')->name('sending-mail-trigger');  
+        
+        /**New  bulletin*/
+        Route::get('news/bulletin/history', 'NewsBulletinController@newsBulletinHistory')->name('news-bulletin-history');
+        Route::get('news/bulletin/create', 'NewsBulletinController@newsBulletinCreate')->name('create-bolletin');
+        Route::post('news/bulletin/genearate', 'NewsBulletinController@newsBulletinGenerate')->name('bulletin-generate');
+        Route::get('news/bulletin/pdf/view/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfView')->name('bolletin-pdf-view');
+        Route::get('news/bulletin/pdf/email/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfSendEMail')->name('bolletin-pdf-send-email');
+        Route::get('news/bulletin/pdf/download/{date_id}/{district}', 'NewsBulletinController@newsBulletinPdfDownload')->name('bolletin-pdf-download');
+        
+        /*bulletin map upload*/
+        Route::get('chart/history', 'NewsBulletinController@chartHistory')->name('chart-history');
+        Route::get('chart/history/view/edit/{id}', 'NewsBulletinController@bulletinChartViewAndEdit')->name('chart-history-view-edit');
+        Route::get('bulletin/chart', 'NewsBulletinController@bulletinChart')->name('bulletin-chart');
+        Route::post('bulletin/chart/upoload', 'NewsBulletinController@bulletinChartUpload')->name('bulletin-chart-upload');
+        Route::post('check/bulletin/chart/upload', 'NewsBulletinController@checkBulletinChartUpload')->name('check.bulletin.chart.upload');
+        Route::post('check/bulletin/district/list', 'NewsBulletinController@checkBulletinDistrictList')->name('check.bulletin.district.list');
 
-
+        /*email mapping*/
+        Route::get('email/mapping/history', 'NewsBulletinController@emailMappingHistory')->name('email-mapping-history');
+        Route::get('add/email/mapping', 'NewsBulletinController@addEmailMapping')->name('add-email-mapping');
+        Route::post('save/email/mapping', 'NewsBulletinController@saveEmailMapping')->name('email-mapping-save');
+        Route::get('edit/email/mapping/{id}', 'NewsBulletinController@editEmailMapping')->name('email-mapping-edit');
+        Route::post('update/email/mapping/{id}', 'NewsBulletinController@updateEmailMapping')->name('email-mapping-update');
 });
 
 
@@ -147,7 +168,16 @@ Route::get('hpm-get-national-infected-trend', 'Hpm\DashboardController@getNation
 Route::get('hpm-get-national-test-vs-infected-trend', 'Hpm\DashboardController@getNationalTestVsInfectedTrend')->name('hpm.get_national_test_vs_infected_trend');
 Route::get('hpm-get-test-positivity-rate-trend', 'Hpm\DashboardController@getTestPositivityRateTrend')->name('hpm.get_hpm_get_test_positivity_rate_trend');
 Route::get('hpm-get-weekly-comparision-infected-death', 'Hpm\DashboardController@getWeeklyDifferenceData')->name('hpm.get_weekly_comparision_infected_death');
+
 Route::get('hpm-risk-matrix-data', 'Hpm\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData');
+Route::get('xpm-risk-matrix-date-change', 'xpm\DashboardController@getRiskMatrixDateChange')->name('weekly.date.change.for.matrix');
+
+Route::get('hpm-second-risk-matrix-data', 'Hpm\DashboardController@getSecondRiskMatricData')->name('hpm.getSecondRiskMatricData');
+Route::get('xpm-second-risk-matrix-date-change', 'xpm\DashboardController@getSecondRiskMatrixDateChange')->name('weekly.date.change.for.second.matrix');
+
+Route::get('hpm-third-risk-matrix-data', 'Hpm\DashboardController@getThirdRiskMatricData')->name('hpm.getThirdRiskMatricData');
+Route::get('xpm-third-risk-matrix-date-change', 'xpm\DashboardController@getThirdRiskMatrixDateChange')->name('weekly.date.change.for.third.matrix');
+
 Route::get('hpm-get-hospital-beds-trend', 'Hpm\DashboardController@getHospitalBedsTrend')->name('hpm.get_hospital_beds_trend');
 Route::get('/admin/f5', function () {
 
@@ -169,13 +199,13 @@ Route::get('/admin/f5', function () {
 //================New Route For Dashboard Developed By SoftBD Ltd.====//
 Route::redirect('xpm-dashboard', 'national-dashboard');
 Route::redirect('hpm-dashboard', 'national-dashboard');
-Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard')->middleware('first_time_login');
+Route::get('national-dashboard', 'xpm\DashboardController@index')->middleware('first_time_login');
 
 Route::get('national-dashboard/testdata', 'xpm\DashboardController@testData')->middleware('first_time_login');
 Route::get('force-first-time-password-reset', 'xpm\DashboardController@forceFirstTimeResetPassword')->name('force.reset.password');
 Route::post('force-first-time-password-submit', 'xpm\DashboardController@submitforceFirstTimePassword')->name('submit.force.password');
 
-Route::get('national-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
+Route::get('xpm-dashboard', 'xpm\DashboardController@index')->name('xpm.dashboard');
 Route::get('age-graph', 'xpm\DashboardController@edgeGraph')->name('xpm.edge-graph');
 Route::get('xpm-get-district-comparision-data', 'xpm\DashboardController@getCumulativeInfectedData')->name('xpm.get_district_comparision');
 Route::get('xpm-get-national-daily-infected-trend', 'xpm\DashboardController@getNationalDailyInfectedData')->name('xpm.get_national_daily_infected_trend');
@@ -199,6 +229,12 @@ Route::post('upload-data', 'xpm\DashboardController@uploadData')->name('upload-d
 Route::get('get-south-asia-data', 'xpm\DashboardController@getSouthAsiaData')->name('get-south-asia-data');
 Route::get('get-hospital-name','xpm\DashboardController@getHospitalNames')->name('get=hospital-name');
 Route::get('get-hospital-data','xpm\DashboardController@getHospitalData')->name('get=hospital-data');
+
+/* Age wise death  */
+Route::get('get-age-wise-death-data','xpm\DashboardController@getAgeWiseDeathlData');
+Route::get('get-age-wise-death-data-filter','xpm\DashboardController@getAgeWiseDeathlDataFilter');
+
+
 Route::get('storage-link', function () {
     Artisan::call('storage:link');
     return 'linked';
@@ -276,3 +312,46 @@ Route::get('update-daily-data', function () {
 Route::get('/daily-infected-chart', 'xpm\DashboardController@dailyInfectedChart')->name('daily.infected.chart');
 Route::get('/infected-percentage', 'xpm\DashboardController@infectedPercentage')->name('infected.percentage');
 Route::get('/filter-daily-infected-chart', 'xpm\DashboardController@filterdailyInfectedChart')->name('filter.daily.infected.chart');
+
+
+
+/**
+ * ====================================================
+ * start vaccinatio====================================
+ * ====================================================
+ */
+
+Route::get('vaccination', 'vaccination\DashboardController@index')->name('xpm.vaccination');
+
+
+Route::get('socio-economic', 'socioEconomic\DashboardController@index')->name('socio.economic');
+Route::get('socio-economic/education', 'socioEconomic\DashboardController@education')->name('socio.economic.education');
+Route::get('socio-economic/employment', 'socioEconomic\DashboardController@employment')->name('socio.economic.employment');
+// URL::forceScheme('https');
+// URL::forceScheme('https');
+
+
+/**
+ * ====================================================
+ * start public path====================================
+ * ====================================================
+ */
+
+
+Route::get('webportal', 'combinded\DashboardController@index')->name('combinded.card');
+Route::get('get-national-level-test-positivity-data-public', 'combinded\DashboardController@getNationLevelTestPositivityData')->name('get-national-level-test-positivity-data-public');
+Route::get('get-dhaka-positive-rate-data-public', 'combinded\DashboardController@getDhakaPositiveRateData')->name('get-dhaka-positive-rate-data-public');
+Route::get('/infected-percentage-public', 'combinded\DashboardController@infectedPercentage')->name('infected.percentage-public');
+Route::get('hpm-risk-matrix-data-public', 'combinded\DashboardController@getRiskMatricData')->name('hpm.getRiskMatricData.public');
+Route::get('hpm-third-risk-matrix-data-public', 'combinded\DashboardController@getRiskMatrixModalDataPublic')->name('hpm.getThirdRiskMatricData.public');
+Route::get('xpm-third-risk-matrix-date-change-public', 'combinded\DashboardController@getThirdRiskMatrixDateChange')->name('weekly.date.change.for.third.matrix.public');
+
+Route::get('all-table-data-public', 'combinded\DashboardController@getAllTableData')->name('get.table.data.public');
+Route::get('table-date-change', 'combinded\DashboardController@getRiskMatrixDateChange')->name('weekly.date.change.for.table');
+Route::get('card-infected-data', 'combinded\DashboardController@getCardInfectedData');
+
+
+Route::get('matix', 'combinded\DashboardController@matrix')->name('combinded.matix');
+Route::get('webportal-risk-matrix-data-public', 'combinded\MatrixController@getRiskMatricData')->name('webportal.getRiskMatricData.public');
+
+Route::get('iframe', 'combinded\DashboardController@iframe')->name('combinded.iframe');

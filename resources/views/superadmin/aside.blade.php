@@ -53,7 +53,7 @@
 						</a>
 						</li>
 
-						<li class="side-item side-item-category">Mail Management</li>
+						<li class="side-item side-item-category">News Management</li>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#">
 							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/></svg>
@@ -63,6 +63,17 @@
 								<li><a href="{{route('all-mail')}}" class="slide-item">Mail List</a></li>
 								<li><a href="{{route('create-mail')}}" class="slide-item">Create Mail</a></li>
 								<li><a href="{{route('sending-mail')}}" class="slide-item">Sending Mail</a></li>
+							</ul>
+						</li>
+
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+							<svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z"/></svg>
+							<span class="side-menu__label">Bulletin</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu ">
+								<li><a href="{{route('email-mapping-history')}}" class="slide-item">Email Mapping History</a></li>
+								<li><a href="{{route('chart-history')}}" class="slide-item">Chart Upload History</a></li>
+								<li><a href="{{route('news-bulletin-history')}}" class="slide-item">Bulletin History</a></li>
 							</ul>
 						</li>
 

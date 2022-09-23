@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="pm/css/styles.css">
     <link rel="stylesheet" href="pm/css/responsive.css">
     <link href="{{asset('assets/css/icons.css')}}" rel="stylesheet"/>
+    <link href="pm/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
     <!-- modernizr css -->
     <script src="pm/js/vendor/modernizr-2.8.3.min.js"></script>
     <link rel="stylesheet"
@@ -32,6 +33,7 @@
           crossorigin="anonymous"/>
     <!-- INTERNAL Select2 css -->
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet"/>
+    
     <style>
         .header-area {
             padding: 15px 30px;
@@ -73,6 +75,8 @@
         #iframeData_4 {
             padding-left: -380px;
         }
+
+         
 
         .my-custom-scrollbar {
             position: relative;
@@ -141,6 +145,105 @@
         #slider12c .slider-selection {
             background: white;
         }
+
+        
+
+
+        .slider2ndMap {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider2ndMap:hover {
+            opacity: 1;
+        }
+
+        .slider2ndMap::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider2ndMap::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        #slider12a2ndMap .slider-track-high, #slider12c2ndMatrix .slider-track-high {
+            background: red;
+        }
+
+        #slider12b2ndMap .slider-track-low, #slider12c2ndMatrix .slider-track-low {
+            background: green;
+        }
+
+        #slider12c2ndMatrix .slider-selection {
+            background: white;
+        }
+
+
+        
+
+
+
+
+        .slider3rdMap {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider3rdMap:hover {
+            opacity: 1;
+        }
+
+        .slider3rdMap::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider3rdMap::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        #slider12a3rdMap .slider-track-high, #slider12c3rdMatrix .slider-track-high {
+            background: red;
+        }
+
+        #slider12b3rdMap .slider-track-low, #slider12c3rdMatrix .slider-track-low {
+            background: green;
+        }
+
+        #slider12c3rdMatrix .slider-selection {
+            background: white;
+        }
+
+
+
+
 
         .table-responsive {
             display: block;
@@ -287,22 +390,63 @@
             }
         }
 
+        .iconImageSize {
+            width: 15px;
+        }
+
+        #matrixFullTableWithAllDistrict th, td {
+            text-align: center;
+        }
+        #matrixFullTableWithAllDistrict th{
+            font-size : 18px
+        }
+
+
+
         /* Loader css end */
         .bold{font-weight: bold;}
         .tabLegendItemSwatchHolder {
             margin-left: 15px;
         }
+        
         .modal-content {
-            width: 108% !important;
+            width: 115% !important;
         }
+
+        #matrixFullTableWithAllDistrict {
+		counter-reset: serial-number;  /* Set the serial number counter to 0 */
+		}
+		#matrixFullTableWithAllDistrict td:first-child:before {
+		counter-increment: serial-number;  /* Increment the serial number counter */
+		content: counter(serial-number);  /* Display the counter */
+		}
+
+        #travellerFullTableWithAllDistrict {
+		counter-reset: serial-number;  /* Set the serial number counter to 0 */
+		}
+		#travellerFullTableWithAllDistrict td:first-child:before {
+		counter-increment: serial-number;  /* Increment the serial number counter */
+		content: counter(serial-number);  /* Display the counter */
+		}
+
+
+        .verticalLabel {
+           width: 10%; vertical-align: middle !important;
+        }
+
+      table.dataTable > thead > tr > th:not(.sorting_disabled), table.dataTable > thead > tr > td:not(.sorting_disabled){
+          font-size : 15px
+      }
+
     </style>
 </head>
 
 <!-- Start :: Disease Progression -->
 <?php
-$class_1 = 'fa fa-arrow-up mr-1 text-danger';
+
+$class_1 = 'fa fa-arrow-up mr-1 text-success';
 if (isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1) {
-    $class_1 = 'fa fa-arrow-down mr-1 text-success';
+    $class_1 = 'fa fa-arrow-down mr-1 text-danger';
 }
 
 $class_2 = 'fa fa-arrow-up mr-1 text-danger';
@@ -347,7 +491,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <a href="{{route('xpm.dashboard')}}"><i
                                     class=""></i><span>পরিস্থিতি</span></a>
                         </li>
-
+                    
                     </ul>
                     <ul class="metismenu">
                         <li class="menu-item">
@@ -407,48 +551,71 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div class="breadcrumbs-area">
                         <ul class="breadcrumbs">
                             <a href="#scroll_daily_affected">
-                                <li><span class="bullet-point"></span> <span>দৈনিক আক্রান্তের সংখ্যা </span></li>
+                                <li><span class="bullet-point"></span> <span>দৈনিক সনাক্তের সংখ্যা </span></li>
                             </a>
-                            <a href="#scroll_daily_affected_area_wise">
-                                <li><span class="bullet-point"></span>
-                                    <span>অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা</span>
+                             <a href="#scroll_daily_risk_dist_wise_test_positive">
+                                <li><span class="bullet-point"></span> <span>পরীক্ষা বিবেচনায় সনাক্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
                                 </li>
                             </a>
+                            <a href="#scroll_daily_last_4weeks_risk">
+                                <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
+                                </li>
+                            </a>
+
+                            @if((Auth::user()->id ?? 0)  == 10)
+                            <a href="#scroll_location_of_the_detected_district">
+                                <li><span class="bullet-point"></span> <span>গত ২ সপ্তাহের সনাক্তের ভিত্তিতে দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
+                                </li>
+                            </a>
+                            <a href="#scroll_location_of_the_3rd_matrix">
+                                <li><span class="bullet-point"></span> <span>গত ১ সপ্তাহের সনাক্ত এবং ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান</span>
+                                </li>
+                            </a>
+                            @endif
+
+                            <a href="#scroll_daily_affected_area_wise">
+                                <li><span class="bullet-point"></span>
+                                    <span>অঞ্চল-ভিত্তিক দৈনিক সনাক্তের সংখ্যা</span>
+                                </li>
+                            </a>
+                           
                             <a href="#scroll_daily_affected_comparison">
                                 <li><span class="bullet-point"></span>
-                                    <span>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</span>
+                                    <span>দৈনিক পরীক্ষা ও সনাক্তের সংখ্যার তুলনা</span>
                                 </li>
                             </a>
                             <a href="#scroll_daily_affected_comparison_rate">
                                 <li><span class="bullet-point"></span>
-                                    <span>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</span>
+                                    <span> পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</span>
                                 </li>
                             </a>
                             {{-- <a href="#scroll_test_status">
                                 <li><span class="bullet-point"></span> <span>পরীক্ষা পরিস্থিতি</span></li>
                             </a> --}}
-                            <a href="#scroll_daily_risk_dist_wise_test_positive">
-                                <li><span class="bullet-point"></span> <span>সনাক্ত বিবেচনায় আক্রান্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ </span>
-                                </li>
-                            </a>
+                            
 
                             <a href="#scroll_daily_test_dhaka_district">
                                 <li><span class="bullet-point"></span>
-                                    <span>জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার</span>
+                                    <span>জেলা ভিত্তিক দৈনিক পরীক্ষা বিবেচনায় সনাক্তের হার</span>
                                 </li>
                             </a>
 
-                            <a href="#scroll_daily_last_4weeks_risk">
-                                <li><span class="bullet-point"></span> <span>গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান </span>
-                                </li>
-                            </a>
-                            <a href="#scroll_daily_age_wise_affect_death">
+                            
+                            {{--  <a href="#scroll_daily_age_wise_affect_death">
                                 <li><span class="bullet-point"></span>
-                                    <span>বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা </span></li>
-                            </a>
+                                    <span>বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা </span></li>
+                            </a>  --}}
+
+                            @if((Auth::user()->id ?? 0)  == 10)
                             <a href="#scroll_daily_covid_hospital_storage_and_usage">
                                 <li><span class="bullet-point"></span>
                                     <span>কোভিড হাসপাতালসমূহের ধারণ ক্ষমতা ও ব্যবহার </span></li>
+                            </a>
+                            @endif
+
+                            <a href="#scroll_daily_covid_weeklycity_corporation_map">
+                                <li><span class="bullet-point"></span>
+                                    <span>সাপ্তাহিক সিটি কর্পোরেশন সংক্রামক ম্যাপ</span></li>
                             </a>
                             <a href="#scroll_daily_south_asian_countries_differentiation">
                                 <li><span class="bullet-point"></span>
@@ -475,14 +642,20 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_tested) ? formatInBanglaStyle($total_tested) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে পরীক্ষা</h4>
+                            <?php
+                            $testPercentages = 0;
+                            if(isset($last_14_days['getLast14DaysTestData'][0])){
+                                $testPercentages = number_format((($last_14_days['getLast14DaysTestData'][0]->Difference)*100)/$last_14_days['getLast14DaysTestData'][0]->last_fourtten_days__test, 2);
+                            }
+                            ?>
+                            <h4 class="header-title pb-1">গত ৭ দিনে পরীক্ষা</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysTestData'][0]->curr_fourtten_days_test) : ' ' !!}
                             </div>
-                            <div class="summary"><i class="{{$class_1}}"></i> পূর্ববর্তী ১৪ দিনে
+                            <div class="summary"><i class="{{$class_1}}"></i> পূর্ববর্তী ৭ দিনে
                                 পরীক্ষার
-                                চেয়ে {!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))) : ' ' !!}
-                                টি
+                                চেয়ে <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysTestData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysTestData'][0]->Difference))) : ' ' !!}</span>
+                                টি বা <span style="border-bottom: 3px solid purple;">{!! bfn($testPercentages) !!}%</span>
                                 @if(isset($last_14_days['getLast14DaysTestData'][0]->Difference) && $last_14_days['getLast14DaysTestData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
@@ -493,19 +666,26 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div style="height: 220px" class="card purple-card">
                         <div class="card-body">
                             <div style="float: right">
-                                <h4 class="header-title pb-1">সর্বমোট আক্রান্ত</h4>
+                                <h4 class="header-title pb-1">সর্বমোট সনাক্ত</h4>
                                 <div style="font-size: 35px; font-weight:bolder; color: #ff198c; margin-top: -15px">
                                     {!! isset($total_infected) ? formatInBanglaStyle($total_infected) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে আক্রান্ত</h4>
+                            <?php
+                            $infectedPercentages = 0;
+                            if(isset($last_14_days['getLast14DaysTestData'][0])){
+                                $infectedPercentages = number_format((($last_14_days['getLast14DaysinfectedData'][0]->Difference)*100)/$last_14_days['getLast14DaysinfectedData'][0]->last_fourtten_days_infected_person, 2);
+                            }
+                            ?>
+                            <h4 class="header-title pb-1">গত ৭ দিনে সনাক্ত</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysinfectedData'][0]->curr_fourtten_days_infected_person) : ' ' !!}
                             </div>
                             <div class="summary"><i class="{{$class_2}}"></i>
-                                পূর্ববর্তী ১৪ দিনে আক্রান্তের
-                                চেয়ে {!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}
-                                জন @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
+                                পূর্ববর্তী ৭ দিনে সনাক্তের
+                                চেয়ে <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysinfectedData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysinfectedData'][0]->Difference))) : ' ' !!}</span>
+                                জন বা <span style="border-bottom: 3px solid purple;">{!! bfn($infectedPercentages) !!}%</span>
+                                @if(isset($last_14_days['getLast14DaysinfectedData'][0]->Difference) && $last_14_days['getLast14DaysinfectedData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
                         </div>
@@ -520,16 +700,33 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     {!! isset($total_death) ? formatInBanglaStyle($total_death) : ' ' !!}
                                 </div>
                             </div>
-                            <h4 class="header-title pb-1">গত ১৪ দিনে মৃত্যু</h4>
+                            
+                            <?php
+                            $deathPercentages = 0;
+                            if(isset($last_14_days['getLast14DaysTestData'][0])){
+			    $deathPercentageFlag = true;
+                                if($last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death == 0){
+                                    $deathPercentageFlag = false;
+                                }
+
+                                if($deathPercentageFlag){
+                                    $deathPercentages = number_format((($last_14_days['getLast14DaysDeathData'][0]->Difference)*100)/$last_14_days['getLast14DaysDeathData'][0]->last_fourtten_days_infected_death, 2);
+                                }
+			    }
+                            ?>
+                            <h4 class="header-title pb-1">গত ৭ দিনে মৃত্যু</h4>
                             <div style="font-size: 55px;" class="the-number">
                                 {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle($last_14_days['getLast14DaysDeathData'][0]->curr_fourtten_days_death) : ' ' !!}
                             </div>
-                            <div class="summary"><i class="{{$class_3}}"></i> পূর্ববর্তী ১৪ দিনে
+                            <div class="summary"><i class="{{$class_3}}"></i> পূর্ববর্তী ৭ দিনে
                                 মৃত্যুর
                                 চেয়ে
-                                {!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}
+                                <span style="border-bottom: 3px solid purple;">{!! isset($last_14_days['getLast14DaysDeathData'][0]) ? formatInBanglaStyle(abs(floor($last_14_days['getLast14DaysDeathData'][0]->Difference))) : ' ' !!}</span>
 
-                                জন @if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
+
+জন@if($deathPercentageFlag) বা <span style="border-bottom: 3px solid purple;">{!! bfn($deathPercentages) !!} %</span> @endif
+
+@if(isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_days['getLast14DaysDeathData'][0]->Difference < 1)
                                     কম  @else বেশি @endif
                             </div>
                         </div>
@@ -543,7 +740,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <div class="invoice-head title-bg-style">
                                 <div class="row">
                                     <div class="iv-left col-6 ">
-                                        <h2>দৈনিক আক্রান্তের সংখ্যা</h2>
+                                        <h2>দৈনিক সনাক্তের সংখ্যা</h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
                                         <select name="" id="daily-infected-total-select" class="form-control">
@@ -583,7 +780,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         {{--  <div class="col-md-3">
                                             <label>বিভাগ</label>
                                             <select name="division[]" id="division" multiple
-                                                    class="select2 form-control btn-outline-primary division_select">
+                                                    class="select2 form-control btn-outline-primary division_select daily_effected_division_select">
 
                                                 @foreach($division_list as $division)
                                                     <option value="{!! $division !!}"
@@ -603,10 +800,19 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 </svg>
                                             </button>
                                         </div>
+                                        <div class="col-md-3 ml-4 mb-3" id="daily_effected_travelers">
+                                            <label>নির্বাচন করুন: </label>
+                                            <select name="daily_effected_travelers" id="daily_effected_travelers_id"
+                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    <option value="all">সকল</option>
+                                                    <option value="1">নন ট্রাভেলার্স</option>
+                                                    <option value="2">ট্রাভেলার্স</option>
+                                            </select>
+                                        </div>
                                         <div class="col-md-3">
                                             <label>জেলা</label>
                                             <select name="district[]" id="daily-infected-district"
-                                                    class="select2 form-control btn-outline-primary select_district">
+                                                    class="select2-show-search form-control btn-outline-primary select_district">
                                                     <option value="all">সারাদেশ</option>
                                                     {{-- <option value="all">সারাদেশ -- নির্বাচন করুন</option> --}}
 
@@ -634,7 +840,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-8 ">
                                         <h2>
-                                            সনাক্ত বিবেচনায় আক্রান্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
+                                            পরীক্ষা বিবেচনায় সনাক্তের হারের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ
                                         </h2>
                                     </div>
                                     {{--<div class="iv-right offset-md-4 col-2 ">
@@ -660,60 +866,197 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
                             
                             <div class="row">
-                                <div class="col-lg-8"></div>
+                                    <div class="col-lg-4"></div>
                                     <div class="col-lg-4">
-                                        <div class="tab-zone tab-widget tabSuppressVizTooltipsAndOverlays tabZone-color" id="tabZoneId8" style="z-index: 16; width: 350px; height: 130px; top: 78px; left: 383px;">
-                                            <div class="tab-zone-margin" style="inset: 4px; position: absolute; background-color: rgb(245, 237, 220); border-width: 1px; border-style: dashed; border-color: rgb(0, 0, 0);"><div class="tab-zone-padding" style="inset: 0px; position: absolute; border-width: 1px; border-color: rgb(172, 168, 153); border-style: none; padding: 0px;">
-                                            <div class="tabLegendPanel tab-widget" style="position: relative; user-select: none; -webkit-tap-highlight-color: transparent; cursor: default; width: 306px; height: 85px;" aria-label="Legend: " id="tableau_base_legend_color_q_Sheet%201" tabindex="-1" role="listbox" aria-multiselectable="true">
-                                            <div class="tabLegendBox"><h3 class="tabLegendTitle" style="height: 0px;"></h3>
-                                            <div class="tabLegendContentHolder" style="overflow: hidden auto; width: 450px; height: 200px;">
-                                                <div class="tabLegendColumnHolder" style="white-space:nowrap">
-                                                    <span class="tabLegendItemColumn" style="width: 450px;">
-                                                        <div class="tabLegendItem" tabindex="0" role="option" aria-selected="false" style="width: 450px; height: 25px;">
-                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                                <span class="tabLegendItemSwatch" id="rgb(255,51,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 51, 51); border-color: rgb(104, 104, 104);"></span>
-                                                            </span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;">
-                                                               <span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">লাল (সনাক্ত বিবেচনায় আক্রান্তের হার &gt; ১০%)</span>
-                                                            </span>
+                                        
+                                        <div style="background-color: #F5EDDC;
+                                            width: 420px;
+                                            height: 125px;
+                                            border: 1px dotted black;" class="row background">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #330000;border: 1px solid #330000;">
+                                                            </div>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(255,187,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(255, 187, 51); border-color: rgb(104, 104, 104);"></span></span><span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;"> কমলা (সনাক্ত বিবেচনায় আক্রান্তের হার ৫% - ১০%)</span></span>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> অধিকতর গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৪০% +)</p>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;">
-                                                            <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;"><span class="tabLegendItemSwatch" id="rgb(255,255,51)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(31, 170, 13); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 12px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">সবুজ (সনাক্ত বিবেচনায় আক্রান্তের হার &lt; ৫%) </span></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #911d07;border: 1px solid #911d07;">
+                                                            </div>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px;"><span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                            <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; top: 3px; left: 3px; background-color: rgb(200, 192, 189); border-color: rgb(104, 104, 104);"></span></span>
-                                                            <span class="tabLegendItemLabelHolder" style="left: 22px; top: 2px; width: 303px; bottom: 0px; text-align: left;"><span class="tabLegendItemLabel" style="font-size: 13px; color: rgb(0, 0, 0); font-family: &quot;Siyam Rupali&quot;; white-space: nowrap;">ধূসর (টেস্টের সংখ্যা &lt; ২০০)</span></span>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩০% - ৩৯%)</p>
                                                         </div>
-                                                        <div class="tabLegendItem" tabindex="-1" role="option" aria-selected="false" style="width: 450px; height: 25px; padding-top:2px; padding-left:2px">
-                                                            {{--  <span class="tabLegendItemSwatchHolder" style="width: 20px; height: 20px; display: inline-grid;">
-                                                
-                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span>
-                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span>
-                                                                    <span class="tabLegendItemSwatch" id="rgb(200,192,189)" style="border-width: 1px; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"></span>
-                                                            </span>  --}}
-                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(197, 7, 7);"></span> &nbsp;&nbsp;
-                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(223, 134, 2);"></span> &nbsp;&nbsp;
-                                                            <span  style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(21, 156, 3);"> &nbsp;&nbsp; <span style="position: relative; top: -3px; font-size:17px">&nbsp;ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</span></span> 
-                                                    </span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #D30D0D;border: 1px solid #D30D0D;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ২০% - ২৯%)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #FD8065;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% - ১৯% )</p>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - ১০%)</p>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #1FAA0D;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার < ৫%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: rgb(255, 255, 255);border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সাদা (পরীক্ষা বিবেচনায় সনাক্তের হার o%) </p>
+
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="row ">
+                                                        {{-- <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #C8C0BD;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> ধূসর (টেস্টের সংখ্যা < ১০০) </p>
+
+                                                        </div>
+                                                        <br>
+                                                        <div class="d-flex justify-content-start pt-2">
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(226, 5, 5);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(196, 151, 6);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(19, 167, 0);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255);"></span>
+                                                            <p style="font-size:16px;margin-bottom: 0px; margin-left: 3px;"> ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</p>
+                                                        </div> --}}
+                                                    </div>
                                                 </div>
-                                            </span>
+                                            </div>
+                                        
                                     </div>
-                                </div>
-                                <div class="tabCatLegendScroll" style="display: none;"><div class="tabCatLegendScrollButtonHolder"><span class="tabCatLegendScrollPrev tabCatLegendScrollLeft tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span><span class="tabCatLegendScrollNext tabCatLegendScrollRight tabIterButtonDisabled" style="width: 12px; height: 12px; line-height: 12px;"></span></div>
-                            </div>
-                            </div>
-                            <div class="tabLegendTitleControls" style="background-color: white; top: 0px; right: 0px;"><div class="tabLegendHighlighterButton tabLegendTitleControlsButtons tab-widget tabHighlightEnabled" title="Highlight Selected Items" style="user-select: none; -webkit-tap-highlight-color: transparent; display: none;"><div class="tabLegendHighlighterButtonIcon"></div></div><div class="tabLegendContextMenuButton tabLegendTitleControlsButtons" style="display: none;"><div class="tabLegendContextMenuButtonIcon"></div></div>
-                            </div></div></div>
-                                        </div>
+                                    <div class="col-lg-4">
+                                        
+                                        <div style="background-color: #F5EDDC;
+                                            width: 420px;
+                                            height: 125px;
+                                            border: 1px dotted black;" class="row background">
+                                                <div class="col-md-12">
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #DC143C;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> গাঢ় লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ৩১% থেকে ৪০%)</p>
+                                                        </div>
+                                                    </div> --}}
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #F90606;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> লাল (পরীক্ষা বিবেচনায় সনাক্তের হার >১০%)</p>
+                                                        </div>
+                                                    </div> --}}
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FF6347;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> হালকা লাল (পরীক্ষা বিবেচনায় সনাক্তের হার ১০% থেকে ২০% )</p>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="row">
+                                                        <br>
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #FFBB33; border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> কমলা (পরীক্ষা বিবেচনায় সনাক্তের হার ৫% - <১০%)</p>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #1FAA0D;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সবুজ (পরীক্ষা বিবেচনায় সনাক্তের হার < ৫%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: rgb(255, 255, 255);border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> সাদা (পরীক্ষা বিবেচনায় সনাক্তের হার o%) </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-md-1 pt-2 pb-1">
+                                                            <div style="width: 12px; height:12px;background-color: #C8C0BD;border: 1px solid #686868;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-11 pt-1">
+                                                            <p style="font-size:16px;margin-bottom: 0px;"> ধূসর (টেস্টের সংখ্যা < ১০০) </p>
+
+                                                        </div>
+                                                        <br>
+                                                        <div class="d-flex justify-content-start pt-2">
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(226, 5, 5); border-color: rgb(226, 5, 5);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(196, 151, 6); border-color: rgb(196, 151, 6);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(19, 167, 0); border-color: rgb(19, 167, 0);"></span>
+                                                            <span style="border-width: 1px; display:block; float: left; clear: right; border-style: solid; width: 12px; height: 12px; border-radius:12px; top: 3px; left: 3px; background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255);"></span>
+                                                            <p style="font-size:16px;margin-bottom: 0px; margin-left: 3px;"> ডট গুলোর রং উপরের শর্ত সাপেক্ষে চিহ্নিত</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
                                     </div>
+
+
+
                             </div>
-                            </div>
-                            <div class="row"  style="height: 300px !important; overflow:hidden;">  
-                                <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
+                            {{-- <div class="row"  style="height: 420px !important; overflow:hidden;">  
+                                <div class="col-lg-3" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_1">
                                     </div>
                                 </div>
@@ -726,8 +1069,17 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="col-lg-3" style="margin:0px !important; padding: 0px !important; min-width: 25% !important;">
                                     <div id="iframeData_4"></div>
                                 </div>
-                            </div>
+                            </div> --}}
                             
+
+                            <div class="row">  
+                                <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                    <div style="margin:0px auto !important;" id="iframeData">
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -737,9 +1089,10 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             
                                                 {!!  $des_6->description_beng ?? '' !!}
                                             </div>
-                                            <p class="footer-note">
-                                                <br>তথ্য সূত্র: MIS-DGHS, IEDCR
-                                            </p>
+					    <p class="footer-note">
+<br>তথ্য সূত্র: MIS-DGHS, IEDCR
+ <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span id="last_date_map_update"></span >  
+                                          </p>
                                         </div>
                                     </div>
                                 </div>
@@ -755,7 +1108,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                             <div class="row">
                                                 <div class="iv-left col-12 ">
                                                     <h2>
-                                                        গত ৪ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
+                                                        গত ২ সপ্তাহের ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান
                                                     </h2>
                                                 </div>
                             
@@ -781,15 +1134,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 $today = convertEnglishDateToBangla(date('Y-m-d'));
                                                 
                                                 
-                                                $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 AND total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>200) as r using(district) ORDER BY r.test_positivity DESC");
-                                                $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 AND total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
                             
                                                 $high_to_high = array();
                                                 foreach ($high_to_high_table_contentData as $result) {
@@ -838,30 +1191,48 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <div class="row">
-                            
                                                             <div class="col-xl-1 col-md-1">
-                                                                <div
+                                                                <div id=""
                                                                     style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
                                                                     class="fs-20 b1">
-                                                                    <br>বিগত ৩য় ও ৪র্থ সপ্তাহ: ( {{$last_week_end}} - {{$last_week_start}} )
+                                                                    <br><span class="last_weekly_date"> গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )</span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-11 col-md-11">
                                                                 <div class="row">
-                            
+                                                                    <div class="col-xl-3">
+                                                                        <p>তারিখ নির্বাচন করুন: </p>
+                                                                        <select name="weekly_date" id="weekly_date" style="width: 100%" class="form-control">
+                                                                            @foreach ($weekly_date as $value)
+                                                                                <option value="{{ $value->date_id }}">{{ $value->date_ban }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                        <p>নির্বাচন করুন: </p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="travelers" name="travelers" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="travelers" name="travelers">&nbsp;নন ট্রাভেলার্স</label>
+                                                                    </div>
+                                                                    <div class="col-xl-3">
+                                                                        <br>
+                                                                        <button type="button" class="btn btn-sm btn-primary" id="weekly_date_submit">পরিবর্তন করুন</button>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
                                                                     <div class="col-xl-6">
                                                                         <div class="slidecontainer">
-                                                                            <p>গত ১৪ দিনে পরীক্ষার সংখ্যা: <span
-                                                                                    id="demo">{!! convertEnglishDigitToBangla('200') !!}</span>
+                                                                            <p>গত ৭ দিনে পরীক্ষার সংখ্যা: <span
+                                                                                    id="demo">{!! convertEnglishDigitToBangla('100') !!}</span>
                                                                                 এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।
                                                                             </p>
-                                                                            <input type="range" min="50" max="300" value="200"
+                                                                            <input type="range" min="50" max="300" value="100"
                                                                                    class="slider" id="myRange">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-6">
                             
-                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্ত বিবেচনায় আক্রান্তের হারের পরিসীমা:
+                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন পরীক্ষা বিবেচনায় সনাক্তের হারের পরিসীমা:
                                                                             <span
                                                                                 id="ex6SliderVal">{!! convertEnglishDigitToBangla('5:10') !!}</span>
                                                                         </p>
@@ -875,8 +1246,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                         style="width: 100%; min-width: 400px;">
                                                                         <thead>
                                                                         <tr>
-                                                                            <td colspan="4" class="text-center fs-18" style="font-size: 26px"><span
-                                                                                    class="text-danger">আজ {{ $today }}</span>, বিগত ২ সপ্তাহ ( {{$first_week_end}} - {{$first_week_start}} )
+                                                                            <td colspan="4" class="text-center fs-18 recent_weekly_date" style="font-size: 26px" id=""><span
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} )
                                                                             </td>
                                                                         </tr>
                                                                         </thead>
@@ -945,10 +1316,71 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     </table>
                                                                 </div>
                                                             </div>
-                            
                                                         </div>
                             
-                            
+                                                            
+                                                            {{-- start table for red color distribution --}}
+                                                            <div class="row">
+                                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                    <div class="card-body">
+                                                                        <table class="table table-bordered table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>১০% থেকে ১৯%</th>
+                                                                                    <th>২০% থেকে ২৯%</th>
+                                                                                    <th>৩০% থেকে ৩৯%</th>
+                                                                                    <th>৪০% +</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="first_slot_district_name" style="background: #FD8065; color: white; width: 25%"></td>
+                                                                                    <td class="second_slot_district_name" style="background: #E13531; color: white; width: 25%"></td>
+                                                                                    <td class="third_slot_district_name" style="background: #D30D0D; color: white; width: 25%"></td>
+                                                                                    <td class="fourth_slot_district_name" style="background: #911d07; color: white; width: 25%"></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {{-- start table for red color distribution --}}
+
+                                                            @if((Auth::user()->id ?? 0)  == 10)
+                                                            <div class="row">
+                                                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                    <div class="card-body">
+                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="showRiskMatrixBtn" style="font-size:20px; border-radius: 0px 4px 4px 0px; min-width: 225px">সকল জেলা বন্ধ করুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-primary pull-right" id="hideRiskMatrixBtn" style="font-size:20px; border-radius: 0px 4px 4px 0px;  min-width: 225px">সকল জেলা এক নজরে দেখুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-success pull-right" id="showTravellerBtn" style="font-size:20px; border-radius: 4px 0px 0px 4px;  min-width: 225px">ট্রাভেলার বন্ধ করুন</button>
+                                                                        <button type="button" class="btn btn-sm btn-success pull-right" id="hideTravellerBtn" style="font-size:20px; border-radius: 4px 0px 0px 4px;  min-width: 225px">ট্রাভেলার এক নজরে দেখুন</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>        
+
+
+                                                            <div class="row" id="riskMatrixAllDistrictShowHideTable">
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                                <div class="col-xl-10 col-lg-10">
+                                                                    <div class="card-body">
+                                                                        <div id="matrix-data-table">&nbsp;</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                            </div>
+                                                            
+                                                            
+                                                            <div class="row" id="travellerAllDistrictShowHideTable">
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                                <div class="col-xl-10 col-lg-10">
+                                                                    <div class="card-body">
+                                                                        <div id="traveller-data-table">&nbsp;</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-1 col-lg-1">&nbsp;</div>
+                                                            </div>
+                                                            @endif
+
                             
                                                         <div class="row">
                                                             <div class="col-xl-12 col-lg-12 col-md-12">
@@ -960,28 +1392,35 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                     <p class="footer-note">
                                                                         <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                         <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                            id="last_date_9"> {{$first_week_start}}</span>
+                                                                            id="last_date_9"> {{ convertEnglishDateToBangla($matrix_date_selected->date_eng) }}</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
-                            
                                                         </div>
+
+
+
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <!-- End :: Risk Matrix -->
                             
                                             <!-- Strat :: Modal Content -->
+
+                                            
                             
                                             <div class="d-none">
+
                                                 <div id="high_to_high_table_content" class="table-responsive b1">
                                                     <table id="risk_table_popup"
-                                                           class="table table-striped table-bordered text-nowrap dataTable">
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1004,8 +1443,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1027,8 +1466,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1051,8 +1490,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1074,8 +1513,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                             
                                                         </tr>
                                                         </thead>
@@ -1098,8 +1537,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1122,8 +1561,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1145,8 +1584,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1168,8 +1607,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <thead>
                                                         <tr>
                                                             <th class="border-bottom-0">জেলা</th>
-                                                            <th class="border-bottom-0">গত ২ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
-                                                            <th class="border-bottom-0">গত ৩য় ও ৪র্থ সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -1196,6 +1635,1059 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             {{-- matix end here --}}
 
 
+
+                            @if((Auth::user()->id ?? 0)  == 10)
+                            {{--2nd matix start here --}}
+                            <div class="col-lg-12 mt-2" id="scroll_location_of_the_detected_district">
+                                        <div class="invoice-head title-bg-style">
+                                            <div class="row">
+                                                <div class="iv-left col-12 ">
+                                                    <h2>
+                                                        গত ২ সপ্তাহের সনাক্তের ভিত্তিতে দেশের ৬৪টি জেলার তুলনামূলক অবস্থান 
+                                                    </h2>
+                                                </div>
+                            
+                                            </div>
+                                        </div>
+                                        
+                            
+                                            <div class="row">
+                                                <h4 id="special_word_9" class="header-title ">
+                                                    {!! $des_12->component_name_beng ?? '' !!}
+                                                </h4>
+                                                <hr>
+                                                <!-- Start :: ঝুঁকি পর্যালোচনা -->
+                                                <?php
+                                                $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
+                                                $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end);
+                            
+                            
+                                                $last_week_start = convertEnglishDateToBangla($last_week->last_2_weeks_start);
+                                                $last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends);
+                                                $today = convertEnglishDateToBangla(date('Y-m-d'));
+                                                
+                                                
+                                                $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 AND total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                            
+                                                $high_to_high = array();
+                                                foreach ($high_to_high_table_contentData as $result) {
+                                                    $high_to_high[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $medium_to_high = array();
+                                                foreach ($medium_to_high_table_contentData as $result) {
+                                                    $medium_to_high[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $low_to_high = array();
+                                                foreach ($low_to_high_table_contentData as $result) {
+                                                    $low_to_high[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                            
+                                                $high_to_medium = array();
+                                                foreach ($high_to_medium_table_contentData as $result) {
+                                                    $high_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $medium_to_medium = array();
+                                                foreach ($medium_to_medium_table_contentData as $result) {
+                                                    $medium_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $low_to_medium = array();
+                                                foreach ($low_to_medium_table_contentData as $result) {
+                                                    $low_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                            
+                                                $high_to_low = array();
+                                                foreach ($high_to_low_table_contentData as $result) {
+                                                    $high_to_low[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $medium_to_low = array();
+                                                foreach ($medium_to_low_table_contentData as $result) {
+                                                    $medium_to_low[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $low_to_low = array();
+                                                foreach ($low_to_low_table_contentData as $result) {
+                                                    $low_to_low[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                            
+                            
+                                                //echo implode(",",$resultstr);
+                            
+                                                ?>
+                            
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-xl-1 col-md-1">
+                                                                <div id=""
+                                                                    style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;"
+                                                                    class="fs-20 b1 last_weekly_date_second_matrix">
+                                                                    <br>গত সপ্তাহ ( {{$matrix_date_selected->last_weekly_date}} )
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-11 col-md-11">
+                                                                <div class="row">
+                                                                    <div class="col-xl-3">
+                                                                        <p>তারিখ নির্বাচন করুন: </p>
+                                                                        <select name="weekly_date_2nd_matrix" id="weekly_date_2nd_matrix" style="width: 100%" class="form-control">
+                                                                            @foreach ($weekly_date as $value)
+                                                                                <option value="{{ $value->date_id }}">{{ $value->date_ban }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                        <p>নির্বাচন করুন: </p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="travelers_2nd_matrix" name="travelers_2nd_matrix" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="travelers_2nd_matrix" name="travelers_2nd_matrix">&nbsp;নন ট্রাভেলার্স</label>
+                                                                    </div>
+                                                                    <div class="col-xl-3">
+                                                                        <br>
+                                                                        <button type="button" class="btn btn-sm btn-primary" id="weekly_date__2nd_matrix_submit">পরিবর্তন করুন</button>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="col-xl-6">
+                                                                        <div class="slidecontainer">
+                                                                            <p>গত ৭ দিনে পরীক্ষার সংখ্যা: <span
+                                                                                    id="demo2ndMatrix">{!! convertEnglishDigitToBangla('100') !!}</span>
+                                                                                এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।
+                                                                            </p>
+                                                                            <input type="range" min="50" max="300" value="100"
+                                                                                   class="slider2ndMap" id="myRange2ndMatrix">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                            
+                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্তের পরিসীমা:
+                                                                            <span
+                                                                                id="ex6SliderVal2ndMatrix">{!! convertEnglishDigitToBangla('50:100') !!}</span>
+                                                                        </p>
+                                                                        <input style="width: 100%;" id="ex12c2ndMatrix" type="text"><br/>
+                            
+                                                                    </div>
+                                                                </div>
+                                                                <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar mt-4">
+                                                                    <table
+                                                                        class="table table-bordered table-vcenter text-nowrap  b1"
+                                                                        style="width: 100%; min-width: 400px;">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td colspan="4" class="text-center fs-18 recent_weekly_date_second_matrix" style="font-size: 26px" id=""><span
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} )
+                                                                            </td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody class="fs-20 text-center risk_matrix">
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td class="bold">উচ্চ ঝুঁকিপূর্ণ</td>
+                                                                            <td class="bold">মধ্যম ঝুঁকিপূর্ণ</td>
+                                                                            <td class="bold">কম ঝুঁকিপূর্ণ</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold" width="10%">উচ্চ ঝুঁকিপূর্ণ</td>
+                                                                            <td style="cursor: pointer;background: #cc0033; color: white; width: 30%"
+                                                                                class="high_to_high_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">অপরিবর্তিত উচ্চ ঝুঁকি <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
+                                                                            </td>
+                                                                            <td style="background: #FC6E00; cursor: pointer;text-decoration: none; color: white"
+                                                                                class="high_to_medium_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="cursor: pointer;background: #92C47D; color: white; width:  30%;"
+                                                                                class="high_to_low_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">   {{ convertEnglishDigitToBangla($rm_9->high_to_low)}} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold">মধ্যম ঝুঁকিপূর্ণ</td>
+                                                                            <td style="background: #E13531; cursor: pointer; color: white"
+                                                                                class="medium_to_high_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #FC842D; cursor: pointer; color: white"
+                                                                                class="medium_to_medium_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="cursor: pointer;background: #499227; color: white"
+                                                                                class="medium_to_low_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold">কম ঝুঁকিপূর্ণ</td>
+                                                                            <td style="background: #FD694D; cursor: pointer; color: white"
+                                                                                class="low_to_high_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="cursor: pointer;background: #FFAF74; color: white; width: 30%;"
+                                                                                class="low_to_medium_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="low_to_low_second_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                   
+                                                   
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                <div class="card-body">
+                            
+                                                                    <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                                        {!!$des_12->description_beng ?? '' !!}
+                                                                    </div>
+                                                                    <p class="footer-note">
+                                                                        <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                                        <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
+                                                                            class="last_date_9"> </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <!-- End :: Risk Matrix -->
+                            
+                                            <!-- Strat :: Modal Content -->
+
+                                            
+                            
+                                            <div class="d-none">
+
+                                                <div id="high_to_high_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($high_to_high_table_contentData))
+                                                            @foreach($high_to_high_table_contentData as $item)
+                                                                <tr class="b1">
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="medium_to_high_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($medium_to_high_table_contentData))
+                                                            @foreach($medium_to_high_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="low_to_high_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_high_table_contentData))
+                                                            @foreach($low_to_high_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                            
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="high_to_medium_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($high_to_medium_table_contentData))
+                                                            @foreach($high_to_medium_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="medium_to_medium_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($medium_to_medium_table_contentData))
+                                                            @foreach($medium_to_medium_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="low_to_medium_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_medium_table_contentData))
+                                                            @foreach($low_to_medium_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                            
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="high_to_low_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($high_to_low_table_contentData))
+                                                            @foreach($high_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="medium_to_low_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($medium_to_low_table_contentData))
+                                                            @foreach($medium_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="low_to_low_second_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0"> বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                            <th class="border-bottom-0"> গত সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>)</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+                                            </div>
+                            
+                                        
+                                    
+                            
+                               
+                            </div>
+                            {{--2nd matix end here --}}
+
+
+                            {{--3rd matix start here --}}
+                            <div class="col-lg-12 mt-2" id="scroll_location_of_the_3rd_matrix">
+                                        <div class="invoice-head title-bg-style">
+                                            <div class="row">
+                                                <div class="iv-left col-12 ">
+                                                    <h2>
+                                                        গত ১ সপ্তাহের সনাক্ত এবং ঝুঁকি বিবেচনায় দেশের ৬৪টি জেলার তুলনামূলক অবস্থান 
+                                                    </h2>
+                                                </div>
+                            
+                                            </div>
+                                        </div>
+                                        
+                            
+                                            <div class="row">
+                                                <h4 id="special_word_9" class="header-title ">
+                                                    {!! $des_13->component_name_beng ?? '' !!}
+                                                </h4>
+                                                <hr>
+                                                <!-- Start :: ঝুঁকি পর্যালোচনা -->
+                                                <?php
+                                                $first_week_start = convertEnglishDateToBangla($first_week->first_2_weeks_start);
+                                                $first_week_end = convertEnglishDateToBangla($first_week->first_2_weeks_end);
+                            
+                            
+                                                $last_week_start = convertEnglishDateToBangla($last_week->last_2_weeks_start);
+                                                $last_week_end = convertEnglishDateToBangla($last_week->last_2_weeks_ends);
+                                                $today = convertEnglishDateToBangla(date('Y-m-d'));
+                                                
+                                                
+                                                $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 AND total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity>=5 and test_positivity<12) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                                                $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from (select district, positive_tests, total_tests, test_positivity from last_14_days_test_positivity_district_7_day where test_positivity<5) as l inner join (select district, positive_tests, total_tests, test_positivity from recent_14_days_test_positivity_district_7_day where test_positivity<5 and total_tests>100) as r using(district) ORDER BY r.test_positivity DESC");
+                            
+                                                $high_to_high = array();
+                                                foreach ($high_to_high_table_contentData as $result) {
+                                                    $high_to_high[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $medium_to_high = array();
+                                                foreach ($medium_to_high_table_contentData as $result) {
+                                                    $medium_to_high[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $low_to_high = array();
+                                                foreach ($low_to_high_table_contentData as $result) {
+                                                    $low_to_high[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                            
+                                                $high_to_medium = array();
+                                                foreach ($high_to_medium_table_contentData as $result) {
+                                                    $high_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $medium_to_medium = array();
+                                                foreach ($medium_to_medium_table_contentData as $result) {
+                                                    $medium_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $low_to_medium = array();
+                                                foreach ($low_to_medium_table_contentData as $result) {
+                                                    $low_to_medium[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                            
+                                                $high_to_low = array();
+                                                foreach ($high_to_low_table_contentData as $result) {
+                                                    $high_to_low[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $medium_to_low = array();
+                                                foreach ($medium_to_low_table_contentData as $result) {
+                                                    $medium_to_low[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                                                $low_to_low = array();
+                                                foreach ($low_to_low_table_contentData as $result) {
+                                                    $low_to_low[] = rtrim(en2bnTranslation($result->district), " ");
+                                                }
+                            
+                                                $lessThen = sprintf("iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAAlklEQVRIie2VQQqDMBBFH+0NvEl3bVHcZNsju5LepbtiLqCbTAmBWjEzqaAPZhWYl/kMCRys5KzcrwUq4KXc94MDemAEvIWgBrogiEuNeIK0VCaaE4zh7JYj+BaR1BN4bFpw53dELkcgeGuBoB7RSeFSWRSLrtgyCObr/XfhkifoWkr41hQJ5t9ESjzhYCkSGuBSQrQjJotwcmptsFf4AAAAAElFTkSuQmCC");
+                                                $greaterThen = sprintf("iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAAAhElEQVRIie3VOwqAMBCE4R/PY2Xls7P1yFbiecR4AG1Mo/EBZrZyIG0+MoRd+BM5KVBZQAuwAgPQKqH1cEagU0AugEleWO6XhjAJWAP9DRi9UnOw5bnS3AqcYkI+V5Wekij0mLmrzqkB/xmKL4D8e8sBsxFkNlTN1sSM0eLLgEYJ/HmdDa55cbAPKfeyAAAAAElFTkSuQmCC");
+                                                //echo implode(",",$resultstr);
+                            
+                                                ?>
+                            
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-xl-1 col-md-1">
+                                                                <div id="" style="transform: rotate(-90deg);width: 396px;margin-left: -144px;margin-top: 380px;font-size: 23px;" class="fs-20 b1">
+                                                                    প্রতি লাখে সনাক্ত
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-11 col-md-11">
+                                                                <div class="row">
+                                                                    <div class="col-xl-3">
+                                                                        <p>তারিখ নির্বাচন করুন: </p>
+                                                                        <select name="weekly_date_3rd_matrix" id="weekly_date_3rd_matrix" style="width: 100%" class="form-control">
+                                                                            @foreach ($weekly_date as $value)
+                                                                                <option value="{{ $value->date_id }}">{{ $value->date_ban }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                        <p>নির্বাচন করুন: <span style="font-weight:bold">(প্রতি লাখে সনাক্ত)</span></p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="cases_travelers_3rd_matrix" name="cases_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
+                                                                    </div>
+                                                                    <div class="col-md-3 ml-4 mb-3">
+                                                                        <p>নির্বাচন করুন: <span style="font-weight:bold">(টেস্ট পজিটিভিটি)</span></p>
+                                                                        <label class="radio-inline"><input type="radio" value="0" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix" checked>&nbsp;সকল &nbsp;</label>
+                                                                        <label class="radio-inline"><input type="radio" value="1" class="test_travelers_3rd_matrix" name="test_travelers_3rd_matrix">&nbsp;নন ট্রাভেলার্স</label>
+                                                                    </div>
+                                                                    <div class="col-xl-1">
+                                                                        <br>
+                                                                        <button type="button" class="btn btn-sm btn-primary" id="weekly_date__3rd_matrix_submit">পরিবর্তন করুন</button>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="col-xl-12">
+                                                                        <div class="slidecontainer">
+                                                                            <p>গত ৭ দিনে পরীক্ষার সংখ্যা:  <span
+                                                                                    id="demo3rdMatrix">{!! convertEnglishDigitToBangla('100') !!}</span>
+                                                                            এর কম জেলাসমূহ বাদ দেওয়া হয়েছে।</p>
+                                                                            <input type="range" min="50" max="1000" value="100"
+                                                                                   class="slider3rdMap" id="myRange3rdMatrix">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6" style="display:none">
+                            
+                                                                        <p> সর্বোচ্চ ও সর্বনিম্ন সনাক্তের পরিসীমা:
+                                                                            <span
+                                                                                id="ex6SliderVal3rdMatrix">{!! convertEnglishDigitToBangla('5:10') !!}</span>
+                                                                        </p>
+                                                                        <input style="width: 100%;" id="ex12c3rdMatrix" type="text"><br/>
+                            
+                                                                    </div>
+                                                                </div>
+                                                                <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar mt-4">
+                                                                    <table
+                                                                        class="table table-bordered table-vcenter text-nowrap  b1"
+                                                                        style="width: 100%; min-width: 400px;">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td colspan="4" class="text-center fs-18" style="font-size: 26px" id=""><span class="recent_weekly_date_third_matrix"><span
+                                                                                    class="text-danger">আজ {{ $today }}</span>, বর্তমান সপ্তাহ ( {{$matrix_date_selected->recent_weekly_date}} ) <br></span>
+                                                                                    <span style="position: relative; top: 40px; right:40%; font-size: 23px">টেস্ট পজিটিভিটি</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody class="fs-20 text-center risk_matrix">
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 10% </td>
+                                                                            <td class="bold"> 5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 10% </td>
+                                                                            <td class="bold"> <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}"> 5% </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel"> <img class="iconImageSize" src="data:image/png;base64,{{ $greaterThen }}">= 10</td>
+                                                                            <td style="cursor: pointer;background: #800000; color: white; width: 35%"
+                                                                                class="high_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">অপরিবর্তিত উচ্চ ঝুঁকি <br> {{ convertEnglishDigitToBangla($rm_7->high_to_high)}} টি জেলা</span>
+                                                                            </td>
+                                                                            <td style="background: #FF0000; cursor: pointer;text-decoration: none; color: white; width: 35%"
+                                                                                class="high_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_8->high_to_medium) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="cursor: pointer;background: #FF0000; color: white; width:  30%;"
+                                                                                class="high_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">   {{ convertEnglishDigitToBangla($rm_9->high_to_low)}} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel">5 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">10</td>
+                                                                            <td style="background: #800000; cursor: pointer; color: white"
+                                                                                class="medium_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_4->medium_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #FF0000; cursor: pointer; color: white"
+                                                                                class="medium_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_5->medium_to_medium) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="cursor: pointer;background: #FC6E00; color: white"
+                                                                                class="medium_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal"> {{ convertEnglishDigitToBangla($rm_6->medium_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel">0.01 - <img class="iconImageSize" src="data:image/png;base64,{{ $lessThen }}">5</td>
+                                                                            <td style="background: #FF0000; cursor: pointer; color: white"
+                                                                                class="low_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #FC6E00; cursor: pointer; color: white"
+                                                                                class="low_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="low_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="bold verticalLabel">0</td>
+                                                                            <td style="background: #FC6E00; cursor: pointer; color: white"
+                                                                                class="zero_to_high_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_1->low_to_high) }} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #FC6E00; cursor: pointer; color: white"
+                                                                                class="zero_to_medium_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_2->low_to_medium)}} টি জেলা
+                                                                            </td>
+                                                                            <td style="background: #37761D; cursor: pointer; color: white"
+                                                                                class="zero_to_low_third_matrix_modal_click"
+                                                                                data-target="#modaldemo1"
+                                                                                data-toggle="modal">{{ convertEnglishDigitToBangla($rm_3->low_to_low) }} টি জেলা
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                   
+                                                   
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                                                <div class="card-body">
+                            
+                                                                    <div class="alert mt-3 p-0 text-justify" role="alert">
+                                                                        {!!$des_13->description_beng ?? '' !!}
+                                                                    </div>
+                                                                    <p class="footer-note">
+                                                                        <br>তথ্য সূত্র: MIS-DGHS, IEDCR
+                                                                        <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
+                                                                            class="last_date_9"> </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <!-- End :: Risk Matrix -->
+                            
+                                            <!-- Strat :: Modal Content -->
+
+                                            
+                            
+                                            <div class="d-none">
+
+                                                <div id="high_to_high_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($high_to_high_table_contentData))
+                                                            @foreach($high_to_high_table_contentData as $item)
+                                                                <tr class="b1">
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                               </tr>
+                                                            @endforeach
+                                                        @endif
+                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="medium_to_high_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($medium_to_high_table_contentData))
+                                                            @foreach($medium_to_high_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                               </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="low_to_high_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>                                                        
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_high_table_contentData))
+                                                            @foreach($low_to_high_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                               </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="high_to_medium_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($high_to_medium_table_contentData))
+                                                            @foreach($high_to_medium_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="medium_to_medium_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($medium_to_medium_table_contentData))
+                                                            @foreach($medium_to_medium_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                               </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="low_to_medium_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_medium_table_contentData))
+                                                            @foreach($low_to_medium_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                               </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="high_to_low_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($high_to_low_table_contentData))
+                                                            @foreach($high_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="medium_to_low_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($medium_to_low_table_contentData))
+                                                            @foreach($medium_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="low_to_low_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+                                                <div id="zero_to_high_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+
+                                                <div id="zero_to_medium_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+
+
+                                                <div id="zero_to_low_third_matrix_table_content" class="table-responsive b1">
+                                                    <table id="risk_table_popup"
+                                                           class="table table-striped table-bordered text-nowrap b1 dataTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">ক্রমিক নং</th>
+                                                            <th class="border-bottom-0">জেলা</th>
+                                                            <th class="border-bottom-0">জনসংখ্যা</th>
+                                                            <th class="border-bottom-0">বর্তমান সপ্তাহের টেস্ট পজিটিভিটি (<span style='color:#0636c1d4;'>টেস্ট</span>, <span style='color:#b50514d4;'>পজিটিভ</span>) <span class="badge badge-primary perPositivityHeader"></span></th>
+                                                            <th class="border-bottom-0">প্রতি লাখে সনাক্ত <span class="badge badge-primary perLakHeader"></span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(count($low_to_low_table_contentData))
+                                                            @foreach($low_to_low_table_contentData as $item)
+                                                                <tr>
+                                                                    <td>{!! en2bnTranslation($item->district) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->recent_test_positivity) !!}</td>
+                                                                    <td>{!! convertEnglishDigitToBangla($item->last_test_positivity) !!}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                            
+                                                    </table>
+                                                </div>
+                                            </div>
+                            </div>
+                            {{--3rd matix end here --}}
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -1209,7 +2701,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 <div class="row">
                                     <div class="iv-left col-6 ">
                                         <h2>
-                                            অঞ্চল-ভিত্তিক দৈনিক আক্রান্তের সংখ্যা
+                                            অঞ্চল-ভিত্তিক দৈনিক সনাক্তের সংখ্যা
                                         </h2>
                                     </div>
                                     <div class="iv-right offset-md-4 col-2 " style="display: none">
@@ -1300,7 +2792,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>দৈনিক পরীক্ষা ও আক্রান্তের সংখ্যার তুলনা</h2>
+                                                    <h2>দৈনিক পরীক্ষা ও সনাক্তের সংখ্যার তুলনা</h2>
                                                 </div>
             
                                             </div>
@@ -1334,7 +2826,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="invoice-head title-bg-style" id="scroll_daily_affected_comparison_rate">
                                             <div class="row">
                                                 <div class="iv-left col-12">
-                                                    <h2>আক্রান্ত ও সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়</h2>
+                                                    <h2> পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়</h2>
                                                 </div>
             
                                             </div>
@@ -1372,7 +2864,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="row">
                                             <div class="iv-left col-12 ">
                                                 <h2 class="positive-dhaka-rate-heading">
-                                                    জেলা ভিত্তিক দৈনিক সনাক্ত বিবেচনায় আক্রান্তের হার
+                                                    জেলা ভিত্তিক দৈনিক পরীক্ষা বিবেচনায় সনাক্তের হার
                                                 </h2>
                                             </div>
 
@@ -1382,14 +2874,9 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     <div class="card">
                                         <div class="card-body info-style">
                                             <div class="row">
-
                                                 <h4 id="special_word_8" class="header-title ">
-
                                                     {!! $des_11->component_name_beng ?? '' !!}
-
-
                                                 </h4>
-
                                                     {{-- <div class="col-md-3">
                                                         <label>বিভাগ </label>
                                                         <select name="division[]" id="division_dhaka_rate" multiple
@@ -1405,12 +2892,12 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                         <label>নির্বাচন করুন </label>
                                                         <div class="row">
                                                             <label class="radio-inline" for="radios-1" style="cursor:pointer">
-                                                            <input type="radio" name="weeklyOrDaily" id="radios-1" value="2" checked="checked">
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-1" value="2">
                                                             সাপ্তাহিক
                                                             </label> 
                                                             &nbsp;&nbsp;&nbsp;
                                                             <label class="radio-inline" for="radios-0" style="cursor:pointer">
-                                                            <input type="radio" name="weeklyOrDaily" id="radios-0" value="1">
+                                                            <input type="radio" name="weeklyOrDaily" id="radios-0" value="1" checked="checked">
                                                                 দৈনিক
                                                             </label> 
                                                         
@@ -1425,6 +2912,15 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <option value="{!! $district->district !!}"
                                                                         class="b1">{!! en2bnTranslation($district->district) !!} </option>
                                                             @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 ml-4 mb-3" id="district_wise_non_travelers">
+                                                        <label>নির্বাচন করুন: </label>
+                                                        <select name="daily_effected_travelers" id="district_wise_non_travelers_id"
+                                                                class="select2 form-control btn-outline-primary select_district">
+                                                                <option value="0">সকল</option>
+                                                                <option value="1">নন ট্রাভেলার্স</option>
+                                                                <option value="2">ট্রাভেলার্স</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm mt-4 mx-auto">
@@ -1475,14 +2971,14 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 
                 <!-- section 2 start here -->
 
-                <div class="col-lg-12 mt-2" id="scroll_daily_age_wise_affect_death">
+                {{--  <div class="col-lg-12 mt-2" id="scroll_daily_age_wise_affect_death">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="invoice-head title-bg-style">
                                 <div class="row">
                                     <div class="iv-left col-12 ">
                                         <h2>
-                                            বয়স-ভিত্তিক আক্রান্ত ও মৃত্যু সংখ্যার তুলনা
+                                            বয়স-ভিত্তিক সাপ্তাহিক মৃত্যুর সংখ্যার তুলনা
                                         </h2>
                                     </div>
 
@@ -1502,31 +2998,58 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-body">
+                                                    
                                                     <div class="row">
-
-                                                        <div class="col-xl-4 col-md-12">
-                                                            <h5 class="card-title b1">৬ই মার্চ
-                                                                - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->lastOfMonth()->day) !!}
-                                                                শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonths(2)->format('F')) !!}</h5>
-                                                            <div id="age_wise_death_distribution_2"></div>
+                                                        <div class="col-md-3">
+                                                            <label for="">লিঙ্গ </label>
+                                                            <select name="age_wise_death_by_gender" id="age_wise_death_by_gender"
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                <option value="-1">সকল</option>
+                                                                <option value="Male">পুরুষ</option>
+                                                                <option value="Female">মহিলা</option>
+                                                            
+                                                            </select>
                                                         </div>
-
-                                                        <div class="col-xl-4 col-md-12">
-                                                            <h5 class="card-title b1">
-                                                                ১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}
-                                                                - {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->lastOfMonth()->day) !!}
-                                                                শে {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->subMonth()->format('F')) !!}</h5>
-                                                            <div id="age_wise_death_distribution_1"></div>
+                                                        <div class="col-md-3">
+                                                            <label for="">জেলা</label>
+                                                            <select name="ageWiseDeathDistrict" id="age_wise_death_district_filter"
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                    <option value="-1">সারাদেশ</option>
+                                                                @foreach($district_list as $district)
+                                                                    <option value="{!! $district->district !!}"
+                                                                            class="b1">{!! en2bnTranslation($district->district) !!} </option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
-                                                        <div class="col-xl-4 col-md-12">
-                                                            <h5 class="card-title b1">
-                                                                ১লা {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}
-                                                                -{!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}
-                                                                ই {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</h5>
-                                                            <div id="age_wise_death_distribution"></div>
+                                                        <div class="col-md-3">
+                                                            <label for="">হাসপাতাল</label>
+                                                            <select name="age_wise_hospital_hospital_filter" id="age_wise_hospital_hospital_filter"
+                                                                    class="select2 form-control btn-outline-primary">
+                                                                <option value="-1">সারাদেশ</option>
+                                                                @foreach ($hospital_name as $value)
+                                                                    <option value="{{ $value->hospital_id ?? '' }}">{{ $value->hospital_name_bng ?? '' }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
-
+                                                        <div class="col-sm mt-4 mx-auto">
+                                                            <button id="filter-age-wise-death"
+                                                                    class="btn btn-sm district_cms_search b1">
+                                                                <svg class="header-icon search-icon" x="1008" y="1248"
+                                                                     viewBox="0 0 24 24" height="100%" width="100%"
+                                                                     preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                                    <path
+                                                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
                                                     </div>
+                                                    
+						    <div class="row">
+							<div id="age_wise_death_distribution" style="width: 100%; height: 470px"></div>
+						    </div>
+
+
                                                     <div class="row">
                                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                                             <div class="card-body">
@@ -1538,8 +3061,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                                 <p class="footer-note">
                                                                     <br>তথ্য সূত্র: MIS-DGHS, IEDCR
                                                                     <br>সর্বশেষ তথ্য হালনাগাদের তারিখঃ<span
-                                                                        id="last_date_10"> {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->day)!!}
-                                                                        {!! convertEnglishMonthDateToBangla(Carbon\Carbon::now()->format('F')) !!}</span>
+                                                                        id="last_date_10">
+                                                                        {!! convertEnglishMonthDateToBangla(date('d-m-Y', strtotime("-2 days"))) !!}</span>
                                                                 </p>
                                                             </div>
 
@@ -1553,7 +3076,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>  --}}
 
                         <!--Section 2 end here-->
                     </div>
@@ -1774,6 +3297,71 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     </div>
                 </div>
                 <!--Section 3(Last) end here-->
+
+
+                @if((Auth::user()->id ?? 0)  == 10)
+                {{-- map start here --}}
+                  <div class="col-lg-12 mt-2" id="scroll_daily_covid_weeklycity_corporation_map">
+
+
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="invoice-head title-bg-style">
+                                <div class="row">
+                                    <div class="iv-left col-12 ">
+                                        <h2>
+                                            সাপ্তাহিক সিটি কর্পোরেশন সংক্রামক ম্যাপ
+                                        </h2>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card-body info-style">
+                                <div class="row">
+
+                                    {{-- <h4 id="special_word_11" class="header-title ">
+                                        {!! $des_10->component_name_beng ?? '' !!}
+
+                                    </h4> --}}
+
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="row pt-2 pr-3">
+                                            <div class="col-xl-12 col-md-12">
+                                                
+                                                
+                                                <div class="row">  
+                                                    <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                        <div style="margin:0px auto !important;" id="iframeMapOneData">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="row">  
+                                                    <div class="col-lg-12 preview_wrap" style="margin:0px !important; padding: 8px 8px 0px 0px !important; min-width: 25% !important;">
+                                                        <div style="margin:0px auto !important;" id="iframeMapTwoData">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- map end here --}}
+
+                 @endif
+
+
+
+
                 <!-- Statistics area start -->
                 <div class="col-lg-12 mt-4" id="scroll_daily_south_asian_countries_differentiation">
 
@@ -1847,7 +3435,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                                   style="margin-right: -22%">
 </div>
 </div>
-কপিরাইট © ২০২০ <a href="#">কাভিড-১৯, জাতীয় ড্যাশবোর্ড</a>। সকল অধিকার সংরক্ষিত।
+কপিরাইট © ২০২০ <a href="#">কোভিড-১৯, জাতীয় ড্যাশবোর্ড</a>। সকল অধিকার সংরক্ষিত।
 </p>
 
 
@@ -1880,7 +3468,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
             <div class="modal-header text-white text-center"
                  style="background: #04984A; color: #fff; display: block; width: 100%;">
                 <h3 class="text-center">কোভিড – ১৯ ন্যাশনাল ড্যাশবোর্ড</h3>
-                <h5 class="modal-title text-center mt-2 mb-2 text-white">সহযোগিতায়</h5>
+                <h5 class="modal-title text-center mt-2 mb-2 text-white">নীতি নির্ধারণী পর্ষদ</h5>
                 <button type="button" class="close associator-modal-close-btn" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1892,7 +3480,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         <h3>উপদেষ্টা</h3>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
 
                             <img src="pm/images/collaborator/sebrina-final.png" class="" style="max-width: 100%;
     height: 130px;" alt="">
@@ -1901,14 +3489,21 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             <p>অতিরিক্ত মহাপরিচালক (পরিকল্পনা ও উন্নয়ন),</p>
                             <p> স্বাস্থ্য অধিদপ্তর</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
+
+                            <img src="pm/images/collaborator/mahmudur.png" class="associator-img" alt="">
+                            <p> অধ্যাপক ডাঃ মাহমুদুর রহমান </p>
+                            <p> সাবেক পরিচালক,</p>
+                            <p> আইইডিসিআর</p>
+                        </div>
+                        <div class="col-md-3 text-center">
 
                             <img src="pm/images/collaborator/dr_shams.l_arefin.jpg" class="associator-img" alt="">
                             <p> ড. শামস্ এল আরেফিন</p>
                             <p> ঊর্ধ্বতন পরিচালক,</p>
                             <p> মাতৃ ও শিশু স্বাস্থ্য বিভাগ, আইসিডিডিআরবি</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
 
                             <img src="pm/images/collaborator/anir-chowdhury.jpeg" class="associator-img" alt="">
                             <p>আনীর চৌধুরী
@@ -1923,39 +3518,59 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                     <div class="col-md-12 text-center mt-5">
                         <h3>বিশেষজ্ঞ মতামত</h3>
                         <div class="row">
-                            <div class="col-md-4">
-                                <img src="pm/images/collaborator/dr_md_habibur_rahman.jpg" class="associator-img"
+                            <div class="col-md-3">
+                                <img src="" styles="border:2 px solid green" class="associator-img"
                                      alt="">
-                                <p> ড. মো: হাবিবুর রহমান</p>
+                                <p> অধ্যাপক ডা. মিজানুর রাহমান</p>
                                 <p> পরিচালক</p>
-                                <p>এমআইএস, ডিজিএইচএস</p>
+                                <p>এমআইএস, স্বাস্থ্য অধিদপ্তর</p>
                             </div>
-
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <img src="pm/images/collaborator/asrafi.jpg" class="associator-img"
+                                     alt="">
+                                <p> ডা. শাহ আলি আকবর আশরাফি</p>
+                                <p> চিফ, হেলথ ইনফরমেশন ইউনিট (এইচ আই ইউ)</p>
+                                <p>এমআইএস, স্বাস্থ্য অধিদপ্তর</p>
+                            </div>
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/engr_sukhendra_shekhor_roy.jpg" class="associator-img"
                                      alt="">
                                 <p> ইঞ্জি. সুখেন্দ্র শেখর রায়</p>
                                 <p> সিনিয়র সিস্টেম অ্যনালিস্ট</p>
-                                <p>এমআইএস, ডিজিএইচএস</p>
+                                <p>এমআইএস, স্বাস্থ্য অধিদপ্তর</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/dr_aysha_sania.jpg" class="associator-img" alt="">
                                 <p>ড. আয়েশা সানিয়া</p>
                                 <p> রিসার্চ সায়েন্টিস্ট</p>
                                 <p>কলাম্বিয়া বিশ্ববিদ্যালয়,যুক্তরাষ্ট্র</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/dr_mahbubur_rahman.jpg" class="associator-img" alt="">
                                 <p>ড. মাহবুবুর রহমান</p>
                                 <p> সহকারী অধ্যাপক</p>
                                 <p>আইইডিসিআর</p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <img src="pm/images/collaborator/dr_mallik_masum_billah.jpg" class="associator-img"
                                      alt="">
                                 <p>ড. মল্লিক মাসুম বিল্লাহ</p>
                                 <p>ঊর্ধ্বতন এফইটিপি উপদেষ্টা</p>
                                 <p>আইইডিসিআর</p>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="pm/images/collaborator/taufiq.jpg" class="associator-img"
+                                     alt="">
+                                <p>ডাঃ মোঃ তৌফিক হাসান শাওন</p>
+                                <p>মেডিকেল অফিসার, এমআইএস</p>
+                                <p>স্বাস্থ্য অধিদপ্তর</p>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="pm/images/collaborator/maruf.jpg" class="associator-img"
+                                     alt="">
+                                <p>ডাঃ মোঃ মারুফুর রহমান</p>
+                                <p>ডিপিএম, মেডিকেল বায়োটেকনোলজি, সিএমবিটি, এমআইএস</p>
+                                <p>স্বাস্থ্য অধিদপ্তর</p>
                             </div>
 
                         </div>
@@ -1990,13 +3605,13 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                                 </p>
                             </div>
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <h3>তথ্যচিত্র বিশেষজ্ঞ</h3>
                                 <img src="pm/images/collaborator/mir_sakib.jpg" class="associator-img"
                                      alt="">
                                 <p>মীর সাকিব </p>
                                 <p> সিইও, ক্র্যামস্টেক</p>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>
@@ -2013,7 +3628,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                             </div>
 
                             <div class="col-md-4">
-                                <h3>কারিগরী সহযোগীতায়</h3>
+                                <h3>কারিগরী সহযোগিতায়</h3>
                                 <img src="pm/images/collaborator/e-generation.png" class="" alt="">
                                 <p style="font-size: 16px; float:right">ই-জেনারেশন পাবলিক লিমিটেড কোম্পানি</p>
                             </div>
@@ -2021,6 +3636,8 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
                         </div>
                     </div>
                 </div>
+
+
 
 
             </div>
@@ -2089,6 +3706,7 @@ if (isset($last_14_days['getLast14DaysDeathData'][0]->Difference) && $last_14_da
 <script src="{{ asset('assets/js/select2.js') }}"></script>
 
 
+
 <?php
 use Carbon\Carbon;use Illuminate\Support\Facades\DB;
 $date_arr = $infected_arr = $avg_arr = array();
@@ -2111,7 +3729,7 @@ foreach ($nation_wide_MovingAvgInfected as $k => $row) {
         "date" => $row->report_date,
         "infected" => $row->infected_24_hrs,
         "avg" => $row->five_dayMovingAvgInfected,
-        "total_infected" => $row1_left_trend_infected_data[$k],
+        "total_infected" => $row1_left_trend_infected_data[$k] ?? 0,
         "tested" => $test_arr[$k],
         "tested_data" => $test_arr_data[$k],
         "case" => $case_arr[$k],
@@ -2147,8 +3765,8 @@ $ydata = [];
     var options = {year: 'numeric', month: 'long', day: 'numeric'};
 
     var mdata = <?php echo json_encode($mdata)?>;
-    // console.log(mdata);
-    {{--var xdata = <?php echo json_encode($xdata)?>;--}}
+    
+    
     var msize = Object.keys(mdata).length;
     // var xsize = Object.keys(xdata).length;
 
@@ -2157,14 +3775,14 @@ $ydata = [];
 
 
     var tags = {
-        "special_word_1": ["অক্টোবর মাসের শুরু থেকে আক্রান্তের সংখ্যা দৈনিক ১৫০০", "মহামারীর অপরিবর্তিত অবস্থাকে"],
+        "special_word_1": ["অক্টোবর মাসের শুরু থেকে সনাক্তের সংখ্যা দৈনিক ১৫০০", "মহামারীর অপরিবর্তিত অবস্থাকে"],
         "special_word_2": ["প্রতি হাজারে প্রায় ১৪ জনের", "প্রতিবেশী দেশগুলোর তুলনায় কম"],
-        "special_word_3": ["করোনায় দৈনিক প্রায় একই সংখ্যক মানুষ আক্রান্ত হচ্ছে"],
+        "special_word_3": ["করোনায় দৈনিক প্রায় একই সংখ্যক মানুষ সনাক্তের হচ্ছে"],
         "special_word_4": ["পরীক্ষার পরিমাণ ও তার গুণগতমানের দিকে নজর দেওয়া প্রয়োজন"],
         "special_word_5": ["মহামারীটি এর বর্তমান গতিতেই আগাচ্ছে - এর গতি এই মূহুর্তে কমছে না বা বাড়ছে না"],
         "special_word_6": ["মহামারীটির উন্নতি হচ্ছে না বরং স্থির অবস্থায় বিরাজমান আছে"],
         "special_word_7": ["লাল এলাকায় আরও বেশি করে পরীক্ষা করা দরকার"],
-        "special_word_8": ["পরীক্ষাকৃত ব্যক্তিদের মধ্যে আক্রান্ত্রের সংখ্যা কিছুটা কমে আসলেও এখনো বেশ উঁচু"],
+        "special_word_8": ["পরীক্ষাকৃত ব্যক্তিদের মধ্যে সনাক্তের্রের সংখ্যা কিছুটা কমে আসলেও এখনো বেশ উঁচু"],
         "special_word_9": ["লাল ঘরে কোন জেলাগুলো রয়েছে এবং তাদের অবস্থা উন্নতির দিকে কেন যাচ্ছে না"],
         "special_word_10": ["বেশিরভাগ মৃত্যু ঘটেছে ষাটোর্ধ্ব বয়সীদের ক্ষেত্রে", "সংক্রমণের মাত্রা মধ্যবয়স্ক এবং তরুণ-তরুণীদের মধ্যে বেশি"],
         "special_word_11": ["আইসিইউ শয্যার ব্যবহার এখনও অধিক"],
@@ -2187,117 +3805,155 @@ $ydata = [];
         //tagDesign(id, tag);
     });
 
+    function extractValue(arr, prop) {
+        let extractedValue = arr.map(item => item[prop]);
+        return extractedValue;
+    }
 
     function dailyInfectedChart(data, dist='') {
-
+	   
+        let _maxArray = extractValue(data, 'infected');
+        let _maxValue = Math.max.apply(Math, _maxArray);
+	 
         let zoneName = (dist !== '') ? dist : 'সারাদেশ';
         if ($('#national_dialy_infected_trend').length) {
             $('#last_date_1').html(" " + m_last_date);
             var chart = AmCharts.makeChart("national_dialy_infected_trend", {
                 "type": "serial",
-                "theme": "none",
-                "marginRight": 80,
-                "dataProvider": data,
-                "legend": {
-                    "horizontalGap": 10,
-                    "maxColumns": 2,
-                    "position": "bottom",
-                    "useGraphSettings": true,
-                    "markerSize": 20,
-                    "valueFunction": function (a, value) {
-                        return '';
-                    },
-                    "align": "center"
+                        "addClassNames": true,
+                        "theme": "light",
+                        "balloon": {
+                            "adjustBorderColor": false,
+                            "color": "#050606"
+                        },
+                        "valueAxes": [
+                            {
+                                "position": "left",
+                                //"title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                "title": "দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)",
+                                "id": "v1",
+                                "minimum": 0,
+                                "maximum": _maxValue,
+                                "labelFunction": function (value, valueText, valueAxis) {
+                                    //get from
+                                    return value.toLocaleString("bn-BD");
+                                },
 
-                },
-                "valueAxes": [{
-                    "position": "left",
-                    "title": zoneName+" এর দৈনিক আক্রান্তের সংখ্যা",
-                    "id": "v1",
-                    "minimum": 0,
-                    "labelFunction": function (value, valueText, valueAxis) {
-                        return value.toLocaleString("bn-BD");
-                    },
+                            },
+                            {
+                                "position": "right",
+                                "title": "সনাক্তের সংখ্যা",
+                                "id": "v2",
+                                "minimum": 0,
+                                "maximum": _maxValue,
+                                "labelFunction": function (value, valueText, valueAxis) {
+                                    return value.toLocaleString("bn-BD");
+                                },
+                            },
 
-                },
-                ],
+                        ],
 
-                "graphs": [{
-                    "valueAxis": "v1",
-                    "id": "g1",
-                    "balloonText": "[[title]]: [[value]]",
-                    "columnWidth": 10,
-                    "fillAlphas": 1,
-                    "lineColor": "rgb(103, 183, 220)",
-                    "title": zoneName+" এর দৈনিক আক্রান্ত",
-                    "type": "column",
-                    "valueField": "infected",
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = zoneName+" এর দৈনিক আক্রান্ত";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                }, {
-                    "id": "g2",
-                    "balloonText": "[[title]]: [[value]]",
-                    "lineThickness": 2,
-                    "lineColor": "orange",
-                    "type": "smoothedLine",
-                    "title": zoneName+" এর দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)", //5 days running average
-                    "valueField": "avg",
-                    "bullet": "round",
-                    "bulletSize": 7,
-                    "bulletBorderAlpha": 10,
-                    "bullegit addtColor": "#FFFFFF",
-                    "useLineColorForBulletBorder": true,
-                    "bulletBorderThickness": 3,
-                    "balloonFunction": function (graphDataItem, graph) {
-                        var value = graphDataItem.values.value;
-                        var title = zoneName+"- দৈনিক আক্রান্ত (৭ দিনের  চলমান গড়)";
-                        return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
-                    }
-                }],
-                "chartCursor": {
-                    "cursorPosition": "mouse",
-                    "showNextAvailable": true,
-                    "categoryBalloonFunction": function (date) {
-                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
-                        return date.toLocaleDateString('bn-BD', options);
-                    },
-                },
-                "autoMarginOffset": 5,
-                "columnWidth": 1,
-                "categoryField": "date",
-                "categoryAxis": {
-                    "parseDates": true,
-                    "minPeriod": "hh",
-                    "labelFunction": function (value, date, categoryAxis) {
-                        var options = new Array();
-                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
-                        options["MMM"] = {year: 'numeric', month: 'long'};
-                        options["YY"] = {year: 'numeric', month: 'long'};
-                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
 
-                },
+                        "dataProvider": data,
 
-                "chartScrollbar": {
-                    "graph": "g2",
-                    "gridAlpha": 0,
-                    "color": "#888888",
-                    "scrollbarHeight": 55,
-                    "backgroundAlpha": 0,
-                    "selectedBackgroundAlpha": 0.1,
-                    "selectedBackgroundColor": "#888888",
-                    "graphFillAlpha": 0,
-                    "autoGridCount": true,
-                    "selectedGraphFillAlpha": 0,
-                    "graphLineAlpha": 0.2,
-                    "graphLineColor": "#c2c2c2",
-                    "selectedGraphLineColor": "#888888",
-                    "selectedGraphLineAlpha": 1
+                        "startDuration": 1,
+                        "legend": {
+                            "horizontalGap": 15,
+                            "maxColumns": 15,
+                            "position": "bottom",
+                            "useGraphSettings": true,
+                            "markerSize": 15,
+                            "valueFunction": function (a, value) {
+                                return '';
+                            },
+                            "align": "center"
+                        },
+                        "graphs": [{
+                            "valueAxis": "v2",
+                            "id": "g1",
+                            "alphaField": "alpha",
+                            "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+                            "fillColorsField": "color",
+                            "title": zoneName+" এর দৈনিক সনাক্ত",
+                            "type": "column",
+                            "fillAlphas": 1,
+                            "lineAlpha": 0,
+                            "lineColor": "rgb(103, 183, 220)",
+                            "valueField": "infected",
+                            "dashLengthField": "dashLengthColumn",
+                            "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = zoneName+" এর দৈনিক সনাক্ত";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                            }
+                        }, {
+                            "valueAxis": "v1",
+                            "id": "graph2",
+                            "lineThickness": 2,
+                            "lineColor": "orange",
+                            "type": "smoothedLine",
+                            "gapPeriod": 2,
+                            "title": zoneName+" এর দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)", //5 days running average
+                            "valueField": "avg",
+                            "bullet": "round",
+                            "bulletSize": 7,
+                            "fillAlphas": 0,
+                            "lineAlpha": 1,
+                            "bulletBorderAlpha": 10,
+                            "bullegit addtColor": "#FFFFFF",
+                            "useLineColorForBulletBorder": true,
+                            "bulletBorderThickness": 3,
+                             "balloonFunction": function (graphDataItem, graph) {
+                                var value = graphDataItem.values.value;
+                                var title = zoneName+"- দৈনিক সনাক্তের (৭ দিনের  চলমান গড়)";
+                                return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
+                            }
+                        }],
+                        "chartCursor": {
+                            "cursorPosition": "mouse",
+                            "showNextAvailable": false,
+                            "categoryBalloonFunction": function (date) {
+                                var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                                return date.toLocaleDateString('bn-BD', options);
+                            },
+                        },
+                        "categoryField": "date",
+                        "categoryAxis": {
+                            "parseDates": true,
+                            "minPeriod": "hh",
+                            "showLastLabel": true,
+                            "labelFunction": function (value, date, categoryAxis) {
+                                var options = new Array();
+                                options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                                options["MMM"] = {year: 'numeric', month: 'long'};
+                                options["YY"] = {year: 'numeric', month: 'long'};
+                                return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+                            },
+                            "labelRotation": 30,
+                            "autoGridCount": false,
+                            "equalSpacing": true,
+                            "gridCount": 10,
+                            "showFirstLabel": true,
+                            "showLastLabel": true,
 
-                },
+                        },
+                        "chartScrollbar": {
+                            "graph": "g1",
+                            "gridAlpha": 0,
+                            "color": "#888888",
+                            "scrollbarHeight": 55,
+                            "backgroundAlpha": 0,
+                            "selectedBackgroundAlpha": 0.1,
+                            "selectedBackgroundColor": "#888888",
+                            "graphFillAlpha": 0,
+                            "autoGridCount": true,
+                            "selectedGraphFillAlpha": 0,
+                            "graphLineAlpha": 0.2,
+                            "graphLineColor": "#c2c2c2",
+                            "selectedGraphLineColor": "#888888",
+                            "selectedGraphLineAlpha": 1
+
+                        }
 
             });
 
@@ -2365,7 +4021,7 @@ $ydata = [];
                     "valueField": "count",
                     "balloonFunction": function (graphDataItem, graph) {
                         var value = graphDataItem.values.value;
-                        var title = "প্রতি হাজারে পরীক্ষা(" + date + "):";
+                        var title = "প্রতি হাজারে পরীক্ষা(" + graphDataItem.dataContext.date + "):";
                         return "<b>" + title + "</b><br><span style='font-size:14px' class='g-v'> <b>" + value.toLocaleString('bn-BD') + "</b></span>";
                     },
                     "labelText": '[[balloonValue]]',
@@ -2380,7 +4036,7 @@ $ydata = [];
                     "axisAlpha": 0,
                     "title": "প্রতি হাজারে পরীক্ষা(" + date + ")",
                     "minimum": 0,
-                    "maximum": 100,
+                    "maximum": 150,
                     "labelFunction": function (value, valueText, valueAxis) {
                         return value.toLocaleString("bn-BD");
                     },
@@ -2454,7 +4110,7 @@ $ydata = [];
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",
-                "title": "দৈনিক আক্রান্তের সংখ্যা",
+                "title": "দৈনিক সনাক্তের সংখ্যা",
                 "minimum": 0,
                 "labelFunction": function (value, valueText, valueAxis) {
                     return value.toLocaleString("bn-BD");
@@ -2575,7 +4231,7 @@ $ydata = [];
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "আক্রান্তের সংখ্যা",
+                        "title": "সনাক্তের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -2763,6 +4419,7 @@ $ydata = [];
                     "parseDates": true,
                     "axisColor": "#DADADA",
                     "minPeriod": "DD",
+                    "showLastLabel": true,
                     "labelFunction": function (value, date, categoryAxis) {
                         var options = new Array();
                         options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -2770,6 +4427,10 @@ $ydata = [];
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                     },
+                    "autoGridCount": false,
+                    "equalSpacing": true,
+                    "showFirstLabel": true,
+                    "showLastLabel": true,
 
                 },
                 "chartScrollbar": {
@@ -2816,7 +4477,7 @@ $ydata = [];
                     "id": "v1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "দৈনিক আক্রান্তের সংখ্যা",
+                    "title": "দৈনিক সনাক্তের সংখ্যা",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -2851,13 +4512,13 @@ $ydata = [];
                     "valueAxis": "v1",
                     "lineColor": "rgb(157, 74, 42)",
                     "lineThickness": 2,
-                    "bullet": "দৈনিক আক্রান্ত (৭-দিনের চলমান গড়)",
+                    "bullet": "দৈনিক সনাক্তের (৭-দিনের চলমান গড়)",
                     "id": "g1",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#FFFFFF",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "দৈনিক আক্রান্ত (৭-দিনের চলমান গড়)",
+                    "title": "দৈনিক সনাক্তের (৭-দিনের চলমান গড়)",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "avg",
@@ -2906,8 +4567,10 @@ $ydata = [];
                 },
             },
             "dataDateFormat": "YYYY-MM-DD",
-            "categoryField": "date",
-            "categoryAxis": {
+	    "categoryField": "date",
+	   
+	    "categoryAxis": {
+	        "minPeriod": "DD",
                 "parseDates": true,
                 "labelFunction": function (value, date, categoryAxis) {
                     var options = new Array();
@@ -2915,7 +4578,10 @@ $ydata = [];
                     options["MMM"] = {year: 'numeric', month: 'long'};
                     options["YY"] = {year: 'numeric', month: 'long'};
                     return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                },
+		},
+		"showFirstLabel": true,
+                "showLastLabel": true,
+		"equalSpacing": true,
             },
             "chartScrollbar": {
                 "graph": "g1",
@@ -2956,6 +4622,7 @@ $ydata = [];
             url: "{{ route('infected.percentage') }}",
             type: 'GET',
             success: function (response) {
+                
                 if (response) {
                     response = JSON.parse(response);
                     xdata = response;
@@ -2973,7 +4640,7 @@ $ydata = [];
                         "valueAxes": [
                             {
                                 "position": "left",
-                                "title": "সনাক্ত বিবেচনায় আক্রান্তের হার (টেস্ট পজিটিভিটি রেট)",
+                                "title": "পরীক্ষা বিবেচনায় সনাক্তের হার (টেস্ট পজিটিভিটি রেট)",
                                 "id": "v1",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -2984,7 +4651,7 @@ $ydata = [];
                             },
                             {
                                 "position": "right",
-                                "title": "আক্রান্তের সংখ্যা",
+                                "title": "সনাক্তের সংখ্যা",
                                 "id": "v2",
                                 "minimum": 0,
                                 "labelFunction": function (value, valueText, valueAxis) {
@@ -3016,17 +4683,19 @@ $ydata = [];
                             "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
                             "fillAlphas": 1,
                             "fillColorsField": "color",
-                            "title": "আক্রান্তের সাপ্তাহিক গড়",
+                            "title": "সনাক্তের সাপ্তাহিক গড়",
                             "type": "column",
                             "lineColor": "rgb(223, 200, 37)",
                             "valueField": "infected",
                             "dashLengthField": "dashLengthColumn",
                             "balloonFunction": function (graphDataItem, graph) {
+                                options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                                options["MMM"] = {year: 'numeric', month: 'long'};
+                                options["YY"] = {year: 'numeric', month: 'long'};
                                 var v = 0;
                                 if (graphDataItem.values) {
                                     v = graphDataItem.values.value;
                                 }
-                                var options = {month: 'long', day: 'numeric'};
                                 //let previusSevenDate = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000).getDate();
                                 let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                                 let previusSevenDay= previusSeven.getDate();
@@ -3047,7 +4716,7 @@ $ydata = [];
                             "bulletBorderThickness": 3,
                             "fillAlphas": 0,
                             "lineAlpha": 1,
-                            "title": "সনাক্ত বিবেচনায় আক্রান্তের হারের সাপ্তাহিক গড়",
+                            "title": "পরীক্ষা বিবেচনায় সনাক্তের হারের সাপ্তাহিক গড়",
                             "valueField": "test_positive",
                             "dashLengthField": "dashLengthLine",
                             "type": "smoothedLine",
@@ -3061,7 +4730,7 @@ $ydata = [];
                                 let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
                                 let previusSevenDay= previusSeven.getDate();
                                 let getMonth= month_name(previusSeven.getMonth());
-                                return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                                return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
                             },
                         }],
                         "categoryField": "date",
@@ -3152,7 +4821,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": title+" সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": title+" পরীক্ষা বিবেচনায় সনাক্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -3181,7 +4850,8 @@ $ydata = [];
                         options["MMM"] = {year: 'numeric', month: 'long'};
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
+		    },
+		    "equalSpacing": true,
 
                 },
                 "chartScrollbar": {
@@ -3211,7 +4881,7 @@ $ydata = [];
         }
     }
 
-    function showNationalLevelTestPosivityChart(chartData) {
+    function showNationalLevelTestPosivityChart(chartData, weeklyOrDaily=2) {
         // console.log(chartData);
         var size = Object.keys(chartData).length;
         var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
@@ -3238,7 +4908,7 @@ $ydata = [];
                     "id": "g1",
                     "axisAlpha": 0,
                     "position": "left",
-                    "title": "সাপ্তাহিক সনাক্ত বিবেচনায় আক্রান্তের হার ",
+                    "title": "সাপ্তাহিক পরীক্ষা বিবেচনায় সনাক্তের হার ",
                     "minimum": 0,
                     "labelFunction": function (value, valueText, valueAxis) {
                         //return '';
@@ -3262,20 +4932,24 @@ $ydata = [];
                     "valueAxis": "v1",
                     "lineColor": "#FB0F04",
                     "lineThickness": 2,
-                    "bullet": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "bullet": "জাতীয় পর্যায়ে পরীক্ষা বিবেচনায় সনাক্তের হার",
                     "id": "g1",
                     "bulletBorderAlpha": 1,
                     "bulletColor": "#637bb6",
                     "bulletSize": 7,
                     "lineThickness": 2,
-                    "title": "জাতীয় পর্যায়ে সনাক্ত বিবেচনায় আক্রান্তের হার",
+                    "title": "জাতীয় পর্যায়ে পরীক্ষা বিবেচনায় সনাক্তের হার",
                     "type": "smoothedLine",
                     "useLineColorForBulletBorder": true,
                     "valueField": "National",
                     "balloonFunction": function (graphDataItem, graph) {
                         var v = 0;
+                        var d = 0;
                         if (graphDataItem.values) {
                             v = graphDataItem.values.value;
+                        }
+                        if (graphDataItem.hasOwnProperty('category')) {
+                            d = graphDataItem.category.toLocaleDateString('bn', options);
                         }
                         
                         var options = {month: 'long', day: 'numeric'};
@@ -3283,7 +4957,12 @@ $ydata = [];
                         let previusSevenDay= previusSeven.getDate();
                         let getMonth= month_name(previusSeven.getMonth());
 
-                        return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "%</span></span>";
+                         if(weeklyOrDaily == 1){
+                            return "<b>" + graph.title + "</b><span style='font-size:14px'> :<b>" + v.toLocaleString('bn')  + "</b></span>";
+                        }else{
+                            return "<span style='font-size:12px;'>" + graph.title + "<br>(" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ")<br><span style='font-size:20px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        }
+                     
                     },
                 }],
                 "chartScrollbar": {
@@ -3326,7 +5005,8 @@ $ydata = [];
                         options["MMM"] = {year: 'numeric', month: 'long'};
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
-                    },
+		    },
+		    "equalSpacing": true,
                 },
             });
 
@@ -3359,62 +5039,68 @@ $ydata = [];
         var weeklyOrDaily = $('input[name="weeklyOrDaily"]:checked').val();
 
         var weeklyOrDailyTitle = (weeklyOrDaily == 1) ? 'দৈনিক' : 'সাপ্তাহিক';
-
+        
+        var non_traveler = $('#district_wise_non_travelers_id').val();
 
         var distArray = $('#district_dhaka_rate').val();
         // var districts = [];
         
-        if (distArray) {
+        if (true) {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/get-dhaka-positive-rate-data',
                 type: 'GET',
-                data: {districts: distArray, weeklyOrDaily: weeklyOrDaily},
+                data: {districts: distArray, weeklyOrDaily: weeklyOrDaily, non_traveler: non_traveler},
                 success: function (data) {
-                    // console.log(data);
+                    console.log(data);
                     var axis = new Array();
-                    $.each(data.axis, function (a, b) {
-                        var obj = {
-                            "id": "g" + a,
-                            "valueAxis": "v" + a,
-                            "lineColor": getRandomColor(a),
-                            "lineThickness": 2,
-                            "bullet": "",
-                            "bulletBorderThickness": 2,
-                            "hideBulletsCount": 30,
-                            "title": b.bn,
-                            "valueField": b.en,
-                            "fillAlphas": 0,
-                            "type": "smoothedLine",
-                            "balloonFunction": function (graphDataItem, graph) {
-                                var options = {month: 'long', day: 'numeric'};
-                                var v = 0;
-                                var d = '';
-                                let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
-                                let previusSevenDay= previusSeven.getDate();
-                                let getMonth= month_name(previusSeven.getMonth());
+                    if(typeof (data.axis) === 'object' && (data.axis) !== 'null'){
+                        $.each(data.axis, function (a, b) {
+                            var obj = {
+                                "id": "g" + a,
+                                "valueAxis": "v" + a,
+                                "lineColor": getRandomColor(a),
+                                "lineThickness": 2,
+                                "bullet": "",
+                                "bulletBorderThickness": 2,
+                                "hideBulletsCount": 30,
+                                "title": b.bn,
+                                "valueField": b.en,
+                                "fillAlphas": 0,
+                                "type": "smoothedLine",
+                                "balloonFunction": function (graphDataItem, graph) {
+                                    var options = {month: 'long', day: 'numeric'};
+                                    var v = 0;
+                                    var d = 0;
+                                    let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                                    let previusSevenDay= previusSeven.getDate();
+                                    let getMonth= month_name(previusSeven.getMonth());
 
-                               
-                                if (graphDataItem.values.hasOwnProperty('value')) {
-                                    v = graphDataItem.values.value.toLocaleString('bn');
-                                }
-                                if (graphDataItem.hasOwnProperty('category')) {
-                                    d = graphDataItem.category.toLocaleDateString('bn', options);
-                                }
                                 
-                                if(weeklyOrDaily == 1){
-                                    return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
-                                }else{
-                                    return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
-                                }
-                            },
+                                    if (graphDataItem.values.hasOwnProperty('value')) {
+                                        v = graphDataItem.values.value.toLocaleString('bn');
+                                    }
+                                    if (graphDataItem.hasOwnProperty('category')) {
+                                        d = graphDataItem.category.toLocaleDateString('bn', options);
+                                    }
+                                    
+                                    if(weeklyOrDaily == 1){
+                                        return "<b>" + graph.title + "(" + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                    }else{
+                                        return "<b>" + graph.title + "(" + previusSevenDay.toLocaleString('bn', options) + " "+getMonth+" - " + d + ")</b><span style='font-size:14px'> :<b>" + v + "</b></span>";
+                                    }
+                                },
 
-                        };
-                        axis.push(obj);
-                    })
-                    showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
+                            };
+                            axis.push(obj);
+                        });
+                        showDhakaPisitiveRateChart(data.data, axis, weeklyOrDailyTitle);
+                        hideLoader();
+                    }else{
+                        showNationalLevelTestPosivityChart(data, weeklyOrDaily);
+                        hideLoader();
+                    }
                     
-                    hideLoader();
 
                 },
                 error: function (error) {
@@ -3428,8 +5114,371 @@ $ydata = [];
 
     
 
-    /*==============================End============================================
+    /*==============================End=============================================
     * Dhaka Chart Filter
+    * */
+    
+    
+
+    /*==============================Start============================================
+    * age wise death deault
+    * */
+
+    /*
+
+    function showNationalLevelAgeWiseDeathChart(chartData) {
+        //console.log('hello');
+        //console.log(chartData);
+        //var size = Object.keys(chartData).length;
+        //var div_date = new Date(chartData[size - 1].date).toLocaleDateString('bn', options);
+        // $('#last_date_4').html(" " + div_date);
+
+        if ($('#age_wise_death_distribution').length) {
+            var chart = AmCharts.makeChart("age_wise_death_distribution", {
+                "type": "serial",
+                "theme": "light",
+                "legend": {
+                    "useGraphSettings": true,
+                    "valueFunction": function (a, value) {
+                        return '';
+                    },
+                    "align": "center"
+                },
+                "dataProvider": chartData,
+                "synchronizeGrid": true,
+                "valueAxes": [
+                    {
+                        "title": "সাপ্তাহিক মৃত্যুর সংখ্যা",
+                        "minimum": 0,
+                        "labelFunction": function (value, valueText, valueAxis) {
+                            return value.toLocaleString("bn-BD");
+                        },
+                    }
+                ],
+
+                "graphs": [{
+                    "valueAxis": "v1",
+                    "id": "g1",
+                    "lineColor": "#FF6600",
+                    "lineThickness": 2,
+                    "bullet": "",
+                    "bulletBorderThickness": 2,
+                    "hideBulletsCount": 30,
+                    "title": "৬০+",
+                    "valueField": "sixtyone_plus",
+                    "fillAlphas": 0,
+                    "type": "smoothedLine",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var v = 0;
+                        if (graphDataItem.values) {
+                            v = graphDataItem.values.value;
+                        }
+                        
+                        var options = {month: 'long', day: 'numeric'};
+                        let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                        let previusSevenDay= previusSeven.getDate();
+                        let getMonth= month_name(previusSeven.getMonth());
+                        if(typeof(v) != 'undefined')
+                        return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                    },
+
+                }, {
+                    "valueAxis": "v2",
+                    "id": "g2",
+                    "lineColor": "#54E780",
+                    "lineThickness": 2,
+                    "bullet": "",
+                    "bulletBorderThickness": 2,
+                    "hideBulletsCount": 30,
+                    "title": "৫১ থেকে ৬০",
+                    "valueField": "fiftyone_to_sixty",
+                    "fillAlphas": 0,
+                    "type": "smoothedLine",
+                    "balloonFunction": function (graphDataItem, graph) {
+                        var v = 0;
+                        if (graphDataItem.values) {
+                            v = graphDataItem.values.value;
+                        }
+                        
+                        var options = {month: 'long', day: 'numeric'};
+                        let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                        let previusSevenDay= previusSeven.getDate();
+                        let getMonth= month_name(previusSeven.getMonth());
+                        if(typeof(v) != 'undefined')
+                        return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                    },
+
+                },
+                    {
+                        "valueAxis": "v3",
+                        "id": "g3",
+                        "lineColor": "orange",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 2,
+                        "hideBulletsCount": 30,
+                        "title": "৪১ থেকে ৫০",
+                        "valueField": "fortyone_to_fifty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            
+                            var options = {month: 'long', day: 'numeric'};
+                            let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                            let previusSevenDay= previusSeven.getDate();
+                            let getMonth= month_name(previusSeven.getMonth());
+                            if(typeof(v) != 'undefined')
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        },
+                    },
+                    {
+                        "valueAxis": "v4",
+                        "id": "g4",
+                        "lineColor": "maroon",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "৩১ থেকে ৪০",
+                        "valueField": "thirtyone_to_forty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            
+                            var options = {month: 'long', day: 'numeric'};
+                            let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                            let previusSevenDay= previusSeven.getDate();
+                            let getMonth= month_name(previusSeven.getMonth());
+                            if(typeof(v) != 'undefined')
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        },
+
+                    },
+                    {
+                        "valueAxis": "v5",
+                        "id": "g5",
+                        "lineColor": "#E75480",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "২১ থেকে ৩০",
+                        "valueField": "twentyone_to_thirty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            
+                            var options = {month: 'long', day: 'numeric'};
+                            let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                            let previusSevenDay= previusSeven.getDate();
+                            let getMonth= month_name(previusSeven.getMonth());
+                            if(typeof(v) != 'undefined')
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        },
+
+                    },
+                    {
+                        "valueAxis": "v6",
+                        "id": "g6",
+                        "lineColor": "black",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "১১ থেকে ২০",
+                        "valueField": "elv_to_twenty",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            
+                            var options = {month: 'long', day: 'numeric'};
+                            let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                            let previusSevenDay= previusSeven.getDate();
+                            let getMonth= month_name(previusSeven.getMonth());
+                            if(typeof(v) != 'undefined')
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        },
+
+                    },
+                    {
+                        "valueAxis": "v7",
+                        "id": "g7",
+                        "lineColor": "blue",
+                        "lineThickness": 2,
+                        "bullet": "",
+                        "bulletBorderThickness": 3,
+                        "hideBulletsCount": 30,
+                        "title": "০ থেকে ১০",
+                        "valueField": "zero_to_ten",
+                        "fillAlphas": 0,
+                        "type": "smoothedLine",
+                        "balloonFunction": function (graphDataItem, graph) {
+                            var v = 0;
+                            if (graphDataItem.values) {
+                                v = graphDataItem.values.value;
+                            }
+                            
+                            var options = {month: 'long', day: 'numeric'};
+                            let previusSeven = new Date(graphDataItem.category.setDate(graphDataItem.category.getDate())- 518400000);
+                            let previusSevenDay= previusSeven.getDate();
+                            let getMonth= month_name(previusSeven.getMonth());
+                            if(typeof(v) != 'undefined')
+                            return "<span style='font-size:12px;'>" + graph.title + " (" +  previusSevenDay.toLocaleString('bn', options) + ' ' + getMonth + " - " + graphDataItem.category.toLocaleString('bn', options) + ") <span style='font-size:14px;'>" + v.toLocaleString('bn') + "</span></span>";
+                        },
+                    }
+                    
+                ],
+                "chartScrollbar": {},
+                "chartCursor": {
+                    "cursorPosition": "mouse",
+                    "categoryBalloonFunction": function (date) {
+                        var options = {year: 'numeric', month: 'long', day: 'numeric'};
+                        return '';
+                    },
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "axisColor": "#DADADA",
+                    "minPeriod": "DD",
+                    "labelFunction": function (value, date, categoryAxis) {
+                        var options = new Array();
+                        options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
+                        options["MMM"] = {year: 'numeric', month: 'long'};
+                        options["YY"] = {year: 'numeric', month: 'long'};
+                        return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
+		    },
+		    "equalSpacing": true,
+
+                },
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "gridAlpha": 0,
+                    "color": "#888888",
+                    "scrollbarHeight": 55,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "autoGridCount": true,
+                    "selectedGraphFillAlpha": 0,
+                    "graphLineAlpha": 0.2,
+                    "graphLineColor": "#c2c2c2",
+                    "selectedGraphLineColor": "#888888",
+                    "selectedGraphLineAlpha": 1
+
+                },
+
+            });
+
+            
+            
+
+            chart.addListener("dataUpdated", zoomChart);
+
+            function zoomChart() {
+                // chart.zoomToDates(new Date(2020, 5, 20), new Date(2020, 10, 17));
+            }
+        } 
+    }
+
+    */
+
+
+
+
+
+
+   /* $.ajax({
+    url: '{{url("/")}}/get-age-wise-death-data',
+    type: 'GET',
+    data: {},
+        success: function (data) {
+            showNationalLevelAgeWiseDeathChart(data);
+            // hideLoader();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });  */
+
+    $('#filter-age-wise-death').click(function () {
+        var genderTitle = '';
+        var gender = $('#age_wise_death_by_gender').val();
+        var hospital = $('#age_wise_hospital_hospital_filter').val();
+        var district = $('#age_wise_death_district_filter').val();
+        
+        
+        // switch(gender) {
+        //     case 'M':
+        //         genderTitle = 'পুরুষ';
+        //         break;
+        //     case 'F':
+        //         genderTitle = 'মহিলা';
+        //         break;
+        //     case 'O':
+        //         genderTitle = 'অন্যান্য';
+        //         break;
+        //     default:
+        //         genderTitle = 'সকল';
+        //         break;
+        // } 
+        //console.log(genderTitle);
+       
+        
+        
+        if (gender != '-1' || hospital || '-1' && district || '-1') {
+            showLoader();
+            $.ajax({
+	        url:  '{{url("/")}}/get-age-wise-death-data-filter',
+            type: 'GET',
+            data: { gender: gender, district: district, hospital: hospital },
+                success: function (data) {
+                    showNationalLevelAgeWiseDeathChart(data);
+                    hideLoader();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+	    }else{
+            showLoader();
+	        $.ajax({
+            url: '{{url("/")}}/get-age-wise-death-data',
+            type: 'GET',
+            data: {},
+                success: function (data) {
+                    showNationalLevelAgeWiseDeathChart(data);
+                    hideLoader();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        }
+    });
+    
+    
+    
+    /*==============================End==============================================
+    * age wise death default
     * */
 
 
@@ -3451,15 +5500,17 @@ $ydata = [];
 
 
      /*==============================Start============================================
-    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 1st map
     * */
-    $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1_16088038408650/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
+    {{-- $('#iframeData_1').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth1_16088038408650/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_2').html('<iframe id="rtIframeData" scrolling="no" width="100%"  style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth2_16088070260020/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
     $('#iframeData_3').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth3_16088073716630/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>');
-
+    $('#iframeData_4').html('<iframe id="rtIframeData" scrolling="no" width="100%" style="margin:0px !important; padding:0px !important" height="870px" src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth4_16088075184360/Dashboard1?%3Aembed=y&amp;%3AshowVizHome=no" style="overflow-y: hidden" frameborder="0" allowFullScreen="true"></iframe>'); --}}
+    $('#iframeData').html('<iframe src="https://public.tableau.com/views/COVIDtestpositivityratedistrictmonth_travelers_nontravelers3_16275499908960/Dashboard?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeMapOneData').html('<iframe src="https://moru.maps.arcgis.com/apps/dashboards/7097cccb4e874d3db948661a9befeee6?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    $('#iframeMapTwoData').html('<iframe src="https://moru.maps.arcgis.com/apps/dashboards/05cd4ef7880a45b5b07eea30a47b9e20?%3Aembed=y&amp;&:device=desktop&:%3AshowVizHome=no" onload="javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));" style="height:500px;width:100%;border:none;overflow:hidden; margin-left:30px" frameborder="0" allowFullScreen="true"></iframe>');
+    
     $(document).ready(function ($) {
-        var slider = document.getElementById("myRange");
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
         //  output.innerHTML = englishToBangla(slider.value);
@@ -3469,7 +5520,7 @@ $ydata = [];
         }
 
         //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
-        $("#ex12c").slider({id: "slider12c", min: 0, max: 30, range: true, value: [5, 10]});
+        $("#ex12c").slider({id: "slider12c", min: 0, max: 60, range: true, value: [5, 10]});
 
         $("#ex12c").on("slide", function (slideEvt) {
             $("#ex6SliderVal").text(englishToBangla(slideEvt.value[0]) + ',' + englishToBangla(slideEvt.value[1]));
@@ -3483,8 +5534,45 @@ $ydata = [];
         });
 
 
-        function myrange_ajax_call() {
+        $('#weekly_date_submit').on('click', function () {
+            myrange_ajax_call();
+            weekly_date_change();
+        });
 
+
+
+        function weekly_date_change(){
+            let url = new URL('{!! route('weekly.date.change.for.matrix') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'weekly_date': $('#weekly_date').val(),
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.recent_weekly_date').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
+                        $('.last_weekly_date').html("গত সপ্তাহ ("+data.last_weekly_date+")")
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+
+        function myrange_ajax_call() {
+            // console.log(hpm.getRiskMatricData);
             let result;
             let url = new URL('{!! route('hpm.getRiskMatricData') !!}');
             $.ajax({
@@ -3494,6 +5582,8 @@ $ydata = [];
                 data: {
                     'test_count': $('#myRange').val(),
                     'test_positive_data_rate': $('#ex12c').val(),
+                    'weekly_date': $('#weekly_date').val(),
+                    'travelers' : $('input[name="travelers"]:checked').val()
                 },
                 timeout: 30000,
                 success: function (data) {
@@ -3516,7 +5606,7 @@ $ydata = [];
         }
 
         function rangeChange(data, risk_matrix_data) {
-            // console.log(risk_matrix_data);
+            //console.log(risk_matrix_data.high_to_high_table_contentData);
 
             $('.high_to_high_modal_click').html('<strong>অপরিবর্তিত উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
             $('.high_to_low_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
@@ -3548,8 +5638,115 @@ $ydata = [];
             $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
             $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
 
+            /* extra slot*/
+            $('.first_slot_district_name').html(risk_matrix_data.first_slot_district_name);
+            $('.second_slot_district_name').html(risk_matrix_data.second_slot_district_name);
+            $('.third_slot_district_name').html(risk_matrix_data.third_slot_district_name);
+            $('.fourth_slot_district_name').html(risk_matrix_data.fourth_slot_district_name);
 
+
+
+
+            /*risk matrix all data start here*/
+             var riskMatrixTableHead = `<table id="matrixFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
+                                                    <th class="border-bottom-0" rowspan="2">জেলা</th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="2">পরিবর্তন</th>
+                                                </tr>
+                                                    <tr>
+                                                    <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0">পজিটিভ</th>
+                                                    <th class="border-bottom-0">পজিটিভিটি</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>`;
+            var riskMatrixTableBody = risk_matrix_data.risk_matrix_all_data; 
+            var riskMatrixTableFooter = '</tbody></table>';
+            
+            setTimeout(riskMatrixAllDistrictForDataTable, 3000);
+            
+            $('#matrix-data-table').html(riskMatrixTableHead+riskMatrixTableBody+riskMatrixTableFooter);
+
+
+            /*traveller all data start here*/
+             var travellerTableHead = `<table id="travellerFullTableWithAllDistrict" class="table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" rowspan="2">ক্রমিক নং</th>
+                                                    <th class="border-bottom-0" rowspan="2">জেলা</th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_recent_weekly_date"> {{$matrix_date_selected->recent_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="3"><span class="table_last_weekly_date"> {{$matrix_date_selected->last_weekly_date}} </span></th>
+                                                    <th class="border-bottom-0" colspan="2">পরিবর্তন</th>
+                                                </tr>
+                                                    <tr>
+                                                    <th class="border-bottom-0">টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"><span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0"> টেস্ট পজিটিভিটি</th>
+                                                    <th class="border-bottom-0"> <span style='color:#0636c1d4;'>টেস্ট</span></th>
+                                                    <th class="border-bottom-0"> <span style='color:#b50514d4;'>পজিটিভ</span></th>
+                                                    <th class="border-bottom-0">পজিটিভ</th>
+                                                    <th class="border-bottom-0">পজিটিভিটি</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>`;
+            var travellerTableBody = risk_matrix_data.traveller_all_data; 
+            var travellerTableFooter = '</tbody></table>';
+            
+            setTimeout(travellerAllDistrictForDataTable, 3000);
+            
+            $('#traveller-data-table').html(travellerTableHead+travellerTableBody+travellerTableFooter);
+        
         }
+
+        function riskMatrixAllDistrictForDataTable(){
+            if ( $.fn.dataTable.isDataTable( '#matrixFullTableWithAllDistrict' ) ) {
+                table = $('#matrixFullTableWithAllDistrict').DataTable();
+            }
+            else {
+                table = $('#matrixFullTableWithAllDistrict').DataTable( {
+                    paging: false,
+                    searching: true,
+                    "oLanguage": {
+                        "sSearch": "অনুসন্ধান করুন:"
+                    }
+                } );
+            }
+            
+            $('.table_recent_weekly_date').html($('.recent_weekly_date').html());
+            $('.table_last_weekly_date').html($('.last_weekly_date').html());
+        }
+
+
+        function travellerAllDistrictForDataTable(){
+            if ( $.fn.dataTable.isDataTable( '#travellerFullTableWithAllDistrict' ) ) {
+                table = $('#travellerFullTableWithAllDistrict').DataTable();
+            }
+            else {
+                table = $('#travellerFullTableWithAllDistrict').DataTable( {
+                    paging: false,
+                    searching: true,
+                    "oLanguage": {
+                        "sSearch": "অনুসন্ধান করুন:"
+                    }
+                } );
+            }
+            
+            $('.table_recent_weekly_date').html($('.recent_weekly_date').html());
+            $('.table_last_weekly_date').html($('.last_weekly_date').html());
+        }
+
+        
+
 
         $('.high_to_high_modal_click').click(function () {
             $('.modal-title').html('ঝুঁকি পর্যালোচনা');
@@ -3605,11 +5802,464 @@ $ydata = [];
             $('#modalContent').html($('#low_to_low_table_content').html());
             //hospitalDataModal();
         });
-
     });
-
-     /*==============================End============================================
+   /*==============================End============================================
     * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণs
+    * 
+    */
+
+
+
+
+
+   /*==============================Start============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 2nd matrix
+    * 
+    */
+    $(document).ready(function ($) {
+        var slider = document.getElementById("myRange2ndMatrix");
+        var output = document.getElementById("demo2ndMatrix");
+        //  output.innerHTML = englishToBangla(slider.value);
+
+        slider.oninput = function () {
+            output.innerHTML = englishToBangla(this.value);
+        }
+
+        //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
+        $("#ex12c2ndMatrix").slider({id: "slider12c2ndMatrix", min: 0, max: 500, range: true, value: [50, 100]});
+
+        $("#ex12c2ndMatrix").on("slide", function (slideEvt) {
+            $("#ex6SliderVal2ndMatrix").text(englishToBangla(slideEvt.value[0]) + ',' + englishToBangla(slideEvt.value[1]));
+            second_matrix_myrange_ajax_call();
+        });
+        second_matrix_myrange_ajax_call();
+
+
+        $('#myRange2ndMatrix').on('click', function () {
+            second_matrix_myrange_ajax_call();
+        });
+
+
+        $('#weekly_date__2nd_matrix_submit').on('click', function () {
+            second_matrix_myrange_ajax_call();
+            second_matrix_weekly_date_change();
+        });
+
+
+
+        function second_matrix_weekly_date_change(){
+            let url = new URL('{!! route('weekly.date.change.for.second.matrix') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'weekly_date': $('#weekly_date_2nd_matrix').val(),
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.recent_weekly_date_second_matrix').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
+                        $('.last_weekly_date_second_matrix').html("গত সপ্তাহ ("+data.last_weekly_date+")")
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+
+        function second_matrix_myrange_ajax_call() {
+            // console.log(hpm.getSecondRiskMatricData);
+            let result;
+            let url = new URL('{!! route('hpm.getSecondRiskMatricData') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'test_count': $('#myRange2ndMatrix').val(),
+                    'test_positive_data_rate': $('#ex12c2ndMatrix').val(),
+                    'weekly_date': $('#weekly_date_2nd_matrix').val(),
+                    'travelers' : $('input[name="travelers_2nd_matrix"]:checked').val()
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        
+                        secondMatrixrangeChange(data.result_data, data.risk_matrix_data);
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+        function secondMatrixrangeChange(data, risk_matrix_data) {
+            //console.log(risk_matrix_data.high_to_high_table_contentData);
+            $('.high_to_high_second_matrix_modal_click').html('<strong>অপরিবর্তিত উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
+            $('.high_to_low_second_matrix_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
+            $('.high_to_medium_second_matrix_modal_click').html('<strong>উচ্চ ঝুঁকি থেকে মধ্যম ঝুঁকি</strong> <br><u>'+englishToBangla(data.high_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_medium_district_name);
+            $('.low_to_high_second_matrix_modal_click').html('<strong>কম ঝুঁকি থেকে উচ্চ ঝুঁকি</strong> <br><u>'+englishToBangla(data.low_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_high_district_name);
+            $('.low_to_low_second_matrix_modal_click').html('<strong>অপরিবর্তিত কম ঝুঁকি</strong> <br> <u>'+englishToBangla(data.low_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_low_district_name);
+            $('.medium_to_high_second_matrix_modal_click').html('<strong>মধ্যম ঝুঁকি থেকে উচ্চ ঝুঁকি</strong><br><u>'+englishToBangla(data.medium_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_high_district_name);
+            $('.medium_to_low_second_matrix_modal_click').html('<strong>মধ্যম ঝুঁকি থেকে কম ঝুঁকি</strong> <br><u>'+englishToBangla(data.medium_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_low_district_name);
+            $('.medium_to_medium_second_matrix_modal_click').html('<strong>অপরিবর্তিত মধ্যম ঝুঁকি</strong> <br> <u>'+englishToBangla(data.medium_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_medium_district_name);
+            $('.low_to_medium_second_matrix_modal_click').html('<strong>কম ঝুঁকি থেকে মধ্যম ঝুঁকি</strong> <br> <u>'+englishToBangla(data.low_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
+            /*modal data*/
+            $('#high_to_high_second_matrix_table_content tbody').html(risk_matrix_data.high_to_high_table_contentData);
+            $('#medium_to_high_second_matrix_table_content tbody').html(risk_matrix_data.medium_to_high_table_contentData);
+            $('#low_to_high_second_matrix_table_content tbody').html(risk_matrix_data.low_to_high_table_contentData);
+            $('#high_to_medium_second_matrix_table_content tbody').html(risk_matrix_data.high_to_medium_table_contentData);
+            $('#medium_to_medium_second_matrix_table_content tbody').html(risk_matrix_data.medium_to_medium_table_contentData);
+            $('#low_to_medium_second_matrix_table_content tbody').html(risk_matrix_data.low_to_medium_table_contentData);
+            $('#high_to_low_second_matrix_table_content tbody').html(risk_matrix_data.high_to_low_table_contentData);
+            $('#medium_to_low_second_matrix_table_content tbody').html(risk_matrix_data.medium_to_low_table_contentData);
+            $('#low_to_low_second_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+            /*district data*/
+            $('.high_to_high_district').html(risk_matrix_data.high_to_high_district_name);
+            $('.high_to_low_district').html(risk_matrix_data.high_to_low_district_name);
+            $('.high_to_medium_district').html(risk_matrix_data.high_to_medium_district_name);
+            $('.low_to_high_district').html(risk_matrix_data.low_to_high_district_name);
+            $('.low_to_medium_district').html(risk_matrix_data.low_to_medium_district_name);
+            $('.low_to_low_district').html(risk_matrix_data.low_to_low_district_name);
+            $('.medium_to_high_district').html(risk_matrix_data.medium_to_high_district_name);
+            $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
+            $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
+       
+        }
+
+  
+  
+        $('.high_to_high_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#high_to_high_second_matrix_table_content').html());
+            //hospitalDataModal();
+
+        });
+
+        $('.medium_to_high_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#medium_to_high_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.low_to_high_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_high_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.high_to_medium_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#high_to_medium_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.medium_to_medium_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#medium_to_medium_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.low_to_medium_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_medium_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.high_to_low_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#high_to_low_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.medium_to_low_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#medium_to_low_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+
+        $('.low_to_low_second_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_low_second_matrix_table_content').html());
+            //hospitalDataModal();
+        });
+    });
+     /*==============================End============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 2nd map
+    * */
+
+
+
+
+
+    /*==============================Start============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 3rd matrix
+    * 
+    */
+    $(document).ready(function ($) {
+        var slider = document.getElementById("myRange3rdMatrix");
+       
+        var output = document.getElementById("demo3rdMatrix");
+        //  output.innerHTML = englishToBangla(slider.value);
+
+        slider.oninput = function () {
+            let sliderValue = englishToBangla(this.value);
+            output.innerHTML = sliderValue;
+            $('.slider3rdMatrix').text(sliderValue);
+        }
+
+        //$("#ex16b").slider({ min: 10, max: 100, value: [10, 100], labelledby: ['ex18-label-2a', 'ex18-label-2b'], focus: true });
+        $("#ex12c3rdMatrix").slider({id: "slider12c3rdMatrix", min: 0, max: 100, range: true, value: [5, 10]});
+
+        $("#ex12c3rdMatrix").on("slide", function (slideEvt) {
+            $("#ex6SliderVal3rdMatrix").text(englishToBangla(slideEvt.value[0]) + ',' + englishToBangla(slideEvt.value[1]));
+            $('.minRange3rd').text(englishToBangla(slideEvt.value[0]));
+            $('.maxRange3rd').text(englishToBangla(slideEvt.value[1]));
+            third_matrix_myrange_ajax_call();
+        });
+        
+        third_matrix_myrange_ajax_call();
+
+
+        $('#myRange3rdMatrix').on('click', function () {
+            third_matrix_myrange_ajax_call();
+        });
+
+
+        $('#weekly_date__3rd_matrix_submit').on('click', function () {
+            third_matrix_myrange_ajax_call();
+            third_matrix_weekly_date_change();
+        });
+
+
+
+        function third_matrix_weekly_date_change(){
+            let url = new URL('{!! route('weekly.date.change.for.third.matrix') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'weekly_date': $('#weekly_date_3rd_matrix').val(),
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.recent_weekly_date_third_matrix').html("বর্তমান সপ্তাহ ("+data.recent_weekly_date+")")
+                        $('.last_weekly_date_third_matrix').html("গত সপ্তাহ ("+data.last_weekly_date+")") 
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+
+        function third_matrix_myrange_ajax_call() {
+            // console.log(hpm.getThirdRiskMatricData);
+            let result;
+            let url = new URL('{!! route('hpm.getThirdRiskMatricData') !!}');
+            $.ajax({
+
+                type: "GET",
+                url: url.toString(),
+                data: {
+                    'test_count': $('#myRange3rdMatrix').val(),
+                    'test_positive_data_rate': $('#ex12c3rdMatrix').val(),
+                    'weekly_date': $('#weekly_date_3rd_matrix').val(),
+                    'case_travelers' : $('input[name="cases_travelers_3rd_matrix"]:checked').val(),
+                    'test_travelers' : $('input[name="test_travelers_3rd_matrix"]:checked').val()
+                },
+                timeout: 30000,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        
+                        thirdMatrixrangeChange(data.result_data, data.risk_matrix_data);
+                    } else {
+                        alert("Something Went Wrong");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("Request Param");
+                    // console.log(request.responseText);
+                    console.log("Status Param");
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+            return false;
+        }
+
+        function thirdMatrixrangeChange(data, risk_matrix_data) {
+            //console.log(risk_matrix_data.high_to_high_table_contentData);
+            $('.high_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.high_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_high_district_name);
+            $('.high_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.high_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_low_district_name);
+            $('.high_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.high_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.high_to_medium_district_name);
+            $('.low_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.low_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_high_district_name);
+            $('.low_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.low_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_low_district_name);
+            $('.medium_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_high_district_name);
+            $('.medium_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_low_district_name);
+            $('.medium_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.medium_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.medium_to_medium_district_name);
+            $('.low_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.low_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.low_to_medium_district_name);
+            $('.zero_to_high_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_high) + ' টি জেলা</u> <br>' + risk_matrix_data.zero_to_high_district_name);
+            $('.zero_to_medium_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_medium) + ' টি জেলা</u> <br>' + risk_matrix_data.zero_to_medium_district_name);
+            $('.zero_to_low_third_matrix_modal_click').html('<u>'+englishToBangla(data.zero_to_low) + ' টি জেলা</u> <br>' + risk_matrix_data.zero_to_low_district_name);
+            /*modal data*/
+            $('#high_to_high_third_matrix_table_content tbody').html(risk_matrix_data.high_to_high_table_contentData);
+            $('#medium_to_high_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_high_table_contentData);
+            $('#low_to_high_third_matrix_table_content tbody').html(risk_matrix_data.low_to_high_table_contentData);
+            $('#high_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.high_to_medium_table_contentData);
+            $('#medium_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_medium_table_contentData);
+            $('#low_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.low_to_medium_table_contentData);
+            $('#high_to_low_third_matrix_table_content tbody').html(risk_matrix_data.high_to_low_table_contentData);
+            $('#medium_to_low_third_matrix_table_content tbody').html(risk_matrix_data.medium_to_low_table_contentData);
+            $('#low_to_low_third_matrix_table_content tbody').html(risk_matrix_data.low_to_low_table_contentData);
+            $('#zero_to_high_third_matrix_table_content tbody').html(risk_matrix_data.zero_to_high_table_contentData);
+            $('#zero_to_medium_third_matrix_table_content tbody').html(risk_matrix_data.zero_to_medium_table_contentData);
+            $('#zero_to_low_third_matrix_table_content tbody').html(risk_matrix_data.zero_to_low_table_contentData);
+            /*district data*/
+            $('.high_to_high_district').html(risk_matrix_data.high_to_high_district_name);
+            $('.high_to_low_district').html(risk_matrix_data.high_to_low_district_name);
+            $('.high_to_medium_district').html(risk_matrix_data.high_to_medium_district_name);
+            $('.low_to_high_district').html(risk_matrix_data.low_to_high_district_name);
+            $('.low_to_medium_district').html(risk_matrix_data.low_to_medium_district_name);
+            $('.low_to_low_district').html(risk_matrix_data.low_to_low_district_name);
+            $('.medium_to_high_district').html(risk_matrix_data.medium_to_high_district_name);
+            $('.medium_to_medium_district').html(risk_matrix_data.medium_to_medium_district_name);
+            $('.medium_to_low_district').html(risk_matrix_data.medium_to_low_district_name);
+            $('.zero_to_high_district').html(risk_matrix_data.zero_to_high_district_name);
+            $('.zero_to_medium_district').html(risk_matrix_data.zero_to_medium_district_name);
+            $('.zero_to_low_district').html(risk_matrix_data.zero_to_low_district_name);
+       
+        }
+
+  
+  
+        $('.high_to_high_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#high_to_high_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+
+        });
+
+        $('.medium_to_high_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#medium_to_high_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.low_to_high_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_high_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.high_to_medium_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#high_to_medium_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.medium_to_medium_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#medium_to_medium_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.low_to_medium_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_medium_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.high_to_low_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#high_to_low_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.medium_to_low_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#medium_to_low_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.low_to_low_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#low_to_low_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.zero_to_high_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#zero_to_high_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.zero_to_medium_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#zero_to_medium_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());
+            //hospitalDataModal();
+        });
+
+        $('.zero_to_low_third_matrix_modal_click').click(function () {
+            $('.modal-title').html('ঝুঁকি পর্যালোচনা');
+            $('#modalContent').html($('#zero_to_low_third_matrix_table_content').html());
+            $('.perLakHeader').html($("input[name='cases_travelers_3rd_matrix']:checked").parent('label').text());
+            $('.perPositivityHeader').html($("input[name='test_travelers_3rd_matrix']:checked").parent('label').text());   
+            //hospitalDataModal();
+        });
+    });
+     /*==============================End============================================
+    * টেস্ট পজিটিভিটি রেটের ভিত্তিতে জেলা পর্যায়ে ঝুঁকি বিশ্লেষণ 3rd map
     * */
 
 
@@ -3799,228 +6449,8 @@ $ydata = [];
 
 
     // Age Wise Death Distribution
-    Highcharts.chart('age_wise_death_distribution', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            }
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-            data: [<?php echo $cur_death;?>]
-
-        }, {
-            name: 'আক্রান্ত',
-            data: [<?php echo $cur_infected;?>]
-
-
-        }]
-    });
-
-    // Age Wise Death Distribution 1
-    Highcharts.chart('age_wise_death_distribution_1', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            },
-
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-
-            data: [<?php echo $previous_month__death;?>]
-            {{--data: [<?php echo $deathAge;?>]--}}
-
-        }, {
-            name: 'আক্রান্ত',
-
-            {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-            data: [<?php echo $previous_month__infected;?>]
-
-        }]
-    });
-    // Age Wise Death Distribution 2
-    Highcharts.chart('age_wise_death_distribution_2', {
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'SolaimanLipi'
-            }
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                fontSize: "16px",
-                fontWeight: "normal"
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function () {
-                    return englishToBangla(this.value);
-                }
-            },
-            max: 12000,
-        },
-        xAxis: {
-            categories: ["০-১০", "১১-২০", "২১-৩০", "৩১-৪০", "৪১-৫০", "৫১-৬০", "৬১+"],
-            title: {
-                text: 'বয়স',
-                style: {
-                    fontSize: 18,
-                    fontFamily: 'SolaimanLipi'
-                }
-            }
-
-        },
-        /*tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b>'
-
-        },*/
-        tooltip: {
-            formatter: function () {
-                return `${this.series.name}: <b>${englishToBangla(this.y)}</b>`;
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        colors: ['#ef4b4b', '#ff9800'],
-        series: [{
-            name: 'মৃত্যু',
-            data: [<?php echo $previous_previous_month__death;?>]
-            {{--data: [<?php echo $deathAge;?>]--}}
-
-        }, {
-            name: 'আক্রান্ত',
-            {{--data: [<?php echo $_ageWiseInfectData;?>],--}}
-            data: [<?php echo $previous_previous_month__infected;?>]
-
-        }]
-    });
+    
+    
 
     <?php
 
@@ -4030,6 +6460,8 @@ as 'GeneralBedVacancyRate',
 from hospitaltemporarydata
 where city = 'Country'
 group by date ORDER BY date ");
+
+
 
     $dates = $general_beds = $icu_beds = [];
     foreach ($vacancy_beds as $key => $vacancy_bed) {
@@ -4240,7 +6672,7 @@ group by date ORDER BY date ");
                 "synchronizeGrid": true,
                 "valueAxes": [
                     {
-                        "title": "আক্রান্তের সংখ্যা",
+                        "title": "সনাক্তের সংখ্যা",
                         "minimum": 0,
                         "labelFunction": function (value, valueText, valueAxis) {
                             return value.toLocaleString("bn-BD");
@@ -4336,6 +6768,7 @@ group by date ORDER BY date ");
                         };
                         axis.push(obj);
                     })
+                    // console.log(data)
                     showDivisionChartFilter(data.data, axis);
                     
                     hideLoader();
@@ -4468,6 +6901,11 @@ group by date ORDER BY date ");
                 option = option + '<option value="' + b.name + '">' + b.name_bn + '</option>';
             });
 
+            /* age wise death */
+            // $('#age_wise_hospital_hospital_filter').empty();
+            // $('#age_wise_hospital_hospital_filter').append(option);
+            /* age wise death */
+
             $('#hospital_filter').empty();
             $('#hospital_filter').append(option);
             $('#hospital_filter').select2();
@@ -4599,8 +7037,8 @@ group by date ORDER BY date ");
                 },
                 "categoryAxis": {
                     "parseDates": true,
-                    "seriesStacked" : true,
                     "minPeriod": "DD",
+                    "showLastLabel": true,
                     "labelFunction": function (value, date, categoryAxis) {
                         var options = new Array();
                         options["MMM DD"] = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -4608,32 +7046,37 @@ group by date ORDER BY date ");
                         options["YY"] = {year: 'numeric', month: 'long'};
                         return date.toLocaleDateString("bn-BD", options[categoryAxis.currentDateFormat]);
                     },
+                    "labelRotation": 45,
+                    "autoGridCount": false,
+                    "equalSpacing": true,
+                    "gridCount": 14,
+                    "showFirstLabel": true,
+                    "showLastLabel": true,
 
                 },
 
                 "legend": {
-                //"horizontalGap": 50,
-                    "maxColumns": 5,
+                    "horizontalGap": 10,
+                    "maxColumns": 1,
                     "position": "bottom",
                     "useGraphSettings": true,
                     "markerSize": 10,
                     "valueFunction": function (a, value) {
                         return '';
                     },
-                    "align": "left"
-
+                    "align": "center"
                 },
 
                 "chartScrollbar": {
-                        "graph": "g3",
+                        "graph": "g1",
                         "gridAlpha": 0,
                         "color": "#888888",
-                        "scrollbarHeight": 30,
-                        "backgroundAlpha": 1,
+                        "scrollbarHeight": 55,
+                        "backgroundAlpha": 0,
                         "selectedBackgroundAlpha": 0.1,
                         "selectedBackgroundColor": "#888888",
                         "graphFillAlpha": 0,
-                        "autoGridCount": false,
+                        "autoGridCount": true,
                         "selectedGraphFillAlpha": 0,
                         "graphLineAlpha": 0.2,
                         "graphLineColor": "#c2c2c2",
@@ -4647,6 +7090,38 @@ group by date ORDER BY date ");
     /* ======================Stack Chart Common Desin start================================= */
 
 
+    /**...last update show...*/
+    $(document).ready(function()
+    {
+        var date = $('#last_date_9').html();
+        $('.last_date_9').html(date);
+        $('#last_date_map_update').html(date);
+        $('#last_date_8').html(date);
+        $('#last_date_10').html(' ২ জানুয়ারী');
+    });
+
+    var data = {
+        id: "-1",
+        text: 'সারাদেশ'
+    };
+
+    $('#age_wise_death_district_filter').on('change', function(e){
+        var age_wise_death_district = $('#age_wise_death_district_filter').val();
+        if('-1' !== age_wise_death_district){
+            //var newOption = new Option(data.text, data.id, true, true);
+            $('#age_wise_hospital_hospital_filter').val(data.id);
+            $('#age_wise_hospital_hospital_filter').trigger('change');
+        }
+     });
+
+     $('#age_wise_hospital_hospital_filter').on('change', function(e){
+        var age_wise_death_hospital = $('#age_wise_hospital_hospital_filter').val();
+        if('-1' !== age_wise_death_hospital){
+            //var newOption = new Option(data.text, data.id, true, true);
+            $('#age_wise_death_district_filter').val(data.id);
+            $('#age_wise_death_district_filter').trigger('change');
+        }
+     });
 </script>
 
 
@@ -4737,26 +7212,38 @@ group by date ORDER BY date ");
 
 
     // Filter daily infected by district
+    $('#daily_effected_travelers').hide();
+
+    $('#daily-infected-district').on('select2:select', function (e) {
+        var val = this.value;
+        if(val != 'all'){
+            $('#daily_effected_travelers').show();
+        }else{
+            $('#daily_effected_travelers').hide();
+           // $('#daily_effected_travelers').select2("val", "all");
+        }
+    });
 
     $('#filter-daily-infected-search').click(function () {
     var districts = $('#daily-infected-district').val().replace(/'/g, "''");
     var dis =  $('#daily-infected-district').find(":selected").text();
+    var non_travelers = $('#daily_effected_travelers_id').val();
     // console.log(districts);
     
     
-    if (districts != 'all') {
+    if (districts != 'all' || non_travelers != 'all') {
             showLoader();
             $.ajax({
                 url: '{{url("/")}}/filter-daily-infected-chart',
                 type: 'GET',
-                data: {districts: [districts]},
+                data: {districts: [districts], non_travelers: non_travelers},
                 success: function (response) {
                     // console.log(response);
                     if (response) {
                     response = JSON.parse(response);
-                    dailyInfectedChart(response,dis);
+                        dailyInfectedChart(response,dis);
                     } else {
-                    dailyInfectedChart([]);
+                        dailyInfectedChart([]);
                     }
                     hideLoader();
                 },
@@ -4783,22 +7270,42 @@ group by date ORDER BY date ");
         $('#loading-sniper').hide();
         $('body').css('overflow', 'auto');
     }
-
-    /*$(function () {
-        $.ajax({
-            url: "{{ route('infected.percentage') }}",
-            type: 'GET',
-            success: function (response) {
-                response = JSON.parse(response);
-                if (response) {
-
-                }
-            }
-        });
-    });*/
-
 </script>
 
+
+<script src="{{asset('pm/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('pm/js/dataTables.bootstrap4.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#riskMatrixAllDistrictShowHideTable').hide();
+        $('#showRiskMatrixBtn').hide();
+        $("#showRiskMatrixBtn").click(function() {
+            $('#hideRiskMatrixBtn').show();
+            $('#showRiskMatrixBtn').hide();
+            $("#riskMatrixAllDistrictShowHideTable").hide();
+        });
+        $("#hideRiskMatrixBtn").click(function() {
+            $('#hideRiskMatrixBtn').hide();
+            $('#showRiskMatrixBtn').show();
+            $("#riskMatrixAllDistrictShowHideTable").show();
+        });
+
+        $('#travellerAllDistrictShowHideTable').hide();
+        $('#showTravellerBtn').hide();
+        $("#showTravellerBtn").click(function() {
+            $('#hideTravellerBtn').show();
+            $('#showTravellerBtn').hide();
+            $("#travellerAllDistrictShowHideTable").hide();
+        });
+        $("#hideTravellerBtn").click(function() {
+            $('#hideTravellerBtn').hide();
+            $('#showTravellerBtn').show();
+            $("#travellerAllDistrictShowHideTable").show();
+        });
+    });
+</script>
 
 
 </body>
