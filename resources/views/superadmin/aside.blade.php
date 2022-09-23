@@ -53,6 +53,7 @@
 						</a>
 						</li>
 
+						@can('bulletin')
 						<li class="side-item side-item-category">News Management</li>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#">
@@ -65,6 +66,7 @@
 								<li><a href="{{route('sending-mail')}}" class="slide-item">Sending Mail</a></li>
 							</ul>
 						</li>
+						@endcan
 
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#">
