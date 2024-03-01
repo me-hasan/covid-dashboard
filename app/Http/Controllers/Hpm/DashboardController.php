@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $cumulativeInfectedPerson = $this->cumulativeInfectedPerson_nation($request);
         //dd($cumulativeInfectedPerson);
 
-        
+        // shamvil start
             // row 1
             $data['nation_wide_MovingAvgInfected'] =$this->nation_wide_five_dayMovingAvgInfected($request);
             // row 2
@@ -62,6 +62,12 @@ class DashboardController extends Controller
             $data['rm_7'] = $this->risk_matrix_7();
             $data['rm_8'] = $this->risk_matrix_8();
             $data['rm_9'] = $this->risk_matrix_9();
+            
+
+            // $data['first_slot'] = $this->rm_first_slot();
+            // $data['second_slot'] = $this->rm_second_slot();
+            // $data['third_slot'] = $this->rm_third_slot();
+
             $data['first_week'] = $this->first_week();
             $data['last_week'] = $this->last_week();
 
@@ -77,9 +83,9 @@ class DashboardController extends Controller
             $data['des_9'] = $this->description_insight_qry('501'); //  IMPACT IN POPULATION
             $data['des_10'] = $this->description_insight_qry('601'); // Nationwide Hospital Capacity And Occupancy
             $data['des_11'] = $this->description_insight_qry('701'); // Nationwide Hospital Capacity And Occupancy
-        
+        // shamvil end
 
-        //Test vs Cases 
+        //Test vs Cases (Robi)
         $data['testsVsCases'] = $this->getNationWiseTestsAndCases($request);
 //dd($data['testsVsCases']);
 
@@ -585,8 +591,7 @@ where division = 'Mymensingh') as T2 on T1.thedate=T2.date_of_test) as Q) as a $
          }
 
 
-        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, 
-        round((a.positive_tests/a.total_tests)*100, 2)
+        $cumulativeSql_dhk_sql = "select a.date_of_test, a.district, a.total_tests, a.positive_tests, round((a.positive_tests/a.total_tests), 2)*100
         as 'test_positivity' from
         (select date(date_of_test) as 'date_of_test', district, count(*) as total_tests,
         sum(test_result LIKE 'positive') as positive_tests FROM lab_clean_data
@@ -981,107 +986,379 @@ where district = '".$district."') as T2 on T1.thedate=T2.date_of_test) as Q) as 
         return $city_wise_hospital_details;
       }
 
-      private function risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
 
         $risk_matrix = DB::select("select count(l.district) as 'low_to_high' from
-(select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
+(select district from $table_last where test_positivity<$test_positive_min  and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity>=$test_positive_max
- and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity>=$test_positive_max
+ and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+
+        $risk_matrix = DB::select("select count(l.district) as 'low_to_high' from
+(select district from $table_last where positive_tests<$test_positive_min  and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests>=$test_positive_max
+ and total_tests>$testCount  and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_2($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function third_risk_matrix_1($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+
+        $case_risk_matrix =  DB::select("SELECT r.district from
+        (select district from $case_table_recent where population_infected_Per_Lakh >= 0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $test_risk_matrix =  DB::select("SELECT r.district from
+        (select district from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+      private function risk_matrix_2($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
-(select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
+(select district from $table_last where test_positivity<$test_positive_min  and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity>=$test_positive_min
-and test_positivity<$test_positive_max and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity>=$test_positive_min
+and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_2($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'low_to_medium' from
+(select district from $table_last where positive_tests<$test_positive_min  and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests>=$test_positive_min
+and positive_tests<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function third_risk_matrix_2($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from
+        (select district from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from
+        (select district from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+      private function risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select(" select count(l.district) as 'low_to_low'   from
-        (select district from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
+        (select district from $table_last where test_positivity<$test_positive_min   and date_id = $weekly_date) as l
         inner join
-        (select district from recent_14_days_test_positivity_district where test_positivity<$test_positive_min
-        and total_tests>$testCount) as r
+        (select district from $table_recent where test_positivity<$test_positive_min
+        and total_tests>$testCount  and date_id = $weekly_date) as r
+        using(district)");
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select(" select count(l.district) as 'low_to_low'   from
+        (select district from $table_last where positive_tests<$test_positive_min  and date_id = $weekly_date) as l
+        inner join
+        (select district from $table_recent where positive_tests<$test_positive_min
+        and total_tests>$testCount  and date_id = $weekly_date) as r
         using(district)");
 
 
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_4($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function third_risk_matrix_3($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from
+        (select district from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from
+        (select district from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+
+      private function risk_matrix_4($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
-(select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
+(select district from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max   and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity>=$test_positive_max
-and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity>=$test_positive_max
+and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_4($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_high' from
+(select district from $table_last where positive_tests>=$test_positive_min and positive_tests<$test_positive_max   and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests>=$test_positive_max
+and total_tests>$testCount  and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function third_risk_matrix_4($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from
+        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from
+        (select district from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+      private function risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_medium' from
-(select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
+(select district from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max   and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity>=$test_positive_min and
-test_positivity<$test_positive_max and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity>=$test_positive_min and
+test_positivity<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_medium' from
+(select district from $table_last where positive_tests>=$test_positive_min and positive_tests<$test_positive_max   and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests>=$test_positive_min and
+positive_tests<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function third_risk_matrix_5($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from
+        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from
+        (select district from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+      private function risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'medium_to_low' from
-(select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
+(select district from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max   and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<$test_positive_min
-and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity<$test_positive_min
+and total_tests>$testCount   and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'medium_to_low' from
+(select district from $table_last where positive_tests>=$test_positive_min and positive_tests<$test_positive_max   and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests<$test_positive_min
+and total_tests>$testCount   and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
-       private function risk_matrix_7($testCount=200,$test_positive_min=5,$test_positive_max=12){
+      private function third_risk_matrix_6($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from
+        (select district from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from
+        (select district from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+       private function risk_matrix_7($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_high' from
-(select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
+(select district from $table_last where test_positivity>=$test_positive_max  and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity>=$test_positive_max
- and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity>=$test_positive_max
+ and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_7($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_high' from
+(select district from $table_last where positive_tests>=$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests>=$test_positive_max
+ and total_tests>$testCount  and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
-      private function risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12){
+
+      private function third_risk_matrix_7($testCount=200,$test_positive_min=5,$test_positive_max=10, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from 
+        (select district from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+         
+         $test_risk_matrix = DB::select("SELECT r.district from 
+        (select district from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+
+      private function risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_medium' from
-(select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
+(select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity>=$test_positive_min
-and test_positivity<$test_positive_max and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity>=$test_positive_min
+and test_positivity<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+      
+      private function second_risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_medium' from
+(select district from $table_last where positive_tests>=$test_positive_max   and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests>=$test_positive_min
+and positive_tests<$test_positive_max and total_tests>$testCount   and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
 
+      private function third_risk_matrix_8($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from 
+        (select district from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from 
+        (select district from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
 
-      private function risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12){
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+
+
+      private function risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
         $risk_matrix = DB::select("select count(l.district) as 'high_to_low' from
-(select district from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
+(select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
 inner join
-(select district from recent_14_days_test_positivity_district where test_positivity<$test_positive_min
-and total_tests>$testCount) as r
+(select district from $table_recent where test_positivity<$test_positive_min
+and total_tests>$testCount   and date_id = $weekly_date) as r
 using(district)");
 
         return $risk_matrix[0];
       }
+      
+      private function second_risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent){
+        $risk_matrix = DB::select("select count(l.district) as 'high_to_low' from
+(select district from $table_last where positive_tests>=$test_positive_max   and date_id = $weekly_date) as l
+inner join
+(select district from $table_recent where positive_tests<$test_positive_min
+and total_tests>$testCount   and date_id = $weekly_date) as r
+using(district)");
+
+        return $risk_matrix[0];
+      }
+
+      private function third_risk_matrix_9($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where population_infected_Per_Lakh >=10 AND total_tests>$testCount  and date_id = $weekly_date) as r");
+        
+        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity< 5 AND total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+
+      private function third_risk_matrix_10($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where population_infected_Per_Lakh = 0 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity> 10 and total_tests>$testCount  and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+      private function third_risk_matrix_11($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from
+(select district from $case_table_recent where total_tests>$testCount and population_infected_Per_Lakh = 0  and date_id = $weekly_date) as r");
+
+        $test_risk_matrix = DB::select("SELECT r.district from
+        (select district from $test_table_recent where total_tests>$testCount and test_positivity < 10 and test_positivity >= 5 and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+      private function third_risk_matrix_12($testCount=200,$test_positive_min=5,$test_positive_max=10, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent){
+        $case_risk_matrix = DB::select("SELECT r.district from (select district from $case_table_recent where total_tests>$testCount  and population_infected_Per_Lakh = 0 and date_id = $weekly_date) as r");
+
+        $test_risk_matrix = DB::select("SELECT r.district from (select district from $test_table_recent where test_positivity< 5 and total_tests>$testCount and date_id = $weekly_date) as r");
+
+        $risk_matrix = array_intersect($this->removeIndexFromArray($case_risk_matrix), $this->removeIndexFromArray($test_risk_matrix));
+        return count($risk_matrix);
+      }
+
+
+      public function removeIndexFromArray($data){
+           $newArray = []; 
+           foreach($data as $value){
+                $newArray[] = $value->district;
+           }
+           return $newArray;
+      }
+
+//       private function rm_first_slot($testCount=200,$test_positive_min=10,$test_positive_max=20, $weekly_date = 382, $table_last='', $table_recent=''){
+//         $risk_matrix = DB::select("select count(l.district) as 'first_slot' from
+// (select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
+// inner join
+// (select district from $table_recent where test_positivity<$test_positive_min
+// and total_tests>$testCount   and date_id = $weekly_date) as r
+// using(district)");
+
+//         return $risk_matrix[0];
+//       }
+
+//       private function rm_second_slot($testCount=100,$test_positive_min=21,$test_positive_max=30, $weekly_date = 382, $table_last='', $table_recent=''){
+//         $risk_matrix = DB::select("select count(l.district) as 'second_slot' from
+// (select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
+// inner join
+// (select district from $table_recent where test_positivity<$test_positive_min
+// and total_tests>$testCount   and date_id = $weekly_date) as r
+// using(district)");
+
+//         return $risk_matrix[0];
+//       }
+
+//       private function rm_third_slot($testCount=100,$test_positive_min=31,$test_positive_max=100, $weekly_date = 382, $table_last='', $table_recent=''){
+//         $risk_matrix = DB::select("select count(l.district) as 'third_slot' from
+// (select district from $table_last where test_positivity>=$test_positive_max   and date_id = $weekly_date) as l
+// inner join
+// (select district from $table_recent where test_positivity<$test_positive_min
+// and total_tests>$testCount   and date_id = $weekly_date) as r
+// using(district)");
+
+//         return $risk_matrix[0];
+//       }
 
     private function getLast14DaysData($request) {
         try{
@@ -1575,16 +1852,16 @@ SELECT
     }
 
     private function first_week(){
-        $first_week = DB::select("select distinct DATE_SUB(curdate(), interval 7 day) as 'first_2_weeks_start',
-DATE_SUB(DATE_SUB(curdate(), interval 7 day), INTERVAL 13 DAY)
+        $first_week = DB::select("select distinct DATE_SUB(curdate(), interval 8 day) as 'first_2_weeks_start',
+DATE_SUB(DATE_SUB(curdate(), interval 8 day), INTERVAL 13 DAY)
 as 'first_2_weeks_end' from lab_clean_data ");
                 return $first_week[0];
     }
 
     private function last_week(){
-        $last_week = DB::select("select distinct DATE_SUB(DATE_SUB(curdate(), interval 7 day), INTERVAL 14 DAY)
+        $last_week = DB::select("select distinct DATE_SUB(DATE_SUB(curdate(), interval 8 day), INTERVAL 14 DAY)
 as 'last_2_weeks_start',
-DATE_SUB(DATE_SUB(DATE_SUB(curdate(), interval 7 day), INTERVAL 14 DAY), INTERVAL 13 DAY)
+DATE_SUB(DATE_SUB(DATE_SUB(curdate(), interval 8 day), INTERVAL 14 DAY), INTERVAL 13 DAY)
 as 'last_2_weeks_ends' from test_positivity_rate_district ");
         return $last_week[0];
     }
@@ -1594,7 +1871,17 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
         $data['status'] = 'failed';
         try{
 
+            $table_last = 'tp_matrix_last';
+            $table_recent = 'tp_matrix_recent';
+
+            $travelers = $request->input('travelers');
+            if($travelers == 1){
+                $table_last = 'tp_matrix_last_non_travelers';
+                $table_recent = 'tp_matrix_recent_non_travelers';
+            }
+
             $testCount = $request->input('test_count');
+            $weekly_date = $request->input('weekly_date');
             $test_positive_data_rate = explode(",",$request->input('test_positive_data_rate'));
             $test_positive_min = 0;
             $test_positive_max = 0;
@@ -1603,102 +1890,673 @@ as 'last_2_weeks_ends' from test_positivity_rate_district ");
                 $test_positive_max = $test_positive_data_rate[1];
             }
 
-            $result['low_to_high'] = $this->risk_matrix_1($testCount,$test_positive_min,$test_positive_max)->low_to_high ?? 0;
-            $result['low_to_medium'] = $this->risk_matrix_2($testCount,$test_positive_min,$test_positive_max)->low_to_medium ?? 0;
-            $result['low_to_low'] = $this->risk_matrix_3($testCount,$test_positive_min,$test_positive_max)->low_to_low ?? 0;
-            $result['medium_to_high'] = $this->risk_matrix_4($testCount,$test_positive_min,$test_positive_max)->medium_to_high ?? 0;
-            $result['medium_to_medium'] = $this->risk_matrix_5($testCount,$test_positive_min,$test_positive_max)->medium_to_medium ?? 0;
-            $result['medium_to_low'] = $this->risk_matrix_6($testCount,$test_positive_min,$test_positive_max)->medium_to_low ?? 0;
-            $result['high_to_high'] = $this->risk_matrix_7($testCount,$test_positive_min,$test_positive_max)->high_to_high ?? 0;
-            $result['high_to_medium'] = $this->risk_matrix_8($testCount,$test_positive_min,$test_positive_max)->high_to_medium ?? 0;
-            $result['high_to_low'] = $this->risk_matrix_9($testCount,$test_positive_min,$test_positive_max)->high_to_low ?? 0;
+            $result['low_to_high'] = $this->risk_matrix_1($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_high ?? 0;
+            $result['low_to_medium'] = $this->risk_matrix_2($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_medium ?? 0;
+            $result['low_to_low'] = $this->risk_matrix_3($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_low ?? 0;
+            $result['medium_to_high'] = $this->risk_matrix_4($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->medium_to_high ?? 0;
+            $result['medium_to_medium'] = $this->risk_matrix_5($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->medium_to_medium ?? 0;
+            $result['medium_to_low'] = $this->risk_matrix_6($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->medium_to_low ?? 0;
+            $result['high_to_high'] = $this->risk_matrix_7($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_high ?? 0;
+            $result['high_to_medium'] = $this->risk_matrix_8($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_medium ?? 0;
+            $result['high_to_low'] = $this->risk_matrix_9($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_low ?? 0;
+            
+            // $result['first_slot'] = $this->rm_first_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->first_slot ?? 0;
+            // $result['second_slot'] = $this->rm_second_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->second_slot ?? 0;
+            // $result['third_slot'] = $this->rm_third_slot($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->third_slot ?? 0;
+            
             $data['result_data'] = $result;
-            $data['risk_matrix_data'] = $this->getRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max);
+            $data['risk_matrix_data'] = $this->getRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent);
 
             $data['status'] = 'success';
         }catch (\Exception $exception) {
+            
+        }
+        return $data;
+    }
 
+    public function getSecondRiskMatricData(Request  $request) {
+        $data['status'] = 'failed';
+        try{
+
+            $table_last = 'tp_matrix_last';
+            $table_recent = 'tp_matrix_recent';
+
+            $travelers = $request->input('travelers');
+            if($travelers == 1){
+                $table_last = 'tp_matrix_last_non_travelers';
+                $table_recent = 'tp_matrix_recent_non_travelers';
+            }
+
+            $testCount = $request->input('test_count');
+            $weekly_date = $request->input('weekly_date');
+            $test_positive_data_rate = explode(",",$request->input('test_positive_data_rate'));
+            $test_positive_min = 0;
+            $test_positive_max = 0;
+            if(is_array($test_positive_data_rate) && count($test_positive_data_rate) == 2) {
+                $test_positive_min = $test_positive_data_rate[0];
+                $test_positive_max = $test_positive_data_rate[1];
+            }
+            
+            $result['low_to_high'] = $this->second_risk_matrix_1($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_high ?? 0;
+            $result['low_to_medium'] = $this->second_risk_matrix_2($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_medium ?? 0;
+            $result['low_to_low'] = $this->second_risk_matrix_3($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->low_to_low ?? 0;
+            $result['medium_to_high'] = $this->second_risk_matrix_4($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->medium_to_high ?? 0;
+            $result['medium_to_medium'] = $this->second_risk_matrix_5($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->medium_to_medium ?? 0;
+            $result['medium_to_low'] = $this->second_risk_matrix_6($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->medium_to_low ?? 0;
+            $result['high_to_high'] = $this->second_risk_matrix_7($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_high ?? 0;
+            $result['high_to_medium'] = $this->second_risk_matrix_8($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_medium ?? 0;
+            $result['high_to_low'] = $this->second_risk_matrix_9($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent)->high_to_low ?? 0;
+            
+            
+            
+            $data['result_data'] = $result;
+            $data['risk_matrix_data'] = $this->getSecondRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max, $weekly_date, $table_last, $table_recent);
+
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+            
         }
         return $data;
     }
 
 
-    public function getRiskMatrixModalData($testCount=200,$test_positive_min=5,$test_positive_max=12) {
-        $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=$test_positive_max and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['high_to_high_district_name'] = $this->getRiskDistrictName($high_to_high_table_contentData);
-        $data['high_to_high_table_contentData'] = $this->riskMatrichtmlProcess($high_to_high_table_contentData);
-        $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=$test_positive_max and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['medium_to_high_district_name'] = $this->getRiskDistrictName($medium_to_high_table_contentData);
-        $data['medium_to_high_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_high_table_contentData);
-        $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=$test_positive_max and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['low_to_high_district_name'] = $this->getRiskDistrictName($low_to_high_table_contentData);
-        $data['low_to_high_table_contentData'] = $this->riskMatrichtmlProcess($low_to_high_table_contentData);
-        $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['high_to_medium_district_name'] = $this->getRiskDistrictName($high_to_medium_table_contentData);
-        $data['high_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($high_to_medium_table_contentData);
-        $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['medium_to_medium_district_name'] = $this->getRiskDistrictName($medium_to_medium_table_contentData);
-        $data['medium_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_medium_table_contentData);
-        $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['low_to_medium_district_name'] = $this->getRiskDistrictName($low_to_medium_table_contentData);
-        $data['low_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($low_to_medium_table_contentData);
-        $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_max) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<$test_positive_min AND total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['high_to_low_district_name'] = $this->getRiskDistrictName($high_to_low_table_contentData);
-        $data['high_to_low_table_contentData'] = $this->riskMatrichtmlProcess($high_to_low_table_contentData);
-        $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("select l.district as 'district',l.test_positivity as 'last_test_positivity',
-r.test_positivity as 'recent_test_positivity' from
-(select district,test_positivity from last_14_days_test_positivity_district where test_positivity>=$test_positive_min and test_positivity<$test_positive_max) as l
-inner join
-(select district,test_positivity from recent_14_days_test_positivity_district where test_positivity<$test_positive_min and total_tests>$testCount) as r
-using(district) ORDER BY r.test_positivity DESC");
-        $data['medium_to_low_district_name'] = $this->getRiskDistrictName($medium_to_low_table_contentData);
-        $data['medium_to_low_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_low_table_contentData);
-        $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" select l.district as 'district',l.test_positivity as 'last_test_positivity',
-    r.test_positivity as 'recent_test_positivity'  from
-    (select district, test_positivity from last_14_days_test_positivity_district where test_positivity<$test_positive_min) as l
-    inner join
-    (select district, test_positivity from recent_14_days_test_positivity_district where test_positivity<$test_positive_min
-    and total_tests>$testCount) as r
-    using(district) ORDER BY r.test_positivity DESC");
-        $data['low_to_low_district_name'] = $this->getRiskDistrictName($low_to_low_table_contentData);
-        $data['low_to_low_table_contentData'] = $this->riskMatrichtmlProcess($low_to_low_table_contentData);
+    public function getThirdRiskMatricData(Request  $request) {
+        $data['status'] = 'failed';
+        try{
+
+            $case_table_recent = '';
+            $case_table_last = '';
+            $test_table_recent = '';
+            $test_table_last = '';
+
+            $case_travelers = $request->input('case_travelers');
+            if($case_travelers == 1){
+                $case_table_recent = 'v_tp_matrix_recent_non_travelers';
+            }
+            if($case_travelers == 0){
+                $case_table_recent = 'v_tp_matrix_recent';
+            }
+            
+
+            $test_travelers = $request->input('test_travelers');
+            if($test_travelers == 1){
+                $test_table_recent = 'v_tp_matrix_recent_non_travelers';
+            }
+            if($test_travelers == 0){
+                $test_table_recent = 'v_tp_matrix_recent';
+            }
+            
+
+            $testCount = $request->input('test_count');
+            $weekly_date = $request->input('weekly_date');
+            $test_positive_data_rate = explode(",",$request->input('test_positive_data_rate'));
+            $test_positive_min = 0;
+            $test_positive_max = 0;
+            if(is_array($test_positive_data_rate) && count($test_positive_data_rate) == 2) {
+                $test_positive_min = $test_positive_data_rate[0];
+                $test_positive_max = $test_positive_data_rate[1];
+            }
+            
+            
+            
+            $result['low_to_high'] = $this->third_risk_matrix_1($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['low_to_medium'] = $this->third_risk_matrix_2($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['low_to_low'] = $this->third_risk_matrix_3($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['medium_to_high'] = $this->third_risk_matrix_4($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['medium_to_medium'] = $this->third_risk_matrix_5($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['medium_to_low'] = $this->third_risk_matrix_6($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['high_to_high'] = $this->third_risk_matrix_7($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['high_to_medium'] = $this->third_risk_matrix_8($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['high_to_low'] = $this->third_risk_matrix_9($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['zero_to_high'] = $this->third_risk_matrix_10($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['zero_to_medium'] = $this->third_risk_matrix_11($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            $result['zero_to_low'] = $this->third_risk_matrix_12($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent) ?? 0;
+            
+            
+            $data['result_data'] = $result;
+            $data['risk_matrix_data'] = $this->getThirdRiskMatrixModalData($testCount,$test_positive_min,$test_positive_max, $weekly_date, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent, $case_travelers, $test_travelers);
+           
+            $data['status'] = 'success';
+        }catch (\Exception $exception) {
+            dd($exception);
+        }
         return $data;
     }
+
+
+    
+
+
+    public function getRiskMatrixModalData($testCount=200,$test_positive_min=5,$test_positive_max=12, $weekly_date = 382, $table_last, $table_recent) {
+        $old_weekly_date = $this->getOldWeeklyDate($weekly_date);
+
+        //high_to_high old
+        $high_to_high_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+        (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_max and date_id = $old_weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $old_weekly_date) as r
+        using(district) ORDER BY r.test_positivity DESC");
+        
+        //medium_to_high old
+        $medium_to_high_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //low_to_high old = 3:1 (row:column)
+        $low_to_high_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity<$test_positive_min  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //high_to_medium old = 1:2 (row:column)
+        $high_to_medium_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>$test_positive_max  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //medium_to_medium old
+        $medium_to_medium_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //low_to_medium old
+        $low_to_medium_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity<$test_positive_min  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //high_to_low old = 1:3 (row:column)
+        $high_to_low_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_max  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity<$test_positive_min AND total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //medium_to_low old
+        $medium_to_low_table_contentData_old = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max  and date_id = $old_weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity<$test_positive_min and total_tests>$testCount  and date_id = $old_weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+
+        //low_to_low old
+        $low_to_low_table_contentData_old = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district' from
+    (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity<$test_positive_min  and date_id = $old_weekly_date) as l
+    inner join
+    (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity<$test_positive_min
+    and total_tests>$testCount  and date_id = $old_weekly_date) as r
+    using(district) ORDER BY r.test_positivity DESC");
+
+        $red_table_contentData_old = array_merge($high_to_high_table_contentData_old,$medium_to_high_table_contentData_old, $low_to_high_table_contentData_old);
+        $orange_green_table_contentData_old = array_merge($high_to_medium_table_contentData_old,$medium_to_medium_table_contentData_old, $low_to_medium_table_contentData_old, $high_to_low_table_contentData_old, $medium_to_low_table_contentData_old, $low_to_low_table_contentData_old);
+        //dd($red_table_contentData_old);
+
+
+        //high_to_high 
+        $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+        (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_max and date_id = $weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+        using(district) ORDER BY r.test_positivity DESC");
+        $data['high_to_high_district_name'] = $this->getRiskDistrictName($high_to_high_table_contentData, $orange_green_table_contentData_old);
+        $data['high_to_high_table_contentData'] = $this->riskMatrichtmlProcess($high_to_high_table_contentData);
+        
+
+        //medium_to_high 
+        $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['medium_to_high_district_name'] = $this->getRiskDistrictName($medium_to_high_table_contentData, $orange_green_table_contentData_old);
+        $data['medium_to_high_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_high_table_contentData);
+        
+
+        //low_to_high = 3:1 (row:column)
+        $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity<$test_positive_min  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['low_to_high_district_name'] = $this->getRiskDistrictName($low_to_high_table_contentData, $orange_green_table_contentData_old);
+        $data['low_to_high_table_contentData'] = $this->riskMatrichtmlProcess($low_to_high_table_contentData);
+        
+
+        //high_to_medium = 1:2 (row:column)
+        $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['high_to_medium_district_name'] = $this->getRiskDistrictName($high_to_medium_table_contentData, $red_table_contentData_old);
+        $data['high_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($high_to_medium_table_contentData);
+        
+
+        //medium_to_medium
+        $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['medium_to_medium_district_name'] = $this->getRiskDistrictName($medium_to_medium_table_contentData, $red_table_contentData_old);
+        $data['medium_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_medium_table_contentData);
+
+
+        //low_to_medium
+        $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity<$test_positive_min  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity>=$test_positive_min and test_positivity<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['low_to_medium_district_name'] = $this->getRiskDistrictName($low_to_medium_table_contentData, $red_table_contentData_old);
+        $data['low_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($low_to_medium_table_contentData);
+
+
+        //high_to_low = 1:3 (row:column)
+        $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity<$test_positive_min AND total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['high_to_low_district_name'] = $this->getRiskDistrictName($high_to_low_table_contentData, $red_table_contentData_old);
+        $data['high_to_low_table_contentData'] = $this->riskMatrichtmlProcess($high_to_low_table_contentData);
+
+
+        //medium_to_low
+        $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity>=$test_positive_min and test_positivity<$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity<$test_positive_min and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.test_positivity DESC");
+        $data['medium_to_low_district_name'] = $this->getRiskDistrictName($medium_to_low_table_contentData, $red_table_contentData_old);
+        $data['medium_to_low_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_low_table_contentData);
+
+
+        //low_to_low
+        $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+    (select district, positive_tests, total_tests, test_positivity from $table_last where test_positivity<$test_positive_min  and date_id = $weekly_date) as l
+    inner join
+    (select district, positive_tests, total_tests, test_positivity from $table_recent where test_positivity<$test_positive_min
+    and total_tests>$testCount  and date_id = $weekly_date) as r
+    using(district) ORDER BY r.test_positivity DESC");
+        $data['low_to_low_district_name'] = $this->getRiskDistrictName($low_to_low_table_contentData, $red_table_contentData_old);
+        $data['low_to_low_table_contentData'] = $this->riskMatrichtmlProcess($low_to_low_table_contentData);
+
+
+        // first slot
+        $first_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=10 and floor(test_positivity)<20 and total_tests>$testCount  and date_id = $weekly_date ORDER BY test_positivity desc");
+        //$first_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=10 and test_positivity<=20 and total_tests>$testCount and date_id = $weekly_date");
+        $data['first_slot_district_name'] = $this->getRiskDistrictClusteringName($first_slot_table_contentDataFirst, $first_slot_table_contentDataSecond=[]);
+
+
+        // second slot
+        $second_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=20 and floor(test_positivity)<30 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$second_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=20 and test_positivity<=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['second_slot_district_name'] = $this->getRiskDistrictClusteringName($second_slot_table_contentDataFirst, $second_slot_table_contentDataSecond=[]);
+
+        
+        // third slot
+        $third_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>=30 and floor(test_positivity)<40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$third_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['third_slot_district_name'] = $this->getRiskDistrictClusteringName($third_slot_table_contentDataFirst, $third_slot_table_contentDataSecond=[]);
+
+        // fourth slot
+        $fourth_slot_table_contentDataFirst = \Illuminate\Support\Facades\DB::select("SELECT district from $table_recent where floor(test_positivity)>40 and total_tests>$testCount  and date_id = $weekly_date ORDER BY  test_positivity desc");
+        //$fourth_slot_table_contentDataSecond = \Illuminate\Support\Facades\DB::select("SELECT district from $table_last where test_positivity>=30 and total_tests>$testCount and date_id = $weekly_date");
+        $data['fourth_slot_district_name'] = $this->getRiskDistrictClusteringName($fourth_slot_table_contentDataFirst, $fourth_slot_table_contentDataSecond=[]);
+
+
+        // Risk Matrix All Data
+        $rist_matrix_all_data = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+        (select district, positive_tests, total_tests, test_positivity from $table_last where  date_id = $weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from $table_recent where date_id = $weekly_date) as r
+        using(district) ORDER BY r.test_positivity DESC");
+        $data['risk_matrix_all_data'] = $this->getRiskMatrixAllData($rist_matrix_all_data);
+
+
+        // Traveller All Data
+        $traveller_all_data = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+        (select district, positive_tests, total_tests, test_positivity from tp_matrix_last_travelers where  date_id = $weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from tp_matrix_recent_travelers where date_id = $weekly_date) as r
+        using(district) ORDER BY r.test_positivity DESC");
+        $data['traveller_all_data'] = $this->getRiskMatrixAllData($traveller_all_data);
+
+        
+        return $data;
+    }
+
+
+    public function getSecondRiskMatrixModalData($testCount=200,$test_positive_min=50,$test_positive_max=200, $weekly_date = 382, $table_last, $table_recent) {
+        
+        //high_to_high
+        $high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+        (select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests>=$test_positive_max and date_id = $weekly_date) as l
+        inner join
+        (select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+        using(district) ORDER BY r.positive_tests DESC");
+        $data['high_to_high_district_name'] = $this->getSecondRiskDistrictName($high_to_high_table_contentData);
+        $data['high_to_high_table_contentData'] = $this->riskMatrichtmlProcess($high_to_high_table_contentData);
+        
+
+        //medium_to_high
+        $medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests>=$test_positive_min and positive_tests<$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['medium_to_high_district_name'] = $this->getSecondRiskDistrictName($medium_to_high_table_contentData);
+        $data['medium_to_high_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_high_table_contentData);
+        
+
+        //low_to_high
+        $low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests<$test_positive_min  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests>=$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['low_to_high_district_name'] = $this->getSecondRiskDistrictName($low_to_high_table_contentData);
+        $data['low_to_high_table_contentData'] = $this->riskMatrichtmlProcess($low_to_high_table_contentData);
+        
+
+        //high_to_medium
+        $high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests>=$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests>=$test_positive_min and positive_tests<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['high_to_medium_district_name'] = $this->getSecondRiskDistrictName($high_to_medium_table_contentData);
+        $data['high_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($high_to_medium_table_contentData);
+        
+
+        //medium_to_medium
+        $medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests>=$test_positive_min and positive_tests<$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests>=$test_positive_min and positive_tests<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['medium_to_medium_district_name'] = $this->getSecondRiskDistrictName($medium_to_medium_table_contentData);
+        $data['medium_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_medium_table_contentData);
+
+
+        //low_to_medium
+        $low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests<$test_positive_min  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests>=$test_positive_min and positive_tests<$test_positive_max and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['low_to_medium_district_name'] = $this->getSecondRiskDistrictName($low_to_medium_table_contentData);
+        $data['low_to_medium_table_contentData'] = $this->riskMatrichtmlProcess($low_to_medium_table_contentData);
+
+
+        //high_to_low
+        $high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests>=$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests<$test_positive_min AND total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['high_to_low_district_name'] = $this->getSecondRiskDistrictName($high_to_low_table_contentData);
+        $data['high_to_low_table_contentData'] = $this->riskMatrichtmlProcess($high_to_low_table_contentData);
+
+
+        //medium_to_low
+        $medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity' from
+(select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests>=$test_positive_min and positive_tests<$test_positive_max  and date_id = $weekly_date) as l
+inner join
+(select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests<$test_positive_min and total_tests>$testCount  and date_id = $weekly_date) as r
+using(district) ORDER BY r.positive_tests DESC");
+        $data['medium_to_low_district_name'] = $this->getSecondRiskDistrictName($medium_to_low_table_contentData);
+        $data['medium_to_low_table_contentData'] = $this->riskMatrichtmlProcess($medium_to_low_table_contentData);
+
+
+        //low_to_low
+        $low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT l.district as 'district', l.positive_tests AS 'l_positive', l.total_tests AS 'l_total_test', l.test_positivity as 'last_test_positivity', r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity'  from
+    (select district, positive_tests, total_tests, test_positivity from $table_last where positive_tests<$test_positive_min  and date_id = $weekly_date) as l
+    inner join
+    (select district, positive_tests, total_tests, test_positivity from $table_recent where positive_tests<$test_positive_min
+    and total_tests>$testCount  and date_id = $weekly_date) as r
+    using(district) ORDER BY r.positive_tests DESC");
+        $data['low_to_low_district_name'] = $this->getSecondRiskDistrictName($low_to_low_table_contentData);
+        $data['low_to_low_table_contentData'] = $this->riskMatrichtmlProcess($low_to_low_table_contentData);
+
+        
+        
+        return $data;
+    }
+
+    public function getThirdRiskMatrixModalData($testCount=200,$test_positive_min=50,$test_positive_max=200, $weekly_date = 382, $case_table_last, $case_table_recent, $test_table_last, $test_table_recent, $cFlag, $tFlag) {
+        
+        //high_to_high
+        $case_high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount  and date_id = $weekly_date) as r
+         ORDER BY r.positive_tests DESC");
+
+        $test_high_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+        ORDER BY r.positive_tests DESC");
+        
+        $high_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_high_table_contentData, $test_high_to_high_table_contentData, $cFlag, $tFlag);
+        $data['high_to_high_district_name'] = $this->getSecondRiskDistrictName($high_to_high_table_contentData);
+        $data['high_to_high_table_contentData'] = $this->thirdRiskMatrichtmlProcess($high_to_high_table_contentData);
+        
+
+
+        //medium_to_high
+        $case_medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+ ORDER BY r.positive_tests DESC");
+
+        $test_medium_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+         ORDER BY r.positive_tests DESC");
+
+        $medium_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_medium_to_high_table_contentData, $test_medium_to_high_table_contentData, $cFlag, $tFlag);  
+        $data['medium_to_high_district_name'] = $this->getSecondRiskDistrictName($medium_to_high_table_contentData);
+        $data['medium_to_high_table_contentData'] = $this->thirdRiskMatrichtmlProcess($medium_to_high_table_contentData);
+        
+
+        //low_to_high
+        $case_low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >= 0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r
+ORDER BY r.positive_tests DESC");
+
+        $test_low_to_high_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+        ORDER BY r.positive_tests DESC");
+
+        $low_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_high_table_contentData, $test_low_to_high_table_contentData, $cFlag, $tFlag); 
+        $data['low_to_high_district_name'] = $this->getSecondRiskDistrictName($low_to_high_table_contentData);
+        $data['low_to_high_table_contentData'] = $this->thirdRiskMatrichtmlProcess($low_to_high_table_contentData);
+        
+
+        //high_to_medium
+        $case_high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=10 and total_tests>$testCount  and date_id = $weekly_date) as r
+ ORDER BY r.positive_tests DESC");
+ 
+ $test_high_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+ ORDER BY r.positive_tests DESC");
+        
+        $high_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_medium_table_contentData, $test_high_to_medium_table_contentData, $cFlag, $tFlag);
+        $data['high_to_medium_district_name'] = $this->getSecondRiskDistrictName($high_to_medium_table_contentData);
+        $data['high_to_medium_table_contentData'] = $this->thirdRiskMatrichtmlProcess($high_to_medium_table_contentData);
+        
+
+        //medium_to_medium
+        $case_medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+ ORDER BY r.positive_tests DESC");
+
+        $test_medium_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population, r.population from
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+        ORDER BY r.positive_tests DESC");
+
+        $medium_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_medium_to_medium_table_contentData, $test_medium_to_medium_table_contentData, $cFlag, $tFlag);
+        $data['medium_to_medium_district_name'] = $this->getSecondRiskDistrictName($medium_to_medium_table_contentData);
+        $data['medium_to_medium_table_contentData'] = $this->thirdRiskMatrichtmlProcess($medium_to_medium_table_contentData);
+
+
+        //low_to_medium
+        $case_low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r
+ORDER BY r.positive_tests DESC");
+
+        $test_low_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity>= 5 and test_positivity< 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+ORDER BY r.positive_tests DESC");
+
+        $low_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_medium_table_contentData, $test_low_to_medium_table_contentData, $cFlag, $tFlag);
+        $data['low_to_medium_district_name'] = $this->getSecondRiskDistrictName($low_to_medium_table_contentData);
+        $data['low_to_medium_table_contentData'] = $this->thirdRiskMatrichtmlProcess($low_to_medium_table_contentData);
+
+
+        //high_to_low
+        $case_high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=10 AND total_tests>$testCount  and date_id = $weekly_date) as r
+ORDER BY r.positive_tests DESC");
+
+        $test_high_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+        (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 AND total_tests>$testCount  and date_id = $weekly_date) as r
+        ORDER BY r.positive_tests DESC");
+
+        $high_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_high_to_low_table_contentData, $test_high_to_low_table_contentData, $cFlag, $tFlag);
+        $data['high_to_low_district_name'] = $this->getSecondRiskDistrictName($high_to_low_table_contentData);
+        $data['high_to_low_table_contentData'] = $this->thirdRiskMatrichtmlProcess($high_to_low_table_contentData);
+
+
+        //medium_to_low
+        $case_medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=5 and population_infected_Per_Lakh < 10 and total_tests>$testCount  and date_id = $weekly_date) as r
+ ORDER BY r.positive_tests DESC");
+ 
+        $test_medium_to_low_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+(select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r
+ ORDER BY r.positive_tests DESC");
+
+        $medium_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_medium_to_low_table_contentData, $test_medium_to_low_table_contentData, $cFlag, $tFlag);
+        $data['medium_to_low_district_name'] = $this->getSecondRiskDistrictName($medium_to_low_table_contentData);
+        $data['medium_to_low_table_contentData'] = $this->thirdRiskMatrichtmlProcess($medium_to_low_table_contentData);
+
+
+        //low_to_low 
+        $case_low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population  from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh >=0.01 and population_infected_Per_Lakh < 5 and total_tests>$testCount  and date_id = $weekly_date) as r
+     ORDER BY r.positive_tests DESC");
+     
+        $test_low_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population  from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 and total_tests>$testCount  and date_id = $weekly_date) as r
+     ORDER BY r.positive_tests DESC");
+
+        $low_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_low_to_low_table_contentData, $test_low_to_low_table_contentData, $cFlag, $tFlag);
+        $data['low_to_low_district_name'] = $this->getSecondRiskDistrictName($low_to_low_table_contentData);
+        $data['low_to_low_table_contentData'] = $this->thirdRiskMatrichtmlProcess($low_to_low_table_contentData);
+
+        
+
+        //zero_to_high
+        $case_zero_to_high_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where population_infected_Per_Lakh = 0 and total_tests>$testCount  and date_id = $weekly_date) as r
+     ORDER BY r.positive_tests DESC");
+     
+       $test_zero_to_high_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity> 10 and total_tests>$testCount  and date_id = $weekly_date) as r ORDER BY r.positive_tests DESC");
+
+        $zero_to_high_table_contentData = $this->thirdRiskMatrixIntersect($case_zero_to_high_table_contentData, $test_zero_to_high_table_contentData, $cFlag, $tFlag);
+        $data['zero_to_high_district_name'] = $this->getSecondRiskDistrictName($zero_to_high_table_contentData);
+        $data['zero_to_high_table_contentData'] = $this->thirdRiskMatrichtmlProcess($zero_to_high_table_contentData);
+
+
+        //zero_to_medium
+        $case_zero_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where total_tests>$testCount and population_infected_Per_Lakh = 0  and date_id = $weekly_date) as r
+    ORDER BY r.positive_tests DESC");
+    
+        $test_zero_to_medium_table_contentData = \Illuminate\Support\Facades\DB::select("SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh, r.population from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where total_tests>$testCount and test_positivity < 10 and test_positivity >= 5 and date_id = $weekly_date) as r
+    ORDER BY r.positive_tests DESC");
+
+        $zero_to_medium_table_contentData = $this->thirdRiskMatrixIntersect($case_zero_to_medium_table_contentData, $test_zero_to_medium_table_contentData, $cFlag, $tFlag);
+        $data['zero_to_medium_district_name'] = $this->getSecondRiskDistrictName($zero_to_medium_table_contentData);
+        $data['zero_to_medium_table_contentData'] = $this->thirdRiskMatrichtmlProcess($zero_to_medium_table_contentData);
+
+
+
+        //zero_to_low
+        $case_zero_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh , r.population from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $case_table_recent where total_tests>$testCount  and population_infected_Per_Lakh = 0 and date_id = $weekly_date) as r
+     ORDER BY r.positive_tests DESC");
+     
+        $test_zero_to_low_table_contentData = \Illuminate\Support\Facades\DB::select(" SELECT r.district, r.positive_tests AS 'r_positive', r.total_tests AS 'r_total_test', r.test_positivity as 'recent_test_positivity', r.population_infected_Per_Lakh , r.population from
+    (select district, positive_tests, total_tests, test_positivity, population_infected_Per_Lakh, population from $test_table_recent where test_positivity< 5 and total_tests>$testCount and date_id = $weekly_date) as r
+     ORDER BY r.positive_tests DESC");
+
+        $zero_to_low_table_contentData = $this->thirdRiskMatrixIntersect($case_zero_to_low_table_contentData, $test_zero_to_low_table_contentData, $cFlag, $tFlag);
+        $data['zero_to_low_district_name'] = $this->getSecondRiskDistrictName($zero_to_low_table_contentData);
+        $data['zero_to_low_table_contentData'] = $this->thirdRiskMatrichtmlProcess($zero_to_low_table_contentData);
+
+        
+        return $data;
+    }
+
+
+    public function thirdRiskMatrixIntersect($cases, $test, $cFlag, $tFlag){
+        $newArray = [];
+        $reform = [];
+       
+        
+        foreach($cases as $c){
+            if(!empty($c->district) && isset($c->district)){
+                foreach($test as $k=> $t){
+                   if($c->district === $t->district){
+                       $reform['district'] =  $c->district;
+                       $reform['population'] =  $c->population;
+                       $reform['r_positive'] = ($tFlag == 0) ? $c->r_positive : $t->r_positive;
+                       $reform['r_total_test'] = ($tFlag == 0) ? $c->r_total_test: $t->r_total_test;
+                       $reform['recent_test_positivity'] = ($tFlag == 0) ? $c->recent_test_positivity: $t->recent_test_positivity;
+                       $reform['population_infected_Per_Lakh'] = ($cFlag == 0) ? $c->population_infected_Per_Lakh: $t->population_infected_Per_Lakh;
+		       $newArray[] = $reform;
+		   }
+                }
+            }
+        }
+        return $newArray;
+
+        
+
+    }
+    
+
+
+
+    public function getOldWeeklyDate($weekly_date){
+        $_weeklyDateData = \Illuminate\Support\Facades\DB::select("SELECT date_id FROM weekly_dates ORDER BY date_id DESC");
+        $_weeklyDateDataArray = array_column($_weeklyDateData, 'date_id');
+        $_oldIndex = array_search($weekly_date, $_weeklyDateDataArray)+1;
+        $_oldWeeklyDate = $_weeklyDateDataArray[$_oldIndex];
+        
+        return $_oldWeeklyDate;
+    }
+
 
     public function riskMatrichtmlProcess($items) {
         $html = "";
@@ -1706,8 +2564,8 @@ using(district) ORDER BY r.test_positivity DESC");
             foreach($items as $key => $item) {
                 $html .= '<tr class="b1">';
                 $html .= "<td >".en2bnTranslation($item->district)."</td>";
-                $html .= "<td>".convertEnglishDigitToBangla($item->recent_test_positivity)."</td>";
-                $html .= "<td>".convertEnglishDigitToBangla($item->last_test_positivity)."</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($item->recent_test_positivity)."% (<span style='color:#0636c1d4;'>".convertEnglishDigitToBangla($item->r_total_test)."</span>, <span style='color:#b50514d4;'>".convertEnglishDigitToBangla($item->r_positive)."</span>)</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($item->last_test_positivity)."% (<span style='color:#0636c1d4;'>".convertEnglishDigitToBangla($item->l_total_test)."</span>, <span style='color:#b50514d4;'>".convertEnglishDigitToBangla($item->l_positive)."</span>)</td>";
                 $html .= "</tr>";
             }
         }
@@ -1716,14 +2574,93 @@ using(district) ORDER BY r.test_positivity DESC");
         return $html;
     }
 
-    public function getRiskDistrictName($items) {
+    public function thirdRiskMatrichtmlProcess($items) {
+        $html = "";
+        if(count($items)) {
+            $object = json_decode(json_encode($items), FALSE);
+            foreach($object as $key => $item) {
+                $lakhPerInfec = number_format($item->population_infected_Per_Lakh ?? 0, 2);
+                $html .= '<tr class="b1">';
+                $html .= "<td>".convertEnglishDigitToBangla($key+1)."</td>";
+                $html .= "<td>".en2bnTranslation($item->district ?? '')."</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($item->population ?? 0)."</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($item->recent_test_positivity ?? 0)."% (<span style='color:#0636c1d4;'>".convertEnglishDigitToBangla($item->r_total_test ?? 0)."</span>, <span style='color:#b50514d4;'>".convertEnglishDigitToBangla($item->r_positive ?? 0)."</span>)</td>";
+                $html .= "<td>".convertEnglishDigitToBangla($lakhPerInfec)."</td>";
+                $html .= "</tr>";
+            }
+        }
+     return $html;
+    }
+
+    public function getRiskDistrictName($items, $oldItem) {
+        $oldDataArray = array_column($oldItem, 'district');
         $arrayData = array();
         foreach ($items as $item) {
-            $arrayData[] = rtrim(en2bnTranslation($item->district)," ");
+            if(in_array($item->district, $oldDataArray)){
+                $arrayData[] = "<span style='font-style: italic; color:#B19CD9; text-shadow: -1px 0 white, 0 1px black, 1px 0 black, 0 -1px white'>". rtrim(en2bnTranslation($item->district)."</span>"," ");
+            }else{
+                $arrayData[] =  rtrim(en2bnTranslation($item->district)," ");
+            }
         }
         $districtName = implode(", ",$arrayData);
         return $districtName;
     }
+
+    public function getSecondRiskDistrictName($items) {
+        $arrayData = array();
+        if(!empty($items)){
+            $object = json_decode(json_encode($items), FALSE);
+            foreach ($object as $item) {
+                $arrayData[] =  rtrim(en2bnTranslation($item->district ?? '')," ");
+            }
+            $districtName = implode(", ",$arrayData);
+            return $districtName;
+        }else{
+            return '';
+        }
+    }
+
+    public function getRiskDistrictClusteringName($itemsOne, $itemsTow) {
+        $arrayOneData = array();
+        $arrayTwoData = array();
+        $arrayData = array();
+        foreach ($itemsOne as $item) {
+            $arrayOneData[] = rtrim(en2bnTranslation($item->district)," ");
+        }
+        foreach ($itemsTow as $item) {
+            $arrayTwoData[] = rtrim(en2bnTranslation($item->district)," ");
+        }
+        $arrayData = array_unique(array_merge($arrayOneData,$arrayTwoData), SORT_REGULAR);
+        $districtName = implode(", ",$arrayData);
+        return $districtName;
+    }
+
+     public function getRiskMatrixAllData($items)
+     {
+        $html = "";
+        $changePostiveColor = "";
+        if(count($items)) {
+            foreach($items as $key => $item) {
+                $changePositive = $item->r_positive - $item->l_positive;
+                $changePositivity = number_format(($item->recent_test_positivity - $item->last_test_positivity), 2);
+                $changePostiveColor = ($changePositive < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositive === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
+                $changePostivityColor = ($changePositivity < 0) ? "style='border-right-color:#90EE90 !important; border-width:1px 3px 1px 1px !important; background-color: #e6fff2; color: #004d00'" : (($changePositivity === 0) ? "" : "style='border-right-color:#FFA07A !important; border-width:1px 3px 1px 1px !important; background-color:#ffe6e6; color: #ff0000'");
+                $html .= '<tr class="b1">';
+                $html .= "<td>&nbsp;</td>";
+                $html .= "<td style='font-size: 18px' >".en2bnTranslation($item->district)."</td>";
+                $html .= "<td>".$item->recent_test_positivity."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item->r_total_test."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item->r_positive."</span></td>";
+                $html .= "<td>".$item->last_test_positivity."% </td>";
+                $html .= "<td><span style='color:#0636c1d4;'>".$item->l_total_test."</span></td>";
+                $html .= "<td><span style='color:#b50514d4;'>".$item->l_positive."</span></td>";
+                $html .= "<td $changePostiveColor>".$changePositive."</td>";
+                $html .= "<td $changePostivityColor>".$changePositivity." % </td>";
+                $html .= "</tr>";
+            }
+        }
+        return $html;
+     }
 
     public function getNationalDailyInfectedData(Request  $request) {
         $data['status'] = 'failed';
@@ -1819,63 +2756,6 @@ using(district) ORDER BY r.test_positivity DESC");
         return $data;
     }
 
-    protected function getNationWideHospitalBedsTrend($request) {
-
-        /*$testDateQuery = ' ';
-        if($request->has('from_date') && $request->from_date != '') {
-            $testDateQuery .= ' AND date >='. "'".$request->from_date."'";
-        }
-        if($request->has('to_date') && $request->to_date != '') {
-            if($testDateQuery == '') {
-                $testDateQuery .= ' AND date <= '. "'".$request->to_date."'";
-            } else {
-                $testDateQuery .= ' AND date <='. "'".$request->to_date."'";
-            }
-        }*/
-        $dateQuery = ' AND TRUE';
-        if($request->has('from_date') && $request->from_date != '') {
-            $dateQuery .= ' AND  date >='. "'".$request->from_date."'";
-        }
-        if($request->has('to_date') && $request->to_date != '') {
-            $dateQuery .= ' AND date <='. "'".$request->to_date."'";
-        }
-        $vacancy_beds = DB::select("select date, (((alocatedGeneralBed-AdmittedGeneralBed)/alocatedGeneralBed)*100)
-        as 'GeneralBedVacancyRate',
-        (((alocatedICUBed-AdmittedICUBed)/alocatedICUBed)*100) as 'ICUVacancyRate'
-        from hospitaltemporarydata
-        where city = 'Country' $dateQuery
-        group by date ORDER BY date ");
-
-        $dates = $general_beds = $icu_beds =[];
-        foreach ($vacancy_beds as $key => $vacancy_bed) {
-            $dates[]        = convertEnglishDateToBangla($vacancy_bed->date);
-            $general_beds[] = doubleval($vacancy_bed->GeneralBedVacancyRate);
-            $icu_beds[]     = doubleval($vacancy_bed->ICUVacancyRate);
-        }
-
-        $hospital_vacancy_dates     = implode(",", $dates);
-        $hospital_vacancy_generals  = implode(",", $general_beds);
-        $hospital_vacancy_icus      = implode(",", $icu_beds);
-
-        return [
-            'hospital_vacancy_dates' => $dates,
-            'hospital_vacancy_generals' => $general_beds,
-            'hospital_vacancy_icus' => $icu_beds
-        ];
-    }
-
-    public function getHospitalBedsTrend(Request $request) {
-        $data['status'] = 'failed';
-        try {
-            $hospitalBedsTrend = $this->getNationWideHospitalBedsTrend($request);
-            $data['hospital_vacancy_dates'] = json_encode($hospitalBedsTrend['hospital_vacancy_dates']);
-            $data['hospital_vacancy_generals'] = json_encode($hospitalBedsTrend['hospital_vacancy_generals']);
-            $data['hospital_vacancy_icus'] = json_encode($hospitalBedsTrend['hospital_vacancy_icus']);
-            $data['status'] = 'success';
-        }catch (\Exception $exception) {
-
-        }
-        return $data;
-    }
+    
 
 }

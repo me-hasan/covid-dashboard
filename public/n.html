@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Check Amchart Language</title>
+	<script src="numeral.min.js"></script>
+</head>
+<body>
+	<div id="mroot">
+		<h3>Checking Numeral</h3>
+		<h5>2900</h5>
+	</div>
+
+</body>
+<script>
+	// load a locale
+numeral.register('locale', 'fr', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+    ordinal : function (number) {
+        return number === 1 ? 'er' : 'ème';
+    },
+    currency: {
+        symbol: '€'
+    }
+});
+
+// switch between locales
+numeral.locale('fr');
+</script>
+</html>

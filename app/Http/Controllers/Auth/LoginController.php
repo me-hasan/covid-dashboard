@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\VisitorTrace;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,13 @@ class LoginController extends Controller
                     return RouteServiceProvider::IEDCR_DASHBOARD;
                     break;
                 case 'hpm':
-                    return RouteServiceProvider::HPM_DASHBOARD;
+                    return RouteServiceProvider::XPM_DASHBOARD;
+                    break;
+                case 'vaccination':
+                    return RouteServiceProvider::VACCINATION;
+                    break;
+                case 'socio':
+                    return RouteServiceProvider::SOCIO_ECONOMIC;
                     break;
                 default:
                     return RouteServiceProvider::IEDCR_DASHBOARD;
@@ -97,5 +104,21 @@ class LoginController extends Controller
         }
 
         return back()->withInput($request->only('email', 'remember'));
+    }
+
+    function authenticated(Request $request, $user)
+    {
+        $userInfo = ($user->logged_count === null) ? 0 : $user->logged_count;
+       
+        $user->update([
+            'last_login_at' => now(),
+            'logged_count' => $userInfo + 1
+        ]);
+       
+        $visitorTrace = new VisitorTrace;
+        $visitorTrace->create([
+            'user_id' => $user->id,
+            'login_at' => now()
+        ]);
     }
 }
